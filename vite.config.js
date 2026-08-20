@@ -5,6 +5,8 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  // Set base to repo name for GitHub Pages (change 'sps-website' to your repo name)
+  base: '/satarapolytechnicsatara/',
   server: {
     proxy: {
       '/api': {
