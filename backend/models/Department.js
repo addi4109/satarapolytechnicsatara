@@ -5,6 +5,7 @@ const facultySchema = new mongoose.Schema({
   designation: { type: String, default: '' },
   qual: { type: String, default: '' },
   exp: { type: String, default: '' },
+  expYear: { type: Number, default: () => new Date().getFullYear() },
   email: { type: String, default: '' },
   image: { type: String, default: '' },
 });

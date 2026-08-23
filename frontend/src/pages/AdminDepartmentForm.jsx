@@ -97,7 +97,7 @@ function AdminDepartmentForm() {
 
   // Faculty management
   const addFaculty = () => {
-    setForm((prev) => ({ ...prev, faculty: [...prev.faculty, { name: '', designation: '', qual: '', exp: '', email: '', image: '' }] }));
+    setForm((prev) => ({ ...prev, faculty: [...prev.faculty, { name: '', designation: '', qual: '', exp: '', expYear: new Date().getFullYear(), email: '', image: '' }] }));
   };
   const updateFaculty = (idx, field, val) => {
     setForm((prev) => {
@@ -371,7 +371,13 @@ function AdminDepartmentForm() {
                         <input type="text" placeholder="Name" value={f.name} onChange={(e) => updateFaculty(idx, 'name', e.target.value)} />
                         <input type="text" placeholder="Designation" value={f.designation} onChange={(e) => updateFaculty(idx, 'designation', e.target.value)} />
                         <input type="text" placeholder="Qualification" value={f.qual} onChange={(e) => updateFaculty(idx, 'qual', e.target.value)} />
-                        <input type="text" placeholder="Experience" value={f.exp} onChange={(e) => updateFaculty(idx, 'exp', e.target.value)} />
+                        <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                          <input type="text" placeholder="Experience (e.g. 5)" value={f.exp} onChange={(e) => {
+                            updateFaculty(idx, 'exp', e.target.value);
+                            updateFaculty(idx, 'expYear', new Date().getFullYear());
+                          }} style={{ flex: 1 }} />
+                          <input type="number" placeholder="Year" value={f.expYear || new Date().getFullYear()} onChange={(e) => updateFaculty(idx, 'expYear', Number(e.target.value))} style={{ width: '70px' }} title="Year experience was last updated" />
+                        </div>
                         <input type="text" placeholder="Email" value={f.email} onChange={(e) => updateFaculty(idx, 'email', e.target.value)} />
                       </div>
                     </div>

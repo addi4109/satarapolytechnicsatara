@@ -355,7 +355,7 @@ function DepartmentsPage() {
                         <p className="fcard-designation">{f.designation}</p>
                         <div className="fcard-details">
                           <span><strong>Qualification:</strong> {f.qual}</span>
-                          <span><strong>Experience:</strong> {f.exp}</span>
+                          <span><strong>Experience:</strong> {f.exp ? `${parseInt(f.exp, 10) + (new Date().getFullYear() - (f.expYear || new Date().getFullYear()))} years` : f.exp}</span>
                         </div>
                         {f.email && <a href={`mailto:${f.email}`} className="fcard-email">{f.email}</a>}
                       </div>
