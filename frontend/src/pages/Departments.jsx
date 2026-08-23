@@ -140,19 +140,17 @@ function DepartmentsPage() {
 
           {/* Mobile sections list */}
           <ul className="dept-mobile-tabs">
-            {sidebarItems
-              .filter((item) => item.id !== 'curriculum')
-              .map((item) => (
-                <li key={item.id}>
-                  <button
-                    className={`dept-mobile-tab ${activeTab === item.id ? 'active' : ''}`}
-                    onClick={() => setActiveTab(item.id)}
-                  >
-                    <span className="arrow">→</span>
-                    {item.label}
-                  </button>
-                </li>
-              ))}
+            {sidebarItems.map((item) => (
+              <li key={item.id}>
+                <button
+                  className={`dept-mobile-tab ${activeTab === item.id ? 'active' : ''}`}
+                  onClick={() => setActiveTab(item.id)}
+                >
+                  <span className="arrow">→</span>
+                  {item.label}
+                </button>
+              </li>
+            ))}
           </ul>
         </aside>
 

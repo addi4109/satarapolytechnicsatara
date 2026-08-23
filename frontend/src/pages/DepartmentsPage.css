@@ -563,7 +563,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 13px 16px;
+    padding: 14px 16px;
     background: #fff;
     border: none;
     font-size: 14px;
@@ -576,15 +576,21 @@
 
   .dept-mobile-tab:hover {
     background: #f5f7fa;
+    color: #243358;
   }
 
   .dept-mobile-tab.active {
-    background: #f5f7fa;
-    color: #243358;
+    background: #243358;
+    color: #fff;
     font-weight: 700;
+  }
+
+  .dept-mobile-tab.active .arrow {
+    opacity: 1;
   }
 
   .dept-mobile-tab .arrow {
     opacity: 0.6;
+    font-size: 12px;
   }
 }
