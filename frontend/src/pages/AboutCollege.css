@@ -403,7 +403,7 @@
   background: #fff;
   border: 1px solid #e4e8ed;
   border-radius: 12px;
-  padding: 24px 16px 20px;
+  padding: 30px 16px 26px;
   text-align: center;
   transition: box-shadow 0.25s, transform 0.25s;
 }
@@ -414,25 +414,25 @@
 }
 
 .staff-card-photo {
-  width: 110px;
-  height: 110px;
+  width: 128px;
+  height: 128px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid #e4e8ed;
-  margin: 0 auto 14px;
+  margin: 0 auto 16px;
   display: block;
   background: #f0f3f8;
 }
 
 .staff-card-photo-placeholder {
-  width: 110px;
-  height: 110px;
+  width: 128px;
+  height: 128px;
   border-radius: 50%;
   border: 3px dashed #ccc;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 14px;
+  margin: 0 auto 16px;
   font-size: 12px;
   color: #aaa;
   background: #f8f9fa;
@@ -461,8 +461,8 @@
   }
   .staff-card-photo,
   .staff-card-photo-placeholder {
-    width: 90px;
-    height: 90px;
+    width: 104px;
+    height: 104px;
   }
 }
 
