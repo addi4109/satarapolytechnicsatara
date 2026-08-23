@@ -20,6 +20,7 @@ const defaultSection = {
   officerName: '',
   officerPhoto: '',
   officerQual: '',
+  officerMsg: '',
   officeTeam: [],
   active: true,
 };
@@ -76,6 +77,7 @@ function AdminPlacements() {
         officerName: existing.officerName || '',
         officerPhoto: existing.officerPhoto || '',
         officerQual: existing.officerQual || '',
+        officerMsg: existing.officerMsg || '',
         officeTeam: existing.officeTeam || [],
         active: existing.active !== false,
       });
@@ -266,22 +268,22 @@ function AdminPlacements() {
               <>
                 <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
                 <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Placement Officer</h4>
-                <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-                  <div style={{ textAlign: 'center' }}>
-                    <label style={{ fontSize: '12px', color: '#888', marginBottom: '4px', display: 'block' }}>Photo</label>
-                    <ImageUpload
-                      value={form.officerPhoto}
-                      onChange={(url) => handleChange('officerPhoto', url)}
-                    />
-                  </div>
-                  <div style={{ flex: 1, minWidth: '200px' }}>
+                <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+                  {/* Left: Photo, Name, Qualification */}
+                  <div style={{ flex: '0 0 auto', textAlign: 'center' }}>
+                    <div className="form-group">
+                      <label>Photo</label>
+                      <ImageUpload
+                        value={form.officerPhoto}
+                        onChange={(url) => handleChange('officerPhoto', url)}
+                      />
+                    </div>
                     <div className="form-group">
                       <label>Officer Name</label>
                       <input
                         type="text"
                         value={form.officerName}
-                        onChange={(e) => handleChange('officerName', e.target.value)}
-                        placeholder="e.g. Mr. Sunil Pawar"
+                        onChange={(e) => handleChange('officerName', e.target.value)}                        placeholder="e.g. Mr. Sunil Pawar"
                       />
                     </div>
                     <div className="form-group">
@@ -291,6 +293,19 @@ function AdminPlacements() {
                         value={form.officerQual}
                         onChange={(e) => handleChange('officerQual', e.target.value)}
                         placeholder="e.g. M.E. Mechanical"
+                      />
+                    </div>
+                  </div>
+                  {/* Right: Message */}
+                  <div style={{ flex: 1, minWidth: '280px' }}>
+                    <div className="form-group">
+                      <label>Message from Placement Officer</label>
+                      <textarea
+                        value={form.officerMsg}
+                        onChange={(e) => handleChange('officerMsg', e.target.value)}
+                        rows={8}
+                        placeholder="Write a message from the placement officer..."
+                        style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', resize: 'vertical', boxSizing: 'border-box' }}
                       />
                     </div>
                   </div>
@@ -475,6 +490,7 @@ function AdminPlacements() {
                       officerName: sections[activeTab].officerName || '',
                       officerPhoto: sections[activeTab].officerPhoto || '',
                       officerQual: sections[activeTab].officerQual || '',
+                      officerMsg: sections[activeTab].officerMsg || '',
                       officeTeam: sections[activeTab].officeTeam || [],
                       active: sections[activeTab].active !== false,
                     });

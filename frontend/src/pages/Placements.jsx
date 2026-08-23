@@ -135,18 +135,23 @@ function Placements() {
               {/* Placement Officer */}
               {(getSection('about').officerName || getSection('about').officerPhoto) && (
                 <div className="placement-officer-card">
-                  {getSection('about').officerPhoto && (
-                    <div className="placement-officer-photo">
-                      <img src={getSection('about').officerPhoto} alt={getSection('about').officerName} />
-                    </div>
-                  )}
-                  <div className="placement-officer-info">
+                  <div className="placement-officer-left">
+                    {getSection('about').officerPhoto && (
+                      <div className="placement-officer-photo">
+                        <img src={getSection('about').officerPhoto} alt={getSection('about').officerName} />
+                      </div>
+                    )}
                     <h4 className="placement-officer-name">{getSection('about').officerName}</h4>
                     <p className="placement-officer-designation">Placement Officer</p>
                     {getSection('about').officerQual && (
                       <p className="placement-officer-qual">{getSection('about').officerQual}</p>
                     )}
                   </div>
+                  {getSection('about').officerMsg && (
+                    <div className="placement-officer-msg">
+                      <p style={{ whiteSpace: 'pre-line' }}>{getSection('about').officerMsg}</p>
+                    </div>
+                  )}
                 </div>
               )}
 
