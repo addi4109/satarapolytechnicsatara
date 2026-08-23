@@ -470,6 +470,13 @@
   display: none;
 }
 
+/* Override global index.css sidebar hide for department page */
+@media (max-width: 1024px) {
+  .dept-page-layout .about-sidebar {
+    display: block !important;
+  }
+}
+
 /* Mobile responsive */
 @media (max-width: 768px) {
   .dept-page-layout {
