@@ -258,47 +258,58 @@ function AdminPlacements() {
             {/* Placement Officer - only for About section */}
             {activeTab === 'about' && (
               <>
-                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Placement Officer</h4>
-                <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-                  {/* Left: Photo, Name, Qualification */}
-                  <div style={{ flex: '0 0 auto', textAlign: 'center' }}>
-                    <div className="form-group">
-                      <label>Photo</label>
-                      <ImageUpload
-                        value={form.officerPhoto}
-                        onChange={(url) => handleChange('officerPhoto', url)}
-                      />
+                <div className="dept-form-card">
+                  <div className="dept-form-card-header">
+                    <div className="dept-form-card-icon">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                     </div>
-                    <div className="form-group">
-                      <label>Officer Name</label>
-                      <input
-                        type="text"
-                        value={form.officerName}
-                        onChange={(e) => handleChange('officerName', e.target.value)}                        placeholder="e.g. Mr. Sunil Pawar"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Qualification</label>
-                      <input
-                        type="text"
-                        value={form.officerQual}
-                        onChange={(e) => handleChange('officerQual', e.target.value)}
-                        placeholder="e.g. M.E. Mechanical"
-                      />
+                    <div>
+                      <h3>Placement Officer</h3>
+                      <p>Officer photo, name, qualification and message</p>
                     </div>
                   </div>
-                  {/* Right: Message */}
-                  <div style={{ flex: 1, minWidth: '280px' }}>
-                    <div className="form-group">
-                      <label>Message from Placement Officer</label>
-                      <textarea
-                        value={form.officerMsg}
-                        onChange={(e) => handleChange('officerMsg', e.target.value)}
-                        rows={8}
-                        placeholder="Write a message from the placement officer..."
-                        style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', resize: 'vertical', boxSizing: 'border-box' }}
-                      />
+                  <div className="dept-form-card-body">
+                    <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'stretch' }}>
+                      {/* Left: Photo, Name, Qualification */}
+                      <div style={{ flex: '0 0 240px', textAlign: 'center' }}>
+                        <div className="form-group">
+                          <label>Photo</label>
+                          <ImageUpload
+                            value={form.officerPhoto}
+                            onChange={(url) => handleChange('officerPhoto', url)}
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label>Officer Name</label>
+                          <input
+                            type="text"
+                            value={form.officerName}
+                            onChange={(e) => handleChange('officerName', e.target.value)}
+                            placeholder="e.g. Mr. Sunil Pawar"
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label>Qualification</label>
+                          <input
+                            type="text"
+                            value={form.officerQual}
+                            onChange={(e) => handleChange('officerQual', e.target.value)}
+                            placeholder="e.g. M.E. Mechanical"
+                          />
+                        </div>
+                      </div>
+                      {/* Right: Message */}
+                      <div style={{ flex: 1, minWidth: '280px', display: 'flex', flexDirection: 'column' }}>
+                        <div className="form-group" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                          <label>Message from Placement Officer</label>
+                          <textarea
+                            value={form.officerMsg}
+                            onChange={(e) => handleChange('officerMsg', e.target.value)}
+                            placeholder="Write a message from the placement officer..."
+                            style={{ flex: 1, width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', resize: 'vertical', boxSizing: 'border-box', minHeight: '180px' }}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
