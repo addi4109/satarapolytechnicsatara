@@ -205,9 +205,15 @@
 }
 
 @media (max-width: 768px) {
+  /* Compact footer for mobile only - desktop unchanged */
+  .footer-main {
+    padding: 26px 16px 16px;
+  }
+
   .footer-inner {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 14px;
+    text-align: center;
   }
 
   .footer-brand {
@@ -215,8 +221,26 @@
     text-align: center;
   }
 
-  .footer-social {
-    justify-content: center;
+  .footer-logo {
+    font-size: 22px;
+  }
+
+  .footer-desc {
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Hide the Departments column on mobile to keep the footer short */
+  .footer-links-group + .footer-links-group {
+    display: none;
+  }
+
+  .footer-heading {
+    margin-bottom: 10px;
+    padding-bottom: 7px;
   }
 
   .footer-heading::after {
@@ -224,9 +248,22 @@
     transform: translateX(-50%);
   }
 
+  /* Quick Links as compact inline row */
   .footer-list,
   .footer-contact {
     text-align: center;
+  }
+
+  .footer-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 16px;
+    row-gap: 4px;
+  }
+
+  .footer-list li {
+    margin-bottom: 0;
   }
 
   .footer-contact li {
@@ -235,8 +272,9 @@
 
   .footer-bottom-inner {
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     text-align: center;
+    padding: 12px 10px;
   }
 
   .footer-admin-link {
