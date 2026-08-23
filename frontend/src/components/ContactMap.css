@@ -1,0 +1,80 @@
+.contact-section {
+  background: #fff;
+  padding: 50px 20px;
+}
+
+.contact-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 50px;
+  align-items: stretch;
+}
+
+.contact-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.contact-name {
+  font-family: 'Georgia', serif;
+  font-size: 26px;
+  color: #243358;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.contact-society {
+  font-size: 14px;
+  color: #888;
+  margin: 4px 0 16px;
+}
+
+.contact-desc {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.75;
+  margin: 0 0 24px;
+}
+
+.contact-info {
+  margin-bottom: 16px;
+}
+
+.contact-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #243358;
+  margin: 0 0 4px;
+}
+
+.contact-detail {
+  font-size: 13.5px;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.contact-right {
+  flex: 1;
+  min-height: 300px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e4e8ed;
+}
+
+.contact-right iframe {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .contact-inner {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .contact-right {
+    min-height: 250px;
+  }
+}

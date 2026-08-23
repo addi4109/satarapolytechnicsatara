@@ -1,0 +1,18 @@
+{
+  "name": "sps-backend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node index.js",
+    "seed": "node seed.js",
+    "seed:departments": "node seed-departments.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dns2": "^3.1.1",
+    "dotenv": "^17.4.2",
+    "express": "^4.22.2",
+    "mongoose": "^9.9.3"
+  }
+}

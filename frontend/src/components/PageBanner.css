@@ -1,0 +1,39 @@
+.page-banner {
+  background: #243358;
+  padding: 28px 20px;
+  border-bottom: 3px solid #c8963e;
+}
+
+.page-banner-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-breadcrumb {
+  font-size: 13px;
+  color: #a8bde0;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.page-breadcrumb a {
+  color: #a8bde0;
+  text-decoration: none;
+}
+
+.page-breadcrumb a:hover {
+  color: #fff;
+}
+
+.page-breadcrumb .sep {
+  margin: 0 8px;
+  opacity: 0.5;
+}
+
+.page-title {
+  font-family: 'Georgia', serif;
+  font-size: 28px;
+  color: #fff;
+  font-weight: 700;
+  margin: 0;
+}

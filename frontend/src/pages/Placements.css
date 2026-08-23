@@ -1,0 +1,58 @@
+/* Reuse the shared about-layout, sidebar, content styles */
+@import './Academics.css';
+
+/* Override fee-table-wrap to remove outer border */
+.fee-table-wrap {
+  border: none;
+}
+
+/* Recruiters grid for the Our Recruiters page */
+.recruiters-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.recruiter-item {
+  background: #f5f7fa;
+  border: 1px solid #e4e8ed;
+  border-radius: 8px;
+  padding: 20px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.recruiter-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.recruiter-item-logo {
+  width: 100px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.recruiter-item-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #243358;
+}
+
+@media (max-width: 768px) {
+  .recruiters-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .recruiters-grid {
+    grid-template-columns: 1fr;
+  }
+}

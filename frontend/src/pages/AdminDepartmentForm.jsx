@@ -1,0 +1,523 @@
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import AdminLayout from './AdminLayout';
+import ImageUpload from '../components/ImageUpload';
+import PdfUpload from '../components/PdfUpload';
+import './Admin.css';
+
+const API_URL = '/api';
+
+const emptyForm = {
+  name: '',
+  slug: '',
+  image: '',
+  intake: 60,
+  directSecond: true,
+  about: '',
+  vision: '',
+  mission: '',
+  hod: '',
+  hodImage: '',
+  hodQual: '',
+  hodMsg: '',
+  faculty: [],
+  labs: [],
+  infrastructure: [],
+  curriculum: [],
+  order: 0,
+};
+
+const years = ['1st Year', '2nd Year', '3rd Year'];
+const semestersByYear = { '1st Year': [1, 2], '2nd Year': [3, 4], '3rd Year': [5, 6] };
+
+function getNextSemester(curriculum, year) {
+  const yearSems = curriculum.filter((c) => c.year === year);
+  return yearSems.length > 0 ? Math.max(...yearSems.map((c) => c.semester)) + 1 : (year === '1st Year' ? 1 : year === '2nd Year' ? 3 : 5);
+}
+
+function AdminDepartmentForm() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const isEdit = Boolean(id);
+
+  const [form, setForm] = useState(emptyForm);
+  const [loading, setLoading] = useState(isEdit);
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState(null);
+
+  useEffect(() => {
+    if (isEdit) fetchDept();
+  }, [id]);
+
+  const fetchDept = async () => {
+    try {
+      const res = await fetch(`${API_URL}/departments`);
+      const depts = await res.json();
+      const dept = depts.find((d) => d._id === id);
+      if (dept) {
+        setForm({
+          name: dept.name || '',
+          slug: dept.slug || '',
+          image: dept.image || '',
+          intake: dept.intake || 60,
+          directSecond: dept.directSecond ?? true,
+          about: dept.about || '',
+          vision: dept.vision || '',
+          mission: Array.isArray(dept.mission) ? dept.mission.join('\n') : '',
+          hod: dept.hod || '',
+          hodImage: dept.hodImage || '',
+          hodQual: dept.hodQual || '',
+          hodMsg: dept.hodMsg || '',
+          faculty: dept.faculty || [],
+          labs: dept.labs || [],
+          infrastructure: dept.infrastructure || [],
+          curriculum: dept.curriculum || [],
+          order: dept.order || 0,
+        });
+      } else {
+        setMessage({ type: 'error', text: 'Department not found' });
+      }
+    } catch (err) {
+      setMessage({ type: 'error', text: 'Failed to load department' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setForm((prev) => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+  };
+
+  const handleNameChange = (e) => {
+    const name = e.target.value;
+    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    setForm((prev) => ({ ...prev, name, slug }));
+  };
+
+  // Faculty management
+  const addFaculty = () => {
+    setForm((prev) => ({ ...prev, faculty: [...prev.faculty, { name: '', designation: '', qual: '', exp: '', email: '', image: '' }] }));
+  };
+  const updateFaculty = (idx, field, val) => {
+    setForm((prev) => {
+      const f = [...prev.faculty];
+      f[idx] = { ...f[idx], [field]: val };
+      return { ...prev, faculty: f };
+    });
+  };
+  const removeFaculty = (idx) => {
+    setForm((prev) => ({ ...prev, faculty: prev.faculty.filter((_, i) => i !== idx) }));
+  };
+
+  // Labs management
+  const addLab = () => {
+    setForm((prev) => ({ ...prev, labs: [...prev.labs, { name: '', image: '' }] }));
+  };
+  const updateLab = (idx, field, val) => {
+    setForm((prev) => {
+      const l = [...prev.labs];
+      l[idx] = { ...l[idx], [field]: val };
+      return { ...prev, labs: l };
+    });
+  };
+  const removeLab = (idx) => {
+    setForm((prev) => ({ ...prev, labs: prev.labs.filter((_, i) => i !== idx) }));
+  };
+
+  // Infrastructure management
+  const addInfra = () => {
+    setForm((prev) => ({ ...prev, infrastructure: [...prev.infrastructure, { name: '', image: '' }] }));
+  };
+  const updateInfra = (idx, field, val) => {
+    setForm((prev) => {
+      const l = [...prev.infrastructure];
+      l[idx] = { ...l[idx], [field]: val };
+      return { ...prev, infrastructure: l };
+    });
+  };
+  const removeInfra = (idx) => {
+    setForm((prev) => ({ ...prev, infrastructure: prev.infrastructure.filter((_, i) => i !== idx) }));
+  };
+
+  // Curriculum management
+  const addSubject = () => {
+    setForm((prev) => ({
+      ...prev,
+      curriculum: [...prev.curriculum, { year: '1st Year', semester: 1, name: '', url: '' }],
+    }));
+  };
+  const updateCurriculum = (idx, field, val) => {
+    setForm((prev) => {
+      const curr = [...prev.curriculum];
+      curr[idx] = { ...curr[idx], [field]: val };
+      if (field === 'year') {
+        curr[idx].semester = semestersByYear[val]?.[0] || 1;
+      }
+      return { ...prev, curriculum: curr };
+    });
+  };
+  const removeSubject = (idx) => {
+    setForm((prev) => ({ ...prev, curriculum: prev.curriculum.filter((_, i) => i !== idx) }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    setMessage(null);
+
+    try {
+      const url = isEdit ? `${API_URL}/departments/${id}` : `${API_URL}/departments`;
+      const method = isEdit ? 'PUT' : 'POST';
+
+      const data = {
+        ...form,
+        mission: form.mission.split('\n').filter((m) => m.trim()),
+        curriculum: form.curriculum.filter((s) => s.name.trim()),
+        faculty: form.faculty.filter((f) => f.name.trim()),
+        labs: form.labs.filter((l) => l.name.trim()),
+        infrastructure: form.infrastructure.filter((i) => i.name.trim()),
+      };
+
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        setMessage({ type: 'success', text: isEdit ? 'Department updated!' : 'Department created!' });
+        setTimeout(() => navigate('/admin/departments'), 1000);
+      } else {
+        const err = await res.json();
+        setMessage({ type: 'error', text: err.error || 'Failed to save' });
+      }
+    } catch (err) {
+      setMessage({ type: 'error', text: 'Network error. Is the server running?' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <AdminLayout>
+        <div className="admin-topbar"><h1>Loading...</h1></div>
+        <div className="admin-content"><p>Loading...</p></div>
+      </AdminLayout>
+    );
+  }
+
+  return (
+    <AdminLayout>
+      <div className="admin-topbar">
+        <h1>{isEdit ? 'Edit Department' : 'Add New Department'}</h1>
+      </div>
+      <div className="admin-content">
+        {message && (
+          <div className={`alert alert-${message.type}`}>
+            {message.text}
+            <button style={{ float: 'right', background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px', color: 'inherit' }} onClick={() => setMessage(null)}>x</button>
+          </div>
+        )}
+
+        {/* Live Preview */}
+        <div className="live-preview">
+          <div className="live-preview-header">Live Preview</div>
+          <div className="preview-cell-card">
+            {form.image && (
+              <div style={{ marginBottom: '12px', borderRadius: '6px', overflow: 'hidden', height: '160px' }}>
+                <img src={form.image} alt={form.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+            )}
+            <h3 className="preview-cell-name">{form.name || 'Department Name'}</h3>
+            <p className="preview-cell-desc">{form.about || 'About section will appear here...'}</p>
+            {form.hod && (
+              <div style={{ marginTop: '10px', padding: '10px', background: '#F2E5E8', borderRadius: '4px' }}>
+                <strong>HOD:</strong> {form.hod} {form.hodQual && `(${form.hodQual})`}
+              </div>
+            )}
+            <div style={{ display: 'flex', gap: '16px', marginTop: '10px', flexWrap: 'wrap' }}>
+              <span style={{ fontSize: '12px', color: '#666' }}>Intake: {form.intake}</span>
+              <span style={{ fontSize: '12px', color: '#666' }}>Faculty: {form.faculty.filter(f => f.name.trim()).length}</span>
+              <span style={{ fontSize: '12px', color: '#666' }}>Labs: {form.labs.filter(l => l.name.trim()).length}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Form */}
+        <form className="admin-form" onSubmit={handleSubmit}>
+          {/* Card 1: Basic Info */}
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              </div>
+              <div>
+                <h3>Basic Information</h3>
+                <p>Department name, image, and description</p>
+              </div>
+            </div>
+            <div className="dept-form-card-body">
+              <div className="form-group">
+                <label>Department Name *</label>
+                <input type="text" name="name" value={form.name} onChange={handleNameChange} placeholder="e.g. Computer Engineering" required />
+              </div>
+              <div className="form-group">
+                <label>Slug (auto-generated)</label>
+                <input type="text" name="slug" value={form.slug} onChange={handleChange} />
+              </div>
+              <div className="form-group">
+                <ImageUpload
+                  value={form.image}
+                  onChange={(url) => setForm((prev) => ({ ...prev, image: url }))}
+                  label="Department Image"
+                  placeholder="Upload department image..."
+                />
+              </div>
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Intake</label>
+                  <input type="number" name="intake" value={form.intake} onChange={handleChange} min={0} />
+                </div>
+                <div className="form-group">
+                  <label>Sort Order</label>
+                  <input type="number" name="order" value={form.order} onChange={handleChange} min={0} />
+                </div>
+              </div>
+              <div className="form-group">
+                <label>Direct 2nd Year Admission</label>
+                <div className="toggle-row">
+                  <button
+                    type="button"
+                    className={`toggle-switch ${form.directSecond ? 'active' : ''}`}
+                    onClick={() => setForm((prev) => ({ ...prev, directSecond: !prev.directSecond }))}
+                  >
+                    <span className="toggle-knob"></span>
+                  </button>
+                  <span className="toggle-label">{form.directSecond ? 'Available' : 'Not Available'}</span>
+                </div>
+              </div>
+              <div className="form-group">
+                <label>About</label>
+                <textarea name="about" value={form.about} onChange={handleChange} placeholder="About the department..." rows={4} />
+              </div>
+              <div className="form-group">
+                <label>Vision</label>
+                <textarea name="vision" value={form.vision} onChange={handleChange} placeholder="Department vision..." rows={2} />
+              </div>
+              <div className="form-group">
+                <label>Mission (one per line)</label>
+                <textarea name="mission" value={form.mission} onChange={handleChange} placeholder="Mission point 1\nMission point 2\nMission point 3" rows={4} />
+              </div>
+            </div>
+          </div>
+
+          {/* Card 2: HOD Details */}
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div>
+                <h3>HOD Details</h3>
+                <p>Head of Department information</p>
+              </div>
+            </div>
+            <div className="dept-form-card-body">
+              <div className="form-row">
+                <div className="form-group">
+                  <label>HOD Name</label>
+                  <input type="text" name="hod" value={form.hod} onChange={handleChange} placeholder="HOD name" />
+                </div>
+                <div className="form-group">
+                  <label>HOD Qualification</label>
+                  <input type="text" name="hodQual" value={form.hodQual} onChange={handleChange} placeholder="e.g. M.E. Computer" />
+                </div>
+              </div>
+              <div className="form-group" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <ImageUpload
+                  value={form.hodImage}
+                  onChange={(url) => setForm((prev) => ({ ...prev, hodImage: url }))}
+                  label="HOD Photo"
+                  placeholder="Upload HOD photo..."
+                  circle
+                />
+              </div>
+              <div className="form-group">
+                <label>HOD Message</label>
+                <textarea name="hodMsg" value={form.hodMsg} onChange={handleChange} placeholder="HOD's welcome message..." rows={3} />
+              </div>
+            </div>
+          </div>
+
+          {/* Card 3: Faculty Members */}
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div>
+                <h3>Faculty Members</h3>
+                <p>Add and manage faculty details</p>
+              </div>
+              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addFaculty}>+ Add Faculty</button>
+            </div>
+            <div className="dept-form-card-body">
+              {form.faculty.length === 0 ? (
+                <div className="members-empty">No faculty added yet. Click "+ Add Faculty" to add one.</div>
+              ) : (
+                <div className="faculty-cards-grid">
+                  {form.faculty.map((f, idx) => (
+                    <div key={idx} className="faculty-card">
+                      <button type="button" className="faculty-card-remove" onClick={() => removeFaculty(idx)} title="Remove">
+                        ✕
+                      </button>
+                      <div className="faculty-card-img">
+                        <ImageUpload
+                          value={f.image}
+                          onChange={(url) => updateFaculty(idx, 'image', url)}
+                          label=""
+                          placeholder="Photo"
+                          circle
+                        />
+                      </div>
+                      <div className="faculty-card-fields">
+                        <input type="text" placeholder="Name" value={f.name} onChange={(e) => updateFaculty(idx, 'name', e.target.value)} />
+                        <input type="text" placeholder="Designation" value={f.designation} onChange={(e) => updateFaculty(idx, 'designation', e.target.value)} />
+                        <input type="text" placeholder="Qualification" value={f.qual} onChange={(e) => updateFaculty(idx, 'qual', e.target.value)} />
+                        <input type="text" placeholder="Experience" value={f.exp} onChange={(e) => updateFaculty(idx, 'exp', e.target.value)} />
+                        <input type="text" placeholder="Email" value={f.email} onChange={(e) => updateFaculty(idx, 'email', e.target.value)} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Card 4: Laboratories */}
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 3h6v11l4 5H5l4-5V3z"/><line x1="9" y1="3" x2="15" y2="3"/></svg>
+              </div>
+              <div>
+                <h3>Laboratories</h3>
+                <p>Department lab facilities</p>
+              </div>
+              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addLab}>+ Add Lab</button>
+            </div>
+            <div className="dept-form-card-body">
+              {form.labs.length === 0 ? (
+                <div className="members-empty">No labs added yet. Click "+ Add Lab" to add one.</div>
+              ) : (
+                <div className="labs-items-grid">
+                  {form.labs.map((l, idx) => (
+                    <div key={idx} className="lab-item-card">
+                      <button type="button" className="lab-item-remove" onClick={() => removeLab(idx)} title="Remove">✕</button>
+                      <div className="lab-item-img">
+                        <ImageUpload
+                          value={l.image}
+                          onChange={(url) => updateLab(idx, 'image', url)}
+                          label=""
+                          placeholder="Lab photo"
+                        />
+                      </div>
+                      <input type="text" placeholder="Lab Name" value={l.name} onChange={(e) => updateLab(idx, 'name', e.target.value)} className="lab-item-input" />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Card 5: Infrastructure */}
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="6" width="22" height="12" rx="2" ry="2"/><line x1="1" y1="12" x2="23" y2="12"/></svg>
+              </div>
+              <div>
+                <h3>Infrastructure</h3>
+                <p>Facilities and equipment</p>
+              </div>
+              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addInfra}>+ Add Item</button>
+            </div>
+            <div className="dept-form-card-body">
+              {form.infrastructure.length === 0 ? (
+                <div className="members-empty">No infrastructure items added yet. Click "+ Add Item" to add one.</div>
+              ) : (
+                <div className="labs-items-grid">
+                  {form.infrastructure.map((item, idx) => (
+                    <div key={idx} className="lab-item-card">
+                      <button type="button" className="lab-item-remove" onClick={() => removeInfra(idx)} title="Remove">✕</button>
+                      <div className="lab-item-img">
+                        <ImageUpload
+                          value={item.image}
+                          onChange={(url) => updateInfra(idx, 'image', url)}
+                          label=""
+                          placeholder="Item photo"
+                        />
+                      </div>
+                      <input type="text" placeholder="Item Name" value={item.name} onChange={(e) => updateInfra(idx, 'name', e.target.value)} className="lab-item-input" />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Card 6: Curriculum / Syllabus */}
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
+              <div>
+                <h3>Curriculum / Syllabus</h3>
+                <p>Add subjects with a PDF link or website link</p>
+              </div>
+              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addSubject}>+ Add Subject</button>
+            </div>
+            <div className="dept-form-card-body">
+              {form.curriculum.length === 0 ? (
+                <div className="members-empty">No subjects added yet. Click "+ Add Subject" to add one.</div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {form.curriculum.map((item, idx) => (
+                    <div key={idx} className="curriculum-sem-card">
+                      <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+                        <select value={item.year} onChange={(e) => updateCurriculum(idx, 'year', e.target.value)} style={{ padding: '8px 10px', border: '1px solid #DDD7CA', borderRadius: '6px', fontSize: '13px', fontFamily: "'Times New Roman', Times, serif" }}>
+                          {years.map((y) => <option key={y} value={y}>{y}</option>)}
+                        </select>
+                        <select value={item.semester} onChange={(e) => updateCurriculum(idx, 'semester', Number(e.target.value))} style={{ padding: '8px 10px', border: '1px solid #DDD7CA', borderRadius: '6px', fontSize: '13px', fontFamily: "'Times New Roman', Times, serif" }}>
+                          {(semestersByYear[item.year] || [1, 2]).map((s) => <option key={s} value={s}>Sem {s}</option>)}
+                        </select>
+                        <input type="text" placeholder="Subject name" value={item.name} onChange={(e) => updateCurriculum(idx, 'name', e.target.value)} style={{ flex: 1, minWidth: '150px', padding: '8px 10px', border: '1px solid #DDD7CA', borderRadius: '6px', fontSize: '13px', fontFamily: "'Times New Roman', Times, serif" }} />
+                        <PdfUpload value={item.url} onChange={(url) => updateCurriculum(idx, 'url', url)} />
+                        <button type="button" className="btn btn-danger btn-sm" onClick={() => removeSubject(idx)}>✕</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Submit */}
+          <div className="dept-form-submit">
+            <button type="submit" className="btn btn-success" disabled={saving}>
+              {saving ? 'Saving...' : isEdit ? 'Update Department' : 'Create Department'}
+            </button>
+            <button type="button" className="btn btn-secondary" onClick={() => navigate('/admin/departments')}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </AdminLayout>
+  );
+}
+
+export default AdminDepartmentForm;
