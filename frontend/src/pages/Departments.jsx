@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import './DepartmentsPage.css';
 
 const API_URL = '/api';
 const years = ['1st Year', '2nd Year', '3rd Year'];
+const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum'];
 
 function DepartmentsPage() {
   const { deptId } = useParams();
-  const [activeTab, setActiveTab] = useState('about');
+  const [searchParams] = useSearchParams();
+  const tabParam = searchParams.get('tab');
+  const [activeTab, setActiveTab] = useState(
+    VALID_TABS.includes(tabParam) ? tabParam : 'about'
+  );
   const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,6 +22,11 @@ function DepartmentsPage() {
   useEffect(() => {
     fetchDepartments();
   }, []);
+
+  useEffect(() => {
+    const t = searchParams.get('tab');
+    if (t && VALID_TABS.includes(t)) setActiveTab(t);
+  }, [searchParams]);
 
   const fetchDepartments = async () => {
     try {
