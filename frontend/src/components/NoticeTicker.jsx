@@ -7,9 +7,9 @@ function NoticeTicker() {
   const [notices, setNotices] = useState([]);
 
   useEffect(() => {
-    fetch(`${API_URL}/notices`)
+    fetch(`${API_URL}/notices/tinker`)
       .then((res) => res.json())
-      .then((data) => setNotices(data.filter((n) => n.category !== 'tinker').map((n) => n.text)))
+      .then((data) => setNotices(data.map((n) => n.text || n.title)))
       .catch((err) => console.error('Failed to fetch notices:', err));
   }, []);
 

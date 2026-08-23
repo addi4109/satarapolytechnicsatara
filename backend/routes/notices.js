@@ -3,6 +3,15 @@ import Notice from '../models/Notice.js';
 
 const router = Router();
 
+router.get('/tinker', async (req, res) => {
+  try {
+    const items = await Notice.find({ active: true, category: 'tinker' }).sort({ order: 1, createdAt: -1 });
+    res.json(items);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 router.get('/', async (req, res) => {
   try {
     const { category } = req.query;
