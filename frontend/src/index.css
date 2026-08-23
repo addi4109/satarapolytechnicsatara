@@ -9,55 +9,9 @@ body {
   min-height: 100vh;
 }
 
-/* Public page sidebars become a compact horizontal top bar on small screens */
+/* Public page sidebars: only on large screens (laptop/desktop) */
 @media (max-width: 1024px) {
-  .about-layout {
-    flex-direction: column !important;
-  }
-
   .about-sidebar {
-    display: block !important;
-    width: 100% !important;
-    background: #243358;
-    padding: 10px 14px;
-  }
-
-  .about-sidebar .sidebar-heading,
-  .about-sidebar .arrow {
     display: none !important;
-  }
-
-  .about-sidebar .sidebar-list {
-    display: flex !important;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    gap: 8px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .about-sidebar .sidebar-list::-webkit-scrollbar {
-    display: none;
-  }
-
-  .about-sidebar .sidebar-link {
-    background: rgba(255, 255, 255, 0.08) !important;
-    color: #fff !important;
-    border: none;
-    white-space: nowrap;
-    padding: 6px 12px;
-    border-radius: 16px;
-    font-size: 14px;
-    cursor: pointer;
-    box-shadow: none !important;
-  }
-
-  .about-sidebar .sidebar-link.active {
-    background: #c8963e !important;
-    color: #fff !important;
-    font-weight: bold;
   }
 }

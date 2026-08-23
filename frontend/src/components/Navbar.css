@@ -346,8 +346,15 @@
     display: flex;
   }
 
+  /* Blue strip stays visible above the logo on mobile */
+  .top-strip-inner {
+    justify-content: center;
+    gap: 16px;
+    padding: 0 10px;
+  }
+
   .top-strip {
-    display: none;
+    font-size: 11px;
   }
 
   .nav-list {
