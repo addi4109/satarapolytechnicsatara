@@ -331,7 +331,7 @@ function AdminDepartmentForm() {
               </div>
               <div className="form-group">
                 <label>HOD Message</label>
-                <textarea name="hodMsg" value={form.hodMsg} onChange={handleChange} placeholder="HOD's welcome message..." rows={3} />
+                <textarea name="hodMsg" value={form.hodMsg} onChange={handleChange} placeholder="HOD's welcome message...\n(Use Enter for line breaks)" rows={5} />
               </div>
             </div>
           </div>

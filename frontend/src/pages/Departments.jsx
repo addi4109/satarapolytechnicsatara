@@ -326,7 +326,7 @@ function DepartmentsPage() {
                         "Welcome to the Department of {dept.name}. We are committed to
                         providing quality education and practical training to our students."
                       </p>
-                      <p>{dept.hodMsg}</p>
+                      <p style={{ whiteSpace: 'pre-line' }}>{dept.hodMsg}</p>
                       <p className="message-sign">
                         <strong>— {dept.hod}, Head of Department</strong>
                       </p>
