@@ -346,10 +346,10 @@
     display: flex;
   }
 
-  /* Blue strip stays visible above the logo on mobile */
+  /* Blue strip stays visible above the logo on mobile:
+     phone at left edge, email at right edge */
   .top-strip-inner {
-    justify-content: center;
-    gap: 16px;
+    justify-content: space-between;
     padding: 0 10px;
   }
 
