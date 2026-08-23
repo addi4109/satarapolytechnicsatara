@@ -6,7 +6,7 @@ const router = Router();
 router.get('/', async (req, res) => {
   try {
     const { category } = req.query;
-    const filter = { active: true };
+    const filter = { active: true, category: { $ne: 'tinker' } };
     if (category) filter.category = category;
     const items = await Notice.find(filter).sort({ order: 1, createdAt: -1 });
     res.json(items);

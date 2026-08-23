@@ -149,35 +149,57 @@ function AdminNotices() {
               <div className="dept-form-card-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14"/></svg>
               </div>
-              <div><h3>{editId ? 'Edit' : 'Add'} Notice</h3></div>
+              <div><h3>{editId ? 'Edit' : 'Add'} {activeTab === 'tinker' ? 'Tinker Notice' : 'Notice'}</h3></div>
             </div>
             <div className="dept-form-card-body">
               <form className="admin-form" onSubmit={handleSave}>
-                <div className="form-group">
-                  <label>Title *</label>
-                  <input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Notice title" required />
-                </div>
-                <div className="form-group">
-                  <label>Description *</label>
-                  <textarea value={form.text || ''} onChange={(e) => setForm({ ...form, text: e.target.value })} rows={3} placeholder="Notice description" required />
-                </div>
-                <div className="form-group">
-                  <label>Upload PDF (optional)</label>
-                  <PdfUpload value={form._uploadPdf || ''} onChange={(url) => setForm({ ...form, _uploadPdf: url })} />
-                </div>
-                <div className="form-group">
-                  <label>PDF Link (optional)</label>
-                  <input type="text" value={form._pdfLink || ''} onChange={(e) => setForm({ ...form, _pdfLink: e.target.value })} placeholder="https://example.com/notice.pdf" style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
-                </div>
-                <div className="form-group">
-                  <label>Status</label>
-                  <div className="toggle-row">
-                    <button type="button" className={`toggle-switch ${form.active !== false ? 'active' : ''}`} onClick={() => setForm({ ...form, active: form.active === false ? true : false })}>
-                      <span className="toggle-knob"></span>
-                    </button>
-                    <span className="toggle-label">{form.active !== false ? 'Active' : 'Inactive'}</span>
-                  </div>
-                </div>
+                {activeTab === 'tinker' ? (
+                  /* Tinker: only title field (one line) */
+                  <>
+                    <div className="form-group">
+                      <label>Notice Text *</label>
+                      <input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value, text: e.target.value })} placeholder="Enter notice text (one line)" required />
+                    </div>
+                    <div className="form-group">
+                      <label>Status</label>
+                      <div className="toggle-row">
+                        <button type="button" className={`toggle-switch ${form.active !== false ? 'active' : ''}`} onClick={() => setForm({ ...form, active: form.active === false ? true : false })}>
+                          <span className="toggle-knob"></span>
+                        </button>
+                        <span className="toggle-label">{form.active !== false ? 'Active' : 'Inactive'}</span>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  /* Regular notice: full form */
+                  <>
+                    <div className="form-group">
+                      <label>Title *</label>
+                      <input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Notice title" required />
+                    </div>
+                    <div className="form-group">
+                      <label>Description *</label>
+                      <textarea value={form.text || ''} onChange={(e) => setForm({ ...form, text: e.target.value })} rows={3} placeholder="Notice description" required />
+                    </div>
+                    <div className="form-group">
+                      <label>Upload PDF (optional)</label>
+                      <PdfUpload value={form._uploadPdf || ''} onChange={(url) => setForm({ ...form, _uploadPdf: url })} />
+                    </div>
+                    <div className="form-group">
+                      <label>PDF Link (optional)</label>
+                      <input type="text" value={form._pdfLink || ''} onChange={(e) => setForm({ ...form, _pdfLink: e.target.value })} placeholder="https://example.com/notice.pdf" style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
+                    </div>
+                    <div className="form-group">
+                      <label>Status</label>
+                      <div className="toggle-row">
+                        <button type="button" className={`toggle-switch ${form.active !== false ? 'active' : ''}`} onClick={() => setForm({ ...form, active: form.active === false ? true : false })}>
+                          <span className="toggle-knob"></span>
+                        </button>
+                        <span className="toggle-label">{form.active !== false ? 'Active' : 'Inactive'}</span>
+                      </div>
+                    </div>
+                  </>
+                )}
                 <div style={{ display: 'flex', gap: '10px', marginTop: '16px' }}>
                   <button type="submit" className="btn btn-success" disabled={saving}>{saving ? 'Saving...' : editId ? 'Update' : 'Add'}</button>
                   <button type="button" className="btn btn-secondary" onClick={cancelForm}>Cancel</button>
@@ -226,12 +248,12 @@ function AdminNotices() {
                         </td>
                         <td>
                           <div className="actions" style={{ justifyContent: 'center' }}>
-                            {notice.pdfUrl ? (
+                            {notice.category !== 'tinker' && notice.pdfUrl ? (
                               <a href={notice.pdfUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm" style={{ textDecoration: 'none' }}>View</a>
-                            ) : (
+                            ) : notice.category !== 'tinker' ? (
                               <button className="btn btn-primary btn-sm" onClick={() => openEdit(notice)}>View</button>
-                            )}
-                            {notice.pdfUrl && <a href={notice.pdfUrl} download className="btn btn-secondary btn-sm" style={{ textDecoration: 'none' }}>Download</a>}
+                            ) : null}
+                            {notice.category !== 'tinker' && notice.pdfUrl && <a href={notice.pdfUrl} download className="btn btn-secondary btn-sm" style={{ textDecoration: 'none' }}>Download</a>}
                             <button className="btn btn-primary btn-sm" onClick={() => openEdit(notice)}>Edit</button>
                             {deleteConfirm === notice._id ? (
                               <>
