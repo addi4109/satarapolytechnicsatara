@@ -232,20 +232,16 @@ function AdminActivities() {
     <div className="form-group">
       <label style={{ fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '6px' }}>Info Rows (Label - Value)</label>
       <p style={{ fontSize: '12px', color: '#888', margin: '0 0 10px' }}>Shown exactly like the live website — click a row to edit it.</p>
-      <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'stretch' }}>
-        {/* Add tile - always first */}
-        <div
-          onClick={addEmptyInfoRow}
-          title="Add Info Row"
-          style={{ width: '150px', boxSizing: 'border-box', minHeight: '104px', background: '#fff', border: '1px dashed #b9c3d4', borderRadius: '6px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '4px', cursor: 'pointer', color: '#243358' }}
-        >
-          <span style={{ fontSize: '28px', lineHeight: 1 }}>+</span>
-          <span style={{ fontSize: '12px', fontWeight: 600 }}>Add Row</span>
+      <div className="admin-info-table">
+        {/* Add Row - styled like a table row */}
+        <div className="admin-info-add" onClick={addEmptyInfoRow} title="Add Info Row">
+          + Add Row
         </div>
 
         {form.infoRows.map((row, i) => (
           editingInfoIdx === i ? (
-            <div key={i} style={{ width: '150px', boxSizing: 'border-box', background: '#fff', border: '1px solid #c8963e', borderRadius: '6px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            /* Editing mode - inline inputs inside the row */
+            <div key={i} className="admin-info-editing">
               <input
                 autoFocus
                 type="text"
@@ -253,7 +249,7 @@ function AdminActivities() {
                 onChange={(e) => updateInfoRow(i, 'label', e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && setEditingInfoIdx(null)}
                 placeholder="Label"
-                style={{ width: '100%', padding: '7px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '12px', boxSizing: 'border-box' }}
+                style={{ width: '100%', padding: '7px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '12.5px', boxSizing: 'border-box' }}
               />
               <input
                 type="text"
@@ -261,26 +257,22 @@ function AdminActivities() {
                 onChange={(e) => updateInfoRow(i, 'value', e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && setEditingInfoIdx(null)}
                 placeholder="Value"
-                style={{ width: '100%', padding: '7px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '12px', boxSizing: 'border-box' }}
+                style={{ width: '100%', padding: '7px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '12.5px', boxSizing: 'border-box' }}
               />
-              <button className="btn btn-success btn-sm" onClick={() => setEditingInfoIdx(null)} style={{ width: '100%' }}>Done</button>
+              <button className="btn btn-success btn-sm" onClick={() => setEditingInfoIdx(null)} style={{ alignSelf: 'flex-start' }}>Done</button>
             </div>
           ) : (
-            <div
-              key={i}
-              onClick={() => setEditingInfoIdx(i)}
-              title="Click to edit"
-              style={{ position: 'relative', width: '150px', boxSizing: 'border-box', background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '6px', padding: '14px 12px 12px', textAlign: 'center', cursor: 'pointer' }}
-            >
+            /* Display mode - same look as the live info table */
+            <div key={i} className="admin-info-row" onClick={() => setEditingInfoIdx(i)} title="Click to edit">
+              <span className="admin-info-label">{row.label || <em style={{ color: '#aaa' }}>Label</em>}</span>
+              <span className="admin-info-value">{row.value || <em style={{ color: '#aaa' }}>Value</em>}</span>
               <button
+                className="admin-info-remove"
                 onClick={(e) => { e.stopPropagation(); removeInfoRow(i); }}
                 title="Remove"
-                style={{ position: 'absolute', top: '6px', right: '6px', width: '20px', height: '20px', borderRadius: '50%', border: 'none', background: '#fdecea', color: '#d32f2f', fontSize: '12px', fontWeight: 700, lineHeight: 1, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}
               >
                 ×
               </button>
-              <span style={{ display: 'block', fontSize: '12.5px', fontWeight: 700, color: '#243358' }}>{row.label || <em style={{ color: '#aaa' }}>Label</em>}</span>
-              <span style={{ display: 'block', fontSize: '11.5px', color: '#777', marginTop: '4px' }}>{row.value || <em style={{ color: '#aaa' }}>Value</em>}</span>
             </div>
           )
         ))}
