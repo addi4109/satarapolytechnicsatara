@@ -132,6 +132,24 @@ function Placements() {
               <div className="content-line"></div>
               {renderContent(getSection('about').content || STATIC_CONTENT.placements.about)}
 
+              {/* Placement Officer */}
+              {(getSection('about').officerName || getSection('about').officerPhoto) && (
+                <div className="placement-officer-card">
+                  {getSection('about').officerPhoto && (
+                    <div className="placement-officer-photo">
+                      <img src={getSection('about').officerPhoto} alt={getSection('about').officerName} />
+                    </div>
+                  )}
+                  <div className="placement-officer-info">
+                    <h4 className="placement-officer-name">{getSection('about').officerName}</h4>
+                    <p className="placement-officer-designation">Placement Officer</p>
+                    {getSection('about').officerQual && (
+                      <p className="placement-officer-qual">{getSection('about').officerQual}</p>
+                    )}
+                  </div>
+                </div>
+              )}
+
               {/* Placement Cell Members from Cells & Committees */}
               {placementCell && placementCell.members && placementCell.members.length > 0 && (
                 <>

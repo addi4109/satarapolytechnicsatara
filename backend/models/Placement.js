@@ -28,6 +28,9 @@ const PlacementSchema = new mongoose.Schema({
     type: [{ name: String, logoUrl: String }],
     default: [],
   },
+  officerName: { type: String, default: '' },
+  officerPhoto: { type: String, default: '' },
+  officerQual: { type: String, default: '' },
   active: {
     type: Boolean,
     default: true,

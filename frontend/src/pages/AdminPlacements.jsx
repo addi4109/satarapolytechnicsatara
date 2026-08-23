@@ -17,6 +17,9 @@ const defaultSection = {
   steps: [],
   records: [],
   recruiters: [],
+  officerName: '',
+  officerPhoto: '',
+  officerQual: '',
   active: true,
 };
 
@@ -68,6 +71,9 @@ function AdminPlacements() {
         steps: existing.steps || [],
         records: existing.records || [],
         recruiters: existing.recruiters || [],
+        officerName: existing.officerName || '',
+        officerPhoto: existing.officerPhoto || '',
+        officerQual: existing.officerQual || '',
         active: existing.active !== false,
       });
     } else {
@@ -237,6 +243,43 @@ function AdminPlacements() {
               />
             </div>
 
+            {/* Placement Officer - only for About section */}
+            {activeTab === 'about' && (
+              <>
+                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
+                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Placement Officer</h4>
+                <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <label style={{ fontSize: '12px', color: '#888', marginBottom: '4px', display: 'block' }}>Photo</label>
+                    <ImageUpload
+                      value={form.officerPhoto}
+                      onChange={(url) => handleChange('officerPhoto', url)}
+                    />
+                  </div>
+                  <div style={{ flex: 1, minWidth: '200px' }}>
+                    <div className="form-group">
+                      <label>Officer Name</label>
+                      <input
+                        type="text"
+                        value={form.officerName}
+                        onChange={(e) => handleChange('officerName', e.target.value)}
+                        placeholder="e.g. Mr. Sunil Pawar"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label>Qualification</label>
+                      <input
+                        type="text"
+                        value={form.officerQual}
+                        onChange={(e) => handleChange('officerQual', e.target.value)}
+                        placeholder="e.g. M.E. Mechanical"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+
             {/* Process - Steps */}
             {activeTab === 'process' && (
               <>
@@ -353,6 +396,9 @@ function AdminPlacements() {
                       steps: sections[activeTab].steps || [],
                       records: sections[activeTab].records || [],
                       recruiters: sections[activeTab].recruiters || [],
+                      officerName: sections[activeTab].officerName || '',
+                      officerPhoto: sections[activeTab].officerPhoto || '',
+                      officerQual: sections[activeTab].officerQual || '',
                       active: sections[activeTab].active !== false,
                     });
                   } else {
