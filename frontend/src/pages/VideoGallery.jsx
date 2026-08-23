@@ -10,6 +10,10 @@ function getYouTubeEmbed(url) {
   return match ? `https://www.youtube.com/embed/${match[1]}` : '';
 }
 
+function isYouTube(url) {
+  return !!getYouTubeEmbed(url);
+}
+
 function VideoGallery() {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -56,13 +60,23 @@ function VideoGallery() {
               <div className="video-card" key={video._id}>
                 <div className="video-thumb">
                   {playing === video._id ? (
-                    <iframe
-                      src={getYouTubeEmbed(video.videoUrl)}
-                      style={{ width: '100%', height: '100%', border: 'none' }}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      title={video.title}
-                    />
+                    isYouTube(video.videoUrl) ? (
+                      <iframe
+                        src={getYouTubeEmbed(video.videoUrl)}
+                        style={{ width: '100%', height: '100%', border: 'none' }}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        title={video.title}
+                      />
+                    ) : (
+                      <video
+                        src={video.videoUrl}
+                        controls
+                        autoPlay
+                        style={{ width: '100%', height: '100%', background: '#000', border: 'none' }}
+                        title={video.title}
+                      />
+                    )
                   ) : (
                     <div
                       className="video-placeholder"

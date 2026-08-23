@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import ImageUpload from '../components/ImageUpload';
+import VideoUpload from '../components/VideoUpload';
 import './Admin.css';
 
 const API_URL = '/api';
@@ -166,9 +167,9 @@ function AdminGallery() {
                 {/* Video fields */}
                 {tab === 'videos' && <>
                   <div className="form-group"><label>Title *</label><input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} required /></div>
-                  <div className="form-group"><label>YouTube URL *</label><input type="text" value={form.videoUrl || ''} onChange={(e) => setForm({ ...form, videoUrl: e.target.value })} placeholder="https://www.youtube.com/watch?v=..." required /></div>
+                  <div className="form-group"><VideoUpload value={form.videoUrl || ''} onChange={(url) => setForm({ ...form, videoUrl: url })} label="Video (upload, drag &amp; drop, or paste URL) *" placeholder="Upload video..." /></div>
                   <div className="form-row">
-                    <div className="form-group"><label>Thumbnail URL</label><input type="text" value={form.thumbnail || ''} onChange={(e) => setForm({ ...form, thumbnail: e.target.value })} placeholder="https://..." /></div>
+                    <div className="form-group"><ImageUpload value={form.thumbnail || ''} onChange={(url) => setForm({ ...form, thumbnail: url })} label="Thumbnail (optional)" placeholder="Upload thumbnail..." /></div>
                     <div className="form-group"><label>Order</label><input type="number" value={form.order || 0} onChange={(e) => setForm({ ...form, order: Number(e.target.value) })} min={0} /></div>
                   </div>
                   <div className="form-group"><label>Description</label><textarea value={form.description || ''} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} /></div>
