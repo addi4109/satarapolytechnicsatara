@@ -215,6 +215,42 @@ function AdminManagement() {
   const activeEntry = entries[activeTab];
   const currentRole = ROLES.find((r) => r.key === activeTab);
 
+  const gbFormFields = (
+    <>
+      <div style={{ textAlign: 'center', marginBottom: '14px' }}>
+        <ImageUpload
+          value={gbForm.photoUrl}
+          onChange={(url) => setGbForm({ ...gbForm, photoUrl: url })}
+          circle
+        />
+      </div>
+      <input
+        type="text"
+        className="gb-member-input"
+        value={gbForm.name}
+        onChange={(e) => setGbForm({ ...gbForm, name: e.target.value })}
+        placeholder="Name"
+        required
+      />
+      <input
+        type="text"
+        className="gb-member-input"
+        value={gbForm.designation}
+        onChange={(e) => setGbForm({ ...gbForm, designation: e.target.value })}
+        placeholder="Designation"
+        required
+      />
+      <input
+        type="number"
+        className="gb-member-input"
+        value={gbForm.order}
+        onChange={(e) => setGbForm({ ...gbForm, order: Number(e.target.value) })}
+        placeholder="Display Order (e.g. 1, 2, 3)"
+        min="0"
+      />
+    </>
+  );
+
   if (loading) {
     return (
       <AdminLayout>
@@ -276,188 +312,75 @@ function AdminManagement() {
                 <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
               ) : (
                 <>
-                  {/* Add Button */}
-                  {!showGbForm && (
-                    <div style={{ marginBottom: '16px' }}>
-                      <button className="btn btn-success" onClick={openAddGb}>+ Add Member</button>
+                  {/* Add / Close Button */}
+                  <div style={{ marginBottom: '16px' }}>
+                    <button
+                      className={`btn ${showGbForm && !editGbId ? 'btn-secondary' : 'btn-success'}`}
+                      onClick={() => (showGbForm && !editGbId ? cancelGbForm() : openAddGb())}
+                    >
+                      {showGbForm && !editGbId ? 'Close Form' : '+ Add Member'}
+                    </button>
+                  </div>
+
+                  {/* Empty State */}
+                  {gbMembers.length === 0 && !showGbForm && (
+                    <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+                      <p style={{ color: '#888', marginBottom: '16px' }}>No governing body members yet.</p>
+                      <button className="btn btn-success" onClick={openAddGb}>Add First Member</button>
                     </div>
                   )}
 
-                  {/* Card-style Form */}
-                  {showGbForm && (
-                    <div style={{ display: 'flex', justifyContent: 'center', padding: '10px 0' }}>
-                      <div style={{
-                        background: '#fff',
-                        border: '1px solid #e0e0e0',
-                        borderRadius: '16px',
-                        padding: '32px 28px 28px',
-                        width: '320px',
-                        position: 'relative',
-                        boxShadow: '0 2px 16px rgba(0,0,0,0.07)',
-                      }}>
-                        {/* Close Button */}
-                        <button
-                          onClick={cancelGbForm}
-                          style={{
-                            position: 'absolute',
-                            top: '14px',
-                            right: '14px',
-                            width: '28px',
-                            height: '28px',
-                            borderRadius: '50%',
-                            border: 'none',
-                            background: '#fdecea',
-                            color: '#d32f2f',
-                            fontSize: '16px',
-                            fontWeight: '600',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            lineHeight: 1,
-                          }}
-                        >
-                          ×
-                        </button>
+                  {/* Members Cards (inline editing) */}
+                  <div className="gb-cards-grid">
+                    {/* Inline Add Form */}
+                    {showGbForm && !editGbId && (
+                      <form className="gb-member-card gb-member-editing" onSubmit={handleGbSave}>
+                        {gbFormFields}
+                        <div className="gb-member-actions">
+                          <button type="submit" className="btn btn-success btn-sm" disabled={gbSaving}>
+                            {gbSaving ? 'Saving...' : 'Add Member'}
+                          </button>
+                          <button type="button" className="btn btn-secondary btn-sm" onClick={cancelGbForm}>Cancel</button>
+                        </div>
+                      </form>
+                    )}
 
-                        <form onSubmit={handleGbSave}>
-                          {/* Circular Photo Upload */}
-                          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                            <ImageUpload
-                              value={gbForm.photoUrl}
-                              onChange={(url) => setGbForm({ ...gbForm, photoUrl: url })}
-                              circle
-                            />
-                          </div>
-
-                          {/* Fields */}
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                            <input
-                              type="text"
-                              value={gbForm.name}
-                              onChange={(e) => setGbForm({ ...gbForm, name: e.target.value })}
-                              placeholder="Name"
-                              required
-                              style={{
-                                width: '100%',
-                                padding: '12px 16px',
-                                border: '1px solid #e0e0e0',
-                                borderRadius: '10px',
-                                fontSize: '14px',
-                                color: '#333',
-                                boxSizing: 'border-box',
-                                outline: 'none',
-                                background: '#fafafa',
-                              }}
-                            />
-                            <input
-                              type="text"
-                              value={gbForm.designation}
-                              onChange={(e) => setGbForm({ ...gbForm, designation: e.target.value })}
-                              placeholder="Designation"
-                              required
-                              style={{
-                                width: '100%',
-                                padding: '12px 16px',
-                                border: '1px solid #e0e0e0',
-                                borderRadius: '10px',
-                                fontSize: '14px',
-                                color: '#333',
-                                boxSizing: 'border-box',
-                                outline: 'none',
-                                background: '#fafafa',
-                              }}
-                            />
-
-                          </div>
-
-                          {/* Actions */}
-                          <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-                            <button
-                              type="submit"
-                              className="btn btn-success"
-                              disabled={gbSaving}
-                              style={{ flex: 1, padding: '10px 0', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                              {gbSaving ? 'Saving...' : editGbId ? 'Update' : 'Add'}
+                    {gbMembers.map((member) =>
+                      editGbId === member._id ? (
+                        <form key={member._id} className="gb-member-card gb-member-editing" onSubmit={handleGbSave}>
+                          {gbFormFields}
+                          <div className="gb-member-actions">
+                            <button type="submit" className="btn btn-success btn-sm" disabled={gbSaving}>
+                              {gbSaving ? 'Saving...' : 'Update'}
                             </button>
-                            <button
-                              type="button"
-                              className="btn btn-secondary"
-                              onClick={cancelGbForm}
-                              style={{ flex: 1, padding: '10px 0', fontSize: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                            >
-                              Cancel
-                            </button>
+                            <button type="button" className="btn btn-secondary btn-sm" onClick={cancelGbForm}>Cancel</button>
                           </div>
                         </form>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Members Table */}
-                  {!showGbForm && (
-                    gbMembers.length === 0 ? (
-                      <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-                        <p style={{ color: '#888', marginBottom: '16px' }}>No governing body members yet.</p>
-                        <button className="btn btn-success" onClick={openAddGb}>Add First Member</button>
-                      </div>
-                    ) : (
-                      <div className="admin-card">
-                        <div className="admin-card-header">
-                          <h3>All Members ({gbMembers.length})</h3>
+                      ) : (
+                        <div key={member._id} className="gb-member-card">
+                          <span className="gb-member-order">#{member.order ?? 0}</span>
+                          {member.photoUrl ? (
+                            <img src={member.photoUrl} alt={member.name} className="gb-member-photo" />
+                          ) : (
+                            <div className="gb-member-photo gb-member-photo-empty">No Photo</div>
+                          )}
+                          <h3 className="gb-member-name">{member.name}</h3>
+                          <p className="gb-member-designation">{member.designation}</p>
+                          <div className="gb-member-actions">
+                            <button className="btn btn-primary btn-sm" onClick={() => openEditGb(member)}>Edit</button>
+                            {deleteConfirm === member._id ? (
+                              <>
+                                <button className="btn btn-danger btn-sm" onClick={() => handleGbDelete(member._id)}>Yes</button>
+                                <button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirm(null)}>No</button>
+                              </>
+                            ) : (
+                              <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirm(member._id)}>Del</button>
+                            )}
+                          </div>
                         </div>
-                        <div style={{ overflowX: 'auto' }}>
-                          <table className="admin-table">
-                            <thead>
-                              <tr>
-                                <th style={{ width: '50px', textAlign: 'center' }}>#</th>
-                                <th style={{ width: '80px', textAlign: 'center' }}>Photo</th>
-                                <th>Name</th>
-                                <th>Designation</th>
-                                <th style={{ width: '80px', textAlign: 'center' }}>Order</th>
-                                <th style={{ width: '80px', textAlign: 'center' }}>Status</th>
-                                <th style={{ width: '200px', textAlign: 'center' }}>Actions</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {gbMembers.map((member, index) => (
-                                <tr key={member._id}>
-                                  <td style={{ textAlign: 'center', fontWeight: '600', color: '#243358' }}>{index + 1}</td>
-                                  <td style={{ textAlign: 'center' }}>
-                                    {member.photoUrl ? (
-                                      <img src={member.photoUrl} alt={member.name} style={{ width: '45px', height: '45px', objectFit: 'cover', borderRadius: '50%', border: '2px solid #e4e8ed' }} />
-                                    ) : (
-                                      <div style={{ width: '45px', height: '45px', background: '#f0f3f8', borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', color: '#aaa' }}>N/A</div>
-                                    )}
-                                  </td>
-                                  <td style={{ fontWeight: '500', color: '#333' }}>{member.name}</td>
-                                  <td style={{ color: '#555' }}>{member.designation}</td>
-                                  <td style={{ textAlign: 'center', color: '#888' }}>{member.order}</td>
-                                  <td style={{ textAlign: 'center' }}>
-                                    <span className={`badge ${member.active ? 'badge-cell' : 'badge-committee'}`}>{member.active ? 'On' : 'Off'}</span>
-                                  </td>
-                                  <td>
-                                    <div className="actions" style={{ justifyContent: 'center' }}>
-                                      <button className="btn btn-primary btn-sm" onClick={() => openEditGb(member)}>Edit</button>
-                                      {deleteConfirm === member._id ? (
-                                        <>
-                                          <button className="btn btn-danger btn-sm" onClick={() => handleGbDelete(member._id)}>Yes</button>
-                                          <button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirm(null)}>No</button>
-                                        </>
-                                      ) : (
-                                        <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirm(member._id)}>Del</button>
-                                      )}
-                                    </div>
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    )
-                  )}
+                      )
+                    )}
+                  </div>
                 </>
               )}
             </div>
