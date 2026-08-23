@@ -433,7 +433,7 @@
   }
 
   .dropdown-multi.show {
-    max-height: 2000px;
+    max-height: 800px;
   }
 
   .dropdown-col {
@@ -487,61 +487,5 @@
   .address-line,
   .affiliation-line {
     font-size: 11px;
-  }
-}
-
-/* ===== department tab sub-drawer (mobile only) ===== */
-.dept-nav-expand,
-.dept-tab-sublist {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .dept-nav-row {
-    display: flex;
-    align-items: center;
-  }
-
-  .dept-nav-row > a {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .dept-nav-expand {
-    display: block;
-    background: none;
-    border: none;
-    color: #a8bde0;
-    font-size: 11px;
-    padding: 8px 14px;
-    cursor: pointer;
-  }
-
-  .dept-tab-sublist {
-    display: block;
-    list-style: none;
-    margin: 0;
-    padding: 0 0 6px;
-    background: rgba(0, 0, 0, 0.15);
-  }
-
-  .dept-tab-sublist li a {
-    display: block;
-    color: #9fb3d4;
-    text-decoration: none;
-    font-size: 11.5px;
-    padding: 5px 20px 5px 48px;
-    transition: background 0.1s;
-  }
-
-  .dept-tab-sublist li a:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
-  }
-
-  .dept-tab-sublist li a .arrow {
-    font-size: 9px;
-    opacity: 0.6;
-    margin-right: 6px;
   }
 }

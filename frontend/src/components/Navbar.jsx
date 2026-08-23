@@ -3,20 +3,10 @@ import './Navbar.css';
 
 const API_URL = '/api';
 
-const DEPT_TABS = [
-  { id: 'about', label: 'About' },
-  { id: 'vision', label: 'Vision & Mission' },
-  { id: 'hod', label: 'HOD Desk' },
-  { id: 'faculty', label: 'Faculty' },
-  { id: 'infrastructure', label: 'Infrastructure' },
-  { id: 'curriculum', label: 'Curriculum / Syllabus' },
-];
-
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState(null);
-  const [expandedDept, setExpandedDept] = useState(null);
   const [dbCells, setDbCells] = useState([]);
   const [dbDepts, setDbDepts] = useState([]);
 
@@ -71,7 +61,6 @@ function Navbar() {
           items: dbDepts.map((d) => ({
             label: d.name,
             link: `/departments/${d.slug}`,
-            slug: d.slug,
           })),
         },
         {
@@ -230,7 +219,6 @@ function Navbar() {
             onClick={() => {
               setMobileOpen(!mobileOpen);
               setMobileExpanded(null);
-              setExpandedDept(null);
             }}
             aria-label="Toggle menu"
           >
@@ -267,54 +255,13 @@ function Navbar() {
                         <div className="dropdown-col" key={cIdx}>
                           <span className="dropdown-col-header">{col.header}</span>
                           <ul className="dropdown-col-list">
-                            {col.items.map((child, iIdx) =>
-                              col.header === 'Departments' && child.slug ? (
-                                <li key={iIdx} className="dept-nav-item">
-                                  <div className="dept-nav-row">
-                                    <a
-                                      href={`/departments/${child.slug}`}
-                                      onClick={() => setMobileOpen(false)}
-                                    >
-                                      {child.label}
-                                    </a>
-                                    <button
-                                      type="button"
-                                      className="dept-nav-expand"
-                                      aria-label={`${expandedDept === child.slug ? 'Hide' : 'Show'} sections for ${child.label}`}
-                                      onClick={() =>
-                                        setExpandedDept(expandedDept === child.slug ? null : child.slug)
-                                      }
-                                    >
-                                      {expandedDept === child.slug ? '▴' : '▾'}
-                                    </button>
-                                  </div>
-                                  {expandedDept === child.slug && (
-                                    <ul className="dept-tab-sublist">
-                                      {DEPT_TABS.map((tab) => (
-                                        <li key={tab.id}>
-                                          <a
-                                            href={`/departments/${child.slug}?tab=${tab.id}`}
-                                            onClick={() => {
-                                              setMobileOpen(false);
-                                              setExpandedDept(null);
-                                            }}
-                                          >
-                                            <span className="arrow">→</span>
-                                            {tab.label}
-                                          </a>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  )}
-                                </li>
-                              ) : (
-                                <li key={iIdx}>
-                                  <a href={child.link} onClick={() => setMobileOpen(false)}>
-                                    {child.label}
-                                  </a>
-                                </li>
-                              )
-                            )}
+                            {col.items.map((child, iIdx) => (
+                              <li key={iIdx}>
+                                <a href={child.link} onClick={() => setMobileOpen(false)}>
+                                  {child.label}
+                                </a>
+                              </li>
+                            ))}
                           </ul>
                         </div>
                       ))}
