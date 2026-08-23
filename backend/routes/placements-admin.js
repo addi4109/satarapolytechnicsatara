@@ -27,7 +27,7 @@ router.get('/:section', async (req, res) => {
 // Create or update section
 router.post('/', async (req, res) => {
   try {
-    const { section, title, content, steps, records, recruiters, active } = req.body;
+    const { section, title, content, steps, records, recruiters, officerName, officerPhoto, officerQual, officerMsg, officeTeam, active } = req.body;
 
     if (!section) {
       return res.status(400).json({ error: 'Section is required' });
@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
 
     const entry = await Placement.findOneAndUpdate(
       { section },
-      { section, title, content, steps, records, recruiters, active },
+      { section, title, content, steps, records, recruiters, officerName, officerPhoto, officerQual, officerMsg, officeTeam, active },
       { new: true, upsert: true }
     );
 
