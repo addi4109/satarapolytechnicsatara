@@ -24,8 +24,13 @@ function AdminNotices() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState(null);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
+  const [activeTab, setActiveTab] = useState('notices');
 
   useEffect(() => { fetchNotices(); }, []);
+
+  const filteredNotices = notices.filter((n) =>
+    activeTab === 'notices' ? n.category !== 'tinker' : n.category === 'tinker'
+  );
 
   const fetchNotices = async () => {
     setLoading(true);
@@ -42,7 +47,7 @@ function AdminNotices() {
 
   const openAdd = () => {
     setEditId(null);
-    setForm({ ...emptyNotice });
+    setForm({ ...emptyNotice, category: activeTab === 'tinker' ? 'tinker' : 'general' });
     setShowForm(true);
   };
 
@@ -119,6 +124,24 @@ function AdminNotices() {
           </div>
         )}
 
+        {/* Sub-tabs */}
+        <div style={{ display: 'flex', gap: '4px', marginBottom: '20px', background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '4px', flexWrap: 'wrap' }}>
+          <button
+            className={`gallery-tab ${activeTab === 'notices' ? 'active' : ''}`}
+            onClick={() => { setActiveTab('notices'); setShowForm(false); }}
+          >
+            Notices
+            <span className="gallery-tab-count" style={{ fontSize: '10px' }}>{notices.filter((n) => n.category !== 'tinker').length}</span>
+          </button>
+          <button
+            className={`gallery-tab ${activeTab === 'tinker' ? 'active' : ''}`}
+            onClick={() => { setActiveTab('tinker'); setShowForm(false); }}
+          >
+            Notice Tinker
+            <span className="gallery-tab-count" style={{ fontSize: '10px' }}>{notices.filter((n) => n.category === 'tinker').length}</span>
+          </button>
+        </div>
+
         {/* Inline Form */}
         {showForm && (
           <div className="dept-form-card" style={{ marginBottom: '24px' }}>
@@ -168,7 +191,7 @@ function AdminNotices() {
         {!showForm && (
           loading ? (
             <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
-          ) : notices.length === 0 ? (
+          ) : filteredNotices.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '40px 20px' }}>
               <p style={{ color: '#888', marginBottom: '16px' }}>No notices yet.</p>
               <button className="btn btn-success" onClick={openAdd}>Add First Notice</button>
@@ -176,7 +199,7 @@ function AdminNotices() {
           ) : (
             <div className="admin-card">
               <div className="admin-card-header">
-                <h3>All Notices ({notices.length})</h3>
+                <h3>{activeTab === 'tinker' ? 'Notice Tinker' : 'All Notices'} ({filteredNotices.length})</h3>
               </div>
               <div style={{ overflowX: 'auto' }}>
                 <table className="admin-table">
@@ -190,7 +213,7 @@ function AdminNotices() {
                     </tr>
                   </thead>
                   <tbody>
-                    {notices.map((notice, index) => (
+                    {filteredNotices.map((notice, index) => (
                       <tr key={notice._id}>
                         <td style={{ textAlign: 'center', fontWeight: '600', color: '#243358' }}>{index + 1}</td>
                         <td>

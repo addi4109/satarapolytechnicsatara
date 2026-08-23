@@ -7,7 +7,7 @@ const noticeSchema = new mongoose.Schema(
     category: {
       type: String,
       required: true,
-      enum: ['admission', 'examination', 'academic', 'placement', 'scholarship', 'department', 'circulars', 'general'],
+      enum: ['admission', 'examination', 'academic', 'placement', 'scholarship', 'department', 'circulars', 'general', 'tinker'],
       default: 'general'
     },
     pdfUrl: { type: String, default: '' },

@@ -16,7 +16,7 @@ function Notices() {
     try {
       const res = await fetch(`${API_URL}/notices`);
       const data = await res.json();
-      setNotices(data);
+      setNotices(data.filter((n) => n.category !== 'tinker'));
     } catch (err) {
       console.error('Failed to fetch notices:', err);
     } finally {
