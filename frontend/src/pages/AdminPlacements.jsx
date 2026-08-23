@@ -42,9 +42,6 @@ function AdminPlacements() {
   const [newRecPlaced, setNewRecPlaced] = useState('');
   const [newRecCompanies, setNewRecCompanies] = useState('');
 
-  // Recruiter states
-  const [newRecruiterName, setNewRecruiterName] = useState('');
-  const [newRecruiterLogo, setNewRecruiterLogo] = useState('');
 
 
   useEffect(() => {
@@ -94,8 +91,6 @@ function AdminPlacements() {
     setNewRecYear('');
     setNewRecPlaced('');
     setNewRecCompanies('');
-    setNewRecruiterName('');
-    setNewRecruiterLogo('');
   };
 
   const handleChange = (field, value) => {
@@ -165,10 +160,7 @@ function AdminPlacements() {
 
   // Recruiter helpers
   const addRecruiter = () => {
-    if (!newRecruiterName.trim()) return;
-    handleChange('recruiters', [...form.recruiters, { name: newRecruiterName.trim(), logoUrl: newRecruiterLogo }]);
-    setNewRecruiterName('');
-    setNewRecruiterLogo('');
+    handleChange('recruiters', [...form.recruiters, { name: '', logoUrl: '' }]);
   };
 
   const removeRecruiter = (index) => {
@@ -440,35 +432,41 @@ function AdminPlacements() {
             {activeTab === 'recruiters' && (
               <>
                 <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Add Recruiter</h4>
-                <div style={{ background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '20px', marginBottom: '16px', display: 'inline-block' }}>
-                  <div style={{ textAlign: 'center' }}>
-                    <label style={{ fontSize: '12px', color: '#888', marginBottom: '4px', display: 'block' }}>Logo</label>
-                    <ImageUpload value={newRecruiterLogo} onChange={(url) => setNewRecruiterLogo(url)} />
+                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Our Recruiters</h4>
+                <div className="faculty-cards-grid">
+                  {/* Add new recruiter card first */}
+                  <div className="faculty-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', borderStyle: 'dashed', minHeight: '180px' }} onClick={addRecruiter}>
+                    <div style={{ fontSize: '36px', color: '#bbb', marginBottom: '8px' }}>+</div>
+                    <p style={{ margin: 0, color: '#999', fontSize: '13px' }}>Add Recruiter</p>
                   </div>
-                  <div style={{ textAlign: 'center', marginTop: '10px' }}>
-                    <label style={{ fontSize: '12px', color: '#888', marginBottom: '4px', display: 'block' }}>Company Name</label>
-                    <input type="text" value={newRecruiterName} onChange={(e) => setNewRecruiterName(e.target.value)} placeholder="Company name" style={{ width: '200px', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box', textAlign: 'center' }} />
-                  </div>
-                  <div style={{ textAlign: 'center', marginTop: '12px' }}>
-                    <button className="btn btn-primary btn-sm" onClick={addRecruiter}>Add</button>
-                  </div>
-                </div>
-                {form.recruiters.length > 0 && (
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '12px' }}>
-                    {form.recruiters.map((rec, i) => (
-                      <div key={i} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '16px', textAlign: 'center', position: 'relative', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
-                        <button onClick={() => removeRecruiter(i)} style={{ position: 'absolute', top: '6px', right: '6px', background: 'rgba(220,53,69,0.1)', border: 'none', color: '#dc3545', cursor: 'pointer', fontSize: '12px', width: '20px', height: '20px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
-                        {rec.logoUrl ? (
-                          <img src={rec.logoUrl} alt={rec.name} style={{ width: '80px', height: '50px', objectFit: 'contain', marginBottom: '10px' }} />
-                        ) : (
-                          <div style={{ width: '80px', height: '50px', margin: '0 auto 10px', background: '#f0f0f0', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', color: '#aaa' }}>No Logo</div>
-                        )}
-                        <p style={{ margin: 0, fontSize: '12px', fontWeight: 600, color: '#333', lineHeight: 1.4 }}>{rec.name}</p>
+                  {/* Existing recruiter cards */}
+                  {form.recruiters.map((rec, idx) => (
+                    <div key={idx} className="faculty-card">
+                      <button type="button" className="faculty-card-remove" onClick={() => removeRecruiter(idx)} title="Remove">
+                        ✕
+                      </button>
+                      <div className="faculty-card-img">
+                        <ImageUpload
+                          value={rec.logoUrl}
+                          onChange={(url) => {
+                            const updated = [...form.recruiters];
+                            updated[idx] = { ...updated[idx], logoUrl: url };
+                            handleChange('recruiters', updated);
+                          }}
+                          label=""
+                          placeholder="Logo"
+                        />
                       </div>
-                    ))}
-                  </div>
-                )}
+                      <div className="faculty-card-fields">
+                        <input type="text" placeholder="Company Name" value={rec.name} onChange={(e) => {
+                          const updated = [...form.recruiters];
+                          updated[idx] = { ...updated[idx], name: e.target.value };
+                          handleChange('recruiters', updated);
+                        }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </>
             )}
 
