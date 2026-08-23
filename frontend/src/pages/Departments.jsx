@@ -12,6 +12,7 @@ function DepartmentsPage() {
   const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   useEffect(() => {
     fetchDepartments();
@@ -127,6 +128,38 @@ function DepartmentsPage() {
               </li>
             ))}
           </ul>
+
+          {/* Mobile sections drawer */}
+          <div className="dept-mobile-nav">
+            <button
+              className="dept-mobile-nav-toggle"
+              onClick={() => setMobileNavOpen((o) => !o)}
+            >
+              <span>☰ Sections</span>
+              <span className="dept-mobile-nav-current">
+                {sidebarItems.find((i) => i.id === activeTab)?.label}
+              </span>
+              <span className="dept-mobile-nav-caret">{mobileNavOpen ? '▲' : '▼'}</span>
+            </button>
+            {mobileNavOpen && (
+              <ul className="dept-mobile-nav-list">
+                {sidebarItems.map((item) => (
+                  <li key={item.id}>
+                    <button
+                      className={activeTab === item.id ? 'active' : ''}
+                      onClick={() => {
+                        setActiveTab(item.id);
+                        setMobileNavOpen(false);
+                      }}
+                    >
+                      <span className="arrow">→</span>
+                      {item.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </aside>
 
         <div className="dept-content-area">
