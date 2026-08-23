@@ -7,9 +7,9 @@ function Recruiters() {
   const [recruiters, setRecruiters] = useState([]);
 
   useEffect(() => {
-    fetch(`${API_URL}/recruiters`)
+    fetch(`${API_URL}/placements-admin/recruiters`)
       .then((res) => res.json())
-      .then((data) => setRecruiters(data))
+      .then((data) => setRecruiters(data.recruiters || []))
       .catch((err) => console.error('Failed to fetch recruiters:', err));
   }, []);
 
@@ -26,7 +26,7 @@ function Recruiters() {
         <div className="marquee-track">
           {items.map((r, idx) => (
             <div className="recruiter-card" key={idx}>
-              <img src={r.logo} alt={r.name} className="recruiter-logo" />
+              <img src={r.logoUrl || r.logo} alt={r.name} className="recruiter-logo" />
             </div>
           ))}
         </div>
