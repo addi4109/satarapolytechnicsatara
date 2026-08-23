@@ -20,6 +20,7 @@ const defaultSection = {
   officerName: '',
   officerPhoto: '',
   officerQual: '',
+  officeTeam: [],
   active: true,
 };
 
@@ -43,6 +44,13 @@ function AdminPlacements() {
   // Recruiter states
   const [newRecruiterName, setNewRecruiterName] = useState('');
   const [newRecruiterLogo, setNewRecruiterLogo] = useState('');
+
+  // Team member states
+  const [newTeamName, setNewTeamName] = useState('');
+  const [newTeamDesig, setNewTeamDesig] = useState('');
+  const [newTeamPhoto, setNewTeamPhoto] = useState('');
+  const [newTeamQual, setNewTeamQual] = useState('');
+  const [newTeamEmail, setNewTeamEmail] = useState('');
 
   useEffect(() => {
     fetchSections();
@@ -74,6 +82,7 @@ function AdminPlacements() {
         officerName: existing.officerName || '',
         officerPhoto: existing.officerPhoto || '',
         officerQual: existing.officerQual || '',
+        officeTeam: existing.officeTeam || [],
         active: existing.active !== false,
       });
     } else {
@@ -91,6 +100,11 @@ function AdminPlacements() {
     setNewRecCompanies('');
     setNewRecruiterName('');
     setNewRecruiterLogo('');
+    setNewTeamName('');
+    setNewTeamDesig('');
+    setNewTeamPhoto('');
+    setNewTeamQual('');
+    setNewTeamEmail('');
   };
 
   const handleChange = (field, value) => {
@@ -168,6 +182,27 @@ function AdminPlacements() {
 
   const removeRecruiter = (index) => {
     handleChange('recruiters', form.recruiters.filter((_, i) => i !== index));
+  };
+
+  // Team member helpers
+  const addTeamMember = () => {
+    if (!newTeamName.trim()) return;
+    handleChange('officeTeam', [...form.officeTeam, {
+      name: newTeamName.trim(),
+      designation: newTeamDesig.trim(),
+      photo: newTeamPhoto,
+      qual: newTeamQual.trim(),
+      email: newTeamEmail.trim(),
+    }]);
+    setNewTeamName('');
+    setNewTeamDesig('');
+    setNewTeamPhoto('');
+    setNewTeamQual('');
+    setNewTeamEmail('');
+  };
+
+  const removeTeamMember = (index) => {
+    handleChange('officeTeam', form.officeTeam.filter((_, i) => i !== index));
   };
 
   const currentSection = SECTIONS.find((s) => s.key === activeTab);
@@ -277,6 +312,54 @@ function AdminPlacements() {
                     </div>
                   </div>
                 </div>
+              </>
+            )}
+
+            {/* Office Team - only for About section */}
+            {activeTab === 'about' && (
+              <>
+                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
+                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Placement & Training Office Team</h4>
+                <div style={{ display: 'flex', gap: '10px', marginBottom: '12px', flexWrap: 'wrap', alignItems: 'flex-end' }}>
+                  <div style={{ flex: 1, minWidth: '120px' }}>
+                    <label style={{ fontSize: '12px', color: '#888', display: 'block', marginBottom: '4px' }}>Photo</label>
+                    <ImageUpload value={newTeamPhoto} onChange={(url) => setNewTeamPhoto(url)} />
+                  </div>
+                  <div style={{ flex: 1, minWidth: '120px' }}>
+                    <label style={{ fontSize: '12px', color: '#888', display: 'block', marginBottom: '4px' }}>Name</label>
+                    <input type="text" value={newTeamName} onChange={(e) => setNewTeamName(e.target.value)} placeholder="Name" style={{ width: '100%', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
+                  </div>
+                  <div style={{ flex: 1, minWidth: '120px' }}>
+                    <label style={{ fontSize: '12px', color: '#888', display: 'block', marginBottom: '4px' }}>Designation</label>
+                    <input type="text" value={newTeamDesig} onChange={(e) => setNewTeamDesig(e.target.value)} placeholder="Designation" style={{ width: '100%', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
+                  </div>
+                  <div style={{ flex: 1, minWidth: '120px' }}>
+                    <label style={{ fontSize: '12px', color: '#888', display: 'block', marginBottom: '4px' }}>Qualification</label>
+                    <input type="text" value={newTeamQual} onChange={(e) => setNewTeamQual(e.target.value)} placeholder="Qualification" style={{ width: '100%', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
+                  </div>
+                  <div style={{ flex: 1, minWidth: '120px' }}>
+                    <label style={{ fontSize: '12px', color: '#888', display: 'block', marginBottom: '4px' }}>Email</label>
+                    <input type="text" value={newTeamEmail} onChange={(e) => setNewTeamEmail(e.target.value)} placeholder="Email" style={{ width: '100%', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
+                  </div>
+                  <button className="btn btn-primary btn-sm" onClick={addTeamMember} style={{ alignSelf: 'flex-end', marginBottom: '1px' }}>Add</button>
+                </div>
+                {form.officeTeam.length > 0 && (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '12px' }}>
+                    {form.officeTeam.map((member, i) => (
+                      <div key={i} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '16px', textAlign: 'center', position: 'relative', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
+                        <button onClick={() => removeTeamMember(i)} style={{ position: 'absolute', top: '6px', right: '6px', background: 'rgba(220,53,69,0.1)', border: 'none', color: '#dc3545', cursor: 'pointer', fontSize: '12px', width: '20px', height: '20px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
+                        {member.photo ? (
+                          <img src={member.photo} alt={member.name} style={{ width: '70px', height: '70px', borderRadius: '50%', objectFit: 'cover', marginBottom: '10px', border: '2px solid #e4e8ed' }} />
+                        ) : (
+                          <div style={{ width: '70px', height: '70px', margin: '0 auto 10px', background: '#f0f0f0', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', color: '#aaa', fontWeight: 700 }}>{member.name?.charAt(0) || '?'}</div>
+                        )}
+                        <p style={{ margin: '0 0 2px', fontSize: '13px', fontWeight: 700, color: '#243358' }}>{member.name}</p>
+                        <p style={{ margin: '0 0 2px', fontSize: '11px', color: '#666' }}>{member.designation}</p>
+                        {member.qual && <p style={{ margin: '0', fontSize: '11px', color: '#999' }}>{member.qual}</p>}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </>
             )}
 
@@ -399,6 +482,7 @@ function AdminPlacements() {
                       officerName: sections[activeTab].officerName || '',
                       officerPhoto: sections[activeTab].officerPhoto || '',
                       officerQual: sections[activeTab].officerQual || '',
+                      officeTeam: sections[activeTab].officeTeam || [],
                       active: sections[activeTab].active !== false,
                     });
                   } else {

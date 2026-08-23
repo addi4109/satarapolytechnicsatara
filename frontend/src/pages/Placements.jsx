@@ -150,6 +150,30 @@ function Placements() {
                 </div>
               )}
 
+              {/* Office Team */}
+              {getSection('about').officeTeam && getSection('about').officeTeam.length > 0 && (
+                <>
+                  <h3 className="content-sub-heading">Placement & Training Office Team</h3>
+                  <div className="placement-team-grid">
+                    {getSection('about').officeTeam.map((member, i) => (
+                      <div className="placement-team-card" key={i}>
+                        <div className="placement-team-photo">
+                          {member.photo ? (
+                            <img src={member.photo} alt={member.name} />
+                          ) : (
+                            <span>{member.name?.split(' ')?.pop()?.charAt(0) || '?'}</span>
+                          )}
+                        </div>
+                        <h4 className="placement-team-name">{member.name}</h4>
+                        <p className="placement-team-designation">{member.designation}</p>
+                        {member.qual && <p className="placement-team-qual">{member.qual}</p>}
+                        {member.email && <a href={`mailto:${member.email}`} className="placement-team-email">{member.email}</a>}
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+
               {/* Placement Cell Members from Cells & Committees */}
               {placementCell && placementCell.members && placementCell.members.length > 0 && (
                 <>

@@ -31,6 +31,10 @@ const PlacementSchema = new mongoose.Schema({
   officerName: { type: String, default: '' },
   officerPhoto: { type: String, default: '' },
   officerQual: { type: String, default: '' },
+  officeTeam: {
+    type: [{ name: String, designation: String, photo: String, qual: String, email: String }],
+    default: [],
+  },
   active: {
     type: Boolean,
     default: true,
