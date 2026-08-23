@@ -72,6 +72,76 @@
   font-family: 'Times New Roman', Times, serif;
 }
 
+/* Sidebar only on large screens (laptop/desktop); hidden on mobile & tablet */
+@media (max-width: 1024px) {
+  .admin-sidebar {
+    display: none;
+  }
+  .admin-main {
+    margin-left: 0;
+  }
+}
+
+/* Mobile top strip - horizontal nav, shown instead of sidebar on small screens */
+.admin-mobile-strip {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .admin-mobile-strip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #243358;
+    padding: 10px 14px;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+  }
+
+  .admin-mobile-strip-links {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .admin-mobile-strip-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .admin-mobile-strip-item {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-size: 14px;
+    white-space: nowrap;
+    padding: 6px 12px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .admin-mobile-strip-item.active {
+    background: #c8963e;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  .admin-mobile-logout {
+    background: #c0392b;
+    color: #fff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-size: 14px;
+    white-space: nowrap;
+    cursor: pointer;
+    font-family: 'Times New Roman', Times, serif;
+  }
+}
+
 .admin-topbar {
   background: #fff;
   padding: 16px 30px;
@@ -1091,12 +1161,6 @@
 @media (max-width: 768px) {
   .cells-admin-grid {
     grid-template-columns: 1fr;
-  }
-  .admin-sidebar {
-    display: none;
-  }
-  .admin-main {
-    margin-left: 0;
   }
   .form-row {
     grid-template-columns: 1fr;

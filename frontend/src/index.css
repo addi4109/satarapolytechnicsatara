@@ -8,3 +8,10 @@ body {
 #root {
   min-height: 100vh;
 }
+
+/* Public page sidebars: only on large screens (laptop/desktop) */
+@media (max-width: 1024px) {
+  .about-sidebar {
+    display: none !important;
+  }
+}

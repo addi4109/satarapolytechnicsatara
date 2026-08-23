@@ -14,6 +14,20 @@ function AdminLayout({ children }) {
 
   const isActive = (path) => location.pathname === path;
 
+  const NAV_LINKS = [
+    { to: '/admin/about', label: 'About' },
+    { to: '/admin/admissions', label: 'Admissions' },
+    { to: '/admin/placements', label: 'Placements' },
+    { to: '/admin/management', label: 'Management' },
+    { to: '/admin/cells', label: 'Cells & Committees' },
+    { to: '/admin/departments', label: 'Departments' },
+    { to: '/admin/gallery', label: 'Gallery' },
+    { to: '/admin/campus', label: 'Campus' },
+    { to: '/admin/activities', label: 'Activities' },
+    { to: '/admin/examinations', label: 'Examination' },
+    { to: '/admin/notices', label: 'Notices' },
+  ];
+
   const handleLogout = () => {
     sessionStorage.removeItem('adminAuth');
     navigate('/admin/login');
@@ -27,72 +41,15 @@ function AdminLayout({ children }) {
           <p>Satara Polytechnic</p>
         </div>
         <nav className="admin-nav">
-          <Link
-            to="/admin/about"
-            className={`admin-nav-item ${isActive('/admin/about') ? 'active' : ''}`}
-          >
-            About
-          </Link>
-          <Link
-            to="/admin/admissions"
-            className={`admin-nav-item ${isActive('/admin/admissions') ? 'active' : ''}`}
-          >
-            Admissions
-          </Link>
-          <Link
-            to="/admin/placements"
-            className={`admin-nav-item ${isActive('/admin/placements') ? 'active' : ''}`}
-          >
-            Placements
-          </Link>
-          <Link
-            to="/admin/management"
-            className={`admin-nav-item ${isActive('/admin/management') ? 'active' : ''}`}
-          >
-            Management
-          </Link>
-          <Link
-            to="/admin/cells"
-            className={`admin-nav-item ${isActive('/admin/cells') ? 'active' : ''}`}
-          >
-            Cells & Committees
-          </Link>
-          <Link
-            to="/admin/departments"
-            className={`admin-nav-item ${isActive('/admin/departments') ? 'active' : ''}`}
-          >
-            Departments
-          </Link>
-          <Link
-            to="/admin/gallery"
-            className={`admin-nav-item ${isActive('/admin/gallery') ? 'active' : ''}`}
-          >
-            Gallery
-          </Link>
-          <Link
-            to="/admin/campus"
-            className={`admin-nav-item ${isActive('/admin/campus') ? 'active' : ''}`}
-          >
-            Campus
-          </Link>
-          <Link
-            to="/admin/activities"
-            className={`admin-nav-item ${isActive('/admin/activities') ? 'active' : ''}`}
-          >
-            Activities
-          </Link>
-          <Link
-            to="/admin/examinations"
-            className={`admin-nav-item ${isActive('/admin/examinations') ? 'active' : ''}`}
-          >
-            Examination
-          </Link>
-          <Link
-            to="/admin/notices"
-            className={`admin-nav-item ${isActive('/admin/notices') ? 'active' : ''}`}
-          >
-            Notices
-          </Link>
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`admin-nav-item ${isActive(link.to) ? 'active' : ''}`}
+            >
+              {link.label}
+            </Link>
+          ))}
         </nav>
         <div className="admin-sidebar-footer">
           <button className="admin-logout-btn" onClick={handleLogout}>
@@ -101,6 +58,23 @@ function AdminLayout({ children }) {
         </div>
       </aside>
       <main className="admin-main">
+        {/* Mobile top strip - horizontal nav shown only on small screens */}
+        <div className="admin-mobile-strip">
+          <div className="admin-mobile-strip-links">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`admin-mobile-strip-item ${isActive(link.to) ? 'active' : ''}`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+          <button className="admin-mobile-logout" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
         {children}
       </main>
     </div>
