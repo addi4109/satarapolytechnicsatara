@@ -456,7 +456,7 @@
 
 @media (max-width: 768px) {
   .staff-cards-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 16px;
   }
   .staff-card-photo,
@@ -514,9 +514,14 @@
     text-align: center;
   }
 
+  .principal-photo {
+    width: 100%;
+  }
+
   .principal-photo img {
     width: 160px;
     height: 190px;
+    margin: 0 auto;
   }
 
   .info-row {
