@@ -201,22 +201,25 @@ function DepartmentsPage() {
                   support quality technical education. The facilities include
                   modern laboratories, workshops, and computing resources.
                 </p>
-                {dept.infrastructure && dept.infrastructure.length > 0 ? (
-                  <div className="labs-grid">
-                    {dept.infrastructure.map((item, i) => (
-                      <div className="lab-img-card" key={i}>
-                        {item.image && (
-                          <div className="lab-img-wrap">
-                            <img src={item.image} alt={item.name} />
-                          </div>
-                        )}
-                        <h4 className="lab-img-name">{item.name}</h4>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p style={{ color: '#888', fontStyle: 'italic' }}>No infrastructure items added yet.</p>
-                )}
+                {(() => {
+                  const items = [...(dept.labs || []), ...(dept.infrastructure || [])];
+                  return items.length > 0 ? (
+                    <div className="labs-grid">
+                      {items.map((item, i) => (
+                        <div className="lab-img-card" key={i}>
+                          {item.image && (
+                            <div className="lab-img-wrap">
+                              <img src={item.image} alt={item.name} />
+                            </div>
+                          )}
+                          <h4 className="lab-img-name">{item.name}</h4>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p style={{ color: '#888', fontStyle: 'italic' }}>No infrastructure items added yet.</p>
+                  );
+                })()}
               </>
             )}
 
@@ -335,34 +338,6 @@ function DepartmentsPage() {
                   </div>
                 ) : (
                   <p style={{ color: '#888', fontStyle: 'italic' }}>No faculty members added yet.</p>
-                )}
-              </>
-            )}
-
-            {activeTab === 'labs' && (
-              <>
-                <h2 className="content-heading">Laboratories</h2>
-                <div className="content-line"></div>
-                <p>
-                  The department has well-equipped laboratories to provide hands-on
-                  practical training to students. All labs are equipped with modern
-                  instruments and safety equipment.
-                </p>
-                {dept.labs && dept.labs.length > 0 ? (
-                  <div className="labs-grid">
-                    {dept.labs.map((lab, i) => (
-                      <div className="lab-img-card" key={i}>
-                        {lab.image && (
-                          <div className="lab-img-wrap">
-                            <img src={lab.image} alt={lab.name} />
-                          </div>
-                        )}
-                        <h4 className="lab-img-name">{lab.name}</h4>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p style={{ color: '#888', fontStyle: 'italic' }}>No labs added yet.</p>
                 )}
               </>
             )}

@@ -97,7 +97,7 @@ function AdminDepartments() {
               <div style={{ display: 'flex', gap: '16px', marginTop: '12px', flexWrap: 'wrap' }}>
                 <span style={{ fontSize: '12px', color: '#666' }}>Intake: {selectedDept.intake}</span>
                 <span style={{ fontSize: '12px', color: '#666' }}>Faculty: {selectedDept.faculty?.length || 0}</span>
-                <span style={{ fontSize: '12px', color: '#666' }}>Labs: {selectedDept.labs?.length || 0}</span>
+                <span style={{ fontSize: '12px', color: '#666' }}>Infrastructure: {(selectedDept.labs?.length || 0) + (selectedDept.infrastructure?.length || 0)}</span>
               </div>
               <div style={{ marginTop: '12px' }}>
                 <strong style={{ fontSize: '13px', color: '#7A263A' }}>Sections:</strong>

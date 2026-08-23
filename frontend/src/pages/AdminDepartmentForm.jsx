@@ -69,8 +69,8 @@ function AdminDepartmentForm() {
           hodQual: dept.hodQual || '',
           hodMsg: dept.hodMsg || '',
           faculty: dept.faculty || [],
-          labs: dept.labs || [],
-          infrastructure: dept.infrastructure || [],
+          labs: [...(dept.labs || []), ...(dept.infrastructure || [])],
+          infrastructure: [],
           curriculum: dept.curriculum || [],
           order: dept.order || 0,
         });
@@ -110,7 +110,7 @@ function AdminDepartmentForm() {
     setForm((prev) => ({ ...prev, faculty: prev.faculty.filter((_, i) => i !== idx) }));
   };
 
-  // Labs management
+  // Labs management (combined Infrastructure section)
   const addLab = () => {
     setForm((prev) => ({ ...prev, labs: [...prev.labs, { name: '', image: '' }] }));
   };
@@ -123,21 +123,6 @@ function AdminDepartmentForm() {
   };
   const removeLab = (idx) => {
     setForm((prev) => ({ ...prev, labs: prev.labs.filter((_, i) => i !== idx) }));
-  };
-
-  // Infrastructure management
-  const addInfra = () => {
-    setForm((prev) => ({ ...prev, infrastructure: [...prev.infrastructure, { name: '', image: '' }] }));
-  };
-  const updateInfra = (idx, field, val) => {
-    setForm((prev) => {
-      const l = [...prev.infrastructure];
-      l[idx] = { ...l[idx], [field]: val };
-      return { ...prev, infrastructure: l };
-    });
-  };
-  const removeInfra = (idx) => {
-    setForm((prev) => ({ ...prev, infrastructure: prev.infrastructure.filter((_, i) => i !== idx) }));
   };
 
   // Curriculum management
@@ -176,7 +161,7 @@ function AdminDepartmentForm() {
         curriculum: form.curriculum.filter((s) => s.name.trim()),
         faculty: form.faculty.filter((f) => f.name.trim()),
         labs: form.labs.filter((l) => l.name.trim()),
-        infrastructure: form.infrastructure.filter((i) => i.name.trim()),
+        infrastructure: [],
       };
 
       const res = await fetch(url, {
@@ -240,7 +225,7 @@ function AdminDepartmentForm() {
             <div style={{ display: 'flex', gap: '16px', marginTop: '10px', flexWrap: 'wrap' }}>
               <span style={{ fontSize: '12px', color: '#666' }}>Intake: {form.intake}</span>
               <span style={{ fontSize: '12px', color: '#666' }}>Faculty: {form.faculty.filter(f => f.name.trim()).length}</span>
-              <span style={{ fontSize: '12px', color: '#666' }}>Labs: {form.labs.filter(l => l.name.trim()).length}</span>
+              <span style={{ fontSize: '12px', color: '#666' }}>Infrastructure: {form.labs.filter(l => l.name.trim()).length}</span>
             </div>
           </div>
         </div>
@@ -396,21 +381,21 @@ function AdminDepartmentForm() {
             </div>
           </div>
 
-          {/* Card 4: Laboratories */}
+          {/* Card 4: Infrastructure (Labs + Facilities) */}
           <div className="dept-form-card">
             <div className="dept-form-card-header">
               <div className="dept-form-card-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 3h6v11l4 5H5l4-5V3z"/><line x1="9" y1="3" x2="15" y2="3"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="6" width="22" height="12" rx="2" ry="2"/><line x1="1" y1="12" x2="23" y2="12"/></svg>
               </div>
               <div>
-                <h3>Laboratories</h3>
-                <p>Department lab facilities</p>
+                <h3>Infrastructure</h3>
+                <p>Laboratories and department facilities</p>
               </div>
-              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addLab}>+ Add Lab</button>
+              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addLab}>+ Add Item</button>
             </div>
             <div className="dept-form-card-body">
               {form.labs.length === 0 ? (
-                <div className="members-empty">No labs added yet. Click "+ Add Lab" to add one.</div>
+                <div className="members-empty">No items added yet. Click "+ Add Item" to add one.</div>
               ) : (
                 <div className="labs-items-grid">
                   {form.labs.map((l, idx) => (
@@ -421,46 +406,10 @@ function AdminDepartmentForm() {
                           value={l.image}
                           onChange={(url) => updateLab(idx, 'image', url)}
                           label=""
-                          placeholder="Lab photo"
+                          placeholder="Photo"
                         />
                       </div>
-                      <input type="text" placeholder="Lab Name" value={l.name} onChange={(e) => updateLab(idx, 'name', e.target.value)} className="lab-item-input" />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Card 5: Infrastructure */}
-          <div className="dept-form-card">
-            <div className="dept-form-card-header">
-              <div className="dept-form-card-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="6" width="22" height="12" rx="2" ry="2"/><line x1="1" y1="12" x2="23" y2="12"/></svg>
-              </div>
-              <div>
-                <h3>Infrastructure</h3>
-                <p>Facilities and equipment</p>
-              </div>
-              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addInfra}>+ Add Item</button>
-            </div>
-            <div className="dept-form-card-body">
-              {form.infrastructure.length === 0 ? (
-                <div className="members-empty">No infrastructure items added yet. Click "+ Add Item" to add one.</div>
-              ) : (
-                <div className="labs-items-grid">
-                  {form.infrastructure.map((item, idx) => (
-                    <div key={idx} className="lab-item-card">
-                      <button type="button" className="lab-item-remove" onClick={() => removeInfra(idx)} title="Remove">✕</button>
-                      <div className="lab-item-img">
-                        <ImageUpload
-                          value={item.image}
-                          onChange={(url) => updateInfra(idx, 'image', url)}
-                          label=""
-                          placeholder="Item photo"
-                        />
-                      </div>
-                      <input type="text" placeholder="Item Name" value={item.name} onChange={(e) => updateInfra(idx, 'name', e.target.value)} className="lab-item-input" />
+                      <input type="text" placeholder="Item Name (e.g. CAD Lab)" value={l.name} onChange={(e) => updateLab(idx, 'name', e.target.value)} className="lab-item-input" />
                     </div>
                   ))}
                 </div>
