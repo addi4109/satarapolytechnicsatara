@@ -22,6 +22,7 @@ import governingBodyRouter from './routes/governing-body.js';
 import campusRouter from './routes/campus.js';
 import activitiesRouter from './routes/activities.js';
 import settingsRouter from './routes/settings.js';
+import pdfProxyRouter from './routes/pdf-proxy.js';
 
 // Use Google DNS to resolve MongoDB Atlas SRV records
 dns.setServers(['8.8.8.8', '8.8.4.4']);
@@ -55,6 +56,7 @@ app.use('/api/governing-body', governingBodyRouter);
 app.use('/api/campus', campusRouter);
 app.use('/api/activities', activitiesRouter);
 app.use('/api/settings', settingsRouter);
+app.use('/api/pdf-proxy', pdfProxyRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {

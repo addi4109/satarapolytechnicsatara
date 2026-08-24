@@ -140,7 +140,7 @@ function Examinations() {
                           <td style={{ textAlign: 'center' }}>
                             {item.pdfUrl ? (
                               <a
-                                href={`https://docs.google.com/gview?url=${encodeURIComponent(item.pdfUrl)}&embedded=true`}
+                                href={`/api/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 style={{
@@ -413,7 +413,7 @@ function Examinations() {
                           <td style={{ textAlign: 'center' }}>
                             {item.pdfUrl ? (
                               <a
-                                href={`https://docs.google.com/gview?url=${encodeURIComponent(item.pdfUrl)}&embedded=true`}
+                                href={`/api/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 style={{
