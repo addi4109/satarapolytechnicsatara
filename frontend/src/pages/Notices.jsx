@@ -72,35 +72,29 @@ function Notices() {
               <tbody>
                 {notices.map((notice, index) => (
                   <tr key={notice._id}>
-                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                    <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{index + 1}</td>
                     <td>
                       <div className="notice-title-cell">{notice.title}</div>
-                      {notice.imageUrl && (
-                        <img src={notice.imageUrl} alt={notice.title} style={{ marginTop: '6px', maxWidth: '120px', maxHeight: '60px', borderRadius: '4px', objectFit: 'cover', border: '1px solid #e4e8ed' }} />
-                      )}
+                      {notice.text && <div style={{ fontSize: '12px', color: '#888', marginTop: '2px' }}>{notice.text.substring(0, 80)}{notice.text.length > 80 ? '...' : ''}</div>}
                     </td>
-                    <td>{new Date(notice.createdAt).toLocaleDateString('en-IN')}</td>
+                    <td style={{ fontSize: '13px', color: '#666' }}>{new Date(notice.createdAt).toLocaleDateString('en-IN')}</td>
                     <td style={{ textAlign: 'center' }}>
-                      {(notice.pdfUrl || notice.imageUrl) ? (
-                        <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
+                      <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
+                        {(notice.pdfUrl || notice.imageUrl) && (
                           <a
                             href={notice.pdfUrl ? `/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl}
                             target="_blank"
-                            className="notice-btn notice-view-btn"
-                            style={{ textDecoration: 'none' }}
-                          >{notice.imageUrl ? '🖼 View' : '📄 View'}</a>
-                          {notice.pdfUrl && (
-                            <a
-                              href={`/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}`}
-                              download
-                              className="notice-btn notice-download-btn"
-                              style={{ textDecoration: 'none', cursor: 'pointer' }}
-                            >Download</a>
-                          )}
-                        </div>
-                      ) : (
-                        <span className="notice-btn notice-btn disabled">-</span>
-                      )}
+                            style={{ padding: '5px 14px', background: '#243358', color: '#fff', fontSize: '12px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
+                          >View</a>
+                        )}
+                        {notice.pdfUrl && (
+                          <a
+                            href={`/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}`}
+                            download
+                            style={{ padding: '5px 14px', background: '#fff', color: '#243358', fontSize: '12px', fontWeight: 600, borderRadius: '4px', border: '1px solid #243358', textDecoration: 'none', cursor: 'pointer' }}
+                          >Download</a>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}
