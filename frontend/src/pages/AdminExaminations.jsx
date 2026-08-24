@@ -567,20 +567,63 @@ function AdminExaminations() {
                       <p style={{ color: '#888' }}>No content available. Add details from admin panel.</p>
                     )}
 
+                    <style>{`
+                      .admin-result-btn {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 10px;
+                        padding: 14px 36px;
+                        background: linear-gradient(135deg, #243358 0%, #3a5080 100%);
+                        color: #fff;
+                        font-size: 16px;
+                        font-weight: 600;
+                        border: none;
+                        border-radius: 50px;
+                        text-decoration: none;
+                        cursor: pointer;
+                        transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+                        box-shadow: 0 4px 15px rgba(36, 51, 88, 0.3);
+                      }
+                      .admin-result-btn:hover {
+                        transform: translateY(-3px);
+                        box-shadow: 0 8px 25px rgba(36, 51, 88, 0.4);
+                        background: linear-gradient(135deg, #7A263A 0%, #a63446 100%);
+                      }
+                      .admin-result-btn .btn-arrow {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 28px;
+                        height: 28px;
+                        background: rgba(255,255,255,0.2);
+                        border-radius: 50%;
+                        font-size: 14px;
+                        transition: transform 0.3s ease;
+                      }
+                      .admin-result-btn:hover .btn-arrow {
+                        transform: translateX(4px);
+                      }
+                    `}</style>
                     {form.resultPortalUrl ? (
                       <div style={{ marginTop: '24px', textAlign: 'center' }}>
                         <a
                           href={form.resultPortalUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="btn btn-primary"
-                          style={{ padding: '12px 32px', fontSize: '15px', textDecoration: 'none', display: 'inline-block' }}
+                          className="admin-result-btn"
                         >
-                          View Result Portal →
+                          <span>View Result Portal</span>
+                          <span className="btn-arrow">→</span>
                         </a>
                       </div>
                     ) : (
-                      <p style={{ color: '#888', marginTop: '20px' }}>Result portal link will be available soon.</p>
+                      <div style={{ marginTop: '24px', textAlign: 'center' }}>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', background: '#f0f2f5', borderRadius: '50px', color: '#aaa', fontSize: '16px', fontWeight: 600 }}>
+                          <span>Result Portal</span>
+                          <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', background: 'rgba(0,0,0,0.05)', borderRadius: '50%', fontSize: '14px' }}>→</span>
+                        </div>
+                        <p style={{ marginTop: '12px', fontSize: '13px', color: '#888' }}>Result portal link will be available soon.</p>
+                      </div>
                     )}
                   </div>
                   {form.resultPortalUrl && (
