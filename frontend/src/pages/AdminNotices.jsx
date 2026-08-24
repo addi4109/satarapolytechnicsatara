@@ -6,9 +6,8 @@ import './Admin.css';
 
 const API_URL = '/api';
 
-const emptyNotice = { title: '', text: '', category: 'general', pdfUrl: '', active: true, order: 0 };
+const emptyNotice = { title: '', text: '', category: 'general', pdfUrl: '', imageUrl: '', active: true, order: 0 };
 
-// Split an existing attachment between the upload and link sections
 const splitAttachment = (pdfUrl = '') => {
   if (!pdfUrl) return { _uploadPdf: '', _pdfLink: '' };
   return pdfUrl.includes('supabase') || pdfUrl.includes('/storage/')
@@ -114,9 +113,6 @@ function AdminNotices() {
     <AdminLayout>
       <div className="admin-topbar">
         <h1>Notices</h1>
-        <div className="admin-topbar-actions">
-          <button className="btn btn-success" onClick={openAdd}>+ Add Notice</button>
-        </div>
       </div>
       <div className="admin-content">
         {message && (
@@ -144,26 +140,145 @@ function AdminNotices() {
           </button>
         </div>
 
-        {/* Inline Form */}
-        {showForm && (
-          <div className="dept-form-card" style={{ marginBottom: '24px' }}>
-            <div className="dept-form-card-header">
-              <div className="dept-form-card-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-              </div>
-              <div><h3>{editId ? 'Edit' : 'Add'} {activeTab === 'tinker' ? 'Tinker Notice' : 'Notice'}</h3></div>
+        {/* Card Grid */}
+        {loading ? (
+          <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
+            {/* Add New Card */}
+            <div
+              onClick={openAdd}
+              style={{
+                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                minHeight: '180px', border: '2px dashed #b9c3d4', borderRadius: '10px', cursor: 'pointer',
+                background: '#fff', transition: 'all 0.25s ease', gap: '10px',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#243358'; e.currentTarget.style.background = '#f8f9fa'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#b9c3d4'; e.currentTarget.style.background = '#fff'; }}
+            >
+              <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', color: '#243358', fontWeight: 300 }}>+</div>
+              <span style={{ fontSize: '14px', fontWeight: 600, color: '#243358' }}>Add Notice</span>
             </div>
-            <div className="dept-form-card-body">
-              <form className="admin-form" onSubmit={handleSave}>
+
+            {/* Notice Cards */}
+            {filteredNotices.map((notice) => (
+              <div key={notice._id} style={{
+                background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '16px',
+                display: 'flex', flexDirection: 'column', position: 'relative',
+                transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
+              }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(36,51,88,0.1)'; e.currentTarget.style.borderColor = '#c8963e'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e4e8ed'; }}
+              >
+                {/* Status Badge */}
+                <div style={{ position: 'absolute', top: '12px', right: '12px' }}>
+                  <span className={`badge ${notice.active ? 'badge-cell' : 'badge-committee'}`} style={{ fontSize: '10px' }}>{notice.active ? 'Active' : 'Inactive'}</span>
+                </div>
+
+                {/* Image Preview */}
+                {notice.imageUrl && (
+                  <img src={notice.imageUrl} alt={notice.title} style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '6px', marginBottom: '10px', border: '1px solid #e4e8ed' }} />
+                )}
+
+                {/* Title */}
+                <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '15px', fontWeight: 700, paddingRight: '60px' }}>{notice.title}</h4>
+
+                {/* Description */}
+                {notice.text && (
+                  <p style={{ margin: '0 0 8px', color: '#666', fontSize: '13px', lineHeight: '1.5', flex: 1 }}>
+                    {notice.text.substring(0, 100)}{notice.text.length > 100 ? '...' : ''}
+                  </p>
+                )}
+
+                {/* Date */}
+                <p style={{ margin: '0 0 10px', fontSize: '12px', color: '#999' }}>{new Date(notice.createdAt).toLocaleDateString('en-IN')}</p>
+
+                {/* Action Buttons */}
+                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                  {(notice.pdfUrl || notice.imageUrl) && (
+                    <a
+                      href={notice.pdfUrl ? `/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl}
+                      target="_blank"
+                      style={{ padding: '5px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}
+                    >View</a>
+                  )}
+                  {(notice.pdfUrl || notice.imageUrl) && (
+                    <a
+                      href="#"
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        const fileUrl = notice.pdfUrl || notice.imageUrl;
+                        const ext = notice.pdfUrl ? 'pdf' : 'jpg';
+                        const fileName = `${notice.title.replace(/[^a-zA-Z0-9]/g, '_')}.${ext}`;
+                        try {
+                          const res = await fetch(fileUrl);
+                          const blob = await res.blob();
+                          const url = URL.createObjectURL(blob);
+                          const a = document.createElement('a');
+                          a.href = url;
+                          a.download = fileName;
+                          document.body.appendChild(a);
+                          a.click();
+                          document.body.removeChild(a);
+                          URL.revokeObjectURL(url);
+                        } catch { window.open(fileUrl, '_blank'); }
+                      }}
+                      style={{ padding: '5px 12px', background: '#fff', color: '#243358', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #243358', textDecoration: 'none', cursor: 'pointer' }}
+                    >Download</a>
+                  )}
+                  <button
+                    onClick={() => openEdit(notice)}
+                    style={{ padding: '5px 12px', background: '#fff', color: '#555', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}
+                  >Edit</button>
+                  {deleteConfirm === notice._id ? (
+                    <>
+                      <button onClick={() => handleDelete(notice._id)} style={{ padding: '5px 12px', background: '#dc3545', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: 'none', cursor: 'pointer' }}>Yes</button>
+                      <button onClick={() => setDeleteConfirm(null)} style={{ padding: '5px 12px', background: '#fff', color: '#555', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>No</button>
+                    </>
+                  ) : (
+                    <button
+                      onClick={() => setDeleteConfirm(notice._id)}
+                      style={{ padding: '5px 12px', background: '#fff', color: '#dc3545', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #dc3545', cursor: 'pointer' }}
+                    >Delete</button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Modal Form */}
+      {showForm && (
+        <div
+          style={{
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+            background: 'rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 9999, padding: '20px',
+          }}
+          onClick={(e) => { if (e.target === e.currentTarget) cancelForm(); }}
+        >
+          <div style={{
+            background: '#fff', borderRadius: '12px', width: '100%', maxWidth: '520px',
+            maxHeight: '90vh', overflowY: 'auto', boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
+          }}>
+            {/* Modal Header */}
+            <div style={{ padding: '16px 20px', borderBottom: '1px solid #e4e8ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h3 style={{ margin: 0, color: '#243358', fontSize: '17px' }}>{editId ? 'Edit' : 'Add'} {activeTab === 'tinker' ? 'Tinker Notice' : 'Notice'}</h3>
+              <button onClick={cancelForm} style={{ background: 'none', border: 'none', fontSize: '22px', cursor: 'pointer', color: '#999', lineHeight: 1 }}>×</button>
+            </div>
+
+            {/* Modal Body */}
+            <div style={{ padding: '20px' }}>
+              <form onSubmit={handleSave}>
                 {activeTab === 'tinker' ? (
-                  /* Tinker: only title field (one line) */
                   <>
-                    <div className="form-group">
-                      <label>Notice Text *</label>
-                      <input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value, text: e.target.value })} placeholder="Enter notice text (one line)" required />
+                    <div style={{ marginBottom: '14px' }}>
+                      <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '5px' }}>Notice Text *</label>
+                      <input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value, text: e.target.value })} placeholder="Enter notice text (one line)" required style={{ width: '100%', padding: '9px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
                     </div>
-                    <div className="form-group">
-                      <label>Status</label>
+                    <div style={{ marginBottom: '14px' }}>
+                      <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '5px' }}>Status</label>
                       <div className="toggle-row">
                         <button type="button" className={`toggle-switch ${form.active !== false ? 'active' : ''}`} onClick={() => setForm({ ...form, active: form.active === false ? true : false })}>
                           <span className="toggle-knob"></span>
@@ -173,35 +288,34 @@ function AdminNotices() {
                     </div>
                   </>
                 ) : (
-                  /* Regular notice: full form */
                   <>
-                    <div className="form-group">
-                      <label>Title *</label>
-                      <input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Notice title" required />
+                    <div style={{ marginBottom: '14px' }}>
+                      <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '5px' }}>Title *</label>
+                      <input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Notice title" required style={{ width: '100%', padding: '9px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
                     </div>
-                    <div className="form-group">
-                      <label>Description *</label>
-                      <textarea value={form.text || ''} onChange={(e) => setForm({ ...form, text: e.target.value })} rows={3} placeholder="Notice description" required />
+                    <div style={{ marginBottom: '14px' }}>
+                      <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '5px' }}>Description *</label>
+                      <textarea value={form.text || ''} onChange={(e) => setForm({ ...form, text: e.target.value })} rows={3} placeholder="Notice description" required style={{ width: '100%', padding: '9px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', resize: 'vertical', boxSizing: 'border-box' }} />
                     </div>
-                    <div className="form-group">
-                      <label>Upload Image (optional)</label>
+                    <div style={{ marginBottom: '14px' }}>
+                      <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '5px' }}>Upload Image (optional)</label>
                       <ImageUpload value={form.imageUrl || ''} onChange={(url) => setForm({ ...form, imageUrl: url })} label="" placeholder="Upload notice image" />
                     </div>
                     {form.imageUrl && (
-                      <div style={{ marginTop: '-8px', marginBottom: '12px' }}>
-                        <img src={form.imageUrl} alt="Preview" style={{ maxWidth: '200px', maxHeight: '100px', borderRadius: '6px', border: '1px solid #e4e8ed', objectFit: 'cover' }} />
+                      <div style={{ marginBottom: '14px' }}>
+                        <img src={form.imageUrl} alt="Preview" style={{ maxWidth: '100%', maxHeight: '120px', borderRadius: '6px', border: '1px solid #e4e8ed', objectFit: 'cover' }} />
                       </div>
                     )}
-                    <div className="form-group">
-                      <label>Upload PDF (optional)</label>
+                    <div style={{ marginBottom: '14px' }}>
+                      <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '5px' }}>Upload PDF (optional)</label>
                       <PdfUpload value={form._uploadPdf || ''} onChange={(url) => setForm({ ...form, _uploadPdf: url })} />
                     </div>
-                    <div className="form-group">
-                      <label>PDF Link (optional)</label>
-                      <input type="text" value={form._pdfLink || ''} onChange={(e) => setForm({ ...form, _pdfLink: e.target.value })} placeholder="https://example.com/notice.pdf" style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
+                    <div style={{ marginBottom: '14px' }}>
+                      <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '5px' }}>PDF Link (optional)</label>
+                      <input type="text" value={form._pdfLink || ''} onChange={(e) => setForm({ ...form, _pdfLink: e.target.value })} placeholder="https://example.com/notice.pdf" style={{ width: '100%', padding: '9px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
                     </div>
-                    <div className="form-group">
-                      <label>Status</label>
+                    <div style={{ marginBottom: '14px' }}>
+                      <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '5px' }}>Status</label>
                       <div className="toggle-row">
                         <button type="button" className={`toggle-switch ${form.active !== false ? 'active' : ''}`} onClick={() => setForm({ ...form, active: form.active === false ? true : false })}>
                           <span className="toggle-knob"></span>
@@ -211,80 +325,15 @@ function AdminNotices() {
                     </div>
                   </>
                 )}
-                <div style={{ display: 'flex', gap: '10px', marginTop: '16px' }}>
-                  <button type="submit" className="btn btn-success" disabled={saving}>{saving ? 'Saving...' : editId ? 'Update' : 'Add'}</button>
+                <div style={{ display: 'flex', gap: '10px', marginTop: '16px', paddingTop: '14px', borderTop: '1px solid #e4e8ed' }}>
+                  <button type="submit" className="btn btn-success" disabled={saving} style={{ flex: 1 }}>{saving ? 'Saving...' : editId ? 'Update' : 'Add Notice'}</button>
                   <button type="button" className="btn btn-secondary" onClick={cancelForm}>Cancel</button>
                 </div>
               </form>
             </div>
           </div>
-        )}
-
-        {/* Notices Table */}
-        {!showForm && (
-          loading ? (
-            <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
-          ) : filteredNotices.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-              <p style={{ color: '#888', marginBottom: '16px' }}>No notices yet.</p>
-              <button className="btn btn-success" onClick={openAdd}>Add First Notice</button>
-            </div>
-          ) : (
-            <div className="admin-card">
-              <div className="admin-card-header">
-                <h3>{activeTab === 'tinker' ? 'Notice Tinker' : 'All Notices'} ({filteredNotices.length})</h3>
-              </div>
-              <div style={{ overflowX: 'auto' }}>
-                <table className="admin-table">
-                  <thead>
-                    <tr>
-                      <th style={{ width: '60px', textAlign: 'center' }}>Sr. No.</th>
-                      <th>Title</th>
-                      <th style={{ width: '120px' }}>Date</th>
-                      <th style={{ width: '80px', textAlign: 'center' }}>Status</th>
-                      <th style={{ width: '220px', textAlign: 'center' }}>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredNotices.map((notice, index) => (
-                      <tr key={notice._id}>
-                        <td style={{ textAlign: 'center', fontWeight: '600', color: '#243358' }}>{index + 1}</td>
-                        <td>
-                          <div style={{ fontWeight: '500', color: '#333' }}>{notice.title}</div>
-                          {notice.text && <div style={{ fontSize: '12px', color: '#888', marginTop: '2px' }}>{notice.text.substring(0, 80)}{notice.text.length > 80 ? '...' : ''}</div>}
-                        </td>
-                        <td style={{ fontSize: '13px', color: '#666' }}>{new Date(notice.createdAt).toLocaleDateString('en-IN')}</td>
-                        <td style={{ textAlign: 'center' }}>
-                          <span className={`badge ${notice.active ? 'badge-cell' : 'badge-committee'}`}>{notice.active ? 'On' : 'Off'}</span>
-                        </td>
-                        <td>
-                          <div className="actions" style={{ justifyContent: 'center' }}>
-                            {notice.category !== 'tinker' && (notice.pdfUrl || notice.imageUrl) ? (
-                              <a href={notice.pdfUrl ? `/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl} target="_blank" className="btn btn-primary btn-sm" style={{ textDecoration: 'none' }}>{notice.imageUrl ? '🖼 View' : '📄 View'}</a>
-                            ) : notice.category !== 'tinker' ? (
-                              <button className="btn btn-primary btn-sm" onClick={() => openEdit(notice)}>View</button>
-                            ) : null}
-                            {notice.category !== 'tinker' && notice.pdfUrl && <a href={`/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}`} download className="btn btn-secondary btn-sm" style={{ textDecoration: 'none' }}>Download</a>}
-                            <button className="btn btn-primary btn-sm" onClick={() => openEdit(notice)}>Edit</button>
-                            {deleteConfirm === notice._id ? (
-                              <>
-                                <button className="btn btn-danger btn-sm" onClick={() => handleDelete(notice._id)}>Yes</button>
-                                <button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirm(null)}>No</button>
-                              </>
-                            ) : (
-                              <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirm(notice._id)}>Del</button>
-                            )}
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )
-        )}
-      </div>
+        </div>
+      )}
     </AdminLayout>
   );
 }
