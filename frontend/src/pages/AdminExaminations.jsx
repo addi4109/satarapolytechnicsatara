@@ -675,7 +675,13 @@ function AdminExaminations() {
 
                 <div style={{ marginTop: '8px' }}>
                   {form.revaluationSteps.map((step, i) => (
-                    <div className="admin-rev-step-card" key={i} style={{ border: editingRevStepIdx === i ? '2px solid #c8963e' : undefined }}>
+                    <div className="admin-rev-step-card" key={i} style={{ position: 'relative', border: editingRevStepIdx === i ? '2px solid #c8963e' : undefined }}>
+                      <button
+                        className="member-remove-btn"
+                        title="Delete step"
+                        onClick={() => removeRow('revaluationSteps', i)}
+                        style={{ position: 'absolute', top: '10px', right: '10px' }}
+                      >×</button>
                       <div className="step-number">{i + 1}</div>
                       <div className="step-content" style={{ flex: 1 }}>
                         {editingRevStepIdx === i ? (
@@ -740,13 +746,6 @@ function AdminExaminations() {
                                 <p style={{ fontStyle: 'italic', color: '#aaa', margin: 0, fontSize: '13px' }}>No description or sub-points</p>
                               )}
                             </div>
-                            <button
-                              className="member-remove-btn"
-                              title="Delete step"
-                              onClick={() => removeRow('revaluationSteps', i)}
-                            >
-                              ×
-                            </button>
                           </>
                         )}
                       </div>
