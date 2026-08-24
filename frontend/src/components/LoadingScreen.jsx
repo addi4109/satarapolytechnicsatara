@@ -58,14 +58,6 @@ function LoadingScreen({ onComplete }) {
   );
 }
 
-// Check if this is the first visit in current session
-export function shouldShowLoading() {
-  const key = 'sps_loading_shown';
-  if (!sessionStorage.getItem(key)) {
-    sessionStorage.setItem(key, 'true');
-    return true;
-  }
-  return false;
-}
+
 
 export default LoadingScreen;

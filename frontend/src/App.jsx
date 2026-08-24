@@ -1,9 +1,9 @@
-import { lazy, Suspense, useState, useCallback } from 'react';
+import { lazy, Suspense, useState, useCallback, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import SEO from './components/SEO';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import LoadingScreen, { shouldShowLoading } from './components/LoadingScreen';
+import LoadingScreen from './components/LoadingScreen';
 
 // Lazy-loaded page components for code splitting
 const ImageSlider = lazy(() => import('./components/ImageSlider'));
@@ -151,14 +151,33 @@ function AppLayout() {
 }
 
 function App() {
-  const [showLoading, setShowLoading] = useState(() => shouldShowLoading());
+  return (
+    <BrowserRouter>
+      <AppWithLoader />
+    </BrowserRouter>
+  );
+}
+
+function AppWithLoader() {
+  const location = useLocation();
+  const [showLoading, setShowLoading] = useState(false);
+  const [loadingKey, setLoadingKey] = useState(0);
+
+  // Trigger loading screen on every homepage visit
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setShowLoading(true);
+      setLoadingKey((k) => k + 1);
+    }
+  }, [location.pathname]);
+
   const handleLoadingComplete = useCallback(() => setShowLoading(false), []);
 
   return (
-    <BrowserRouter>
-      {showLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
+    <> 
+      {showLoading && <LoadingScreen key={loadingKey} onComplete={handleLoadingComplete} />}
       <AppLayout />
-    </BrowserRouter>
+    </>
   );
 }
 
