@@ -162,6 +162,7 @@ function AppWithLoader() {
   const location = useLocation();
   const [showLoading, setShowLoading] = useState(false);
   const [loadingKey, setLoadingKey] = useState(0);
+  const [settingsLoaded, setSettingsLoaded] = useState(false);
   const [loadingEnabled, setLoadingEnabled] = useState(true);
 
   // Fetch loading screen setting on mount
@@ -173,16 +174,17 @@ function AppWithLoader() {
           setLoadingEnabled(data.value);
         }
       })
-      .catch(() => {});
+      .catch(() => {}) // keep default true on error
+      .finally(() => setSettingsLoaded(true));
   }, []);
 
-  // Trigger loading screen on every homepage visit (if enabled)
+  // Trigger loading screen on every homepage visit (only after settings loaded)
   useEffect(() => {
-    if (location.pathname === '/' && loadingEnabled) {
+    if (settingsLoaded && location.pathname === '/' && loadingEnabled) {
       setShowLoading(true);
       setLoadingKey((k) => k + 1);
     }
-  }, [location.pathname, loadingEnabled]);
+  }, [location.pathname, loadingEnabled, settingsLoaded]);
 
   const handleLoadingComplete = useCallback(() => setShowLoading(false), []);
 
