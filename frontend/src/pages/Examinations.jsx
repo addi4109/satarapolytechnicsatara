@@ -139,29 +139,18 @@ function Examinations() {
                           <td style={{ textAlign: 'center' }}>{item.endDate}</td>
                           <td style={{ textAlign: 'center' }}>
                             {item.pdfUrl ? (
-                              <a
-                                href="#"
-                                onClick={async (e) => { e.preventDefault(); try { const res = await fetch(item.pdfUrl); const blob = await res.blob(); const url = URL.createObjectURL(blob); window.open(url, '_blank'); } catch { window.open(item.pdfUrl, '_blank'); } }}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                style={{
-                                  display: 'inline-flex',
-                                  alignItems: 'center',
-                                  gap: '4px',
-                                  padding: '5px 14px',
-                                  background: 'linear-gradient(135deg, #243358, #3a5080)',
-                                  color: '#fff',
-                                  fontSize: '12px',
-                                  fontWeight: 600,
-                                  borderRadius: '20px',
-                                  textDecoration: 'none',
-                                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-                                }}
-                                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(36,51,88,0.3)'; }}
-                                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
-                              >
-                                📄 View PDF
-                              </a>
+                              <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
+                                <a
+                                  href="#"
+                                  onClick={async (e) => { e.preventDefault(); try { const res = await fetch(item.pdfUrl); const blob = await res.blob(); const url = URL.createObjectURL(blob); window.open(url, '_blank'); } catch { window.open(item.pdfUrl, '_blank'); } }}
+                                  style={{ padding: '4px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
+                                >View</a>
+                                <a
+                                  href={item.pdfUrl}
+                                  download
+                                  style={{ padding: '4px 12px', background: '#7A263A', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
+                                >Download</a>
+                              </div>
                             ) : (
                               <span style={{ color: '#ccc', fontSize: '12px' }}>—</span>
                             )}
@@ -413,29 +402,18 @@ function Examinations() {
                           <td style={{ fontSize: '13px', color: '#666' }}>{item.date}</td>
                           <td style={{ textAlign: 'center' }}>
                             {item.pdfUrl ? (
-                              <a
-                                href="#"
-                                onClick={async (e) => { e.preventDefault(); try { const res = await fetch(item.pdfUrl); const blob = await res.blob(); const url = URL.createObjectURL(blob); window.open(url, '_blank'); } catch { window.open(item.pdfUrl, '_blank'); } }}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                style={{
-                                  display: 'inline-flex',
-                                  alignItems: 'center',
-                                  gap: '4px',
-                                  padding: '5px 14px',
-                                  background: 'linear-gradient(135deg, #243358, #3a5080)',
-                                  color: '#fff',
-                                  fontSize: '12px',
-                                  fontWeight: 600,
-                                  borderRadius: '20px',
-                                  textDecoration: 'none',
-                                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-                                }}
-                                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(36,51,88,0.3)'; }}
-                                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
-                              >
-                                📄 View PDF
-                              </a>
+                              <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
+                                <a
+                                  href="#"
+                                  onClick={async (e) => { e.preventDefault(); try { const res = await fetch(item.pdfUrl); const blob = await res.blob(); const url = URL.createObjectURL(blob); window.open(url, '_blank'); } catch { window.open(item.pdfUrl, '_blank'); } }}
+                                  style={{ padding: '4px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
+                                >View</a>
+                                <a
+                                  href={item.pdfUrl}
+                                  download
+                                  style={{ padding: '4px 12px', background: '#7A263A', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
+                                >Download</a>
+                              </div>
                             ) : (
                               <span style={{ color: '#ccc', fontSize: '12px' }}>—</span>
                             )}
