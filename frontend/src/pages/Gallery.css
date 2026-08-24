@@ -148,6 +148,8 @@
   cursor: pointer;
   transition: transform 0.2s, background 0.2s;
   padding-left: 3px;
+  position: relative;
+  z-index: 2;
 }
 
 .video-card:hover .video-play-btn {
