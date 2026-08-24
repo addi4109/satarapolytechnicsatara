@@ -349,11 +349,18 @@ function Examinations() {
               {getSection('revaluation').revaluationSteps && getSection('revaluation').revaluationSteps.length > 0 && (
                 <div className="process-steps" style={{ marginTop: '20px' }}>
                   {getSection('revaluation').revaluationSteps.map((step, i) => (
-                    <div className="process-step" key={i}>
+                    <div className="process-step exam-rev-card" key={i} style={{ transition: 'transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease' }}>
                       <div className="step-number">{i + 1}</div>
                       <div className="step-content">
-                        <h4>{step.title}</h4>
-                        {step.description && <p>{step.description}</p>}
+                        <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '17px' }}>{step.title}</h4>
+                        {step.description && <p style={{ margin: '0 0 4px', color: '#555', fontSize: '15px', lineHeight: '1.6' }}>{step.description}</p>}
+                        {step.subPoints && step.subPoints.length > 0 && (
+                          <ul style={{ margin: '6px 0 0', paddingLeft: '18px' }}>
+                            {step.subPoints.map((sp, spIdx) => (
+                              <li key={spIdx} style={{ color: '#555', fontSize: '14px', lineHeight: '1.7', marginBottom: '3px' }}>{sp}</li>
+                            ))}
+                          </ul>
+                        )}
                       </div>
                     </div>
                   ))}

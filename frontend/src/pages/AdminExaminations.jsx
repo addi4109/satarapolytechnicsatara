@@ -244,8 +244,29 @@ function AdminExaminations() {
 
   // Revaluation steps - inline card editing
   const addEmptyRevStep = () => {
-    addEmptyRow('revaluationSteps', { title: '', description: '' });
+    addEmptyRow('revaluationSteps', { title: '', description: '', subPoints: [] });
     setEditingRevStepIdx(form.revaluationSteps.length);
+  };
+
+  // Revaluation sub-points helpers
+  const addRevStepSubPoint = (stepIdx) => {
+    const rows = [...form.revaluationSteps];
+    rows[stepIdx] = { ...rows[stepIdx], subPoints: [...(rows[stepIdx].subPoints || []), ''] };
+    handleChange('revaluationSteps', rows);
+  };
+
+  const updateRevStepSubPoint = (stepIdx, spIdx, value) => {
+    const rows = [...form.revaluationSteps];
+    const sp = [...rows[stepIdx].subPoints];
+    sp[spIdx] = value;
+    rows[stepIdx] = { ...rows[stepIdx], subPoints: sp };
+    handleChange('revaluationSteps', rows);
+  };
+
+  const removeRevStepSubPoint = (stepIdx, spIdx) => {
+    const rows = [...form.revaluationSteps];
+    rows[stepIdx] = { ...rows[stepIdx], subPoints: rows[stepIdx].subPoints.filter((_, i) => i !== spIdx) };
+    handleChange('revaluationSteps', rows);
   };
 
   const currentSection = SECTIONS.find((s) => s.key === activeTab);
@@ -654,7 +675,7 @@ function AdminExaminations() {
 
                 <div className="process-steps" style={{ marginTop: '8px' }}>
                   {form.revaluationSteps.map((step, i) => (
-                    <div className="process-step" key={i}>
+                    <div className="process-step admin-rev-card" key={i} style={{ transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease', border: editingRevStepIdx === i ? '1px solid #c8963e' : '1px solid #e4e8ed', borderRadius: '8px' }}>
                       <div className="step-number">{i + 1}</div>
                       <div className="step-content" style={{ flex: 1 }}>
                         {editingRevStepIdx === i ? (
@@ -665,7 +686,7 @@ function AdminExaminations() {
                               value={step.title}
                               onChange={(e) => updateRow('revaluationSteps', i, 'title', e.target.value)}
                               placeholder="Step title"
-                              style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', marginBottom: '6px' }}
+                              style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '14px', marginBottom: '6px' }}
                             />
                             <textarea
                               value={step.description}
@@ -674,14 +695,50 @@ function AdminExaminations() {
                               rows={2}
                               style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', resize: 'vertical', marginBottom: '8px' }}
                             />
+
+                            {/* Sub-points for revaluation step */}
+                            <div style={{ marginBottom: '10px' }}>
+                              <label style={{ fontSize: '12px', fontWeight: 600, color: '#555', marginBottom: '6px', display: 'block' }}>Sub-Points (bullet dots)</label>
+                              {(step.subPoints || []).map((sp, spIdx) => (
+                                <div key={spIdx} style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                                  <span style={{ color: '#7A263A', fontWeight: 700, fontSize: '14px' }}>•</span>
+                                  <input
+                                    type="text"
+                                    value={sp}
+                                    onChange={(e) => updateRevStepSubPoint(i, spIdx, e.target.value)}
+                                    placeholder="Sub-point text"
+                                    style={{ flex: 1, padding: '5px 8px', border: '1px solid #c8963e', borderRadius: '4px', fontSize: '12.5px', boxSizing: 'border-box' }}
+                                  />
+                                  <button
+                                    onClick={() => removeRevStepSubPoint(i, spIdx)}
+                                    style={{ background: 'none', border: 'none', color: '#c0392b', cursor: 'pointer', fontSize: '16px', fontWeight: 700, padding: '0 4px' }}
+                                    title="Remove"
+                                  >×</button>
+                                </div>
+                              ))}
+                              <button
+                                onClick={() => addRevStepSubPoint(i)}
+                                style={{ marginTop: '4px', background: 'none', border: '1px dashed #b9c3d4', borderRadius: '4px', padding: '4px 12px', cursor: 'pointer', color: '#243358', fontSize: '12px', fontWeight: 600 }}
+                              >+ Add Sub-Point</button>
+                            </div>
+
                             <button className="btn btn-success btn-sm" onClick={() => setEditingRevStepIdx(null)}>Done</button>
                           </>
                         ) : (
                           <>
                             <div onClick={() => setEditingRevStepIdx(i)} title="Click to edit" style={{ cursor: 'pointer' }}>
-                              <h4>{step.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled step</em>}</h4>
-                              {step.description && <p>{step.description}</p>}
-                              {!step.description && <p style={{ fontStyle: 'italic', color: '#aaa' }}>No description</p>}
+                              <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '16px' }}>{step.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled step</em>}</h4>
+                              {step.description && <p style={{ margin: '0 0 4px', color: '#555', fontSize: '14px', lineHeight: '1.5' }}>{step.description}</p>}
+                              {step.subPoints && step.subPoints.length > 0 && (
+                                <ul style={{ margin: '4px 0 0', paddingLeft: '18px' }}>
+                                  {step.subPoints.map((sp, spIdx) => (
+                                    <li key={spIdx} style={{ color: '#555', fontSize: '13px', lineHeight: '1.5', marginBottom: '2px' }}>{sp}</li>
+                                  ))}
+                                </ul>
+                              )}
+                              {!step.description && (!step.subPoints || step.subPoints.length === 0) && (
+                                <p style={{ fontStyle: 'italic', color: '#aaa', margin: 0, fontSize: '13px' }}>No description or sub-points</p>
+                              )}
                             </div>
                             <button
                               className="member-remove-btn"
