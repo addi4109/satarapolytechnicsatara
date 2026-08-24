@@ -954,7 +954,7 @@ function AdminAdmissions() {
                   <div style={{ marginTop: '12px', padding: '12px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '6px' }}>
                     <p style={{ margin: 0, fontSize: '13px', color: '#444' }}>
                       <strong>Current PDF:</strong>{' '}
-                      <a href={form.pdfUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#243358' }}>
+                      <a href={`/api/pdf-proxy?url=${encodeURIComponent(form.pdfUrl)}`} target="_blank" style={{ color: '#243358' }}>
                         {form.pdfUrl}
                       </a>
                     </p>

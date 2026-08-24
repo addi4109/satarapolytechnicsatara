@@ -141,12 +141,12 @@ function Examinations() {
                             {item.pdfUrl ? (
                               <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
                                 <a
-                                  href="#"
-                                  onClick={async (e) => { e.preventDefault(); try { const res = await fetch(item.pdfUrl); const blob = await res.blob(); const url = URL.createObjectURL(blob); window.open(url, '_blank'); } catch { window.open(item.pdfUrl, '_blank'); } }}
+                                  href={`/api/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
+                                  target="_blank"
                                   style={{ padding: '4px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
                                 >View</a>
                                 <a
-                                  href={item.pdfUrl}
+                                  href={`/api/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
                                   download
                                   style={{ padding: '4px 12px', background: '#7A263A', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
                                 >Download</a>
@@ -404,12 +404,12 @@ function Examinations() {
                             {item.pdfUrl ? (
                               <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
                                 <a
-                                  href="#"
-                                  onClick={async (e) => { e.preventDefault(); try { const res = await fetch(item.pdfUrl); const blob = await res.blob(); const url = URL.createObjectURL(blob); window.open(url, '_blank'); } catch { window.open(item.pdfUrl, '_blank'); } }}
+                                  href={`/api/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
+                                  target="_blank"
                                   style={{ padding: '4px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
                                 >View</a>
                                 <a
-                                  href={item.pdfUrl}
+                                  href={`/api/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
                                   download
                                   style={{ padding: '4px 12px', background: '#7A263A', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
                                 >Download</a>

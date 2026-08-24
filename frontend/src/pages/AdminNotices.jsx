@@ -249,11 +249,11 @@ function AdminNotices() {
                         <td>
                           <div className="actions" style={{ justifyContent: 'center' }}>
                             {notice.category !== 'tinker' && notice.pdfUrl ? (
-                              <a href={notice.pdfUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm" style={{ textDecoration: 'none' }}>View</a>
+                              <a href={`/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}`} target="_blank" className="btn btn-primary btn-sm" style={{ textDecoration: 'none' }}>View</a>
                             ) : notice.category !== 'tinker' ? (
                               <button className="btn btn-primary btn-sm" onClick={() => openEdit(notice)}>View</button>
                             ) : null}
-                            {notice.category !== 'tinker' && notice.pdfUrl && <a href={notice.pdfUrl} download className="btn btn-secondary btn-sm" style={{ textDecoration: 'none' }}>Download</a>}
+                            {notice.category !== 'tinker' && notice.pdfUrl && <a href={`/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}`} download className="btn btn-secondary btn-sm" style={{ textDecoration: 'none' }}>Download</a>}
                             <button className="btn btn-primary btn-sm" onClick={() => openEdit(notice)}>Edit</button>
                             {deleteConfirm === notice._id ? (
                               <>

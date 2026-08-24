@@ -81,31 +81,17 @@ function Notices() {
                       {notice.pdfUrl ? (
                         <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
                           <a
-                            href={notice.pdfUrl}
+                            href={`/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}`}
                             target="_blank"
-                            rel="noopener noreferrer"
                             className="notice-btn notice-view-btn"
                             style={{ textDecoration: 'none' }}
                           >View</a>
-                          <button
+                          <a
+                            href={`/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}`}
+                            download
                             className="notice-btn notice-download-btn"
-                            onClick={async () => {
-                              try {
-                                const res = await fetch(notice.pdfUrl);
-                                const blob = await res.blob();
-                                const url = window.URL.createObjectURL(blob);
-                                const a = document.createElement('a');
-                                a.href = url;
-                                a.download = `${notice.title}.pdf`;
-                                document.body.appendChild(a);
-                                a.click();
-                                document.body.removeChild(a);
-                                window.URL.revokeObjectURL(url);
-                              } catch {
-                                window.open(notice.pdfUrl, '_blank');
-                              }
-                            }}
-                          >Download</button>
+                            style={{ textDecoration: 'none', cursor: 'pointer' }}
+                          >Download</a>
                         </div>
                       ) : (
                         <span className="notice-btn notice-btn disabled">-</span>

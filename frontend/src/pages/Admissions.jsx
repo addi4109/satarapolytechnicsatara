@@ -423,36 +423,27 @@ function Admissions() {
               {getSection('brochure').pdfUrl ? (
                 <div style={{ marginTop: '20px', display: 'flex', gap: '12px' }}>
                   <a
-                    href={getSection('brochure').pdfUrl}
+                    href={`/api/pdf-proxy?url=${encodeURIComponent(getSection('brochure').pdfUrl)}`}
                     target="_blank"
-                    rel="noopener noreferrer"
                     className="btn btn-primary"
                     style={{ padding: '10px 24px', fontSize: '14px', textDecoration: 'none' }}
                   >
                     View Brochure
                   </a>
-                  <button
+                  <a
+                    href={`/api/pdf-proxy?url=${encodeURIComponent(getSection('brochure').pdfUrl)}`}
+                    download
                     className="btn btn-secondary"
-                    onClick={async () => {
-                      try {
-                        const response = await fetch(getSection('brochure').pdfUrl);
-                        const blob = await response.blob();
-                        const url = window.URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = 'College_Brochure.pdf';
-                        document.body.appendChild(a);
-                        a.click();
-                        window.URL.revokeObjectURL(url);
-                        document.body.removeChild(a);
-                      } catch {
-                        window.open(getSection('brochure').pdfUrl, '_blank');
+                    style={{ padding: '10px 24px', fontSize: '14px', textDecoration: 'none', cursor: 'pointer' }}
+                  >
+                    Download Brochure
+                  </a>
                       }
                     }}
                     style={{ padding: '10px 24px', fontSize: '14px' }}
                   >
                     Download Brochure
-                  </button>
+                  </a>
                 </div>
               ) : (
                 <p style={{ marginTop: '20px', color: '#888' }}>No brochure uploaded yet.</p>
