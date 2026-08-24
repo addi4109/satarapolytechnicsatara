@@ -9,8 +9,6 @@ const API_URL = '/api';
 const emptyPhoto = { title: '', image: '', category: 'general', description: '', order: 0 };
 const emptyVideo = { title: '', videoUrl: '', thumbnail: '', description: '', order: 0 };
 const emptyNews = { title: '', date: '', source: '', summary: '', image: '', order: 0 };
-const emptyRecruiter = { name: '', logo: '', order: 0 };
-const emptyNotice = { text: '', active: true, order: 0 };
 const emptySlide = { image: '', title: '', link: '', order: 0 };
 
 function AdminGallery() {
@@ -21,9 +19,9 @@ function AdminGallery() {
   const [slides, setSlides] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const [showForm, setShowForm] = useState(false);
-  const [editId, setEditId] = useState(null);
-  const [form, setForm] = useState({});
+  const [adding, setAdding] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [form, setForm] = useState({ ...emptyPhoto });
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState(null);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
@@ -39,14 +37,10 @@ function AdminGallery() {
         fetch(`${API_URL}/slides`).then((r) => r.json()),
       ]);
       setPhotos(p); setVideos(v); setNews(n); setSlides(s);
-    } catch (err) {
+    } catch {
       setMessage({ type: 'error', text: 'Failed to load data' });
     } finally { setLoading(false); }
   };
-
-  const openAdd = () => { setEditId(null); setForm(getEmpty()); setShowForm(true); };
-  const openEdit = (item) => { setEditId(item._id); setForm({ ...item }); setShowForm(true); };
-  const cancelForm = () => { setShowForm(false); setEditId(null); setMessage(null); };
 
   const getEmpty = () => {
     if (tab === 'photos') return { ...emptyPhoto };
@@ -62,17 +56,37 @@ function AdminGallery() {
     return 'slides';
   };
 
+  const startAdd = () => {
+    setAdding(true);
+    setEditingId(null);
+    setForm(getEmpty());
+  };
+
+  const startEdit = (item) => {
+    setAdding(false);
+    setEditingId(item._id);
+    setForm({ ...item });
+  };
+
+  const cancelForm = () => {
+    setAdding(false);
+    setEditingId(null);
+    setForm(getEmpty());
+  };
+
   const handleSave = async (e) => {
     e.preventDefault();
     setSaving(true);
     try {
       const ep = getEndpoint();
-      const url = editId ? `${API_URL}/${ep}/${editId}` : `${API_URL}/${ep}`;
-      const method = editId ? 'PUT' : 'POST';
+      const url = editingId ? `${API_URL}/${ep}/${editingId}` : `${API_URL}/${ep}`;
+      const method = editingId ? 'PUT' : 'POST';
       const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) });
       if (res.ok) {
-        setMessage({ type: 'success', text: editId ? 'Updated!' : 'Added!' });
-        setShowForm(false); setEditId(null);
+        setMessage({ type: 'success', text: editingId ? 'Updated!' : 'Added!' });
+        setAdding(false);
+        setEditingId(null);
+        setForm(getEmpty());
         fetchAll();
       } else {
         const err = await res.json();
@@ -91,22 +105,123 @@ function AdminGallery() {
     setDeleteConfirm(null);
   };
 
-  const switchTab = (t) => { setTab(t); setShowForm(false); setEditId(null); setMessage(null); };
+  const switchTab = (t) => { setTab(t); setAdding(false); setEditingId(null); setMessage(null); };
 
-  const renderItemActions = (id) => (
-    <div className="cells-admin-card-actions">
-      <button className="btn btn-primary btn-sm" onClick={() => {
-        const list = tab === 'photos' ? photos : tab === 'videos' ? videos : tab === 'news' ? news : slides;
-        openEdit(list.find((i) => i._id === id));
-      }}>Edit</button>
-      {deleteConfirm === id ? (
-        <>
-          <button className="btn btn-danger btn-sm" onClick={() => handleDelete(id)}>Confirm</button>
-          <button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirm(null)}>Cancel</button>
-        </>
-      ) : (
-        <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirm(id)}>Delete</button>
-      )}
+  const isEditing = (id) => editingId === id;
+
+  // Inline form card
+  const renderFormCard = () => (
+    <div style={{
+      background: '#fff', border: '2px solid #c8963e', borderRadius: '10px', padding: '16px',
+      minHeight: '280px',
+    }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+        <h4 style={{ margin: 0, color: '#243358', fontSize: '15px' }}>{editingId ? 'Edit' : 'Add New'} {tab === 'photos' ? 'Photo' : tab === 'videos' ? 'Video' : tab === 'news' ? 'News' : 'Slide'}</h4>
+        <button onClick={cancelForm} style={{ background: 'none', border: 'none', fontSize: '18px', cursor: 'pointer', color: '#999' }}>×</button>
+      </div>
+      <form onSubmit={handleSave}>
+        {/* Photo fields */}
+        {tab === 'photos' && <>
+          <div style={{ marginBottom: '10px' }}>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Title *</label>
+            <input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Photo title" required style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+          </div>
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
+            <div style={{ flex: 1 }}>
+              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Category</label>
+              <select value={form.category || 'general'} onChange={(e) => setForm({ ...form, category: e.target.value })} style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }}>
+                <option value="general">General</option>
+                <option value="campus">Campus</option>
+                <option value="events">Events</option>
+                <option value="labs">Labs</option>
+                <option value="placements">Placements</option>
+              </select>
+            </div>
+            <div style={{ width: '80px' }}>
+              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Order</label>
+              <input type="number" value={form.order || 0} onChange={(e) => setForm({ ...form, order: Number(e.target.value) })} min={0} style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+            </div>
+          </div>
+          <div style={{ marginBottom: '10px' }}>
+            <ImageUpload value={form.image || ''} onChange={(url) => setForm({ ...form, image: url })} label="" placeholder="Upload photo..." />
+          </div>
+          {form.image && <img src={form.image} alt="Preview" style={{ width: '100%', height: '100px', objectFit: 'cover', borderRadius: '6px', marginBottom: '10px', border: '1px solid #e4e8ed' }} />}
+          <div style={{ marginBottom: '10px' }}>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Description</label>
+            <textarea value={form.description || ''} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={2} placeholder="Optional description" style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', resize: 'vertical', boxSizing: 'border-box' }} />
+          </div>
+        </>}
+
+        {/* Video fields */}
+        {tab === 'videos' && <>
+          <div style={{ marginBottom: '10px' }}>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Title *</label>
+            <input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Video title" required style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+          </div>
+          <div style={{ marginBottom: '10px' }}>
+            <VideoUpload value={form.videoUrl || ''} onChange={(url) => setForm({ ...form, videoUrl: url })} label="Video *" placeholder="Upload video..." />
+          </div>
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
+            <div style={{ flex: 1 }}><ImageUpload value={form.thumbnail || ''} onChange={(url) => setForm({ ...form, thumbnail: url })} label="" placeholder="Thumbnail..." /></div>
+            <div style={{ width: '80px' }}>
+              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Order</label>
+              <input type="number" value={form.order || 0} onChange={(e) => setForm({ ...form, order: Number(e.target.value) })} min={0} style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+            </div>
+          </div>
+          <div style={{ marginBottom: '10px' }}>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Description</label>
+            <textarea value={form.description || ''} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={2} style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', resize: 'vertical', boxSizing: 'border-box' }} />
+          </div>
+        </>}
+
+        {/* News fields */}
+        {tab === 'news' && <>
+          <div style={{ marginBottom: '10px' }}>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Title *</label>
+            <input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="News title" required style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+          </div>
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
+            <div style={{ flex: 1 }}>
+              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Date *</label>
+              <input type="text" value={form.date || ''} onChange={(e) => setForm({ ...form, date: e.target.value })} placeholder="15 Jul 2025" required style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+            </div>
+            <div style={{ flex: 1 }}>
+              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Source</label>
+              <input type="text" value={form.source || ''} onChange={(e) => setForm({ ...form, source: e.target.value })} placeholder="Times of India" style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+            </div>
+          </div>
+          <div style={{ marginBottom: '10px' }}>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Summary</label>
+            <textarea value={form.summary || ''} onChange={(e) => setForm({ ...form, summary: e.target.value })} rows={2} style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', resize: 'vertical', boxSizing: 'border-box' }} />
+          </div>
+          <div style={{ marginBottom: '10px' }}><ImageUpload value={form.image || ''} onChange={(url) => setForm({ ...form, image: url })} label="" placeholder="News image..." /></div>
+          <div style={{ marginBottom: '10px' }}>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Order</label>
+            <input type="number" value={form.order || 0} onChange={(e) => setForm({ ...form, order: Number(e.target.value) })} min={0} style={{ width: '100px', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+          </div>
+        </>}
+
+        {/* Slide fields */}
+        {tab === 'slides' && <>
+          <div style={{ marginBottom: '10px' }}><ImageUpload value={form.image || ''} onChange={(url) => setForm({ ...form, image: url })} label="" placeholder="Slide image..." /></div>
+          {form.image && <img src={form.image} alt="Preview" style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '6px', marginBottom: '10px', border: '1px solid #e4e8ed' }} />}
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
+            <div style={{ flex: 1 }}>
+              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Title</label>
+              <input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Slide title" style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+            </div>
+            <div style={{ width: '80px' }}>
+              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Order</label>
+              <input type="number" value={form.order || 0} onChange={(e) => setForm({ ...form, order: Number(e.target.value) })} min={0} style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+            </div>
+          </div>
+        </>}
+
+        <div style={{ display: 'flex', gap: '8px', marginTop: '12px', paddingTop: '12px', borderTop: '1px solid #e4e8ed' }}>
+          <button type="submit" className="btn btn-success btn-sm" disabled={saving} style={{ flex: 1 }}>{saving ? 'Saving...' : editingId ? 'Update' : 'Add'}</button>
+          <button type="button" className="btn btn-secondary btn-sm" onClick={cancelForm}>Cancel</button>
+        </div>
+      </form>
     </div>
   );
 
@@ -114,9 +229,6 @@ function AdminGallery() {
     <AdminLayout>
       <div className="admin-topbar">
         <h1>Gallery & Content</h1>
-        <div className="admin-topbar-actions">
-          <button className="btn btn-success" onClick={openAdd}>+ Add New</button>
-        </div>
       </div>
       <div className="admin-content">
         {message && (
@@ -142,209 +254,168 @@ function AdminGallery() {
           </button>
         </div>
 
-        {/* Inline Form */}
-        {showForm && (
-          <div className="dept-form-card" style={{ marginBottom: '24px' }}>
-            <div className="dept-form-card-header">
-              <div className="dept-form-card-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+        {/* Card Grid */}
+        {loading ? (
+          <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '16px' }}>
+            {/* Add New Card */}
+            {!adding && !editingId && (
+              <div
+                onClick={startAdd}
+                style={{
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                  minHeight: '200px', border: '2px dashed #b9c3d4', borderRadius: '10px', cursor: 'pointer',
+                  background: '#fff', transition: 'all 0.25s ease', gap: '10px',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#243358'; e.currentTarget.style.background = '#f8f9fa'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#b9c3d4'; e.currentTarget.style.background = '#fff'; }}
+              >
+                <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', color: '#243358', fontWeight: 300 }}>+</div>
+                <span style={{ fontSize: '14px', fontWeight: 600, color: '#243358' }}>Add {tab === 'photos' ? 'Photo' : tab === 'videos' ? 'Video' : tab === 'news' ? 'News' : 'Slide'}</span>
               </div>
-              <div><h3>{editId ? 'Edit' : 'Add New'} {tab.charAt(0).toUpperCase() + tab.slice(1, -1)}</h3></div>
-            </div>
-            <div className="dept-form-card-body">
-              <form className="admin-form" onSubmit={handleSave}>
-                {/* Photo fields */}
-                {tab === 'photos' && <>
-                  <div className="form-group"><label>Title *</label><input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} required /></div>
-                  <div className="form-row">
-                    <div className="form-group"><label>Category</label><select value={form.category || 'general'} onChange={(e) => setForm({ ...form, category: e.target.value })}><option value="general">General</option><option value="campus">Campus</option><option value="events">Events</option><option value="labs">Labs</option><option value="placements">Placements</option></select></div>
-                    <div className="form-group"><label>Order</label><input type="number" value={form.order || 0} onChange={(e) => setForm({ ...form, order: Number(e.target.value) })} min={0} /></div>
+            )}
+
+            {/* Inline Form Card */}
+            {adding && renderFormCard()}
+
+            {/* ===== PHOTOS ===== */}
+            {tab === 'photos' && photos.map((p) => (
+              isEditing(p._id) ? (
+                <div key={p._id}>{renderFormCard()}</div>
+              ) : (
+                <div key={p._id} style={{
+                  background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', overflow: 'hidden',
+                  transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
+                }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(36,51,88,0.1)'; e.currentTarget.style.borderColor = '#c8963e'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e4e8ed'; }}
+                >
+                  {p.image && <img src={p.image} alt={p.title} style={{ width: '100%', height: '160px', objectFit: 'cover' }} />}
+                  {!p.image && <div style={{ height: '160px', background: '#f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ccc', fontSize: '32px' }}>🖼</div>}
+                  <div style={{ padding: '12px 14px' }}>
+                    <span style={{ display: 'inline-block', padding: '2px 8px', background: '#e8f5e9', color: '#2e7d32', borderRadius: '4px', fontSize: '10px', fontWeight: 600, marginBottom: '6px' }}>{p.category}</span>
+                    <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '14px', fontWeight: 700 }}>{p.title}</h4>
+                    {p.description && <p style={{ margin: 0, color: '#666', fontSize: '12px', lineHeight: '1.4' }}>{p.description.substring(0, 60)}{p.description.length > 60 ? '...' : ''}</p>}
+                    <div style={{ display: 'flex', gap: '6px', marginTop: '10px' }}>
+                      <button onClick={() => startEdit(p)} style={{ padding: '4px 12px', background: '#fff', color: '#243358', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>Edit</button>
+                      {deleteConfirm === p._id ? (
+                        <>
+                          <button onClick={() => handleDelete(p._id)} style={{ padding: '4px 12px', background: '#dc3545', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: 'none', cursor: 'pointer' }}>Yes</button>
+                          <button onClick={() => setDeleteConfirm(null)} style={{ padding: '4px 12px', background: '#fff', color: '#555', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>No</button>
+                        </>
+                      ) : (
+                        <button onClick={() => setDeleteConfirm(p._id)} style={{ padding: '4px 12px', background: '#fff', color: '#dc3545', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #dc3545', cursor: 'pointer' }}>Delete</button>
+                      )}
+                    </div>
                   </div>
-                  <div className="form-group"><ImageUpload value={form.image || ''} onChange={(url) => setForm({ ...form, image: url })} label="Photo" placeholder="Upload photo..." /></div>
-                  <div className="form-group"><label>Description</label><textarea value={form.description || ''} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} /></div>
-                </>}
-
-                {/* Video fields */}
-                {tab === 'videos' && <>
-                  <div className="form-group"><label>Title *</label><input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} required /></div>
-                  <div className="form-group"><VideoUpload value={form.videoUrl || ''} onChange={(url) => setForm({ ...form, videoUrl: url })} label="Video (upload, drag &amp; drop, or paste URL) *" placeholder="Upload video..." /></div>
-                  <div className="form-row">
-                    <div className="form-group"><ImageUpload value={form.thumbnail || ''} onChange={(url) => setForm({ ...form, thumbnail: url })} label="Thumbnail (optional)" placeholder="Upload thumbnail..." /></div>
-                    <div className="form-group"><label>Order</label><input type="number" value={form.order || 0} onChange={(e) => setForm({ ...form, order: Number(e.target.value) })} min={0} /></div>
-                  </div>
-                  <div className="form-group"><label>Description</label><textarea value={form.description || ''} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} /></div>
-                </>}
-
-                {/* News fields */}
-                {tab === 'news' && <>
-                  <div className="form-group"><label>Title *</label><input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} required /></div>
-                  <div className="form-row">
-                    <div className="form-group"><label>Date *</label><input type="text" value={form.date || ''} onChange={(e) => setForm({ ...form, date: e.target.value })} placeholder="e.g. 15 Jul 2025" required /></div>
-                    <div className="form-group"><label>Source</label><input type="text" value={form.source || ''} onChange={(e) => setForm({ ...form, source: e.target.value })} placeholder="e.g. Times of India" /></div>
-                  </div>
-                  <div className="form-group"><label>Summary</label><textarea value={form.summary || ''} onChange={(e) => setForm({ ...form, summary: e.target.value })} rows={4} /></div>
-                  <div className="form-group"><ImageUpload value={form.image || ''} onChange={(url) => setForm({ ...form, image: url })} label="News Image (optional)" placeholder="Upload news image..." /></div>
-                  <div className="form-group"><label>Order</label><input type="number" value={form.order || 0} onChange={(e) => setForm({ ...form, order: Number(e.target.value) })} min={0} /></div>
-                </>}
-
-
-
-                {/* Slide fields */}
-                {tab === 'slides' && <>
-                  <div className="form-group"><ImageUpload value={form.image || ''} onChange={(url) => setForm({ ...form, image: url })} label="Slide Image" placeholder="Upload slide image..." /></div>
-                  <div className="form-row">
-                    <div className="form-group"><label>Title (optional)</label><input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Slide title" /></div>
-                    <div className="form-group"><label>Link URL (optional)</label><input type="text" value={form.link || ''} onChange={(e) => setForm({ ...form, link: e.target.value })} placeholder="https://..." /></div>
-                  </div>
-                  <div className="form-group"><label>Order</label><input type="number" value={form.order || 0} onChange={(e) => setForm({ ...form, order: Number(e.target.value) })} min={0} /></div>
-                </>}
-
-
-
-                <div style={{ display: 'flex', gap: '10px', marginTop: '16px' }}>
-                  <button type="submit" className="btn btn-success" disabled={saving}>{saving ? 'Saving...' : editId ? 'Update' : 'Add'}</button>
-                  <button type="button" className="btn btn-secondary" onClick={cancelForm}>Cancel</button>
                 </div>
-              </form>
-            </div>
+              )
+            ))}
+
+            {/* ===== VIDEOS ===== */}
+            {tab === 'videos' && videos.map((v) => (
+              isEditing(v._id) ? (
+                <div key={v._id}>{renderFormCard()}</div>
+              ) : (
+                <div key={v._id} style={{
+                  background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', overflow: 'hidden',
+                  transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
+                }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(36,51,88,0.1)'; e.currentTarget.style.borderColor = '#c8963e'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e4e8ed'; }}
+                >
+                  <div style={{ height: '160px', background: '#1a1a2e', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                    {v.thumbnail ? <img src={v.thumbnail} alt={v.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span style={{ color: '#fff', fontSize: '36px' }}>▶</span>}
+                  </div>
+                  <div style={{ padding: '12px 14px' }}>
+                    <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '14px', fontWeight: 700 }}>{v.title}</h4>
+                    <div style={{ display: 'flex', gap: '6px', marginTop: '10px' }}>
+                      <button onClick={() => startEdit(v)} style={{ padding: '4px 12px', background: '#fff', color: '#243358', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>Edit</button>
+                      {deleteConfirm === v._id ? (
+                        <>
+                          <button onClick={() => handleDelete(v._id)} style={{ padding: '4px 12px', background: '#dc3545', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: 'none', cursor: 'pointer' }}>Yes</button>
+                          <button onClick={() => setDeleteConfirm(null)} style={{ padding: '4px 12px', background: '#fff', color: '#555', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>No</button>
+                        </>
+                      ) : (
+                        <button onClick={() => setDeleteConfirm(v._id)} style={{ padding: '4px 12px', background: '#fff', color: '#dc3545', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #dc3545', cursor: 'pointer' }}>Delete</button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )
+            ))}
+
+            {/* ===== NEWS ===== */}
+            {tab === 'news' && news.map((n) => (
+              isEditing(n._id) ? (
+                <div key={n._id}>{renderFormCard()}</div>
+              ) : (
+                <div key={n._id} style={{
+                  background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', overflow: 'hidden',
+                  transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
+                }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(36,51,88,0.1)'; e.currentTarget.style.borderColor = '#c8963e'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e4e8ed'; }}
+                >
+                  {n.image && <img src={n.image} alt={n.title} style={{ width: '100%', height: '140px', objectFit: 'cover' }} />}
+                  <div style={{ padding: '12px 14px' }}>
+                    <div style={{ display: 'flex', gap: '6px', marginBottom: '6px' }}>
+                      <span style={{ padding: '2px 8px', background: '#e8f5e9', color: '#2e7d32', borderRadius: '4px', fontSize: '10px', fontWeight: 600 }}>{n.date}</span>
+                      {n.source && <span style={{ padding: '2px 8px', background: '#e3f2fd', color: '#1565c0', borderRadius: '4px', fontSize: '10px', fontWeight: 600 }}>{n.source}</span>}
+                    </div>
+                    <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '14px', fontWeight: 700 }}>{n.title}</h4>
+                    {n.summary && <p style={{ margin: 0, color: '#666', fontSize: '12px', lineHeight: '1.4' }}>{n.summary.substring(0, 80)}{n.summary.length > 80 ? '...' : ''}</p>}
+                    <div style={{ display: 'flex', gap: '6px', marginTop: '10px' }}>
+                      <button onClick={() => startEdit(n)} style={{ padding: '4px 12px', background: '#fff', color: '#243358', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>Edit</button>
+                      {deleteConfirm === n._id ? (
+                        <>
+                          <button onClick={() => handleDelete(n._id)} style={{ padding: '4px 12px', background: '#dc3545', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: 'none', cursor: 'pointer' }}>Yes</button>
+                          <button onClick={() => setDeleteConfirm(null)} style={{ padding: '4px 12px', background: '#fff', color: '#555', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>No</button>
+                        </>
+                      ) : (
+                        <button onClick={() => setDeleteConfirm(n._id)} style={{ padding: '4px 12px', background: '#fff', color: '#dc3545', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #dc3545', cursor: 'pointer' }}>Delete</button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )
+            ))}
+
+            {/* ===== SLIDES ===== */}
+            {tab === 'slides' && slides.map((s) => (
+              isEditing(s._id) ? (
+                <div key={s._id}>{renderFormCard()}</div>
+              ) : (
+                <div key={s._id} style={{
+                  background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', overflow: 'hidden',
+                  transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
+                }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(36,51,88,0.1)'; e.currentTarget.style.borderColor = '#c8963e'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e4e8ed'; }}
+                >
+                  {s.image && <img src={s.image} alt={s.title} style={{ width: '100%', height: '140px', objectFit: 'cover' }} />}
+                  <div style={{ padding: '12px 14px' }}>
+                    {s.title && <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '14px', fontWeight: 700 }}>{s.title}</h4>}
+                    <div style={{ display: 'flex', gap: '6px', marginTop: '10px' }}>
+                      <button onClick={() => startEdit(s)} style={{ padding: '4px 12px', background: '#fff', color: '#243358', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>Edit</button>
+                      {deleteConfirm === s._id ? (
+                        <>
+                          <button onClick={() => handleDelete(s._id)} style={{ padding: '4px 12px', background: '#dc3545', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: 'none', cursor: 'pointer' }}>Yes</button>
+                          <button onClick={() => setDeleteConfirm(null)} style={{ padding: '4px 12px', background: '#fff', color: '#555', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>No</button>
+                        </>
+                      ) : (
+                        <button onClick={() => setDeleteConfirm(s._id)} style={{ padding: '4px 12px', background: '#fff', color: '#dc3545', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #dc3545', cursor: 'pointer' }}>Delete</button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )
+            ))}
           </div>
         )}
-
-        {/* ===== PHOTOS ===== */}
-        {tab === 'photos' && !showForm && (
-          loading ? <p>Loading...</p> : photos.length === 0 ? (
-            <EmptyState text="No photos yet." onAdd={openAdd} />
-          ) : (
-            <div className="cells-admin-grid">
-              {photos.map((p) => (
-                <div key={p._id} className="cells-admin-card">
-                  {p.image && <div style={{ height: '160px', borderRadius: '6px', overflow: 'hidden', marginBottom: '12px' }}><img src={p.image} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></div>}
-                  <div className="cells-admin-card-top"><span className="badge badge-cell">{p.category}</span></div>
-                  <h3 className="cells-admin-card-title">{p.title}</h3>
-                  <p className="cells-admin-card-desc">{p.description || 'No description'}</p>
-                  {renderItemActions(p._id)}
-                </div>
-              ))}
-            </div>
-          )
-        )}
-
-        {/* ===== VIDEOS ===== */}
-        {tab === 'videos' && !showForm && (
-          loading ? <p>Loading...</p> : videos.length === 0 ? (
-            <EmptyState text="No videos yet." onAdd={openAdd} />
-          ) : (
-            <div className="cells-admin-grid">
-              {videos.map((v) => (
-                <div key={v._id} className="cells-admin-card">
-                  <div style={{ height: '160px', borderRadius: '6px', overflow: 'hidden', marginBottom: '12px', background: '#7A263A', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    {v.thumbnail ? <img src={v.thumbnail} alt={v.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span style={{ color: '#315C4A', fontSize: '36px' }}>▶</span>}
-                  </div>
-                  <h3 className="cells-admin-card-title">{v.title}</h3>
-                  <p className="cells-admin-card-desc" style={{ fontFamily: 'monospace', fontSize: '11px', wordBreak: 'break-all' }}>{v.videoUrl}</p>
-                  {renderItemActions(v._id)}
-                </div>
-              ))}
-            </div>
-          )
-        )}
-
-        {/* ===== NEWS ===== */}
-        {tab === 'news' && !showForm && (
-          loading ? <p>Loading...</p> : news.length === 0 ? (
-            <EmptyState text="No news yet." onAdd={openAdd} />
-          ) : (
-            <>
-              {/* News with image - 3 per row grid */}
-              {news.filter(n => n.image).length > 0 && (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '24px' }}>
-                  {news.filter(n => n.image).map((n) => (
-                    <div key={n._id} className="cells-admin-card">
-                      <div style={{ height: '160px', borderRadius: '6px', overflow: 'hidden', marginBottom: '12px' }}>
-                        <img src={n.image} alt={n.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                      </div>
-                      <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
-                        <span className="badge badge-cell">{n.date}</span>
-                        {n.source && <span className="badge badge-committee">{n.source}</span>}
-                      </div>
-                      <h3 className="cells-admin-card-title" style={{ fontSize: '14px' }}>{n.title}</h3>
-                      <p className="cells-admin-card-desc" style={{ fontSize: '12px' }}>{n.summary}</p>
-                      <div className="cells-admin-card-actions" style={{ marginTop: '10px' }}>
-                        <button className="btn btn-primary btn-sm" onClick={() => openEdit(n)}>Edit</button>
-                        {deleteConfirm === n._id ? (
-                          <><button className="btn btn-danger btn-sm" onClick={() => handleDelete(n._id)}>Confirm</button><button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirm(null)}>Cancel</button></>
-                        ) : (
-                          <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirm(n._id)}>Delete</button>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* News without image - full width */}
-              {news.filter(n => !n.image).length > 0 && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  {news.filter(n => !n.image).map((n) => (
-                    <div key={n._id} className="admin-card" style={{ padding: '16px 20px' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '16px' }}>
-                        <div style={{ flex: 1 }}>
-                          <div style={{ display: 'flex', gap: '10px', marginBottom: '6px' }}>
-                            <span className="badge badge-cell">{n.date}</span>
-                            {n.source && <span className="badge badge-committee">{n.source}</span>}
-                          </div>
-                          <h3 style={{ fontFamily: "'Georgia', serif", fontSize: '15px', color: '#7A263A', margin: '0 0 4px' }}>{n.title}</h3>
-                          <p style={{ fontSize: '13px', color: '#666', margin: 0, lineHeight: '1.5' }}>{n.summary}</p>
-                        </div>
-                        <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
-                          <button className="btn btn-primary btn-sm" onClick={() => openEdit(n)}>Edit</button>
-                          {deleteConfirm === n._id ? (
-                            <><button className="btn btn-danger btn-sm" onClick={() => handleDelete(n._id)}>Confirm</button><button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirm(null)}>Cancel</button></>
-                          ) : (
-                            <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirm(n._id)}>Delete</button>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </>
-          )
-        )}
-
-
-
-        {/* ===== SLIDES ===== */}
-        {tab === 'slides' && !showForm && (
-          loading ? <p>Loading...</p> : slides.length === 0 ? (
-            <EmptyState text="No slides yet." onAdd={openAdd} />
-          ) : (
-            <div className="cells-admin-grid">
-              {slides.map((s) => (
-                <div key={s._id} className="cells-admin-card">
-                  {s.image && <div style={{ height: '160px', borderRadius: '6px', overflow: 'hidden', marginBottom: '12px' }}><img src={s.image} alt={s.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></div>}
-                  {s.title && <h3 className="cells-admin-card-title">{s.title}</h3>}
-                  {s.link && <p className="cells-admin-card-desc" style={{ fontFamily: 'monospace', fontSize: '11px', wordBreak: 'break-all' }}>{s.link}</p>}
-                  {renderItemActions(s._id)}
-                </div>
-              ))}
-            </div>
-          )
-        )}
-
-
       </div>
     </AdminLayout>
-  );
-}
-
-function EmptyState({ text, onAdd }) {
-  return (
-    <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-      <p style={{ color: '#888', marginBottom: '16px' }}>{text}</p>
-      <button className="btn btn-success" onClick={onAdd}>Add First Item</button>
-    </div>
   );
 }
 
