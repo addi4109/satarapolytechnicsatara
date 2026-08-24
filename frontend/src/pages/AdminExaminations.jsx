@@ -397,7 +397,7 @@ function AdminExaminations() {
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                         <h4
                           onClick={() => setEditingSubSectionIdx(ssIdx)}
-                          style={{ margin: 0, color: '#243358', fontSize: '16px', cursor: 'pointer', flex: 1 }}
+                          style={{ margin: 0, color: '#243358', fontSize: '20px', cursor: 'pointer', flex: 1 }}
                         >
                           <span style={{ color: '#7A263A', marginRight: '8px' }}>§{ssIdx + 1}</span>
                           {subSection.subTitle || <em style={{ fontWeight: 400, color: '#aaa' }}>Untitled sub-section</em>}
@@ -463,17 +463,17 @@ function AdminExaminations() {
                               title="Click to edit"
                               style={{ cursor: 'pointer', flex: 1 }}
                             >
-                              <h5 style={{ margin: '0 0 4px', color: '#243358', fontSize: '14px' }}>
+                              <h5 style={{ margin: '0 0 4px', color: '#243358', fontSize: '17px' }}>
                                 <span style={{ color: '#7A263A', marginRight: '6px' }}>Rule {rIdx + 1}:</span>
                                 {rule.title || <em style={{ fontWeight: 400, color: '#aaa' }}>Untitled rule</em>}
                               </h5>
                               {rule.description && (
-                                <p style={{ margin: '0 0 4px', color: '#555', fontSize: '13px', lineHeight: '1.5' }}>{rule.description}</p>
+                                <p style={{ margin: '0 0 4px', color: '#555', fontSize: '15px', lineHeight: '1.5' }}>{rule.description}</p>
                               )}
                               {rule.subPoints && rule.subPoints.length > 0 && (
                                 <ul style={{ margin: '4px 0 0', paddingLeft: '18px' }}>
                                   {rule.subPoints.map((sp, spIdx) => (
-                                    <li key={spIdx} style={{ color: '#555', fontSize: '12px', lineHeight: '1.5', marginBottom: '1px' }}>{sp}</li>
+                                    <li key={spIdx} style={{ color: '#555', fontSize: '14px', lineHeight: '1.5', marginBottom: '1px' }}>{sp}</li>
                                   ))}
                                 </ul>
                               )}
