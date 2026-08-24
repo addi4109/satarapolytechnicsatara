@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
   try {
     const {
       section, title, content,
-      schedules, rules, resultsData,
+      schedules, rules, ruleSubSections, resultsData,
       revaluationSteps, revaluationFee, revaluationDeadline,
       noticesData, resultPortalUrl, active,
     } = req.body;
@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
       { section },
       {
         section, title, content,
-        schedules, rules, resultsData,
+        schedules, rules, ruleSubSections, resultsData,
         revaluationSteps, revaluationFee, revaluationDeadline,
         noticesData, resultPortalUrl, active,
       },

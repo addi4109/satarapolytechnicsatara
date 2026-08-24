@@ -28,7 +28,25 @@ const ExaminationSchema = new mongoose.Schema({
     }],
     default: [],
   },
-  // For rules section: array of rules
+  // For rules section: array of sub-sections, each with its own rules
+  ruleSubSections: {
+    type: [{
+      subTitle: { type: String, default: '' },
+      rules: {
+        type: [{
+          title: String,
+          description: String,
+          subPoints: {
+            type: [String],
+            default: [],
+          },
+        }],
+        default: [],
+      },
+    }],
+    default: [],
+  },
+  // Legacy flat rules (kept for backward compatibility)
   rules: {
     type: [{
       title: String,

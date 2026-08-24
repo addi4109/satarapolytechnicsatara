@@ -28,6 +28,7 @@ const defaultForm = {
   content: '',
   schedules: [],
   rules: [],
+  ruleSubSections: [],
   resultsData: [],
   revaluationSteps: [],
   revaluationFee: '',
@@ -48,6 +49,8 @@ function AdminExaminations() {
   // Inline editing state - frontend-style editors
   const [editingRuleIdx, setEditingRuleIdx] = useState(null);
   const [editingRevStepIdx, setEditingRevStepIdx] = useState(null);
+  const [editingSubSectionIdx, setEditingSubSectionIdx] = useState(null);
+  const [editingSubSectionRuleIdx, setEditingSubSectionRuleIdx] = useState(null);
 
   useEffect(() => { fetchSections(); }, []);
 
@@ -73,6 +76,7 @@ function AdminExaminations() {
         content: existing.content || '',
         schedules: existing.schedules || [],
         rules: existing.rules || [],
+        ruleSubSections: existing.ruleSubSections || [],
         resultsData: existing.resultsData || [],
         revaluationSteps: existing.revaluationSteps || [],
         revaluationFee: existing.revaluationFee || '',
@@ -91,6 +95,8 @@ function AdminExaminations() {
   const resetInputs = () => {
     setEditingRuleIdx(null);
     setEditingRevStepIdx(null);
+    setEditingSubSectionIdx(null);
+    setEditingSubSectionRuleIdx(null);
   };
 
   const handleChange = (field, value) => setForm((prev) => ({ ...prev, [field]: value }));
@@ -167,6 +173,73 @@ function AdminExaminations() {
     const rows = [...form.rules];
     rows[ruleIdx] = { ...rows[ruleIdx], subPoints: rows[ruleIdx].subPoints.filter((_, i) => i !== spIdx) };
     handleChange('rules', rows);
+  };
+
+  // ===== Sub-Section helpers =====
+  const addEmptySubSection = () => {
+    const sections = [...(form.ruleSubSections || []), { subTitle: '', rules: [] }];
+    handleChange('ruleSubSections', sections);
+    setEditingSubSectionIdx(sections.length - 1);
+    setEditingSubSectionRuleIdx(null);
+  };
+
+  const updateSubSectionTitle = (ssIdx, value) => {
+    const sections = [...form.ruleSubSections];
+    sections[ssIdx] = { ...sections[ssIdx], subTitle: value };
+    handleChange('ruleSubSections', sections);
+  };
+
+  const removeSubSection = (ssIdx) => {
+    handleChange('ruleSubSections', form.ruleSubSections.filter((_, i) => i !== ssIdx));
+    setEditingSubSectionIdx(null);
+    setEditingSubSectionRuleIdx(null);
+  };
+
+  const addRuleToSubSection = (ssIdx) => {
+    const sections = [...form.ruleSubSections];
+    sections[ssIdx] = { ...sections[ssIdx], rules: [...sections[ssIdx].rules, { title: '', description: '', subPoints: [] }] };
+    handleChange('ruleSubSections', sections);
+    setEditingSubSectionRuleIdx(sections[ssIdx].rules.length - 1);
+  };
+
+  const updateSubSectionRule = (ssIdx, rIdx, key, value) => {
+    const sections = [...form.ruleSubSections];
+    const rules = [...sections[ssIdx].rules];
+    rules[rIdx] = { ...rules[rIdx], [key]: value };
+    sections[ssIdx] = { ...sections[ssIdx], rules };
+    handleChange('ruleSubSections', sections);
+  };
+
+  const removeSubSectionRule = (ssIdx, rIdx) => {
+    const sections = [...form.ruleSubSections];
+    sections[ssIdx] = { ...sections[ssIdx], rules: sections[ssIdx].rules.filter((_, i) => i !== rIdx) };
+    handleChange('ruleSubSections', sections);
+  };
+
+  const addSubPointToSubSectionRule = (ssIdx, rIdx) => {
+    const sections = [...form.ruleSubSections];
+    const rules = [...sections[ssIdx].rules];
+    rules[rIdx] = { ...rules[rIdx], subPoints: [...(rules[rIdx].subPoints || []), ''] };
+    sections[ssIdx] = { ...sections[ssIdx], rules };
+    handleChange('ruleSubSections', sections);
+  };
+
+  const updateSubPointInSubSectionRule = (ssIdx, rIdx, spIdx, value) => {
+    const sections = [...form.ruleSubSections];
+    const rules = [...sections[ssIdx].rules];
+    const sp = [...rules[rIdx].subPoints];
+    sp[spIdx] = value;
+    rules[rIdx] = { ...rules[rIdx], subPoints: sp };
+    sections[ssIdx] = { ...sections[ssIdx], rules };
+    handleChange('ruleSubSections', sections);
+  };
+
+  const removeSubPointFromSubSectionRule = (ssIdx, rIdx, spIdx) => {
+    const sections = [...form.ruleSubSections];
+    const rules = [...sections[ssIdx].rules];
+    rules[rIdx] = { ...rules[rIdx], subPoints: rules[rIdx].subPoints.filter((_, i) => i !== spIdx) };
+    sections[ssIdx] = { ...sections[ssIdx], rules };
+    handleChange('ruleSubSections', sections);
   };
 
   // Revaluation steps - inline card editing
@@ -302,96 +375,140 @@ function AdminExaminations() {
               <>
                 <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
                 <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Exam Rules</h4>
-                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>Shown exactly like the live website — click a rule to edit it.</p>
+                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>Add sub-sections with titles, then add rules under each sub-section.</p>
 
-                {form.rules.map((rule, i) => (
-                  <div key={i} style={{ position: 'relative', marginBottom: '14px', padding: '14px 16px', background: '#f8f9fa', border: editingRuleIdx === i ? '1px solid #c8963e' : '1px solid #e4e8ed', borderRadius: '8px' }}>
-                    {editingRuleIdx === i ? (
-                      <>
+                {/* Sub-Sections */}
+                {(form.ruleSubSections || []).map((subSection, ssIdx) => (
+                  <div key={ssIdx} style={{ marginBottom: '18px', padding: '16px', background: '#fff', border: editingSubSectionIdx === ssIdx ? '2px solid #c8963e' : '1px solid #e4e8ed', borderRadius: '8px' }}>
+                    {/* Sub-Section Header */}
+                    {editingSubSectionIdx === ssIdx ? (
+                      <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '12px' }}>
                         <input
                           autoFocus
                           type="text"
-                          value={rule.title}
-                          onChange={(e) => updateRow('rules', i, 'title', e.target.value)}
-                          placeholder="Rule title"
-                          style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', marginBottom: '6px', boxSizing: 'border-box' }}
+                          value={subSection.subTitle}
+                          onChange={(e) => updateSubSectionTitle(ssIdx, e.target.value)}
+                          placeholder="Sub-section title (e.g. General Rules, Exam Hall Rules)"
+                          style={{ flex: 1, padding: '8px 12px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '14px', fontWeight: 600, boxSizing: 'border-box' }}
                         />
-                        <textarea
-                          value={rule.description}
-                          onChange={(e) => updateRow('rules', i, 'description', e.target.value)}
-                          placeholder="Rule description"
-                          rows={2}
-                          style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }}
-                        />
-
-                        {/* Sub-points section */}
-                        <div style={{ marginBottom: '10px' }}>
-                          <label style={{ fontSize: '12px', fontWeight: 600, color: '#555', marginBottom: '6px', display: 'block' }}>Sub-Points (bullet points)</label>
-                          {(rule.subPoints || []).map((sp, spIdx) => (
-                            <div key={spIdx} style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
-                              <span style={{ color: '#7A263A', fontWeight: 700, fontSize: '14px' }}>•</span>
-                              <input
-                                type="text"
-                                value={sp}
-                                onChange={(e) => updateSubPoint(i, spIdx, e.target.value)}
-                                placeholder="Sub-point text"
-                                style={{ flex: 1, padding: '5px 8px', border: '1px solid #c8963e', borderRadius: '4px', fontSize: '12.5px', boxSizing: 'border-box' }}
-                              />
-                              <button
-                                onClick={() => removeSubPoint(i, spIdx)}
-                                style={{ background: 'none', border: 'none', color: '#c0392b', cursor: 'pointer', fontSize: '16px', fontWeight: 700, padding: '0 4px' }}
-                                title="Remove sub-point"
-                              >×</button>
-                            </div>
-                          ))}
-                          <button
-                            onClick={() => addSubPoint(i)}
-                            style={{ marginTop: '4px', background: 'none', border: '1px dashed #b9c3d4', borderRadius: '4px', padding: '4px 12px', cursor: 'pointer', color: '#243358', fontSize: '12px', fontWeight: 600 }}
-                          >+ Add Sub-Point</button>
-                        </div>
-
-                        <button className="btn btn-success btn-sm" onClick={() => setEditingRuleIdx(null)}>Done</button>
-                      </>
+                        <button className="btn btn-success btn-sm" onClick={() => { setEditingSubSectionIdx(null); setEditingSubSectionRuleIdx(null); }}>Done</button>
+                      </div>
                     ) : (
-                      <>
-                        <div onClick={() => setEditingRuleIdx(i)} title="Click to edit" style={{ cursor: 'pointer' }}>
-                          <h4 style={{ margin: '0 0 8px', color: '#243358', fontSize: '15px' }}>
-                            <span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {i + 1}:</span>
-                            {rule.title || <em style={{ fontWeight: 400, color: '#aaa' }}>Untitled rule</em>}
-                          </h4>
-                          {rule.description && (
-                            <p style={{ margin: '0 0 6px', color: '#555', fontSize: '14px', lineHeight: '1.6' }}>{rule.description}</p>
-                          )}
-                          {rule.subPoints && rule.subPoints.length > 0 && (
-                            <ul style={{ margin: '6px 0 0', paddingLeft: '20px' }}>
-                              {rule.subPoints.map((sp, spIdx) => (
-                                <li key={spIdx} style={{ color: '#555', fontSize: '13px', lineHeight: '1.6', marginBottom: '2px' }}>{sp}</li>
-                              ))}
-                            </ul>
-                          )}
-                          {!rule.description && (!rule.subPoints || rule.subPoints.length === 0) && (
-                            <p style={{ margin: 0, color: '#aaa', fontStyle: 'italic' }}>No description or sub-points</p>
-                          )}
-                        </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                        <h4
+                          onClick={() => setEditingSubSectionIdx(ssIdx)}
+                          style={{ margin: 0, color: '#243358', fontSize: '16px', cursor: 'pointer', flex: 1 }}
+                        >
+                          <span style={{ color: '#7A263A', marginRight: '8px' }}>§{ssIdx + 1}</span>
+                          {subSection.subTitle || <em style={{ fontWeight: 400, color: '#aaa' }}>Untitled sub-section</em>}
+                        </h4>
                         <button
                           className="member-remove-btn"
-                          title="Delete rule"
-                          onClick={() => removeRow('rules', i)}
-                          style={{ position: 'absolute', top: '10px', right: '10px' }}
-                        >
-                          ×
-                        </button>
-                      </>
+                          title="Delete sub-section"
+                          onClick={() => removeSubSection(ssIdx)}
+                        >×</button>
+                      </div>
                     )}
+
+                    {/* Rules inside this sub-section */}
+                    {subSection.rules.map((rule, rIdx) => (
+                      <div key={rIdx} style={{ position: 'relative', marginBottom: '10px', padding: '12px 14px', background: '#f8f9fa', border: editingSubSectionRuleIdx === rIdx && editingSubSectionIdx === ssIdx ? '1px solid #c8963e' : '1px solid #e8ecf0', borderRadius: '6px', marginLeft: '12px' }}>
+                        {editingSubSectionRuleIdx === rIdx && editingSubSectionIdx === ssIdx ? (
+                          <>
+                            <input
+                              type="text"
+                              value={rule.title}
+                              onChange={(e) => updateSubSectionRule(ssIdx, rIdx, 'title', e.target.value)}
+                              placeholder="Rule title"
+                              style={{ width: '100%', padding: '6px 10px', border: '1px solid #c8963e', borderRadius: '4px', fontSize: '13px', marginBottom: '6px', boxSizing: 'border-box' }}
+                            />
+                            <textarea
+                              value={rule.description}
+                              onChange={(e) => updateSubSectionRule(ssIdx, rIdx, 'description', e.target.value)}
+                              placeholder="Rule description"
+                              rows={2}
+                              style={{ width: '100%', padding: '6px 10px', border: '1px solid #c8963e', borderRadius: '4px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }}
+                            />
+                            {/* Sub-points */}
+                            <div style={{ marginBottom: '8px' }}>
+                              <label style={{ fontSize: '11px', fontWeight: 600, color: '#555', marginBottom: '4px', display: 'block' }}>Sub-Points (bullet dots)</label>
+                              {(rule.subPoints || []).map((sp, spIdx) => (
+                                <div key={spIdx} style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '3px' }}>
+                                  <span style={{ color: '#7A263A', fontWeight: 700, fontSize: '13px' }}>•</span>
+                                  <input
+                                    type="text"
+                                    value={sp}
+                                    onChange={(e) => updateSubPointInSubSectionRule(ssIdx, rIdx, spIdx, e.target.value)}
+                                    placeholder="Sub-point text"
+                                    style={{ flex: 1, padding: '4px 8px', border: '1px solid #c8963e', borderRadius: '4px', fontSize: '12px', boxSizing: 'border-box' }}
+                                  />
+                                  <button
+                                    onClick={() => removeSubPointFromSubSectionRule(ssIdx, rIdx, spIdx)}
+                                    style={{ background: 'none', border: 'none', color: '#c0392b', cursor: 'pointer', fontSize: '15px', fontWeight: 700, padding: '0 3px' }}
+                                    title="Remove"
+                                  >×</button>
+                                </div>
+                              ))}
+                              <button
+                                onClick={() => addSubPointToSubSectionRule(ssIdx, rIdx)}
+                                style={{ marginTop: '3px', background: 'none', border: '1px dashed #b9c3d4', borderRadius: '3px', padding: '3px 10px', cursor: 'pointer', color: '#243358', fontSize: '11px', fontWeight: 600 }}
+                              >+ Add Sub-Point</button>
+                            </div>
+                            <button className="btn btn-success btn-sm" onClick={() => setEditingSubSectionRuleIdx(null)}>Done</button>
+                          </>
+                        ) : (
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                            <div
+                              onClick={() => { setEditingSubSectionIdx(ssIdx); setEditingSubSectionRuleIdx(rIdx); }}
+                              title="Click to edit"
+                              style={{ cursor: 'pointer', flex: 1 }}
+                            >
+                              <h5 style={{ margin: '0 0 4px', color: '#243358', fontSize: '14px' }}>
+                                <span style={{ color: '#7A263A', marginRight: '6px' }}>Rule {rIdx + 1}:</span>
+                                {rule.title || <em style={{ fontWeight: 400, color: '#aaa' }}>Untitled rule</em>}
+                              </h5>
+                              {rule.description && (
+                                <p style={{ margin: '0 0 4px', color: '#555', fontSize: '13px', lineHeight: '1.5' }}>{rule.description}</p>
+                              )}
+                              {rule.subPoints && rule.subPoints.length > 0 && (
+                                <ul style={{ margin: '4px 0 0', paddingLeft: '18px' }}>
+                                  {rule.subPoints.map((sp, spIdx) => (
+                                    <li key={spIdx} style={{ color: '#555', fontSize: '12px', lineHeight: '1.5', marginBottom: '1px' }}>{sp}</li>
+                                  ))}
+                                </ul>
+                              )}
+                              {!rule.description && (!rule.subPoints || rule.subPoints.length === 0) && (
+                                <p style={{ margin: 0, color: '#aaa', fontStyle: 'italic', fontSize: '12px' }}>No description or sub-points</p>
+                              )}
+                            </div>
+                            <button
+                              className="member-remove-btn"
+                              title="Delete rule"
+                              onClick={() => removeSubSectionRule(ssIdx, rIdx)}
+                            >×</button>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+
+                    {/* Add rule to this sub-section */}
+                    <div style={{ marginLeft: '12px', marginTop: '6px' }}>
+                      <div
+                        onClick={() => addRuleToSubSection(ssIdx)}
+                        style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', border: '1px dashed #b9c3d4', borderRadius: '5px', padding: '5px 14px', cursor: 'pointer', color: '#243358', background: '#fff', fontWeight: 600, fontSize: '12px' }}
+                      >
+                        <span style={{ fontSize: '15px', lineHeight: 1 }}>+</span> Add Rule
+                      </div>
+                    </div>
                   </div>
                 ))}
 
                 <div
-                  onClick={addEmptyRule}
-                  title="Add Rule"
+                  onClick={addEmptySubSection}
+                  title="Add Sub-Section"
                   style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px dashed #b9c3d4', borderRadius: '6px', padding: '9px 18px', cursor: 'pointer', color: '#243358', background: '#fff', fontWeight: 600, fontSize: '12.5px' }}
                 >
-                  <span style={{ fontSize: '18px', lineHeight: 1 }}>+</span> Add Rule
+                  <span style={{ fontSize: '18px', lineHeight: 1 }}>+</span> Add Sub-Section
                 </div>
               </>
             )}
@@ -586,6 +703,7 @@ function AdminExaminations() {
                       content: sections[activeTab].content || '',
                       schedules: sections[activeTab].schedules || [],
                       rules: sections[activeTab].rules || [],
+                      ruleSubSections: sections[activeTab].ruleSubSections || [],
                       resultsData: sections[activeTab].resultsData || [],
                       revaluationSteps: sections[activeTab].revaluationSteps || [],
                       revaluationFee: sections[activeTab].revaluationFee || '',

@@ -167,7 +167,39 @@ function Examinations() {
               <div className="content-line"></div>
               {renderContent(getSection('rules').content || STATIC_CONTENT.examinations.rules)}
 
-              {getSection('rules').rules && getSection('rules').rules.length > 0 && (
+              {/* Sub-Sections (new format) */}
+              {getSection('rules').ruleSubSections && getSection('rules').ruleSubSections.length > 0 && (
+                <div style={{ marginTop: '20px' }}>
+                  {getSection('rules').ruleSubSections.map((subSection, ssIdx) => (
+                    <div key={ssIdx} style={{ marginBottom: '24px' }}>
+                      <h3 style={{ margin: '0 0 12px', color: '#243358', fontSize: '17px', borderBottom: '2px solid #c8963e', paddingBottom: '6px' }}>
+                        {subSection.subTitle || 'Untitled Section'}
+                      </h3>
+                      {subSection.rules && subSection.rules.map((rule, rIdx) => (
+                        <div key={rIdx} style={{ marginBottom: '12px', padding: '14px 16px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px', marginLeft: '8px' }}>
+                          <h4 style={{ margin: '0 0 6px', color: '#243358', fontSize: '15px' }}>
+                            <span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {rIdx + 1}:</span>
+                            {rule.title}
+                          </h4>
+                          {rule.description && (
+                            <p style={{ margin: '0 0 6px', color: '#555', fontSize: '14px', lineHeight: '1.6' }}>{rule.description}</p>
+                          )}
+                          {rule.subPoints && rule.subPoints.length > 0 && (
+                            <ul style={{ margin: '6px 0 0', paddingLeft: '20px' }}>
+                              {rule.subPoints.map((sp, spIdx) => (
+                                <li key={spIdx} style={{ color: '#555', fontSize: '13px', lineHeight: '1.7', marginBottom: '3px' }}>{sp}</li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Legacy flat rules (backward compatibility) */}
+              {(!getSection('rules').ruleSubSections || getSection('rules').ruleSubSections.length === 0) && getSection('rules').rules && getSection('rules').rules.length > 0 && (
                 <div style={{ marginTop: '20px' }}>
                   {getSection('rules').rules.map((rule, i) => (
                     <div key={i} style={{ marginBottom: '16px', padding: '16px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px' }}>
