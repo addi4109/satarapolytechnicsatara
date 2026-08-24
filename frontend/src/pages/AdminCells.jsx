@@ -103,7 +103,7 @@ function AdminCells() {
                       <tr key={idx}>
                         <td>{idx + 1}</td>
                         <td>{m.name}</td>
-                        <td>{m.designation}</td>
+                        <td>{m.position || m.designation || '-'}</td>
                         <td>{m.phone}</td>
                       </tr>
                     ))}

@@ -82,7 +82,6 @@ function CellDetail() {
                 <tr>
                   <th style={{ width: '70px', textAlign: 'center' }}>Sr. No.</th>
                   <th>Name of Member</th>
-                  <th>Position</th>
                   <th>Designation</th>
                   <th>Contact Number</th>
                 </tr>
@@ -92,8 +91,7 @@ function CellDetail() {
                   <tr key={index}>
                     <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{index + 1}</td>
                     <td style={{ fontWeight: 500 }}>{member.name}</td>
-                    <td>{member.position || '-'}</td>
-                    <td>{member.designation}</td>
+                    <td>{member.position || member.designation || '-'}</td>
                     <td>{member.phone}</td>
                   </tr>
                 ))}

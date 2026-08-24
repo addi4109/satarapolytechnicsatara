@@ -185,7 +185,6 @@ function AdminCellForm() {
                     <tr>
                       <th>Sr.</th>
                       <th>Name</th>
-                      <th>Position</th>
                       <th>Designation</th>
                       <th>Contact</th>
                     </tr>
@@ -195,8 +194,7 @@ function AdminCellForm() {
                       <tr key={idx}>
                         <td>{idx + 1}</td>
                         <td>{m.name}</td>
-                        <td>{m.position}</td>
-                        <td>{m.designation}</td>
+                        <td>{m.position || m.designation || '-'}</td>
                         <td>{m.phone}</td>
                       </tr>
                     ))}
@@ -302,15 +300,9 @@ function AdminCellForm() {
                         />
                         <input
                           type="text"
-                          placeholder="Position"
+                          placeholder="Designation"
                           value={member.position || ''}
                           onChange={(e) => updateMember(idx, 'position', e.target.value)}
-                        />
-                        <input
-                          type="text"
-                          placeholder="Designation"
-                          value={member.designation}
-                          onChange={(e) => updateMember(idx, 'designation', e.target.value)}
                         />
                         <input
                           type="text"
