@@ -310,10 +310,7 @@ function AdminNotices() {
                       <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '5px' }}>Upload PDF (optional)</label>
                       <PdfUpload value={form._uploadPdf || ''} onChange={(url) => setForm({ ...form, _uploadPdf: url })} />
                     </div>
-                    <div style={{ marginBottom: '14px' }}>
-                      <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '5px' }}>PDF Link (optional)</label>
-                      <input type="text" value={form._pdfLink || ''} onChange={(e) => setForm({ ...form, _pdfLink: e.target.value })} placeholder="https://example.com/notice.pdf" style={{ width: '100%', padding: '9px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
-                    </div>
+
                     <div style={{ marginBottom: '14px' }}>
                       <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '5px' }}>Status</label>
                       <div className="toggle-row">
