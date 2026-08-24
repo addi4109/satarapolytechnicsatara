@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import PageBanner from '../components/PageBanner';
+import { SkeletonCards } from '../components/Skeleton';
+import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Gallery.css';
 
 const API_URL = '/api';
@@ -29,6 +31,17 @@ function VideoGallery() {
 
   return (
     <>
+      <SEO
+        title="Video Gallery | Campus Events & Activities"
+        description="Watch videos of campus events, celebrations, and academic activities at Satara Polytechnic, Satara. Stay connected with our college."
+        keywords="college video gallery, campus videos, Satara Polytechnic videos, polytechnic events videos"
+        url="/gallery/videos"
+        structuredData={breadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Gallery', url: '/gallery/photos' },
+          { name: 'Video Gallery' },
+        ])}
+      />
       <PageBanner
         title="Video Gallery"
         breadcrumb={
@@ -51,7 +64,7 @@ function VideoGallery() {
         </p>
 
         {loading ? (
-          <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>Loading videos...</p>
+          <SkeletonCards count={6} />
         ) : videos.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>No videos available yet.</p>
         ) : (

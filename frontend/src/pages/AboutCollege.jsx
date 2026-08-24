@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
+import { SkeletonPage } from '../components/Skeleton';
+import SEO, { breadcrumbSchema } from '../components/SEO';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './AboutCollege.css';
 
@@ -144,13 +146,8 @@ function AboutCollege() {
   if (loading) {
     return (
       <>
-        <PageBanner
-          title="About College"
-          breadcrumb={<><a href="/">Home</a><span className="sep">|</span>About College</>}
-        />
-        <div className="about-layout">
-          <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
-        </div>
+        <SEO title="About College | Satara Polytechnic" description="Learn about Satara Polytechnic, Satara - its history, vision, mission, and leadership." keywords="about Satara Polytechnic, college history" url="/about/college" />
+        <SkeletonPage />
       </>
     );
   }
@@ -161,8 +158,30 @@ function AboutCollege() {
   const getVision = () => about.vision || {};
   const getAffiliation = () => about.affiliation || {};
 
+  const seoTitle = active === 'society' ? 'Satara Education Society' :
+    active === 'institute' ? 'Institute Overview' :
+    active === 'disclosure' ? 'Mandatory Disclosure' :
+    active === 'vision' ? 'Vision & Mission' :
+    active === 'affiliation' ? 'Affiliation & Approval' :
+    active === 'founder' ? 'Founder' :
+    active === 'chairman' ? "Chairman's Message" :
+    active === 'secretary' ? "Secretary's Message" :
+    active === 'principal' ? "Principal's Message" :
+    active === 'governing-body' ? 'Governing Body' : 'About College';
+
   return (
     <>
+      <SEO
+        title={`${seoTitle} | Satara Polytechnic`}
+        description={`Learn about ${seoTitle} at Satara Polytechnic, Satara. ${active === 'vision' ? 'Our vision to provide quality technical education and mission to produce skilled engineers.' : active === 'affiliation' ? 'Affiliated to MSBTE, Mumbai and approved by AICTE, New Delhi.' : 'A premier diploma engineering institute affiliated to MSBTE.'}`}
+        keywords={`Satara Polytechnic, ${seoTitle}, Satara polytechnic about, MSBTE affiliated college, Satara education society`}
+        url={`/about/${page || 'college'}`}
+        structuredData={breadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'About', url: '/about/college' },
+          { name: seoTitle },
+        ])}
+      />
       <PageBanner
         title="About College"
         breadcrumb={

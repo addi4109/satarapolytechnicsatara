@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import PageBanner from '../components/PageBanner';
+import { SkeletonTable } from '../components/Skeleton';
+import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Notices.css';
 
 const API_URL = '/api';
@@ -26,6 +28,16 @@ function Notices() {
 
   return (
     <>
+      <SEO
+        title="Notices & Circulars | Latest Announcements"
+        description="View latest notices, circulars, and official announcements from Satara Polytechnic administration. Stay updated with important college information."
+        keywords="college notices, circulars, announcements, Satara Polytechnic notices, polytechnic circulars"
+        url="/notices"
+        structuredData={breadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Notices' },
+        ])}
+      />
       <PageBanner
         title="Notices"
         breadcrumb={
@@ -42,7 +54,7 @@ function Notices() {
       <div className="notices-page-wrap">
         <div className="notices-table-wrap">
           {loading ? (
-            <div className="notices-loading">Loading...</div>
+            <SkeletonTable rows={8} cols={4} />
           ) : notices.length === 0 ? (
             <div className="notices-empty">
               <p>No notices available.</p>

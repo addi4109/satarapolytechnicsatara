@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
+import { SkeletonPage } from '../components/Skeleton';
+import SEO, { breadcrumbSchema } from '../components/SEO';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './Academics.css';
 
@@ -88,16 +90,25 @@ function Campus() {
   if (loading) {
     return (
       <>
-        <PageBanner title="Campus" breadcrumb={<><a href="/">Home</a><span className="sep">|</span>Campus</>} />
-        <div className="about-layout">
-          <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
-        </div>
+        <SEO title="Campus | Satara Polytechnic" description="Explore campus facilities at Satara Polytechnic." keywords="college campus, library, canteen" url="/campus" />
+        <SkeletonPage />
       </>
     );
   }
 
   return (
     <>
+      <SEO
+        title={`${active === 'bus-facility' ? 'Bus Facility' : active === 'non-teaching-staff' ? 'Non-Teaching Staff' : active.charAt(0).toUpperCase() + active.slice(1)} | Campus`}
+        description={`${active === 'library' ? 'Library with 15000+ books, 50+ journals, and barcode-based issuing system at Satara Polytechnic.' : active === 'bus-facility' ? 'Bus facility for students and staff at Satara Polytechnic.' : active === 'canteen' ? 'College canteen serving hygienic food at affordable prices.' : active === 'registrar' ? "Registrar's desk for administrative work at Satara Polytechnic." : active === 'office-staff' ? 'Office staff members at Satara Polytechnic.' : 'Non-teaching staff at Satara Polytechnic.'}`}
+        keywords={`Satara Polytechnic campus, college ${active}, polytechnic facilities, ${active} Satara Polytechnic`}
+        url={`/campus/${page || 'library'}`}
+        structuredData={breadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Campus', url: '/campus' },
+          { name: active.charAt(0).toUpperCase() + active.slice(1) },
+        ])}
+      />
       <PageBanner
         title="Campus"
         breadcrumb={

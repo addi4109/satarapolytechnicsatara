@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
+import { SkeletonPage } from '../components/Skeleton';
+import SEO, { breadcrumbSchema } from '../components/SEO';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './Academics.css';
 
@@ -133,16 +135,25 @@ function Admissions() {
   if (loading) {
     return (
       <>
-        <PageBanner title="Admissions" breadcrumb={<><a href="/">Home</a><span className="sep">|</span>Admissions</>} />
-        <div className="about-layout">
-          <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
-        </div>
+        <SEO title="Admissions | Satara Polytechnic" description="Diploma admission information at Satara Polytechnic." keywords="polytechnic admission, fee structure" url="/admissions/overview" />
+        <SkeletonPage />
       </>
     );
   }
 
   return (
     <>
+      <SEO
+        title={`${active === 'fees' ? 'Fee Structure' : active === 'eligibility' ? 'Eligibility Criteria' : active === 'process' ? 'Admission Process' : active === 'first-year' ? 'First Year Admission' : active === 'direct-second' ? 'Direct Second Year' : active === 'acap' ? 'A-CAP Admission' : active === 'scholarships' ? 'Scholarships' : active === 'brochure' ? 'College Brochure' : active === 'courses' ? 'Courses Offered' : 'Admission Overview'} | Admissions 2026-27`}
+        description={`${active === 'fees' ? 'Complete fee structure for First Year and Direct Second Year diploma programs at Satara Polytechnic.' : active === 'eligibility' ? 'Eligibility criteria for FY and Direct Second Year admission at Satara Polytechnic.' : active === 'process' ? 'Step-by-step admission process for diploma programs.' : active === 'first-year' ? 'First year diploma admission details and required documents.' : active === 'direct-second' ? 'Direct second year admission for SSC passed students.' : active === 'acap' ? 'A-CAP admission process for Maharashtra students.' : active === 'scholarships' ? 'Government and private scholarships for SC/ST/OBC/Minority students.' : active === 'brochure' ? 'Download the official college brochure for Satara Polytechnic.' : active === 'courses' ? '6 diploma engineering courses offered at Satara Polytechnic.' : 'Admission information for diploma engineering programs at Satara Polytechnic, Satara.'}`}
+        keywords={`polytechnic admission 2026, ${active} admission, fee structure, eligibility, Satara Polytechnic admission, diploma admission`}
+        url={`/admissions/${page || 'overview'}`}
+        structuredData={breadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Admissions', url: '/admissions/overview' },
+          { name: active.charAt(0).toUpperCase() + active.slice(1) },
+        ])}
+      />
       <PageBanner
         title="Admissions"
         breadcrumb={

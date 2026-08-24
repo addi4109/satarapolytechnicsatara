@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
+import SEO, { breadcrumbSchema } from '../components/SEO';
 import './ApplyNow.css';
 
 const branchOptions = [
@@ -95,6 +96,17 @@ function ApplyNow() {
 
   return (
     <>
+      <SEO
+        title="Apply Now | Online Admission Enquiry Form"
+        description="Submit your online admission enquiry form for Satara Polytechnic, Satara. Choose from 6 engineering branches - Computer, ETC, Mechanical, Chemical, Electrical, and Automobile."
+        keywords="apply polytechnic, online admission form, polytechnic application, Satara Polytechnic apply now"
+        url="/admissions/apply"
+        structuredData={breadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Admissions', url: '/admissions/overview' },
+          { name: 'Apply Now' },
+        ])}
+      />
       <PageBanner
         title="Apply Now"
         breadcrumb={

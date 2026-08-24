@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
+import { SkeletonPage } from '../components/Skeleton';
+import SEO, { breadcrumbSchema } from '../components/SEO';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './Academics.css';
 
@@ -58,16 +60,25 @@ function Examinations() {
   if (loading) {
     return (
       <>
-        <PageBanner title="Examination" breadcrumb={<><a href="/">Home</a><span className="sep">|</span>Examination</>} />
-        <div className="about-layout">
-          <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
-        </div>
+        <SEO title="Examination | Satara Polytechnic" description="MSBTE exam schedule, rules, and results." keywords="MSBTE exam, exam schedule, results" url="/examination" />
+        <SkeletonPage />
       </>
     );
   }
 
   return (
     <>
+      <SEO
+        title={`${active.charAt(0).toUpperCase() + active.slice(1)} | Examination`}
+        description={`${active === 'schedule' ? 'Check MSBTE exam schedule for all semesters at Satara Polytechnic.' : active === 'results' ? 'View MSBTE exam results and result portal link.' : active === 'rules' ? 'Know the examination rules and regulations.' : active === 'revaluation' ? 'Revaluation process and fee details.' : 'Latest exam notices and circulars.'} Satara Polytechnic, Satara.`}
+        keywords={`MSBTE exam ${active}, examination schedule, polytechnic exam results, Satara Polytechnic exam, revaluation`}
+        url={`/examination/${page || 'schedule'}`}
+        structuredData={breadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Examination', url: '/examination' },
+          { name: active.charAt(0).toUpperCase() + active.slice(1) },
+        ])}
+      />
       <PageBanner
         title="Examination"
         breadcrumb={

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
+import { SkeletonPage } from '../components/Skeleton';
+import SEO, { breadcrumbSchema } from '../components/SEO';
 import './CellsPage.css';
 
 const API_URL = '/api';
@@ -21,13 +23,8 @@ function CellDetail() {
   if (loading) {
     return (
       <>
-        <PageBanner
-          title="Cells"
-          breadcrumb={<><a href="/">Home</a><span className="sep">|</span>Cells</>}
-        />
-        <div className="cells-page-wrap">
-          <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
-        </div>
+        <SEO title="Cell | Satara Polytechnic" description="Loading cell details..." url={`/cells/${cellId}`} />
+        <SkeletonPage />
       </>
     );
   }
@@ -53,6 +50,17 @@ function CellDetail() {
 
   return (
     <>
+      <SEO
+        title={`${cell.name} | Satara Polytechnic`}
+        description={`Details about ${cell.name} at Satara Polytechnic, Satara. View members, contact information, and activities.`}
+        keywords={`${cell.name}, Satara Polytechnic, college committee, ${cell.slug}`}
+        url={`/cells/${cellId}`}
+        structuredData={breadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Cells & Committees', url: '/cells' },
+          { name: cell.name },
+        ])}
+      />
       <PageBanner
         title={cell.name}
         breadcrumb={

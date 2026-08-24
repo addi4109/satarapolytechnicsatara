@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
+import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Academics.css';
 
 const routeMap = {
@@ -43,6 +44,17 @@ function Academics() {
 
   return (
     <>
+      <SEO
+        title={`${active.charAt(0).toUpperCase() + active.slice(1)} | Academics`}
+        description={`Explore ${active === 'overview' ? 'academic overview' : active} at Satara Polytechnic, Satara. ${active === 'courses' ? '6 diploma engineering courses with 360 annual intake.' : active === 'faculty' ? 'Experienced faculty across 6 engineering departments.' : active === 'library' ? 'Library with 15000+ books and 50+ journals.' : active === 'results' ? 'MSBTE exam results with 92% pass percentage.' : 'MSBTE affiliated diploma programs.'}`}
+        keywords={`Satara Polytechnic academics, ${active}, polytechnic courses, MSBTE curriculum, diploma engineering ${active}`}
+        url={`/academics/${page || 'overview'}`}
+        structuredData={breadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Academics', url: '/academics/overview' },
+          { name: active.charAt(0).toUpperCase() + active.slice(1) },
+        ])}
+      />
       <PageBanner
         title="Academics"
         breadcrumb={

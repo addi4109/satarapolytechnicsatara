@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import PageBanner from '../components/PageBanner';
+import { SkeletonCards } from '../components/Skeleton';
+import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Gallery.css';
 
 const API_URL = '/api';
@@ -39,6 +41,17 @@ function MediaNews() {
 
   return (
     <>
+      <SEO
+        title="Media & News | Press Coverage & Highlights"
+        description="Read latest news, press coverage, and media mentions of Satara Polytechnic's achievements, events, and activities from various publications."
+        keywords="college news, press coverage, Satara Polytechnic news, media mentions, polytechnic press"
+        url="/gallery/media"
+        structuredData={breadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Gallery', url: '/gallery/photos' },
+          { name: 'Media News' },
+        ])}
+      />
       <PageBanner
         title="Media News"
         breadcrumb={
@@ -62,7 +75,7 @@ function MediaNews() {
         </p>
 
         {loading ? (
-          <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>Loading...</p>
+          <SkeletonCards count={4} />
         ) : newsItems.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>No news available yet.</p>
         ) : (

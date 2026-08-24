@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import PageBanner from '../components/PageBanner';
+import { SkeletonCards } from '../components/Skeleton';
+import SEO, { breadcrumbSchema } from '../components/SEO';
 import './CellsPage.css';
 
 const API_URL = '/api';
@@ -17,6 +19,16 @@ function CellsPage() {
   }, []);
   return (
     <>
+      <SEO
+        title="Cells & Committees | Anti-Ragging, NSS, IQAC"
+        description="Learn about various cells and committees at Satara Polytechnic including Anti-Ragging Cell, NSS, IQAC, Grievance Redressal, Women Grievance Cell, and more."
+        keywords="anti-ragging cell, NSS cell, IQAC, college committees, grievance redressal, Satara Polytechnic committees"
+        url="/cells"
+        structuredData={breadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Cells & Committees' },
+        ])}
+      />
       <PageBanner
         title="Cell and Committees"
         breadcrumb={
@@ -39,7 +51,7 @@ function CellsPage() {
         </p>
 
         {loading ? (
-          <p style={{ color: '#888', textAlign: 'center', padding: '40px 0' }}>Loading cells...</p>
+          <SkeletonCards count={6} />
         ) : cells.length === 0 ? (
           <p style={{ color: '#888', textAlign: 'center', padding: '40px 0' }}>
             No cells or committees available yet.

@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
+import { SkeletonPage } from '../components/Skeleton';
+import SEO, { breadcrumbSchema } from '../components/SEO';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './Academics.css';
 import './Gallery.css';
@@ -123,16 +125,25 @@ function Activities() {
   if (loading) {
     return (
       <>
-        <PageBanner title="Activities" breadcrumb={<><a href="/">Home</a><span className="sep">|</span>Activities</>} />
-        <div className="about-layout">
-          <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
-        </div>
+        <SEO title="Activities | Satara Polytechnic" description="Student activities at Satara Polytechnic." keywords="college activities, sports, cultural events" url="/activities" />
+        <SkeletonPage />
       </>
     );
   }
 
   return (
     <>
+      <SEO
+        title={`${active.charAt(0).toUpperCase() + active.slice(1)} | Activities`}
+        description={`${active === 'sports' ? 'Sports activities and achievements at Satara Polytechnic.' : active === 'cultural' ? 'Cultural events and celebrations at Satara Polytechnic.' : active === 'technical' ? 'Technical events, workshops, and seminars at Satara Polytechnic.' : active === 'industrial-visits' ? 'Industrial visits for practical exposure at Satara Polytechnic.' : 'Competitions and contests organized at Satara Polytechnic.'}`}
+        keywords={`Satara Polytechnic ${active}, college activities, polytechnic sports, cultural events, technical events, industrial visits`}
+        url={`/activities/${page || 'sports'}`}
+        structuredData={breadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Activities', url: '/activities' },
+          { name: active.charAt(0).toUpperCase() + active.slice(1) },
+        ])}
+      />
       <PageBanner
         title="Activities"
         breadcrumb={

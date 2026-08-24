@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
+import { SkeletonPage } from '../components/Skeleton';
+import SEO, { breadcrumbSchema } from '../components/SEO';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './Placements.css';
 
@@ -85,16 +87,25 @@ function Placements() {
   if (loading) {
     return (
       <>
-        <PageBanner title="Placements" breadcrumb={<><a href="/">Home</a><span className="sep">|</span>Placements</>} />
-        <div className="about-layout">
-          <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
-        </div>
+        <SEO title="Placements | Satara Polytechnic" description="Training & Placement Cell at Satara Polytechnic offering campus recruitment drives." keywords="polytechnic placements, campus recruitment" url="/placements" />
+        <SkeletonPage />
       </>
     );
   }
 
   return (
     <>
+      <SEO
+        title={`${active.charAt(0).toUpperCase() + active.slice(1)} | Placements`}
+        description={`${active === 'about' ? 'Training & Placement Cell at Satara Polytechnic offering campus recruitment drives and soft skill training.' : active === 'process' ? 'Step-by-step placement process at Satara Polytechnic.' : active === 'records' ? 'Year-wise placement records showing students placed and companies visited.' : 'Top recruiters visiting Satara Polytechnic campus for placements.'}`}
+        keywords={`polytechnic placements, campus recruitment, training placement cell, Satara Polytechnic placements, ${active}`}
+        url={`/placements/${page || 'about'}`}
+        structuredData={breadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Placements', url: '/placements' },
+          { name: active.charAt(0).toUpperCase() + active.slice(1) },
+        ])}
+      />
       <PageBanner
         title="Placements"
         breadcrumb={

@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import PageBanner from '../components/PageBanner';
+import { SkeletonCards } from '../components/Skeleton';
+import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Gallery.css';
 
 const API_URL = '/api';
@@ -33,6 +35,17 @@ function PhotoGallery() {
 
   return (
     <>
+      <SEO
+        title="Photo Gallery | Campus Life & Events"
+        description="Browse photos of campus life, events, celebrations, and infrastructure at Satara Polytechnic, Satara. Explore our vibrant college campus."
+        keywords="college photo gallery, campus photos, Satara Polytechnic photos, polytechnic events, college celebrations"
+        url="/gallery/photos"
+        structuredData={breadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Gallery', url: '/gallery/photos' },
+          { name: 'Photo Gallery' },
+        ])}
+      />
       <PageBanner
         title="Photo Gallery"
         breadcrumb={
@@ -55,7 +68,7 @@ function PhotoGallery() {
         </p>
 
         {loading ? (
-          <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>Loading photos...</p>
+          <SkeletonCards count={8} />
         ) : photos.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>No photos available yet.</p>
         ) : (

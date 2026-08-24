@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
+import { SkeletonPage } from '../components/Skeleton';
+import SEO, { breadcrumbSchema } from '../components/SEO';
 import './DepartmentsPage.css';
 
 const API_URL = '/api';
@@ -56,17 +58,8 @@ function DepartmentsPage() {
   if (loading) {
     return (
       <>
-        <PageBanner
-          title="Departments"
-          breadcrumb={<><a href="/">Home</a><span className="sep">|</span>Departments</>}
-        />
-        <div className="dept-page-layout">
-          <div className="dept-content-area" style={{ width: '100%' }}>
-            <main className="about-content">
-              <p style={{ textAlign: 'center', padding: '60px 20px', color: '#888' }}>Loading departments...</p>
-            </main>
-          </div>
-        </div>
+        <SEO title="Departments | Satara Polytechnic" description="Explore 6 engineering departments at Satara Polytechnic." keywords="engineering departments, polytechnic departments" url="/departments/computer" />
+        <SkeletonPage />
       </>
     );
   }
@@ -109,6 +102,17 @@ function DepartmentsPage() {
 
   return (
     <>
+      <SEO
+        title={`${dept.name} Department | Satara Polytechnic`}
+        description={`Explore ${dept.name} department at Satara Polytechnic, Satara. ${dept.about ? dept.about.slice(0, 150) : 'Offering diploma engineering program with experienced faculty and modern labs.'}`}
+        keywords={`${dept.name}, ${dept.slug} department, polytechnic ${dept.name}, Satara Polytechnic ${dept.name} engineering`}
+        url={`/departments/${activeSlug}`}
+        structuredData={breadcrumbSchema([
+          { name: 'Home', url: '/' },
+          { name: 'Departments', url: '/departments/computer' },
+          { name: dept.name },
+        ])}
+      />
       <PageBanner
         title="Departments"
         breadcrumb={
