@@ -673,9 +673,9 @@ function AdminExaminations() {
                 <h4 style={{ margin: '12px 0', color: '#243358', fontSize: '15px' }}>Revaluation Process Steps</h4>
                 <p style={{ fontSize: '12px', color: '#888', margin: '0 0 4px' }}>Shown exactly like the live website — click a step to edit it.</p>
 
-                <div className="process-steps" style={{ marginTop: '8px' }}>
+                <div style={{ marginTop: '8px' }}>
                   {form.revaluationSteps.map((step, i) => (
-                    <div className="process-step admin-rev-card" key={i} style={{ transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease', border: editingRevStepIdx === i ? '1px solid #c8963e' : '1px solid #e4e8ed', borderRadius: '8px' }}>
+                    <div className="admin-rev-step-card" key={i} style={{ border: editingRevStepIdx === i ? '2px solid #c8963e' : undefined }}>
                       <div className="step-number">{i + 1}</div>
                       <div className="step-content" style={{ flex: 1 }}>
                         {editingRevStepIdx === i ? (

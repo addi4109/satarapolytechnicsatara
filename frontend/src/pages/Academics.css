@@ -396,6 +396,89 @@
   margin: 0;
 }
 
+/* Revaluation Step Cards */
+.rev-step-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 20px 22px;
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.rev-step-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(36, 51, 88, 0.12);
+  border-color: #c8963e;
+}
+
+.rev-step-card .step-number {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  font-size: 17px;
+  background: linear-gradient(135deg, #243358, #3a5080);
+  box-shadow: 0 3px 10px rgba(36, 51, 88, 0.3);
+}
+
+.rev-step-card .step-content h4 {
+  font-family: 'Georgia', serif;
+  font-size: 17px;
+  color: #243358;
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+
+.rev-step-card .step-content p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.rev-step-card .step-content ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+.rev-step-card .step-content li {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 3px;
+}
+
+/* Admin Revaluation Step Cards */
+.admin-rev-step-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.admin-rev-step-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(36, 51, 88, 0.1);
+  border-color: #c8963e;
+}
+
+.admin-rev-step-card .step-number {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  font-size: 15px;
+  background: linear-gradient(135deg, #243358, #3a5080);
+  box-shadow: 0 2px 8px rgba(36, 51, 88, 0.25);
+}
+
 /* Fee Structure Tables */
 .fee-table-wrap {
   overflow-x: auto;
