@@ -87,10 +87,27 @@ function Notices() {
                             style={{ padding: '5px 14px', background: '#243358', color: '#fff', fontSize: '12px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
                           >View</a>
                         )}
-                        {notice.pdfUrl && (
+                        {(notice.pdfUrl || notice.imageUrl) && (
                           <a
-                            href={`/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}`}
-                            download
+                            href="#"
+                            onClick={async (e) => {
+                              e.preventDefault();
+                              const fileUrl = notice.pdfUrl || notice.imageUrl;
+                              const ext = notice.pdfUrl ? 'pdf' : 'jpg';
+                              const fileName = `${notice.title.replace(/[^a-zA-Z0-9]/g, '_')}.${ext}`;
+                              try {
+                                const res = await fetch(fileUrl);
+                                const blob = await res.blob();
+                                const url = URL.createObjectURL(blob);
+                                const a = document.createElement('a');
+                                a.href = url;
+                                a.download = fileName;
+                                document.body.appendChild(a);
+                                a.click();
+                                document.body.removeChild(a);
+                                URL.revokeObjectURL(url);
+                              } catch { window.open(fileUrl, '_blank'); }
+                            }}
                             style={{ padding: '5px 14px', background: '#fff', color: '#243358', fontSize: '12px', fontWeight: 600, borderRadius: '4px', border: '1px solid #243358', textDecoration: 'none', cursor: 'pointer' }}
                           >Download</a>
                         )}
