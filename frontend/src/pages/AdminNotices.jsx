@@ -260,7 +260,7 @@ function AdminNotices() {
         >
           <div style={{
             background: '#fff', borderRadius: '12px', width: '100%', maxWidth: '520px',
-            maxHeight: '90vh', overflowY: 'auto', boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
           }}>
             {/* Modal Header */}
             <div style={{ padding: '16px 20px', borderBottom: '1px solid #e4e8ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
