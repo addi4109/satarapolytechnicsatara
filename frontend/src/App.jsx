@@ -160,36 +160,21 @@ function App() {
 
 function AppWithLoader() {
   const location = useLocation();
-  const [showLoading, setShowLoading] = useState(false);
+  const [showLoading, setShowLoading] = useState(() => location.pathname === '/');
   const [loadingKey, setLoadingKey] = useState(0);
-  const [settingsLoaded, setSettingsLoaded] = useState(false);
-  const [loadingEnabled, setLoadingEnabled] = useState(true);
 
-  // Fetch loading screen setting on mount
+  // Trigger loading screen on every homepage visit
   useEffect(() => {
-    fetch('/api/settings/loadingScreen')
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.value !== null && data.value !== undefined) {
-          setLoadingEnabled(data.value);
-        }
-      })
-      .catch(() => {}) // keep default true on error
-      .finally(() => setSettingsLoaded(true));
-  }, []);
-
-  // Trigger loading screen on every homepage visit (only after settings loaded)
-  useEffect(() => {
-    if (settingsLoaded && location.pathname === '/' && loadingEnabled) {
+    if (location.pathname === '/') {
       setShowLoading(true);
       setLoadingKey((k) => k + 1);
     }
-  }, [location.pathname, loadingEnabled, settingsLoaded]);
+  }, [location.pathname]);
 
   const handleLoadingComplete = useCallback(() => setShowLoading(false), []);
 
   return (
-    <> 
+    <>
       {showLoading && <LoadingScreen key={loadingKey} onComplete={handleLoadingComplete} />}
       <AppLayout />
     </>
