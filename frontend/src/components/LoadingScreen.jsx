@@ -8,7 +8,7 @@ function LoadingScreen({ onComplete }) {
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    const duration = 1500; // 1.5 seconds total
+    const duration = 1000; // 1 second total
     const interval = 20;
     const step = (interval / duration) * 100;
     let current = 0;
