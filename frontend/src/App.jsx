@@ -1,8 +1,9 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useState, useCallback } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import SEO from './components/SEO';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import LoadingScreen, { shouldShowLoading } from './components/LoadingScreen';
 
 // Lazy-loaded page components for code splitting
 const ImageSlider = lazy(() => import('./components/ImageSlider'));
@@ -150,8 +151,12 @@ function AppLayout() {
 }
 
 function App() {
+  const [showLoading, setShowLoading] = useState(() => shouldShowLoading());
+  const handleLoadingComplete = useCallback(() => setShowLoading(false), []);
+
   return (
     <BrowserRouter>
+      {showLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
       <AppLayout />
     </BrowserRouter>
   );
