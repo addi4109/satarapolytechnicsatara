@@ -162,14 +162,27 @@ function AppWithLoader() {
   const location = useLocation();
   const [showLoading, setShowLoading] = useState(false);
   const [loadingKey, setLoadingKey] = useState(0);
+  const [loadingEnabled, setLoadingEnabled] = useState(true);
 
-  // Trigger loading screen on every homepage visit
+  // Fetch loading screen setting on mount
   useEffect(() => {
-    if (location.pathname === '/') {
+    fetch('/api/settings/loadingScreen')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.value !== null && data.value !== undefined) {
+          setLoadingEnabled(data.value);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  // Trigger loading screen on every homepage visit (if enabled)
+  useEffect(() => {
+    if (location.pathname === '/' && loadingEnabled) {
       setShowLoading(true);
       setLoadingKey((k) => k + 1);
     }
-  }, [location.pathname]);
+  }, [location.pathname, loadingEnabled]);
 
   const handleLoadingComplete = useCallback(() => setShowLoading(false), []);
 

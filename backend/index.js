@@ -21,6 +21,7 @@ import examinationsRouter from './routes/examinations.js';
 import governingBodyRouter from './routes/governing-body.js';
 import campusRouter from './routes/campus.js';
 import activitiesRouter from './routes/activities.js';
+import settingsRouter from './routes/settings.js';
 
 // Use Google DNS to resolve MongoDB Atlas SRV records
 dns.setServers(['8.8.8.8', '8.8.4.4']);
@@ -53,6 +54,7 @@ app.use('/api/examinations', examinationsRouter);
 app.use('/api/governing-body', governingBodyRouter);
 app.use('/api/campus', campusRouter);
 app.use('/api/activities', activitiesRouter);
+app.use('/api/settings', settingsRouter);
 
 // Health check
 app.get('/api/health', (req, res) => {
