@@ -373,13 +373,36 @@ function AdminExaminations() {
             {/* ===== RULES TAB ===== */}
             {activeTab === 'rules' && (
               <>
+                <style>{`
+                  .admin-rule-card {
+                    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+                  }
+                  .admin-rule-card:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 18px rgba(36, 51, 88, 0.1);
+                    border-color: #c8963e;
+                  }
+                  .admin-subsection-card {
+                    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+                  }
+                  .admin-subsection-card:hover {
+                    box-shadow: 0 4px 14px rgba(36, 51, 88, 0.08);
+                    border-color: #c8963e;
+                  }
+                  .admin-subsection-title {
+                    transition: color 0.2s ease;
+                  }
+                  .admin-subsection-title:hover {
+                    color: #c8963e !important;
+                  }
+                `}</style>
                 <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
                 <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Exam Rules</h4>
                 <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>Add sub-sections with titles, then add rules under each sub-section.</p>
 
                 {/* Sub-Sections */}
                 {(form.ruleSubSections || []).map((subSection, ssIdx) => (
-                  <div key={ssIdx} style={{ marginBottom: '18px', padding: '16px', background: '#fff', border: editingSubSectionIdx === ssIdx ? '2px solid #c8963e' : '1px solid #e4e8ed', borderRadius: '8px' }}>
+                  <div key={ssIdx} className="admin-subsection-card" style={{ marginBottom: '18px', padding: '16px', background: '#fff', border: editingSubSectionIdx === ssIdx ? '2px solid #c8963e' : '1px solid #e4e8ed', borderRadius: '8px' }}>
                     {/* Sub-Section Header */}
                     {editingSubSectionIdx === ssIdx ? (
                       <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '12px' }}>
@@ -397,6 +420,7 @@ function AdminExaminations() {
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                         <h4
                           onClick={() => setEditingSubSectionIdx(ssIdx)}
+                          className="admin-subsection-title"
                           style={{ margin: 0, color: '#243358', fontSize: '20px', cursor: 'pointer', flex: 1 }}
                         >
                           <span style={{ color: '#7A263A', marginRight: '8px' }}>§{ssIdx + 1}</span>
@@ -412,7 +436,7 @@ function AdminExaminations() {
 
                     {/* Rules inside this sub-section */}
                     {subSection.rules.map((rule, rIdx) => (
-                      <div key={rIdx} style={{ position: 'relative', marginBottom: '10px', padding: '12px 14px', background: '#f8f9fa', border: editingSubSectionRuleIdx === rIdx && editingSubSectionIdx === ssIdx ? '1px solid #c8963e' : '1px solid #e8ecf0', borderRadius: '6px', marginLeft: '12px' }}>
+                      <div key={rIdx} className="admin-rule-card" style={{ position: 'relative', marginBottom: '10px', padding: '12px 14px', background: '#f8f9fa', border: editingSubSectionRuleIdx === rIdx && editingSubSectionIdx === ssIdx ? '1px solid #c8963e' : '1px solid #e8ecf0', borderRadius: '6px', marginLeft: '12px' }}>
                         {editingSubSectionRuleIdx === rIdx && editingSubSectionIdx === ssIdx ? (
                           <>
                             <input

@@ -167,16 +167,41 @@ function Examinations() {
               <div className="content-line"></div>
               {renderContent(getSection('rules').content || STATIC_CONTENT.examinations.rules)}
 
+              <style>{`
+                .exam-rule-card {
+                  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+                  cursor: default;
+                }
+                .exam-rule-card:hover {
+                  transform: translateY(-3px);
+                  box-shadow: 0 8px 24px rgba(36, 51, 88, 0.12);
+                  border-color: #c8963e;
+                }
+                .exam-subsection-card {
+                  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+                }
+                .exam-subsection-card:hover {
+                  box-shadow: 0 4px 16px rgba(36, 51, 88, 0.08);
+                  border-color: #c8963e;
+                }
+                .exam-subsection-title {
+                  transition: color 0.2s ease;
+                }
+                .exam-subsection-title:hover {
+                  color: #c8963e !important;
+                }
+              `}</style>
+
               {/* Sub-Sections (new format) */}
               {getSection('rules').ruleSubSections && getSection('rules').ruleSubSections.length > 0 && (
                 <div style={{ marginTop: '20px' }}>
                   {getSection('rules').ruleSubSections.map((subSection, ssIdx) => (
-                    <div key={ssIdx} style={{ marginBottom: '24px' }}>
-                      <h3 style={{ margin: '0 0 12px', color: '#243358', fontSize: '21px', borderBottom: '2px solid #c8963e', paddingBottom: '6px' }}>
+                    <div key={ssIdx} className="exam-subsection-card" style={{ marginBottom: '24px', padding: '16px', border: '1px solid #e4e8ed', borderRadius: '10px', background: '#fff' }}>
+                      <h3 className="exam-subsection-title" style={{ margin: '0 0 12px', color: '#243358', fontSize: '21px', borderBottom: '2px solid #c8963e', paddingBottom: '6px' }}>
                         {subSection.subTitle || 'Untitled Section'}
                       </h3>
                       {subSection.rules && subSection.rules.map((rule, rIdx) => (
-                        <div key={rIdx} style={{ marginBottom: '12px', padding: '14px 16px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px', marginLeft: '8px' }}>
+                        <div key={rIdx} className="exam-rule-card" style={{ marginBottom: '12px', padding: '14px 16px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px', marginLeft: '8px' }}>
                           <h4 style={{ margin: '0 0 6px', color: '#243358', fontSize: '18px' }}>
                             <span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {rIdx + 1}:</span>
                             {rule.title}
@@ -202,7 +227,7 @@ function Examinations() {
               {(!getSection('rules').ruleSubSections || getSection('rules').ruleSubSections.length === 0) && getSection('rules').rules && getSection('rules').rules.length > 0 && (
                 <div style={{ marginTop: '20px' }}>
                   {getSection('rules').rules.map((rule, i) => (
-                    <div key={i} style={{ marginBottom: '16px', padding: '16px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px' }}>
+                    <div key={i} className="exam-rule-card" style={{ marginBottom: '16px', padding: '16px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px' }}>
                       <h4 style={{ margin: '0 0 8px', color: '#243358', fontSize: '18px' }}>
                         <span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {i + 1}:</span>
                         {rule.title}
