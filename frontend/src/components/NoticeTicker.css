@@ -9,7 +9,7 @@
 .ticker-label {
   background: #b8860b;
   color: #fff;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   padding: 0 14px;
   height: 100%;
@@ -28,12 +28,12 @@
 .ticker-scroll {
   display: flex;
   white-space: nowrap;
-  animation: ticker-scroll 40s linear infinite;
+  animation: ticker-scroll 25s linear infinite;
 }
 
 .ticker-item {
   color: #e0e0e0;
-  font-size: 12.5px;
+  font-size: 14px;
   white-space: nowrap;
   padding: 0 50px;
   position: relative;
