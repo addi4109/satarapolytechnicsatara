@@ -140,7 +140,8 @@ function Examinations() {
                           <td style={{ textAlign: 'center' }}>
                             {item.pdfUrl ? (
                               <a
-                                href={item.pdfUrl}
+                                href="#"
+                                onClick={async (e) => { e.preventDefault(); try { const res = await fetch(item.pdfUrl); const blob = await res.blob(); const url = URL.createObjectURL(blob); window.open(url, '_blank'); } catch { window.open(item.pdfUrl, '_blank'); } }}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 style={{
@@ -413,7 +414,8 @@ function Examinations() {
                           <td style={{ textAlign: 'center' }}>
                             {item.pdfUrl ? (
                               <a
-                                href={item.pdfUrl}
+                                href="#"
+                                onClick={async (e) => { e.preventDefault(); try { const res = await fetch(item.pdfUrl); const blob = await res.blob(); const url = URL.createObjectURL(blob); window.open(url, '_blank'); } catch { window.open(item.pdfUrl, '_blank'); } }}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 style={{
