@@ -11,6 +11,7 @@ const noticeSchema = new mongoose.Schema(
       default: 'general'
     },
     pdfUrl: { type: String, default: '' },
+    imageUrl: { type: String, default: '' },
     active: { type: Boolean, default: true },
     order: { type: Number, default: 0 },
   },

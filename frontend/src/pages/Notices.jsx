@@ -75,23 +75,28 @@ function Notices() {
                     <td style={{ textAlign: 'center' }}>{index + 1}</td>
                     <td>
                       <div className="notice-title-cell">{notice.title}</div>
+                      {notice.imageUrl && (
+                        <img src={notice.imageUrl} alt={notice.title} style={{ marginTop: '6px', maxWidth: '120px', maxHeight: '60px', borderRadius: '4px', objectFit: 'cover', border: '1px solid #e4e8ed' }} />
+                      )}
                     </td>
                     <td>{new Date(notice.createdAt).toLocaleDateString('en-IN')}</td>
                     <td style={{ textAlign: 'center' }}>
-                      {notice.pdfUrl ? (
+                      {(notice.pdfUrl || notice.imageUrl) ? (
                         <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
                           <a
-                            href={`/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}`}
+                            href={notice.pdfUrl ? `/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl}
                             target="_blank"
                             className="notice-btn notice-view-btn"
                             style={{ textDecoration: 'none' }}
-                          >View</a>
-                          <a
-                            href={`/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}`}
-                            download
-                            className="notice-btn notice-download-btn"
-                            style={{ textDecoration: 'none', cursor: 'pointer' }}
-                          >Download</a>
+                          >{notice.imageUrl ? '🖼 View' : '📄 View'}</a>
+                          {notice.pdfUrl && (
+                            <a
+                              href={`/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}`}
+                              download
+                              className="notice-btn notice-download-btn"
+                              style={{ textDecoration: 'none', cursor: 'pointer' }}
+                            >Download</a>
+                          )}
                         </div>
                       ) : (
                         <span className="notice-btn notice-btn disabled">-</span>

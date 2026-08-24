@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import PdfUpload from '../components/PdfUpload';
+import ImageUpload from '../components/ImageUpload';
 import './Admin.css';
 
 const API_URL = '/api';
@@ -79,6 +80,7 @@ function AdminNotices() {
           active: form.active,
           order: form.order,
           pdfUrl: attachment,
+          imageUrl: (form.imageUrl || '').trim(),
         }),
       });
       if (res.ok) {
@@ -182,6 +184,10 @@ function AdminNotices() {
                       <textarea value={form.text || ''} onChange={(e) => setForm({ ...form, text: e.target.value })} rows={3} placeholder="Notice description" required />
                     </div>
                     <div className="form-group">
+                      <label>Upload Image (optional)</label>
+                      <ImageUpload value={form.imageUrl || ''} onChange={(url) => setForm({ ...form, imageUrl: url })} label="" placeholder="Upload notice image" />
+                    </div>
+                    <div className="form-group">
                       <label>Upload PDF (optional)</label>
                       <PdfUpload value={form._uploadPdf || ''} onChange={(url) => setForm({ ...form, _uploadPdf: url })} />
                     </div>
@@ -248,8 +254,8 @@ function AdminNotices() {
                         </td>
                         <td>
                           <div className="actions" style={{ justifyContent: 'center' }}>
-                            {notice.category !== 'tinker' && notice.pdfUrl ? (
-                              <a href={`/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}`} target="_blank" className="btn btn-primary btn-sm" style={{ textDecoration: 'none' }}>View</a>
+                            {notice.category !== 'tinker' && (notice.pdfUrl || notice.imageUrl) ? (
+                              <a href={notice.pdfUrl ? `/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl} target="_blank" className="btn btn-primary btn-sm" style={{ textDecoration: 'none' }}>{notice.imageUrl ? '🖼 View' : '📄 View'}</a>
                             ) : notice.category !== 'tinker' ? (
                               <button className="btn btn-primary btn-sm" onClick={() => openEdit(notice)}>View</button>
                             ) : null}
