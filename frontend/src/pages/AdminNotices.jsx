@@ -187,6 +187,11 @@ function AdminNotices() {
                       <label>Upload Image (optional)</label>
                       <ImageUpload value={form.imageUrl || ''} onChange={(url) => setForm({ ...form, imageUrl: url })} label="" placeholder="Upload notice image" />
                     </div>
+                    {form.imageUrl && (
+                      <div style={{ marginTop: '-8px', marginBottom: '12px' }}>
+                        <img src={form.imageUrl} alt="Preview" style={{ maxWidth: '200px', maxHeight: '100px', borderRadius: '6px', border: '1px solid #e4e8ed', objectFit: 'cover' }} />
+                      </div>
+                    )}
                     <div className="form-group">
                       <label>Upload PDF (optional)</label>
                       <PdfUpload value={form._uploadPdf || ''} onChange={(url) => setForm({ ...form, _uploadPdf: url })} />

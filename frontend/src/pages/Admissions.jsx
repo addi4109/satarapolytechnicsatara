@@ -438,12 +438,6 @@ function Admissions() {
                   >
                     Download Brochure
                   </a>
-                      }
-                    }}
-                    style={{ padding: '10px 24px', fontSize: '14px' }}
-                  >
-                    Download Brochure
-                  </a>
                 </div>
               ) : (
                 <p style={{ marginTop: '20px', color: '#888' }}>No brochure uploaded yet.</p>
