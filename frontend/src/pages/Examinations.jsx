@@ -140,12 +140,26 @@ function Examinations() {
                           <td style={{ textAlign: 'center' }}>
                             {item.pdfUrl ? (
                               <a
-                                href={item.pdfUrl}
+                                href={`https://docs.google.com/gview?url=${encodeURIComponent(item.pdfUrl)}&embedded=true`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                style={{ color: '#243358', fontWeight: 600, fontSize: '13px', textDecoration: 'none' }}
+                                style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '4px',
+                                  padding: '5px 14px',
+                                  background: 'linear-gradient(135deg, #243358, #3a5080)',
+                                  color: '#fff',
+                                  fontSize: '12px',
+                                  fontWeight: 600,
+                                  borderRadius: '20px',
+                                  textDecoration: 'none',
+                                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                                }}
+                                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(36,51,88,0.3)'; }}
+                                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
                               >
-                                View PDF
+                                📄 View PDF
                               </a>
                             ) : (
                               <span style={{ color: '#ccc', fontSize: '12px' }}>—</span>
@@ -399,12 +413,26 @@ function Examinations() {
                           <td style={{ textAlign: 'center' }}>
                             {item.pdfUrl ? (
                               <a
-                                href={item.pdfUrl}
+                                href={`https://docs.google.com/gview?url=${encodeURIComponent(item.pdfUrl)}&embedded=true`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                style={{ color: '#243358', fontWeight: 600, fontSize: '13px', textDecoration: 'none' }}
+                                style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '4px',
+                                  padding: '5px 14px',
+                                  background: 'linear-gradient(135deg, #243358, #3a5080)',
+                                  color: '#fff',
+                                  fontSize: '12px',
+                                  fontWeight: 600,
+                                  borderRadius: '20px',
+                                  textDecoration: 'none',
+                                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                                }}
+                                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(36,51,88,0.3)'; }}
+                                onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
                               >
-                                View PDF
+                                📄 View PDF
                               </a>
                             ) : (
                               <span style={{ color: '#ccc', fontSize: '12px' }}>—</span>
