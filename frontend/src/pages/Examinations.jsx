@@ -175,7 +175,16 @@ function Examinations() {
                         <span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {i + 1}:</span>
                         {rule.title}
                       </h4>
-                      <p style={{ margin: 0, color: '#555', fontSize: '14px', lineHeight: '1.6' }}>{rule.description}</p>
+                      {rule.description && (
+                        <p style={{ margin: '0 0 6px', color: '#555', fontSize: '14px', lineHeight: '1.6' }}>{rule.description}</p>
+                      )}
+                      {rule.subPoints && rule.subPoints.length > 0 && (
+                        <ul style={{ margin: '8px 0 0', paddingLeft: '20px' }}>
+                          {rule.subPoints.map((sp, spIdx) => (
+                            <li key={spIdx} style={{ color: '#555', fontSize: '13px', lineHeight: '1.7', marginBottom: '3px' }}>{sp}</li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
                   ))}
                 </div>

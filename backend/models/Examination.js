@@ -33,6 +33,10 @@ const ExaminationSchema = new mongoose.Schema({
     type: [{
       title: String,
       description: String,
+      subPoints: {
+        type: [String],
+        default: [],
+      },
     }],
     default: [],
   },

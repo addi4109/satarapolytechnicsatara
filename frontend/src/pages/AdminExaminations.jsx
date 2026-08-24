@@ -144,8 +144,29 @@ function AdminExaminations() {
 
   // Rules - inline card editing
   const addEmptyRule = () => {
-    addEmptyRow('rules', { title: '', description: '' });
+    addEmptyRow('rules', { title: '', description: '', subPoints: [] });
     setEditingRuleIdx(form.rules.length);
+  };
+
+  // Sub-points helpers
+  const addSubPoint = (ruleIdx) => {
+    const rows = [...form.rules];
+    rows[ruleIdx] = { ...rows[ruleIdx], subPoints: [...(rows[ruleIdx].subPoints || []), ''] };
+    handleChange('rules', rows);
+  };
+
+  const updateSubPoint = (ruleIdx, spIdx, value) => {
+    const rows = [...form.rules];
+    const sp = [...rows[ruleIdx].subPoints];
+    sp[spIdx] = value;
+    rows[ruleIdx] = { ...rows[ruleIdx], subPoints: sp };
+    handleChange('rules', rows);
+  };
+
+  const removeSubPoint = (ruleIdx, spIdx) => {
+    const rows = [...form.rules];
+    rows[ruleIdx] = { ...rows[ruleIdx], subPoints: rows[ruleIdx].subPoints.filter((_, i) => i !== spIdx) };
+    handleChange('rules', rows);
   };
 
   // Revaluation steps - inline card editing
@@ -292,7 +313,6 @@ function AdminExaminations() {
                           type="text"
                           value={rule.title}
                           onChange={(e) => updateRow('rules', i, 'title', e.target.value)}
-                          onKeyDown={(e) => e.key === 'Enter' && setEditingRuleIdx(null)}
                           placeholder="Rule title"
                           style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', marginBottom: '6px', boxSizing: 'border-box' }}
                         />
@@ -303,6 +323,33 @@ function AdminExaminations() {
                           rows={2}
                           style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }}
                         />
+
+                        {/* Sub-points section */}
+                        <div style={{ marginBottom: '10px' }}>
+                          <label style={{ fontSize: '12px', fontWeight: 600, color: '#555', marginBottom: '6px', display: 'block' }}>Sub-Points (bullet points)</label>
+                          {(rule.subPoints || []).map((sp, spIdx) => (
+                            <div key={spIdx} style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                              <span style={{ color: '#7A263A', fontWeight: 700, fontSize: '14px' }}>•</span>
+                              <input
+                                type="text"
+                                value={sp}
+                                onChange={(e) => updateSubPoint(i, spIdx, e.target.value)}
+                                placeholder="Sub-point text"
+                                style={{ flex: 1, padding: '5px 8px', border: '1px solid #c8963e', borderRadius: '4px', fontSize: '12.5px', boxSizing: 'border-box' }}
+                              />
+                              <button
+                                onClick={() => removeSubPoint(i, spIdx)}
+                                style={{ background: 'none', border: 'none', color: '#c0392b', cursor: 'pointer', fontSize: '16px', fontWeight: 700, padding: '0 4px' }}
+                                title="Remove sub-point"
+                              >×</button>
+                            </div>
+                          ))}
+                          <button
+                            onClick={() => addSubPoint(i)}
+                            style={{ marginTop: '4px', background: 'none', border: '1px dashed #b9c3d4', borderRadius: '4px', padding: '4px 12px', cursor: 'pointer', color: '#243358', fontSize: '12px', fontWeight: 600 }}
+                          >+ Add Sub-Point</button>
+                        </div>
+
                         <button className="btn btn-success btn-sm" onClick={() => setEditingRuleIdx(null)}>Done</button>
                       </>
                     ) : (
@@ -312,9 +359,19 @@ function AdminExaminations() {
                             <span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {i + 1}:</span>
                             {rule.title || <em style={{ fontWeight: 400, color: '#aaa' }}>Untitled rule</em>}
                           </h4>
-                          <p style={{ margin: 0, color: '#555', fontSize: '14px', lineHeight: '1.6' }}>
-                            {rule.description || <em style={{ color: '#aaa' }}>No description</em>}
-                          </p>
+                          {rule.description && (
+                            <p style={{ margin: '0 0 6px', color: '#555', fontSize: '14px', lineHeight: '1.6' }}>{rule.description}</p>
+                          )}
+                          {rule.subPoints && rule.subPoints.length > 0 && (
+                            <ul style={{ margin: '6px 0 0', paddingLeft: '20px' }}>
+                              {rule.subPoints.map((sp, spIdx) => (
+                                <li key={spIdx} style={{ color: '#555', fontSize: '13px', lineHeight: '1.6', marginBottom: '2px' }}>{sp}</li>
+                              ))}
+                            </ul>
+                          )}
+                          {!rule.description && (!rule.subPoints || rule.subPoints.length === 0) && (
+                            <p style={{ margin: 0, color: '#aaa', fontStyle: 'italic' }}>No description or sub-points</p>
+                          )}
                         </div>
                         <button
                           className="member-remove-btn"
