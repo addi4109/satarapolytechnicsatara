@@ -16,17 +16,17 @@ function ContactMap() {
           <div className="contact-info">
             <h3 className="contact-label">Location</h3>
             <p className="contact-detail">
-              Satara Polytechnic Satara, Sonegaon Tarf Satara, near NH - 4, near Khindwadi, Sonegaon Tarf Satara, Maharashtra 415519
+              near NH - 4, near Khindwadi, Sonegaon Tarf Satara, Maharashtra 415519
             </p>
           </div>
           <div className="contact-info">
             <h3 className="contact-label">Office Hours</h3>
-            <p className="contact-detail">11 AM – 5 PM</p>
+            <p className="contact-detail">8 AM – 6 PM (Mon - Sun)</p>
           </div>
         </div>
         <div className="contact-right">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3824.123456789!2d73.9985563!3d17.6458608!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc239d3e0b5e5e5%3A0x1234567890abcdef!2sSatara%20Polytechnic!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3801.94073621475!2d74.0093987!3d17.6529606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2399e87a8a1e3%3A0xaae19259100b0879!2sSatara%20Polytechnic!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
             width="100%"
             height="100%"
             style={{ border: 0 }}
