@@ -288,7 +288,10 @@ function DepartmentsPage() {
                                         <td>{sub.name}</td>
                                         <td>
                                           {sub.url ? (
-                                            <a href={sub.url} className="curr-btn curr-view" target="_blank" rel="noreferrer">View</a>
+                                            <div style={{ display: 'flex', gap: '6px' }}>
+                                              <a href={sub.url} className="curr-btn curr-view" target="_blank" rel="noreferrer">View</a>
+                                              <a href={sub.url} className="curr-btn curr-download" download>Download</a>
+                                            </div>
                                           ) : (
                                             <span style={{ color: '#ccc' }}>—</span>
                                           )}
