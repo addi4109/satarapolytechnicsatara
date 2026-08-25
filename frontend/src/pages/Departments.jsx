@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import { SkeletonPage } from '../components/Skeleton';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './DepartmentsPage.css';
+import './Gallery.css';
 
 const API_URL = '/api';
 const years = ['1st Year', '2nd Year', '3rd Year'];
@@ -19,6 +20,21 @@ function DepartmentsPage() {
   const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [lightbox, setLightbox] = useState(null);
+
+  const closeLightbox = useCallback(() => setLightbox(null), []);
+
+  useEffect(() => {
+    const handleKey = (e) => { if (e.key === 'Escape') closeLightbox(); };
+    if (lightbox) {
+      document.addEventListener('keydown', handleKey);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
+    };
+  }, [lightbox, closeLightbox]);
 
   useEffect(() => {
     fetchDepartments();
@@ -235,7 +251,7 @@ function DepartmentsPage() {
                   return items.length > 0 ? (
                     <div className="labs-grid">
                       {items.map((item, i) => (
-                        <div className="lab-img-card" key={i}>
+                        <div className="lab-img-card" key={i} style={{ cursor: item.image ? 'pointer' : 'default' }} onClick={() => item.image && setLightbox(item)}>
                           {item.image && (
                             <div className="lab-img-wrap">
                               <img src={item.image} alt={item.name} />
@@ -376,6 +392,19 @@ function DepartmentsPage() {
           </main>
         </div>
       </div>
+
+      {/* Lightbox */}
+      {lightbox && (
+        <div className="lightbox-overlay" onClick={closeLightbox}>
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <button className="lightbox-close" onClick={closeLightbox}>✕</button>
+            <img src={lightbox.image} alt={lightbox.name} className="lightbox-img" />
+            <div className="lightbox-info">
+              <h3>{lightbox.name}</h3>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

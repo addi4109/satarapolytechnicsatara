@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const memberSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  designation: { type: String, required: true },
+  designation: { type: String, default: '' },
   phone: { type: String, default: '' },
   position: { type: String, default: '' },
 });
