@@ -127,8 +127,6 @@ function Navbar() {
         { label: 'Sports', link: '/activities/sports' },
         { label: 'Cultural', link: '/activities/cultural' },
         { label: 'Technical Events', link: '/activities/technical' },
-        { label: 'Industrial Visits', link: '/activities/industrial-visits' },
-        { label: 'Competitions', link: '/activities/competitions' },
       ],
     },
     {
