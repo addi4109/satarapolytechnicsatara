@@ -48,6 +48,7 @@ function Navbar() {
             { label: 'Secretary', link: '/about/secretary' },
             { label: 'Principal', link: '/about/principal' },
             { label: 'Governing Body', link: '/about/governing-body' },
+            { label: 'Local Governing Body', link: '/about/local-governing-body' },
           ],
         },
       ],

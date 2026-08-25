@@ -19,6 +19,7 @@ const routeMap = {
   'founder': 'founder',
   'society': 'society',
   'governing-body': 'governing-body',
+  'local-governing-body': 'local-governing-body',
 };
 
 const sidebarLinks = [
@@ -32,6 +33,7 @@ const sidebarLinks = [
   { id: 'secretary', label: 'Secretary' },
   { id: 'principal', label: 'Principal' },
   { id: 'governing-body', label: 'Governing Body' },
+  { id: 'local-governing-body', label: 'Local Governing Body' },
 ];
 
 const API_URL = '/api';
@@ -42,6 +44,7 @@ function AboutCollege() {
   const [management, setManagement] = useState({});
   const [about, setAbout] = useState({});
   const [gbMembers, setGbMembers] = useState([]);
+  const [lgbMembers, setLgbMembers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -55,8 +58,9 @@ function AboutCollege() {
       fetch(`${API_URL}/management`).then((r) => r.json()),
       fetch(`${API_URL}/about`).then((r) => r.json()),
       fetch(`${API_URL}/governing-body`).then((r) => r.json()),
+      fetch(`${API_URL}/local-governing-body`).then((r) => r.json()),
     ])
-      .then(([mgmtData, aboutData, gbData]) => {
+      .then(([mgmtData, aboutData, gbData, lgbData]) => {
         const mgmtMapped = {};
         mgmtData.forEach((entry) => { mgmtMapped[entry.role] = entry; });
         setManagement(mgmtMapped);
@@ -66,6 +70,7 @@ function AboutCollege() {
         setAbout(aboutMapped);
 
         setGbMembers(gbData);
+        setLgbMembers(lgbData);
       })
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -167,7 +172,8 @@ function AboutCollege() {
     active === 'chairman' ? "Chairman's Message" :
     active === 'secretary' ? "Secretary's Message" :
     active === 'principal' ? "Principal's Message" :
-    active === 'governing-body' ? 'Governing Body' : 'About College';
+    active === 'governing-body' ? 'Governing Body' :
+    active === 'local-governing-body' ? 'Local Governing Body' : 'About College';
 
   return (
     <>
@@ -354,6 +360,44 @@ function AboutCollege() {
               ) : (
                 <div className="staff-cards-grid">
                   {gbMembers.map((member) => (
+                    <div key={member._id} className="staff-card">
+                      {member.photoUrl ? (
+                        <img
+                          className="staff-card-photo"
+                          src={member.photoUrl}
+                          alt={member.name}
+                        />
+                      ) : (
+                        <div className="staff-card-photo-placeholder">
+                          No Photo
+                        </div>
+                      )}
+                      <h3 className="staff-card-name">{member.name}</h3>
+                      <p className="staff-card-designation">{member.designation}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+
+          {/* Local Governing Body */}
+          {active === 'local-governing-body' && (
+            <>
+              <h2 className="content-heading">Local Governing Body</h2>
+              <div className="content-line"></div>
+              <p style={{ marginBottom: '24px', color: '#555', lineHeight: '1.7' }}>
+                The Local Governing Body of Satara Polytechnic, Satara provides local governance,
+                community engagement, and support for the overall development of the institute.
+                The members bring local expertise and are committed to strengthening the institute's
+                connection with the community.
+              </p>
+
+              {lgbMembers.length === 0 ? (
+                <p style={{ color: '#888' }}>No local governing body members added yet.</p>
+              ) : (
+                <div className="staff-cards-grid">
+                  {lgbMembers.map((member) => (
                     <div key={member._id} className="staff-card">
                       {member.photoUrl ? (
                         <img

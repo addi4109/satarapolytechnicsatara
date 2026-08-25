@@ -46,6 +46,15 @@ function AdminManagement() {
   const [gbSaving, setGbSaving] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
 
+  // Local Governing Body state
+  const [lgbMembers, setLgbMembers] = useState([]);
+  const [lgbLoading, setLgbLoading] = useState(true);
+  const [showLgbForm, setShowLgbForm] = useState(false);
+  const [editLgbId, setEditLgbId] = useState(null);
+  const [lgbForm, setLgbForm] = useState({ ...defaultGbMember });
+  const [lgbSaving, setLgbSaving] = useState(false);
+  const [deleteConfirmLgb, setDeleteConfirmLgb] = useState(null);
+
   useEffect(() => {
     fetchEntries();
   }, []);
@@ -53,6 +62,9 @@ function AdminManagement() {
   useEffect(() => {
     if (activeTab === 'governing-body') {
       fetchGbMembers();
+    }
+    if (activeTab === 'local-governing-body') {
+      fetchLgbMembers();
     }
   }, [activeTab]);
 
@@ -85,8 +97,21 @@ function AdminManagement() {
     }
   };
 
+  const fetchLgbMembers = async () => {
+    setLgbLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/local-governing-body/all`);
+      const data = await res.json();
+      setLgbMembers(data);
+    } catch (err) {
+      console.error('Failed to fetch local governing body:', err);
+    } finally {
+      setLgbLoading(false);
+    }
+  };
+
   useEffect(() => {
-    if (activeTab !== 'governing-body') {
+    if (activeTab !== 'governing-body' && activeTab !== 'local-governing-body') {
       const existing = entries[activeTab];
       if (existing) {
         setForm({ ...defaultEntry, ...existing });
@@ -212,6 +237,70 @@ function AdminManagement() {
     setDeleteConfirm(null);
   };
 
+  // Local Governing Body handlers
+  const openAddLgb = () => {
+    setEditLgbId(null);
+    setLgbForm({ ...defaultGbMember });
+    setShowLgbForm(true);
+  };
+
+  const openEditLgb = (member) => {
+    setEditLgbId(member._id);
+    setLgbForm({
+      name: member.name || '',
+      designation: member.designation || '',
+      photoUrl: member.photoUrl || '',
+      order: member.order || 0,
+      active: member.active !== false,
+    });
+    setShowLgbForm(true);
+  };
+
+  const cancelLgbForm = () => {
+    setShowLgbForm(false);
+    setEditLgbId(null);
+    setLgbForm({ ...defaultGbMember });
+  };
+
+  const handleLgbSave = async (e) => {
+    e.preventDefault();
+    setLgbSaving(true);
+    try {
+      const url = editLgbId ? `${API_URL}/local-governing-body/${editLgbId}` : `${API_URL}/local-governing-body`;
+      const method = editLgbId ? 'PUT' : 'POST';
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(lgbForm),
+      });
+      if (res.ok) {
+        setMsg({ type: 'success', text: editLgbId ? 'Member updated!' : 'Member added!' });
+        setShowLgbForm(false);
+        setEditLgbId(null);
+        setLgbForm({ ...defaultGbMember });
+        fetchLgbMembers();
+      } else {
+        const err = await res.json();
+        setMsg({ type: 'error', text: err.error || 'Failed' });
+      }
+    } catch {
+      setMsg({ type: 'error', text: 'Network error' });
+    } finally {
+      setLgbSaving(false);
+    }
+  };
+
+  const handleLgbDelete = async (id) => {
+    try {
+      await fetch(`${API_URL}/local-governing-body/${id}`, { method: 'DELETE' });
+      setMsg({ type: 'success', text: 'Member deleted' });
+      fetchLgbMembers();
+    } catch {
+      setMsg({ type: 'error', text: 'Failed to delete' });
+    }
+    setDeleteConfirmLgb(null);
+  };
+
   const activeEntry = entries[activeTab];
   const currentRole = ROLES.find((r) => r.key === activeTab);
 
@@ -287,13 +376,20 @@ function AdminManagement() {
                 Governing Body
                 {gbMembers.length > 0 && <span className="gallery-tab-count" style={{ fontSize: '10px' }}>{gbMembers.length}</span>}
               </button>
+              <button
+                className={`gallery-tab ${activeTab === 'local-governing-body' ? 'active' : ''}`}
+                onClick={() => setActiveTab('local-governing-body')}
+              >
+                Local Governing Body
+                {lgbMembers.length > 0 && <span className="gallery-tab-count" style={{ fontSize: '10px' }}>{lgbMembers.length}</span>}
+              </button>
             </div>
           </div>
 
           {/* Title */}
           <div style={{ padding: '10px 24px', textAlign: 'center', flexShrink: 0 }}>
             <h2 style={{ margin: 0, fontFamily: 'Georgia, serif', fontSize: '22px', color: '#243358' }}>
-              {activeTab === 'governing-body' ? 'Governing Body Management' : `${currentRole?.label} Management`}
+              {activeTab === 'governing-body' ? 'Governing Body Management' : activeTab === 'local-governing-body' ? 'Local Governing Body Management' : `${currentRole?.label} Management`}
             </h2>
           </div>
 
@@ -386,8 +482,99 @@ function AdminManagement() {
             </div>
           )}
 
+          {/* ===== LOCAL GOVERNING BODY TAB ===== */}
+          {activeTab === 'local-governing-body' && (
+            <div style={{ flex: 1, padding: '0 24px 24px' }}>
+              {lgbLoading ? (
+                <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
+              ) : (
+                <>
+                  <div style={{ marginBottom: '16px' }}>
+                    <button
+                      className={`btn ${showLgbForm && !editLgbId ? 'btn-secondary' : 'btn-success'}`}
+                      onClick={() => (showLgbForm && !editLgbId ? cancelLgbForm() : openAddLgb())}
+                    >
+                      {showLgbForm && !editLgbId ? 'Close Form' : '+ Add Member'}
+                    </button>
+                  </div>
+
+                  {lgbMembers.length === 0 && !showLgbForm && (
+                    <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+                      <p style={{ color: '#888', marginBottom: '16px' }}>No local governing body members yet.</p>
+                      <button className="btn btn-success" onClick={openAddLgb}>Add First Member</button>
+                    </div>
+                  )}
+
+                  <div className="gb-cards-grid">
+                    {showLgbForm && !editLgbId && (
+                      <form className="gb-member-card gb-member-editing" onSubmit={handleLgbSave}>
+                        <div style={{ textAlign: 'center', marginBottom: '14px' }}>
+                          <ImageUpload
+                            value={lgbForm.photoUrl}
+                            onChange={(url) => setLgbForm({ ...lgbForm, photoUrl: url })}
+                            circle
+                          />
+                        </div>
+                        <input type="text" className="gb-member-input" value={lgbForm.name} onChange={(e) => setLgbForm({ ...lgbForm, name: e.target.value })} placeholder="Name" required />
+                        <input type="text" className="gb-member-input" value={lgbForm.designation} onChange={(e) => setLgbForm({ ...lgbForm, designation: e.target.value })} placeholder="Designation" required />
+                        <input type="number" className="gb-member-input" value={lgbForm.order} onChange={(e) => setLgbForm({ ...lgbForm, order: Number(e.target.value) })} placeholder="Display Order" min="0" />
+                        <div className="gb-member-actions">
+                          <button type="submit" className="btn btn-success btn-sm" disabled={lgbSaving}>{lgbSaving ? 'Saving...' : 'Add Member'}</button>
+                          <button type="button" className="btn btn-secondary btn-sm" onClick={cancelLgbForm}>Cancel</button>
+                        </div>
+                      </form>
+                    )}
+
+                    {lgbMembers.map((member) =>
+                      editLgbId === member._id ? (
+                        <form key={member._id} className="gb-member-card gb-member-editing" onSubmit={handleLgbSave}>
+                          <div style={{ textAlign: 'center', marginBottom: '14px' }}>
+                            <ImageUpload
+                              value={lgbForm.photoUrl}
+                              onChange={(url) => setLgbForm({ ...lgbForm, photoUrl: url })}
+                              circle
+                            />
+                          </div>
+                          <input type="text" className="gb-member-input" value={lgbForm.name} onChange={(e) => setLgbForm({ ...lgbForm, name: e.target.value })} placeholder="Name" required />
+                          <input type="text" className="gb-member-input" value={lgbForm.designation} onChange={(e) => setLgbForm({ ...lgbForm, designation: e.target.value })} placeholder="Designation" required />
+                          <input type="number" className="gb-member-input" value={lgbForm.order} onChange={(e) => setLgbForm({ ...lgbForm, order: Number(e.target.value) })} placeholder="Display Order" min="0" />
+                          <div className="gb-member-actions">
+                            <button type="submit" className="btn btn-success btn-sm" disabled={lgbSaving}>{lgbSaving ? 'Saving...' : 'Update'}</button>
+                            <button type="button" className="btn btn-secondary btn-sm" onClick={cancelLgbForm}>Cancel</button>
+                          </div>
+                        </form>
+                      ) : (
+                        <div key={member._id} className="gb-member-card">
+                          <span className="gb-member-order">#{member.order ?? 0}</span>
+                          {member.photoUrl ? (
+                            <img src={member.photoUrl} alt={member.name} className="gb-member-photo" />
+                          ) : (
+                            <div className="gb-member-photo gb-member-photo-empty">No Photo</div>
+                          )}
+                          <h3 className="gb-member-name">{member.name}</h3>
+                          <p className="gb-member-designation">{member.designation}</p>
+                          <div className="gb-member-actions">
+                            <button className="btn btn-primary btn-sm" onClick={() => openEditLgb(member)}>Edit</button>
+                            {deleteConfirmLgb === member._id ? (
+                              <>
+                                <button className="btn btn-danger btn-sm" onClick={() => handleLgbDelete(member._id)}>Yes</button>
+                                <button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirmLgb(null)}>No</button>
+                              </>
+                            ) : (
+                              <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirmLgb(member._id)}>Del</button>
+                            )}
+                          </div>
+                        </div>
+                      )
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
           {/* ===== MANAGEMENT ROLE TABS ===== */}
-          {activeTab !== 'governing-body' && (
+          {activeTab !== 'governing-body' && activeTab !== 'local-governing-body' && (
             <div style={{ flex: 1, padding: '0 24px 24px', display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
               {/* Left: Circular Photo + Fields */}
               <div style={{
