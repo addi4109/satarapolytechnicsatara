@@ -62,11 +62,6 @@
   font-size: 13px;
   font-weight: 600;
   border-radius: 4px;
-  transition: background 0.2s;
-}
-
-.welcome-btn:hover {
-  background: #243358;
 }
 
 @media (max-width: 768px) {

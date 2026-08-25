@@ -29,7 +29,7 @@ function Departments() {
 
         <div className="dept-grid">
           {departments.map((dept, idx) => (
-            <div className="dept-card" key={dept.slug || idx} style={{ animationDelay: `${idx * 0.12}s` }}>
+            <div className="dept-card" key={dept.slug || idx}>
               <div className="dept-img-wrap">
                 <img src={dept.image} alt={dept.name} />
               </div>

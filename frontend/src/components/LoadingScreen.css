@@ -36,12 +36,6 @@
   overflow: hidden;
   border: 3px solid rgba(200, 150, 62, 0.5);
   box-shadow: 0 0 40px rgba(200, 150, 62, 0.25), 0 0 80px rgba(36, 51, 88, 0.4);
-  animation: logoPulse 2s ease-in-out infinite;
-}
-
-@keyframes logoPulse {
-  0%, 100% { box-shadow: 0 0 40px rgba(200, 150, 62, 0.25), 0 0 80px rgba(36, 51, 88, 0.4); }
-  50% { box-shadow: 0 0 60px rgba(200, 150, 62, 0.4), 0 0 100px rgba(36, 51, 88, 0.5); }
 }
 
 .loading-logo {

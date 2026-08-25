@@ -28,7 +28,7 @@
 .ticker-scroll {
   display: flex;
   white-space: nowrap;
-  animation: ticker-scroll 25s linear infinite;
+  overflow-x: auto;
 }
 
 .ticker-item {
@@ -46,14 +46,7 @@
   color: rgba(255,255,255,0.3);
 }
 
-@keyframes ticker-scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
+
 
 @media (max-width: 768px) {
   .ticker-section {
