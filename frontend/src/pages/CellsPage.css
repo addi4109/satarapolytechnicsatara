@@ -176,6 +176,17 @@
   border-bottom: none;
 }
 
+.cell-detail-desc {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 24px;
+  padding: 16px 20px;
+  background: #f9fafc;
+  border-left: 3px solid #c8963e;
+  border-radius: 0 6px 6px 0;
+}
+
 @media (max-width: 768px) {
   .cells-page-wrap {
     padding: 24px 16px 40px;

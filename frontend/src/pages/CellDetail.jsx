@@ -75,6 +75,9 @@ function CellDetail() {
       <div className="cells-page-wrap">
         <h2 className="cells-main-heading">{cell.name}</h2>
         <div className="cells-main-line"></div>
+        {cell.description && (
+          <p className="cell-detail-desc">{cell.description}</p>
+        )}
         {cell.members && cell.members.length > 0 ? (
           <div style={{ overflowX: 'auto' }}>
             <table className="cell-card-table">
