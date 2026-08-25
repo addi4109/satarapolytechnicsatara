@@ -238,6 +238,38 @@ const departmentsData = [
       { name: 'Seminar Hall' },
     ],
   },
+  {
+    name: 'General Science',
+    slug: 'general-science',
+    image: '',
+    intake: 60,
+    directSecond: false,
+    order: 7,
+    hideFromHome: true,
+    about: 'The Department of General Science provides foundational science education to first-year students across all engineering disciplines.',
+    vision: 'To build strong scientific fundamentals that support engineering education.',
+    mission: [
+      'Provide quality education in Physics, Chemistry, and Mathematics',
+      'Develop analytical and scientific thinking skills',
+      'Support engineering departments with strong foundational knowledge',
+      'Encourage practical learning through laboratory experiments',
+    ],
+    hod: '',
+    hodImage: '',
+    hodQual: '',
+    hodMsg: '',
+    faculty: [],
+    labs: [
+      { name: 'Physics Lab' },
+      { name: 'Chemistry Lab' },
+      { name: 'Mathematics Lab' },
+    ],
+    infrastructure: [
+      { name: 'Physics Lab' },
+      { name: 'Chemistry Lab' },
+      { name: 'Smart Classroom' },
+    ],
+  },
 ];
 
 async function seed() {

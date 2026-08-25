@@ -41,6 +41,7 @@ const departmentSchema = new mongoose.Schema(
     infrastructure: [labSchema],
     curriculum: [curriculumSchema],
     order: { type: Number, default: 0 },
+    hideFromHome: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

@@ -58,7 +58,7 @@ function Navbar() {
       columns: [
         {
           header: 'Departments',
-          items: dbDepts.map((d) => ({
+          items: dbDepts.filter((d) => !d.hideFromHome).map((d) => ({
             label: d.name,
             link: `/departments/${d.slug}`,
           })),

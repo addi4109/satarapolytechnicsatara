@@ -11,6 +11,7 @@ const branchOptions = [
   'Chemical Engineering',
   'Electrical Engineering',
   'Automobile Engineering',
+  'General Science',
 ];
 
 const admissionType = [
