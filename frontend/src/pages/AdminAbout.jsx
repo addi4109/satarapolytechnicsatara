@@ -7,11 +7,11 @@ import './AboutCollege.css';
 const API_URL = '/api';
 
 const SECTIONS = [
-  { key: 'society', label: 'Satara Education Society', icon: '🏫' },
-  { key: 'institute', label: 'Institute', icon: '🏛️' },
-  { key: 'disclosure', label: 'Mandatory Disclosure', icon: '📋' },
-  { key: 'vision', label: 'Vision & Mission', icon: '🎯' },
-  { key: 'affiliation', label: 'Affiliation & Approval', icon: '📜' },
+  { key: 'society', label: 'Satara Education Society' },
+  { key: 'institute', label: 'Institute' },
+  { key: 'disclosure', label: 'Mandatory Disclosure' },
+  { key: 'vision', label: 'Vision & Mission' },
+  { key: 'affiliation', label: 'Affiliation & Approval' },
 ];
 
 const defaultSection = {
@@ -466,7 +466,6 @@ function AdminAbout() {
               className={`about-admin-tab ${activeTab === sec.key ? 'active' : ''}`}
               onClick={() => setActiveTab(sec.key)}
             >
-              <span className="about-tab-icon">{sec.icon}</span>
               {sec.label}
               {sections[sec.key] && <span className="about-tab-saved">Saved</span>}
             </button>
