@@ -4,15 +4,41 @@ dotenv.config();
 
 const router = Router();
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@gmail.com';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
+/**
+ * Parse admin credentials from env vars.
+ * Supports multiple admins via comma-separated values:
+ *   ADMIN_EMAILS=admin1@gmail.com,admin2@gmail.com
+ *   ADMIN_PASSWORDS=pass1,pass2
+ * 
+ * Or single admin:
+ *   ADMIN_EMAIL=admin@gmail.com
+ *   ADMIN_PASSWORD=pass123
+ */
+function getAdminCredentials() {
+  // Try multi-admin format first
+  const emails = process.env.ADMIN_EMAILS;
+  const passwords = process.env.ADMIN_PASSWORDS;
+  
+  if (emails && passwords) {
+    const emailList = emails.split(',').map(e => e.trim());
+    const passList = passwords.split(',').map(p => p.trim());
+    return emailList.map((email, i) => ({
+      email,
+      password: passList[i] || ''
+    }));
+  }
+  
+  // Fallback to single admin format
+  return [{
+    email: process.env.ADMIN_EMAIL || 'admin@gmail.com',
+    password: process.env.ADMIN_PASSWORD || 'admin123'
+  }];
+}
 
 /**
  * POST /api/auth/login
  * Body: { email, password }
  * Returns: { success: true } or { success: false, error: '...' }
- * 
- * Credentials are checked server-side — never exposed to frontend JS.
  */
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
@@ -21,11 +47,14 @@ router.post('/login', (req, res) => {
     return res.status(400).json({ success: false, error: 'Email and password are required' });
   }
 
-  // Timing-safe comparison to prevent timing attacks
-  const emailMatch = timingSafeEqual(email, ADMIN_EMAIL);
-  const passwordMatch = timingSafeEqual(password, ADMIN_PASSWORD);
+  const admins = getAdminCredentials();
+  
+  // Check if any admin matches
+  const isValid = admins.some(admin => 
+    timingSafeEqual(email, admin.email) && timingSafeEqual(password, admin.password)
+  );
 
-  if (emailMatch && passwordMatch) {
+  if (isValid) {
     return res.json({ success: true });
   }
 
