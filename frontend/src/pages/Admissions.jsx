@@ -411,39 +411,176 @@ function Admissions() {
             </>
           )}
 
-          {/* Courses */}
+          {/* Courses - Static Professional Layout */}
           {active === 'courses' && (
             <>
-              <h2 className="content-heading">{getSection('courses').title || 'Courses Offered'}</h2>
+              <h2 className="content-heading">Courses Offered</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('courses').content || STATIC_CONTENT.admissions.courses)}
-              {renderSubSections(getSection('courses').subSections)}
+              <p>
+                Shri Satara Polytechnic, Satara offers six full-time diploma programmes in
+                various branches of engineering and technology. All programmes are approved by
+                AICTE, New Delhi and affiliated to MSBTE, Mumbai. The courses are designed to
+                provide a strong foundation in engineering principles along with hands-on practical
+                training to prepare students for successful careers in the industry.
+              </p>
+
+              {/* Stats */}
+              <div className="overview-stats">
+                <div className="stat-box">
+                  <span className="stat-num">06</span>
+                  <span className="stat-txt">Diploma Programs</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">360</span>
+                  <span className="stat-txt">Total Intake</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">03</span>
+                  <span className="stat-txt">Years Duration</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">06</span>
+                  <span className="stat-txt">Semesters</span>
+                </div>
+              </div>
+
+              {/* Department Cards */}
+              <div style={{ marginTop: '36px' }}>
+                <h3 className="content-sub-heading">Our Departments</h3>
+                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div className="course-dept-grid">
+                  <div className="course-dept-card">
+                    <div className="course-dept-icon">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01"/></svg>
+                    </div>
+                    <h4>Computer Engineering</h4>
+                    <p>Programming, software development, networking, database management and emerging technologies.</p>
+                    <div className="course-dept-meta">
+                      <span>Duration: 3 Years</span>
+                      <span>Intake: 60</span>
+                    </div>
+                  </div>
+                  <div className="course-dept-card">
+                    <div className="course-dept-icon">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12h5l3-9 4 18 3-9h5"/></svg>
+                    </div>
+                    <h4>Electronics &amp; Telecommunication</h4>
+                    <p>Electronics circuits, communication systems, signal processing and embedded systems.</p>
+                    <div className="course-dept-meta">
+                      <span>Duration: 3 Years</span>
+                      <span>Intake: 60</span>
+                    </div>
+                  </div>
+                  <div className="course-dept-card">
+                    <div className="course-dept-icon">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    </div>
+                    <h4>Mechanical Engineering</h4>
+                    <p>Design, manufacturing, thermodynamics, CAD/CAM and industrial engineering.</p>
+                    <div className="course-dept-meta">
+                      <span>Duration: 3 Years</span>
+                      <span>Intake: 60</span>
+                    </div>
+                  </div>
+                  <div className="course-dept-card">
+                    <div className="course-dept-icon">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 2h10M12 2v6M12 8l-4 4M12 8l4 4M5 14h14M8 14v6M16 14v6"/></svg>
+                    </div>
+                    <h4>Chemical Engineering</h4>
+                    <p>Chemical processes, unit operations, process design, environmental engineering and safety.</p>
+                    <div className="course-dept-meta">
+                      <span>Duration: 3 Years</span>
+                      <span>Intake: 60</span>
+                    </div>
+                  </div>
+                  <div className="course-dept-card">
+                    <div className="course-dept-icon">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <h4>Electrical Engineering</h4>
+                    <p>Power systems, electrical machines, control systems, renewable energy and instrumentation.</p>
+                    <div className="course-dept-meta">
+                      <span>Duration: 3 Years</span>
+                      <span>Intake: 60</span>
+                    </div>
+                  </div>
+                  <div className="course-dept-card">
+                    <div className="course-dept-icon">
+                      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+                    </div>
+                    <h4>Automobile Engineering</h4>
+                    <p>Automotive systems, engine technology, vehicle design, diagnostics and EV technology.</p>
+                    <div className="course-dept-meta">
+                      <span>Duration: 3 Years</span>
+                      <span>Intake: 60</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Course Table from Admin */}
               {getSection('courses').courseTable && getSection('courses').courseTable.length > 0 && (
-                <div className="fee-table-wrap">
-                  <table className="fee-table">
-                    <thead>
-                      <tr>
-                        <th style={{ width: 60 }}>Sr. No.</th>
-                        <th style={{ textAlign: 'left' }}>Course Name</th>
-                        <th style={{ width: 100 }}>Duration</th>
-                        <th style={{ width: 80 }}>Intake</th>
-                        <th style={{ width: 120 }}>Direct 2nd Year</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {getSection('courses').courseTable.map((course, i) => (
-                        <tr key={i}>
-                          <td>{i + 1}</td>
-                          <td className="fee-particular">{course.name}</td>
-                          <td style={{ textAlign: 'center' }}>{course.duration}</td>
-                          <td style={{ textAlign: 'center', fontWeight: 600 }}>{course.intake}</td>
-                          <td style={{ textAlign: 'center' }}>{course.direct2nd}</td>
+                <div style={{ marginTop: '36px' }}>
+                  <h3 className="content-sub-heading">Course Details</h3>
+                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                  <div className="fee-table-wrap">
+                    <table className="fee-table">
+                      <thead>
+                        <tr>
+                          <th style={{ width: 60 }}>Sr. No.</th>
+                          <th style={{ textAlign: 'left' }}>Course Name</th>
+                          <th style={{ width: 100 }}>Duration</th>
+                          <th style={{ width: 80 }}>Intake</th>
+                          <th style={{ width: 120 }}>Direct 2nd Year</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {getSection('courses').courseTable.map((course, i) => (
+                          <tr key={i}>
+                            <td>{i + 1}</td>
+                            <td className="fee-particular">{course.name}</td>
+                            <td style={{ textAlign: 'center' }}>{course.duration}</td>
+                            <td style={{ textAlign: 'center', fontWeight: 600 }}>{course.intake}</td>
+                            <td style={{ textAlign: 'center' }}>{course.direct2nd}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               )}
+
+              {/* Key Features */}
+              <div style={{ marginTop: '36px' }}>
+                <h3 className="content-sub-heading">Key Features</h3>
+                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div className="info-table">
+                  <div className="info-row">
+                    <span className="info-label">Curriculum</span>
+                    <span className="info-value">Prescribed by MSBTE, Mumbai — regularly updated to meet industry standards</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Approval</span>
+                    <span className="info-value">AICTE, New Delhi — all programmes are nationally approved</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Direct Second Year</span>
+                    <span className="info-value">Available in all 6 branches for eligible HSC / ITI candidates</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Practical Training</span>
+                    <span className="info-value">Hands-on labs, workshops, industrial visits and project work</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Placement Support</span>
+                    <span className="info-value">Campus recruitment drives by top companies across all branches</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Scholarships</span>
+                    <span className="info-value">Government scholarships available for SC/ST/OBC/VJNT/Minority/EWS students</span>
+                  </div>
+                </div>
+              </div>
             </>
           )}
 
