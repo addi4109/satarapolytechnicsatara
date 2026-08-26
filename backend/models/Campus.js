@@ -37,6 +37,14 @@ const CampusSchema = new mongoose.Schema({
     }],
     default: [],
   },
+  // For library: rules array
+  rules: {
+    type: [{
+      ruleTitle: String,
+      ruleDesc: String,
+    }],
+    default: [],
+  },
   // For office-staff: array of staff members
   staffMembers: {
     type: [{

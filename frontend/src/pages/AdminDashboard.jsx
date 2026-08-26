@@ -101,7 +101,6 @@ function AdminDashboard() {
             <Link to="/admin/cells/new" className="btn btn-success">+ Add Cell</Link>
             <Link to="/admin/departments/new" className="btn btn-success">+ Add Department</Link>
             <Link to="/admin/gallery" className="btn btn-primary">Manage Gallery</Link>
-            <Link to="/admin/rules" className="btn btn-primary">Manage Rules</Link>
             <a href="/" target="_blank" className="btn btn-secondary">View Website ↗</a>
           </div>
         </div>

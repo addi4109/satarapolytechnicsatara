@@ -229,6 +229,24 @@ function Campus() {
 
               {/* Data Tables from admin */}
               {renderTables(getSection('library').tables)}
+
+              {/* Library Rules */}
+              {getSection('library').rules && getSection('library').rules.length > 0 && (
+                <div style={{ marginTop: '24px' }}>
+                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', marginBottom: '12px' }}>Library Rules</h3>
+                  <div className="rules-list">
+                    {getSection('library').rules.map((rule, i) => (
+                      <div className="rule-item" key={i}>
+                        <div className="rule-number">{i + 1}</div>
+                        <div className="rule-content">
+                          <h4 className="rule-title">{rule.ruleTitle || `Rule ${i + 1}`}</h4>
+                          <p className="rule-desc">{rule.ruleDesc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </>
           )}
 
