@@ -302,6 +302,14 @@
   letter-spacing: 0.5px;
 }
 
+.dropdown-sub-header {
+  font-weight: 700 !important;
+  color: #243358 !important;
+  font-size: 12px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .dropdown-col-list {
   list-style: none;
   padding: 0;

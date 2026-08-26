@@ -64,10 +64,14 @@ function Navbar() {
       columns: [
         {
           header: 'Departments',
-          items: dbDepts.filter((d) => !d.hideFromHome).map((d) => ({
-            label: d.name,
-            link: `/departments/${d.slug}`,
-          })),
+          items: [
+            ...dbDepts.filter((d) => !d.hideFromHome).map((d) => ({
+              label: d.name,
+              link: `/departments/${d.slug}`,
+            })),
+            { divider: true },
+            { label: academicTabName, link: '/academics/calendar', isSubHeader: true },
+          ],
         },
         {
           header: 'Cell and Committees',
@@ -75,12 +79,6 @@ function Navbar() {
             label: c.name,
             link: `/cells/${c.slug}`,
           })),
-        },
-        {
-          header: academicTabName,
-          items: [
-            { label: academicTabName, link: '/academics/calendar' },
-          ],
         },
       ],
     },
@@ -271,11 +269,15 @@ function Navbar() {
                           <span className="dropdown-col-header">{col.header}</span>
                           <ul className="dropdown-col-list">
                             {col.items.map((child, iIdx) => (
-                              <li key={iIdx}>
-                                <a href={child.link} onClick={() => setMobileOpen(false)}>
-                                  {child.label}
-                                </a>
-                              </li>
+                              child.divider ? (
+                                <li key={iIdx} className="dropdown-divider" style={{ borderTop: '1px solid #e4e8ed', margin: '8px 0', listStyle: 'none' }}></li>
+                              ) : (
+                                <li key={iIdx}>
+                                  <a href={child.link} onClick={() => setMobileOpen(false)} className={child.isSubHeader ? 'dropdown-sub-header' : ''}>
+                                    {child.label}
+                                  </a>
+                                </li>
+                              )
                             ))}
                           </ul>
                         </div>
