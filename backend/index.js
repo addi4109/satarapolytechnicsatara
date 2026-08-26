@@ -23,6 +23,7 @@ import localGoverningBodyRouter from './routes/local-governing-body.js';
 import campusRouter from './routes/campus.js';
 import activitiesRouter from './routes/activities.js';
 import settingsRouter from './routes/settings.js';
+import contactRouter from './routes/contact.js';
 import pdfProxyRouter from './routes/pdf-proxy.js';
 
 // Use Google DNS to resolve MongoDB Atlas SRV records
@@ -58,6 +59,7 @@ app.use('/api/local-governing-body', localGoverningBodyRouter);
 app.use('/api/campus', campusRouter);
 app.use('/api/activities', activitiesRouter);
 app.use('/api/settings', settingsRouter);
+app.use('/api/contact', contactRouter);
 app.use('/api/pdf-proxy', pdfProxyRouter);
 
 // Health check

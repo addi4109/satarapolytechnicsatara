@@ -26,6 +26,7 @@ function AdminLayout({ children }) {
     { to: '/admin/activities', label: 'Activities' },
     { to: '/admin/examinations', label: 'Examination' },
     { to: '/admin/notices', label: 'Notices' },
+    { to: '/admin/contact', label: 'Contact' },
   ];
 
   const handleLogout = () => {
