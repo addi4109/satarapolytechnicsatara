@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
 import GoToTop from './components/GoToTop';
+import EnquiryPopup from './components/EnquiryPopup';
 
 // Lazy-loaded page components for code splitting
 const ImageSlider = lazy(() => import('./components/ImageSlider'));
@@ -163,6 +164,7 @@ function App() {
 function AppWithLoader() {
   const location = useLocation();
   const [showLoading, setShowLoading] = useState(() => location.pathname === '/');
+  const [showEnquiry, setShowEnquiry] = useState(false);
   const [loadingKey, setLoadingKey] = useState(0);
 
   // Trigger loading screen on every homepage visit
@@ -173,11 +175,18 @@ function AppWithLoader() {
     }
   }, [location.pathname]);
 
-  const handleLoadingComplete = useCallback(() => setShowLoading(false), []);
+  const handleLoadingComplete = useCallback(() => {
+    setShowLoading(false);
+    // Show enquiry popup after splash screen on homepage
+    if (location.pathname === '/') {
+      setTimeout(() => setShowEnquiry(true), 600);
+    }
+  }, [location.pathname]);
 
   return (
     <>
       {showLoading && <LoadingScreen key={loadingKey} onComplete={handleLoadingComplete} />}
+      {showEnquiry && <EnquiryPopup onClose={() => setShowEnquiry(false)} />}
       <AppLayout />
     </>
   );
