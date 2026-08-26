@@ -1382,6 +1382,15 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
+.gb-member-card .drag-handle {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.gb-member-card:hover .drag-handle {
+  opacity: 1;
+}
+
 .gb-member-card.gb-member-editing {
   border-color: #c8963e;
   box-shadow: 0 0 0 2px rgba(200, 150, 62, 0.2);
