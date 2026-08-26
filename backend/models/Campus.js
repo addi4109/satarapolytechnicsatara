@@ -28,6 +28,15 @@ const CampusSchema = new mongoose.Schema({
     type: [{ title: String, desc: String }],
     default: [],
   },
+  // For library: array of data tables
+  tables: {
+    type: [{
+      title: String,
+      columns: [String],
+      rows: [[String]],
+    }],
+    default: [],
+  },
   // For office-staff: array of staff members
   staffMembers: {
     type: [{

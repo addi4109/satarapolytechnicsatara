@@ -21,6 +21,7 @@ const defaultForm = {
   content: '',
   infoRows: [],
   stats: [],
+  tables: [],
   staffMembers: [],
   active: true,
 };
@@ -42,15 +43,15 @@ function AdminCampus() {
   const [msg, setMsg] = useState(null);
   const [editing, setEditing] = useState(false);
 
-  // Staff card form state
+  // Staff state
   const [showStaffForm, setShowStaffForm] = useState(false);
   const [editStaffIdx, setEditStaffIdx] = useState(null);
   const [staffForm, setStaffForm] = useState({ ...defaultStaff });
   const [deleteConfirm, setDeleteConfirm] = useState(null);
 
-  // Editable info rows / stats for preview mode
-  const [editInfoIdx, setEditInfoIdx] = useState(null);
-  const [editStatIdx, setEditStatIdx] = useState(null);
+  // Table editing state
+  const [editingTableIdx, setEditingTableIdx] = useState(null);
+  const [editingCell, setEditingCell] = useState(null); // { tableIdx, rowIdx, colIdx }
 
   useEffect(() => { fetchSections(); }, []);
 
@@ -76,6 +77,7 @@ function AdminCampus() {
         content: existing.content || '',
         infoRows: existing.infoRows || [],
         stats: existing.stats || [],
+        tables: existing.tables || [],
         staffMembers: existing.staffMembers || [],
         active: existing.active !== false,
       });
@@ -88,8 +90,8 @@ function AdminCampus() {
     setEditStaffIdx(null);
     setStaffForm({ ...defaultStaff });
     setDeleteConfirm(null);
-    setEditInfoIdx(null);
-    setEditStatIdx(null);
+    setEditingTableIdx(null);
+    setEditingCell(null);
   }, [activeTab, sections]);
 
   const handleChange = (field, value) => setForm((prev) => ({ ...prev, [field]: value }));
@@ -128,7 +130,80 @@ function AdminCampus() {
     }
   };
 
-  // Staff handlers
+  // ===== TABLE HELPERS =====
+  const addTable = () => {
+    const newTables = [...form.tables, { title: '', columns: ['Sr. No.', 'Item', 'Details'], rows: [['1', '', '']] }];
+    handleChange('tables', newTables);
+    setEditingTableIdx(newTables.length - 1);
+  };
+
+  const removeTable = (idx) => {
+    handleChange('tables', form.tables.filter((_, i) => i !== idx));
+    setEditingTableIdx(null);
+  };
+
+  const updateTableTitle = (idx, title) => {
+    const t = [...form.tables];
+    t[idx] = { ...t[idx], title };
+    handleChange('tables', t);
+  };
+
+  const addColumn = (tableIdx) => {
+    const t = [...form.tables];
+    t[tableIdx] = {
+      ...t[tableIdx],
+      columns: [...t[tableIdx].columns, 'New Column'],
+      rows: t[tableIdx].rows.map(row => [...row, '']),
+    };
+    handleChange('tables', t);
+  };
+
+  const removeColumn = (tableIdx, colIdx) => {
+    const t = [...form.tables];
+    t[tableIdx] = {
+      ...t[tableIdx],
+      columns: t[tableIdx].columns.filter((_, i) => i !== colIdx),
+      rows: t[tableIdx].rows.map(row => row.filter((_, i) => i !== colIdx)),
+    };
+    handleChange('tables', t);
+  };
+
+  const updateColumnName = (tableIdx, colIdx, name) => {
+    const t = [...form.tables];
+    const cols = [...t[tableIdx].columns];
+    cols[colIdx] = name;
+    t[tableIdx] = { ...t[tableIdx], columns: cols };
+    handleChange('tables', t);
+  };
+
+  const addRow = (tableIdx) => {
+    const t = [...form.tables];
+    const newRow = Array(t[tableIdx].columns.length).fill('');
+    newRow[0] = String(t[tableIdx].rows.length + 1);
+    t[tableIdx] = { ...t[tableIdx], rows: [...t[tableIdx].rows, newRow] };
+    handleChange('tables', t);
+  };
+
+  const removeRow = (tableIdx, rowIdx) => {
+    const t = [...form.tables];
+    t[tableIdx] = { ...t[tableIdx], rows: t[tableIdx].rows.filter((_, i) => i !== rowIdx) };
+    handleChange('tables', t);
+  };
+
+  const updateCell = (tableIdx, rowIdx, colIdx, value) => {
+    const t = [...form.tables];
+    const rows = t[tableIdx].rows.map(r => [...r]);
+    rows[rowIdx][colIdx] = value;
+    t[tableIdx] = { ...t[tableIdx], rows };
+    handleChange('tables', t);
+  };
+
+  // ===== INFO ROW HELPERS =====
+  const addInfoRow = () => handleChange('infoRows', [...form.infoRows, { label: '', value: '' }]);
+  const updateInfoRow = (i, field, val) => { const r = [...form.infoRows]; r[i] = { ...r[i], [field]: val }; handleChange('infoRows', r); };
+  const removeInfoRow = (i) => handleChange('infoRows', form.infoRows.filter((_, idx) => idx !== i));
+
+  // ===== STAFF HELPERS =====
   const openAddStaff = () => { setEditStaffIdx(null); setStaffForm({ ...defaultStaff }); setShowStaffForm(true); };
   const openEditStaff = (idx) => {
     const m = form.staffMembers[idx];
@@ -148,29 +223,165 @@ function AdminCampus() {
     setStaffForm({ ...defaultStaff });
     setMsg({ type: 'success', text: editStaffIdx !== null ? 'Staff updated!' : 'Staff added!' });
   };
-  const deleteStaff = (idx) => {
-    handleChange('staffMembers', form.staffMembers.filter((_, i) => i !== idx));
-    setDeleteConfirm(null);
-  };
-
-  // Info row / stat helpers
-  const addInfoRow = () => handleChange('infoRows', [...form.infoRows, { label: '', value: '' }]);
-  const updateInfoRow = (i, field, val) => { const r = [...form.infoRows]; r[i] = { ...r[i], [field]: val }; handleChange('infoRows', r); };
-  const removeInfoRow = (i) => { handleChange('infoRows', form.infoRows.filter((_, idx) => idx !== i)); setEditInfoIdx(null); };
-  const addStat = () => handleChange('stats', [...form.stats, { num: '', label: '' }]);
-  const updateStat = (i, field, val) => { const s = [...form.stats]; s[i] = { ...s[i], [field]: val }; handleChange('stats', s); };
-  const removeStat = (i) => { handleChange('stats', form.stats.filter((_, idx) => idx !== i)); setEditStatIdx(null); };
+  const deleteStaff = (idx) => { handleChange('staffMembers', form.staffMembers.filter((_, i) => i !== idx)); setDeleteConfirm(null); };
 
   const currentSection = SECTIONS.find((s) => s.key === activeTab);
-  const hasData = !!sections[activeTab];
 
-  if (loading) {
-    return <AdminLayout><div style={{ padding: '40px', textAlign: 'center', color: '#888' }}>Loading...</div></AdminLayout>;
-  }
+  // ===== TABLE EDITOR (used in edit mode for all sections with tables) =====
+  const renderTableEditor = (table, tableIdx) => (
+    <div key={tableIdx} style={{ marginBottom: '20px', background: '#fff', border: editingTableIdx === tableIdx ? '2px solid #c8963e' : '1px solid #e4e8ed', borderRadius: '10px', overflow: 'hidden' }}>
+      {/* Table Header */}
+      <div style={{ padding: '12px 16px', background: '#f5f7fa', borderBottom: '1px solid #e4e8ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        {editingTableIdx === tableIdx ? (
+          <input autoFocus type="text" value={table.title} onChange={(e) => updateTableTitle(tableIdx, e.target.value)} placeholder="Table title (e.g. Book Collection by Department)" style={{ flex: 1, padding: '6px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '14px', fontWeight: 600, marginRight: '10px' }} />
+        ) : (
+          <h4 style={{ margin: 0, fontSize: '14px', color: '#243358', fontWeight: 700 }}>{table.title || 'Untitled Table'}</h4>
+        )}
+        <div style={{ display: 'flex', gap: '6px' }}>
+          {editingTableIdx === tableIdx ? (
+            <>
+              <button className="btn btn-success btn-sm" onClick={() => { setEditingTableIdx(null); setEditingCell(null); }}>Done</button>
+              <button className="btn btn-danger btn-sm" onClick={() => removeTable(tableIdx)}>Delete Table</button>
+            </>
+          ) : (
+            <button className="btn btn-primary btn-sm" onClick={() => setEditingTableIdx(tableIdx)}>Edit Table</button>
+          )}
+        </div>
+      </div>
 
-  // ===== PREVIEW MODE =====
-  const renderPreview = () => {
-    const sec = sections[activeTab];
+      {/* Table Content */}
+      {editingTableIdx === tableIdx ? (
+        <div style={{ padding: '12px 16px' }}>
+          {/* Column headers - editable */}
+          <div style={{ display: 'flex', gap: '4px', marginBottom: '8px', alignItems: 'center' }}>
+            {table.columns.map((col, ci) => (
+              <div key={ci} style={{ flex: ci === 0 ? '0 60px' : 1, position: 'relative' }}>
+                <input type="text" value={col} onChange={(e) => updateColumnName(tableIdx, ci, e.target.value)} style={{ width: '100%', padding: '6px 8px', border: '1px solid #c8963e', borderRadius: '4px', fontSize: '12px', fontWeight: 700, background: '#fffbe6', boxSizing: 'border-box' }} />
+                {ci > 0 && (
+                  <button onClick={() => removeColumn(tableIdx, ci)} style={{ position: 'absolute', top: '-6px', right: '-6px', width: '16px', height: '16px', borderRadius: '50%', border: 'none', background: '#fdecea', color: '#d32f2f', fontSize: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>×</button>
+                )}
+              </div>
+            ))}
+            <button onClick={() => addColumn(tableIdx)} style={{ width: '28px', height: '28px', borderRadius: '50%', border: '1px dashed #b9c3d4', background: '#fff', color: '#243358', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>+</button>
+          </div>
+
+          {/* Rows */}
+          {table.rows.map((row, ri) => (
+            <div key={ri} style={{ display: 'flex', gap: '4px', marginBottom: '4px', alignItems: 'center' }}>
+              {row.map((cell, ci) => (
+                <input key={ci} type="text" value={cell} onChange={(e) => updateCell(tableIdx, ri, ci, e.target.value)} style={{ flex: ci === 0 ? '0 60px' : 1, padding: '6px 8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '12px', boxSizing: 'border-box', textAlign: ci === 0 ? 'center' : 'left' }} />
+              ))}
+              <button onClick={() => removeRow(tableIdx, ri)} style={{ width: '22px', height: '22px', borderRadius: '50%', border: 'none', background: '#fdecea', color: '#d32f2f', fontSize: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: 0 }}>×</button>
+            </div>
+          ))}
+
+          <button onClick={() => addRow(tableIdx)} style={{ marginTop: '6px', padding: '4px 12px', border: '1px dashed #b9c3d4', borderRadius: '4px', background: '#fff', color: '#243358', fontSize: '12px', cursor: 'pointer', fontWeight: 600 }}>+ Add Row</button>
+        </div>
+      ) : (
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
+            <thead>
+              <tr>
+                {table.columns.map((col, ci) => (
+                  <th key={ci} style={{ padding: '10px 12px', textAlign: ci === 0 ? 'center' : 'left', background: '#243358', color: '#fff', fontWeight: 600, fontSize: '12px', whiteSpace: 'nowrap' }}>{col}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {table.rows.map((row, ri) => (
+                <tr key={ri}>
+                  {row.map((cell, ci) => (
+                    <td key={ci} style={{ padding: '8px 12px', borderBottom: '1px solid #e4e8ed', textAlign: ci === 0 ? 'center' : 'left', fontWeight: ci === 0 ? 600 : 400, color: ci === 0 ? '#243358' : '#333' }}>{cell}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+
+  // ===== LIBRARY PREVIEW =====
+  const renderLibraryPreview = () => {
+    const title = form.title || 'Library';
+    const content = form.content || STATIC_CONTENT.campus.library;
+
+    return (
+      <div style={{ position: 'relative' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+          <span style={{ fontSize: '12px', color: '#888' }}>Preview — matches the live website</span>
+          <button className="btn btn-primary btn-sm" onClick={() => setEditing(true)}>Edit</button>
+        </div>
+
+        <div className="about-content" style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '24px 28px' }}>
+          <h2 className="content-heading">{title}</h2>
+          <div className="content-line"></div>
+          {content.split('\n').filter(p => p.trim()).map((para, i) => (
+            <p key={i}>{para}</p>
+          ))}
+
+          {/* Stats */}
+          {form.stats.length > 0 && (
+            <div className="overview-stats" style={{ marginTop: '24px' }}>
+              {form.stats.map((stat, i) => (
+                <div className="stat-box" key={i}>
+                  <span className="stat-num">{stat.num}</span>
+                  <span className="stat-txt">{stat.label}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Data Tables */}
+          {form.tables.length > 0 && (
+            <div style={{ marginTop: '24px' }}>
+              {form.tables.map((table, ti) => (
+                <div key={ti} style={{ marginBottom: '24px' }}>
+                  {table.title && <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>{table.title}</h3>}
+                  <div className="fee-table-wrap">
+                    <table className="fee-table">
+                      <thead>
+                        <tr>
+                          {table.columns.map((col, ci) => (
+                            <th key={ci} style={ci === 0 ? { width: 50, textAlign: 'center' } : {}}>{col}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {table.rows.map((row, ri) => (
+                          <tr key={ri}>
+                            {row.map((cell, ci) => (
+                              <td key={ci} style={ci === 0 ? { textAlign: 'center', fontWeight: 600, color: '#243358' } : ci === 1 ? { fontWeight: 500 } : {}}>{cell}</td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Info Rows */}
+          {form.infoRows.length > 0 && (
+            <div className="info-table" style={{ marginTop: '20px' }}>
+              {form.infoRows.map((row, i) => (
+                <div className="info-row" key={i}>
+                  <span className="info-label">{row.label}</span>
+                  <span className="info-value">{row.value}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  // ===== GENERAL SECTION PREVIEW =====
+  const renderGeneralPreview = () => {
     const title = form.title || currentSection?.label || '';
     const content = form.content || STATIC_CONTENT.campus?.[activeTab] || '';
 
@@ -188,19 +399,36 @@ function AdminCampus() {
             <p key={i}>{para}</p>
           ))}
 
-          {/* Stats - only for library */}
-          {activeTab === 'library' && form.stats.length > 0 && (
-            <div className="overview-stats" style={{ marginTop: '20px' }}>
-              {form.stats.map((stat, i) => (
-                <div className="stat-box" key={i}>
-                  <span className="stat-num">{stat.num}</span>
-                  <span className="stat-txt">{stat.label}</span>
+          {form.tables.length > 0 && (
+            <div style={{ marginTop: '24px' }}>
+              {form.tables.map((table, ti) => (
+                <div key={ti} style={{ marginBottom: '24px' }}>
+                  {table.title && <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>{table.title}</h3>}
+                  <div className="fee-table-wrap">
+                    <table className="fee-table">
+                      <thead>
+                        <tr>
+                          {table.columns.map((col, ci) => (
+                            <th key={ci} style={ci === 0 ? { width: 50, textAlign: 'center' } : {}}>{col}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {table.rows.map((row, ri) => (
+                          <tr key={ri}>
+                            {row.map((cell, ci) => (
+                              <td key={ci} style={ci === 0 ? { textAlign: 'center', fontWeight: 600, color: '#243358' } : {}}>{cell}</td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               ))}
             </div>
           )}
 
-          {/* Info Rows */}
           {form.infoRows.length > 0 && (
             <div className="info-table" style={{ marginTop: '20px' }}>
               {form.infoRows.map((row, i) => (
@@ -212,7 +440,7 @@ function AdminCampus() {
             </div>
           )}
 
-          {/* Staff Table - for office-staff and non-teaching-staff */}
+          {/* Staff Table */}
           {(activeTab === 'office-staff' || activeTab === 'non-teaching-staff') && form.staffMembers.length > 0 && (
             <div className="fee-table-wrap" style={{ marginTop: '20px' }}>
               <table className="fee-table">
@@ -262,79 +490,82 @@ function AdminCampus() {
           <button className="btn btn-secondary btn-sm" onClick={() => {
             const existing = sections[activeTab];
             if (existing) {
-              setForm({ title: existing.title || '', content: existing.content || '', infoRows: existing.infoRows || [], stats: existing.stats || [], staffMembers: existing.staffMembers || [], active: existing.active !== false });
+              setForm({ title: existing.title || '', content: existing.content || '', infoRows: existing.infoRows || [], stats: existing.stats || [], tables: existing.tables || [], staffMembers: existing.staffMembers || [], active: existing.active !== false });
             } else { setForm({ ...defaultForm }); }
             setEditing(false);
             setShowStaffForm(false);
             setDeleteConfirm(null);
+            setEditingTableIdx(null);
+            setEditingCell(null);
           }}>Cancel</button>
         </div>
       </div>
 
       <div className="admin-card">
         <div className="admin-card-body">
-          {/* Title */}
-          <div className="form-group">
-            <label>Section Title</label>
-            <input type="text" value={form.title} onChange={(e) => handleChange('title', e.target.value)} placeholder={`Enter title for ${currentSection?.label}`} />
-          </div>
-
-          {/* Content */}
-          <div className="form-group">
-            <label>Content / Description</label>
-            <textarea value={form.content} onChange={(e) => handleChange('content', e.target.value)} rows={6} placeholder="Write the main content here..." style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', resize: 'vertical', boxSizing: 'border-box' }} />
-          </div>
-
-          <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-
-          {/* Info Rows */}
-          <div className="form-group">
-            <label style={{ fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '6px' }}>Info Rows (Label - Value)</label>
-            <p style={{ fontSize: '12px', color: '#888', margin: '0 0 10px' }}>Click a row to edit it. Click "+ Add Row" to add more.</p>
-            <div className="admin-info-table">
-              <div className="admin-info-add" onClick={addInfoRow} title="Add Info Row">+ Add Row</div>
-              {form.infoRows.map((row, i) => (
-                editInfoIdx === i ? (
-                  <div key={i} className="admin-info-editing">
-                    <input autoFocus type="text" value={row.label || ''} onChange={(e) => updateInfoRow(i, 'label', e.target.value)} onKeyDown={(e) => e.key === 'Enter' && setEditInfoIdx(null)} placeholder="Label" style={{ width: '100%', padding: '7px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '12.5px', boxSizing: 'border-box' }} />
-                    <input type="text" value={row.value || ''} onChange={(e) => updateInfoRow(i, 'value', e.target.value)} onKeyDown={(e) => e.key === 'Enter' && setEditInfoIdx(null)} placeholder="Value" style={{ width: '100%', padding: '7px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '12.5px', boxSizing: 'border-box' }} />
-                    <button className="btn btn-success btn-sm" onClick={() => setEditInfoIdx(null)} style={{ alignSelf: 'flex-start' }}>Done</button>
-                  </div>
-                ) : (
-                  <div key={i} className="admin-info-row" onClick={() => setEditInfoIdx(i)} title="Click to edit">
-                    <span className="admin-info-label">{row.label || <em style={{ color: '#aaa' }}>Label</em>}</span>
-                    <span className="admin-info-value">{row.value || <em style={{ color: '#aaa' }}>Value</em>}</span>
-                    <button className="admin-info-remove" onClick={(e) => { e.stopPropagation(); removeInfoRow(i); }} title="Remove">×</button>
-                  </div>
-                )
-              ))}
-            </div>
-          </div>
-
-          {/* Stats - only for library */}
+          {/* Library-specific: Stats */}
           {activeTab === 'library' && (
+            <>
+              <div className="form-group">
+                <label style={{ fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '6px' }}>Quick Stats</label>
+                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 10px' }}>Displayed as stat boxes on the live website.</p>
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'stretch' }}>
+                  {form.stats.map((stat, i) => (
+                    <div key={i} style={{ width: '150px', background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '6px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      <input type="text" value={stat.num || ''} onChange={(e) => { const s = [...form.stats]; s[i] = { ...s[i], num: e.target.value }; handleChange('stats', s); }} placeholder="Number" style={{ width: '100%', padding: '6px 8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '12px', boxSizing: 'border-box', textAlign: 'center' }} />
+                      <input type="text" value={stat.label || ''} onChange={(e) => { const s = [...form.stats]; s[i] = { ...s[i], label: e.target.value }; handleChange('stats', s); }} placeholder="Label" style={{ width: '100%', padding: '6px 8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '12px', boxSizing: 'border-box' }} />
+                      <button onClick={() => handleChange('stats', form.stats.filter((_, idx) => idx !== i))} style={{ padding: '4px', border: 'none', background: '#fdecea', color: '#d32f2f', borderRadius: '4px', fontSize: '11px', cursor: 'pointer' }}>Remove</button>
+                    </div>
+                  ))}
+                  <div onClick={() => handleChange('stats', [...form.stats, { num: '', label: '' }])} style={{ width: '150px', minHeight: '80px', border: '1px dashed #b9c3d4', borderRadius: '6px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '4px', cursor: 'pointer', color: '#243358' }}>
+                    <span style={{ fontSize: '24px', lineHeight: 1 }}>+</span>
+                    <span style={{ fontSize: '11px', fontWeight: 600 }}>Add Stat</span>
+                  </div>
+                </div>
+              </div>
+              <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
+            </>
+          )}
+
+          {/* Data Tables */}
+          <div className="form-group">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+              <div>
+                <label style={{ fontSize: '13px', fontWeight: 600, color: '#333', margin: 0 }}>Data Tables ({form.tables.length})</label>
+                <p style={{ fontSize: '12px', color: '#888', margin: '2px 0 0' }}>Click "Edit Table" to modify rows, columns, and data.</p>
+              </div>
+              <button className="btn btn-success btn-sm" onClick={addTable}>+ Add Table</button>
+            </div>
+            {form.tables.length > 0 ? (
+              form.tables.map((table, ti) => renderTableEditor(table, ti))
+            ) : (
+              <div style={{ textAlign: 'center', padding: '20px', border: '1px dashed #b9c3d4', borderRadius: '8px', color: '#888', fontSize: '13px' }}>
+                No tables yet. Click "+ Add Table" to create one.
+              </div>
+            )}
+          </div>
+
+          {/* Info Rows (for non-library sections) */}
+          {activeTab !== 'library' && (
             <>
               <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
               <div className="form-group">
-                <label style={{ fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '6px' }}>Stats (Number - Label)</label>
-                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 10px' }}>Click a stat to edit it.</p>
-                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'stretch' }}>
-                  <div onClick={addStat} title="Add Stat" style={{ width: '150px', minHeight: '104px', background: '#fff', border: '1px dashed #b9c3d4', borderRadius: '6px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '4px', cursor: 'pointer', color: '#243358' }}>
-                    <span style={{ fontSize: '28px', lineHeight: 1 }}>+</span>
-                    <span style={{ fontSize: '12px', fontWeight: 600 }}>Add Stat</span>
-                  </div>
-                  {form.stats.map((stat, i) => (
-                    editStatIdx === i ? (
-                      <div key={i} style={{ width: '150px', background: '#fff', border: '1px solid #c8963e', borderRadius: '6px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                        <input autoFocus type="text" value={stat.num || ''} onChange={(e) => updateStat(i, 'num', e.target.value)} onKeyDown={(e) => e.key === 'Enter' && setEditStatIdx(null)} placeholder="Number" style={{ width: '100%', padding: '7px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '12px', boxSizing: 'border-box' }} />
-                        <input type="text" value={stat.label || ''} onChange={(e) => updateStat(i, 'label', e.target.value)} onKeyDown={(e) => e.key === 'Enter' && setEditStatIdx(null)} placeholder="Label" style={{ width: '100%', padding: '7px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '12px', boxSizing: 'border-box' }} />
-                        <button className="btn btn-success btn-sm" onClick={() => setEditStatIdx(null)} style={{ width: '100%' }}>Done</button>
+                <label style={{ fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '6px' }}>Info Rows (Label - Value)</label>
+                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 10px' }}>Click a row to edit it.</p>
+                <div className="admin-info-table">
+                  <div className="admin-info-add" onClick={addInfoRow}>+ Add Row</div>
+                  {form.infoRows.map((row, i) => (
+                    editingCell?.type === 'info' && editingCell?.idx === i ? (
+                      <div key={i} className="admin-info-editing">
+                        <input autoFocus type="text" value={row.label || ''} onChange={(e) => updateInfoRow(i, 'label', e.target.value)} onKeyDown={(e) => e.key === 'Enter' && setEditingCell(null)} placeholder="Label" style={{ width: '100%', padding: '7px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '12.5px', boxSizing: 'border-box' }} />
+                        <input type="text" value={row.value || ''} onChange={(e) => updateInfoRow(i, 'value', e.target.value)} onKeyDown={(e) => e.key === 'Enter' && setEditingCell(null)} placeholder="Value" style={{ width: '100%', padding: '7px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '12.5px', boxSizing: 'border-box' }} />
+                        <button className="btn btn-success btn-sm" onClick={() => setEditingCell(null)} style={{ alignSelf: 'flex-start' }}>Done</button>
                       </div>
                     ) : (
-                      <div key={i} onClick={() => setEditStatIdx(i)} title="Click to edit" style={{ position: 'relative', width: '150px', background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '6px', padding: '18px 12px 14px', textAlign: 'center', cursor: 'pointer' }}>
-                        <button onClick={(e) => { e.stopPropagation(); removeStat(i); }} title="Remove" style={{ position: 'absolute', top: '6px', right: '6px', width: '20px', height: '20px', borderRadius: '50%', border: 'none', background: '#fdecea', color: '#d32f2f', fontSize: '12px', fontWeight: 700, lineHeight: 1, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>×</button>
-                        <span style={{ display: 'block', fontSize: '22px', fontWeight: 700, color: '#243358', fontFamily: 'Georgia, serif' }}>{stat.num}</span>
-                        <span style={{ display: 'block', fontSize: '11.5px', color: '#777', marginTop: '4px' }}>{stat.label}</span>
+                      <div key={i} className="admin-info-row" onClick={() => setEditingCell({ type: 'info', idx: i })} title="Click to edit">
+                        <span className="admin-info-label">{row.label || <em style={{ color: '#aaa' }}>Label</em>}</span>
+                        <span className="admin-info-value">{row.value || <em style={{ color: '#aaa' }}>Value</em>}</span>
+                        <button className="admin-info-remove" onClick={(e) => { e.stopPropagation(); removeInfoRow(i); }}>×</button>
                       </div>
                     )
                   ))}
@@ -343,7 +574,7 @@ function AdminCampus() {
             </>
           )}
 
-          {/* Staff Members - for office-staff and non-teaching-staff */}
+          {/* Staff Members */}
           {(activeTab === 'office-staff' || activeTab === 'non-teaching-staff') && (
             <>
               <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
@@ -353,7 +584,6 @@ function AdminCampus() {
                   {!showStaffForm && <button className="btn btn-success btn-sm" onClick={openAddStaff}>+ Add Staff</button>}
                 </div>
 
-                {/* Staff Form */}
                 {showStaffForm && (
                   <div style={{ background: '#f8f9fa', border: '2px solid #c8963e', borderRadius: '10px', padding: '20px', marginBottom: '16px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
@@ -361,9 +591,7 @@ function AdminCampus() {
                       <button onClick={cancelStaffForm} style={{ background: 'none', border: 'none', fontSize: '18px', cursor: 'pointer', color: '#999' }}>×</button>
                     </div>
                     <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-                      <div style={{ flexShrink: 0 }}>
-                        <ImageUpload value={staffForm.photoUrl} onChange={(url) => setStaffForm({ ...staffForm, photoUrl: url })} circle />
-                      </div>
+                      <div style={{ flexShrink: 0 }}><ImageUpload value={staffForm.photoUrl} onChange={(url) => setStaffForm({ ...staffForm, photoUrl: url })} circle /></div>
                       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '10px' }}>
                         <input type="text" value={staffForm.name} onChange={(e) => setStaffForm({ ...staffForm, name: e.target.value })} placeholder="Name *" style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
                         <input type="text" value={staffForm.designation} onChange={(e) => setStaffForm({ ...staffForm, designation: e.target.value })} placeholder="Designation" style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
@@ -380,7 +608,6 @@ function AdminCampus() {
                   </div>
                 )}
 
-                {/* Staff Table */}
                 {!showStaffForm && form.staffMembers.length > 0 && (
                   <div style={{ overflowX: 'auto' }}>
                     <table className="admin-table">
@@ -441,6 +668,10 @@ function AdminCampus() {
     </div>
   );
 
+  if (loading) {
+    return <AdminLayout><div style={{ padding: '40px', textAlign: 'center', color: '#888' }}>Loading...</div></AdminLayout>;
+  }
+
   return (
     <AdminLayout>
       <div className="admin-topbar">
@@ -450,11 +681,7 @@ function AdminCampus() {
         {/* Tabs */}
         <div style={{ display: 'flex', gap: '6px', marginBottom: '20px', background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '4px', flexWrap: 'wrap' }}>
           {SECTIONS.map((sec) => (
-            <button
-              key={sec.key}
-              className={`gallery-tab ${activeTab === sec.key ? 'active' : ''}`}
-              onClick={() => setActiveTab(sec.key)}
-            >
+            <button key={sec.key} className={`gallery-tab ${activeTab === sec.key ? 'active' : ''}`} onClick={() => setActiveTab(sec.key)}>
               {sec.label}
               {sections[sec.key] && <span className="gallery-tab-count" style={{ fontSize: '10px' }}>Saved</span>}
             </button>
@@ -474,7 +701,7 @@ function AdminCampus() {
         </h2>
 
         {/* Preview or Edit mode */}
-        {editing ? renderEditor() : renderPreview()}
+        {editing ? renderEditor() : (activeTab === 'library' ? renderLibraryPreview() : renderGeneralPreview())}
       </div>
     </AdminLayout>
   );

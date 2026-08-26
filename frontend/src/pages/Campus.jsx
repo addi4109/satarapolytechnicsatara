@@ -71,6 +71,39 @@ function Campus() {
     );
   };
 
+  const renderTables = (tables) => {
+    if (!tables || tables.length === 0) return null;
+    return (
+      <div style={{ marginTop: '24px' }}>
+        {tables.map((table, ti) => (
+          <div key={ti} style={{ marginBottom: '24px' }}>
+            {table.title && <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>{table.title}</h3>}
+            <div className="fee-table-wrap">
+              <table className="fee-table">
+                <thead>
+                  <tr>
+                    {table.columns && table.columns.map((col, ci) => (
+                      <th key={ci} style={ci === 0 ? { width: 50, textAlign: 'center' } : {}}>{col}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {table.rows && table.rows.map((row, ri) => (
+                    <tr key={ri}>
+                      {row.map((cell, ci) => (
+                        <td key={ci} style={ci === 0 ? { textAlign: 'center', fontWeight: 600, color: '#243358' } : ci === 1 ? { fontWeight: 500 } : {}}>{cell}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   const renderStats = (stats) => {
     if (!stats || stats.length === 0) return null;
     return (
@@ -146,6 +179,7 @@ function Campus() {
               <div className="content-line"></div>
               {renderContent(getSection('library').content || STATIC_CONTENT.campus.library)}
               {renderStats(getSection('library').stats)}
+              {renderTables(getSection('library').tables)}
               {renderInfoRows(getSection('library').infoRows)}
             </>
           )}
@@ -156,6 +190,7 @@ function Campus() {
               <h2 className="content-heading">{getSection('bus-facility').title || 'Bus Facility'}</h2>
               <div className="content-line"></div>
               {renderContent(getSection('bus-facility').content || STATIC_CONTENT.campus['bus-facility'])}
+              {renderTables(getSection('bus-facility').tables)}
               {renderInfoRows(getSection('bus-facility').infoRows)}
             </>
           )}
@@ -166,6 +201,7 @@ function Campus() {
               <h2 className="content-heading">{getSection('canteen').title || 'Canteen'}</h2>
               <div className="content-line"></div>
               {renderContent(getSection('canteen').content || STATIC_CONTENT.campus.canteen)}
+              {renderTables(getSection('canteen').tables)}
               {renderInfoRows(getSection('canteen').infoRows)}
             </>
           )}
@@ -176,6 +212,7 @@ function Campus() {
               <h2 className="content-heading">{getSection('registrar').title || "Registrar's Desk"}</h2>
               <div className="content-line"></div>
               {renderContent(getSection('registrar').content || STATIC_CONTENT.campus.registrar)}
+              {renderTables(getSection('registrar').tables)}
               {renderInfoRows(getSection('registrar').infoRows)}
             </>
           )}
