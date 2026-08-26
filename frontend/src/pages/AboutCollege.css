@@ -253,44 +253,101 @@
   margin-bottom: 6px;
 }
 
-.principal-layout {
+/* Officer / Message Card (shared with Placements) */
+.officer-card {
   display: flex;
-  gap: 28px;
+  gap: 24px;
   align-items: flex-start;
+  background: #f5f7fa;
+  border: 1px solid #e4e8ed;
+  border-radius: 10px;
+  padding: 24px;
+  margin-top: 24px;
 }
 
-.principal-photo {
-  flex-shrink: 0;
-  width: 200px;
+.officer-left {
+  flex: 0 0 auto;
   text-align: center;
+  min-width: 160px;
 }
 
-.principal-photo img {
-  width: 200px;
-  height: 240px;
+.officer-photo {
+  width: 140px;
+  height: 170px;
   border-radius: 8px;
+  overflow: hidden;
+  border: 3px solid #e4e8ed;
+  margin: 0 auto 12px;
+}
+
+.officer-photo img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border: 2px solid #e4e8ed;
   display: block;
 }
 
-.principal-name {
-  font-size: 16px;
+.officer-photo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f3f8;
+}
+
+.officer-photo-placeholder span {
+  font-size: 48px;
   font-weight: 700;
   color: #243358;
-  margin: 12px 0 2px;
+  font-family: 'Georgia', serif;
 }
 
-.principal-qual {
-  font-size: 13px;
+.officer-name {
+  font-family: 'Georgia', serif;
+  font-size: 20px;
   color: #243358;
-  margin: 0;
-  font-weight: 500;
+  font-weight: 700;
+  margin: 0 0 4px;
 }
 
-.principal-info {
+.officer-designation {
+  font-size: 14px;
+  color: #243358;
+  font-weight: 500;
+  margin: 0 0 8px;
+}
+
+.officer-qual {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+}
+
+.officer-msg {
   flex: 1;
   min-width: 0;
+  background: #fff;
+  border-left: 3px solid #c8963e;
+  padding: 20px 24px;
+  border-radius: 0 8px 8px 0;
+}
+
+.officer-msg p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.75;
+  margin: 0 0 12px;
+}
+
+.officer-msg p:last-child {
+  margin-bottom: 0;
+}
+
+.officer-msg .message-quote {
+  font-size: 15px;
+  font-style: italic;
+  color: #243358;
+  line-height: 1.7;
+  margin-bottom: 16px;
 }
 
 /* Leadership Photo Cards */
@@ -563,20 +620,25 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .principal-layout {
+  .officer-card {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    padding: 20px;
   }
 
-  .principal-photo {
+  .officer-left {
     width: 100%;
   }
 
-  .principal-photo img {
-    width: 160px;
-    height: 190px;
-    margin: 0 auto;
+  .officer-photo {
+    width: 120px;
+    height: 150px;
+  }
+
+  .officer-msg {
+    border-left: none;
+    border-top: 3px solid #c8963e;
+    border-radius: 0 0 8px 8px;
+    padding: 16px;
   }
 
   .info-row {

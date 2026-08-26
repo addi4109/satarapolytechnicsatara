@@ -333,27 +333,31 @@ function DepartmentsPage() {
               <>
                 <h2 className="content-heading">HOD Desk</h2>
                 <div className="content-line"></div>
-                <div className="hod-layout">
-                  <div className="hod-photo">
+                <div className="officer-card">
+                  <div className="officer-left">
                     {dept.hodImage ? (
-                      <img src={dept.hodImage} alt={dept.hod} />
+                      <div className="officer-photo">
+                        <img src={dept.hodImage} alt={dept.hod} />
+                      </div>
                     ) : (
-                      <div className="hod-photo-placeholder"><span>{dept.hod?.split(' ').pop()?.charAt(0) || '?'}</span></div>
+                      <div className="officer-photo officer-photo-placeholder">
+                        <span>{dept.hod?.split(' ').pop()?.charAt(0) || '?'}</span>
+                      </div>
                     )}
-                    <p className="hod-name">{dept.hod}</p>
-                    <p className="hod-qual">{dept.hodQual}</p>
+                    <h4 className="officer-name">{dept.hod}</h4>
+                    <p className="officer-designation">Head of Department</p>
+                    {dept.hodQual && (
+                      <p className="officer-qual">{dept.hodQual}</p>
+                    )}
                   </div>
-                  <div className="hod-info">
-                    <div className="message-card">
-                      <p className="message-quote">
-                        "Welcome to the Department of {dept.name}. We are committed to
-                        providing quality education and practical training to our students."
-                      </p>
+                  <div className="officer-msg">
+                    <p className="message-quote">
+                      "Welcome to the Department of {dept.name}. We are committed to
+                      providing quality education and practical training to our students."
+                    </p>
+                    {dept.hodMsg && (
                       <p style={{ whiteSpace: 'pre-line' }}>{dept.hodMsg}</p>
-                      <p className="message-sign">
-                        <strong>— {dept.hod}, Head of Department</strong>
-                      </p>
-                    </div>
+                    )}
                   </div>
                 </div>
               </>
