@@ -1,26 +1,27 @@
 .go-to-top {
   position: fixed;
-  bottom: 90px;
-  right: 24px;
-  width: 56px;
-  height: 56px;
+  bottom: 28px;
+  right: 28px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background: #243358;
   color: #fff;
-  border: none;
+  border: 2px solid rgba(255, 255, 255, 0.15);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 16px rgba(36, 51, 88, 0.35);
+  box-shadow: 0 4px 18px rgba(36, 51, 88, 0.4);
   z-index: 9997;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(12px);
-  transition: opacity 0.3s ease,
-              visibility 0.3s ease,
-              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              background 0.2s ease;
+  transform: translateY(16px);
+  transition: opacity 0.35s ease,
+              visibility 0.35s ease,
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.25s ease,
+              box-shadow 0.25s ease;
 }
 
 .go-to-top.show {
@@ -31,24 +32,29 @@
 
 .go-to-top:hover {
   background: #c8963e;
+  box-shadow: 0 6px 24px rgba(200, 150, 62, 0.45);
   transform: translateY(-3px);
 }
 
+.go-to-top:active {
+  transform: translateY(-1px);
+}
+
 .go-to-top svg {
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
 }
 
 @media (max-width: 480px) {
   .go-to-top {
-    bottom: 82px;
-    right: 16px;
-    width: 50px;
-    height: 50px;
+    bottom: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
   }
 
   .go-to-top svg {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
   }
 }
