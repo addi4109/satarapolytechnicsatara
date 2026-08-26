@@ -26,17 +26,12 @@ function AdminLogin() {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, apiKey: apiKey.trim() }),
       });
 
       const data = await res.json();
 
       if (data.success) {
-        if (!apiKey.trim()) {
-          setError('API key is required. Contact administrator.');
-          setLoading(false);
-          return;
-        }
         sessionStorage.setItem('adminAuth', 'true');
         setAdminApiKey(apiKey.trim());
         navigate('/admin');

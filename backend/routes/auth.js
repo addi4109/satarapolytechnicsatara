@@ -41,15 +41,20 @@ function getAdminCredentials() {
  * Returns: { success: true } or { success: false, error: '...' }
  */
 router.post('/login', (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, apiKey } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ success: false, error: 'Email and password are required' });
+  if (!email || !password || !apiKey) {
+    return res.status(400).json({ success: false, error: 'Email, password, and API key are required' });
   }
 
+  // Verify API key first
+  const ADMIN_API_KEY = process.env.ADMIN_API_KEY || 'sps-admin-key-change-in-production';
+  if (!timingSafeEqual(apiKey, ADMIN_API_KEY)) {
+    return res.status(401).json({ success: false, error: 'Invalid API key' });
+  }
+
+  // Then verify credentials
   const admins = getAdminCredentials();
-  
-  // Check if any admin matches
   const isValid = admins.some(admin => 
     timingSafeEqual(email, admin.email) && timingSafeEqual(password, admin.password)
   );
