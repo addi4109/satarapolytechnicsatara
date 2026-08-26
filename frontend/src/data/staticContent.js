@@ -66,16 +66,11 @@ export const STATIC_CONTENT = {
   },
 
   examinations: {
-    schedule:
-      'The tentative schedule of class tests, preliminary examinations and MSBTE final theory/practical examinations will be updated here as and when declared.',
-    rules:
-      'Students must follow the examination rules framed by MSBTE and the institute regarding attendance, malpractice, revaluation and conduct in the examination hall.',
-    results:
-      'Results declared by MSBTE can be checked by students using the official result portal link given below.',
-    revaluation:
-      'Students not satisfied with their examination results can apply for revaluation/photocopy of answer sheets within the stipulated time by paying the prescribed fee.',
-    notices:
-      'Important notices related to examinations such as exam forms, timetable updates and result announcements will be published here.',
+    schedule: 'Satara Polytechnic, Satara follows the examination schedule declared by the Maharashtra State Board of Technical Education (MSBTE), Mumbai. The tentative schedule of class tests, preliminary examinations and MSBTE final theory/practical examinations is updated here as and when declared by the board. Students are advised to check this page regularly for the latest updates on exam dates, timetables and any changes announced by MSBTE or the institute. The examination cell coordinates with all departments to ensure smooth conduct of examinations as per the prescribed schedule.',
+    rules: 'All students appearing for examinations at Satara Polytechnic, Satara must strictly follow the examination rules and regulations framed by MSBTE and the institute. These rules cover aspects such as minimum attendance requirements, examination hall conduct, malpractice and unfair means, revaluation procedures, and general discipline during the examination period. Non-compliance with these rules may result in cancellation of examination or disciplinary action as deemed appropriate by the authorities.',
+    results: 'Examination results declared by MSBTE, Mumbai can be checked by students through the official result portal. Students are required to use their seat number to access their individual results. In case of any discrepancy in the result, students should immediately contact the examination cell of the institute. The institute also displays merit lists and toppers information on the notice board after each examination cycle.',
+    revaluation: 'Students who are not satisfied with their examination results can apply for revaluation or photocopy of answer sheets as per MSBTE guidelines. The application must be submitted within the stipulated time frame along with the prescribed fee. Revaluation applications processed after the deadline will not be entertained. The revalued results declared by MSBTE will be considered final.',
+    notices: 'Important notices related to examinations including exam form submissions, timetable updates, result announcements, and circulars from MSBTE are published here. Students and faculty members are advised to check this section regularly to stay updated with the latest examination-related information and deadlines.',
   },
 
   placements: {

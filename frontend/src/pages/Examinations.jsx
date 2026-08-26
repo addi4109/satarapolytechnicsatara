@@ -112,9 +112,9 @@ function Examinations() {
           {/* Exam Schedule */}
           {active === 'schedule' && (
             <>
-              <h2 className="content-heading">{getSection('schedule').title || 'Exam Schedule'}</h2>
+              <h2 className="content-heading">Exam Schedule</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('schedule').content || STATIC_CONTENT.examinations.schedule)}
+              {renderContent(STATIC_CONTENT.examinations.schedule)}
 
               {getSection('schedule').schedules && getSection('schedule').schedules.length > 0 && (
                 <div className="fee-table-wrap" style={{ marginTop: '20px' }}>
@@ -167,9 +167,9 @@ function Examinations() {
           {/* Exam Rules */}
           {active === 'rules' && (
             <>
-              <h2 className="content-heading">{getSection('rules').title || 'Exam Rules'}</h2>
+              <h2 className="content-heading">Exam Rules</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('rules').content || STATIC_CONTENT.examinations.rules)}
+              {renderContent(STATIC_CONTENT.examinations.rules)}
 
               <style>{`
                 .exam-rule-card {
@@ -256,9 +256,9 @@ function Examinations() {
           {/* Results */}
           {active === 'results' && (
             <>
-              <h2 className="content-heading">{getSection('results').title || 'Results'}</h2>
+              <h2 className="content-heading">Results</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('results').content || STATIC_CONTENT.examinations.results)}
+              {renderContent(STATIC_CONTENT.examinations.results)}
 
               {getSection('results').resultPortalUrl ? (
                 <div style={{ marginTop: '28px', textAlign: 'center' }}>
@@ -329,9 +329,9 @@ function Examinations() {
           {/* Revaluation */}
           {active === 'revaluation' && (
             <>
-              <h2 className="content-heading">{getSection('revaluation').title || 'Revaluation'}</h2>
+              <h2 className="content-heading">Revaluation</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('revaluation').content || STATIC_CONTENT.examinations.revaluation)}
+              {renderContent(STATIC_CONTENT.examinations.revaluation)}
 
               {(getSection('revaluation').revaluationFee || getSection('revaluation').revaluationDeadline) && (
                 <div className="info-table" style={{ marginTop: '20px' }}>
@@ -376,9 +376,9 @@ function Examinations() {
           {/* Exam Notices */}
           {active === 'notices' && (
             <>
-              <h2 className="content-heading">{getSection('notices').title || 'Exam Notices'}</h2>
+              <h2 className="content-heading">Exam Notices</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('notices').content || STATIC_CONTENT.examinations.notices)}
+              {renderContent(STATIC_CONTENT.examinations.notices)}
 
               {getSection('notices').noticesData && getSection('notices').noticesData.length > 0 && (
                 <div className="fee-table-wrap" style={{ marginTop: '20px' }}>
