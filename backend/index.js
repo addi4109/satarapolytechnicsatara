@@ -27,6 +27,7 @@ import activitiesRouter from './routes/activities.js';
 import settingsRouter from './routes/settings.js';
 import contactRouter from './routes/contact.js';
 import pdfProxyRouter from './routes/pdf-proxy.js';
+import authRouter from './routes/auth.js';
 
 // Use Google DNS to resolve MongoDB Atlas SRV records
 dns.setServers(['8.8.8.8', '8.8.4.4']);
@@ -53,6 +54,9 @@ app.use(rateLimit({ windowMs: 60000, maxRequests: 200 }));
 
 // Security headers
 app.use(securityHeaders);
+
+// Auth routes (login — registered before admin auth middleware)
+app.use('/api/auth', authRouter);
 
 // Admin auth middleware — protects all write (POST/PUT/DELETE) operations
 app.use('/api', requireAdmin);

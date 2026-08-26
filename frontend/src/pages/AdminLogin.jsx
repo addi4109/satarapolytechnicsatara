@@ -3,9 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { setAdminApiKey, getAdminApiKey } from '../lib/adminApi';
 import './Admin.css';
 
-const ADMIN_EMAIL = 'admin@gmail.com';
-const ADMIN_PASSWORD = 'admin123';
-
 function AdminLogin() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -20,13 +17,21 @@ function AdminLogin() {
     }
   }, [navigate]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-    setTimeout(() => {
-      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
         if (!apiKey.trim()) {
           setError('API key is required. Contact administrator.');
           setLoading(false);
@@ -36,10 +41,13 @@ function AdminLogin() {
         setAdminApiKey(apiKey.trim());
         navigate('/admin');
       } else {
-        setError('Invalid email or password');
+        setError(data.error || 'Invalid email or password');
       }
+    } catch (err) {
+      setError('Unable to connect to server. Please try again.');
+    } finally {
       setLoading(false);
-    }, 500);
+    }
   };
 
   return (
