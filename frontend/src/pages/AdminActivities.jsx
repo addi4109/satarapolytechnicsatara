@@ -307,7 +307,7 @@ function AdminActivities() {
                   </div>
                 )}
               </div>
-              <DragHandle style={{ position: 'absolute', top: '8px', left: '8px' }} />
+              <DragHandle />
               <button className="member-remove-btn" onClick={() => removeSubSection(i)}>×</button>
             </div>
           )}

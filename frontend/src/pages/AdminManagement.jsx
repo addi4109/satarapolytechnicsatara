@@ -469,7 +469,7 @@ function AdminManagement() {
                             )}
                             <h3 className="gb-member-name">{member.name}</h3>
                             <p className="gb-member-designation">{member.designation}</p>
-                            <DragHandle style={{ position: 'absolute', top: '8px', left: '8px' }} className="drag-handle" />
+                            <DragHandle />
                             <div className="gb-member-actions" onClick={(e) => e.stopPropagation()}>
                               {deleteConfirm === member._id ? (
                                 <>
@@ -557,7 +557,7 @@ function AdminManagement() {
                             )}
                             <h3 className="gb-member-name">{member.name}</h3>
                             <p className="gb-member-designation">{member.designation}</p>
-                            <DragHandle style={{ position: 'absolute', top: '8px', left: '8px' }} className="drag-handle" />
+                            <DragHandle />
                             <div className="gb-member-actions" onClick={(e) => e.stopPropagation()}>
                               {deleteConfirmLgb === member._id ? (
                                 <>

@@ -320,7 +320,7 @@ function AdminGallery() {
                       position: 'relative',
                     }}
                     >
-                      <DragHandle style={{ position: 'absolute', top: '8px', right: '8px', zIndex: 10, opacity: 0, transition: 'opacity 0.2s', background: 'rgba(255,255,255,0.9)', borderRadius: '4px' }} />
+                      <DragHandle />
                       <style>{`.photo-drag-parent:hover .drag-handle{opacity:1 !important}`}</style>
                       {p.image && <img src={p.image} alt={p.title} style={{ width: '100%', height: '160px', objectFit: 'cover' }} />}
                       {!p.image && <div style={{ height: '160px', background: '#f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ccc', fontSize: '32px' }}>🖼</div>}
