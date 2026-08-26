@@ -27,6 +27,7 @@ const ApplyNow = lazy(() => import('./pages/ApplyNow'));
 const Placements = lazy(() => import('./pages/Placements'));
 const Examinations = lazy(() => import('./pages/Examinations'));
 const Campus = lazy(() => import('./pages/Campus'));
+const Contact = lazy(() => import('./pages/Contact'));
 const Activities = lazy(() => import('./pages/Activities'));
 const Notices = lazy(() => import('./pages/Notices'));
 const AdminLogin = lazy(() => import('./pages/AdminLogin'));
@@ -119,6 +120,8 @@ function AppLayout() {
           <Route path="/examination/:page" element={<Examinations />} />
           <Route path="/campus" element={<Campus />} />
           <Route path="/campus/:page" element={<Campus />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/contact/:page" element={<Contact />} />
           <Route path="/activities" element={<Activities />} />
           <Route path="/activities/:page" element={<Activities />} />
           <Route path="/gallery/photos" element={<PhotoGallery />} />
