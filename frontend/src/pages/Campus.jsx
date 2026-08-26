@@ -177,10 +177,57 @@ function Campus() {
             <>
               <h2 className="content-heading">{getSection('library').title || 'Library'}</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('library').content || STATIC_CONTENT.campus.library)}
-              {renderStats(getSection('library').stats)}
-              {renderTables(getSection('library').tables)}
+
+              {/* Static professional content */}
+              <p>
+                The library of Satara Polytechnic, Satara is the intellectual heart of the institute, providing a comprehensive collection of knowledge resources to support academic excellence and research. Established with the vision of fostering a reading culture among students and faculty, the library serves as a hub for learning, exploration, and intellectual growth.
+              </p>
+              <p>
+                The library is fully automated with a barcode-based issuing system powered by Libsys software, ensuring efficient management of book circulation, cataloguing, and inventory tracking. The staffed help desk assists students and faculty in locating resources, accessing digital databases, and navigating the library catalog.
+              </p>
+              <p>
+                Our collection includes textbooks, reference books, handbooks, encyclopedias, directories, and standard specifications covering all branches of engineering — Computer, Electronics & Telecommunication, Mechanical, Chemical, Electrical, and Automobile. The library subscribes to leading national and international journals, periodicals, and magazines to keep students abreast of the latest developments in technology and science.
+              </p>
+              <p>
+                The digital library section provides access to e-books, online journals, NPTEL video lectures, and other e-resources through INFLIBNET and other digital platforms. Students can access these resources both within the campus and remotely using their institutional credentials.
+              </p>
+              <p>
+                The spacious reading hall with a seating capacity of 100 students provides a quiet and comfortable environment for self-study and group discussions. Reprographic facilities (photocopying and scanning) are available for students to reproduce reference material as needed.
+              </p>
+
+              {/* Static Stats */}
+              <div className="overview-stats" style={{ marginTop: '24px' }}>
+                <div className="stat-box">
+                  <span className="stat-num">15000+</span>
+                  <span className="stat-txt">Total Books</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">50+</span>
+                  <span className="stat-txt">Journals & Periodicals</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">30+</span>
+                  <span className="stat-txt">Magazines</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">15</span>
+                  <span className="stat-txt">Computers</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">100</span>
+                  <span className="stat-txt">Seating Capacity</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">6</span>
+                  <span className="stat-txt">Departments Covered</span>
+                </div>
+              </div>
+
+              {/* Info from backend */}
               {renderInfoRows(getSection('library').infoRows)}
+
+              {/* Data Tables from admin */}
+              {renderTables(getSection('library').tables)}
             </>
           )}
 

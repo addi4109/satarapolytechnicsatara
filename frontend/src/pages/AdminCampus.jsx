@@ -321,18 +321,6 @@ function AdminCampus() {
             <p key={i}>{para}</p>
           ))}
 
-          {/* Stats */}
-          {form.stats.length > 0 && (
-            <div className="overview-stats" style={{ marginTop: '24px' }}>
-              {form.stats.map((stat, i) => (
-                <div className="stat-box" key={i}>
-                  <span className="stat-num">{stat.num}</span>
-                  <span className="stat-txt">{stat.label}</span>
-                </div>
-              ))}
-            </div>
-          )}
-
           {/* Data Tables */}
           {form.tables.length > 0 && (
             <div style={{ marginTop: '24px' }}>
@@ -503,29 +491,7 @@ function AdminCampus() {
 
       <div className="admin-card">
         <div className="admin-card-body">
-          {/* Library-specific: Stats */}
-          {activeTab === 'library' && (
-            <>
-              <div className="form-group">
-                <label style={{ fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '6px' }}>Quick Stats</label>
-                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 10px' }}>Displayed as stat boxes on the live website.</p>
-                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'stretch' }}>
-                  {form.stats.map((stat, i) => (
-                    <div key={i} style={{ width: '150px', background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '6px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                      <input type="text" value={stat.num || ''} onChange={(e) => { const s = [...form.stats]; s[i] = { ...s[i], num: e.target.value }; handleChange('stats', s); }} placeholder="Number" style={{ width: '100%', padding: '6px 8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '12px', boxSizing: 'border-box', textAlign: 'center' }} />
-                      <input type="text" value={stat.label || ''} onChange={(e) => { const s = [...form.stats]; s[i] = { ...s[i], label: e.target.value }; handleChange('stats', s); }} placeholder="Label" style={{ width: '100%', padding: '6px 8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '12px', boxSizing: 'border-box' }} />
-                      <button onClick={() => handleChange('stats', form.stats.filter((_, idx) => idx !== i))} style={{ padding: '4px', border: 'none', background: '#fdecea', color: '#d32f2f', borderRadius: '4px', fontSize: '11px', cursor: 'pointer' }}>Remove</button>
-                    </div>
-                  ))}
-                  <div onClick={() => handleChange('stats', [...form.stats, { num: '', label: '' }])} style={{ width: '150px', minHeight: '80px', border: '1px dashed #b9c3d4', borderRadius: '6px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '4px', cursor: 'pointer', color: '#243358' }}>
-                    <span style={{ fontSize: '24px', lineHeight: 1 }}>+</span>
-                    <span style={{ fontSize: '11px', fontWeight: 600 }}>Add Stat</span>
-                  </div>
-                </div>
-              </div>
-              <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-            </>
-          )}
+
 
           {/* Data Tables */}
           <div className="form-group">
