@@ -3,6 +3,7 @@ import AdminLayout from './AdminLayout';
 import ImageUpload from '../components/ImageUpload';
 import './Admin.css';
 import './Academics.css';
+import './Gallery.css';
 
 const API_URL = '/api';
 
@@ -192,13 +193,13 @@ function AdminActivities() {
               <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '12px', borderRadius: '2px' }}></div>
               {sub.description && <p style={{ color: '#555', lineHeight: '1.7', marginBottom: '12px' }}>{sub.description}</p>}
               {sub.images && sub.images.length > 0 && (
-                <div className="photo-grid" style={{ marginTop: '12px' }}>
+                <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: '12px' }}>
                   {sub.images.map((img, j) => (
-                    <div className="photo-card" key={j}>
-                      <div className="photo-thumb">
+                    <div key={j} style={{ textAlign: 'center' }}>
+                      <div style={{ width: '160px', height: '160px', borderRadius: '10px', overflow: 'hidden', border: '1px solid #e4e8ed' }}>
                         <img src={img.url} alt={img.caption || `Image ${j + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       </div>
-                      {img.caption && <div className="photo-info"><h4 className="photo-title">{img.caption}</h4></div>}
+                      {img.caption && <p style={{ fontSize: '12px', color: '#555', margin: '6px 0 0', fontWeight: 500 }}>{img.caption}</p>}
                     </div>
                   ))}
                 </div>
@@ -229,39 +230,48 @@ function AdminActivities() {
 
               {/* Images for this sub-section */}
               <div style={{ marginBottom: '8px' }}>
-                <label style={{ fontSize: '12px', fontWeight: 600, color: '#555', marginBottom: '8px', display: 'block' }}>Images</label>
-                {!newSubImage ? (
-                  <ImageUpload value={newSubImage} onChange={(url) => setNewSubImage(url)} label="Upload Image" placeholder="Upload image..." />
-                ) : (
-                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
-                    <div style={{ width: '80px', height: '60px', borderRadius: '6px', overflow: 'hidden', border: '1px solid #e4e8ed' }}>
-                      <img src={newSubImage} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    </div>
-                    <button className="btn btn-primary btn-sm" onClick={() => addSubImage(i)}>Add</button>
-                    <button className="btn btn-secondary btn-sm" onClick={() => setNewSubImage('')}>Cancel</button>
-                  </div>
-                )}
-
-                {sub.images && sub.images.length > 0 && (
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginTop: '8px' }}>
-                    {sub.images.map((img, j) => (
-                      <div key={j} style={{ position: 'relative', background: '#fff', border: '1px solid #e4e8ed', borderRadius: '6px', padding: '6px' }}>
-                        <div style={{ height: '70px', borderRadius: '4px', overflow: 'hidden', marginBottom: '4px' }}>
-                          <img src={img.url} alt={img.caption || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        </div>
-                        {editingSubImgIdx === `${i}-${j}` ? (
-                          <div style={{ display: 'flex', gap: '4px' }}>
-                            <input autoFocus type="text" value={img.caption} onChange={(e) => updateSubImageCaption(i, j, e.target.value)} placeholder="Caption" style={{ flex: 1, padding: '4px 6px', border: '1px solid #c8963e', borderRadius: '4px', fontSize: '11px' }} />
-                            <button className="btn btn-success btn-sm" onClick={() => setEditingSubImgIdx(null)} style={{ padding: '4px 6px', fontSize: '10px' }}>✓</button>
-                          </div>
-                        ) : (
-                          <p onClick={() => setEditingSubImgIdx(`${i}-${j}`)} style={{ fontSize: '11px', color: '#555', margin: 0, cursor: 'pointer' }}>{img.caption || <em style={{ color: '#aaa' }}>Caption</em>}</p>
-                        )}
-                        <button onClick={() => removeSubImage(i, j)} style={{ position: 'absolute', top: '4px', right: '4px', background: '#fdecea', border: 'none', color: '#d32f2f', cursor: 'pointer', fontSize: '12px', width: '20px', height: '20px', borderRadius: '50%' }}>×</button>
+                <label style={{ fontSize: '12px', fontWeight: 600, color: '#555', marginBottom: '10px', display: 'block' }}>Images</label>
+                <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+                  {/* Add Image Card */}
+                  <div style={{ width: '160px', flexShrink: 0 }}>
+                    {!newSubImage ? (
+                      <div style={{ width: '160px', height: '160px', border: '2px dashed #d7dde6', borderRadius: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', background: '#fafbfc', transition: 'border-color 0.2s' }}>
+                        <ImageUpload value={newSubImage} onChange={(url) => setNewSubImage(url)} label="" placeholder="" />
+                        <span style={{ fontSize: '12px', color: '#999', marginTop: '4px' }}>Click to upload</span>
                       </div>
-                    ))}
+                    ) : (
+                      <div style={{ width: '160px', background: '#fff', border: '2px solid #c8963e', borderRadius: '10px', overflow: 'hidden' }}>
+                        <div style={{ width: '160px', height: '160px', overflow: 'hidden' }}>
+                          <img src={newSubImage} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        </div>
+                        <div style={{ padding: '8px 10px' }}>
+                          <div style={{ display: 'flex', gap: '6px' }}>
+                            <button className="btn btn-primary btn-sm" onClick={() => addSubImage(i)} style={{ flex: 1, fontSize: '12px' }}>Add</button>
+                            <button className="btn btn-secondary btn-sm" onClick={() => setNewSubImage('')} style={{ fontSize: '12px' }}>Cancel</button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
+
+                  {/* Existing Images */}
+                  {sub.images && sub.images.map((img, j) => (
+                    <div key={j} style={{ width: '160px', flexShrink: 0, position: 'relative' }}>
+                      <div style={{ width: '160px', height: '160px', borderRadius: '10px', overflow: 'hidden', border: '1px solid #e4e8ed', background: '#f8f9fa' }}>
+                        <img src={img.url} alt={img.caption || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      </div>
+                      <button onClick={() => removeSubImage(i, j)} style={{ position: 'absolute', top: '6px', right: '6px', background: '#fdecea', border: 'none', color: '#d32f2f', cursor: 'pointer', fontSize: '12px', width: '22px', height: '22px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
+                      {editingSubImgIdx === `${i}-${j}` ? (
+                        <div style={{ display: 'flex', gap: '4px', marginTop: '6px' }}>
+                          <input autoFocus type="text" value={img.caption} onChange={(e) => updateSubImageCaption(i, j, e.target.value)} placeholder="Caption" style={{ flex: 1, padding: '6px 8px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '12px', boxSizing: 'border-box' }} />
+                          <button className="btn btn-success btn-sm" onClick={() => setEditingSubImgIdx(null)} style={{ padding: '6px 8px', fontSize: '11px' }}>Done</button>
+                        </div>
+                      ) : (
+                        <p onClick={() => setEditingSubImgIdx(`${i}-${j}`)} style={{ fontSize: '12px', color: '#555', margin: '6px 0 0', cursor: 'pointer', textAlign: 'center' }}>{img.caption || <em style={{ color: '#aaa' }}>Add caption...</em>}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             </>
           ) : (
