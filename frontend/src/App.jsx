@@ -4,6 +4,7 @@ import SEO from './components/SEO';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
+import ChatBot from './components/ChatBot';
 
 // Lazy-loaded page components for code splitting
 const ImageSlider = lazy(() => import('./components/ImageSlider'));
@@ -146,6 +147,7 @@ function AppLayout() {
         </Routes>
       </Suspense>
       {!isAdmin && <Footer />}
+      {!isAdmin && <ChatBot />}
     </>
   );
 }
