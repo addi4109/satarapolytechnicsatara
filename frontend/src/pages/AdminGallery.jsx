@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import ImageUpload from '../components/ImageUpload';
 import VideoUpload from '../components/VideoUpload';
+import SortableGrid, { DragHandle } from '../components/SortableGrid';
 import './Admin.css';
 
 const API_URL = '/api';
@@ -108,6 +109,30 @@ function AdminGallery() {
   const switchTab = (t) => { setTab(t); setAdding(false); setEditingId(null); setMessage(null); };
 
   const isEditing = (id) => editingId === id;
+
+  // Drag reorder handler
+  const handleReorder = async (newItems, type) => {
+    // Update local state
+    if (type === 'photos') setPhotos(newItems);
+    else if (type === 'videos') setVideos(newItems);
+    else if (type === 'news') setNews(newItems);
+    else if (type === 'slides') setSlides(newItems);
+
+    // Save new order to backend
+    try {
+      const ep = type === 'photos' ? 'photos' : type === 'videos' ? 'videos' : type === 'news' ? 'news' : 'slides';
+      const updates = newItems.map((item, i) =>
+        fetch(`${API_URL}/${ep}/${item._id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...item, order: i }),
+        })
+      );
+      await Promise.all(updates);
+    } catch (err) {
+      console.error('Failed to save order:', err);
+    }
+  };
 
   // Inline form card
   const renderFormCard = () => (
