@@ -17,6 +17,7 @@
   align-items: center;
   white-space: nowrap;
   flex-shrink: 0;
+  z-index: 1;
 }
 
 .ticker-wrap {
@@ -28,7 +29,8 @@
 .ticker-scroll {
   display: flex;
   white-space: nowrap;
-  overflow-x: auto;
+  width: max-content;
+  animation: ticker-scroll 30s linear infinite;
 }
 
 .ticker-item {
@@ -37,6 +39,7 @@
   white-space: nowrap;
   padding: 0 50px;
   position: relative;
+  flex-shrink: 0;
 }
 
 .ticker-item::after {
@@ -46,7 +49,19 @@
   color: rgba(255,255,255,0.3);
 }
 
+/* Pause animation on hover */
+.ticker-wrap:hover .ticker-scroll {
+  animation-play-state: paused;
+}
 
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 
 @media (max-width: 768px) {
   .ticker-section {
