@@ -39,6 +39,7 @@ function AdminPlacements() {
   // Step states
   const [newStepTitle, setNewStepTitle] = useState('');
   const [newStepDesc, setNewStepDesc] = useState('');
+  const [editingStepIdx, setEditingStepIdx] = useState(null);
 
   // Record states
   const [newRecYear, setNewRecYear] = useState('');
@@ -96,6 +97,7 @@ function AdminPlacements() {
     setNewRecYear('');
     setNewRecPlaced('');
     setNewRecCompanies('');
+    setEditingStepIdx(null);
   };
 
   const handleChange = (field, value) => {
@@ -388,69 +390,75 @@ function AdminPlacements() {
               <>
                 <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
                 <h4 style={{ margin: '0 0 6px', color: '#243358', fontSize: '15px' }}>Process Steps</h4>
-                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Add steps that will appear as numbered cards on the website.</p>
+                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Shown exactly like the live website — click a step to edit it.</p>
 
-                {/* Add new step input */}
-                <div style={{ display: 'flex', gap: '10px', marginBottom: '16px', alignItems: 'flex-end' }}>
-                  <div style={{ flex: 1 }}>
-                    <label style={{ fontSize: '12px', color: '#666', marginBottom: '4px', display: 'block' }}>Step Title</label>
-                    <input type="text" value={newStepTitle} onChange={(e) => setNewStepTitle(e.target.value)} placeholder="e.g. Registration on CAP Portal" style={{ width: '100%', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
-                  </div>
-                  <div style={{ flex: 2 }}>
-                    <label style={{ fontSize: '12px', color: '#666', marginBottom: '4px', display: 'block' }}>Step Description</label>
-                    <input type="text" value={newStepDesc} onChange={(e) => setNewStepDesc(e.target.value)} placeholder="Describe what happens in this step..." style={{ width: '100%', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
-                  </div>
-                  <button className="btn btn-primary btn-sm" onClick={addStep} style={{ padding: '8px 18px', height: '36px' }}>+ Add</button>
-                </div>
-
-                {/* Steps preview - like the website */}
-                <div className="process-steps">
+                {/* Steps list */}
+                <div className="process-steps" style={{ marginTop: '12px' }}>
                   {form.steps.map((step, i) => (
                     <div className="process-step" key={i}>
-                      <div className="step-number" style={{ cursor: 'pointer', position: 'relative' }}>
+                      <div className="step-number" style={{ cursor: 'default' }}>
                         {i + 1}
                       </div>
                       <div className="step-content" style={{ flex: 1 }}>
-                        <input
-                          type="text"
-                          value={step.title}
-                          onChange={(e) => {
-                            const updated = [...form.steps];
-                            updated[i] = { ...updated[i], title: e.target.value };
-                            handleChange('steps', updated);
-                          }}
-                          placeholder="Step title"
-                          style={{ width: '100%', padding: '6px 10px', border: '1px solid #e4e8ed', borderRadius: '5px', fontSize: '14px', fontWeight: 700, fontFamily: 'Georgia, serif', color: '#243358', marginBottom: '6px', boxSizing: 'border-box' }}
-                        />
-                        <textarea
-                          value={step.desc}
-                          onChange={(e) => {
-                            const updated = [...form.steps];
-                            updated[i] = { ...updated[i], desc: e.target.value };
-                            handleChange('steps', updated);
-                          }}
-                          placeholder="Step description"
-                          rows={2}
-                          style={{ width: '100%', padding: '6px 10px', border: '1px solid #e4e8ed', borderRadius: '5px', fontSize: '13px', color: '#666', resize: 'vertical', boxSizing: 'border-box' }}
-                        />
+                        {editingStepIdx === i ? (
+                          <>
+                            <input
+                              autoFocus
+                              type="text"
+                              value={step.title}
+                              onChange={(e) => {
+                                const updated = [...form.steps];
+                                updated[i] = { ...updated[i], title: e.target.value };
+                                handleChange('steps', updated);
+                              }}
+                              placeholder="Step title"
+                              style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', marginBottom: '6px', boxSizing: 'border-box' }}
+                            />
+                            <textarea
+                              value={step.desc}
+                              onChange={(e) => {
+                                const updated = [...form.steps];
+                                updated[i] = { ...updated[i], desc: e.target.value };
+                                handleChange('steps', updated);
+                              }}
+                              placeholder="Step description (optional)"
+                              rows={2}
+                              style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }}
+                            />
+                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                              <button className="btn btn-success btn-sm" onClick={() => setEditingStepIdx(null)}>Done</button>
+                              <button
+                                onClick={() => removeStep(i)}
+                                style={{ background: 'none', border: 'none', color: '#dc3545', cursor: 'pointer', fontSize: '12px', fontWeight: 600 }}
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          </>
+                        ) : (
+                          <div onClick={() => setEditingStepIdx(i)} title="Click to edit" style={{ cursor: 'pointer' }}>
+                            <h4>{step.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled step</em>}</h4>
+                            {step.desc && <p>{step.desc}</p>}
+                            {!step.desc && <p style={{ fontStyle: 'italic', color: '#aaa' }}>No description</p>}
+                          </div>
+                        )}
                       </div>
-                      <button
-                        onClick={() => removeStep(i)}
-                        className="member-remove-btn"
-                        title="Remove step"
-                        style={{ flexShrink: 0 }}
-                      >
-                        ×
-                      </button>
                     </div>
                   ))}
                 </div>
 
-                {form.steps.length === 0 && (
-                  <div style={{ textAlign: 'center', padding: '30px', background: '#f8f9fb', border: '1px dashed #d7dde6', borderRadius: '8px' }}>
-                    <p style={{ margin: 0, color: '#aaa', fontSize: '13px' }}>No steps added yet. Add your first step above.</p>
-                  </div>
-                )}
+                {/* Add Step button */}
+                <div
+                  onClick={() => {
+                    const newSteps = [...form.steps, { title: '', desc: '' }];
+                    handleChange('steps', newSteps);
+                    setEditingStepIdx(newSteps.length - 1);
+                  }}
+                  title="Add Step"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px dashed #b9c3d4', borderRadius: '6px', padding: '9px 18px', cursor: 'pointer', color: '#243358', background: '#fff', fontWeight: 600, fontSize: '12.5px', marginTop: '14px' }}
+                >
+                  <span style={{ fontSize: '18px', lineHeight: 1 }}>+</span> Add Step
+                </div>
               </>
             )}
 
