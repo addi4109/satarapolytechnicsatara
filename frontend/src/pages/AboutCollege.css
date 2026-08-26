@@ -489,17 +489,37 @@
   /* Show mobile tabs */
   .about-mobile-tabs {
     display: block !important;
-    list-style: none;
     margin: 0 0 18px;
-    padding: 0;
-    border: 1px solid #e4e8ed;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   }
 
-  .about-mobile-tabs li + li {
+  .about-mobile-group-heading {
+    background: #243358;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 16px;
+    margin: 0 0 0;
+    border-radius: 6px 6px 0 0;
+    letter-spacing: 0.3px;
+  }
+
+  .about-mobile-group-heading:last-of-type {
+    margin-top: 18px;
+    border-radius: 6px 6px 0 0;
+  }
+
+  .about-mobile-tabs-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #e4e8ed;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .about-mobile-tabs-list li + li {
     border-top: 1px solid #f0f0f0;
   }
 
@@ -508,10 +528,10 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 14px 16px;
+    padding: 13px 16px;
     background: #fff;
     border: none;
-    font-size: 14px;
+    font-size: 13.5px;
     color: #444;
     cursor: pointer;
     text-align: left;

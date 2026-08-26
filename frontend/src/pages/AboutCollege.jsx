@@ -217,19 +217,37 @@ function AboutCollege() {
           </ul>
 
           {/* Mobile top bar tabs */}
-          <ul className="about-mobile-tabs">
-            {sidebarLinks.map((link) => (
-              <li key={link.id}>
-                <button
-                  className={`about-mobile-tab ${active === link.id ? 'active' : ''}`}
-                  onClick={() => setActive(link.id)}
-                >
-                  <span className="arrow">→</span>
-                  {link.label}
-                </button>
-              </li>
-            ))}
-          </ul>
+          <div className="about-mobile-tabs">
+            <h4 className="about-mobile-group-heading">About</h4>
+            <ul className="about-mobile-tabs-list">
+              {sidebarLinks.filter((l) => ['society', 'institute', 'disclosure', 'vision', 'affiliation'].includes(l.id)).map((link) => (
+                <li key={link.id}>
+                  <button
+                    className={`about-mobile-tab ${active === link.id ? 'active' : ''}`}
+                    onClick={() => setActive(link.id)}
+                  >
+                    <span className="arrow">→</span>
+                    {link.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+
+            <h4 className="about-mobile-group-heading">Management</h4>
+            <ul className="about-mobile-tabs-list">
+              {sidebarLinks.filter((l) => ['founder', 'chairman', 'secretary', 'principal', 'governing-body', 'local-governing-body'].includes(l.id)).map((link) => (
+                <li key={link.id}>
+                  <button
+                    className={`about-mobile-tab ${active === link.id ? 'active' : ''}`}
+                    onClick={() => setActive(link.id)}
+                  >
+                    <span className="arrow">→</span>
+                    {link.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </aside>
 
         <main className="about-content">
