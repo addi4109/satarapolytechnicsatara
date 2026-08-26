@@ -121,13 +121,12 @@ function Navbar() {
         { label: 'Placement Records', link: '/placements/records' },
         { label: 'Our Recruiters', link: '/placements/recruiters' },
       ],
-    },
-    {
-      label: 'ACTIVITIES',
+    },        { label: 'ACTIVITIES',
       children: [
         { label: 'Sports', link: '/activities/sports' },
         { label: 'Cultural', link: '/activities/cultural' },
         { label: 'Technical Events', link: '/activities/technical' },
+        { label: 'Academic Events & Activities', link: '/activities/academic-events' },
       ],
     },
     {

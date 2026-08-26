@@ -15,12 +15,14 @@ const routeMap = {
   technical: 'technical',
   'industrial-visits': 'industrial-visits',
   competitions: 'competitions',
+  'academic-events': 'academic-events',
 };
 
 const sidebarLinks = [
   { id: 'sports', label: 'Sports' },
   { id: 'cultural', label: 'Cultural' },
   { id: 'technical', label: 'Technical Events' },
+  { id: 'academic-events', label: 'Academic Events & Activities' },
   { id: 'industrial-visits', label: 'Industrial Visits' },
   { id: 'competitions', label: 'Competitions' },
 ];
@@ -219,6 +221,18 @@ function Activities() {
               {renderStats(getSection('industrial-visits').stats)}
               {renderInfoRows(getSection('industrial-visits').infoRows)}
               {renderImages('industrial-visits')}
+            </>
+          )}
+
+          {/* Academic Events */}
+          {active === 'academic-events' && (
+            <>
+              <h2 className="content-heading">{getSection('academic-events').title || 'Academic Events & Activities'}</h2>
+              <div className="content-line"></div>
+              {renderContent(getSection('academic-events').content)}
+              {renderStats(getSection('academic-events').stats)}
+              {renderInfoRows(getSection('academic-events').infoRows)}
+              {renderImages('academic-events')}
             </>
           )}
 

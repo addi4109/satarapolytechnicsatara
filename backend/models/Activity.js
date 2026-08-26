@@ -4,7 +4,7 @@ const ActivitySchema = new mongoose.Schema({
   section: {
     type: String,
     required: true,
-    enum: ['sports', 'cultural', 'technical', 'industrial-visits', 'competitions'],
+    enum: ['sports', 'cultural', 'technical', 'industrial-visits', 'competitions', 'academic-events'],
     unique: true,
   },
   title: {
