@@ -130,6 +130,34 @@ function Admissions() {
     );
   };
 
+  // Helper: render sub-sections
+  const renderSubSections = (subSections) => {
+    if (!subSections || subSections.length === 0) return null;
+    return subSections.map((sub, i) => (
+      <div key={i} style={{ marginTop: '32px' }}>
+        {sub.title && (
+          <>
+            <h3 className="content-sub-heading">{sub.title}</h3>
+            <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '16px', borderRadius: '2px' }}></div>
+          </>
+        )}
+        {renderContent(sub.content)}
+        {renderStats(sub.stats)}
+        {sub.documents && sub.documents.length > 0 && (
+          <>
+            <h3 className="content-sub-heading">Documents Required</h3>
+            <ul className="vm-list">
+              {sub.documents.map((doc, j) => (
+                <li key={j}>{doc}</li>
+              ))}
+            </ul>
+          </>
+        )}
+        {renderSteps(sub.steps)}
+      </div>
+    ));
+  };
+
   const getSection = (key) => sections[key] || {};
 
   if (loading) {
@@ -198,6 +226,7 @@ function Admissions() {
               <div className="content-line"></div>
               {renderContent(getSection('overview').content || STATIC_CONTENT.admissions.overview)}
               {renderStats(getSection('overview').stats)}
+              {renderSubSections(getSection('overview').subSections)}
             </>
           )}
 
@@ -207,6 +236,7 @@ function Admissions() {
               <h2 className="content-heading">{getSection('courses').title || 'Courses Offered'}</h2>
               <div className="content-line"></div>
               {renderContent(getSection('courses').content || STATIC_CONTENT.admissions.courses)}
+              {renderSubSections(getSection('courses').subSections)}
               {getSection('courses').courseTable && getSection('courses').courseTable.length > 0 && (
                 <div className="fee-table-wrap">
                   <table className="fee-table">
@@ -242,6 +272,7 @@ function Admissions() {
               <h2 className="content-heading">{getSection('eligibility').title || 'Eligibility'}</h2>
               <div className="content-line"></div>
               {renderContent(getSection('eligibility').content || STATIC_CONTENT.admissions.eligibility)}
+              {renderSubSections(getSection('eligibility').subSections)}
 
               {getSection('eligibility').eligFirstYear && getSection('eligibility').eligFirstYear.length > 0 && (
                 <>
@@ -274,6 +305,7 @@ function Admissions() {
               <div className="content-line"></div>
               {renderContent(getSection('process').content || STATIC_CONTENT.admissions.process)}
               {renderSteps(getSection('process').steps)}
+              {renderSubSections(getSection('process').subSections)}
             </>
           )}
 
@@ -284,6 +316,7 @@ function Admissions() {
               <div className="content-line"></div>
               {renderContent(getSection('first-year').content || STATIC_CONTENT.admissions['first-year'])}
               {renderDocuments(getSection('first-year').documents)}
+              {renderSubSections(getSection('first-year').subSections)}
             </>
           )}
 
@@ -294,6 +327,7 @@ function Admissions() {
               <div className="content-line"></div>
               {renderContent(getSection('direct-second').content || STATIC_CONTENT.admissions['direct-second'])}
               {renderDocuments(getSection('direct-second').documents)}
+              {renderSubSections(getSection('direct-second').subSections)}
             </>
           )}
 
@@ -304,6 +338,7 @@ function Admissions() {
               <div className="content-line"></div>
               {renderContent(getSection('acap').content || STATIC_CONTENT.admissions.acap)}
               {renderDocuments(getSection('acap').documents)}
+              {renderSubSections(getSection('acap').subSections)}
             </>
           )}
 
@@ -376,6 +411,7 @@ function Admissions() {
               <h2 className="content-heading">{getSection('scholarships').title || 'Scholarships'}</h2>
               <div className="content-line"></div>
               {renderContent(getSection('scholarships').content || STATIC_CONTENT.admissions.scholarships)}
+              {renderSubSections(getSection('scholarships').subSections)}
 
               {getSection('scholarships').scholarshipDocs && getSection('scholarships').scholarshipDocs.length > 0 && (
                 <div style={{ marginTop: '20px' }}>
@@ -418,6 +454,7 @@ function Admissions() {
               <h2 className="content-heading">{getSection('brochure').title || 'College Brochure'}</h2>
               <div className="content-line"></div>
               {renderContent(getSection('brochure').content || STATIC_CONTENT.admissions.brochure)}
+              {renderSubSections(getSection('brochure').subSections)}
 
               {getSection('brochure').pdfUrl ? (
                 <div style={{ marginTop: '20px', display: 'flex', gap: '12px' }}>

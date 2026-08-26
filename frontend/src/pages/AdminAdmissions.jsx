@@ -51,6 +51,7 @@ const defaultSection = {
   feeRows2: [...defaultFeeRows],
   pdfUrl: '',
   scholarshipDocs: [],
+  subSections: [],
   active: true,
 };
 
@@ -156,6 +157,7 @@ function AdminAdmissions() {
         feeRows2: existing.feeRows2 && existing.feeRows2.length > 0 ? existing.feeRows2 : [...defaultFeeRows],
         pdfUrl: existing.pdfUrl || '',
         scholarshipDocs: existing.scholarshipDocs || [],
+        subSections: existing.subSections || [],
         active: existing.active !== false,
       });
     } else {
@@ -345,6 +347,108 @@ function AdminAdmissions() {
     setEditingElig(null);
   };
 
+  // Sub-sections helpers
+  const [editingSubIdx, setEditingSubIdx] = useState(null);
+
+  const addSubSection = () => {
+    const newSub = { title: '', content: '', stats: [], documents: [], steps: [] };
+    handleChange('subSections', [...form.subSections, newSub]);
+    setEditingSubIdx(form.subSections.length);
+  };
+
+  const updateSubSection = (index, field, value) => {
+    const updated = form.subSections.map((sub, i) =>
+      i === index ? { ...sub, [field]: value } : sub
+    );
+    handleChange('subSections', updated);
+  };
+
+  const removeSubSection = (index) => {
+    handleChange('subSections', form.subSections.filter((_, i) => i !== index));
+    setEditingSubIdx(null);
+  };
+
+  const addSubStat = (subIdx) => {
+    const updated = form.subSections.map((sub, i) => {
+      if (i === subIdx) return { ...sub, stats: [...sub.stats, { num: '', label: '' }] };
+      return sub;
+    });
+    handleChange('subSections', updated);
+  };
+
+  const updateSubStat = (subIdx, statIdx, field, value) => {
+    const updated = form.subSections.map((sub, i) => {
+      if (i === subIdx) {
+        const stats = sub.stats.map((s, j) => j === statIdx ? { ...s, [field]: value } : s);
+        return { ...sub, stats };
+      }
+      return sub;
+    });
+    handleChange('subSections', updated);
+  };
+
+  const removeSubStat = (subIdx, statIdx) => {
+    const updated = form.subSections.map((sub, i) => {
+      if (i === subIdx) return { ...sub, stats: sub.stats.filter((_, j) => j !== statIdx) };
+      return sub;
+    });
+    handleChange('subSections', updated);
+  };
+
+  const addSubDocument = (subIdx) => {
+    const updated = form.subSections.map((sub, i) => {
+      if (i === subIdx) return { ...sub, documents: [...sub.documents, ''] };
+      return sub;
+    });
+    handleChange('subSections', updated);
+  };
+
+  const updateSubDocument = (subIdx, docIdx, value) => {
+    const updated = form.subSections.map((sub, i) => {
+      if (i === subIdx) {
+        const docs = sub.documents.map((d, j) => j === docIdx ? value : d);
+        return { ...sub, documents: docs };
+      }
+      return sub;
+    });
+    handleChange('subSections', updated);
+  };
+
+  const removeSubDocument = (subIdx, docIdx) => {
+    const updated = form.subSections.map((sub, i) => {
+      if (i === subIdx) return { ...sub, documents: sub.documents.filter((_, j) => j !== docIdx) };
+      return sub;
+    });
+    handleChange('subSections', updated);
+  };
+
+  const addSubStep = (subIdx) => {
+    const updated = form.subSections.map((sub, i) => {
+      if (i === subIdx) return { ...sub, steps: [...sub.steps, { title: '', desc: '' }] };
+      return sub;
+    });
+    handleChange('subSections', updated);
+  };
+
+  const updateSubStep = (subIdx, stepIdx, field, value) => {
+    const updated = form.subSections.map((sub, i) => {
+      if (i === subIdx) {
+        const steps = sub.steps.map((s, j) => j === stepIdx ? { ...s, [field]: value } : s);
+        return { ...sub, steps };
+      }
+      return sub;
+    });
+    handleChange('subSections', updated);
+  };
+
+  const removeSubStep = (subIdx, stepIdx) => {
+    const updated = form.subSections.map((sub, i) => {
+      if (i === subIdx) return { ...sub, steps: sub.steps.filter((_, j) => j !== stepIdx) };
+      return sub;
+    });
+    handleChange('subSections', updated);
+  };
+
   const currentSection = SECTIONS.find((s) => s.key === activeTab);
 
   if (loading) {
@@ -417,6 +521,130 @@ function AdminAdmissions() {
                 style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', resize: 'vertical', boxSizing: 'border-box' }}
               />
             </div>
+
+            {/* Sub Sections */}
+            <>
+              <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                <h4 style={{ margin: 0, color: '#243358', fontSize: '15px' }}>Additional Sections</h4>
+                <button
+                  className="btn btn-success btn-sm"
+                  onClick={addSubSection}
+                  style={{ fontSize: '12px' }}
+                >
+                  + Add Section
+                </button>
+              </div>
+              <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Add multiple content blocks below the main content. Each section has its own title, content, stats, documents, and steps.</p>
+
+              {form.subSections.map((sub, subIdx) => (
+                <div key={subIdx} style={{ background: '#f8f9fb', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '16px', marginBottom: '14px', position: 'relative' }}>
+                  {/* Section header */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                    <span style={{ fontSize: '13px', fontWeight: 700, color: '#243358' }}>Section {subIdx + 1}</span>
+                    <div style={{ display: 'flex', gap: '6px' }}>
+                      <button
+                        className="btn btn-secondary btn-sm"
+                        onClick={() => setEditingSubIdx(editingSubIdx === subIdx ? null : subIdx)}
+                        style={{ fontSize: '11px', padding: '4px 10px' }}
+                      >
+                        {editingSubIdx === subIdx ? 'Close' : 'Edit'}
+                      </button>
+                      <button
+                        className="member-remove-btn"
+                        title="Delete section"
+                        onClick={() => removeSubSection(subIdx)}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Display / Edit mode */}
+                  {editingSubIdx === subIdx ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      <input
+                        type="text"
+                        value={sub.title}
+                        onChange={(e) => updateSubSection(subIdx, 'title', e.target.value)}
+                        placeholder="Section title"
+                        style={{ width: '100%', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }}
+                      />
+                      <textarea
+                        value={sub.content}
+                        onChange={(e) => updateSubSection(subIdx, 'content', e.target.value)}
+                        placeholder="Section content..."
+                        rows={4}
+                        style={{ width: '100%', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', resize: 'vertical', boxSizing: 'border-box' }}
+                      />
+
+                      {/* Stats */}
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                          <span style={{ fontSize: '12px', fontWeight: 600, color: '#243358' }}>Stats</span>
+                          <button className="btn btn-success btn-sm" onClick={() => addSubStat(subIdx)} style={{ fontSize: '10px', padding: '2px 8px' }}>+ Add</button>
+                        </div>
+                        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                          {sub.stats.map((stat, si) => (
+                            <div key={si} style={{ display: 'flex', gap: '4px', alignItems: 'center', background: '#fff', border: '1px solid #e4e8ed', borderRadius: '5px', padding: '4px 6px' }}>
+                              <input type="text" value={stat.num} onChange={(e) => updateSubStat(subIdx, si, 'num', e.target.value)} placeholder="Num" style={{ width: '50px', padding: '4px 6px', border: '1px solid #ddd', borderRadius: '3px', fontSize: '11px', textAlign: 'center' }} />
+                              <input type="text" value={stat.label} onChange={(e) => updateSubStat(subIdx, si, 'label', e.target.value)} placeholder="Label" style={{ width: '100px', padding: '4px 6px', border: '1px solid #ddd', borderRadius: '3px', fontSize: '11px' }} />
+                              <button className="member-remove-btn" onClick={() => removeSubStat(subIdx, si)} title="Remove" style={{ fontSize: '10px' }}>×</button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Documents */}
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                          <span style={{ fontSize: '12px', fontWeight: 600, color: '#243358' }}>Documents</span>
+                          <button className="btn btn-success btn-sm" onClick={() => addSubDocument(subIdx)} style={{ fontSize: '10px', padding: '2px 8px' }}>+ Add</button>
+                        </div>
+                        {sub.documents.map((doc, di) => (
+                          <div key={di} style={{ display: 'flex', gap: '6px', alignItems: 'center', marginBottom: '4px' }}>
+                            <input type="text" value={doc} onChange={(e) => updateSubDocument(subIdx, di, e.target.value)} placeholder="Document name" style={{ flex: 1, padding: '5px 8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '12px' }} />
+                            <button className="member-remove-btn" onClick={() => removeSubDocument(subIdx, di)} title="Remove">×</button>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Steps */}
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                          <span style={{ fontSize: '12px', fontWeight: 600, color: '#243358' }}>Steps</span>
+                          <button className="btn btn-success btn-sm" onClick={() => addSubStep(subIdx)} style={{ fontSize: '10px', padding: '2px 8px' }}>+ Add</button>
+                        </div>
+                        {sub.steps.map((step, sti) => (
+                          <div key={sti} style={{ display: 'flex', gap: '6px', alignItems: 'center', marginBottom: '4px' }}>
+                            <input type="text" value={step.title} onChange={(e) => updateSubStep(subIdx, sti, 'title', e.target.value)} placeholder="Step title" style={{ flex: 1, padding: '5px 8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '12px' }} />
+                            <input type="text" value={step.desc} onChange={(e) => updateSubStep(subIdx, sti, 'desc', e.target.value)} placeholder="Description" style={{ flex: 1, padding: '5px 8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '12px' }} />
+                            <button className="member-remove-btn" onClick={() => removeSubStep(subIdx, sti)} title="Remove">×</button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    /* Preview mode */
+                    <div style={{ fontSize: '13px', color: '#555' }}>
+                      <div style={{ fontWeight: 600, color: '#243358', marginBottom: '4px' }}>{sub.title || <em style={{ color: '#aaa' }}>Untitled</em>}</div>
+                      <div style={{ marginBottom: '6px', lineHeight: 1.5 }}>{sub.content ? (sub.content.length > 150 ? sub.content.slice(0, 150) + '...' : sub.content) : <em style={{ color: '#aaa' }}>No content</em>}</div>
+                      <div style={{ display: 'flex', gap: '12px', fontSize: '11px', color: '#888' }}>
+                        {sub.stats.length > 0 && <span>{sub.stats.length} stat{sub.stats.length !== 1 ? 's' : ''}</span>}
+                        {sub.documents.length > 0 && <span>{sub.documents.length} doc{sub.documents.length !== 1 ? 's' : ''}</span>}
+                        {sub.steps.length > 0 && <span>{sub.steps.length} step{sub.steps.length !== 1 ? 's' : ''}</span>}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              {form.subSections.length === 0 && (
+                <div style={{ textAlign: 'center', padding: '20px', background: '#f8f9fb', border: '1px dashed #d7dde6', borderRadius: '8px' }}>
+                  <p style={{ margin: 0, color: '#aaa', fontSize: '13px' }}>No additional sections yet. Click "+ Add Section" to create one.</p>
+                </div>
+              )}
+            </>
 
             {/* Overview - Stats */}
             {activeTab === 'overview' && (
@@ -985,6 +1213,7 @@ function AdminAdmissions() {
                       feeRows2: sections[activeTab].feeRows2 && sections[activeTab].feeRows2.length > 0 ? sections[activeTab].feeRows2 : [...defaultFeeRows],
                       pdfUrl: sections[activeTab].pdfUrl || '',
                       scholarshipDocs: sections[activeTab].scholarshipDocs || [],
+                      subSections: sections[activeTab].subSections || [],
                       active: sections[activeTab].active !== false,
                     });
                   } else {
