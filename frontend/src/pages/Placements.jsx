@@ -403,25 +403,142 @@ function Placements() {
             </>
           )}
 
-          {/* Our Recruiters */}
+          {/* Our Recruiters - Static + Admin Grid */}
           {active === 'recruiters' && (
             <>
-              <h2 className="content-heading">{getSection('recruiters').title || 'Our Recruiters'}</h2>
+              <h2 className="content-heading">Our Recruiters</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('recruiters').content || STATIC_CONTENT.placements.recruiters)}
+              <p>
+                Satara Polytechnic, Satara has built strong industry partnerships over the years,
+                attracting top companies from diverse engineering sectors for campus recruitment
+                drives. Our Training &amp; Placement Cell maintains active relationships with leading
+                organizations across IT, manufacturing, automobile, chemical, electrical, and
+                core engineering domains.
+              </p>
+              <p>
+                Companies regularly visit our campus to hire diploma engineers for roles in software
+                development, production, quality control, maintenance, design, and project management.
+                Our students are well-prepared through aptitude training, soft skill workshops, and
+                industry-ready curriculum, making them preferred candidates for top recruiters.
+              </p>
 
+              {/* Stats */}
+              <div className="overview-stats">
+                <div className="stat-box">
+                  <span className="stat-num">50+</span>
+                  <span className="stat-txt">Partner Companies</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">15+</span>
+                  <span className="stat-txt">Industry Sectors</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">85%</span>
+                  <span className="stat-txt">Placement Rate</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">100%</span>
+                  <span className="stat-txt">Training Support</span>
+                </div>
+              </div>
+
+              {/* Recruiter Logos Grid */}
               {getSection('recruiters').recruiters && getSection('recruiters').recruiters.length > 0 && (
-                <div className="recruiters-grid" style={{ marginTop: '20px' }}>
-                  {getSection('recruiters').recruiters.map((rec, i) => (
-                    <div className="recruiter-item" key={i}>
-                      {rec.logoUrl && (
-                        <img src={rec.logoUrl} alt={rec.name} className="recruiter-item-logo" />
-                      )}
-                      <span className="recruiter-item-name">{rec.name}</span>
-                    </div>
-                  ))}
+                <div style={{ marginTop: '36px' }}>
+                  <h3 className="content-sub-heading">Companies That Recruit From Us</h3>
+                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                  <div className="recruiters-grid">
+                    {getSection('recruiters').recruiters.map((rec, i) => (
+                      <div className="recruiter-item" key={i}>
+                        {rec.logoUrl && (
+                          <img src={rec.logoUrl} alt={rec.name} className="recruiter-item-logo" />
+                        )}
+                        <span className="recruiter-item-name">{rec.name}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
+
+              {/* Industry Sectors */}
+              <div style={{ marginTop: '36px' }}>
+                <h3 className="content-sub-heading">Recruitment Sectors</h3>
+                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div className="info-table">
+                  <div className="info-row">
+                    <span className="info-label">Information Technology</span>
+                    <span className="info-value">Software development, web development, networking, and IT support roles in leading tech companies.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Manufacturing</span>
+                    <span className="info-value">Production, quality control, CNC programming, and shop floor management in automotive and engineering firms.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Automobile</span>
+                    <span className="info-value">Vehicle design, assembly line operations, service engineering, and dealership management roles.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Chemical Industry</span>
+                    <span className="info-value">Process operations, plant maintenance, quality assurance, and environmental compliance positions.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Electrical & Electronics</span>
+                    <span className="info-value">Power systems, control panels, instrumentation, and embedded systems roles in core companies.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Infrastructure & Construction</span>
+                    <span className="info-value">Civil works, project management, site supervision, and structural design positions.</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Why Companies Choose Us */}
+              <div style={{ marginTop: '36px' }}>
+                <h3 className="content-sub-heading">Why Companies Choose Our Graduates</h3>
+                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div className="info-table">
+                  <div className="info-row">
+                    <span className="info-label">Industry-Ready Skills</span>
+                    <span className="info-value">Our curriculum includes practical training, workshops, and project work that prepare students for real-world engineering challenges from day one.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Strong Foundation</span>
+                    <span className="info-value">Three years of comprehensive diploma education provides deep technical knowledge across theory, practical, and application-based learning.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Soft Skills Training</span>
+                    <span className="info-value">Regular communication skills, personality development, and interview preparation sessions ensure students are confident and professional.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Aptitude & Reasoning</span>
+                    <span className="info-value">Dedicated aptitude training modules covering quantitative, logical reasoning, and verbal ability — essential for campus recruitment screening.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Problem Solving Ability</span>
+                    <span className="info-value">Hands-on lab experience and project-based learning develop strong analytical and problem-solving skills valued by employers.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Work Ethic & Discipline</span>
+                    <span className="info-value">Our students are known for their punctuality, dedication, team spirit, and willingness to learn — qualities that recruiters highly appreciate.</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact CTA */}
+              <div style={{ marginTop: '36px', background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '28px', textAlign: 'center' }}>
+                <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', margin: '0 0 8px' }}>Want to Recruit From Our Campus?</h3>
+                <p style={{ fontSize: '14px', color: '#666', margin: '0 0 16px', lineHeight: '1.6' }}>
+                  Partner with Satara Polytechnic for your next campus recruitment drive. Our Training &amp; Placement Cell will coordinate the entire process.
+                </p>
+                <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                  <a href="tel:+912162284040" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#243358', color: '#fff', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
+                    📞 +91-2162 284 040
+                  </a>
+                  <a href="mailto:satarapolyinfo@gmail.com" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#fff', color: '#243358', border: '1px solid #243358', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
+                    ✉ satarapolyinfo@gmail.com
+                  </a>
+                </div>
+              </div>
             </>
           )}
         </main>

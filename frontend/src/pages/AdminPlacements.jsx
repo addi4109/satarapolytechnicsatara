@@ -234,14 +234,14 @@ function AdminPlacements() {
         {/* Form */}
         <div className="admin-card">
           <div className="admin-card-header">
-            <h3>{activeTab === 'records' ? 'Placement Records' : activeTab === 'about' ? 'Placement Officer & Team' : activeTab === 'process' ? 'Placement Process Steps' : 'Section Content'}</h3>
+            <h3>{activeTab === 'records' ? 'Placement Records' : activeTab === 'about' ? 'Placement Officer & Team' : activeTab === 'process' ? 'Placement Process Steps' : activeTab === 'recruiters' ? 'Our Recruiters' : 'Section Content'}</h3>
             {sections[activeTab] && (
               <button className="btn btn-danger btn-sm" onClick={handleDelete}>Delete</button>
             )}
           </div>
           <div className="admin-card-body">
-            {/* Title - hidden for records, about, and process */}
-            {activeTab !== 'records' && activeTab !== 'about' && activeTab !== 'process' && (
+            {/* Title - hidden for records, about, process, and recruiters */}
+            {activeTab !== 'records' && activeTab !== 'about' && activeTab !== 'process' && activeTab !== 'recruiters' && (
               <div className="form-group">
                 <label>Section Title</label>
                 <input
@@ -253,8 +253,8 @@ function AdminPlacements() {
               </div>
             )}
 
-            {/* Content - hidden for records, about, and process */}
-            {activeTab !== 'records' && activeTab !== 'about' && activeTab !== 'process' && (
+            {/* Content - hidden for records, about, process, and recruiters */}
+            {activeTab !== 'records' && activeTab !== 'about' && activeTab !== 'process' && activeTab !== 'recruiters' && (
               <div className="form-group">
                 <label>Content</label>
                 <textarea
