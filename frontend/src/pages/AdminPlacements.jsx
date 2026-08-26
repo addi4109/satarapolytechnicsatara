@@ -37,6 +37,9 @@ function AdminPlacements() {
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState(null);
 
+  // View mode for process and records tabs
+  const [view, setView] = useState('preview');
+
   // Step states
   const [newStepTitle, setNewStepTitle] = useState('');
   const [newStepDesc, setNewStepDesc] = useState('');
@@ -90,6 +93,7 @@ function AdminPlacements() {
     }
     setMsg(null);
     resetInputs();
+    setView('preview');
   }, [activeTab, sections]);
 
   const resetInputs = () => {
@@ -105,6 +109,18 @@ function AdminPlacements() {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
+  const startEditing = () => { setView('edit'); resetInputs(); };
+
+  const cancelEditing = () => {
+    const existing = sections[activeTab];
+    if (existing) {
+      setForm({
+        title: existing.title || '', content: existing.content || '', steps: existing.steps || [], records: existing.records || [], recordTable: existing.recordTable || [], recordImages: existing.recordImages || [], recruiters: existing.recruiters || [], officerName: existing.officerName || '', officerPhoto: existing.officerPhoto || '', officerQual: existing.officerQual || '', officerMsg: existing.officerMsg || '', officeTeam: existing.officeTeam || [], active: existing.active !== false,
+      });
+    } else { setForm({ ...defaultSection }); }
+    setView('preview'); resetInputs();
+  };
+
   const handleSave = async () => {
     setSaving(true);
     setMsg(null);
@@ -117,7 +133,8 @@ function AdminPlacements() {
       if (!res.ok) throw new Error('Failed to save');
       const saved = await res.json();
       setSections((prev) => ({ ...prev, [activeTab]: saved }));
-      setMsg({ type: 'success', text: 'Section saved successfully!' });
+      setMsg({ type: 'success', text: 'Saved!' });
+      setView('preview');
     } catch (err) {
       setMsg({ type: 'error', text: 'Failed to save.' });
     } finally {
@@ -230,6 +247,23 @@ function AdminPlacements() {
         <h2 style={{ margin: '0 0 20px', fontFamily: 'Georgia, serif', fontSize: '22px', color: '#243358' }}>
           {currentSection?.label}
         </h2>
+
+        {/* Action bar for process and records */}
+        {(activeTab === 'process' || activeTab === 'records') && (
+          <div className="admission-action-bar">
+            {view === 'preview' ? (
+              <>
+                <button className="btn btn-primary" onClick={startEditing}>{sections[activeTab] ? 'Edit' : 'Add Content'}</button>
+                {sections[activeTab] && <button className="btn btn-danger btn-sm" onClick={handleDelete}>Delete</button>}
+              </>
+            ) : (
+              <>
+                <button className="btn btn-primary" onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</button>
+                <button className="btn btn-secondary" onClick={cancelEditing}>Cancel</button>
+              </>
+            )}
+          </div>
+        )}
 
         {/* Form */}
         <div className="admin-card">
@@ -409,184 +443,150 @@ function AdminPlacements() {
               </>
             )}
 
-            {/* Process - Steps */}
+            {/* Process - Preview/Edit */}
             {activeTab === 'process' && (
               <>
-                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 6px', color: '#243358', fontSize: '15px' }}>Process Steps</h4>
-                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Shown exactly like the live website — click a step to edit it.</p>
-
-                {/* Steps list */}
-                <div className="process-steps" style={{ marginTop: '12px' }}>
-                  {form.steps.map((step, i) => (
-                    <div className="process-step" key={i}>
-                      <div className="step-number" style={{ cursor: 'default' }}>
-                        {i + 1}
-                      </div>
-                      <div className="step-content" style={{ flex: 1 }}>
-                        {editingStepIdx === i ? (
-                          <>
-                            <input
-                              autoFocus
-                              type="text"
-                              value={step.title}
-                              onChange={(e) => {
-                                const updated = [...form.steps];
-                                updated[i] = { ...updated[i], title: e.target.value };
-                                handleChange('steps', updated);
-                              }}
-                              placeholder="Step title"
-                              style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', marginBottom: '6px', boxSizing: 'border-box' }}
-                            />
-                            <textarea
-                              value={step.desc}
-                              onChange={(e) => {
-                                const updated = [...form.steps];
-                                updated[i] = { ...updated[i], desc: e.target.value };
-                                handleChange('steps', updated);
-                              }}
-                              placeholder="Step description (optional)"
-                              rows={2}
-                              style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }}
-                            />
-                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                              <button className="btn btn-success btn-sm" onClick={() => setEditingStepIdx(null)}>Done</button>
-                              <button
-                                onClick={() => removeStep(i)}
-                                style={{ background: 'none', border: 'none', color: '#dc3545', cursor: 'pointer', fontSize: '12px', fontWeight: 600 }}
-                              >
-                                Remove
-                              </button>
-                            </div>
-                          </>
-                        ) : (
-                          <div onClick={() => setEditingStepIdx(i)} title="Click to edit" style={{ cursor: 'pointer' }}>
-                            <h4>{step.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled step</em>}</h4>
+                {view === 'preview' ? (
+                  /* Preview */
+                  <>
+                    <h4 style={{ margin: '0 0 6px', color: '#243358', fontSize: '15px' }}>Process Steps</h4>
+                    <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Preview of how steps appear on the live website.</p>
+                    <div className="process-steps" style={{ marginTop: '12px' }}>
+                      {form.steps.map((step, i) => (
+                        <div className="process-step" key={i}>
+                          <div className="step-number">{i + 1}</div>
+                          <div className="step-content">
+                            <h4>{step.title || 'Untitled'}</h4>
                             {step.desc && <p>{step.desc}</p>}
-                            {!step.desc && <p style={{ fontStyle: 'italic', color: '#aaa' }}>No description</p>}
                           </div>
-                        )}
-                      </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-
-                {/* Add Step button */}
-                <div
-                  onClick={() => {
-                    const newSteps = [...form.steps, { title: '', desc: '' }];
-                    handleChange('steps', newSteps);
-                    setEditingStepIdx(newSteps.length - 1);
-                  }}
-                  title="Add Step"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px dashed #b9c3d4', borderRadius: '6px', padding: '9px 18px', cursor: 'pointer', color: '#243358', background: '#fff', fontWeight: 600, fontSize: '12.5px', marginTop: '14px' }}
-                >
-                  <span style={{ fontSize: '18px', lineHeight: 1 }}>+</span> Add Step
-                </div>
+                    {form.steps.length === 0 && <p style={{ color: '#aaa', fontStyle: 'italic' }}>No steps added yet.</p>}
+                  </>
+                ) : (
+                  /* Edit mode */
+                  <>
+                    <h4 style={{ margin: '0 0 6px', color: '#243358', fontSize: '15px' }}>Process Steps</h4>
+                    <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>Click a step to edit it.</p>
+                    <div className="process-steps" style={{ marginTop: '12px' }}>
+                      {form.steps.map((step, i) => (
+                        <div className="process-step" key={i}>
+                          <div className="step-number" style={{ cursor: 'default' }}>{i + 1}</div>
+                          <div className="step-content" style={{ flex: 1 }}>
+                            {editingStepIdx === i ? (
+                              <>
+                                <input autoFocus type="text" value={step.title} onChange={(e) => { const u = [...form.steps]; u[i] = { ...u[i], title: e.target.value }; handleChange('steps', u); }} placeholder="Step title" style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', marginBottom: '6px', boxSizing: 'border-box' }} />
+                                <textarea value={step.desc} onChange={(e) => { const u = [...form.steps]; u[i] = { ...u[i], desc: e.target.value }; handleChange('steps', u); }} placeholder="Description" rows={2} style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }} />
+                                <div style={{ display: 'flex', gap: '8px' }}>
+                                  <button className="btn btn-success btn-sm" onClick={() => setEditingStepIdx(null)}>Done</button>
+                                  <button onClick={() => removeStep(i)} style={{ background: 'none', border: 'none', color: '#dc3545', cursor: 'pointer', fontSize: '12px', fontWeight: 600 }}>Remove</button>
+                                </div>
+                              </>
+                            ) : (
+                              <div onClick={() => setEditingStepIdx(i)} style={{ cursor: 'pointer' }}>
+                                <h4>{step.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled</em>}</h4>
+                                {step.desc && <p>{step.desc}</p>}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <button className="btn btn-success btn-sm" style={{ marginTop: '12px' }} onClick={() => { const ns = [...form.steps, { title: '', desc: '' }]; handleChange('steps', ns); setEditingStepIdx(ns.length - 1); }}>+ Add Step</button>
+                  </>
+                )}
               </>
             )}
 
-            {/* Records - Table + Images */}
+            {/* Records - Preview/Edit */}
             {activeTab === 'records' && (
               <>
-                {/* Record Table */}
-                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Record Table</h4>
-                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>Add placement record years with PDF links for view/download.</p>
+                {view === 'preview' ? (
+                  /* Preview */
+                  <>
+                    <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Placement Records</h4>
+                    <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Preview of how records appear on the live website.</p>
 
-                {form.recordTable.map((row, i) => (
-                  <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '10px', background: '#f8f9fb', border: '1px solid #e4e8ed', borderRadius: '6px', padding: '10px 12px' }}>
-                    <span style={{ fontSize: '13px', fontWeight: 600, color: '#243358', minWidth: '30px' }}>{i + 1}.</span>
-                    <input
-                      type="text"
-                      value={row.year}
-                      onChange={(e) => {
-                        const updated = [...form.recordTable];
-                        updated[i] = { ...updated[i], year: e.target.value };
-                        handleChange('recordTable', updated);
-                      }}
-                      placeholder="Year (e.g. 2023-24)"
-                      style={{ width: '140px', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }}
-                    />
-                    <div style={{ flex: 1 }}>
-                      <PdfUpload
-                        value={row.pdfUrl}
-                        onChange={(url) => {
-                          const updated = [...form.recordTable];
-                          updated[i] = { ...updated[i], pdfUrl: url };
-                          handleChange('recordTable', updated);
-                        }}
-                        compact
-                        label="Upload PDF"
-                      />
-                    </div>
-                    <button
-                      className="member-remove-btn"
-                      title="Remove"
-                      onClick={() => handleChange('recordTable', form.recordTable.filter((_, j) => j !== i))}
-                    >
-                      ×
-                    </button>
-                  </div>
-                ))}
-                <div
-                  onClick={() => handleChange('recordTable', [...form.recordTable, { year: '', pdfUrl: '' }])}
-                  title="Add Row"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px dashed #b9c3d4', borderRadius: '6px', padding: '8px 18px', cursor: 'pointer', color: '#243358', background: '#fff', fontWeight: 600, fontSize: '12.5px', marginBottom: '20px' }}
-                >
-                  <span style={{ fontSize: '18px', lineHeight: 1 }}>+</span> Add Row
-                </div>
-
-                {/* Record Images */}
-                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Record Images</h4>
-                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>Add placement record images with title (e.g. 2020, 2021).</p>
-
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '14px' }}>
-                  {form.recordImages.map((img, i) => (
-                    <div key={i} style={{ background: '#f8f9fb', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '12px', position: 'relative' }}>
-                      <button
-                        className="member-remove-btn"
-                        title="Remove"
-                        onClick={() => handleChange('recordImages', form.recordImages.filter((_, j) => j !== i))}
-                        style={{ position: 'absolute', top: '8px', right: '8px' }}
-                      >
-                        ×
-                      </button>
-                      <div style={{ textAlign: 'center', marginBottom: '10px' }}>
-                        <ImageUpload
-                          value={img.imageUrl}
-                          onChange={(url) => {
-                            const updated = [...form.recordImages];
-                            updated[i] = { ...updated[i], imageUrl: url };
-                            handleChange('recordImages', updated);
-                          }}
-                          label=""
-                          placeholder="Image"
-                        />
+                    {/* Record Table Preview */}
+                    {form.recordTable.length > 0 && (
+                      <div className="fee-table-wrap" style={{ marginBottom: '24px' }}>
+                        <table className="fee-table">
+                          <thead><tr><th style={{ width: 60 }}>Sr.</th><th>Academic Year</th><th style={{ width: 160, textAlign: 'center' }}>Actions</th></tr></thead>
+                          <tbody>
+                            {form.recordTable.map((rec, i) => (
+                              <tr key={i}>
+                                <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                                <td className="fee-particular" style={{ fontWeight: 600 }}>{rec.year}</td>
+                                <td style={{ textAlign: 'center' }}>
+                                  {rec.pdfUrl ? (
+                                    <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+                                      <a href={`/api/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`} target="_blank" style={{ padding: '5px 14px', background: '#243358', color: '#fff', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}>View</a>
+                                      <a href={`/api/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`} download style={{ padding: '5px 14px', background: '#fff', color: '#243358', border: '1px solid #243358', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}>Download</a>
+                                    </div>
+                                  ) : <span style={{ color: '#ccc' }}>No PDF</span>}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
                       </div>
-                      <input
-                        type="text"
-                        value={img.title}
-                        onChange={(e) => {
-                          const updated = [...form.recordImages];
-                          updated[i] = { ...updated[i], title: e.target.value };
-                          handleChange('recordImages', updated);
-                        }}
-                        placeholder="Title (e.g. 2020)"
-                        style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box', textAlign: 'center' }}
-                      />
+                    )}
+
+                    {/* Record Images Preview */}
+                    {form.recordImages.length > 0 && (
+                      <div style={{ marginTop: '24px' }}>
+                        <h4 style={{ margin: '0 0 16px', color: '#243358', fontSize: '15px' }}>Record Gallery</h4>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px' }}>
+                          {form.recordImages.map((img, i) => (
+                            <div key={i} style={{ textAlign: 'center' }}>
+                              {img.imageUrl && (
+                                <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid #e4e8ed', marginBottom: '12px' }}>
+                                  <img src={img.imageUrl} alt={img.title || 'Record'} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                                </div>
+                              )}
+                              {img.title && <p style={{ fontFamily: 'Georgia, serif', fontSize: '16px', fontWeight: 700, color: '#243358', margin: 0 }}>{img.title}</p>}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {form.recordTable.length === 0 && form.recordImages.length === 0 && <p style={{ color: '#aaa', fontStyle: 'italic' }}>No records added yet.</p>}
+                  </>
+                ) : (
+                  /* Edit mode */
+                  <>
+                    <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Record Table</h4>
+                    {form.recordTable.map((row, i) => (
+                      <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '10px', background: '#f8f9fb', border: '1px solid #e4e8ed', borderRadius: '6px', padding: '10px 12px' }}>
+                        <span style={{ fontSize: '13px', fontWeight: 600, color: '#243358', minWidth: '30px' }}>{i + 1}.</span>
+                        <input type="text" value={row.year} onChange={(e) => { const u = [...form.recordTable]; u[i] = { ...u[i], year: e.target.value }; handleChange('recordTable', u); }} placeholder="Year" style={{ width: '140px', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+                        <div style={{ flex: 1 }}><PdfUpload value={row.pdfUrl} onChange={(url) => { const u = [...form.recordTable]; u[i] = { ...u[i], pdfUrl: url }; handleChange('recordTable', u); }} compact /></div>
+                        <button className="member-remove-btn" onClick={() => handleChange('recordTable', form.recordTable.filter((_, j) => j !== i))}>×</button>
+                      </div>
+                    ))}
+                    <button className="btn btn-success btn-sm" style={{ marginBottom: '20px' }} onClick={() => handleChange('recordTable', [...form.recordTable, { year: '', pdfUrl: '' }])}>+ Add Row</button>
+
+                    <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
+                    <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Record Images</h4>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '14px' }}>
+                      {form.recordImages.map((img, i) => (
+                        <div key={i} style={{ background: '#f8f9fb', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '12px', position: 'relative' }}>
+                          <button className="member-remove-btn" onClick={() => handleChange('recordImages', form.recordImages.filter((_, j) => j !== i))} style={{ position: 'absolute', top: '8px', right: '8px' }}>×</button>
+                          <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+                            <ImageUpload value={img.imageUrl} onChange={(url) => { const u = [...form.recordImages]; u[i] = { ...u[i], imageUrl: url }; handleChange('recordImages', u); }} placeholder="Image" />
+                          </div>
+                          <input type="text" value={img.title} onChange={(e) => { const u = [...form.recordImages]; u[i] = { ...u[i], title: e.target.value }; handleChange('recordImages', u); }} placeholder="Title (e.g. 2020)" style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box', textAlign: 'center' }} />
+                        </div>
+                      ))}
+                      <div onClick={() => handleChange('recordImages', [...form.recordImages, { imageUrl: '', title: '' }])} style={{ background: '#fff', border: '2px dashed #d7dde6', borderRadius: '8px', padding: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', minHeight: '180px' }}>
+                        <span style={{ fontSize: '32px', color: '#bbb', marginBottom: '6px' }}>+</span>
+                        <span style={{ fontSize: '12px', color: '#999' }}>Add Image</span>
+                      </div>
                     </div>
-                  ))}
-                  {/* Add new image card */}
-                  <div
-                    onClick={() => handleChange('recordImages', [...form.recordImages, { imageUrl: '', title: '' }])}
-                    style={{ background: '#fff', border: '2px dashed #d7dde6', borderRadius: '8px', padding: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', minHeight: '180px' }}
-                  >
-                    <span style={{ fontSize: '32px', color: '#bbb', marginBottom: '6px' }}>+</span>
-                    <span style={{ fontSize: '12px', color: '#999' }}>Add Image</span>
-                  </div>
-                </div>
+                  </>
+                )}
               </>
             )}
 

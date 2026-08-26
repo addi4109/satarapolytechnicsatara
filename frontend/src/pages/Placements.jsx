@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import { SkeletonPage } from '../components/Skeleton';
@@ -28,6 +28,21 @@ function Placements() {
   const [sections, setSections] = useState({});
   const [placementCell, setPlacementCell] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [lightbox, setLightbox] = useState(null);
+
+  const closeLightbox = useCallback(() => setLightbox(null), []);
+
+  useEffect(() => {
+    const handleKey = (e) => { if (e.key === 'Escape') closeLightbox(); };
+    if (lightbox) {
+      document.addEventListener('keydown', handleKey);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
+    };
+  }, [lightbox, closeLightbox]);
 
   useEffect(() => {
     if (page && routeMap[page]) {
@@ -375,17 +390,16 @@ function Placements() {
                   <h3 className="content-sub-heading">Placement Record Gallery</h3>
                   <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px' }}>
-                    {getSection('records').recordImages.map((img, i) => (
-                      <div key={i} style={{ textAlign: 'center' }}>
-                        {img.imageUrl && (
-                          <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid #e4e8ed', marginBottom: '12px' }}>
-                            <img
-                              src={img.imageUrl}
-                              alt={img.title || 'Placement Record'}
-                              style={{ width: '100%', height: 'auto', display: 'block' }}
-                            />
-                          </div>
-                        )}
+                    {getSection('records').recordImages.map((img, i) => (                          <div key={i} style={{ textAlign: 'center', cursor: 'pointer' }} onClick={() => img.imageUrl && setLightbox({ url: img.imageUrl, caption: img.title })}>
+                            {img.imageUrl && (
+                              <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid #e4e8ed', marginBottom: '12px' }}>
+                                <img
+                                  src={img.imageUrl}
+                                  alt={img.title || 'Placement Record'}
+                                  style={{ width: '100%', height: 'auto', display: 'block' }}
+                                />
+                              </div>
+                            )}
                         {img.title && (
                           <p style={{ fontFamily: 'Georgia, serif', fontSize: '16px', fontWeight: 700, color: '#243358', margin: 0 }}>{img.title}</p>
                         )}
@@ -543,6 +557,21 @@ function Placements() {
           )}
         </main>
       </div>
+
+      {/* Lightbox */}
+      {lightbox && (
+        <div className="lightbox-overlay" onClick={closeLightbox}>
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <button className="lightbox-close" onClick={closeLightbox}>✕</button>
+            <img src={lightbox.url} alt={lightbox.caption || 'Image'} className="lightbox-img" />
+            {lightbox.caption && (
+              <div className="lightbox-info">
+                <h3>{lightbox.caption}</h3>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 }
