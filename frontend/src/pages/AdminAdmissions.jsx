@@ -16,7 +16,6 @@ const courseCellInput = {
 };
 
 const SECTIONS = [
-  { key: 'overview', label: 'Admission Overview' },
   { key: 'courses', label: 'Courses Offered' },
   { key: 'eligibility', label: 'Eligibility' },
   { key: 'process', label: 'Admission Process' },

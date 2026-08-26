@@ -219,14 +219,195 @@ function Admissions() {
         </aside>
 
         <main className="about-content">
-          {/* Overview */}
+          {/* Overview - Static Professional Layout */}
           {active === 'overview' && (
             <>
-              <h2 className="content-heading">{getSection('overview').title || 'Admission Overview'}</h2>
+              <h2 className="content-heading">Admission Overview</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('overview').content || STATIC_CONTENT.admissions.overview)}
-              {renderStats(getSection('overview').stats)}
-              {renderSubSections(getSection('overview').subSections)}
+              <p>
+                Welcome to the Admissions section of Shri Satara Polytechnic, Satara — one of the
+                premier diploma engineering institutes in Maharashtra, established with a vision to
+                provide quality technical education. Our institute is approved by AICTE, New Delhi
+                and affiliated to MSBTE, Mumbai, offering six full-time diploma programmes in
+                engineering disciplines.
+              </p>
+              <p>
+                Admissions to all diploma programmes are conducted as per the rules and schedules
+                laid down by the Directorate of Technical Education (DTE), Maharashtra through the
+                Central Admission Process (CAP). Students can also seek admission through the
+                Institute Level / Management quota for vacant seats.
+              </p>
+
+              {/* Stats */}
+              <div className="overview-stats">
+                <div className="stat-box">
+                  <span className="stat-num">06</span>
+                  <span className="stat-txt">Engineering Programs</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">360</span>
+                  <span className="stat-txt">Annual Intake</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">02</span>
+                  <span className="stat-txt">Admission Routes</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">100%</span>
+                  <span className="stat-txt">Career-Focused Education</span>
+                </div>
+              </div>
+
+              {/* Why Choose Us */}
+              <div style={{ marginTop: '36px' }}>
+                <h3 className="content-sub-heading">Why Choose Shri Satara Polytechnic?</h3>
+                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div className="admission-highlight-grid">
+                  <div className="admission-highlight-card">
+                    <div className="highlight-icon">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
+                    </div>
+                    <h4>Approved by AICTE</h4>
+                    <p>All programmes are approved by the All India Council for Technical Education (AICTE), New Delhi, ensuring national-level quality standards.</p>
+                  </div>
+                  <div className="admission-highlight-card">
+                    <div className="highlight-icon">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+                    </div>
+                    <h4>Modern Infrastructure</h4>
+                    <p>Well-equipped laboratories, computer centres, workshops and a library with 15,000+ books and digital resources.</p>
+                  </div>
+                  <div className="admission-highlight-card">
+                    <div className="highlight-icon">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h4>Experienced Faculty</h4>
+                    <p>Team of dedicated and qualified faculty members with industry experience committed to student success.</p>
+                  </div>
+                  <div className="admission-highlight-card">
+                    <div className="highlight-icon">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8l-4 4-4-4"/><path d="M16 16l-4-4-4 4"/></svg>
+                    </div>
+                    <h4>Placement Assistance</h4>
+                    <p>Dedicated Training &amp; Placement Cell providing campus recruitment drives, soft skill training and career guidance.</p>
+                  </div>
+                  <div className="admission-highlight-card">
+                    <div className="highlight-icon">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h4>Affiliated to MSBTE</h4>
+                    <p>Fully affiliated to Maharashtra State Board of Technical Education (MSBTE), Mumbai with proven academic results.</p>
+                  </div>
+                  <div className="admission-highlight-card">
+                    <div className="highlight-icon">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h4>Scholarships Available</h4>
+                    <p>Government and private scholarships for SC/ST/OBC/VJNT/Minority and EWS students making education affordable.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick Links */}
+              <div style={{ marginTop: '36px' }}>
+                <h3 className="content-sub-heading">Quick Navigation</h3>
+                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div className="admission-quick-grid">
+                  <button className="admission-quick-card" onClick={() => setActive('courses')}>
+                    <span className="quick-card-num">01</span>
+                    <span className="quick-card-label">Courses Offered</span>
+                    <span className="quick-card-desc">6 diploma engineering programmes</span>
+                    <span className="quick-card-arrow">→</span>
+                  </button>
+                  <button className="admission-quick-card" onClick={() => setActive('eligibility')}>
+                    <span className="quick-card-num">02</span>
+                    <span className="quick-card-label">Eligibility</span>
+                    <span className="quick-card-desc">Check admission criteria</span>
+                    <span className="quick-card-arrow">→</span>
+                  </button>
+                  <button className="admission-quick-card" onClick={() => setActive('process')}>
+                    <span className="quick-card-num">03</span>
+                    <span className="quick-card-label">Admission Process</span>
+                    <span className="quick-card-desc">Step-by-step CAP process</span>
+                    <span className="quick-card-arrow">→</span>
+                  </button>
+                  <button className="admission-quick-card" onClick={() => setActive('fees')}>
+                    <span className="quick-card-num">04</span>
+                    <span className="quick-card-label">Fee Structure</span>
+                    <span className="quick-card-desc">Category-wise fee details</span>
+                    <span className="quick-card-arrow">→</span>
+                  </button>
+                  <button className="admission-quick-card" onClick={() => setActive('scholarships')}>
+                    <span className="quick-card-num">05</span>
+                    <span className="quick-card-label">Scholarships</span>
+                    <span className="quick-card-desc">Government scholarship schemes</span>
+                    <span className="quick-card-arrow">→</span>
+                  </button>
+                  <button className="admission-quick-card" onClick={() => setActive('brochure')}>
+                    <span className="quick-card-num">06</span>
+                    <span className="quick-card-label">College Brochure</span>
+                    <span className="quick-card-desc">Download prospectus PDF</span>
+                    <span className="quick-card-arrow">→</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Key Dates / Important Info */}
+              <div style={{ marginTop: '36px' }}>
+                <h3 className="content-sub-heading">Important Information</h3>
+                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div className="info-table">
+                  <div className="info-row">
+                    <span className="info-label">Academic Year</span>
+                    <span className="info-value">2026-27</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Duration of Programme</span>
+                    <span className="info-value">3 Years (6 Semesters)</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Admission Mode</span>
+                    <span className="info-value">Central Admission Process (CAP) by DTE Maharashtra</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Institute Level Seats</span>
+                    <span className="info-value">Available for vacant seats after CAP rounds</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Direct Second Year</span>
+                    <span className="info-value">Available for SSC / HSC (Science) / ITI pass candidates</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Contact for Admissions</span>
+                    <span className="info-value">+91-2162 284 040 | satarapolyinfo@gmail.com</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Admission Routes */}
+              <div style={{ marginTop: '36px' }}>
+                <h3 className="content-sub-heading">Admission Routes</h3>
+                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+                  <div style={{ background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '24px' }}>
+                    <h4 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', margin: '0 0 10px' }}>Central Admission Process (CAP)</h4>
+                    <p style={{ fontSize: '13.5px', color: '#555', lineHeight: '1.7', margin: 0 }}>
+                      Admission through online CAP rounds conducted by DTE Maharashtra. Students must
+                      register on the DTE portal, fill preference forms, and confirm admission at the
+                      institute after seat allocation. All categories (Open, SC, ST, OBC, VJNT, EWS)
+                      are covered under this process.
+                    </p>
+                  </div>
+                  <div style={{ background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '24px' }}>
+                    <h4 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', margin: '0 0 10px' }}>Institute Level / Management</h4>
+                    <p style={{ fontSize: '13.5px', color: '#555', lineHeight: '1.7', margin: 0 }}>
+                      Vacant seats after CAP rounds are filled under Institute Level / Management quota.
+                      Interested candidates can contact the institute directly for availability and
+                      admission procedure. Merit-based selection is followed.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </>
           )}
 
