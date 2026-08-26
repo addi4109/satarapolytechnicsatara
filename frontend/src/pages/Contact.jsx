@@ -30,7 +30,6 @@ const API_URL = '/api';
 function Contact() {
   const { page } = useParams();
   const [active, setActive] = useState('contact');
-  const [departments, setDepartments] = useState([]);
   const [contactData, setContactData] = useState({});
   const [loading, setLoading] = useState(true);
   const [feedbackForm, setFeedbackForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
@@ -43,12 +42,9 @@ function Contact() {
   }, [page]);
 
   useEffect(() => {
-    Promise.all([
-      fetch(`${API_URL}/departments`).then((r) => r.json()),
-      fetch(`${API_URL}/contact`).then((r) => r.json()),
-    ])
-      .then(([deptData, contactRes]) => {
-        setDepartments(deptData.filter((d) => !d.hideFromHome));
+    fetch(`${API_URL}/contact`)
+      .then((r) => r.json())
+      .then((contactRes) => {
         const mapped = {};
         contactRes.forEach((s) => { mapped[s.section] = s; });
         setContactData(mapped);
@@ -217,39 +213,22 @@ function Contact() {
 
               {(() => {
                 const deptDetails = getContact('departments').departmentDetails || [];
-                if (deptDetails.length > 0) {
-                  return (
-                    <div className="contact-dept-cards">
-                      {deptDetails.map((dept, i) => (
-                        <div key={i} className="contact-dept-card">
-                          <h4>{dept.name}</h4>
-                          {dept.hod && <p><strong>HOD:</strong> {dept.hod}</p>}
-                          {dept.phone && <p><strong>Phone:</strong> <a href={`tel:${dept.phone.replace(/[^0-9+]/g, '')}`}>{dept.phone}</a></p>}
-                          {dept.email && <p><strong>Email:</strong> <a href={`mailto:${dept.email}`}>{dept.email}</a></p>}
-                          {dept.address && <p style={{ fontSize: '12px', color: '#888' }}>{dept.address}</p>}
-                          {dept.description && <p style={{ fontSize: '13px', color: '#555', marginTop: '4px' }}>{dept.description}</p>}
-                        </div>
-                      ))}
-                    </div>
-                  );
-                } else if (departments.length > 0) {
-                  return (
-                    <div className="contact-dept-cards">
-                      {departments.map((dept) => (
-                        <div key={dept._id} className="contact-dept-card">
-                          <h4>{dept.name}</h4>
-                          {dept.hod && <p><strong>HOD:</strong> {dept.hod}</p>}
-                          {dept.hodQual && <p style={{ fontSize: '12px', color: '#888' }}>{dept.hodQual}</p>}
-                          {dept.phone && <p><strong>Phone:</strong> <a href={`tel:${dept.phone}`}>{dept.phone}</a></p>}
-                          {dept.email && <p><strong>Email:</strong> <a href={`mailto:${dept.email}`}>{dept.email}</a></p>}
-                          {!dept.phone && !dept.email && <p style={{ color: '#999', fontStyle: 'italic', fontSize: '13px' }}>Contact office for department details</p>}
-                        </div>
-                      ))}
-                    </div>
-                  );
-                } else {
-                  return <p style={{ color: '#888' }}>No department data available.</p>;
-                }
+                return deptDetails.length > 0 ? (
+                  <div className="contact-dept-cards">
+                    {deptDetails.map((dept, i) => (
+                      <div key={i} className="contact-dept-card">
+                        <h4>{dept.name}</h4>
+                        {dept.hod && <p><strong>HOD:</strong> {dept.hod}</p>}
+                        {dept.phone && <p><strong>Phone:</strong> <a href={`tel:${dept.phone.replace(/[^0-9+]/g, '')}`}>{dept.phone}</a></p>}
+                        {dept.email && <p><strong>Email:</strong> <a href={`mailto:${dept.email}`}>{dept.email}</a></p>}
+                        {dept.address && <p style={{ fontSize: '12px', color: '#888' }}>{dept.address}</p>}
+                        {dept.description && <p style={{ fontSize: '13px', color: '#555', marginTop: '4px' }}>{dept.description}</p>}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p style={{ color: '#888' }}>No department contact details added yet. Admin can add them from the Admin Panel.</p>
+                );
               })()}
             </>
           )}
