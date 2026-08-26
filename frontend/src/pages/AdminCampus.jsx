@@ -332,7 +332,7 @@ function AdminCampus() {
               {form.tables.map((table, ti) => (
                 <div key={ti} style={{ marginBottom: '24px' }}>
                   {table.title && <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>{table.title}</h3>}
-                  <div className="fee-table-wrap">
+                  <div className="fee-table-wrap library-table">
                     <table className="fee-table">
                       <thead>
                         <tr>

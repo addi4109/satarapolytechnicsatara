@@ -522,6 +522,20 @@
   color: #333;
 }
 
+/* Library tables - left align content */
+.library-table .fee-table thead th,
+.library-table .fee-table tbody td {
+  text-align: left;
+}
+
+.library-table .fee-table thead th:first-child,
+.library-table .fee-table tbody td:first-child {
+  width: 50px;
+  text-align: center;
+  font-weight: 600;
+  color: #243358;
+}
+
 .fee-year-cell {
   background: #f0f3f8;
   font-weight: 700;

@@ -72,14 +72,14 @@ function Campus() {
     );
   };
 
-  const renderTables = (tables) => {
+  const renderTables = (tables, wrapClass) => {
     if (!tables || tables.length === 0) return null;
     return (
       <div style={{ marginTop: '24px' }}>
         {tables.map((table, ti) => (
           <div key={ti} style={{ marginBottom: '24px' }}>
             {table.title && <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>{table.title}</h3>}
-            <div className="fee-table-wrap">
+            <div className={`fee-table-wrap ${wrapClass || ''}`}>
               <table className="fee-table">
                 <thead>
                   <tr>
@@ -220,7 +220,7 @@ function Campus() {
               {renderInfoRows(getSection('library').infoRows)}
 
               {/* Data Tables from admin */}
-              {renderTables(getSection('library').tables)}
+              {renderTables(getSection('library').tables, 'library-table')}
 
               {/* Library Rules */}
               {getSection('library').rules && getSection('library').rules.length > 0 && (
