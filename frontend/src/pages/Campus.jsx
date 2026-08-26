@@ -5,6 +5,7 @@ import { SkeletonPage } from '../components/Skeleton';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './Academics.css';
+import './DepartmentsPage.css';
 
 const API_URL = '/api';
 
@@ -272,37 +273,24 @@ function Campus() {
               {renderContent(getSection('office-staff').content || STATIC_CONTENT.campus['office-staff'])}
 
               {getSection('office-staff').staffMembers && getSection('office-staff').staffMembers.length > 0 && (
-                <div className="fee-table-wrap" style={{ marginTop: '20px' }}>
-                  <table className="fee-table">
-                    <thead>
-                      <tr>
-                        <th style={{ width: 50 }}>Sr. No.</th>
-                        <th style={{ width: 80, textAlign: 'center' }}>Photo</th>
-                        <th>Name</th>
-                        <th>Designation</th>
-                        <th>Contact</th>
-                        <th>Email</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {getSection('office-staff').staffMembers.map((member, i) => (
-                        <tr key={i}>
-                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
-                          <td style={{ textAlign: 'center' }}>
-                            {member.photoUrl ? (
-                              <img src={member.photoUrl} alt={member.name} style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '50%', border: '2px solid #e4e8ed' }} />
-                            ) : (
-                              <div style={{ width: '40px', height: '40px', background: '#f0f3f8', borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', color: '#aaa' }}>N/A</div>
-                            )}
-                          </td>
-                          <td className="fee-particular" style={{ fontWeight: 500 }}>{member.name}</td>
-                          <td style={{ textAlign: 'center' }}>{member.designation}</td>
-                          <td style={{ textAlign: 'center' }}>{member.phone}</td>
-                          <td style={{ textAlign: 'center' }}>{member.email}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <div className="faculty-grid" style={{ marginTop: '24px' }}>
+                  {getSection('office-staff').staffMembers.map((member, i) => (
+                    <div className="faculty-card-new" key={i}>
+                      <div className="fcard-photo">
+                        {member.photoUrl ? (
+                          <img src={member.photoUrl} alt={member.name} />
+                        ) : (
+                          <span>{member.name?.split(' ')?.pop()?.charAt(0) || '?'}</span>
+                        )}
+                      </div>
+                      <h4 className="fcard-name">{member.name}</h4>
+                      <p className="fcard-designation">{member.designation}</p>
+                      <div className="fcard-details">
+                        {member.phone && <span><strong>Phone:</strong> {member.phone}</span>}
+                        {member.email && <span><strong>Email:</strong> {member.email}</span>}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
             </>
@@ -316,37 +304,24 @@ function Campus() {
               {renderContent(getSection('non-teaching-staff').content || STATIC_CONTENT.campus['non-teaching-staff'])}
 
               {getSection('non-teaching-staff').staffMembers && getSection('non-teaching-staff').staffMembers.length > 0 && (
-                <div className="fee-table-wrap" style={{ marginTop: '20px' }}>
-                  <table className="fee-table">
-                    <thead>
-                      <tr>
-                        <th style={{ width: 50 }}>Sr. No.</th>
-                        <th style={{ width: 80, textAlign: 'center' }}>Photo</th>
-                        <th>Name</th>
-                        <th>Designation</th>
-                        <th>Contact</th>
-                        <th>Email</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {getSection('non-teaching-staff').staffMembers.map((member, i) => (
-                        <tr key={i}>
-                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
-                          <td style={{ textAlign: 'center' }}>
-                            {member.photoUrl ? (
-                              <img src={member.photoUrl} alt={member.name} style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '50%', border: '2px solid #e4e8ed' }} />
-                            ) : (
-                              <div style={{ width: '40px', height: '40px', background: '#f0f3f8', borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', color: '#aaa' }}>N/A</div>
-                            )}
-                          </td>
-                          <td className="fee-particular" style={{ fontWeight: 500 }}>{member.name}</td>
-                          <td style={{ textAlign: 'center' }}>{member.designation}</td>
-                          <td style={{ textAlign: 'center' }}>{member.phone}</td>
-                          <td style={{ textAlign: 'center' }}>{member.email}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <div className="faculty-grid" style={{ marginTop: '24px' }}>
+                  {getSection('non-teaching-staff').staffMembers.map((member, i) => (
+                    <div className="faculty-card-new" key={i}>
+                      <div className="fcard-photo">
+                        {member.photoUrl ? (
+                          <img src={member.photoUrl} alt={member.name} />
+                        ) : (
+                          <span>{member.name?.split(' ')?.pop()?.charAt(0) || '?'}</span>
+                        )}
+                      </div>
+                      <h4 className="fcard-name">{member.name}</h4>
+                      <p className="fcard-designation">{member.designation}</p>
+                      <div className="fcard-details">
+                        {member.phone && <span><strong>Phone:</strong> {member.phone}</span>}
+                        {member.email && <span><strong>Email:</strong> {member.email}</span>}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
             </>
