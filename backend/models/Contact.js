@@ -4,7 +4,7 @@ const ContactSchema = new mongoose.Schema({
   section: {
     type: String,
     required: true,
-    enum: ['office', 'enquiry', 'feedback'],
+    enum: ['office', 'enquiry', 'feedback', 'departments'],
     unique: true,
   },
   officeContacts: {
@@ -38,6 +38,17 @@ const ContactSchema = new mongoose.Schema({
   mapEmbedUrl: {
     type: String,
     default: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3801.94073621475!2d74.0093987!3d17.6529606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2399e87a8a1e3%3A0xaae19259100b0879!2sSatara%20Polytechnic!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin',
+  },
+  departmentDetails: {
+    type: [{
+      name: String,
+      hod: String,
+      phone: String,
+      email: String,
+      address: String,
+      description: String,
+    }],
+    default: [],
   },
   active: {
     type: Boolean,

@@ -5,6 +5,7 @@ import './Academics.css';
 const API_URL = '/api';
 
 const defaultOfficeRow = { designation: '', name: '', phone: '', email: '' };
+const defaultDeptRow = { name: '', hod: '', phone: '', email: '', address: '', description: '' };
 
 function AdminContact() {
   const [activeTab, setActiveTab] = useState('general');
@@ -22,6 +23,9 @@ function AdminContact() {
 
   // Office contacts
   const [officeContacts, setOfficeContacts] = useState([]);
+
+  // Department details
+  const [departmentDetails, setDepartmentDetails] = useState([]);
 
   useEffect(() => {
     fetchSections();
@@ -43,6 +47,8 @@ function AdminContact() {
       setOfficeHours(office.officeHours || 'Monday – Saturday, 8:00 AM – 6:00 PM');
       setMapEmbedUrl(office.mapEmbedUrl || '');
       setOfficeContacts(office.officeContacts && office.officeContacts.length > 0 ? office.officeContacts : [{ ...defaultOfficeRow }]);
+      const deptSection = mapped['departments'] || {};
+      setDepartmentDetails(deptSection.departmentDetails && deptSection.departmentDetails.length > 0 ? deptSection.departmentDetails : []);
     } catch (err) {
       console.error('Failed to fetch contact:', err);
     } finally {
@@ -73,6 +79,29 @@ function AdminContact() {
     }
   };
 
+  const handleSaveDeptDetails = async () => {
+    setSaving(true);
+    setMsg(null);
+    try {
+      const res = await fetch(`${API_URL}/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          section: 'departments',
+          departmentDetails,
+        }),
+      });
+      if (!res.ok) throw new Error('Failed to save');
+      const saved = await res.json();
+      setSections((prev) => ({ ...prev, departments: saved }));
+      setMsg({ type: 'success', text: 'Department details saved!' });
+    } catch (err) {
+      setMsg({ type: 'error', text: 'Failed to save.' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const addOfficeRow = () => {
     setOfficeContacts([...officeContacts, { ...defaultOfficeRow }]);
   };
@@ -86,6 +115,22 @@ function AdminContact() {
 
   const removeOfficeRow = (index) => {
     setOfficeContacts(officeContacts.filter((_, i) => i !== index));
+  };
+
+  // Department details helpers
+  const addDeptRow = () => {
+    setDepartmentDetails([...departmentDetails, { ...defaultDeptRow }]);
+  };
+
+  const updateDeptRow = (index, field, value) => {
+    const updated = departmentDetails.map((row, i) =>
+      i === index ? { ...row, [field]: value } : row
+    );
+    setDepartmentDetails(updated);
+  };
+
+  const removeDeptRow = (index) => {
+    setDepartmentDetails(departmentDetails.filter((_, i) => i !== index));
   };
 
   const inputStyle = {
@@ -131,6 +176,7 @@ function AdminContact() {
           {[
             { key: 'general', label: 'General Info' },
             { key: 'office', label: 'Office Contacts' },
+            { key: 'departments', label: 'Department Details' },
           ].map((tab) => (
             <button
               key={tab.key}
@@ -219,6 +265,61 @@ function AdminContact() {
                   )}
                 </tbody>
               </table>
+            </div>
+          </div>
+        )}
+        {/* Department Details */}
+        {activeTab === 'departments' && (
+          <div className="admin-card">
+            <div className="admin-card-header">
+              <h3>Department Contact Details</h3>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button className="btn btn-success btn-sm" onClick={addDeptRow}>+ Add Department</button>
+                <button className="btn btn-primary btn-sm" onClick={handleSaveDeptDetails} disabled={saving}>
+                  {saving ? 'Saving...' : 'Save'}
+                </button>
+              </div>
+            </div>
+            <div className="admin-card-body">
+              {departmentDetails.length === 0 && (
+                <p style={{ textAlign: 'center', color: '#999', padding: '20px' }}>No department details added yet. Click "+ Add Department" to add one.</p>
+              )}
+              {departmentDetails.map((dept, i) => (
+                <div key={i} style={{ background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '16px', marginBottom: '14px', position: 'relative' }}>
+                  <button
+                    className="member-remove-btn"
+                    title="Remove department"
+                    onClick={() => removeDeptRow(i)}
+                    style={{ position: 'absolute', top: '10px', right: '10px' }}
+                  >×</button>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                    <div className="form-group">
+                      <label style={labelStyle}>Department Name *</label>
+                      <input type="text" value={dept.name} onChange={(e) => updateDeptRow(i, 'name', e.target.value)} style={inputStyle} placeholder="e.g. Computer Engineering" />
+                    </div>
+                    <div className="form-group">
+                      <label style={labelStyle}>HOD Name</label>
+                      <input type="text" value={dept.hod} onChange={(e) => updateDeptRow(i, 'hod', e.target.value)} style={inputStyle} placeholder="Head of Department" />
+                    </div>
+                    <div className="form-group">
+                      <label style={labelStyle}>Phone</label>
+                      <input type="text" value={dept.phone} onChange={(e) => updateDeptRow(i, 'phone', e.target.value)} style={inputStyle} placeholder="Phone number" />
+                    </div>
+                    <div className="form-group">
+                      <label style={labelStyle}>Email</label>
+                      <input type="email" value={dept.email} onChange={(e) => updateDeptRow(i, 'email', e.target.value)} style={inputStyle} placeholder="Email address" />
+                    </div>
+                    <div className="form-group">
+                      <label style={labelStyle}>Address / Location</label>
+                      <input type="text" value={dept.address} onChange={(e) => updateDeptRow(i, 'address', e.target.value)} style={inputStyle} placeholder="Room / Building info" />
+                    </div>
+                    <div className="form-group">
+                      <label style={labelStyle}>Description</label>
+                      <input type="text" value={dept.description} onChange={(e) => updateDeptRow(i, 'description', e.target.value)} style={inputStyle} placeholder="Short description" />
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}
