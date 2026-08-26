@@ -30,7 +30,7 @@ const QA_LIST = [
     keywords: ['contact', 'phone', 'email', 'address', 'where', 'location', 'map'],
     question: 'How can I contact the college?',
     answer:
-      'Phone: +91-2162 284 040\nEmail: officesatarapolytechnicsatara@gmail.com\nAddress: At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra.',
+      'Phone: +91-2162 284 040\nEmail: satarapolyinfo@gmail.com\nAddress: At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra.',
   },
   {
     keywords: ['scholarship', 'scholarships', 'financial aid', 'funding'],
@@ -142,7 +142,7 @@ function ChatBot() {
           ...prev,
           {
             from: 'bot',
-            text: "Sorry, I don't have an answer for that. Please try one of the suggested questions, or contact our office at +91-2162 284 040 or officesatarapolytechnicsatara@gmail.com.",
+            text: "Sorry, I don't have an answer for that. Please try one of the suggested questions, or contact our office at +91-2162 284 040 or satarapolyinfo@gmail.com.",
           },
         ]);
       }
