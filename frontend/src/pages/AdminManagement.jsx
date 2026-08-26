@@ -445,7 +445,7 @@ function AdminManagement() {
                     <SortableGrid
                       items={gbMembers}
                       onReorder={handleGbReorder}
-                      gridStyle={{ display: 'contents' }}
+                      
                       renderItem={(member) => (
                         editGbId === member._id ? (
                           <div key={member._id} className="gb-member-card" style={{ border: '2px solid #c8963e', background: '#fffbe6' }}>
@@ -533,7 +533,7 @@ function AdminManagement() {
                     <SortableGrid
                       items={lgbMembers}
                       onReorder={handleLgbReorder}
-                      gridStyle={{ display: 'contents' }}
+                      
                       renderItem={(member) => (
                         editLgbId === member._id ? (
                           <div key={member._id} className="gb-member-card" style={{ border: '2px solid #c8963e', background: '#fffbe6' }}>

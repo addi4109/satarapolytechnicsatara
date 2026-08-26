@@ -309,7 +309,7 @@ function AdminGallery() {
               <SortableGrid
                 items={photos}
                 onReorder={(newItems) => handleReorder(newItems, 'photos')}
-                gridStyle={{ display: 'contents' }}
+                
                 renderItem={(p) => (
                   isEditing(p._id) ? (
                     <div key={p._id}>{renderFormCard()}</div>

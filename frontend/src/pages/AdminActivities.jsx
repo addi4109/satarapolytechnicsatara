@@ -231,10 +231,10 @@ function AdminActivities() {
       <h4>Sub-Sections ({form.subSections.length})</h4>
       <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Add individual sports, events or activities with title, description and images.</p>
 
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <SortableGrid
         items={form.subSections}
         onReorder={handleSubReorder}
-        gridStyle={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
         renderItem={(sub, i) => (
         <div style={{ padding: '16px', background: editingSubIdx === i ? '#fffbe6' : '#f8f9fa', border: editingSubIdx === i ? '2px solid #c8963e' : '1px solid #e4e8ed', borderRadius: '10px', position: 'relative' }}>
           {editingSubIdx === i ? (
@@ -314,6 +314,7 @@ function AdminActivities() {
         </div>
         )}
       />
+      </div>
 
       <button className="btn btn-success btn-sm" onClick={addSubSection}>+ Add Sub-Section</button>
     </div>
