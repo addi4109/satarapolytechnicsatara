@@ -52,17 +52,35 @@ router.get('/', async (req, res) => {
     const ext = getExtFromUrl(url);
     const contentType = contentTypes[ext] || response.headers.get('content-type') || 'application/octet-stream';
 
+    // Forward Content-Length so the browser PDF viewer can scroll properly
+    const contentLength = response.headers.get('content-length');
+
     // Set proper headers
     res.setHeader('Content-Type', contentType);
+    if (contentLength) {
+      res.setHeader('Content-Length', contentLength);
+    }
     res.setHeader('Cache-Control', 'public, max-age=86400');
     res.setHeader('Access-Control-Allow-Origin', '*');
 
-    // Stream the file
-    const buffer = await response.arrayBuffer();
-    res.send(Buffer.from(buffer));
+    // Stream the response instead of buffering
+    const reader = response.body.getReader();
+    const pump = async () => {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) {
+          res.end();
+          break;
+        }
+        res.write(value);
+      }
+    };
+    await pump();
   } catch (err) {
     console.error('File proxy error:', err);
-    res.status(500).json({ error: 'Failed to proxy file' });
+    if (!res.headersSent) {
+      res.status(500).json({ error: 'Failed to proxy file' });
+    }
   }
 });
 
