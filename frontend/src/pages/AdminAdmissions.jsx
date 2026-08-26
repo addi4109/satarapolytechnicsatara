@@ -492,14 +492,14 @@ function AdminAdmissions() {
         {/* Form */}
         <div className="admin-card">
           <div className="admin-card-header">
-            <h3>{activeTab === 'courses' ? 'Course Table' : 'Section Content'}</h3>
-            {sections[activeTab] && activeTab !== 'courses' && (
+            <h3>{activeTab === 'courses' ? 'Course Table' : activeTab === 'eligibility' ? 'Eligibility Points' : 'Section Content'}</h3>
+            {sections[activeTab] && activeTab !== 'courses' && activeTab !== 'eligibility' && (
               <button className="btn btn-danger btn-sm" onClick={handleDelete}>Delete</button>
             )}
           </div>
           <div className="admin-card-body">
             {/* Title - hidden for courses */}
-            {activeTab !== 'courses' && (
+            {activeTab !== 'courses' && activeTab !== 'eligibility' && (
               <div className="form-group">
                 <label>Section Title</label>
                 <input
@@ -512,7 +512,7 @@ function AdminAdmissions() {
             )}
 
             {/* Content - hidden for courses */}
-            {activeTab !== 'courses' && (
+            {activeTab !== 'courses' && activeTab !== 'eligibility' && (
               <div className="form-group">
                 <label>Content</label>
                 <textarea
@@ -526,7 +526,7 @@ function AdminAdmissions() {
             )}
 
             {/* Sub Sections - hidden for courses */}
-            {activeTab !== 'courses' && (
+            {activeTab !== 'courses' && activeTab !== 'eligibility' && (
               <>
                 <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
