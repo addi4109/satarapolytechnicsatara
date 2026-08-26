@@ -26,16 +26,16 @@ const defaultInfoRows = [
 ];
 
 const SECTIONS = [
-  { key: 'overview', label: 'Admission Overview', icon: '📋' },
-  { key: 'courses', label: 'Courses Offered', icon: '📚' },
-  { key: 'eligibility', label: 'Eligibility', icon: '✅' },
-  { key: 'process', label: 'Admission Process', icon: '📝' },
-  { key: 'first-year', label: 'First Year Admission', icon: '🎓' },
-  { key: 'direct-second', label: 'Direct Second Year', icon: '➡️' },
-  { key: 'acap', label: 'A-CAP', icon: '🏛️' },
-  { key: 'fees', label: 'Fee Structure', icon: '💰' },
-  { key: 'scholarships', label: 'Scholarships', icon: '🏅' },
-  { key: 'brochure', label: 'College Brochure', icon: '📄' },
+  { key: 'overview', label: 'Overview' },
+  { key: 'courses', label: 'Courses' },
+  { key: 'eligibility', label: 'Eligibility' },
+  { key: 'process', label: 'Process' },
+  { key: 'first-year', label: 'First Year' },
+  { key: 'direct-second', label: 'Direct Second' },
+  { key: 'acap', label: 'A-CAP' },
+  { key: 'fees', label: 'Fees' },
+  { key: 'scholarships', label: 'Scholarships' },
+  { key: 'brochure', label: 'Brochure' },
 ];
 
 const defaultFeeRows = [
@@ -841,7 +841,6 @@ function AdminAdmissions() {
               className={`about-admin-tab ${activeTab === sec.key ? 'active' : ''}`}
               onClick={() => setActiveTab(sec.key)}
             >
-              <span className="about-tab-icon">{sec.icon}</span>
               {sec.label}
               {sections[sec.key] && <span className="about-tab-saved">Saved</span>}
             </button>
