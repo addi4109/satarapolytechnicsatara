@@ -59,7 +59,7 @@ export const collegeSchema = {
   '@context': 'https://schema.org',
   '@type': 'EducationalOrganization',
   name: 'Satara Polytechnic, Satara',
-  alternateName: 'Shri Polytechnic, Satara',
+  alternateName: 'Satara Polytechnic, Satara',
   url: 'https://sfrppolytechnic.ac.in',
   logo: DEFAULT_IMAGE,
   address: {

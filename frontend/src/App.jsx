@@ -71,7 +71,7 @@ function HomePage() {
           '@context': 'https://schema.org',
           '@type': 'EducationalOrganization',
           name: 'Satara Polytechnic, Satara',
-          alternateName: 'Shri Polytechnic, Satara',
+          alternateName: 'Satara Polytechnic, Satara',
           url: 'https://sfrppolytechnic.ac.in',
           logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10',
           address: {

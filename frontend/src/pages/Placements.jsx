@@ -232,7 +232,7 @@ function Placements() {
               <h2 className="content-heading">Placement Process</h2>
               <div className="content-line"></div>
               <p>
-                The placement process at Shri Satara Polytechnic, Satara is systematic and
+                The placement process at Satara Polytechnic, Satara is systematic and
                 student-centric. Our Training &amp; Placement Cell ensures that every student is
                 well-prepared for campus recruitment through a structured process that includes
                 aptitude training, soft skill development, mock interviews, and group discussions.
@@ -313,7 +313,7 @@ function Placements() {
               <h2 className="content-heading">Placement Records</h2>
               <div className="content-line"></div>
               <p>
-                Shri Satara Polytechnic, Satara has a strong track record of successful campus
+                Satara Polytechnic, Satara has a strong track record of successful campus
                 placements. Our Training & Placement Cell regularly organizes recruitment drives
                 with leading companies across various engineering sectors. Below are the year-wise
                 placement records and supporting documents.

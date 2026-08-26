@@ -225,7 +225,7 @@ function Admissions() {
               <h2 className="content-heading">Admission Overview</h2>
               <div className="content-line"></div>
               <p>
-                Welcome to the Admissions section of Shri Satara Polytechnic, Satara — one of the
+                Welcome to the Admissions section of Satara Polytechnic, Satara — one of the
                 premier diploma engineering institutes in Maharashtra, established with a vision to
                 provide quality technical education. Our institute is approved by AICTE, New Delhi
                 and affiliated to MSBTE, Mumbai, offering six full-time diploma programmes in
@@ -260,7 +260,7 @@ function Admissions() {
 
               {/* Why Choose Us */}
               <div style={{ marginTop: '36px' }}>
-                <h3 className="content-sub-heading">Why Choose Shri Satara Polytechnic?</h3>
+                <h3 className="content-sub-heading">Why Choose Satara Polytechnic, Satara?</h3>
                 <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
                 <div className="admission-highlight-grid">
                   <div className="admission-highlight-card">
@@ -422,7 +422,7 @@ function Admissions() {
               <h2 className="content-heading">Courses Offered</h2>
               <div className="content-line"></div>
               <p>
-                Shri Satara Polytechnic, Satara offers six full-time diploma programmes in
+                Satara Polytechnic, Satara offers six full-time diploma programmes in
                 various branches of engineering and technology. All programmes are approved by
                 AICTE, New Delhi and affiliated to MSBTE, Mumbai. The courses are designed to
                 provide a strong foundation in engineering principles along with hands-on practical
@@ -555,7 +555,7 @@ function Admissions() {
               <h2 className="content-heading">Admission Process</h2>
               <div className="content-line"></div>
               <p>
-                Admission to diploma engineering programmes at Shri Satara Polytechnic, Satara is
+                Admission to diploma engineering programmes at Satara Polytechnic, Satara is
                 conducted through the Central Admission Process (CAP) as per the guidelines of the
                 Directorate of Technical Education (DTE), Maharashtra. The entire process is
                 conducted online and is transparent, merit-based, and accessible to all eligible
@@ -632,7 +632,7 @@ function Admissions() {
               <h2 className="content-heading">First Year Admission</h2>
               <div className="content-line"></div>
               <p>
-                First year diploma admission at Shri Satara Polytechnic, Satara is open to candidates
+                First year diploma admission at Satara Polytechnic, Satara is open to candidates
                 who have passed the SSC (Class X) or equivalent examination conducted by a recognized
                 board with Mathematics and Science as compulsory subjects. Admission is carried out
                 through the Central Admission Process (CAP) conducted by DTE Maharashtra.
@@ -681,7 +681,7 @@ function Admissions() {
                 <div className="info-table">
                   <div className="info-row">
                     <span className="info-label">Payment Mode</span>
-                    <span className="info-value">Online payment through CAP portal or Demand Draft in favour of "Shri Satara Polytechnic, Satara"</span>
+                    <span className="info-value">Online payment through CAP portal or Demand Draft in favour of "Satara Polytechnic, Satara"</span>
                   </div>
                   <div className="info-row">
                     <span className="info-label">Fee Deadline</span>
@@ -704,7 +704,7 @@ function Admissions() {
               <h2 className="content-heading">Direct Second Year Admission</h2>
               <div className="content-line"></div>
               <p>
-                Direct second year admission at Shri Satara Polytechnic, Satara allows eligible
+                Direct second year admission at Satara Polytechnic, Satara allows eligible
                 candidates to directly enter the second year (third semester) of the diploma programme.
                 This pathway is available for candidates who have completed HSC (Science stream), or
                 hold an ITI certificate or 12th Technical qualification as prescribed by DTE Maharashtra.
@@ -866,7 +866,7 @@ function Admissions() {
               <h2 className="content-heading">Fee Structure</h2>
               <div className="content-line"></div>
               <p>
-                The fee structure for diploma programmes at Shri Satara Polytechnic, Satara is approved
+                The fee structure for diploma programmes at Satara Polytechnic, Satara is approved
                 by the Shikshan Shulka Samiti (Fees Regulating Authority), Government of Maharashtra.
                 The fees mentioned below are as sanctioned for the current academic year and are subject
                 to revision as per government directives.
@@ -959,7 +959,7 @@ function Admissions() {
               <h2 className="content-heading">Scholarships</h2>
               <div className="content-line"></div>
               <p>
-                Shri Satara Polytechnic, Satara provides access to various government and private
+                Satara Polytechnic, Satara provides access to various government and private
                 scholarship schemes for eligible students. These scholarships are designed to make
                 quality technical education affordable and accessible to students from all economic
                 backgrounds. Students from reserved categories, economically weaker sections, and
@@ -1039,7 +1039,7 @@ function Admissions() {
               <h2 className="content-heading">College Brochure</h2>
               <div className="content-line"></div>
               <p>
-                Download the official college brochure of Shri Satara Polytechnic, Satara for
+                Download the official college brochure of Satara Polytechnic, Satara for
                 comprehensive information about the institute. The brochure covers details about
                 all six diploma engineering programmes, admission procedures, fee structure,
                 campus infrastructure, laboratory facilities, library resources, placement records,

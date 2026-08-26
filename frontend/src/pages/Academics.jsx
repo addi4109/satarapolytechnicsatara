@@ -90,7 +90,7 @@ function Academics() {
               <h2 className="content-heading">Academic Overview</h2>
               <div className="content-line"></div>
               <p>
-                Shri Polytechnic, Satara follows the curriculum prescribed by the
+                Satara Polytechnic, Satara follows the curriculum prescribed by the
                 Maharashtra State Board of Technical Education (MSBTE), Mumbai.
                 The institute offers full-time diploma programmes in six
                 engineering disciplines with a total annual intake of 360 students.
@@ -388,7 +388,7 @@ function Academics() {
               <h2 className="content-heading">Cell and Committees</h2>
               <div className="content-line"></div>
               <p>
-                Shri Polytechnic, Satara has established various cells and committees to
+                Satara Polytechnic, Satara has established various cells and committees to
                 ensure the overall development of students, maintain discipline, and address
                 grievances. These cells work towards creating a safe, inclusive, and
                 supportive learning environment for all students.
