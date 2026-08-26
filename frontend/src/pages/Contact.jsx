@@ -31,6 +31,7 @@ function Contact() {
   const { page } = useParams();
   const [active, setActive] = useState('contact');
   const [departments, setDepartments] = useState([]);
+  const [contactData, setContactData] = useState({});
   const [loading, setLoading] = useState(true);
   const [feedbackForm, setFeedbackForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
   const [feedbackSent, setFeedbackSent] = useState(false);
@@ -42,12 +43,21 @@ function Contact() {
   }, [page]);
 
   useEffect(() => {
-    fetch(`${API_URL}/departments`)
-      .then((res) => res.json())
-      .then((data) => setDepartments(data.filter((d) => !d.hideFromHome)))
+    Promise.all([
+      fetch(`${API_URL}/departments`).then((r) => r.json()),
+      fetch(`${API_URL}/contact`).then((r) => r.json()),
+    ])
+      .then(([deptData, contactRes]) => {
+        setDepartments(deptData.filter((d) => !d.hideFromHome));
+        const mapped = {};
+        contactRes.forEach((s) => { mapped[s.section] = s; });
+        setContactData(mapped);
+      })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
+
+  const getContact = (key) => contactData[key] || {};
 
   const handleFeedbackChange = (e) => {
     setFeedbackForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -129,7 +139,7 @@ function Contact() {
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                   </div>
                   <h4>Phone</h4>
-                  <a href="tel:+912162284040">+91-2162 284 040</a>
+                  <a href={`tel:${(getContact('office').phone || '+91-2162 284 040').replace(/[^0-9+]/g, '')}`}>{getContact('office').phone || '+91-2162 284 040'}</a>
                 </div>
 
                 <div className="contact-card">
@@ -137,7 +147,7 @@ function Contact() {
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                   </div>
                   <h4>Email</h4>
-                  <a href="mailto:satarapolyinfo@gmail.com">satarapolyinfo@gmail.com</a>
+                  <a href={`mailto:${getContact('office').email || 'satarapolyinfo@gmail.com'}`}>{getContact('office').email || 'satarapolyinfo@gmail.com'}</a>
                 </div>
 
                 <div className="contact-card">
@@ -145,7 +155,7 @@ function Contact() {
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                   </div>
                   <h4>Address</h4>
-                  <p>At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra</p>
+                  <p>{getContact('office').address || 'At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra'}</p>
                 </div>
 
                 <div className="contact-card">
@@ -153,7 +163,7 @@ function Contact() {
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                   </div>
                   <h4>Office Hours</h4>
-                  <p>Monday – Saturday<br />8:00 AM – 6:00 PM</p>
+                  <p>{(getContact('office').officeHours || 'Monday – Saturday, 8:00 AM – 6:00 PM').replace(', ', ' \u2013 ')}</p>
                 </div>
               </div>
             </>
@@ -231,47 +241,60 @@ function Contact() {
               <div className="content-line"></div>
               <p>Key office staff at Satara Polytechnic, Satara.</p>
 
-              <div className="contact-office-table-wrap">
-                <table className="courses-table">
-                  <thead>
-                    <tr>
-                      <th style={{ width: 60 }}>Sr. No.</th>
-                      <th>Designation</th>
-                      <th>Name</th>
-                      <th>Contact</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>1</td>
-                      <td>Principal</td>
-                      <td>—</td>
-                      <td>—</td>
-                    </tr>
-                    <tr>
-                      <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>2</td>
-                      <td>Office Superintendent</td>
-                      <td>—</td>
-                      <td>—</td>
-                    </tr>
-                    <tr>
-                      <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>3</td>
-                      <td>Office In-charge</td>
-                      <td>—</td>
-                      <td>—</td>
-                    </tr>
-                    <tr>
-                      <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>4</td>
-                      <td>General Office</td>
-                      <td>Satara Polytechnic</td>
-                      <td><a href="tel:+912162284040">+91-2162 284 040</a></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p style={{ marginTop: '16px', fontSize: '13px', color: '#888' }}>
-                Note: Admin can update office staff details from the Admin Panel.
-              </p>
+              {(() => {
+                const officeRows = getContact('office').officeContacts || [];
+                const fallbackPhone = getContact('office').phone || '+91-2162 284 040';
+                return officeRows.length > 0 ? (
+                  <div className="contact-office-table-wrap">
+                    <table className="courses-table">
+                      <thead>
+                        <tr>
+                          <th style={{ width: 60 }}>Sr. No.</th>
+                          <th>Designation</th>
+                          <th>Name</th>
+                          <th>Contact</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {officeRows.map((row, i) => (
+                          <tr key={i}>
+                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                            <td>{row.designation || '—'}</td>
+                            <td>{row.name || '—'}</td>
+                            <td>
+                              {row.phone && <a href={`tel:${row.phone.replace(/[^0-9+]/g, '')}`}>{row.phone}</a>}
+                              {row.phone && row.email && ' / '}
+                              {row.email && <a href={`mailto:${row.email}`}>{row.email}</a>}
+                              {!row.phone && !row.email && '—'}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div className="contact-office-table-wrap">
+                    <table className="courses-table">
+                      <thead>
+                        <tr>
+                          <th style={{ width: 60 }}>Sr. No.</th>
+                          <th>Designation</th>
+                          <th>Name</th>
+                          <th>Contact</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>1</td>
+                          <td>General Office</td>
+                          <td>Satara Polytechnic</td>
+                          <td><a href={`tel:${fallbackPhone.replace(/[^0-9+]/g, '')}`}>{fallbackPhone}</a></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                );
+              })()}
             </>
           )}
 
@@ -284,7 +307,7 @@ function Contact() {
 
               <div className="contact-map-wrap">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3801.94073621475!2d74.0093987!3d17.6529606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2399e87a8a1e3%3A0xaae19259100b0879!2sSatara%20Polytechnic!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                  src={getContact('office').mapEmbedUrl || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3801.94073621475!2d74.0093987!3d17.6529606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2399e87a8a1e3%3A0xaae19259100b0879!2sSatara%20Polytechnic!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin'}
                   width="100%"
                   height="400"
                   style={{ border: 0, borderRadius: '8px' }}
@@ -300,14 +323,14 @@ function Contact() {
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                   <div>
                     <strong>Address</strong>
-                    <p>At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra</p>
+                    <p>{getContact('office').address || 'At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra'}</p>
                   </div>
                 </div>
                 <div className="contact-loc-item">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                   <div>
                     <strong>Office Hours</strong>
-                    <p>Monday – Saturday, 8:00 AM – 6:00 PM</p>
+                    <p>{getContact('office').officeHours || 'Monday – Saturday, 8:00 AM – 6:00 PM'}</p>
                   </div>
                 </div>
               </div>

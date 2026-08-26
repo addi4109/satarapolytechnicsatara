@@ -123,6 +123,11 @@
 
 .sidebar-list li {
   border-bottom: 1px solid #f0f0f0;
+  margin: 0;
+}
+
+.sidebar-list li + li {
+  border-top: 1px solid #f0f0f0;
 }
 
 .sidebar-list li:last-child {
@@ -134,7 +139,7 @@
   align-items: center;
   gap: 8px;
   width: 100%;
-  padding: 11px 16px;
+  padding: 13px 16px;
   background: #fff;
   border: none;
   cursor: pointer;
