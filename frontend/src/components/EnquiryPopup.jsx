@@ -70,7 +70,7 @@ function EnquiryPopup({ onClose }) {
             {/* Left image panel */}
             <div className="enquiry-left">
               <img
-                src="https://i.ibb.co/fdtvztYw/enquiry-image.png"
+                src="/enquiry-image.png"
                 alt="Admissions Open"
                 className="enquiry-left-img"
               />
