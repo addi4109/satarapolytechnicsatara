@@ -236,36 +236,98 @@ function Placements() {
             </>
           )}
 
-          {/* Placement Records */}
+          {/* Placement Records - Static + Table + Images */}
           {active === 'records' && (
             <>
-              <h2 className="content-heading">{getSection('records').title || 'Placement Records'}</h2>
+              <h2 className="content-heading">Placement Records</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('records').content || STATIC_CONTENT.placements.records)}
+              <p>
+                Shri Satara Polytechnic, Satara has a strong track record of successful campus
+                placements. Our Training & Placement Cell regularly organizes recruitment drives
+                with leading companies across various engineering sectors. Below are the year-wise
+                placement records and supporting documents.
+              </p>
 
-              {getSection('records').records && getSection('records').records.length > 0 && (
-                <div className="fee-table-wrap" style={{ marginTop: '20px' }}>
-                  <table className="fee-table">
-                    <thead>
-                      <tr>
-                        <th style={{ width: 50 }}>Sr.</th>
-                        <th>Year</th>
-                        <th>Students Placed</th>
-                        <th>Companies Visited</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {getSection('records').records.map((rec, i) => (
-                        <tr key={i}>
-                          <td style={{ textAlign: 'center' }}>{i + 1}</td>
-                          <td className="fee-particular">{rec.year}</td>
-                          <td style={{ textAlign: 'center', fontWeight: 600 }}>{rec.placed}</td>
-                          <td style={{ textAlign: 'center' }}>{rec.companies}</td>
+              {/* Record Table */}
+              {getSection('records').recordTable && getSection('records').recordTable.length > 0 && (
+                <div style={{ marginTop: '28px' }}>
+                  <h3 className="content-sub-heading">Year-wise Placement Records</h3>
+                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                  <div className="fee-table-wrap">
+                    <table className="fee-table">
+                      <thead>
+                        <tr>
+                          <th style={{ width: 60 }}>Sr. No.</th>
+                          <th>Academic Year</th>
+                          <th style={{ width: 160 }}>Actions</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {getSection('records').recordTable.map((rec, i) => (
+                          <tr key={i}>
+                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                            <td className="fee-particular" style={{ fontWeight: 600 }}>{rec.year}</td>
+                            <td style={{ textAlign: 'center' }}>
+                              {rec.pdfUrl ? (
+                                <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+                                  <a
+                                    href={`/api/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '5px 14px', background: '#243358', color: '#fff', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}
+                                  >
+                                    View
+                                  </a>
+                                  <a
+                                    href={`/api/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`}
+                                    download
+                                    style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '5px 14px', background: '#fff', color: '#243358', border: '1px solid #243358', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}
+                                  >
+                                    Download
+                                  </a>
+                                </div>
+                              ) : (
+                                <span style={{ color: '#ccc', fontSize: '12px' }}>No PDF</span>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
+              )}
+
+              {/* Record Images */}
+              {getSection('records').recordImages && getSection('records').recordImages.length > 0 && (
+                <div style={{ marginTop: '36px' }}>
+                  <h3 className="content-sub-heading">Placement Record Gallery</h3>
+                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px' }}>
+                    {getSection('records').recordImages.map((img, i) => (
+                      <div key={i} style={{ textAlign: 'center' }}>
+                        {img.imageUrl && (
+                          <div style={{ borderRadius: '8px', overflow: 'hidden', border: '1px solid #e4e8ed', marginBottom: '12px' }}>
+                            <img
+                              src={img.imageUrl}
+                              alt={img.title || 'Placement Record'}
+                              style={{ width: '100%', height: 'auto', display: 'block' }}
+                            />
+                          </div>
+                        )}
+                        {img.title && (
+                          <p style={{ fontFamily: 'Georgia, serif', fontSize: '16px', fontWeight: 700, color: '#243358', margin: 0 }}>{img.title}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Fallback if no data */}
+              {(!getSection('records').recordTable || getSection('records').recordTable.length === 0) &&
+               (!getSection('records').recordImages || getSection('records').recordImages.length === 0) && (
+                <p style={{ marginTop: '20px', color: '#888' }}>Placement records will be updated soon. Check back later.</p>
               )}
             </>
           )}

@@ -24,6 +24,14 @@ const PlacementSchema = new mongoose.Schema({
     type: [{ year: String, placed: String, companies: String }],
     default: [],
   },
+  recordTable: {
+    type: [{ year: String, pdfUrl: String }],
+    default: [],
+  },
+  recordImages: {
+    type: [{ imageUrl: String, title: String }],
+    default: [],
+  },
   recruiters: {
     type: [{ name: String, logoUrl: String }],
     default: [],

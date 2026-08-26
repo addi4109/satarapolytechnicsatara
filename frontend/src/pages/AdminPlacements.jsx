@@ -16,6 +16,8 @@ const defaultSection = {
   content: '',
   steps: [],
   records: [],
+  recordTable: [],
+  recordImages: [],
   recruiters: [],
   officerName: '',
   officerPhoto: '',
@@ -70,6 +72,8 @@ function AdminPlacements() {
         content: existing.content || '',
         steps: existing.steps || [],
         records: existing.records || [],
+        recordTable: existing.recordTable || [],
+        recordImages: existing.recordImages || [],
         recruiters: existing.recruiters || [],
         officerName: existing.officerName || '',
         officerPhoto: existing.officerPhoto || '',
@@ -226,34 +230,38 @@ function AdminPlacements() {
         {/* Form */}
         <div className="admin-card">
           <div className="admin-card-header">
-            <h3>Section Content</h3>
+            <h3>{activeTab === 'records' ? 'Placement Records' : 'Section Content'}</h3>
             {sections[activeTab] && (
               <button className="btn btn-danger btn-sm" onClick={handleDelete}>Delete</button>
             )}
           </div>
           <div className="admin-card-body">
-            {/* Title */}
-            <div className="form-group">
-              <label>Section Title</label>
-              <input
-                type="text"
-                value={form.title}
-                onChange={(e) => handleChange('title', e.target.value)}
-                placeholder={`Enter title for ${currentSection?.label}`}
-              />
-            </div>
+            {/* Title - hidden for records */}
+            {activeTab !== 'records' && (
+              <div className="form-group">
+                <label>Section Title</label>
+                <input
+                  type="text"
+                  value={form.title}
+                  onChange={(e) => handleChange('title', e.target.value)}
+                  placeholder={`Enter title for ${currentSection?.label}`}
+                />
+              </div>
+            )}
 
-            {/* Content */}
-            <div className="form-group">
-              <label>Content</label>
-              <textarea
-                value={form.content}
-                onChange={(e) => handleChange('content', e.target.value)}
-                rows={6}
-                placeholder="Write the main content here..."
-                style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', resize: 'vertical', boxSizing: 'border-box' }}
-              />
-            </div>
+            {/* Content - hidden for records */}
+            {activeTab !== 'records' && (
+              <div className="form-group">
+                <label>Content</label>
+                <textarea
+                  value={form.content}
+                  onChange={(e) => handleChange('content', e.target.value)}
+                  rows={6}
+                  placeholder="Write the main content here..."
+                  style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', resize: 'vertical', boxSizing: 'border-box' }}
+                />
+              </div>
+            )}
 
             {/* Placement Officer - only for About section */}
             {activeTab === 'about' && (
@@ -397,45 +405,106 @@ function AdminPlacements() {
               </>
             )}
 
-            {/* Records */}
+            {/* Records - Table + Images */}
             {activeTab === 'records' && (
               <>
+                {/* Record Table */}
                 <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Placement Records</h4>
-                <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', flexWrap: 'wrap' }}>
-                  <input type="text" value={newRecYear} onChange={(e) => setNewRecYear(e.target.value)} placeholder="Year" style={{ flex: 1, padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px' }} />
-                  <input type="text" value={newRecPlaced} onChange={(e) => setNewRecPlaced(e.target.value)} placeholder="Students Placed" style={{ flex: 1, padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px' }} />
-                  <input type="text" value={newRecCompanies} onChange={(e) => setNewRecCompanies(e.target.value)} placeholder="Companies Visited" style={{ flex: 2, padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px' }} />
-                  <button className="btn btn-primary btn-sm" onClick={addRecord}>Add</button>
-                </div>
-                {form.records.length > 0 && (
-                  <div style={{ overflowX: 'auto' }}>
-                    <table className="admin-table" style={{ width: '100%' }}>
-                      <thead>
-                        <tr>
-                          <th style={{ width: 50 }}>Sr.</th>
-                          <th>Year</th>
-                          <th>Students Placed</th>
-                          <th>Companies Visited</th>
-                          <th style={{ width: 50 }}></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {form.records.map((rec, i) => (
-                          <tr key={i}>
-                            <td style={{ textAlign: 'center' }}>{i + 1}</td>
-                            <td>{rec.year}</td>
-                            <td>{rec.placed}</td>
-                            <td>{rec.companies}</td>
-                            <td style={{ textAlign: 'center' }}>
-                              <button onClick={() => removeRecord(i)} style={{ background: 'none', border: 'none', color: '#dc3545', cursor: 'pointer', fontSize: '16px' }}>×</button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Record Table</h4>
+                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>Add placement record years with PDF links for view/download.</p>
+
+                {form.recordTable.map((row, i) => (
+                  <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '10px', background: '#f8f9fb', border: '1px solid #e4e8ed', borderRadius: '6px', padding: '10px 12px' }}>
+                    <span style={{ fontSize: '13px', fontWeight: 600, color: '#243358', minWidth: '30px' }}>{i + 1}.</span>
+                    <input
+                      type="text"
+                      value={row.year}
+                      onChange={(e) => {
+                        const updated = [...form.recordTable];
+                        updated[i] = { ...updated[i], year: e.target.value };
+                        handleChange('recordTable', updated);
+                      }}
+                      placeholder="Year (e.g. 2023-24)"
+                      style={{ width: '140px', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }}
+                    />
+                    <input
+                      type="text"
+                      value={row.pdfUrl}
+                      onChange={(e) => {
+                        const updated = [...form.recordTable];
+                        updated[i] = { ...updated[i], pdfUrl: e.target.value };
+                        handleChange('recordTable', updated);
+                      }}
+                      placeholder="PDF URL"
+                      style={{ flex: 1, padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }}
+                    />
+                    <button
+                      className="member-remove-btn"
+                      title="Remove"
+                      onClick={() => handleChange('recordTable', form.recordTable.filter((_, j) => j !== i))}
+                    >
+                      ×
+                    </button>
                   </div>
-                )}
+                ))}
+                <div
+                  onClick={() => handleChange('recordTable', [...form.recordTable, { year: '', pdfUrl: '' }])}
+                  title="Add Row"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px dashed #b9c3d4', borderRadius: '6px', padding: '8px 18px', cursor: 'pointer', color: '#243358', background: '#fff', fontWeight: 600, fontSize: '12.5px', marginBottom: '20px' }}
+                >
+                  <span style={{ fontSize: '18px', lineHeight: 1 }}>+</span> Add Row
+                </div>
+
+                {/* Record Images */}
+                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
+                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Record Images</h4>
+                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>Add placement record images with title (e.g. 2020, 2021).</p>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '14px' }}>
+                  {form.recordImages.map((img, i) => (
+                    <div key={i} style={{ background: '#f8f9fb', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '12px', position: 'relative' }}>
+                      <button
+                        className="member-remove-btn"
+                        title="Remove"
+                        onClick={() => handleChange('recordImages', form.recordImages.filter((_, j) => j !== i))}
+                        style={{ position: 'absolute', top: '8px', right: '8px' }}
+                      >
+                        ×
+                      </button>
+                      <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+                        <ImageUpload
+                          value={img.imageUrl}
+                          onChange={(url) => {
+                            const updated = [...form.recordImages];
+                            updated[i] = { ...updated[i], imageUrl: url };
+                            handleChange('recordImages', updated);
+                          }}
+                          label=""
+                          placeholder="Image"
+                        />
+                      </div>
+                      <input
+                        type="text"
+                        value={img.title}
+                        onChange={(e) => {
+                          const updated = [...form.recordImages];
+                          updated[i] = { ...updated[i], title: e.target.value };
+                          handleChange('recordImages', updated);
+                        }}
+                        placeholder="Title (e.g. 2020)"
+                        style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box', textAlign: 'center' }}
+                      />
+                    </div>
+                  ))}
+                  {/* Add new image card */}
+                  <div
+                    onClick={() => handleChange('recordImages', [...form.recordImages, { imageUrl: '', title: '' }])}
+                    style={{ background: '#fff', border: '2px dashed #d7dde6', borderRadius: '8px', padding: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', minHeight: '180px' }}
+                  >
+                    <span style={{ fontSize: '32px', color: '#bbb', marginBottom: '6px' }}>+</span>
+                    <span style={{ fontSize: '12px', color: '#999' }}>Add Image</span>
+                  </div>
+                </div>
               </>
             )}
 
@@ -495,6 +564,8 @@ function AdminPlacements() {
                       content: sections[activeTab].content || '',
                       steps: sections[activeTab].steps || [],
                       records: sections[activeTab].records || [],
+                      recordTable: sections[activeTab].recordTable || [],
+                      recordImages: sections[activeTab].recordImages || [],
                       recruiters: sections[activeTab].recruiters || [],
                       officerName: sections[activeTab].officerName || '',
                       officerPhoto: sections[activeTab].officerPhoto || '',
