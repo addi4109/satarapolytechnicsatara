@@ -815,3 +815,77 @@
     padding: 8px 10px;
   }
 }
+
+/* Rules Section */
+.rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.rule-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e8eaed;
+  transition: box-shadow 0.2s;
+}
+
+.rule-item:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.rule-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #243358;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.rule-content {
+  flex: 1;
+}
+
+.rule-title {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #243358;
+}
+
+.rule-desc {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.7;
+}
+
+@media (max-width: 600px) {
+  .rules-list {
+    gap: 10px;
+  }
+  .rule-item {
+    padding: 12px 14px;
+    gap: 12px;
+  }
+  .rule-number {
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+  }
+  .rule-title {
+    font-size: 14px;
+  }
+  .rule-desc {
+    font-size: 13px;
+  }
+}

@@ -46,6 +46,8 @@ const AdminExaminations = lazy(() => import('./pages/AdminExaminations'));
 const AdminCampus = lazy(() => import('./pages/AdminCampus'));
 const AdminActivities = lazy(() => import('./pages/AdminActivities'));
 const AdminContact = lazy(() => import('./pages/AdminContact'));
+const Rules = lazy(() => import('./pages/Rules'));
+const AdminRules = lazy(() => import('./pages/AdminRules'));
 
 // Loading fallback with skeleton
 function PageLoader() {
@@ -149,6 +151,8 @@ function AppLayout() {
           <Route path="/admin/campus" element={<AdminCampus />} />
           <Route path="/admin/activities" element={<AdminActivities />} />
           <Route path="/admin/contact" element={<AdminContact />} />
+          <Route path="/admin/rules" element={<AdminRules />} />
+          <Route path="/rules" element={<Rules />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </Suspense>
