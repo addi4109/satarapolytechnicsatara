@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import ImageUpload from '../components/ImageUpload';
 import PdfUpload from '../components/PdfUpload';
+import './Academics.css';
 
 const API_URL = '/api';
 
