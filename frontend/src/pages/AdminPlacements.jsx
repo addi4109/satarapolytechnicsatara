@@ -267,64 +267,87 @@ function AdminPlacements() {
               </div>
             )}
 
-            {/* Placement Officer - only for About section */}
+            {/* Placement Officer - click to edit like live website */}
             {activeTab === 'about' && (
               <>
-                <div className="dept-form-card">
-                  <div className="dept-form-card-header">
-                    <div className="dept-form-card-icon">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    </div>
-                    <div>
-                      <h3>Placement Officer</h3>
-                      <p>Officer photo, name, qualification and message</p>
-                    </div>
-                  </div>
-                  <div className="dept-form-card-body">
-                    <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'stretch' }}>
-                      {/* Left: Photo, Name, Qualification */}
-                      <div style={{ flex: '0 0 240px', textAlign: 'center' }}>
-                        <div className="form-group">
-                          <label>Photo</label>
-                          <ImageUpload
-                            value={form.officerPhoto}
-                            onChange={(url) => handleChange('officerPhoto', url)}
-                          />
-                        </div>
-                        <div className="form-group">
-                          <label>Officer Name</label>
-                          <input
-                            type="text"
-                            value={form.officerName}
-                            onChange={(e) => handleChange('officerName', e.target.value)}
-                            placeholder="e.g. Mr. Sunil Pawar"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <label>Qualification</label>
-                          <input
-                            type="text"
-                            value={form.officerQual}
-                            onChange={(e) => handleChange('officerQual', e.target.value)}
-                            placeholder="e.g. M.E. Mechanical"
-                          />
-                        </div>
-                      </div>
-                      {/* Right: Message */}
-                      <div style={{ flex: 1, minWidth: '280px', display: 'flex', flexDirection: 'column' }}>
-                        <div className="form-group" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                          <label>Message from Placement Officer</label>
-                          <textarea
-                            value={form.officerMsg}
-                            onChange={(e) => handleChange('officerMsg', e.target.value)}
-                            placeholder="Write a message from the placement officer..."
-                            style={{ flex: 1, width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', resize: 'vertical', boxSizing: 'border-box', minHeight: '180px' }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                  <h4 style={{ margin: 0, color: '#243358', fontSize: '15px' }}>Placement Officer</h4>
+                  <span style={{ fontSize: '12px', color: '#888' }}>Click the card to edit</span>
                 </div>
+
+                {/* Preview mode - looks like the live website */}
+                {editingStepIdx !== 'officer' ? (
+                  <div
+                    className="placement-officer-card"
+                    onClick={() => setEditingStepIdx('officer')}
+                    style={{ cursor: 'pointer' }}
+                    title="Click to edit"
+                  >
+                    <div className="placement-officer-left">
+                      {form.officerPhoto ? (
+                        <div className="placement-officer-photo">
+                          <img src={form.officerPhoto} alt={form.officerName} />
+                        </div>
+                      ) : (
+                        <div className="placement-officer-photo" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f0f3f8' }}>
+                          <span style={{ fontSize: '48px', fontWeight: 700, color: '#243358', fontFamily: 'Georgia, serif' }}>?</span>
+                        </div>
+                      )}
+                      <h4 className="placement-officer-name">{form.officerName || 'Officer Name'}</h4>
+                      <p className="placement-officer-designation">Placement Officer</p>
+                      {form.officerQual && (
+                        <p className="placement-officer-qual">{form.officerQual}</p>
+                      )}
+                    </div>
+                    <div className="placement-officer-msg">
+                      <p style={{ whiteSpace: 'pre-line' }}>{form.officerMsg || 'No message added yet. Click to edit.'}</p>
+                    </div>
+                  </div>
+                ) : (
+                  /* Edit mode */
+                  <div className="placement-officer-card" style={{ border: '2px solid #c8963e' }}>
+                    <div className="placement-officer-left">
+                      <div className="placement-officer-photo">
+                        <ImageUpload
+                          value={form.officerPhoto}
+                          onChange={(url) => handleChange('officerPhoto', url)}
+                          label=""
+                          placeholder="Photo"
+                        />
+                      </div>
+                      <input
+                        type="text"
+                        value={form.officerName}
+                        onChange={(e) => handleChange('officerName', e.target.value)}
+                        placeholder="Officer Name"
+                        style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '14px', fontWeight: 700, fontFamily: 'Georgia, serif', color: '#243358', textAlign: 'center', marginBottom: '6px', boxSizing: 'border-box' }}
+                      />
+                      <p className="placement-officer-designation">Placement Officer</p>
+                      <input
+                        type="text"
+                        value={form.officerQual}
+                        onChange={(e) => handleChange('officerQual', e.target.value)}
+                        placeholder="Qualification"
+                        style={{ width: '100%', padding: '5px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', textAlign: 'center', boxSizing: 'border-box' }}
+                      />
+                    </div>
+                    <div className="placement-officer-msg">
+                      <textarea
+                        value={form.officerMsg}
+                        onChange={(e) => handleChange('officerMsg', e.target.value)}
+                        placeholder="Write a message from the placement officer..."
+                        rows={6}
+                        style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', color: '#555', lineHeight: '1.75', resize: 'vertical', boxSizing: 'border-box', minHeight: '120px' }}
+                      />
+                    </div>
+                  </div>
+                )}
+                {editingStepIdx === 'officer' && (
+                  <div style={{ marginTop: '10px' }}>
+                    <button className="btn btn-success btn-sm" onClick={() => setEditingStepIdx(null)}>Done</button>
+                  </div>
+                )}
               </>
             )}
 
