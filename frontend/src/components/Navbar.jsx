@@ -64,10 +64,13 @@ function Navbar() {
       columns: [
         {
           header: 'Departments',
-          items: dbDepts.filter((d) => !d.hideFromHome).map((d) => ({
-            label: d.name,
-            link: `/departments/${d.slug}`,
-          })),
+          items: [
+            ...dbDepts.filter((d) => !d.hideFromHome).map((d) => ({
+              label: d.name,
+              link: `/departments/${d.slug}`,
+            })),
+            { label: academicTabName, link: '/academics/calendar' },
+          ],
         },
         {
           header: 'Cell and Committees',
@@ -75,12 +78,6 @@ function Navbar() {
             label: c.name,
             link: `/cells/${c.slug}`,
           })),
-        },
-        {
-          header: academicTabName,
-          items: [
-            { label: academicTabName, link: '/academics/calendar' },
-          ],
         },
       ],
     },
