@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import './ImageSlider.css';
 
 const API_URL = '/api';
@@ -6,6 +6,8 @@ const API_URL = '/api';
 function ImageSlider() {
   const [slides, setSlides] = useState([]);
   const [current, setCurrent] = useState(0);
+  const timerRef = useRef(null);
+  const dragRef = useRef({ startX: 0, dragging: false });
 
   useEffect(() => {
     fetch(`${API_URL}/slides`)
@@ -18,24 +20,94 @@ function ImageSlider() {
       .catch((err) => console.error('Failed to fetch slides:', err));
   }, []);
 
-  useEffect(() => {
-    if (slides.length === 0) return;
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length);
-    }, 3500);
-    return () => clearInterval(timer);
+  const startTimer = useCallback(() => {
+    clearInterval(timerRef.current);
+    if (slides.length > 0) {
+      timerRef.current = setInterval(() => {
+        setCurrent((prev) => (prev + 1) % slides.length);
+      }, 3500);
+    }
   }, [slides.length]);
+
+  useEffect(() => {
+    startTimer();
+    return () => clearInterval(timerRef.current);
+  }, [startTimer]);
+
+  const goTo = (idx) => {
+    setCurrent(idx);
+    startTimer();
+  };
+
+  const goNext = () => {
+    setCurrent((prev) => (prev + 1) % slides.length);
+    startTimer();
+  };
+
+  const goPrev = () => {
+    setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
+    startTimer();
+  };
+
+  // Mouse drag handlers
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    dragRef.current = { startX: e.clientX, dragging: true };
+    clearInterval(timerRef.current);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!dragRef.current.dragging) return;
+    e.preventDefault();
+  };
+
+  const handleMouseUp = (e) => {
+    if (!dragRef.current.dragging) return;
+    const diff = e.clientX - dragRef.current.startX;
+    dragRef.current.dragging = false;
+    if (Math.abs(diff) > 50) {
+      if (diff < 0) goNext();
+      else goPrev();
+    } else {
+      startTimer();
+    }
+  };
+
+  // Touch swipe handlers
+  const handleTouchStart = (e) => {
+    dragRef.current = { startX: e.touches[0].clientX, dragging: true };
+    clearInterval(timerRef.current);
+  };
+
+  const handleTouchEnd = (e) => {
+    if (!dragRef.current.dragging) return;
+    const diff = e.changedTouches[0].clientX - dragRef.current.startX;
+    dragRef.current.dragging = false;
+    if (Math.abs(diff) > 50) {
+      if (diff < 0) goNext();
+      else goPrev();
+    } else {
+      startTimer();
+    }
+  };
 
   if (slides.length === 0) return null;
 
   return (
     <div className="slider-section">
-      <div className="slider-container">
+      <div
+        className="slider-container"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         {slides.map((slide, idx) => (
           <div key={slide._id} className={`slider-slide ${idx === current ? 'active' : ''}`}>
-            <a href={slide.link || '#'}>
-              <img src={slide.image} alt={slide.title || `Slide ${idx + 1}`} />
-
+            <a href={slide.link || '#'} onClick={(e) => e.preventDefault()}>
+              <img src={slide.image} alt={slide.title || `Slide ${idx + 1}`} draggable={false} />
             </a>
           </div>
         ))}
@@ -44,7 +116,7 @@ function ImageSlider() {
             <button
               key={idx}
               className={`dot ${idx === current ? 'active' : ''}`}
-              onClick={() => setCurrent(idx)}
+              onClick={() => goTo(idx)}
               aria-label={`Go to slide ${idx + 1}`}
             />
           ))}

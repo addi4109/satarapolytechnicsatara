@@ -2,8 +2,8 @@
   position: fixed;
   bottom: 90px;
   right: 24px;
-  width: 44px;
-  height: 44px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background: #243358;
   color: #fff;
@@ -12,7 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(36, 51, 88, 0.3);
+  box-shadow: 0 4px 16px rgba(36, 51, 88, 0.35);
   z-index: 9997;
   opacity: 0;
   visibility: hidden;
@@ -35,20 +35,20 @@
 }
 
 .go-to-top svg {
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
 }
 
 @media (max-width: 480px) {
   .go-to-top {
     bottom: 82px;
     right: 16px;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
   }
 
   .go-to-top svg {
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
   }
 }
