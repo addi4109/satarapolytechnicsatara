@@ -108,7 +108,7 @@ function FeeTableEditor({ yearLabel, feeRows, onChange }) {
 }
 
 function AdminAdmissions() {
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('courses');
   const [sections, setSections] = useState({});
   const [form, setForm] = useState({ ...defaultSection });
   const [loading, setLoading] = useState(true);
