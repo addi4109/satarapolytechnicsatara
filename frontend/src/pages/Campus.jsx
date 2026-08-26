@@ -239,6 +239,23 @@ function Campus() {
                   </div>
                 </div>
               )}
+
+              {/* Library Images */}
+              {getSection('library').images && getSection('library').images.length > 0 && (
+                <div style={{ marginTop: '24px' }}>
+                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', marginBottom: '14px' }}>Library Gallery</h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '16px' }}>
+                    {getSection('library').images.map((img, i) => (
+                      <div key={i} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', overflow: 'hidden', transition: 'box-shadow 0.2s', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'none'}>
+                        <div style={{ width: '100%', height: '180px', background: '#f5f7fa', overflow: 'hidden' }}>
+                          {img.url && <img src={img.url} alt={img.caption || 'Library'} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+                        </div>
+                        {img.caption && <p style={{ margin: 0, padding: '10px 14px', fontSize: '13px', color: '#555', textAlign: 'center', fontWeight: 500 }}>{img.caption}</p>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </>
           )}
 

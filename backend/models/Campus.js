@@ -45,6 +45,14 @@ const CampusSchema = new mongoose.Schema({
     }],
     default: [],
   },
+  // For library: images array
+  images: {
+    type: [{
+      url: String,
+      caption: String,
+    }],
+    default: [],
+  },
   // For office-staff: array of staff members
   staffMembers: {
     type: [{

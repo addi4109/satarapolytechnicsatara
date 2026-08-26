@@ -24,6 +24,7 @@ const defaultForm = {
   stats: [],
   tables: [],
   rules: [],
+  images: [],
   staffMembers: [],
   active: true,
 };
@@ -81,6 +82,7 @@ function AdminCampus() {
         stats: existing.stats || [],
         tables: existing.tables || [],
         rules: existing.rules || [],
+        images: existing.images || [],
         staffMembers: existing.staffMembers || [],
         active: existing.active !== false,
       });
@@ -384,6 +386,27 @@ function AdminCampus() {
               </div>
             </div>
           )}
+
+          {/* Library Images */}
+          {form.images.length > 0 && (
+            <div style={{ marginTop: '24px' }}>
+              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>Library Gallery</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
+                {form.images.map((img, i) => (
+                  <div key={i} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', overflow: 'hidden' }}>
+                    <div style={{ width: '100%', height: '160px', background: '#f5f7fa', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {img.url ? (
+                        <img src={img.url} alt={img.caption || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      ) : (
+                        <span style={{ fontSize: '12px', color: '#aaa' }}>No image</span>
+                      )}
+                    </div>
+                    {img.caption && <p style={{ margin: 0, padding: '10px 12px', fontSize: '13px', color: '#555', textAlign: 'center' }}>{img.caption}</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -486,7 +509,7 @@ function AdminCampus() {
           <button className="btn btn-secondary btn-sm" onClick={() => {
             const existing = sections[activeTab];
             if (existing) {
-              setForm({ title: existing.title || '', content: existing.content || '', infoRows: existing.infoRows || [], stats: existing.stats || [], tables: existing.tables || [], staffMembers: existing.staffMembers || [], active: existing.active !== false });
+              setForm({ title: existing.title || '', content: existing.content || '', infoRows: existing.infoRows || [], stats: existing.stats || [], tables: existing.tables || [], rules: existing.rules || [], images: existing.images || [], staffMembers: existing.staffMembers || [], active: existing.active !== false });
             } else { setForm({ ...defaultForm }); }
             setEditing(false);
             setShowStaffForm(false);
@@ -546,6 +569,47 @@ function AdminCampus() {
                         </div>
                         <input type="text" value={rule.ruleTitle} onChange={(e) => { const r = [...form.rules]; r[i] = { ...r[i], ruleTitle: e.target.value }; setForm({ ...form, rules: r }); }} placeholder="Rule title (e.g. Return Policy)" style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', marginBottom: '8px', boxSizing: 'border-box', fontWeight: 600 }} />
                         <textarea value={rule.ruleDesc} onChange={(e) => { const r = [...form.rules]; r[i] = { ...r[i], ruleDesc: e.target.value }; setForm({ ...form, rules: r }); }} placeholder="Rule description..." rows={2} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box', resize: 'vertical', fontFamily: 'inherit' }} />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+
+          {/* Library Images */}
+          {activeTab === 'library' && (
+            <>
+              <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
+              <div className="form-group">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                  <div>
+                    <label style={{ fontSize: '13px', fontWeight: 600, color: '#333', margin: 0 }}>Library Images ({form.images.length})</label>
+                    <p style={{ fontSize: '12px', color: '#888', margin: '2px 0 0' }}>Add images to display on the library page.</p>
+                  </div>
+                  <button className="btn btn-success btn-sm" onClick={() => setForm({ ...form, images: [...form.images, { url: '', caption: '' }] })}>+ Add Image</button>
+                </div>
+
+                {form.images.length === 0 ? (
+                  <div style={{ textAlign: 'center', padding: '20px', border: '1px dashed #b9c3d4', borderRadius: '8px', color: '#888', fontSize: '13px' }}>
+                    No images yet. Click "+ Add Image" to add one.
+                  </div>
+                ) : (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '14px' }}>
+                    {form.images.map((img, i) => (
+                      <div key={i} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', overflow: 'hidden', position: 'relative' }}>
+                        <button onClick={() => setForm({ ...form, images: form.images.filter((_, idx) => idx !== i) })} style={{ position: 'absolute', top: '6px', right: '6px', width: '22px', height: '22px', borderRadius: '50%', border: 'none', background: 'rgba(0,0,0,0.5)', color: '#fff', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, zIndex: 2 }} title="Remove">×</button>
+                        <div style={{ width: '100%', height: '140px', background: '#f5f7fa', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                          {img.url ? (
+                            <img src={img.url} alt={img.caption || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          ) : (
+                            <span style={{ fontSize: '12px', color: '#aaa' }}>No image</span>
+                          )}
+                        </div>
+                        <div style={{ padding: '10px' }}>
+                          <div style={{ marginBottom: '6px' }}><ImageUpload value={img.url} onChange={(url) => { const imgs = [...form.images]; imgs[i] = { ...imgs[i], url }; setForm({ ...form, images: imgs }); }} /></div>
+                          <input type="text" value={img.caption} onChange={(e) => { const imgs = [...form.images]; imgs[i] = { ...imgs[i], caption: e.target.value }; setForm({ ...form, images: imgs }); }} placeholder="Caption (optional)" style={{ width: '100%', padding: '6px 8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '12px', boxSizing: 'border-box' }} />
+                        </div>
                       </div>
                     ))}
                   </div>
