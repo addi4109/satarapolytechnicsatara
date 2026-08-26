@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
 import ChatBot from './components/ChatBot';
+import GoToTop from './components/GoToTop';
 
 // Lazy-loaded page components for code splitting
 const ImageSlider = lazy(() => import('./components/ImageSlider'));
@@ -148,6 +149,7 @@ function AppLayout() {
       </Suspense>
       {!isAdmin && <Footer />}
       {!isAdmin && <ChatBot />}
+      {!isAdmin && <GoToTop />}
     </>
   );
 }

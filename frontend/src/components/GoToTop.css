@@ -1,0 +1,54 @@
+.go-to-top {
+  position: fixed;
+  bottom: 90px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #243358;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(36, 51, 88, 0.3);
+  z-index: 9997;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity 0.3s ease,
+              visibility 0.3s ease,
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.2s ease;
+}
+
+.go-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.go-to-top:hover {
+  background: #c8963e;
+  transform: translateY(-3px);
+}
+
+.go-to-top svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 480px) {
+  .go-to-top {
+    bottom: 82px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .go-to-top svg {
+    width: 18px;
+    height: 18px;
+  }
+}
