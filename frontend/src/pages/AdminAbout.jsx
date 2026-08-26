@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
+import ImageUpload from '../components/ImageUpload';
+import './Admin.css';
 
 const API_URL = '/api';
 
 const SECTIONS = [
-  { key: 'society', label: 'Satara Education Society' },
-  { key: 'institute', label: 'Institute' },
-  { key: 'disclosure', label: 'Mandatory Disclosure' },
-  { key: 'vision', label: 'Vision & Mission' },
-  { key: 'affiliation', label: 'Affiliation & Approval' },
+  { key: 'society', label: 'Satara Education Society', icon: '🏫' },
+  { key: 'institute', label: 'Institute', icon: '🏛️' },
+  { key: 'disclosure', label: 'Mandatory Disclosure', icon: '📋' },
+  { key: 'vision', label: 'Vision & Mission', icon: '🎯' },
+  { key: 'affiliation', label: 'Affiliation & Approval', icon: '📜' },
 ];
 
 const defaultSection = {
@@ -24,20 +26,19 @@ const defaultSection = {
 function AdminAbout() {
   const [activeTab, setActiveTab] = useState('society');
   const [sections, setSections] = useState({});
-  const [form, setForm] = useState({ ...defaultSection });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState(null);
 
-  // Dynamic list items
+  // Edit mode state
+  const [editing, setEditing] = useState(false);
+  const [editForm, setEditForm] = useState({ ...defaultSection });
+
+  // Inline editing
+  const [editingStatIdx, setEditingStatIdx] = useState(null);
+  const [editingInfoIdx, setEditingInfoIdx] = useState(null);
   const [newMissionItem, setNewMissionItem] = useState('');
   const [newAchievementItem, setNewAchievementItem] = useState('');
-
-  // Index of the stat card currently being edited inline
-  const [editingStatIdx, setEditingStatIdx] = useState(null);
-
-  // Index of the info row card currently being edited inline
-  const [editingInfoIdx, setEditingInfoIdx] = useState(null);
 
   useEffect(() => {
     fetchSections();
@@ -58,29 +59,37 @@ function AdminAbout() {
   };
 
   useEffect(() => {
-    const existing = sections[activeTab];
-    if (existing) {
-      setForm({
-        title: existing.title || '',
-        content: existing.content || '',
-        mission: existing.mission || [],
-        achievements: existing.achievements || [],
-        infoRows: existing.infoRows || [],
-        stats: existing.stats || [],
-        active: existing.active !== false,
-      });
-    } else {
-      setForm({ ...defaultSection });
-    }
+    setEditing(false);
+    setEditingStatIdx(null);
+    setEditingInfoIdx(null);
     setMsg(null);
     setNewMissionItem('');
     setNewAchievementItem('');
+  }, [activeTab]);
+
+  const currentData = sections[activeTab] || {};
+
+  const startEditing = () => {
+    setEditForm({
+      title: currentData.title || '',
+      content: currentData.content || '',
+      mission: currentData.mission || [],
+      achievements: currentData.achievements || [],
+      infoRows: currentData.infoRows || [],
+      stats: currentData.stats || [],
+      active: currentData.active !== false,
+    });
+    setEditing(true);
+    setMsg(null);
+  };
+
+  const cancelEditing = () => {
+    setEditing(false);
+    setEditForm({ ...defaultSection });
     setEditingStatIdx(null);
     setEditingInfoIdx(null);
-  }, [activeTab, sections]);
-
-  const handleChange = (field, value) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
+    setNewMissionItem('');
+    setNewAchievementItem('');
   };
 
   const handleSave = async () => {
@@ -90,12 +99,13 @@ function AdminAbout() {
       const res = await fetch(`${API_URL}/about`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, section: activeTab }),
+        body: JSON.stringify({ ...editForm, section: activeTab }),
       });
       if (!res.ok) throw new Error('Failed to save');
       const saved = await res.json();
       setSections((prev) => ({ ...prev, [activeTab]: saved }));
-      setMsg({ type: 'success', text: 'Section saved successfully!' });
+      setMsg({ type: 'success', text: 'Saved successfully!' });
+      setEditing(false);
     } catch (err) {
       setMsg({ type: 'error', text: 'Failed to save.' });
     } finally {
@@ -104,7 +114,7 @@ function AdminAbout() {
   };
 
   const handleDelete = async () => {
-    if (!window.confirm('Are you sure you want to delete this section?')) return;
+    if (!window.confirm('Delete this section data?')) return;
     try {
       await fetch(`${API_URL}/about/${activeTab}`, { method: 'DELETE' });
       setSections((prev) => {
@@ -112,202 +122,58 @@ function AdminAbout() {
         delete updated[activeTab];
         return updated;
       });
-      setForm({ ...defaultSection });
-      setMsg({ type: 'success', text: 'Deleted successfully!' });
+      setEditing(false);
+      setMsg({ type: 'success', text: 'Deleted.' });
     } catch (err) {
       setMsg({ type: 'error', text: 'Failed to delete.' });
     }
   };
 
-  // List helpers
-  const addListItem = (field, value, setter) => {
-    if (!value.trim()) return;
-    handleChange(field, [...form[field], value.trim()]);
-    setter('');
+  const handleChange = (field, value) => {
+    setEditForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const removeListItem = (field, index) => {
-    handleChange(field, form[field].filter((_, i) => i !== index));
+  // Info row helpers
+  const addInfoRow = () => {
+    handleChange('infoRows', [...editForm.infoRows, { label: '', value: '' }]);
+    setEditingInfoIdx(editForm.infoRows.length);
   };
-
-  // Creates an empty info row card and opens it for inline editing
-  const addEmptyInfoRow = () => {
-    handleChange('infoRows', [...form.infoRows, { label: '', value: '' }]);
-    setEditingInfoIdx(form.infoRows.length);
+  const updateInfoRow = (i, field, val) => {
+    const rows = [...editForm.infoRows];
+    rows[i] = { ...rows[i], [field]: val };
+    handleChange('infoRows', rows);
   };
-
-  const updateInfoRow = (index, field, value) => {
-    const infoRows = [...form.infoRows];
-    infoRows[index] = { ...infoRows[index], [field]: value };
-    handleChange('infoRows', infoRows);
-  };
-
-  const removeInfoRow = (index) => {
-    handleChange('infoRows', form.infoRows.filter((_, i) => i !== index));
+  const removeInfoRow = (i) => {
+    handleChange('infoRows', editForm.infoRows.filter((_, idx) => idx !== i));
     setEditingInfoIdx(null);
   };
 
-  // Creates an empty stat card and opens it for inline editing
-  const addEmptyStat = () => {
-    handleChange('stats', [...form.stats, { num: '', label: '' }]);
-    setEditingStatIdx(form.stats.length);
+  // Stat helpers
+  const addStat = () => {
+    handleChange('stats', [...editForm.stats, { num: '', label: '' }]);
+    setEditingStatIdx(editForm.stats.length);
   };
-
-  const updateStat = (index, field, value) => {
-    const stats = [...form.stats];
-    stats[index] = { ...stats[index], [field]: value };
+  const updateStat = (i, field, val) => {
+    const stats = [...editForm.stats];
+    stats[i] = { ...stats[i], [field]: val };
     handleChange('stats', stats);
   };
-
-  const removeStat = (index) => {
-    handleChange('stats', form.stats.filter((_, i) => i !== index));
+  const removeStat = (i) => {
+    handleChange('stats', editForm.stats.filter((_, idx) => idx !== i));
     setEditingStatIdx(null);
   };
 
+  // Mission helpers
+  const addMission = () => {
+    if (!newMissionItem.trim()) return;
+    handleChange('mission', [...editForm.mission, newMissionItem.trim()]);
+    setNewMissionItem('');
+  };
+  const removeMission = (i) => {
+    handleChange('mission', editForm.mission.filter((_, idx) => idx !== i));
+  };
+
   const currentSection = SECTIONS.find((s) => s.key === activeTab);
-
-  // Render list editor
-  const renderListEditor = (label, field, value, setter) => (
-    <div className="form-group">
-      <label style={{ fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '6px' }}>{label}</label>
-      <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => setter(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && addListItem(field, value, setter)}
-          placeholder={`Add ${label.toLowerCase()}...`}
-          style={{ flex: 1, padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px' }}
-        />
-        <button className="btn btn-primary btn-sm" onClick={() => addListItem(field, value, setter)}>Add</button>
-      </div>
-      {form[field].length > 0 && (
-        <div style={{ background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '6px', padding: '8px' }}>
-          {form[field].map((item, i) => (
-            <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 8px', borderBottom: i < form[field].length - 1 ? '1px solid #eee' : 'none' }}>
-              <span style={{ fontSize: '13px', color: '#444' }}>{item}</span>
-              <button onClick={() => removeListItem(field, i)} style={{ background: 'none', border: 'none', color: '#dc3545', cursor: 'pointer', fontSize: '16px' }}>×</button>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-
-  // Render info rows editor - displayed exactly like the live website's info table
-  const renderInfoRowsEditor = () => (
-    <div className="form-group">
-      <label style={{ fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '6px' }}>Info Rows (Label - Value)</label>
-      <p style={{ fontSize: '12px', color: '#888', margin: '0 0 10px' }}>Shown exactly like the live website — click a row to edit it.</p>
-      <div className="admin-info-table">
-        {/* Add Row - styled like a table row */}
-        <div className="admin-info-add" onClick={addEmptyInfoRow} title="Add Info Row">
-          + Add Row
-        </div>
-
-        {form.infoRows.map((row, i) => (
-          editingInfoIdx === i ? (
-            /* Editing mode - inline inputs inside the row */
-            <div key={i} className="admin-info-editing">
-              <input
-                autoFocus
-                type="text"
-                value={row.label || ''}
-                onChange={(e) => updateInfoRow(i, 'label', e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && setEditingInfoIdx(null)}
-                placeholder="Label"
-                style={{ width: '100%', padding: '7px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '12.5px', boxSizing: 'border-box' }}
-              />
-              <input
-                type="text"
-                value={row.value || ''}
-                onChange={(e) => updateInfoRow(i, 'value', e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && setEditingInfoIdx(null)}
-                placeholder="Value"
-                style={{ width: '100%', padding: '7px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '12.5px', boxSizing: 'border-box' }}
-              />
-              <button className="btn btn-success btn-sm" onClick={() => setEditingInfoIdx(null)} style={{ alignSelf: 'flex-start' }}>Done</button>
-            </div>
-          ) : (
-            /* Display mode - same look as the live info table */
-            <div key={i} className="admin-info-row" onClick={() => setEditingInfoIdx(i)} title="Click to edit">
-              <span className="admin-info-label">{row.label || <em style={{ color: '#aaa' }}>Label</em>}</span>
-              <span className="admin-info-value">{row.value || <em style={{ color: '#aaa' }}>Value</em>}</span>
-              <button
-                className="admin-info-remove"
-                onClick={(e) => { e.stopPropagation(); removeInfoRow(i); }}
-                title="Remove"
-              >
-                ×
-              </button>
-            </div>
-          )
-        ))}
-      </div>
-    </div>
-  );
-
-  // Render stats editor - small stat-box style cards like the live site
-  const renderStatsEditor = () => (
-    <div className="form-group">
-      <label style={{ fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '6px' }}>Stats (Number - Label)</label>
-      <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'stretch' }}>
-        {/* Add tile - always first */}
-        <div
-          onClick={addEmptyStat}
-          title="Add Stat"
-          style={{ width: '150px', boxSizing: 'border-box', minHeight: '104px', background: '#fff', border: '1px dashed #b9c3d4', borderRadius: '6px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '4px', cursor: 'pointer', color: '#243358' }}
-        >
-          <span style={{ fontSize: '28px', lineHeight: 1 }}>+</span>
-          <span style={{ fontSize: '12px', fontWeight: 600 }}>Add Stat</span>
-        </div>
-
-        {form.stats.map((stat, i) => (
-          editingStatIdx === i ? (
-            /* Editing mode - inline inputs inside the small card */
-            <div key={i} style={{ width: '150px', boxSizing: 'border-box', background: '#fff', border: '1px solid #c8963e', borderRadius: '6px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <input
-                autoFocus
-                type="text"
-                value={stat.num || ''}
-                onChange={(e) => updateStat(i, 'num', e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && setEditingStatIdx(null)}
-                placeholder="Number"
-                style={{ width: '100%', padding: '7px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '12px', boxSizing: 'border-box' }}
-              />
-              <input
-                type="text"
-                value={stat.label || ''}
-                onChange={(e) => updateStat(i, 'label', e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && setEditingStatIdx(null)}
-                placeholder="Label"
-                style={{ width: '100%', padding: '7px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '12px', boxSizing: 'border-box' }}
-              />
-              <button className="btn btn-success btn-sm" onClick={() => setEditingStatIdx(null)} style={{ width: '100%' }}>Done</button>
-            </div>
-          ) : (
-            /* Display mode - same look as the live stat boxes */
-            <div
-              key={i}
-              onClick={() => setEditingStatIdx(i)}
-              title="Click to edit"
-              style={{ position: 'relative', width: '150px', boxSizing: 'border-box', background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '6px', padding: '18px 12px 14px', textAlign: 'center', cursor: 'pointer' }}
-            >
-              <button
-                onClick={(e) => { e.stopPropagation(); removeStat(i); }}
-                title="Remove"
-                style={{ position: 'absolute', top: '6px', right: '6px', width: '20px', height: '20px', borderRadius: '50%', border: 'none', background: '#fdecea', color: '#d32f2f', fontSize: '12px', fontWeight: 700, lineHeight: 1, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}
-              >
-                ×
-              </button>
-              <span style={{ display: 'block', fontSize: '22px', fontWeight: 700, color: '#243358', fontFamily: 'Georgia, serif' }}>{stat.num}</span>
-              <span style={{ display: 'block', fontSize: '11.5px', color: '#777', marginTop: '4px' }}>{stat.label}</span>
-            </div>
-          )
-        ))}
-      </div>
-    </div>
-  );
 
   if (loading) {
     return (
@@ -317,6 +183,273 @@ function AdminAbout() {
     );
   }
 
+  // ─── Preview card components ──────────────────────────────────────
+
+  const PreviewCard = ({ children }) => (
+    <div className="about-preview-card" onClick={!editing ? startEditing : undefined}>
+      {!editing && (
+        <div className="about-preview-hint">Click to edit</div>
+      )}
+      {children}
+    </div>
+  );
+
+  const ContentPreview = ({ text }) => {
+    if (!text) return <p style={{ color: '#aaa', fontStyle: 'italic' }}>No content yet. Click to add.</p>;
+    return text.split('\n').filter(p => p.trim()).map((para, i) => (
+      <p key={i} style={{ marginBottom: '12px', lineHeight: '1.7', color: '#444' }}>{para}</p>
+    ));
+  };
+
+  const InfoTablePreview = ({ rows }) => {
+    if (!rows || rows.length === 0) return null;
+    return (
+      <div className="info-table">
+        {rows.map((row, i) => (
+          <div className="info-row" key={i}>
+            <span className="info-label">{row.label}</span>
+            <span className="info-value">{row.value}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const StatsPreview = ({ stats }) => {
+    if (!stats || stats.length === 0) return null;
+    return (
+      <div className="overview-stats">
+        {stats.map((stat, i) => (
+          <div className="stat-box" key={i}>
+            <span className="stat-num">{stat.num}</span>
+            <span className="stat-txt">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const MissionPreview = ({ items }) => {
+    if (!items || items.length === 0) return null;
+    return (
+      <div className="vm-block">
+        <h3 className="vm-title">Mission</h3>
+        <ul className="vm-list">
+          {items.map((item, i) => <li key={i}>{item}</li>)}
+        </ul>
+      </div>
+    );
+  };
+
+  // ─── Render tab content ──────────────────────────────────────────
+
+  const renderPreview = () => {
+    switch (activeTab) {
+      case 'society':
+        return (
+          <PreviewCard>
+            <h2 className="content-heading">{currentData.title || 'Satara Education Society'}</h2>
+            <div className="content-line"></div>
+            <ContentPreview text={currentData.content} />
+          </PreviewCard>
+        );
+
+      case 'institute':
+        return (
+          <PreviewCard>
+            <h2 className="content-heading">{currentData.title || 'Institute Overview'}</h2>
+            <div className="content-line"></div>
+            <ContentPreview text={currentData.content} />
+            <StatsPreview stats={currentData.stats} />
+          </PreviewCard>
+        );
+
+      case 'disclosure':
+        return (
+          <PreviewCard>
+            <h2 className="content-heading">{currentData.title || 'Mandatory Disclosure'}</h2>
+            <div className="content-line"></div>
+            <ContentPreview text={currentData.content} />
+            <InfoTablePreview rows={currentData.infoRows} />
+          </PreviewCard>
+        );
+
+      case 'vision':
+        return (
+          <PreviewCard>
+            <h2 className="content-heading">{currentData.title || 'Vision & Mission'}</h2>
+            <div className="content-line"></div>
+            <ContentPreview text={currentData.content} />
+            <MissionPreview items={currentData.mission} />
+          </PreviewCard>
+        );
+
+      case 'affiliation':
+        return (
+          <PreviewCard>
+            <h2 className="content-heading">{currentData.title || 'Affiliation & Approval'}</h2>
+            <div className="content-line"></div>
+            <ContentPreview text={currentData.content} />
+            <InfoTablePreview rows={currentData.infoRows} />
+          </PreviewCard>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  const renderEditor = () => {
+    switch (activeTab) {
+      case 'society':
+        return (
+          <div className="about-edit-form">
+            <div className="form-group">
+              <label>Section Title</label>
+              <input type="text" value={editForm.title} onChange={(e) => handleChange('title', e.target.value)} placeholder="Enter title..." />
+            </div>
+            <div className="form-group">
+              <label>Content</label>
+              <textarea value={editForm.content} onChange={(e) => handleChange('content', e.target.value)} rows={8} placeholder="Write the content here..." />
+            </div>
+          </div>
+        );
+
+      case 'institute':
+        return (
+          <div className="about-edit-form">
+            <div className="form-group">
+              <label>Section Title</label>
+              <input type="text" value={editForm.title} onChange={(e) => handleChange('title', e.target.value)} placeholder="Enter title..." />
+            </div>
+            <div className="form-group">
+              <label>Content</label>
+              <textarea value={editForm.content} onChange={(e) => handleChange('content', e.target.value)} rows={8} placeholder="Write the content here..." />
+            </div>
+            {/* Stats */}
+            <div className="form-group">
+              <label>Stats</label>
+              <div className="about-stats-grid">
+                {editForm.stats.map((stat, i) => (
+                  editingStatIdx === i ? (
+                    <div key={i} className="about-stat-edit">
+                      <input autoFocus type="text" value={stat.num} onChange={(e) => updateStat(i, 'num', e.target.value)} placeholder="Number" />
+                      <input type="text" value={stat.label} onChange={(e) => updateStat(i, 'label', e.target.value)} placeholder="Label" />
+                      <div className="about-edit-btns">
+                        <button className="btn btn-success btn-sm" onClick={() => setEditingStatIdx(null)}>Done</button>
+                        <button className="btn btn-danger btn-sm" onClick={() => removeStat(i)}>Remove</button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div key={i} className="about-stat-preview" onClick={() => setEditingStatIdx(i)}>
+                      <span className="about-stat-num">{stat.num}</span>
+                      <span className="about-stat-label">{stat.label}</span>
+                      <button className="about-stat-delete" onClick={(e) => { e.stopPropagation(); removeStat(i); }}>×</button>
+                    </div>
+                  )
+                ))}
+                <div className="about-stat-add" onClick={addStat}>
+                  <span>+</span>
+                  <span>Add Stat</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+
+      case 'disclosure':
+        return (
+          <div className="about-edit-form">
+            <div className="form-group">
+              <label>Section Title</label>
+              <input type="text" value={editForm.title} onChange={(e) => handleChange('title', e.target.value)} placeholder="Enter title..." />
+            </div>
+            <div className="form-group">
+              <label>Content</label>
+              <textarea value={editForm.content} onChange={(e) => handleChange('content', e.target.value)} rows={8} placeholder="Write the content here..." />
+            </div>
+            {renderInfoRowsEditor()}
+          </div>
+        );
+
+      case 'vision':
+        return (
+          <div className="about-edit-form">
+            <div className="form-group">
+              <label>Section Title</label>
+              <input type="text" value={editForm.title} onChange={(e) => handleChange('title', e.target.value)} placeholder="Enter title..." />
+            </div>
+            <div className="form-group">
+              <label>Content (Vision)</label>
+              <textarea value={editForm.content} onChange={(e) => handleChange('content', e.target.value)} rows={8} placeholder="Write vision content..." />
+            </div>
+            <div className="form-group">
+              <label>Mission Points</label>
+              <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
+                <input type="text" value={newMissionItem} onChange={(e) => setNewMissionItem(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && addMission()} placeholder="Add mission point..." style={{ flex: 1, padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px' }} />
+                <button className="btn btn-primary btn-sm" onClick={addMission}>Add</button>
+              </div>
+              {editForm.mission.length > 0 && (
+                <div className="about-mission-list">
+                  {editForm.mission.map((item, i) => (
+                    <div key={i} className="about-mission-item">
+                      <span>{item}</span>
+                      <button onClick={() => removeMission(i)}>×</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        );
+
+      case 'affiliation':
+        return (
+          <div className="about-edit-form">
+            <div className="form-group">
+              <label>Section Title</label>
+              <input type="text" value={editForm.title} onChange={(e) => handleChange('title', e.target.value)} placeholder="Enter title..." />
+            </div>
+            <div className="form-group">
+              <label>Content</label>
+              <textarea value={editForm.content} onChange={(e) => handleChange('content', e.target.value)} rows={8} placeholder="Write the content here..." />
+            </div>
+            {renderInfoRowsEditor()}
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  const renderInfoRowsEditor = () => (
+    <div className="form-group">
+      <label>Info Rows</label>
+      <div className="about-info-table">
+        {editForm.infoRows.map((row, i) => (
+          editingInfoIdx === i ? (
+            <div key={i} className="about-info-editing">
+              <input autoFocus type="text" value={row.label} onChange={(e) => updateInfoRow(i, 'label', e.target.value)} placeholder="Label" />
+              <input type="text" value={row.value} onChange={(e) => updateInfoRow(i, 'value', e.target.value)} placeholder="Value" />
+              <div className="about-edit-btns">
+                <button className="btn btn-success btn-sm" onClick={() => setEditingInfoIdx(null)}>Done</button>
+                <button className="btn btn-danger btn-sm" onClick={() => removeInfoRow(i)}>Remove</button>
+              </div>
+            </div>
+          ) : (
+            <div key={i} className="about-info-row" onClick={() => setEditingInfoIdx(i)}>
+              <span className="about-info-label">{row.label || <em style={{ color: '#aaa' }}>Label</em>}</span>
+              <span className="about-info-value">{row.value || <em style={{ color: '#aaa' }}>Value</em>}</span>
+              <button className="about-info-delete" onClick={(e) => { e.stopPropagation(); removeInfoRow(i); }}>×</button>
+            </div>
+          )
+        ))}
+        <div className="about-info-add" onClick={addInfoRow}>+ Add Row</div>
+      </div>
+    </div>
+  );
+
   return (
     <AdminLayout>
       <div className="admin-topbar">
@@ -325,15 +458,16 @@ function AdminAbout() {
 
       <div className="admin-content">
         {/* Sub-tabs */}
-        <div style={{ display: 'flex', gap: '4px', marginBottom: '20px', background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '4px', flexWrap: 'wrap' }}>
+        <div className="about-admin-tabs">
           {SECTIONS.map((sec) => (
             <button
               key={sec.key}
-              className={`gallery-tab ${activeTab === sec.key ? 'active' : ''}`}
+              className={`about-admin-tab ${activeTab === sec.key ? 'active' : ''}`}
               onClick={() => setActiveTab(sec.key)}
             >
+              <span className="about-tab-icon">{sec.icon}</span>
               {sec.label}
-              {sections[sec.key] && <span className="gallery-tab-count" style={{ fontSize: '10px' }}>Saved</span>}
+              {sections[sec.key] && <span className="about-tab-saved">Saved</span>}
             </button>
           ))}
         </div>
@@ -343,108 +477,36 @@ function AdminAbout() {
           <div className={`alert alert-${msg.type}`}>{msg.text}</div>
         )}
 
-        {/* Title */}
-        <h2 style={{ margin: '0 0 20px', fontFamily: 'Georgia, serif', fontSize: '22px', color: '#243358' }}>
-          {currentSection?.label}
-        </h2>
-
-        {/* Form */}
-        <div className="admin-card">
-          <div className="admin-card-header">
-            <h3>Section Content</h3>
-            {sections[activeTab] && (
-              <button className="btn btn-danger btn-sm" onClick={handleDelete}>Delete</button>
-            )}
+        {/* Preview or Editor */}
+        {editing ? (
+          <div className="about-admin-editor">
+            <div className="about-editor-header">
+              <h2>Editing: {currentSection?.label}</h2>
+              <div className="about-editor-actions">
+                <button className="btn btn-primary" onClick={handleSave} disabled={saving}>
+                  {saving ? 'Saving...' : 'Save'}
+                </button>
+                <button className="btn btn-secondary" onClick={cancelEditing}>Cancel</button>
+                {sections[activeTab] && (
+                  <button className="btn btn-danger btn-sm" onClick={handleDelete}>Delete</button>
+                )}
+              </div>
+            </div>
+            {renderEditor()}
           </div>
-          <div className="admin-card-body">
-            {/* Title */}
-            <div className="form-group">
-              <label>Section Title</label>
-              <input
-                type="text"
-                value={form.title}
-                onChange={(e) => handleChange('title', e.target.value)}
-                placeholder={`Enter title for ${currentSection?.label}`}
-              />
-            </div>
-
-            {/* Content */}
-            <div className="form-group">
-              <label>Content (main text)</label>
-              <textarea
-                value={form.content}
-                onChange={(e) => handleChange('content', e.target.value)}
-                rows={6}
-                placeholder="Write the main content here..."
-                style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', resize: 'vertical', boxSizing: 'border-box' }}
-              />
-            </div>
-
-            {/* Vision & Mission specific */}
-            {activeTab === 'vision' && (
-              <>
-                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Mission Points</h4>
-                {renderListEditor('Mission Point', 'mission', newMissionItem, setNewMissionItem)}
-              </>
-            )}
-
-            {/* Achievements specific */}
-            {activeTab === 'achievements' && (
-              <>
-                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Achievement Items</h4>
-                {renderListEditor('Achievement', 'achievements', newAchievementItem, setNewAchievementItem)}
-              </>
-            )}
-
-            {/* Institute specific - stats */}
-            {activeTab === 'institute' && (
-              <>
-                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Stats</h4>
-                {renderStatsEditor()}
-              </>
-            )}
-
-            {/* Accreditation, Affiliation, Disclosure - info rows */}
-            {['accreditation', 'affiliation', 'disclosure'].includes(activeTab) && (
-              <>
-                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Info Rows</h4>
-                {renderInfoRowsEditor()}
-              </>
-            )}
-
-            {/* Actions */}
-            <div style={{ marginTop: '20px', display: 'flex', gap: '12px' }}>
-              <button className="btn btn-primary" onClick={handleSave} disabled={saving} style={{ padding: '10px 30px' }}>
-                {saving ? 'Saving...' : 'Save Section'}
+        ) : (
+          <div className="about-admin-preview">
+            {renderPreview()}
+            <div className="about-preview-actions">
+              <button className="btn btn-primary" onClick={startEditing}>
+                {sections[activeTab] ? 'Edit Section' : 'Add Content'}
               </button>
-              <button
-                className="btn btn-secondary"
-                onClick={() => {
-                  if (sections[activeTab]) {
-                    setForm({
-                      title: sections[activeTab].title || '',
-                      content: sections[activeTab].content || '',
-                      mission: sections[activeTab].mission || [],
-                      achievements: sections[activeTab].achievements || [],
-                      infoRows: sections[activeTab].infoRows || [],
-                      stats: sections[activeTab].stats || [],
-                      active: sections[activeTab].active !== false,
-                    });
-                  } else {
-                    setForm({ ...defaultSection });
-                  }
-                  setMsg(null);
-                }}
-              >
-                Reset
-              </button>
+              {sections[activeTab] && (
+                <button className="btn btn-danger btn-sm" onClick={handleDelete}>Delete</button>
+              )}
             </div>
           </div>
-        </div>
+        )}
       </div>
     </AdminLayout>
   );
