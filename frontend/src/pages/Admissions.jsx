@@ -314,60 +314,59 @@ function Admissions() {
               <div className="content-line"></div>
               {renderContent(getSection('fees').content || STATIC_CONTENT.admissions.fees)}
 
-              {/* First Year Fee Table */}
-              <div className="fee-table-wrap" style={{ marginTop: '20px' }}>
-                <table className="fee-table">
-                  <thead>
-                    <tr>
-                      <th style={{ width: 80 }}>Year</th>
-                      <th style={{ textAlign: 'left' }}>Fee Particulars</th>
-                      <th>OPEN / OBC / EWS / SEBC</th>
-                      <th>VJNT / SBC</th>
-                      <th>SC / ST</th>
-                      <th>OPEN / OBC / EWS / SEBC VJNT / SBC Category Girls</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr><td rowSpan="7" className="fee-year-cell">First Year</td><td className="fee-particular">Tuition Fee</td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td></tr>
-                    <tr><td className="fee-particular">Development Fee</td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td></tr>
-                    <tr><td className="fee-particular">Enrollment Fees</td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td></tr>
-                    <tr><td className="fee-particular">Eligibility Fees</td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td></tr>
-                    <tr><td className="fee-particular">Insurance Fees</td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td></tr>
-                    <tr><td className="fee-particular">Identity Card Fees</td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td></tr>
-                    <tr className="fee-total-row"><td className="fee-particular">Total Payable Fee</td><td className="fee-total"></td><td className="fee-total"></td><td className="fee-total"></td><td className="fee-total"></td></tr>
-                  </tbody>
-                </table>
-              </div>
+              {/* Helper: render a fee table */}
+              {(() => {
+                const renderFeeTable = (rows, yearLabel) => {
+                  if (!rows || rows.length === 0) return null;
+                  return (
+                    <div className="fee-table-wrap" style={{ marginTop: '20px' }}>
+                      <table className="fee-table">
+                        <thead>
+                          <tr>
+                            <th style={{ width: 80 }}>Year</th>
+                            <th style={{ textAlign: 'left' }}>Fee Particulars</th>
+                            <th>OPEN / OBC / EWS / SEBC</th>
+                            <th>VJNT / SBC</th>
+                            <th>SC / ST</th>
+                            <th>OPEN / OBC / EWS / SEBC VJNT / SBC Category Girls</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {rows.map((row, i) => {
+                            const isTotal = row.particular?.toLowerCase().includes('total');
+                            return (
+                              <tr key={i} className={isTotal ? 'fee-total-row' : ''}>
+                                {i === 0 && <td rowSpan={rows.length} className="fee-year-cell">{yearLabel}</td>}
+                                <td className="fee-particular">{row.particular}</td>
+                                <td className={isTotal ? 'fee-total' : 'fee-amount'}>{row.open || '—'}</td>
+                                <td className={isTotal ? 'fee-total' : 'fee-amount'}>{row.vjnt || '—'}</td>
+                                <td className={isTotal ? 'fee-total' : 'fee-amount'}>{row.scst || '—'}</td>
+                                <td className={isTotal ? 'fee-total' : 'fee-amount'}>{row.girls || '—'}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  );
+                };
 
-              {/* Direct Second Year Fee Table */}
-              <div className="fee-table-wrap" style={{ marginTop: '24px' }}>
-                <table className="fee-table">
-                  <thead>
-                    <tr>
-                      <th style={{ width: 80 }}>Year</th>
-                      <th style={{ textAlign: 'left' }}>Fee Particulars</th>
-                      <th>OPEN / OBC / EWS / SEBC</th>
-                      <th>VJNT / SBC</th>
-                      <th>SC / ST</th>
-                      <th>OPEN / OBC / EWS / SEBC VJNT / SBC Category Girls</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr><td rowSpan="7" className="fee-year-cell">Direct Second Year</td><td className="fee-particular">Tuition Fee</td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td></tr>
-                    <tr><td className="fee-particular">Development Fee</td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td></tr>
-                    <tr><td className="fee-particular">Enrollment Fees</td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td></tr>
-                    <tr><td className="fee-particular">Eligibility Fees</td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td></tr>
-                    <tr><td className="fee-particular">Insurance Fees</td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td></tr>
-                    <tr><td className="fee-particular">Identity Card Fees</td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td><td className="fee-amount"></td></tr>
-                    <tr className="fee-total-row"><td className="fee-particular">Total Payable Fee</td><td className="fee-total"></td><td className="fee-total"></td><td className="fee-total"></td><td className="fee-total"></td></tr>
-                  </tbody>
-                </table>
-              </div>
+                const feeRows1 = getSection('fees').feeRows1 || [];
+                const feeRows2 = getSection('fees').feeRows2 || [];
 
-              <p className="fee-note" style={{ marginTop: '12px', fontSize: 12, color: '#888' }}>
-                Note: Above shown fee structure is applicable to candidate whose parent
-                income is up to ₹ 8,00,000/-
-              </p>
+                return (
+                  <>
+                    {renderFeeTable(feeRows1, 'First Year')}
+                    {renderFeeTable(feeRows2, 'Direct Second Year')}
+                    {(feeRows1.length > 0 || feeRows2.length > 0) && (
+                      <p className="fee-note" style={{ marginTop: '12px', fontSize: 12, color: '#888' }}>
+                        Note: Above shown fee structure is applicable to candidate whose parent
+                        income is up to ₹ 8,00,000/-
+                      </p>
+                    )}
+                  </>
+                );
+              })()}
             </>
           )}
 
