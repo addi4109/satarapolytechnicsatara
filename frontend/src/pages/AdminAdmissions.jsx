@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import PdfUpload from '../components/PdfUpload';
 import './Academics.css';
+import './Admin.css';
 
 const API_URL = '/api';
 
@@ -25,16 +26,16 @@ const defaultInfoRows = [
 ];
 
 const SECTIONS = [
-  { key: 'overview', label: 'Admission Overview' },
-  { key: 'courses', label: 'Courses Offered' },
-  { key: 'eligibility', label: 'Eligibility' },
-  { key: 'process', label: 'Admission Process' },
-  { key: 'first-year', label: 'First Year Admission' },
-  { key: 'direct-second', label: 'Direct Second Year' },
-  { key: 'acap', label: 'A-CAP' },
-  { key: 'fees', label: 'Fee Structure' },
-  { key: 'scholarships', label: 'Scholarships' },
-  { key: 'brochure', label: 'College Brochure' },
+  { key: 'overview', label: 'Admission Overview', icon: '📋' },
+  { key: 'courses', label: 'Courses Offered', icon: '📚' },
+  { key: 'eligibility', label: 'Eligibility', icon: '✅' },
+  { key: 'process', label: 'Admission Process', icon: '📝' },
+  { key: 'first-year', label: 'First Year Admission', icon: '🎓' },
+  { key: 'direct-second', label: 'Direct Second Year', icon: '➡️' },
+  { key: 'acap', label: 'A-CAP', icon: '🏛️' },
+  { key: 'fees', label: 'Fee Structure', icon: '💰' },
+  { key: 'scholarships', label: 'Scholarships', icon: '🏅' },
+  { key: 'brochure', label: 'College Brochure', icon: '📄' },
 ];
 
 const defaultFeeRows = [
@@ -125,6 +126,9 @@ function AdminAdmissions() {
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState(null);
 
+  // View mode: 'preview' or 'edit'
+  const [view, setView] = useState('preview');
+
   // List item states
   const [editingStatIdx, setEditingStatIdx] = useState(null);
   const [editingDocIdx, setEditingDocIdx] = useState(null);
@@ -174,6 +178,7 @@ function AdminAdmissions() {
     }
     setMsg(null);
     resetListInputs();
+    setView('preview');
   }, [activeTab, sections]);
 
   const resetListInputs = () => {
@@ -188,6 +193,38 @@ function AdminAdmissions() {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
+  const startEditing = () => {
+    setView('edit');
+    resetListInputs();
+  };
+
+  const cancelEditing = () => {
+    // Revert form to saved data
+    const existing = sections[activeTab];
+    if (existing) {
+      setForm({
+        title: existing.title || '',
+        content: existing.content || '',
+        stats: existing.stats || [],
+        steps: existing.steps || [],
+        documents: existing.documents || [],
+        courseTable: existing.courseTable || [],
+        eligFirstYear: existing.eligFirstYear || [],
+        eligDirect2nd: existing.eligDirect2nd || [],
+        feeRows1: existing.feeRows1 && existing.feeRows1.length > 0 ? existing.feeRows1 : [...defaultFeeRows],
+        feeRows2: existing.feeRows2 && existing.feeRows2.length > 0 ? existing.feeRows2 : [...defaultFeeRows],
+        pdfUrl: existing.pdfUrl || '',
+        scholarshipDocs: existing.scholarshipDocs || [],
+        infoRows: existing.infoRows && existing.infoRows.length > 0 ? existing.infoRows : [...defaultInfoRows],
+        active: existing.active !== false,
+      });
+    } else {
+      setForm({ ...defaultSection });
+    }
+    setView('preview');
+    resetListInputs();
+  };
+
   const handleSave = async () => {
     setSaving(true);
     setMsg(null);
@@ -200,7 +237,8 @@ function AdminAdmissions() {
       if (!res.ok) throw new Error('Failed to save');
       const saved = await res.json();
       setSections((prev) => ({ ...prev, [activeTab]: saved }));
-      setMsg({ type: 'success', text: 'Section saved successfully!' });
+      setMsg({ type: 'success', text: 'Saved successfully!' });
+      setView('preview');
     } catch (err) {
       setMsg({ type: 'error', text: 'Failed to save.' });
     } finally {
@@ -209,7 +247,7 @@ function AdminAdmissions() {
   };
 
   const handleDelete = async () => {
-    if (!window.confirm('Are you sure you want to delete this section?')) return;
+    if (!window.confirm('Delete this section?')) return;
     try {
       await fetch(`${API_URL}/admissions-admin/${activeTab}`, { method: 'DELETE' });
       setSections((prev) => {
@@ -218,247 +256,567 @@ function AdminAdmissions() {
         return updated;
       });
       setForm({ ...defaultSection });
-      setMsg({ type: 'success', text: 'Deleted successfully!' });
+      setMsg({ type: 'success', text: 'Deleted.' });
+      setView('preview');
     } catch (err) {
       setMsg({ type: 'error', text: 'Failed to delete.' });
     }
   };
 
-  // Documents helpers - frontend-style list with inline edit/delete
-  const addEmptyDoc = () => {
-    handleChange('documents', [...form.documents, '']);
-    setEditingDocIdx(form.documents.length);
-  };
+  // ─── Helpers ──────────────────────────────────────────────────────
+  const addEmptyDoc = () => { handleChange('documents', [...form.documents, '']); setEditingDocIdx(form.documents.length); };
+  const updateDoc = (i, val) => { const d = [...form.documents]; d[i] = val; handleChange('documents', d); };
+  const removeDoc = (i) => { handleChange('documents', form.documents.filter((_, idx) => idx !== i)); setEditingDocIdx(null); };
 
-  const updateDoc = (index, value) => {
-    const docs = [...form.documents];
-    docs[index] = value;
-    handleChange('documents', docs);
-  };
+  const addEmptyStat = () => { handleChange('stats', [...form.stats, { num: '', label: '' }]); setEditingStatIdx(form.stats.length); };
+  const updateStat = (i, f, v) => { const s = [...form.stats]; s[i] = { ...s[i], [f]: v }; handleChange('stats', s); };
+  const removeStat = (i) => { handleChange('stats', form.stats.filter((_, idx) => idx !== i)); setEditingStatIdx(null); };
 
-  const removeDoc = (index) => {
-    handleChange('documents', form.documents.filter((_, i) => i !== index));
-    setEditingDocIdx(null);
-  };
+  const addEmptyStep = () => { handleChange('steps', [...form.steps, { title: '', desc: '' }]); setEditingStepIdx(form.steps.length); };
+  const updateStep = (i, f, v) => { const s = [...form.steps]; s[i] = { ...s[i], [f]: v }; handleChange('steps', s); };
+  const removeStep = (i) => { handleChange('steps', form.steps.filter((_, idx) => idx !== i)); setEditingStepIdx(null); };
 
-  // Stats helpers - inline card editing
-  const addEmptyStat = () => {
-    handleChange('stats', [...form.stats, { num: '', label: '' }]);
-    setEditingStatIdx(form.stats.length);
-  };
+  const addEmptyCourse = () => { handleChange('courseTable', [...form.courseTable, { name: '', duration: '3 Years', intake: '60', direct2nd: 'Yes' }]); };
+  const updateCourse = (i, f, v) => { const c = [...form.courseTable]; c[i] = { ...c[i], [f]: v }; handleChange('courseTable', c); };
+  const removeCourse = (i) => { handleChange('courseTable', form.courseTable.filter((_, idx) => idx !== i)); };
 
-  const updateStat = (index, field, value) => {
-    const stats = [...form.stats];
-    stats[index] = { ...stats[index], [field]: value };
-    handleChange('stats', stats);
-  };
+  const addEmptyElig = (field) => { handleChange(field, [...form[field], '']); setEditingElig({ field, index: form[field].length }); };
+  const updateEligItem = (field, i, val) => { const items = [...form[field]]; items[i] = val; handleChange(field, items); };
+  const removeEligItem = (field, i) => { handleChange(field, form[field].filter((_, idx) => idx !== i)); setEditingElig(null); };
 
-  const removeStat = (index) => {
-    handleChange('stats', form.stats.filter((_, i) => i !== index));
-    setEditingStatIdx(null);
+  const addEmptyScholCategory = () => { handleChange('scholarshipDocs', [...form.scholarshipDocs, { category: '', scheme: '', docs: [] }]); setEditingScholCatIdx(form.scholarshipDocs.length); };
+  const updateScholCategory = (i, f, v) => { const c = [...form.scholarshipDocs]; c[i] = { ...c[i], [f]: v }; handleChange('scholarshipDocs', c); };
+  const removeScholCategory = (i) => { handleChange('scholarshipDocs', form.scholarshipDocs.filter((_, idx) => idx !== i)); setEditingScholCatIdx(null); };
+  const addEmptyScholDoc = (catIdx) => {
+    const updated = form.scholarshipDocs.map((cat, i) => i === catIdx ? { ...cat, docs: [...cat.docs, { sr: String(cat.docs.length + 1), document: '', details: '' }] } : cat);
+    handleChange('scholarshipDocs', updated);
   };
-
-  // Steps helpers - frontend-style list with inline edit/delete
-  const addEmptyStep = () => {
-    handleChange('steps', [...form.steps, { title: '', desc: '' }]);
-    setEditingStepIdx(form.steps.length);
-  };
-
-  const updateStep = (index, field, value) => {
-    const steps = [...form.steps];
-    steps[index] = { ...steps[index], [field]: value };
-    handleChange('steps', steps);
-  };
-
-  const removeStep = (index) => {
-    handleChange('steps', form.steps.filter((_, i) => i !== index));
-    setEditingStepIdx(null);
-  };
-
-  // Course table helpers
-  const addEmptyCourse = () => {
-    handleChange('courseTable', [...form.courseTable, { name: '', duration: '3 Years', intake: '60', direct2nd: 'Yes' }]);
-  };
-
-  const updateCourse = (index, field, value) => {
-    const courseTable = [...form.courseTable];
-    courseTable[index] = { ...courseTable[index], [field]: value };
-    handleChange('courseTable', courseTable);
-  };
-
-  const removeCourse = (index) => {
-    handleChange('courseTable', form.courseTable.filter((_, i) => i !== index));
-  };
-
-  // Scholarship helpers - frontend-style categories with inline edit/delete
-  const addEmptyScholCategory = () => {
-    handleChange('scholarshipDocs', [...form.scholarshipDocs, { category: '', scheme: '', docs: [] }]);
-    setEditingScholCatIdx(form.scholarshipDocs.length);
-  };
-
-  const updateScholCategory = (index, field, value) => {
-    const cats = [...form.scholarshipDocs];
-    cats[index] = { ...cats[index], [field]: value };
-    handleChange('scholarshipDocs', cats);
-  };
-
-  const removeScholCategory = (index) => {
-    handleChange('scholarshipDocs', form.scholarshipDocs.filter((_, i) => i !== index));
-    setEditingScholCatIdx(null);
-  };
-
-  const addEmptyScholDoc = (catIndex) => {
+  const updateScholDoc = (catIdx, docIdx, f, v) => {
     const updated = form.scholarshipDocs.map((cat, i) => {
-      if (i === catIndex) {
-        return { ...cat, docs: [...cat.docs, { sr: String(cat.docs.length + 1), document: '', details: '' }] };
-      }
+      if (i === catIdx) { const docs = [...cat.docs]; docs[docIdx] = { ...docs[docIdx], [f]: v }; return { ...cat, docs }; }
       return cat;
     });
     handleChange('scholarshipDocs', updated);
   };
-
-  const updateScholDoc = (catIndex, docIndex, field, value) => {
+  const removeScholDoc = (catIdx, docIdx) => {
     const updated = form.scholarshipDocs.map((cat, i) => {
-      if (i === catIndex) {
-        const docs = [...cat.docs];
-        docs[docIndex] = { ...docs[docIndex], [field]: value };
-        return { ...cat, docs };
-      }
+      if (i === catIdx) return { ...cat, docs: cat.docs.filter((_, j) => j !== docIdx).map((d, idx) => ({ ...d, sr: String(idx + 1) })) };
       return cat;
     });
     handleChange('scholarshipDocs', updated);
-  };
-
-  const removeScholDoc = (catIndex, docIndex) => {
-    const updated = form.scholarshipDocs.map((cat, i) => {
-      if (i === catIndex) {
-        return { ...cat, docs: cat.docs.filter((_, j) => j !== docIndex).map((d, idx) => ({ ...d, sr: String(idx + 1) })) };
-      }
-      return cat;
-    });
-    handleChange('scholarshipDocs', updated);
-  };
-
-  // Eligibility helpers - frontend-style list with inline edit/delete
-  const addEmptyElig = (field) => {
-    handleChange(field, [...form[field], '']);
-    setEditingElig({ field, index: form[field].length });
-  };
-
-  const updateEligItem = (field, index, value) => {
-    const items = [...form[field]];
-    items[index] = value;
-    handleChange(field, items);
-  };
-
-  const removeEligItem = (field, index) => {
-    handleChange(field, form[field].filter((_, i) => i !== index));
-    setEditingElig(null);
-  };
-
-  // Sub-sections helpers
-  const [editingSubIdx, setEditingSubIdx] = useState(null);
-
-  const addSubSection = () => {
-    const newSub = { title: '', content: '', stats: [], documents: [], steps: [] };
-    handleChange('subSections', [...form.subSections, newSub]);
-    setEditingSubIdx(form.subSections.length);
-  };
-
-  const updateSubSection = (index, field, value) => {
-    const updated = form.subSections.map((sub, i) =>
-      i === index ? { ...sub, [field]: value } : sub
-    );
-    handleChange('subSections', updated);
-  };
-
-  const removeSubSection = (index) => {
-    handleChange('subSections', form.subSections.filter((_, i) => i !== index));
-    setEditingSubIdx(null);
-  };
-
-  const addSubStat = (subIdx) => {
-    const updated = form.subSections.map((sub, i) => {
-      if (i === subIdx) return { ...sub, stats: [...sub.stats, { num: '', label: '' }] };
-      return sub;
-    });
-    handleChange('subSections', updated);
-  };
-
-  const updateSubStat = (subIdx, statIdx, field, value) => {
-    const updated = form.subSections.map((sub, i) => {
-      if (i === subIdx) {
-        const stats = sub.stats.map((s, j) => j === statIdx ? { ...s, [field]: value } : s);
-        return { ...sub, stats };
-      }
-      return sub;
-    });
-    handleChange('subSections', updated);
-  };
-
-  const removeSubStat = (subIdx, statIdx) => {
-    const updated = form.subSections.map((sub, i) => {
-      if (i === subIdx) return { ...sub, stats: sub.stats.filter((_, j) => j !== statIdx) };
-      return sub;
-    });
-    handleChange('subSections', updated);
-  };
-
-  const addSubDocument = (subIdx) => {
-    const updated = form.subSections.map((sub, i) => {
-      if (i === subIdx) return { ...sub, documents: [...sub.documents, ''] };
-      return sub;
-    });
-    handleChange('subSections', updated);
-  };
-
-  const updateSubDocument = (subIdx, docIdx, value) => {
-    const updated = form.subSections.map((sub, i) => {
-      if (i === subIdx) {
-        const docs = sub.documents.map((d, j) => j === docIdx ? value : d);
-        return { ...sub, documents: docs };
-      }
-      return sub;
-    });
-    handleChange('subSections', updated);
-  };
-
-  const removeSubDocument = (subIdx, docIdx) => {
-    const updated = form.subSections.map((sub, i) => {
-      if (i === subIdx) return { ...sub, documents: sub.documents.filter((_, j) => j !== docIdx) };
-      return sub;
-    });
-    handleChange('subSections', updated);
-  };
-
-  const addSubStep = (subIdx) => {
-    const updated = form.subSections.map((sub, i) => {
-      if (i === subIdx) return { ...sub, steps: [...sub.steps, { title: '', desc: '' }] };
-      return sub;
-    });
-    handleChange('subSections', updated);
-  };
-
-  const updateSubStep = (subIdx, stepIdx, field, value) => {
-    const updated = form.subSections.map((sub, i) => {
-      if (i === subIdx) {
-        const steps = sub.steps.map((s, j) => j === stepIdx ? { ...s, [field]: value } : s);
-        return { ...sub, steps };
-      }
-      return sub;
-    });
-    handleChange('subSections', updated);
-  };
-
-  const removeSubStep = (subIdx, stepIdx) => {
-    const updated = form.subSections.map((sub, i) => {
-      if (i === subIdx) return { ...sub, steps: sub.steps.filter((_, j) => j !== stepIdx) };
-      return sub;
-    });
-    handleChange('subSections', updated);
   };
 
   const currentSection = SECTIONS.find((s) => s.key === activeTab);
+
+  // ─── Preview Renderers ────────────────────────────────────────────
+  const renderContent = (text) => {
+    if (!text) return <p style={{ color: '#aaa', fontStyle: 'italic' }}>No content yet.</p>;
+    return text.split('\n').filter(p => p.trim()).map((p, i) => <p key={i}>{p}</p>);
+  };
+
+  const renderInfoRows = (rows) => {
+    if (!rows || rows.length === 0) return null;
+    return (
+      <div className="info-table">
+        {rows.map((row, i) => (
+          <div className="info-row" key={i}>
+            <span className="info-label">{row.label}</span>
+            <span className="info-value">{row.value}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderStats = (stats) => {
+    if (!stats || stats.length === 0) return null;
+    return (
+      <div className="overview-stats">
+        {stats.map((s, i) => (
+          <div className="stat-box" key={i}>
+            <span className="stat-num">{s.num}</span>
+            <span className="stat-txt">{s.label}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderSteps = (steps) => {
+    if (!steps || steps.length === 0) return null;
+    return (
+      <div className="process-steps">
+        {steps.map((step, i) => (
+          <div className="process-step" key={i}>
+            <div className="step-number">{i + 1}</div>
+            <div className="step-content">
+              <h4>{step.title}</h4>
+              {step.desc && <p>{step.desc}</p>}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderDocuments = (docs) => {
+    if (!docs || docs.length === 0) return null;
+    return (
+      <>
+        <h3 className="content-sub-heading">Documents Required</h3>
+        <ul className="vm-list">
+          {docs.map((doc, i) => <li key={i}>{doc}</li>)}
+        </ul>
+      </>
+    );
+  };
+
+  const renderFeePreview = (feeRows, label) => {
+    if (!feeRows || feeRows.length === 0) return null;
+    return (
+      <div style={{ overflowX: 'auto', marginBottom: '20px' }}>
+        <table className="fee-table">
+          <thead>
+            <tr>
+              <th style={{ width: 80 }}>Year</th>
+              <th>Fee Particulars</th>
+              <th>OPEN/OBC/EWS/SEBC</th>
+              <th>VJNT/SBC</th>
+              <th>SC/ST</th>
+              <th>Girls</th>
+            </tr>
+          </thead>
+          <tbody>
+            {feeRows.map((row, i) => (
+              <tr key={i} style={i === feeRows.length - 1 ? { fontWeight: 700, background: '#f8f9fa' } : {}}>
+                {i === 0 && <td rowSpan={feeRows.length} style={{ fontWeight: 600, textAlign: 'center', verticalAlign: 'middle' }}>{label}</td>}
+                <td style={{ fontWeight: 500 }}>{row.particular}</td>
+                <td>{row.open || '-'}</td>
+                <td>{row.vjnt || '-'}</td>
+                <td>{row.scst || '-'}</td>
+                <td>{row.girls || '-'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
+
+  // ─── Preview for each tab ─────────────────────────────────────────
+  const renderPreview = () => {
+    switch (activeTab) {
+      case 'overview':
+        return (
+          <div className="admission-preview-card">
+            <h2 className="content-heading">Admission Overview</h2>
+            <div className="content-line"></div>
+            <p>Welcome to the Admissions section of Satara Polytechnic, Satara. Explore complete information about diploma engineering admissions.</p>
+            {renderInfoRows(form.infoRows)}
+          </div>
+        );
+
+      case 'courses':
+        return (
+          <div className="admission-preview-card">
+            <h2 className="content-heading">Courses Offered</h2>
+            <div className="content-line"></div>
+            {form.courseTable.length > 0 ? (
+              <div style={{ overflowX: 'auto' }}>
+                <table className="fee-table">
+                  <thead>
+                    <tr>
+                      <th style={{ width: 60 }}>Sr. No.</th>
+                      <th>Course Name</th>
+                      <th style={{ width: 110 }}>Duration</th>
+                      <th style={{ width: 90 }}>Intake</th>
+                      <th style={{ width: 130 }}>Direct 2nd Year</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {form.courseTable.map((c, i) => (
+                      <tr key={i}>
+                        <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                        <td style={{ fontWeight: 500 }}>{c.name}</td>
+                        <td>{c.duration}</td>
+                        <td>{c.intake}</td>
+                        <td>{c.direct2nd}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p style={{ color: '#aaa', fontStyle: 'italic' }}>No courses added yet.</p>
+            )}
+          </div>
+        );
+
+      case 'eligibility':
+        return (
+          <div className="admission-preview-card">
+            <h2 className="content-heading">Eligibility</h2>
+            <div className="content-line"></div>
+            {form.eligFirstYear.length > 0 && (
+              <>
+                <h3 className="content-sub-heading">First Year Diploma</h3>
+                <ul className="vm-list">{form.eligFirstYear.map((item, i) => <li key={i}>{item}</li>)}</ul>
+              </>
+            )}
+            {form.eligDirect2nd.length > 0 && (
+              <>
+                <h3 className="content-sub-heading">Direct Second Year Diploma</h3>
+                <ul className="vm-list">{form.eligDirect2nd.map((item, i) => <li key={i}>{item}</li>)}</ul>
+              </>
+            )}
+            {form.eligFirstYear.length === 0 && form.eligDirect2nd.length === 0 && (
+              <p style={{ color: '#aaa', fontStyle: 'italic' }}>No eligibility points added yet.</p>
+            )}
+          </div>
+        );
+
+      case 'process':
+        return (
+          <div className="admission-preview-card">
+            <h2 className="content-heading">Admission Process</h2>
+            <div className="content-line"></div>
+            {renderSteps(form.steps)}
+            {form.steps.length === 0 && <p style={{ color: '#aaa', fontStyle: 'italic' }}>No steps added yet.</p>}
+          </div>
+        );
+
+      case 'first-year':
+        return (
+          <div className="admission-preview-card">
+            <h2 className="content-heading">First Year Admission</h2>
+            <div className="content-line"></div>
+            {renderDocuments(form.documents)}
+            {form.documents.length === 0 && <p style={{ color: '#aaa', fontStyle: 'italic' }}>No documents added yet.</p>}
+          </div>
+        );
+
+      case 'direct-second':
+        return (
+          <div className="admission-preview-card">
+            <h2 className="content-heading">Direct Second Year</h2>
+            <div className="content-line"></div>
+            {renderDocuments(form.documents)}
+            {form.documents.length === 0 && <p style={{ color: '#aaa', fontStyle: 'italic' }}>No documents added yet.</p>}
+          </div>
+        );
+
+      case 'acap':
+        return (
+          <div className="admission-preview-card">
+            <h2 className="content-heading">A-CAP</h2>
+            <div className="content-line"></div>
+            {renderDocuments(form.documents)}
+            {form.documents.length === 0 && <p style={{ color: '#aaa', fontStyle: 'italic' }}>No documents added yet.</p>}
+          </div>
+        );
+
+      case 'fees':
+        return (
+          <div className="admission-preview-card">
+            <h2 className="content-heading">Fee Structure</h2>
+            <div className="content-line"></div>
+            <h3 className="content-sub-heading">First Year Fee Structure</h3>
+            {renderFeePreview(form.feeRows1, 'First Year')}
+            <h3 className="content-sub-heading">Direct Second Year Fee Structure</h3>
+            {renderFeePreview(form.feeRows2, 'Direct Second Year')}
+          </div>
+        );
+
+      case 'scholarships':
+        return (
+          <div className="admission-preview-card">
+            <h2 className="content-heading">Scholarships</h2>
+            <div className="content-line"></div>
+            {form.scholarshipDocs.length > 0 ? form.scholarshipDocs.map((cat, i) => (
+              <div key={i} style={{ marginBottom: '24px' }}>
+                <h3 className="content-sub-heading">{cat.category || 'Untitled'}</h3>
+                {cat.scheme && <p className="scholarship-scheme"><strong>Scheme:</strong> {cat.scheme}</p>}
+                {cat.docs.length > 0 && (
+                  <div className="courses-table-wrap">
+                    <table className="courses-table">
+                      <thead><tr><th style={{ width: 60 }}>Sr.</th><th>Document</th><th>Details</th></tr></thead>
+                      <tbody>{cat.docs.map((d, j) => <tr key={j}><td>{j + 1}</td><td>{d.document}</td><td>{d.details}</td></tr>)}</tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            )) : (
+              <p style={{ color: '#aaa', fontStyle: 'italic' }}>No scholarship categories added yet.</p>
+            )}
+          </div>
+        );
+
+      case 'brochure':
+        return (
+          <div className="admission-preview-card">
+            <h2 className="content-heading">College Brochure</h2>
+            <div className="content-line"></div>
+            {form.pdfUrl ? (
+              <div style={{ padding: '16px', background: '#f8f9fa', borderRadius: '8px', border: '1px solid #e4e8ed' }}>
+                <p style={{ margin: 0, fontSize: '14px', color: '#444' }}>
+                  📄 <a href={`/api/pdf-proxy?url=${encodeURIComponent(form.pdfUrl)}`} target="_blank" style={{ color: '#243358', fontWeight: 600 }}>View Brochure PDF</a>
+                </p>
+              </div>
+            ) : (
+              <p style={{ color: '#aaa', fontStyle: 'italic' }}>No brochure uploaded yet.</p>
+            )}
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  // ─── Editor for each tab ──────────────────────────────────────────
+  const renderEditor = () => {
+    switch (activeTab) {
+      case 'overview':
+        return (
+          <div className="admission-edit-form">
+            <h4>Important Information</h4>
+            {form.infoRows.map((row, i) => (
+              <div key={i} className="admission-info-edit-row">
+                <input type="text" value={row.label} onChange={(e) => { const u = [...form.infoRows]; u[i] = { ...u[i], label: e.target.value }; handleChange('infoRows', u); }} placeholder="Label" />
+                <input type="text" value={row.value} onChange={(e) => { const u = [...form.infoRows]; u[i] = { ...u[i], value: e.target.value }; handleChange('infoRows', u); }} placeholder="Value" />
+                <button className="member-remove-btn" onClick={() => handleChange('infoRows', form.infoRows.filter((_, j) => j !== i))}>×</button>
+              </div>
+            ))}
+            <button className="btn btn-success btn-sm" onClick={() => handleChange('infoRows', [...form.infoRows, { label: '', value: '' }])}>+ Add Row</button>
+          </div>
+        );
+
+      case 'courses':
+        return (
+          <div className="admission-edit-form">
+            <h4>Course Table</h4>
+            <div className="fee-table-wrap">
+              <table className="fee-table" style={{ minWidth: '600px' }}>
+                <thead>
+                  <tr>
+                    <th style={{ width: 60 }}>Sr.</th>
+                    <th>Course Name</th>
+                    <th style={{ width: 110 }}>Duration</th>
+                    <th style={{ width: 90 }}>Intake</th>
+                    <th style={{ width: 130 }}>Direct 2nd Year</th>
+                    <th style={{ width: 50 }}></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {form.courseTable.map((c, i) => (
+                    <tr key={i}>
+                      <td style={{ textAlign: 'center', fontWeight: 600 }}>{i + 1}</td>
+                      <td><input type="text" value={c.name} onChange={(e) => updateCourse(i, 'name', e.target.value)} placeholder="Course name" style={courseCellInput} /></td>
+                      <td><input type="text" value={c.duration} onChange={(e) => updateCourse(i, 'duration', e.target.value)} style={courseCellInput} /></td>
+                      <td><input type="text" value={c.intake} onChange={(e) => updateCourse(i, 'intake', e.target.value)} style={courseCellInput} /></td>
+                      <td>
+                        <select value={c.direct2nd} onChange={(e) => updateCourse(i, 'direct2nd', e.target.value)} style={{ ...courseCellInput, cursor: 'pointer' }}>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </td>
+                      <td><button className="member-remove-btn" onClick={() => removeCourse(i)}>×</button></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <button className="btn btn-success btn-sm" style={{ marginTop: '12px' }} onClick={addEmptyCourse}>+ Add Course</button>
+          </div>
+        );
+
+      case 'eligibility':
+        return (
+          <div className="admission-edit-form">
+            <h4>First Year Diploma</h4>
+            <ul className="vm-list">
+              {form.eligFirstYear.map((item, i) => (
+                <li key={i}>
+                  {editingElig && editingElig.field === 'eligFirstYear' && editingElig.index === i ? (
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <input autoFocus type="text" value={item} onChange={(e) => updateEligItem('eligFirstYear', i, e.target.value)} onKeyDown={(e) => e.key === 'Enter' && setEditingElig(null)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px' }} />
+                      <button className="btn btn-success btn-sm" onClick={() => setEditingElig(null)}>Done</button>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span onClick={() => setEditingElig({ field: 'eligFirstYear', index: i })} style={{ flex: 1, cursor: 'pointer', color: '#555' }}>{item || <em style={{ color: '#aaa' }}>Click to edit</em>}</span>
+                      <button className="member-remove-btn" onClick={() => removeEligItem('eligFirstYear', i)}>×</button>
+                    </div>
+                  )}
+                </li>
+              ))}
+              <li style={{ listStyle: 'none', marginTop: '6px' }}>
+                <button className="btn btn-success btn-sm" onClick={() => addEmptyElig('eligFirstYear')}>+ Add Point</button>
+              </li>
+            </ul>
+
+            <h4 style={{ marginTop: '20px' }}>Direct Second Year Diploma</h4>
+            <ul className="vm-list">
+              {form.eligDirect2nd.map((item, i) => (
+                <li key={i}>
+                  {editingElig && editingElig.field === 'eligDirect2nd' && editingElig.index === i ? (
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <input autoFocus type="text" value={item} onChange={(e) => updateEligItem('eligDirect2nd', i, e.target.value)} onKeyDown={(e) => e.key === 'Enter' && setEditingElig(null)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px' }} />
+                      <button className="btn btn-success btn-sm" onClick={() => setEditingElig(null)}>Done</button>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span onClick={() => setEditingElig({ field: 'eligDirect2nd', index: i })} style={{ flex: 1, cursor: 'pointer', color: '#555' }}>{item || <em style={{ color: '#aaa' }}>Click to edit</em>}</span>
+                      <button className="member-remove-btn" onClick={() => removeEligItem('eligDirect2nd', i)}>×</button>
+                    </div>
+                  )}
+                </li>
+              ))}
+              <li style={{ listStyle: 'none', marginTop: '6px' }}>
+                <button className="btn btn-success btn-sm" onClick={() => addEmptyElig('eligDirect2nd')}>+ Add Point</button>
+              </li>
+            </ul>
+          </div>
+        );
+
+      case 'process':
+        return (
+          <div className="admission-edit-form">
+            <h4>Process Steps</h4>
+            <div className="process-steps">
+              {form.steps.map((step, i) => (
+                <div className="process-step" key={i}>
+                  <div className="step-number">{i + 1}</div>
+                  <div className="step-content" style={{ flex: 1 }}>
+                    {editingStepIdx === i ? (
+                      <>
+                        <input autoFocus type="text" value={step.title} onChange={(e) => updateStep(i, 'title', e.target.value)} placeholder="Step title" style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', marginBottom: '6px' }} />
+                        <textarea value={step.desc} onChange={(e) => updateStep(i, 'desc', e.target.value)} placeholder="Description" rows={2} style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', resize: 'vertical', marginBottom: '8px' }} />
+                        <button className="btn btn-success btn-sm" onClick={() => setEditingStepIdx(null)}>Done</button>
+                      </>
+                    ) : (
+                      <>
+                        <div onClick={() => setEditingStepIdx(i)} style={{ cursor: 'pointer' }}>
+                          <h4>{step.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled</em>}</h4>
+                          {step.desc && <p>{step.desc}</p>}
+                        </div>
+                        <button className="member-remove-btn" onClick={() => removeStep(i)}>×</button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button className="btn btn-success btn-sm" style={{ marginTop: '12px' }} onClick={addEmptyStep}>+ Add Step</button>
+          </div>
+        );
+
+      case 'first-year':
+      case 'direct-second':
+      case 'acap':
+        return (
+          <div className="admission-edit-form">
+            <h4>Documents Required</h4>
+            <ul className="vm-list">
+              {form.documents.map((doc, i) => (
+                <li key={i}>
+                  {editingDocIdx === i ? (
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <input autoFocus type="text" value={doc} onChange={(e) => updateDoc(i, e.target.value)} onKeyDown={(e) => e.key === 'Enter' && setEditingDocIdx(null)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px' }} />
+                      <button className="btn btn-success btn-sm" onClick={() => setEditingDocIdx(null)}>Done</button>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span onClick={() => setEditingDocIdx(i)} style={{ flex: 1, cursor: 'pointer', color: '#555' }}>{doc || <em style={{ color: '#aaa' }}>Click to edit</em>}</span>
+                      <button className="member-remove-btn" onClick={() => removeDoc(i)}>×</button>
+                    </div>
+                  )}
+                </li>
+              ))}
+              <li style={{ listStyle: 'none', marginTop: '6px' }}>
+                <button className="btn btn-success btn-sm" onClick={addEmptyDoc}>+ Add Document</button>
+              </li>
+            </ul>
+          </div>
+        );
+
+      case 'fees':
+        return (
+          <div className="admission-edit-form">
+            <h4>First Year Fee Structure</h4>
+            <FeeTableEditor yearLabel="First Year" feeRows={form.feeRows1 || []} onChange={(rows) => handleChange('feeRows1', rows)} />
+            <h4 style={{ marginTop: '20px' }}>Direct Second Year Fee Structure</h4>
+            <FeeTableEditor yearLabel="Direct Second Year" feeRows={form.feeRows2 || []} onChange={(rows) => handleChange('feeRows2', rows)} />
+          </div>
+        );
+
+      case 'scholarships':
+        return (
+          <div className="admission-edit-form">
+            <h4>Scholarship Categories</h4>
+            {form.scholarshipDocs.map((cat, catIdx) => (
+              <div key={catIdx} style={{ marginBottom: '24px', paddingBottom: '18px', borderBottom: catIdx < form.scholarshipDocs.length - 1 ? '1px solid #f0f0f0' : 'none' }}>
+                {editingScholCatIdx === catIdx ? (
+                  <>
+                    <input autoFocus type="text" value={cat.category} onChange={(e) => updateScholCategory(catIdx, 'category', e.target.value)} placeholder="Category" style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', marginBottom: '6px' }} />
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <input type="text" value={cat.scheme} onChange={(e) => updateScholCategory(catIdx, 'scheme', e.target.value)} placeholder="Scheme" style={{ flex: 1, padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px' }} />
+                      <button className="btn btn-success btn-sm" onClick={() => setEditingScholCatIdx(null)}>Done</button>
+                    </div>
+                  </>
+                ) : (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div onClick={() => setEditingScholCatIdx(catIdx)} style={{ flex: 1, cursor: 'pointer' }}>
+                      <h3 className="content-sub-heading" style={{ margin: 0 }}>{cat.category || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled</em>}</h3>
+                      <p className="scholarship-scheme">{cat.scheme ? <><strong>Scheme:</strong> {cat.scheme}</> : <em style={{ color: '#aaa' }}>No scheme</em>}</p>
+                    </div>
+                    <button className="member-remove-btn" onClick={() => removeScholCategory(catIdx)}>×</button>
+                  </div>
+                )}
+                <div className="courses-table-wrap" style={{ marginTop: '4px' }}>
+                  <table className="courses-table">
+                    <thead><tr><th style={{ width: 60 }}>Sr.</th><th>Document</th><th>Details</th><th style={{ width: 50 }}></th></tr></thead>
+                    <tbody>
+                      {cat.docs.map((doc, docIdx) => (
+                        <tr key={docIdx}>
+                          <td style={{ textAlign: 'center' }}>{docIdx + 1}</td>
+                          <td><input type="text" value={doc.document} onChange={(e) => updateScholDoc(catIdx, docIdx, 'document', e.target.value)} placeholder="Document" style={{ width: '100%', padding: '6px 8px', border: '1px solid #d7dde6', borderRadius: '4px', fontSize: '12.5px' }} /></td>
+                          <td><input type="text" value={doc.details} onChange={(e) => updateScholDoc(catIdx, docIdx, 'details', e.target.value)} placeholder="Details" style={{ width: '100%', padding: '6px 8px', border: '1px solid #d7dde6', borderRadius: '4px', fontSize: '12.5px' }} /></td>
+                          <td><button className="member-remove-btn" onClick={() => removeScholDoc(catIdx, docIdx)}>×</button></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <button className="btn btn-success btn-sm" style={{ marginTop: '8px' }} onClick={() => addEmptyScholDoc(catIdx)}>+ Add Document</button>
+              </div>
+            ))}
+            <button className="btn btn-success btn-sm" onClick={addEmptyScholCategory}>+ Add Category</button>
+          </div>
+        );
+
+      case 'brochure':
+        return (
+          <div className="admission-edit-form">
+            <h4>College Brochure PDF</h4>
+            <div className="form-group">
+              <label>Upload PDF</label>
+              <PdfUpload value={form.pdfUrl} onChange={(url) => handleChange('pdfUrl', url)} />
+            </div>
+            {form.pdfUrl && (
+              <div style={{ marginTop: '12px', padding: '12px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '6px' }}>
+                <p style={{ margin: 0, fontSize: '13px', color: '#444' }}>
+                  <strong>Current:</strong> <a href={`/api/pdf-proxy?url=${encodeURIComponent(form.pdfUrl)}`} target="_blank" style={{ color: '#243358' }}>{form.pdfUrl}</a>
+                </p>
+              </div>
+            )}
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
 
   if (loading) {
     return (
@@ -475,613 +833,54 @@ function AdminAdmissions() {
       </div>
 
       <div className="admin-content">
-        {/* Sub-tabs */}
-        <div style={{ display: 'flex', gap: '4px', marginBottom: '20px', background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '4px', flexWrap: 'wrap' }}>
+        {/* Tabs */}
+        <div className="about-admin-tabs">
           {SECTIONS.map((sec) => (
             <button
               key={sec.key}
-              className={`gallery-tab ${activeTab === sec.key ? 'active' : ''}`}
+              className={`about-admin-tab ${activeTab === sec.key ? 'active' : ''}`}
               onClick={() => setActiveTab(sec.key)}
             >
+              <span className="about-tab-icon">{sec.icon}</span>
               {sec.label}
-              {sections[sec.key] && <span className="gallery-tab-count" style={{ fontSize: '10px' }}>Saved</span>}
+              {sections[sec.key] && <span className="about-tab-saved">Saved</span>}
             </button>
           ))}
         </div>
 
         {/* Alert */}
-        {msg && (
-          <div className={`alert alert-${msg.type}`}>{msg.text}</div>
-        )}
+        {msg && <div className={`alert alert-${msg.type}`}>{msg.text}</div>}
 
-        {/* Title */}
-        <h2 style={{ margin: '0 0 20px', fontFamily: 'Georgia, serif', fontSize: '22px', color: '#243358' }}>
-          {currentSection?.label}
-        </h2>
-
-        {/* Form */}
-        <div className="admin-card">
-          <div className="admin-card-header">
-            <h3>{activeTab === 'courses' ? 'Course Table' : activeTab === 'eligibility' ? 'Eligibility Points' : activeTab === 'process' ? 'Process Steps' : activeTab === 'first-year' ? 'Documents Required' : activeTab === 'direct-second' ? 'Documents Required' : activeTab === 'acap' ? 'Documents Required' : activeTab === 'fees' ? 'Fee Structure' : activeTab === 'scholarships' ? 'Scholarship Categories' : activeTab === 'brochure' ? 'Brochure PDF' : 'Section Content'}</h3>
-            {sections[activeTab] && activeTab !== 'courses' && activeTab !== 'eligibility' && (
-              <button className="btn btn-danger btn-sm" onClick={handleDelete}>Delete</button>
-            )}
-          </div>
-          <div className="admin-card-body">
-
-
-            {/* Overview - Info Table */}
-            {activeTab === 'overview' && (
-              <>
-                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Important Information</h4>
-                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Edit the info table shown on the Admission Overview page.</p>
-
-                {form.infoRows.map((row, i) => (
-                  <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '10px', background: '#f8f9fb', border: '1px solid #e4e8ed', borderRadius: '6px', padding: '10px 12px' }}>
-                    <input
-                      type="text"
-                      value={row.label}
-                      onChange={(e) => {
-                        const updated = [...form.infoRows];
-                        updated[i] = { ...updated[i], label: e.target.value };
-                        handleChange('infoRows', updated);
-                      }}
-                      placeholder="Label"
-                      style={{ width: '200px', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', fontWeight: 600, boxSizing: 'border-box' }}
-                    />
-                    <input
-                      type="text"
-                      value={row.value}
-                      onChange={(e) => {
-                        const updated = [...form.infoRows];
-                        updated[i] = { ...updated[i], value: e.target.value };
-                        handleChange('infoRows', updated);
-                      }}
-                      placeholder="Value"
-                      style={{ flex: 1, padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }}
-                    />
-                    <button
-                      className="member-remove-btn"
-                      title="Remove"
-                      onClick={() => {
-                        handleChange('infoRows', form.infoRows.filter((_, j) => j !== i));
-                      }}
-                    >
-                      ×
-                    </button>
-                  </div>
-                ))}
-
-                <div
-                  onClick={() => handleChange('infoRows', [...form.infoRows, { label: '', value: '' }])}
-                  title="Add Row"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px dashed #b9c3d4', borderRadius: '6px', padding: '8px 18px', cursor: 'pointer', color: '#243358', background: '#fff', fontWeight: 600, fontSize: '12.5px' }}
-                >
-                  <span style={{ fontSize: '18px', lineHeight: 1 }}>+</span> Add Row
-                </div>
-              </>
-            )}
-
-            {/* Fees - Fee Tables */}
-            {activeTab === 'fees' && (
-              <>
-                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>First Year Fee Structure</h4>
-                <FeeTableEditor
-                  yearLabel="First Year"
-                  feeRows={form.feeRows1 || []}
-                  onChange={(rows) => handleChange('feeRows1', rows)}
-                />
-
-                <h4 style={{ margin: '20px 0 12px', color: '#243358', fontSize: '15px' }}>Direct Second Year Fee Structure</h4>
-                <FeeTableEditor
-                  yearLabel="Direct Second Year"
-                  feeRows={form.feeRows2 || []}
-                  onChange={(rows) => handleChange('feeRows2', rows)}
-                />
-              </>
-            )}
-
-            {/* Eligibility */}
-            {activeTab === 'eligibility' && (
-              <>
-                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Eligibility Points</h4>
-                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Shown exactly like the live website — click a point to edit it.</p>
-
-                {/* First Year Diploma - frontend style */}
-                <h3 className="content-sub-heading">First Year Diploma</h3>
-                <ul className="vm-list" style={{ marginBottom: '20px' }}>
-                  {form.eligFirstYear.map((item, i) => (
-                    <li key={i}>
-                      {editingElig && editingElig.field === 'eligFirstYear' && editingElig.index === i ? (
-                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                          <input
-                            autoFocus
-                            type="text"
-                            value={item}
-                            onChange={(e) => updateEligItem('eligFirstYear', i, e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && setEditingElig(null)}
-                            placeholder="Eligibility point..."
-                            style={{ flex: 1, padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px' }}
-                          />
-                          <button className="btn btn-success btn-sm" onClick={() => setEditingElig(null)}>Done</button>
-                        </div>
-                      ) : (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <span
-                            onClick={() => setEditingElig({ field: 'eligFirstYear', index: i })}
-                            title="Click to edit"
-                            style={{ flex: 1, cursor: 'pointer', color: '#555' }}
-                          >
-                            {item || <em style={{ color: '#aaa' }}>Empty point — click to edit</em>}
-                          </span>
-                          <button
-                            className="member-remove-btn"
-                            title="Delete"
-                            onClick={() => removeEligItem('eligFirstYear', i)}
-                          >
-                            ×
-                          </button>
-                        </div>
-                      )}
-                    </li>
-                  ))}
-                  <li style={{ listStyle: 'none', marginTop: '6px' }}>
-                    <div
-                      onClick={() => addEmptyElig('eligFirstYear')}
-                      title="Add Point"
-                      style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px dashed #b9c3d4', borderRadius: '6px', padding: '8px 18px', cursor: 'pointer', color: '#243358', background: '#fff', fontWeight: 600, fontSize: '12.5px' }}
-                    >
-                      <span style={{ fontSize: '18px', lineHeight: 1 }}>+</span> Add Point
-                    </div>
-                  </li>
-                </ul>
-
-                {/* Direct Second Year Diploma - frontend style */}
-                <h3 className="content-sub-heading">Direct Second Year Diploma</h3>
-                <ul className="vm-list">
-                  {form.eligDirect2nd.map((item, i) => (
-                    <li key={i}>
-                      {editingElig && editingElig.field === 'eligDirect2nd' && editingElig.index === i ? (
-                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                          <input
-                            autoFocus
-                            type="text"
-                            value={item}
-                            onChange={(e) => updateEligItem('eligDirect2nd', i, e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && setEditingElig(null)}
-                            placeholder="Eligibility point..."
-                            style={{ flex: 1, padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px' }}
-                          />
-                          <button className="btn btn-success btn-sm" onClick={() => setEditingElig(null)}>Done</button>
-                        </div>
-                      ) : (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <span
-                            onClick={() => setEditingElig({ field: 'eligDirect2nd', index: i })}
-                            title="Click to edit"
-                            style={{ flex: 1, cursor: 'pointer', color: '#555' }}
-                          >
-                            {item || <em style={{ color: '#aaa' }}>Empty point — click to edit</em>}
-                          </span>
-                          <button
-                            className="member-remove-btn"
-                            title="Delete"
-                            onClick={() => removeEligItem('eligDirect2nd', i)}
-                          >
-                            ×
-                          </button>
-                        </div>
-                      )}
-                    </li>
-                  ))}
-                  <li style={{ listStyle: 'none', marginTop: '6px' }}>
-                    <div
-                      onClick={() => addEmptyElig('eligDirect2nd')}
-                      title="Add Point"
-                      style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px dashed #b9c3d4', borderRadius: '6px', padding: '8px 18px', cursor: 'pointer', color: '#243358', background: '#fff', fontWeight: 600, fontSize: '12.5px' }}
-                    >
-                      <span style={{ fontSize: '18px', lineHeight: 1 }}>+</span> Add Point
-                    </div>
-                  </li>
-                </ul>
-              </>
-            )}
-
-            {/* Courses - Course Table */}
-            {activeTab === 'courses' && (
-              <>
-                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Courses Offered</h4>
-                <div className="fee-table-wrap">
-                  <table className="fee-table" style={{ minWidth: '600px' }}>
-                    <thead>
-                      <tr>
-                        <th style={{ width: 60 }}>Sr. No.</th>
-                        <th style={{ textAlign: 'left' }}>Course Name</th>
-                        <th style={{ width: 110 }}>Duration</th>
-                        <th style={{ width: 90 }}>Intake</th>
-                        <th style={{ width: 130 }}>Direct 2nd Year</th>
-                        <th style={{ width: 50 }}>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {form.courseTable.map((course, i) => (
-                        <tr key={i}>
-                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
-                          <td className="fee-particular">
-                            <input
-                              type="text"
-                              value={course.name || ''}
-                              onChange={(e) => updateCourse(i, 'name', e.target.value)}
-                              placeholder="Course name"
-                              style={courseCellInput}
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="text"
-                              value={course.duration || ''}
-                              onChange={(e) => updateCourse(i, 'duration', e.target.value)}
-                              placeholder="Duration"
-                              style={courseCellInput}
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="text"
-                              value={course.intake || ''}
-                              onChange={(e) => updateCourse(i, 'intake', e.target.value)}
-                              placeholder="Intake"
-                              style={courseCellInput}
-                            />
-                          </td>
-                          <td>
-                            <select
-                              value={course.direct2nd || 'Yes'}
-                              onChange={(e) => updateCourse(i, 'direct2nd', e.target.value)}
-                              style={{ ...courseCellInput, cursor: 'pointer' }}
-                            >
-                              <option value="Yes">Yes</option>
-                              <option value="No">No</option>
-                            </select>
-                          </td>
-                          <td style={{ textAlign: 'center' }}>
-                            <button
-                              className="member-remove-btn"
-                              title="Remove course"
-                              onClick={() => removeCourse(i)}
-                            >
-                              ×
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                      {/* Add Course - dashed tile inside the table */}
-                      <tr>
-                        <td colSpan={6} style={{ padding: '10px', background: '#fafbfc' }}>
-                          <div
-                            onClick={addEmptyCourse}
-                            title="Add Course"
-                            style={{ border: '1px dashed #b9c3d4', borderRadius: '6px', padding: '14px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '4px', cursor: 'pointer', color: '#243358', background: '#fff' }}
-                          >
-                            <span style={{ fontSize: '22px', lineHeight: 1 }}>+</span>
-                            <span style={{ fontSize: '12px', fontWeight: 600 }}>Add Course</span>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </>
-            )}
-
-            {/* Process - Steps */}
-            {activeTab === 'process' && (
-              <>
-                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Process Steps</h4>
-                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 4px' }}>Shown exactly like the live website — click a step to edit it.</p>
-
-                <div className="process-steps" style={{ marginTop: '12px' }}>
-                  {form.steps.map((step, i) => (
-                    <div className="process-step" key={i}>
-                      <div className="step-number">{i + 1}</div>
-                      <div className="step-content" style={{ flex: 1 }}>
-                        {editingStepIdx === i ? (
-                          <>
-                            <input
-                              autoFocus
-                              type="text"
-                              value={step.title}
-                              onChange={(e) => updateStep(i, 'title', e.target.value)}
-                              placeholder="Step title"
-                              style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', marginBottom: '6px' }}
-                            />
-                            <textarea
-                              value={step.desc}
-                              onChange={(e) => updateStep(i, 'desc', e.target.value)}
-                              placeholder="Step description (optional)"
-                              rows={2}
-                              style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', resize: 'vertical', marginBottom: '8px' }}
-                            />
-                            <button className="btn btn-success btn-sm" onClick={() => setEditingStepIdx(null)}>Done</button>
-                          </>
-                        ) : (
-                          <>
-                            <div onClick={() => setEditingStepIdx(i)} title="Click to edit" style={{ cursor: 'pointer' }}>
-                              <h4>{step.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled step</em>}</h4>
-                              {step.desc && <p>{step.desc}</p>}
-                              {!step.desc && <p style={{ fontStyle: 'italic', color: '#aaa' }}>No description</p>}
-                            </div>
-                            <button
-                              className="member-remove-btn"
-                              title="Delete step"
-                              onClick={() => removeStep(i)}
-                            >
-                              ×
-                            </button>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                  <div
-                    onClick={addEmptyStep}
-                    title="Add Step"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px dashed #b9c3d4', borderRadius: '6px', padding: '9px 18px', cursor: 'pointer', color: '#243358', background: '#fff', fontWeight: 600, fontSize: '12.5px', marginTop: '14px' }}
-                  >
-                    <span style={{ fontSize: '18px', lineHeight: 1 }}>+</span> Add Step
-                  </div>
-                </div>
-              </>
-            )}
-
-            {/* First Year / Direct Second / A-CAP - Documents */}
-            {(activeTab === 'first-year' || activeTab === 'direct-second' || activeTab === 'acap') && (
-              <>
-                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Documents Required</h4>
-                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 4px' }}>Shown exactly like the live website — click a document to edit it.</p>
-
-                <ul className="vm-list">
-                  {form.documents.map((doc, i) => (
-                    <li key={i}>
-                      {editingDocIdx === i ? (
-                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                          <input
-                            autoFocus
-                            type="text"
-                            value={doc}
-                            onChange={(e) => updateDoc(i, e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && setEditingDocIdx(null)}
-                            placeholder="Document name..."
-                            style={{ flex: 1, padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px' }}
-                          />
-                          <button className="btn btn-success btn-sm" onClick={() => setEditingDocIdx(null)}>Done</button>
-                        </div>
-                      ) : (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <span
-                            onClick={() => setEditingDocIdx(i)}
-                            title="Click to edit"
-                            style={{ flex: 1, cursor: 'pointer', color: '#555' }}
-                          >
-                            {doc || <em style={{ color: '#aaa' }}>Empty document — click to edit</em>}
-                          </span>
-                          <button
-                            className="member-remove-btn"
-                            title="Delete"
-                            onClick={() => removeDoc(i)}
-                          >
-                            ×
-                          </button>
-                        </div>
-                      )}
-                    </li>
-                  ))}
-                  <li style={{ listStyle: 'none', marginTop: '6px' }}>
-                    <div
-                      onClick={addEmptyDoc}
-                      title="Add Document"
-                      style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px dashed #b9c3d4', borderRadius: '6px', padding: '8px 18px', cursor: 'pointer', color: '#243358', background: '#fff', fontWeight: 600, fontSize: '12.5px' }}
-                    >
-                      <span style={{ fontSize: '18px', lineHeight: 1 }}>+</span> Add Document
-                    </div>
-                  </li>
-                </ul>
-              </>
-            )}
-
-            {/* Scholarships - frontend-style categories */}
-            {activeTab === 'scholarships' && (
-              <>
-                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Scholarship Categories</h4>
-                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Shown exactly like the live website — click a category name to edit it.</p>
-
-                {form.scholarshipDocs.map((cat, catIdx) => (
-                  <div key={catIdx} style={{ marginBottom: '24px', paddingBottom: '18px', borderBottom: catIdx < form.scholarshipDocs.length - 1 ? '1px solid #f0f0f0' : 'none' }}>
-                    {editingScholCatIdx === catIdx ? (
-                      <>
-                        <input
-                          autoFocus
-                          type="text"
-                          value={cat.category}
-                          onChange={(e) => updateScholCategory(catIdx, 'category', e.target.value)}
-                          onKeyDown={(e) => e.key === 'Enter' && setEditingScholCatIdx(null)}
-                          placeholder="Category (e.g. SC, ST, OBC)"
-                          style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', marginBottom: '6px' }}
-                        />
-                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                          <input
-                            type="text"
-                            value={cat.scheme}
-                            onChange={(e) => updateScholCategory(catIdx, 'scheme', e.target.value)}
-                            placeholder="Scheme name (optional)"
-                            style={{ flex: 1, padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px' }}
-                          />
-                          <button className="btn btn-success btn-sm" onClick={() => setEditingScholCatIdx(null)}>Done</button>
-                        </div>
-                      </>
-                    ) : (
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <div onClick={() => setEditingScholCatIdx(catIdx)} title="Click to edit" style={{ flex: 1, cursor: 'pointer' }}>
-                          <h3 className="content-sub-heading" style={{ margin: 0 }}>{cat.category || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled category</em>}</h3>
-                          {(cat.scheme || true) && (
-                            <p className="scholarship-scheme">
-                              {cat.scheme ? <><strong>Scheme:</strong> {cat.scheme}</> : <em style={{ color: '#aaa' }}>No scheme — click to edit</em>}
-                            </p>
-                          )}
-                        </div>
-                        <button
-                          className="member-remove-btn"
-                          title="Delete category"
-                          onClick={() => removeScholCategory(catIdx)}
-                        >
-                          ×
-                        </button>
-                      </div>
-                    )}
-
-                    {/* Docs table - editable like the live site */}
-                    <div className="courses-table-wrap" style={{ marginTop: '4px' }}>
-                      <table className="courses-table">
-                        <thead>
-                          <tr>
-                            <th style={{ width: 60 }}>Sr. No.</th>
-                            <th>Document</th>
-                            <th>Details / Notes</th>
-                            <th style={{ width: 50 }}>Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {cat.docs.length === 0 && (
-                            <tr><td colSpan={4} style={{ textAlign: 'center', color: '#999', fontSize: '12.5px' }}>No documents added yet</td></tr>
-                          )}
-                          {cat.docs.map((doc, docIdx) => (
-                            <tr key={docIdx}>
-                              <td style={{ textAlign: 'center' }}>{docIdx + 1}</td>
-                              <td>
-                                <input
-                                  type="text"
-                                  value={doc.document}
-                                  onChange={(e) => updateScholDoc(catIdx, docIdx, 'document', e.target.value)}
-                                  placeholder="Document name"
-                                  style={{ width: '100%', padding: '6px 8px', border: '1px solid #d7dde6', borderRadius: '4px', fontSize: '12.5px' }}
-                                />
-                              </td>
-                              <td>
-                                <input
-                                  type="text"
-                                  value={doc.details}
-                                  onChange={(e) => updateScholDoc(catIdx, docIdx, 'details', e.target.value)}
-                                  placeholder="Details / Notes"
-                                  style={{ width: '100%', padding: '6px 8px', border: '1px solid #d7dde6', borderRadius: '4px', fontSize: '12.5px' }}
-                                />
-                              </td>
-                              <td style={{ textAlign: 'center' }}>
-                                <button
-                                  className="member-remove-btn"
-                                  title="Delete document"
-                                  onClick={() => removeScholDoc(catIdx, docIdx)}
-                                >
-                                  ×
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
-                          <tr>
-                            <td colSpan={4} style={{ padding: '10px', background: '#fafbfc' }}>
-                              <div
-                                onClick={() => addEmptyScholDoc(catIdx)}
-                                title="Add Document"
-                                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px dashed #b9c3d4', borderRadius: '6px', padding: '7px 16px', cursor: 'pointer', color: '#243358', background: '#fff', fontWeight: 600, fontSize: '12px' }}
-                              >
-                                <span style={{ fontSize: '17px', lineHeight: 1 }}>+</span> Add Document
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                ))}
-
-                <div
-                  onClick={addEmptyScholCategory}
-                  title="Add Category"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px dashed #b9c3d4', borderRadius: '6px', padding: '9px 18px', cursor: 'pointer', color: '#243358', background: '#fff', fontWeight: 600, fontSize: '12.5px' }}
-                >
-                  <span style={{ fontSize: '18px', lineHeight: 1 }}>+</span> Add Category
-                </div>
-              </>
-            )}
-
-            {/* College Brochure - PDF Upload */}
-            {activeTab === 'brochure' && (
-              <>
-                <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>College Brochure PDF</h4>
-                <div className="form-group">
-                  <label>Upload PDF or Add Link</label>
-                  <PdfUpload
-                    value={form.pdfUrl}
-                    onChange={(url) => handleChange('pdfUrl', url)}
-                  />
-                </div>
-                {form.pdfUrl && (
-                  <div style={{ marginTop: '12px', padding: '12px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '6px' }}>
-                    <p style={{ margin: 0, fontSize: '13px', color: '#444' }}>
-                      <strong>Current PDF:</strong>{' '}
-                      <a href={`/api/pdf-proxy?url=${encodeURIComponent(form.pdfUrl)}`} target="_blank" style={{ color: '#243358' }}>
-                        {form.pdfUrl}
-                      </a>
-                    </p>
-                  </div>
-                )}
-              </>
-            )}
-
-            {/* Actions */}
-            <div style={{ marginTop: '20px', display: 'flex', gap: '12px' }}>
-              <button className="btn btn-primary" onClick={handleSave} disabled={saving} style={{ padding: '10px 30px' }}>
-                {saving ? 'Saving...' : 'Save Section'}
+        {/* Action Bar */}
+        <div className="admission-action-bar">
+          {view === 'preview' ? (
+            <>
+              <button className="btn btn-primary" onClick={startEditing}>
+                {sections[activeTab] ? 'Edit' : 'Add Content'}
               </button>
-              <button
-                className="btn btn-secondary"
-                onClick={() => {
-                  if (sections[activeTab]) {
-                    setForm({
-                      title: sections[activeTab].title || '',
-                      content: sections[activeTab].content || '',
-                      stats: sections[activeTab].stats || [],
-                      steps: sections[activeTab].steps || [],
-                      documents: sections[activeTab].documents || [],
-                      courseTable: sections[activeTab].courseTable || [],
-                      eligFirstYear: sections[activeTab].eligFirstYear || [],
-                      eligDirect2nd: sections[activeTab].eligDirect2nd || [],
-                      feeRows1: sections[activeTab].feeRows1 && sections[activeTab].feeRows1.length > 0 ? sections[activeTab].feeRows1 : [...defaultFeeRows],
-                      feeRows2: sections[activeTab].feeRows2 && sections[activeTab].feeRows2.length > 0 ? sections[activeTab].feeRows2 : [...defaultFeeRows],
-                      pdfUrl: sections[activeTab].pdfUrl || '',
-                      scholarshipDocs: sections[activeTab].scholarshipDocs || [],
-                      infoRows: sections[activeTab].infoRows && sections[activeTab].infoRows.length > 0 ? sections[activeTab].infoRows : [...defaultInfoRows],
-                      active: sections[activeTab].active !== false,
-                    });
-                  } else {
-                    setForm({ ...defaultSection });
-                  }
-                  setMsg(null);
-                  resetListInputs();
-                }}
-              >
-                Reset
+              {sections[activeTab] && activeTab !== 'courses' && activeTab !== 'eligibility' && (
+                <button className="btn btn-danger btn-sm" onClick={handleDelete}>Delete</button>
+              )}
+            </>
+          ) : (
+            <>
+              <button className="btn btn-primary" onClick={handleSave} disabled={saving}>
+                {saving ? 'Saving...' : 'Save'}
               </button>
-            </div>
-          </div>
+              <button className="btn btn-secondary" onClick={cancelEditing}>Cancel</button>
+            </>
+          )}
         </div>
+
+        {/* Preview or Editor */}
+        {view === 'preview' ? renderPreview() : (
+          <div className="admission-editor-panel">
+            <div className="admission-editor-header">
+              <h3>Editing: {currentSection?.label}</h3>
+            </div>
+            {renderEditor()}
+          </div>
+        )}
       </div>
     </AdminLayout>
   );

@@ -2401,6 +2401,89 @@
   padding: 2px 6px;
 }
 
+/* ═══════════════════════════════════════════
+   Admissions Admin - Preview & Edit Mode
+   ═══════════════════════════════════════════ */
+
+.admission-action-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.admission-preview-card {
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  border-radius: 12px;
+  padding: 30px 36px;
+  cursor: default;
+  min-height: 200px;
+}
+
+.admission-editor-panel {
+  background: #fff;
+  border: 2px solid #c8963e;
+  border-radius: 12px;
+  padding: 28px 32px;}
+
+.admission-editor-header {
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e4e8ed;
+}
+
+.admission-editor-header h3 {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  font-size: 18px;
+  color: #243358;
+}
+
+.admission-edit-form h4 {
+  margin: 0 0 12px;
+  color: #243358;
+  font-size: 15px;
+}
+
+.admission-edit-form .form-group {
+  margin-bottom: 16px;
+}
+
+.admission-edit-form label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.admission-info-edit-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+  background: #f8f9fb;
+  border: 1px solid #e4e8ed;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.admission-info-edit-row input {
+  padding: 7px 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 13px;
+  box-sizing: border-box;}
+
+.admission-info-edit-row input:first-child {
+  width: 200px;
+  font-weight: 600;
+}
+
+.admission-info-edit-row input:nth-child(2) {
+  flex: 1;
+}
+
 /* ─── Cells Detail View ─── */
 .cells-detail-view {
   position: relative;
