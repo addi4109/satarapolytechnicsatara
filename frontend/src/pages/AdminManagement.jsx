@@ -306,42 +306,6 @@ function AdminManagement() {
   const activeEntry = entries[activeTab];
   const currentRole = ROLES.find((r) => r.key === activeTab);
 
-  const gbFormFields = (
-    <>
-      <div style={{ textAlign: 'center', marginBottom: '14px' }}>
-        <ImageUpload
-          value={gbForm.photoUrl}
-          onChange={(url) => setGbForm({ ...gbForm, photoUrl: url })}
-          circle
-        />
-      </div>
-      <input
-        type="text"
-        className="gb-member-input"
-        value={gbForm.name}
-        onChange={(e) => setGbForm({ ...gbForm, name: e.target.value })}
-        placeholder="Name"
-        required
-      />
-      <input
-        type="text"
-        className="gb-member-input"
-        value={gbForm.designation}
-        onChange={(e) => setGbForm({ ...gbForm, designation: e.target.value })}
-        placeholder="Designation"
-        required
-      />
-      <input
-        type="number"
-        className="gb-member-input"
-        value={gbForm.order}
-        onChange={(e) => setGbForm({ ...gbForm, order: Number(e.target.value) })}
-        placeholder="Display Order (e.g. 1, 2, 3)"
-        min="0"
-      />
-    </>
-  );
-
   if (loading) {
     return (
       <AdminLayout>
@@ -410,69 +374,84 @@ function AdminManagement() {
                 <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
               ) : (
                 <>
-                  {/* Add / Close Button */}
-                  <div style={{ marginBottom: '16px' }}>
-                    <button
-                      className={`btn ${showGbForm && !editGbId ? 'btn-secondary' : 'btn-success'}`}
-                      onClick={() => (showGbForm && !editGbId ? cancelGbForm() : openAddGb())}
-                    >
-                      {showGbForm && !editGbId ? 'Close Form' : '+ Add Member'}
-                    </button>
-                  </div>
+                  <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Click a card to edit. Click the + box to add a new member.</p>
 
-                  {/* Empty State */}
-                  {gbMembers.length === 0 && !showGbForm && (
-                    <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-                      <p style={{ color: '#888', marginBottom: '16px' }}>No governing body members yet.</p>
-                      <button className="btn btn-success" onClick={openAddGb}>Add First Member</button>
-                    </div>
-                  )}
-
-                  {/* Members Cards (inline editing) */}
                   <div className="gb-cards-grid">
-                    {/* Inline Add Form */}
-                    {showGbForm && !editGbId && (
-                      <form className="gb-member-card gb-member-editing" onSubmit={handleGbSave}>
-                        {gbFormFields}
-                        <div className="gb-member-actions">
-                          <button type="submit" className="btn btn-success btn-sm" disabled={gbSaving}>
-                            {gbSaving ? 'Saving...' : 'Add Member'}
-                          </button>
-                          <button type="button" className="btn btn-secondary btn-sm" onClick={cancelGbForm}>Cancel</button>
+                    {/* Add Member Box */}
+                    {showGbForm && !editGbId ? (
+                      <div className="gb-member-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'solid', borderColor: '#c8963e', background: '#fffbe6' }}>
+                        <div style={{ textAlign: 'center', marginBottom: '14px' }}>
+                          <ImageUpload
+                            value={gbForm.photoUrl}
+                            onChange={(url) => setGbForm({ ...gbForm, photoUrl: url })}
+                            circle
+                          />
                         </div>
-                      </form>
+                        <input type="text" className="gb-member-input" value={gbForm.name} onChange={(e) => setGbForm({ ...gbForm, name: e.target.value })} placeholder="Name" required />
+                        <input type="text" className="gb-member-input" value={gbForm.designation} onChange={(e) => setGbForm({ ...gbForm, designation: e.target.value })} placeholder="Designation" required />
+                        <input type="number" className="gb-member-input" value={gbForm.order} onChange={(e) => setGbForm({ ...gbForm, order: Number(e.target.value) })} placeholder="Display Order" min="0" />
+                        <div className="gb-member-actions">
+                          <button className="btn btn-success btn-sm" onClick={handleGbSave} disabled={gbSaving}>{gbSaving ? 'Saving...' : 'Save'}</button>
+                          <button className="btn btn-secondary btn-sm" onClick={cancelGbForm}>Cancel</button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div
+                        className="gb-member-card"
+                        onClick={openAddGb}
+                        style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'dashed', minHeight: '240px' }}
+                      >
+                        <span style={{ fontSize: '36px', color: '#bbb', marginBottom: '6px' }}>+</span>
+                        <span style={{ fontSize: '13px', color: '#999', fontWeight: 600 }}>Add Member</span>
+                      </div>
                     )}
 
+                    {/* Member Cards - live preview */}
                     {gbMembers.map((member) =>
                       editGbId === member._id ? (
-                        <form key={member._id} className="gb-member-card gb-member-editing" onSubmit={handleGbSave}>
-                          {gbFormFields}
-                          <div className="gb-member-actions">
-                            <button type="submit" className="btn btn-success btn-sm" disabled={gbSaving}>
-                              {gbSaving ? 'Saving...' : 'Update'}
-                            </button>
-                            <button type="button" className="btn btn-secondary btn-sm" onClick={cancelGbForm}>Cancel</button>
+                        /* Edit mode */
+                        <div key={member._id} className="gb-member-card" style={{ border: '2px solid #c8963e', background: '#fffbe6' }}>
+                          <div style={{ textAlign: 'center', marginBottom: '14px' }}>
+                            <ImageUpload
+                              value={gbForm.photoUrl}
+                              onChange={(url) => setGbForm({ ...gbForm, photoUrl: url })}
+                              circle
+                            />
                           </div>
-                        </form>
+                          <input type="text" className="gb-member-input" value={gbForm.name} onChange={(e) => setGbForm({ ...gbForm, name: e.target.value })} placeholder="Name" required />
+                          <input type="text" className="gb-member-input" value={gbForm.designation} onChange={(e) => setGbForm({ ...gbForm, designation: e.target.value })} placeholder="Designation" required />
+                          <input type="number" className="gb-member-input" value={gbForm.order} onChange={(e) => setGbForm({ ...gbForm, order: Number(e.target.value) })} placeholder="Display Order" min="0" />
+                          <div className="gb-member-actions">
+                            <button className="btn btn-success btn-sm" onClick={handleGbSave} disabled={gbSaving}>{gbSaving ? 'Saving...' : 'Save'}</button>
+                            <button className="btn btn-secondary btn-sm" onClick={cancelGbForm}>Cancel</button>
+                          </div>
+                        </div>
                       ) : (
-                        <div key={member._id} className="gb-member-card">
-                          <span className="gb-member-order">#{member.order ?? 0}</span>
+                        /* Preview mode */
+                        <div
+                          key={member._id}
+                          className="gb-member-card"
+                          onClick={() => openEditGb(member)}
+                          style={{ cursor: 'pointer' }}
+                          title="Click to edit"
+                        >
                           {member.photoUrl ? (
                             <img src={member.photoUrl} alt={member.name} className="gb-member-photo" />
                           ) : (
-                            <div className="gb-member-photo gb-member-photo-empty">No Photo</div>
+                            <div className="gb-member-photo gb-member-photo-empty">
+                              <span>{member.name?.split(' ')?.pop()?.charAt(0) || '?'}</span>
+                            </div>
                           )}
                           <h3 className="gb-member-name">{member.name}</h3>
                           <p className="gb-member-designation">{member.designation}</p>
-                          <div className="gb-member-actions">
-                            <button className="btn btn-primary btn-sm" onClick={() => openEditGb(member)}>Edit</button>
+                          <div className="gb-member-actions" onClick={(e) => e.stopPropagation()}>
                             {deleteConfirm === member._id ? (
                               <>
-                                <button className="btn btn-danger btn-sm" onClick={() => handleGbDelete(member._id)}>Yes</button>
-                                <button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirm(null)}>No</button>
+                                <button className="btn btn-danger btn-sm" onClick={() => handleGbDelete(member._id)}>Yes, Delete</button>
+                                <button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirm(null)}>Cancel</button>
                               </>
                             ) : (
-                              <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirm(member._id)}>Del</button>
+                              <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirm(member._id)}>Delete</button>
                             )}
                           </div>
                         </div>
@@ -491,25 +470,12 @@ function AdminManagement() {
                 <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
               ) : (
                 <>
-                  <div style={{ marginBottom: '16px' }}>
-                    <button
-                      className={`btn ${showLgbForm && !editLgbId ? 'btn-secondary' : 'btn-success'}`}
-                      onClick={() => (showLgbForm && !editLgbId ? cancelLgbForm() : openAddLgb())}
-                    >
-                      {showLgbForm && !editLgbId ? 'Close Form' : '+ Add Member'}
-                    </button>
-                  </div>
-
-                  {lgbMembers.length === 0 && !showLgbForm && (
-                    <div style={{ textAlign: 'center', padding: '40px 20px' }}>
-                      <p style={{ color: '#888', marginBottom: '16px' }}>No local governing body members yet.</p>
-                      <button className="btn btn-success" onClick={openAddLgb}>Add First Member</button>
-                    </div>
-                  )}
+                  <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Click a card to edit. Click the + box to add a new member.</p>
 
                   <div className="gb-cards-grid">
-                    {showLgbForm && !editLgbId && (
-                      <form className="gb-member-card gb-member-editing" onSubmit={handleLgbSave}>
+                    {/* Add Member Box */}
+                    {showLgbForm && !editLgbId ? (
+                      <div className="gb-member-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'solid', borderColor: '#c8963e', background: '#fffbe6' }}>
                         <div style={{ textAlign: 'center', marginBottom: '14px' }}>
                           <ImageUpload
                             value={lgbForm.photoUrl}
@@ -521,15 +487,26 @@ function AdminManagement() {
                         <input type="text" className="gb-member-input" value={lgbForm.designation} onChange={(e) => setLgbForm({ ...lgbForm, designation: e.target.value })} placeholder="Designation" required />
                         <input type="number" className="gb-member-input" value={lgbForm.order} onChange={(e) => setLgbForm({ ...lgbForm, order: Number(e.target.value) })} placeholder="Display Order" min="0" />
                         <div className="gb-member-actions">
-                          <button type="submit" className="btn btn-success btn-sm" disabled={lgbSaving}>{lgbSaving ? 'Saving...' : 'Add Member'}</button>
-                          <button type="button" className="btn btn-secondary btn-sm" onClick={cancelLgbForm}>Cancel</button>
+                          <button className="btn btn-success btn-sm" onClick={handleLgbSave} disabled={lgbSaving}>{lgbSaving ? 'Saving...' : 'Save'}</button>
+                          <button className="btn btn-secondary btn-sm" onClick={cancelLgbForm}>Cancel</button>
                         </div>
-                      </form>
+                      </div>
+                    ) : (
+                      <div
+                        className="gb-member-card"
+                        onClick={openAddLgb}
+                        style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'dashed', minHeight: '240px' }}
+                      >
+                        <span style={{ fontSize: '36px', color: '#bbb', marginBottom: '6px' }}>+</span>
+                        <span style={{ fontSize: '13px', color: '#999', fontWeight: 600 }}>Add Member</span>
+                      </div>
                     )}
 
+                    {/* Member Cards - live preview */}
                     {lgbMembers.map((member) =>
                       editLgbId === member._id ? (
-                        <form key={member._id} className="gb-member-card gb-member-editing" onSubmit={handleLgbSave}>
+                        /* Edit mode */
+                        <div key={member._id} className="gb-member-card" style={{ border: '2px solid #c8963e', background: '#fffbe6' }}>
                           <div style={{ textAlign: 'center', marginBottom: '14px' }}>
                             <ImageUpload
                               value={lgbForm.photoUrl}
@@ -541,29 +518,36 @@ function AdminManagement() {
                           <input type="text" className="gb-member-input" value={lgbForm.designation} onChange={(e) => setLgbForm({ ...lgbForm, designation: e.target.value })} placeholder="Designation" required />
                           <input type="number" className="gb-member-input" value={lgbForm.order} onChange={(e) => setLgbForm({ ...lgbForm, order: Number(e.target.value) })} placeholder="Display Order" min="0" />
                           <div className="gb-member-actions">
-                            <button type="submit" className="btn btn-success btn-sm" disabled={lgbSaving}>{lgbSaving ? 'Saving...' : 'Update'}</button>
-                            <button type="button" className="btn btn-secondary btn-sm" onClick={cancelLgbForm}>Cancel</button>
+                            <button className="btn btn-success btn-sm" onClick={handleLgbSave} disabled={lgbSaving}>{lgbSaving ? 'Saving...' : 'Save'}</button>
+                            <button className="btn btn-secondary btn-sm" onClick={cancelLgbForm}>Cancel</button>
                           </div>
-                        </form>
+                        </div>
                       ) : (
-                        <div key={member._id} className="gb-member-card">
-                          <span className="gb-member-order">#{member.order ?? 0}</span>
+                        /* Preview mode */
+                        <div
+                          key={member._id}
+                          className="gb-member-card"
+                          onClick={() => openEditLgb(member)}
+                          style={{ cursor: 'pointer' }}
+                          title="Click to edit"
+                        >
                           {member.photoUrl ? (
                             <img src={member.photoUrl} alt={member.name} className="gb-member-photo" />
                           ) : (
-                            <div className="gb-member-photo gb-member-photo-empty">No Photo</div>
+                            <div className="gb-member-photo gb-member-photo-empty">
+                              <span>{member.name?.split(' ')?.pop()?.charAt(0) || '?'}</span>
+                            </div>
                           )}
                           <h3 className="gb-member-name">{member.name}</h3>
                           <p className="gb-member-designation">{member.designation}</p>
-                          <div className="gb-member-actions">
-                            <button className="btn btn-primary btn-sm" onClick={() => openEditLgb(member)}>Edit</button>
+                          <div className="gb-member-actions" onClick={(e) => e.stopPropagation()}>
                             {deleteConfirmLgb === member._id ? (
                               <>
-                                <button className="btn btn-danger btn-sm" onClick={() => handleLgbDelete(member._id)}>Yes</button>
-                                <button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirmLgb(null)}>No</button>
+                                <button className="btn btn-danger btn-sm" onClick={() => handleLgbDelete(member._id)}>Yes, Delete</button>
+                                <button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirmLgb(null)}>Cancel</button>
                               </>
                             ) : (
-                              <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirmLgb(member._id)}>Del</button>
+                              <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirmLgb(member._id)}>Delete</button>
                             )}
                           </div>
                         </div>
