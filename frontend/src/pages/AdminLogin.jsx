@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { setAdminApiKey, getAdminApiKey } from '../lib/adminApi';
 import './Admin.css';
 
 const ADMIN_EMAIL = 'admin@gmail.com';
@@ -9,11 +10,12 @@ function AdminLogin() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [apiKey, setApiKey] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem('adminAuth')) {
+    if (sessionStorage.getItem('adminAuth') && getAdminApiKey()) {
       navigate('/admin');
     }
   }, [navigate]);
@@ -23,10 +25,15 @@ function AdminLogin() {
     setError('');
     setLoading(true);
 
-    // Simulate a short delay for UX
     setTimeout(() => {
       if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+        if (!apiKey.trim()) {
+          setError('API key is required. Contact administrator.');
+          setLoading(false);
+          return;
+        }
         sessionStorage.setItem('adminAuth', 'true');
+        setAdminApiKey(apiKey.trim());
         navigate('/admin');
       } else {
         setError('Invalid email or password');
@@ -61,6 +68,16 @@ function AdminLogin() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>API Key</label>
+            <input
+              type="password"
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              placeholder="Enter admin API key"
               required
             />
           </div>

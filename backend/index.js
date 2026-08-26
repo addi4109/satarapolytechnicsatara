@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import dns from 'dns';
+import { requireAdmin, rateLimit } from './middleware/adminAuth.js';
+import { securityHeaders } from './middleware/securityHeaders.js';
 import cellsRouter from './routes/cells.js';
 import departmentsRouter from './routes/departments.js';
 import photosRouter from './routes/photos.js';
@@ -34,9 +36,26 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/sps';
+const FRONTEND_URL = process.env.FRONTEND_URL || 'https://satarapolytechnicsatara-5mm8.vercel.app';
 
-app.use(cors());
-app.use(express.json());
+// CORS — restrict to known origins
+app.use(cors({
+  origin: [FRONTEND_URL, 'http://localhost:5173', 'http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'x-admin-key'],
+}));
+
+// Body parser with size limit
+app.use(express.json({ limit: '5mb' }));
+
+// Global rate limiter: 200 requests per minute per IP
+app.use(rateLimit({ windowMs: 60000, maxRequests: 200 }));
+
+// Security headers
+app.use(securityHeaders);
+
+// Admin auth middleware — protects all write (POST/PUT/DELETE) operations
+app.use('/api', requireAdmin);
 
 // API routes
 app.use('/api/cells', cellsRouter);

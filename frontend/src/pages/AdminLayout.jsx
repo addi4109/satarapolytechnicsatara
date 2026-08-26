@@ -1,6 +1,29 @@
 import { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { getAdminApiKey, clearAdminApiKey } from '../lib/adminApi';
 import './Admin.css';
+
+// Intercept fetch in admin context to auto-inject x-admin-key
+const originalFetch = window.fetch;
+let adminFetchPatched = false;
+
+function patchFetchForAdmin() {
+  if (adminFetchPatched) return;
+  adminFetchPatched = true;
+  window.fetch = (url, opts = {}) => {
+    const method = (opts.method || 'GET').toUpperCase();
+    if (method !== 'GET' && method !== 'HEAD') {
+      opts.headers = { ...opts.headers, 'x-admin-key': getAdminApiKey() };
+    }
+    return originalFetch(url, opts);
+  };
+}
+
+function unpatchFetch() {
+  if (!adminFetchPatched) return;
+  window.fetch = originalFetch;
+  adminFetchPatched = false;
+}
 
 function AdminLayout({ children }) {
   const location = useLocation();
@@ -9,7 +32,10 @@ function AdminLayout({ children }) {
   useEffect(() => {
     if (!sessionStorage.getItem('adminAuth')) {
       navigate('/admin/login');
+      return;
     }
+    patchFetchForAdmin();
+    return () => unpatchFetch();
   }, [navigate]);
 
   const isActive = (path) => location.pathname === path;
@@ -31,6 +57,8 @@ function AdminLayout({ children }) {
 
   const handleLogout = () => {
     sessionStorage.removeItem('adminAuth');
+    clearAdminApiKey();
+    unpatchFetch();
     navigate('/admin/login');
   };
 
