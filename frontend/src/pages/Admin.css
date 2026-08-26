@@ -931,6 +931,160 @@
   justify-content: flex-start;
 }
 
+/* Placement Officer Card - matches live website */
+.placement-officer-card {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  background: #f5f7fa;
+  border: 1px solid #e4e8ed;
+  border-radius: 10px;
+  padding: 24px;
+  margin-top: 12px;
+  transition: box-shadow 0.25s ease;
+}
+
+.placement-officer-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+
+.placement-officer-left {
+  flex: 0 0 auto;
+  text-align: center;
+  min-width: 160px;
+}
+
+.placement-officer-photo {
+  width: 140px;
+  height: 170px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 3px solid #e4e8ed;
+  margin: 0 auto 12px;
+}
+
+.placement-officer-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.placement-officer-name {
+  font-family: 'Georgia', serif;
+  font-size: 20px;
+  color: #243358;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.placement-officer-designation {
+  font-size: 14px;
+  color: #243358;
+  font-weight: 500;
+  margin: 0 0 8px;
+}
+
+.placement-officer-qual {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+}
+
+.placement-officer-msg {
+  flex: 1;
+  min-width: 0;
+  background: #fff;
+  border-left: 3px solid #c8963e;
+  padding: 20px 24px;
+  border-radius: 0 8px 8px 0;
+}
+
+.placement-officer-msg p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.75;
+  margin: 0;
+}
+
+/* Placement Team Grid */
+.placement-team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 16px;
+}
+
+.placement-team-card {
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  border-radius: 8px;
+  padding: 24px 16px 20px;
+  text-align: center;
+  transition: box-shadow 0.2s;
+}
+
+.placement-team-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.placement-team-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #e4e8ed;
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f7fa;
+  overflow: hidden;
+}
+
+.placement-team-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.placement-team-photo span {
+  font-size: 28px;
+  font-weight: 700;
+  color: #243358;
+  font-family: 'Georgia', serif;
+}
+
+.placement-team-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #243358;
+  margin: 0 0 4px;
+}
+
+.placement-team-designation {
+  font-size: 13px;
+  color: #243358;
+  font-weight: 500;
+  margin: 0 0 6px;
+}
+
+.placement-team-qual {
+  font-size: 12px;
+  color: #666;
+  margin: 0 0 8px;
+}
+
+.placement-team-email {
+  font-size: 12px;
+  color: #243358;
+  text-decoration: none;
+}
+
+.placement-team-email:hover {
+  text-decoration: underline;
+}
+
 .dept-form-submit .btn {
   padding: 12px 32px;
   font-size: 15px;
@@ -1377,4 +1531,33 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+/* Placement Officer & Team - Mobile Responsive */
+@media (max-width: 768px) {
+  .placement-officer-card {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .placement-officer-left {
+    width: 100%;
+  }
+
+  .placement-officer-photo {
+    width: 120px;
+    height: 150px;
+  }
+
+  .placement-officer-msg {
+    border-left: none;
+    border-top: 3px solid #c8963e;
+    border-radius: 0 0 8px 8px;
+    padding: 16px;
+  }
+
+  .placement-team-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
 }
