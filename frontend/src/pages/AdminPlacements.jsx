@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import ImageUpload from '../components/ImageUpload';
+import PdfUpload from '../components/PdfUpload';
 
 const API_URL = '/api';
 
@@ -427,17 +428,18 @@ function AdminPlacements() {
                       placeholder="Year (e.g. 2023-24)"
                       style={{ width: '140px', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }}
                     />
-                    <input
-                      type="text"
-                      value={row.pdfUrl}
-                      onChange={(e) => {
-                        const updated = [...form.recordTable];
-                        updated[i] = { ...updated[i], pdfUrl: e.target.value };
-                        handleChange('recordTable', updated);
-                      }}
-                      placeholder="PDF URL"
-                      style={{ flex: 1, padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }}
-                    />
+                    <div style={{ flex: 1 }}>
+                      <PdfUpload
+                        value={row.pdfUrl}
+                        onChange={(url) => {
+                          const updated = [...form.recordTable];
+                          updated[i] = { ...updated[i], pdfUrl: url };
+                          handleChange('recordTable', updated);
+                        }}
+                        compact
+                        label="Upload PDF"
+                      />
+                    </div>
                     <button
                       className="member-remove-btn"
                       title="Remove"
