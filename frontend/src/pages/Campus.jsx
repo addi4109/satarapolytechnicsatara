@@ -207,14 +207,6 @@ function Campus() {
                   <span className="stat-txt">Journals & Periodicals</span>
                 </div>
                 <div className="stat-box">
-                  <span className="stat-num">30+</span>
-                  <span className="stat-txt">Magazines</span>
-                </div>
-                <div className="stat-box">
-                  <span className="stat-num">15</span>
-                  <span className="stat-txt">Computers</span>
-                </div>
-                <div className="stat-box">
                   <span className="stat-num">100</span>
                   <span className="stat-txt">Seating Capacity</span>
                 </div>
