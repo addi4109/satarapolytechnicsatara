@@ -226,13 +226,84 @@ function Placements() {
             </>
           )}
 
-          {/* Placement Process */}
+          {/* Placement Process - Static + Steps from Admin */}
           {active === 'process' && (
             <>
-              <h2 className="content-heading">{getSection('process').title || 'Placement Process'}</h2>
+              <h2 className="content-heading">Placement Process</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('process').content || STATIC_CONTENT.placements.process)}
-              {renderSteps(getSection('process').steps)}
+              <p>
+                The placement process at Shri Satara Polytechnic, Satara is systematic and
+                student-centric. Our Training &amp; Placement Cell ensures that every student is
+                well-prepared for campus recruitment through a structured process that includes
+                aptitude training, soft skill development, mock interviews, and group discussions.
+              </p>
+              <p>
+                We maintain strong industry connections and regularly invite leading companies for
+                campus recruitment drives. The placement cell coordinates the entire process from
+                pre-placement talks to final offer letters, ensuring a smooth experience for both
+                students and recruiters.
+              </p>
+
+              {/* Stats */}
+              <div className="overview-stats">
+                <div className="stat-box">
+                  <span className="stat-num">50+</span>
+                  <span className="stat-txt">Companies Visited</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">85%</span>
+                  <span className="stat-txt">Placement Rate</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">03</span>
+                  <span className="stat-txt">Training Modules</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">100%</span>
+                  <span className="stat-txt">Career Support</span>
+                </div>
+              </div>
+
+              {/* Steps from Admin */}
+              {getSection('process').steps && getSection('process').steps.length > 0 && (
+                <div style={{ marginTop: '32px' }}>
+                  <h3 className="content-sub-heading">How It Works</h3>
+                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '16px', borderRadius: '2px' }}></div>
+                  {renderSteps(getSection('process').steps)}
+                </div>
+              )}
+
+              {/* Key Features */}
+              <div style={{ marginTop: '36px' }}>
+                <h3 className="content-sub-heading">Why Our Placements Stand Out</h3>
+                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div className="info-table">
+                  <div className="info-row">
+                    <span className="info-label">Aptitude Training</span>
+                    <span className="info-value">Regular aptitude sessions covering quantitative, logical reasoning and verbal ability for all pre-final and final year students.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Soft Skills Development</span>
+                    <span className="info-value">Communication skills, personality development, resume building and interview preparation workshops conducted throughout the year.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Mock Interviews</span>
+                    <span className="info-value">One-on-one mock interview sessions with industry professionals to build confidence and improve interview performance.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Industry Interaction</span>
+                    <span className="info-value">Regular guest lectures, industrial visits and seminars by industry experts to bridge the gap between academics and industry.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Campus Recruitment</span>
+                    <span className="info-value">On-campus recruitment drives organized with leading companies across IT, manufacturing, automobile and core engineering sectors.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Career Guidance</span>
+                    <span className="info-value">Personalized career counselling for students interested in higher studies, entrepreneurship or government job preparations.</span>
+                  </div>
+                </div>
+              </div>
             </>
           )}
 
