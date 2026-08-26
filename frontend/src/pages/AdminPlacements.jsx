@@ -607,17 +607,25 @@ function AdminPlacements() {
                       <button type="button" className="faculty-card-remove" onClick={() => removeRecruiter(idx)} title="Remove">
                         ✕
                       </button>
-                      <div className="faculty-card-img">
-                        <ImageUpload
-                          value={rec.logoUrl}
-                          onChange={(url) => {
-                            const updated = [...form.recruiters];
-                            updated[idx] = { ...updated[idx], logoUrl: url };
-                            handleChange('recruiters', updated);
-                          }}
-                          label=""
-                          placeholder="Logo"
-                        />
+                      <div className="faculty-card-img" style={{ height: '80px', overflow: 'hidden' }}>
+                        {rec.logoUrl ? (
+                          <img
+                            src={rec.logoUrl}
+                            alt={rec.name}
+                            style={{ width: '100%', height: '80px', objectFit: 'contain', display: 'block' }}
+                          />
+                        ) : (
+                          <ImageUpload
+                            value={rec.logoUrl}
+                            onChange={(url) => {
+                              const updated = [...form.recruiters];
+                              updated[idx] = { ...updated[idx], logoUrl: url };
+                              handleChange('recruiters', updated);
+                            }}
+                            label=""
+                            placeholder="Logo"
+                          />
+                        )}
                       </div>
                       <div className="faculty-card-fields">
                         <input type="text" placeholder="Company Name" value={rec.name} onChange={(e) => {
