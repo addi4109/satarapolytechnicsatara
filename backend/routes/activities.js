@@ -27,7 +27,7 @@ router.get('/:section', async (req, res) => {
 // Create or update section (upsert)
 router.post('/', async (req, res) => {
   try {
-    const { section, title, content, infoRows, stats, images, active } = req.body;
+    const { section, title, content, infoRows, stats, images, subSections, active } = req.body;
 
     if (!section) {
       return res.status(400).json({ error: 'Section is required' });
@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
 
     const entry = await Activity.findOneAndUpdate(
       { section },
-      { section, title, content, infoRows, stats, images, active },
+      { section, title, content, infoRows, stats, images, subSections, active },
       { new: true, upsert: true }
     );
 

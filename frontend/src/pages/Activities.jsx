@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import { SkeletonPage } from '../components/Skeleton';
 import SEO, { breadcrumbSchema } from '../components/SEO';
-import { STATIC_CONTENT } from '../data/staticContent';
 import './Academics.css';
 import './Gallery.css';
 
@@ -13,8 +12,6 @@ const routeMap = {
   sports: 'sports',
   cultural: 'cultural',
   technical: 'technical',
-  'industrial-visits': 'industrial-visits',
-  competitions: 'competitions',
   'academic-events': 'academic-events',
 };
 
@@ -23,9 +20,26 @@ const sidebarLinks = [
   { id: 'cultural', label: 'Cultural' },
   { id: 'technical', label: 'Technical Events' },
   { id: 'academic-events', label: 'Academic Events & Activities' },
-  { id: 'industrial-visits', label: 'Industrial Visits' },
-  { id: 'competitions', label: 'Competitions' },
 ];
+
+const staticContent = {
+  sports: {
+    title: 'Sports',
+    description: 'The institute encourages students to participate in sports at inter-collegiate, university and state level. Annual sports events, qualified coaches and well-maintained grounds help students build fitness, team spirit and sportsmanship. Students have represented the college in cricket, volleyball, kabaddi, athletics and many other sports at various levels.',
+  },
+  cultural: {
+    title: 'Cultural',
+    description: 'Cultural activities give students a platform to showcase their talent in music, dance, drama and fine arts. Events are organised throughout the year, including the annual gathering and youth festival competitions. The college celebrates cultural diversity and encourages students to express their creativity through various performing and visual arts.',
+  },
+  technical: {
+    title: 'Technical Events',
+    description: 'Technical events such as paper presentations, project exhibitions, coding contests, robo-races and workshops help students apply classroom knowledge to real-world problems and sharpen their innovation skills. These events provide a competitive platform for students to demonstrate their technical abilities and learn from peers.',
+  },
+  'academic-events': {
+    title: 'Academic Events & Activities',
+    description: 'Academic events and activities including seminars, workshops, guest lectures, and technical talks are organised to supplement classroom teaching and provide exposure to industry trends and emerging technologies. These events bridge the gap between academic learning and industry requirements.',
+  },
+};
 
 function Activities() {
   const { page } = useParams();
@@ -66,63 +80,8 @@ function Activities() {
       .finally(() => setLoading(false));
   }, []);
 
-  const renderContent = (text) => {
-    if (!text) return null;
-    return text.split('\n').filter(p => p.trim()).map((para, i) => (
-      <p key={i}>{para}</p>
-    ));
-  };
-
-  const renderInfoRows = (rows) => {
-    if (!rows || rows.length === 0) return null;
-    return (
-      <div className="info-table">
-        {rows.map((row, i) => (
-          <div className="info-row" key={i}>
-            <span className="info-label">{row.label}</span>
-            <span className="info-value">{row.value}</span>
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-  const renderStats = (stats) => {
-    if (!stats || stats.length === 0) return null;
-    return (
-      <div className="overview-stats">
-        {stats.map((stat, i) => (
-          <div className="stat-box" key={i}>
-            <span className="stat-num">{stat.num}</span>
-            <span className="stat-txt">{stat.label}</span>
-          </div>
-        ))}
-      </div>
-    );
-  };
-
   const getSection = (key) => sections[key] || {};
-
-  const renderImages = (key) => {
-    const images = getSection(key).images || [];
-    if (images.length === 0) return null;
-    return (
-      <div className="photo-grid" style={{ marginTop: '24px' }}>
-        {images.map((img, i) => (
-          <div className="photo-card" key={i} onClick={() => setLightbox(img)} style={{ cursor: 'pointer' }}>
-            <div className="photo-thumb">
-              <img src={img.url} alt={img.caption || `Image ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </div>
-            {img.caption && (
-              <div className="photo-info">
-                <h4 className="photo-title">{img.caption}</h4>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    );
-  };
+  const staticInfo = staticContent[active] || {};
 
   if (loading) {
     return (
@@ -136,14 +95,14 @@ function Activities() {
   return (
     <>
       <SEO
-        title={`${active.charAt(0).toUpperCase() + active.slice(1)} | Activities`}
-        description={`${active === 'sports' ? 'Sports activities and achievements at Satara Polytechnic.' : active === 'cultural' ? 'Cultural events and celebrations at Satara Polytechnic.' : active === 'technical' ? 'Technical events, workshops, and seminars at Satara Polytechnic.' : active === 'industrial-visits' ? 'Industrial visits for practical exposure at Satara Polytechnic.' : 'Competitions and contests organized at Satara Polytechnic.'}`}
-        keywords={`Satara Polytechnic ${active}, college activities, polytechnic sports, cultural events, technical events, industrial visits`}
+        title={`${staticInfo.title || active} | Activities`}
+        description={`${staticInfo.title} at Satara Polytechnic, Satara.`}
+        keywords={`Satara Polytechnic ${active}, college activities, polytechnic sports, cultural events, technical events`}
         url={`/activities/${page || 'sports'}`}
         structuredData={breadcrumbSchema([
           { name: 'Home', url: '/' },
           { name: 'Activities', url: '/activities' },
-          { name: active.charAt(0).toUpperCase() + active.slice(1) },
+          { name: staticInfo.title || active },
         ])}
       />
       <PageBanner
@@ -176,76 +135,43 @@ function Activities() {
         </aside>
 
         <main className="about-content">
-          {/* Sports */}
-          {active === 'sports' && (
-            <>
-              <h2 className="content-heading">{getSection('sports').title || 'Sports'}</h2>
-              <div className="content-line"></div>
-              {renderContent(getSection('sports').content || STATIC_CONTENT.activities.sports)}
-              {renderStats(getSection('sports').stats)}
-              {renderInfoRows(getSection('sports').infoRows)}
-              {renderImages('sports')}
-            </>
+          {/* Section with static heading + sub-sections from admin */}
+          <h2 className="content-heading">{staticInfo.title}</h2>
+          <div className="content-line"></div>
+          <p>{staticInfo.description}</p>
+
+          {/* Sub-sections from admin */}
+          {getSection(active).subSections && getSection(active).subSections.length > 0 && (
+            <div style={{ marginTop: '28px' }}>
+              {getSection(active).subSections.map((sub, i) => (
+                <div key={i} style={{ marginBottom: '32px' }}>
+                  <h3 className="content-sub-heading">{sub.title}</h3>
+                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '16px', borderRadius: '2px' }}></div>
+                  {sub.description && <p style={{ color: '#555', lineHeight: '1.7', marginBottom: '16px' }}>{sub.description}</p>}
+                  {sub.images && sub.images.length > 0 && (
+                    <div className="photo-grid">
+                      {sub.images.map((img, j) => (
+                        <div className="photo-card" key={j} onClick={() => setLightbox(img)} style={{ cursor: 'pointer' }}>
+                          <div className="photo-thumb">
+                            <img src={img.url} alt={img.caption || `Image ${j + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          </div>
+                          {img.caption && (
+                            <div className="photo-info">
+                              <h4 className="photo-title">{img.caption}</h4>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           )}
 
-          {/* Cultural */}
-          {active === 'cultural' && (
-            <>
-              <h2 className="content-heading">{getSection('cultural').title || 'Cultural'}</h2>
-              <div className="content-line"></div>
-              {renderContent(getSection('cultural').content || STATIC_CONTENT.activities.cultural)}
-              {renderStats(getSection('cultural').stats)}
-              {renderInfoRows(getSection('cultural').infoRows)}
-              {renderImages('cultural')}
-            </>
-          )}
-
-          {/* Technical Events */}
-          {active === 'technical' && (
-            <>
-              <h2 className="content-heading">{getSection('technical').title || 'Technical Events'}</h2>
-              <div className="content-line"></div>
-              {renderContent(getSection('technical').content || STATIC_CONTENT.activities.technical)}
-              {renderStats(getSection('technical').stats)}
-              {renderInfoRows(getSection('technical').infoRows)}
-              {renderImages('technical')}
-            </>
-          )}
-
-          {/* Industrial Visits */}
-          {active === 'industrial-visits' && (
-            <>
-              <h2 className="content-heading">{getSection('industrial-visits').title || 'Industrial Visits'}</h2>
-              <div className="content-line"></div>
-              {renderContent(getSection('industrial-visits').content || STATIC_CONTENT.activities['industrial-visits'])}
-              {renderStats(getSection('industrial-visits').stats)}
-              {renderInfoRows(getSection('industrial-visits').infoRows)}
-              {renderImages('industrial-visits')}
-            </>
-          )}
-
-          {/* Academic Events */}
-          {active === 'academic-events' && (
-            <>
-              <h2 className="content-heading">{getSection('academic-events').title || 'Academic Events & Activities'}</h2>
-              <div className="content-line"></div>
-              {renderContent(getSection('academic-events').content)}
-              {renderStats(getSection('academic-events').stats)}
-              {renderInfoRows(getSection('academic-events').infoRows)}
-              {renderImages('academic-events')}
-            </>
-          )}
-
-          {/* Competitions */}
-          {active === 'competitions' && (
-            <>
-              <h2 className="content-heading">{getSection('competitions').title || 'Competitions'}</h2>
-              <div className="content-line"></div>
-              {renderContent(getSection('competitions').content || STATIC_CONTENT.activities.competitions)}
-              {renderStats(getSection('competitions').stats)}
-              {renderInfoRows(getSection('competitions').infoRows)}
-              {renderImages('competitions')}
-            </>
+          {/* Fallback: if no sub-sections */}
+          {(!getSection(active).subSections || getSection(active).subSections.length === 0) && (
+            <p style={{ color: '#888', fontStyle: 'italic', marginTop: '20px' }}>Details will be updated soon.</p>
           )}
         </main>
       </div>

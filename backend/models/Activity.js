@@ -4,7 +4,7 @@ const ActivitySchema = new mongoose.Schema({
   section: {
     type: String,
     required: true,
-    enum: ['sports', 'cultural', 'technical', 'industrial-visits', 'competitions', 'academic-events'],
+    enum: ['sports', 'cultural', 'technical', 'academic-events'],
     unique: true,
   },
   title: {
@@ -24,9 +24,17 @@ const ActivitySchema = new mongoose.Schema({
     type: [{ num: String, label: String }],
     default: [],
   },
-  // Gallery images for the section
   images: {
     type: [{ url: String, caption: String }],
+    default: [],
+  },
+  // Sub-sections for sports/events (title, description, images for each)
+  subSections: {
+    type: [{
+      title: String,
+      description: String,
+      images: [{ url: String, caption: String }],
+    }],
     default: [],
   },
   active: {
