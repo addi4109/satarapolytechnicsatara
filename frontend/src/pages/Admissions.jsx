@@ -444,46 +444,7 @@ function Admissions() {
                 </div>
               </div>
 
-              {/* Department Cards */}
-              <div style={{ marginTop: '36px' }}>
-                <h3 className="content-sub-heading">Our Departments</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
-                {(() => {
-                  const courseTable = getSection('courses').courseTable || [];
-                  const courseMap = {};
-                  courseTable.forEach((c) => { courseMap[c.name?.toLowerCase()] = c; });
 
-                  const deptData = [
-                    { name: 'Computer Engineering', desc: 'Programming, software development, networking, database management and emerging technologies.', svg: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01"/></svg> },
-                    { name: 'Electronics & Telecommunication', desc: 'Electronics circuits, communication systems, signal processing and embedded systems.', svg: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12h5l3-9 4 18 3-9h5"/></svg> },
-                    { name: 'Mechanical Engineering', desc: 'Design, manufacturing, thermodynamics, CAD/CAM and industrial engineering.', svg: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> },
-                    { name: 'Chemical Engineering', desc: 'Chemical processes, unit operations, process design, environmental engineering and safety.', svg: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M7 2h10M12 2v6M12 8l-4 4M12 8l4 4M5 14h14M8 14v6M16 14v6"/></svg> },
-                    { name: 'Electrical Engineering', desc: 'Power systems, electrical machines, control systems, renewable energy and instrumentation.', svg: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> },
-                    { name: 'Automobile Engineering', desc: 'Automotive systems, engine technology, vehicle design, diagnostics and EV technology.', svg: <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg> },
-                  ];
-
-                  return (
-                    <div className="course-dept-grid">
-                      {deptData.map((dept, i) => {
-                        const match = courseMap[dept.name?.toLowerCase()];
-                        return (
-                          <div className="course-dept-card" key={i}>
-                            <div className="course-dept-icon">
-                              {dept.svg}
-                            </div>
-                            <h4>{dept.name}</h4>
-                            <p>{dept.desc}</p>
-                            <div className="course-dept-meta">
-                              <span>Duration: {match?.duration || '3 Years'}</span>
-                              <span>Intake: {match?.intake || '60'}</span>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  );
-                })()}
-              </div>
 
               {/* Course Table from Admin */}
               {getSection('courses').courseTable && getSection('courses').courseTable.length > 0 && (
