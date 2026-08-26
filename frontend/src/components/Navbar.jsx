@@ -70,7 +70,8 @@ function Navbar() {
               link: `/departments/${d.slug}`,
             })),
             { divider: true },
-            { label: academicTabName, link: '/academics/calendar', isSubHeader: true },
+            { label: academicTabName, isTitle: true },
+            { label: academicTabName, link: '/academics/calendar' },
           ],
         },
         {
@@ -271,9 +272,13 @@ function Navbar() {
                             {col.items.map((child, iIdx) => (
                               child.divider ? (
                                 <li key={iIdx} className="dropdown-divider" style={{ borderTop: '1px solid #e4e8ed', margin: '8px 0', listStyle: 'none' }}></li>
+                              ) : child.isTitle ? (
+                                <li key={iIdx} style={{ padding: '4px 18px 2px', fontWeight: 700, color: '#243358', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', listStyle: 'none' }}>
+                                  {child.label}
+                                </li>
                               ) : (
                                 <li key={iIdx}>
-                                  <a href={child.link} onClick={() => setMobileOpen(false)} className={child.isSubHeader ? 'dropdown-sub-header' : ''}>
+                                  <a href={child.link} onClick={() => setMobileOpen(false)}>
                                     {child.label}
                                   </a>
                                 </li>
