@@ -3,7 +3,6 @@ import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from 
 import { SortableContext, useSortable, arrayMove, rectSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-// Context to pass drag handle listeners to children
 const DragHandleContext = createContext(null);
 
 function SortableItem({ id, children }) {
@@ -64,9 +63,10 @@ export default function SortableGrid({ items, renderItem, onReorder, gridStyle, 
   );
 }
 
-// Drag handle - must be used inside SortableGrid's renderItem
-// It automatically picks up the drag listeners from context
-export function DragHandle({ style }) {
+// Drag handle - use inside SortableGrid's renderItem
+// Automatically picks up drag listeners from context
+// Usage: <DragHandle /> inside a card with position: relative
+export function DragHandle({ style, className }) {
   const ctx = useContext(DragHandleContext);
   if (!ctx) return null;
 
@@ -74,15 +74,17 @@ export function DragHandle({ style }) {
     <span
       {...ctx.listeners}
       {...ctx.attributes}
+      className={className || 'sortable-drag-handle'}
       style={{
         cursor: 'grab',
-        color: '#bbb',
-        fontSize: '18px',
+        color: '#999',
+        fontSize: '20px',
         padding: '4px 6px',
         userSelect: 'none',
         display: 'inline-flex',
         alignItems: 'center',
         touchAction: 'none',
+        lineHeight: 1,
         ...style,
       }}
       title="Drag to reorder"

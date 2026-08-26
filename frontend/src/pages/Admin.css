@@ -1382,12 +1382,30 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
-.gb-member-card .drag-handle {
+.gb-member-card .drag-handle,
+.gb-member-card .sortable-drag-handle {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  background: rgba(255,255,255,0.9);
+  border-radius: 4px;
+  z-index: 10;
+}
+
+.gb-member-card:hover .drag-handle,
+.gb-member-card:hover .sortable-drag-handle {
+  opacity: 1;
+}
+
+/* Global drag handle styles */
+.sortable-drag-handle {
   opacity: 0;
   transition: opacity 0.2s;
 }
 
-.gb-member-card:hover .drag-handle {
+*:hover > .sortable-drag-handle {
   opacity: 1;
 }
 
