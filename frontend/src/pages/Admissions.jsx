@@ -544,56 +544,353 @@ function Admissions() {
             </>
           )}
 
-          {/* Process */}
+          {/* Process - Static Professional Layout */}
           {active === 'process' && (
             <>
-              <h2 className="content-heading">{getSection('process').title || 'Admission Process'}</h2>
+              <h2 className="content-heading">Admission Process</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('process').content || STATIC_CONTENT.admissions.process)}
+              <p>
+                Admission to diploma engineering programmes at Shri Satara Polytechnic, Satara is
+                conducted through the Central Admission Process (CAP) as per the guidelines of the
+                Directorate of Technical Education (DTE), Maharashtra. The entire process is
+                conducted online and is transparent, merit-based, and accessible to all eligible
+                candidates across the state.
+              </p>
+              <p>
+                The admission process involves online registration, document verification, preference
+                filling, seat allocation through merit rounds, and final confirmation at the institute.
+                Candidates are advised to keep all original documents ready and visit the institute for
+                physical verification once a seat is allotted.
+              </p>
+
+              {/* Stats */}
+              <div className="overview-stats">
+                <div className="stat-box">
+                  <span className="stat-num">04</span>
+                  <span className="stat-txt">CAP Rounds</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">100%</span>
+                  <span className="stat-txt">Online Process</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">03</span>
+                  <span className="stat-txt">Document Verification</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-num">24/7</span>
+                  <span className="stat-txt">Helpline Support</span>
+                </div>
+              </div>
+
               {renderSteps(getSection('process').steps)}
+
+              {/* Important Notes */}
+              <div style={{ marginTop: '36px' }}>
+                <h3 className="content-sub-heading">Important Guidelines</h3>
+                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div className="info-table">
+                  <div className="info-row">
+                    <span className="info-label">Registration</span>
+                    <span className="info-value">Register on the DTE Maharashtra CAP portal using a valid email and mobile number. Keep login credentials safe for all rounds.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Document Verification</span>
+                    <span className="info-value">Visit the nearest Facilitation Centre (FC) with original documents and attested photocopies for physical verification.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Preference Filling</span>
+                    <span className="info-value">Fill institute and course preferences in order of priority. You may fill multiple choices across institutes and branches.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Seat Allotment</span>
+                    <span className="info-value">Seats are allocated based on merit rank, preferences filled, and available seats. Check allotment on the CAP portal.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Confirm Admission</span>
+                    <span className="info-value">Report to the allotted institute within the given timeline with fee receipt and all original documents for confirmation.</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Cap Rounds</span>
+                    <span className="info-value">Multiple CAP rounds are conducted. If not satisfied, candidates canfloat to the next round. Spot rounds may follow.</span>
+                  </div>
+                </div>
+              </div>
+
               {renderSubSections(getSection('process').subSections)}
             </>
           )}
 
-          {/* First Year */}
+          {/* First Year - Static Professional Layout */}
           {active === 'first-year' && (
             <>
-              <h2 className="content-heading">{getSection('first-year').title || 'First Year Admission'}</h2>
+              <h2 className="content-heading">First Year Admission</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('first-year').content || STATIC_CONTENT.admissions['first-year'])}
+              <p>
+                First year diploma admission at Shri Satara Polytechnic, Satara is open to candidates
+                who have passed the SSC (Class X) or equivalent examination conducted by a recognized
+                board with Mathematics and Science as compulsory subjects. Admission is carried out
+                through the Central Admission Process (CAP) conducted by DTE Maharashtra.
+              </p>
+              <p>
+                Candidates belonging to various categories (Open, SC, ST, OBC, VJNT, SBC, EWS, and
+                Minority) are eligible for reservation benefits as per the Government of Maharashtra
+                norms. The institute also offers supernumerary seats for candidates from economically
+                weaker sections and orphan candidates.
+              </p>
+
+              {/* Eligibility Quick Info */}
+              <div className="info-table" style={{ marginTop: '20px' }}>
+                <div className="info-row">
+                  <span className="info-label">Eligibility</span>
+                  <span className="info-value">SSC (Class X) or equivalent with Mathematics and Science</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Admission Mode</span>
+                  <span className="info-value">Central Admission Process (CAP) by DTE Maharashtra</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Duration</span>
+                  <span className="info-value">3 Years (6 Semesters)</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Total Intake</span>
+                  <span className="info-value">360 seats across 6 engineering branches</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Age Limit</span>
+                  <span className="info-value">Minimum 15 years as on the date prescribed by DTE</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Nationality</span>
+                  <span className="info-value">Indian nationals domiciled in Maharashtra are eligible</span>
+                </div>
+              </div>
+
               {renderDocuments(getSection('first-year').documents)}
+
+              {/* Fee Payment Info */}
+              <div style={{ marginTop: '32px' }}>
+                <h3 className="content-sub-heading">Fee Payment Guidelines</h3>
+                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div className="info-table">
+                  <div className="info-row">
+                    <span className="info-label">Payment Mode</span>
+                    <span className="info-value">Online payment through CAP portal or Demand Draft in favour of "Shri Satara Polytechnic, Satara"</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Fee Deadline</span>
+                    <span className="info-value">Fees must be paid within the timeline specified in the CAP allotment letter</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Refund Policy</span>
+                    <span className="info-value">Fee refund as per DTE norms if admission is cancelled before the prescribed date</span>
+                  </div>
+                </div>
+              </div>
+
               {renderSubSections(getSection('first-year').subSections)}
             </>
           )}
 
-          {/* Direct Second Year */}
+          {/* Direct Second Year - Static Professional Layout */}
           {active === 'direct-second' && (
             <>
-              <h2 className="content-heading">{getSection('direct-second').title || 'Direct Second Year Admission'}</h2>
+              <h2 className="content-heading">Direct Second Year Admission</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('direct-second').content || STATIC_CONTENT.admissions['direct-second'])}
+              <p>
+                Direct second year admission at Shri Satara Polytechnic, Satara allows eligible
+                candidates to directly enter the second year (third semester) of the diploma programme.
+                This pathway is available for candidates who have completed HSC (Science stream), or
+                hold an ITI certificate or 12th Technical qualification as prescribed by DTE Maharashtra.
+              </p>
+              <p>
+                This route saves one year of study and is ideal for students who wish to transition from
+                science or technical backgrounds into diploma engineering. The admission is conducted
+                through CAP rounds and also through Institute Level / Management quota for vacant seats.
+              </p>
+
+              {/* Eligibility Quick Info */}
+              <div className="info-table" style={{ marginTop: '20px' }}>
+                <div className="info-row">
+                  <span className="info-label">Eligibility</span>
+                  <span className="info-value">HSC (Science) / ITI / 12th Technical from a recognized board</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Admission Mode</span>
+                  <span className="info-value">CAP Rounds + Institute Level / Management Quota</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Duration</span>
+                  <span className="info-value">2 Years (4 Semesters) — direct entry into Second Year</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Branches Available</span>
+                  <span className="info-value">All 6 engineering branches with separate intake</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Lateral Entry</span>
+                  <span className="info-value">Eligible candidates skip the first year and begin from Semester 3</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Required Subjects</span>
+                  <span className="info-value">Physics, Chemistry, Mathematics in HSC or relevant ITI trade</span>
+                </div>
+              </div>
+
               {renderDocuments(getSection('direct-second').documents)}
+
+              {/* Key Benefits */}
+              <div style={{ marginTop: '32px' }}>
+                <h3 className="content-sub-heading">Benefits of Direct Second Year</h3>
+                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div className="info-table">
+                  <div className="info-row">
+                    <span className="info-label">Time Saving</span>
+                    <span className="info-value">Complete diploma in 2 years instead of 3 years, entering directly into the second year</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Career Advantage</span>
+                    <span className="info-value">Early entry into the workforce with a full diploma qualification</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Same Degree</span>
+                    <span className="info-value">Receive the same diploma certificate as regular 3-year students</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Placement Eligibility</span>
+                    <span className="info-value">Fully eligible for campus placements and recruitment drives</span>
+                  </div>
+                </div>
+              </div>
+
               {renderSubSections(getSection('direct-second').subSections)}
             </>
           )}
 
-          {/* A-CAP */}
+          {/* A-CAP - Static Professional Layout */}
           {active === 'acap' && (
             <>
-              <h2 className="content-heading">{getSection('acap').title || 'A-CAP'}</h2>
+              <h2 className="content-heading">A-CAP Admission</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('acap').content || STATIC_CONTENT.admissions.acap)}
+              <p>
+                The A-CAP (All India Admission Process) is conducted by the Central Government for
+                admission to diploma programmes inpolytechnic institutes across India. This process
+                is separate from the state CAP and is applicable for candidates from other states
+                or those who wish to seek admission through the all-India quota.
+              </p>
+              <p>
+                A-CAP seats are available in select institutes and branches. The counselling and seat
+                allocation is managed through the official A-CAP portal. Candidates must register,
+                fill preferences, and confirm admission as per the published schedule.
+              </p>
+
+              {/* Quick Info */}
+              <div className="info-table" style={{ marginTop: '20px' }}>
+                <div className="info-row">
+                  <span className="info-label">Conducting Body</span>
+                  <span className="info-value">Central Government — All India Council for Technical Education (AICTE)</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Eligibility</span>
+                  <span className="info-value">SSC (Class X) or equivalent from any recognized board in India</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Admission Mode</span>
+                  <span className="info-value">Online counselling through the A-CAP portal</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Applicable Candidates</span>
+                  <span className="info-value">Students from any state seeking admission in Maharashtra polytechnics</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Seat Availability</span>
+                  <span className="info-value">Limited seats — varies by institute and branch</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Website</span>
+                  <span className="info-value">Visit the official A-CAP portal for registration and schedule</span>
+                </div>
+              </div>
+
               {renderDocuments(getSection('acap').documents)}
+
+              {/* Process Steps */}
+              <div style={{ marginTop: '32px' }}>
+                <h3 className="content-sub-heading">A-CAP Admission Steps</h3>
+                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div className="process-steps">
+                  <div className="process-step">
+                    <div className="step-number">1</div>
+                    <div className="step-content">
+                      <h4>Online Registration</h4>
+                      <p>Register on the A-CAP portal using a valid email ID and mobile number. Complete the profile with personal and academic details.</p>
+                    </div>
+                  </div>
+                  <div className="process-step">
+                    <div className="step-number">2</div>
+                    <div className="step-content">
+                      <h4>Document Upload</h4>
+                      <p>Upload scanned copies of required documents including SSC marksheet, caste certificate (if applicable), and photographs.</p>
+                    </div>
+                  </div>
+                  <div className="process-step">
+                    <div className="step-number">3</div>
+                    <div className="step-content">
+                      <h4>Choice Filling</h4>
+                      <p>Fill institute and branch preferences in order of priority. Multiple choices can be filled across different institutes.</p>
+                    </div>
+                  </div>
+                  <div className="process-step">
+                    <div className="step-number">4</div>
+                    <div className="step-content">
+                      <h4>Seat Allotment & Confirmation</h4>
+                      <p>Check allotment result on the portal. If allotted, confirm the seat by paying the admission fee and reporting to the institute.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {renderSubSections(getSection('acap').subSections)}
             </>
           )}
 
-          {/* Fees */}
+          {/* Fees - Static Professional Layout */}
           {active === 'fees' && (
             <>
-              <h2 className="content-heading">{getSection('fees').title || 'Fee Structure'}</h2>
+              <h2 className="content-heading">Fee Structure</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('fees').content || STATIC_CONTENT.admissions.fees)}
+              <p>
+                The fee structure for diploma programmes at Shri Satara Polytechnic, Satara is approved
+                by the Shikshan Shulka Samiti (Fees Regulating Authority), Government of Maharashtra.
+                The fees mentioned below are as sanctioned for the current academic year and are subject
+                to revision as per government directives.
+              </p>
+              <p>
+                Fee concessions and waivers are available for students belonging to reserved categories
+                (SC, ST, VJNT, SBC, EWS) as per the Government of Maharashtra norms. Scholarships are
+                also available through various state and central government schemes.
+              </p>
+
+              {/* Fee Info */}
+              <div className="info-table" style={{ marginTop: '20px' }}>
+                <div className="info-row">
+                  <span className="info-label">Fee Approval</span>
+                  <span className="info-value">Approved by Shikshan Shulka Samiti, Government of Maharashtra</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Payment Mode</span>
+                  <span className="info-value">Online through CAP portal or Demand Draft at institute office</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Fee Concession</span>
+                  <span className="info-value">Available for SC/ST/VJNT/SBC/EWS candidates as per government norms</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Parent Income Limit</span>
+                  <span className="info-value">Fee structure applicable for parent income up to ₹8,00,000/-</span>
+                </div>
+              </div>
 
               {/* Helper: render a fee table */}
               {(() => {
@@ -651,12 +948,49 @@ function Admissions() {
             </>
           )}
 
-          {/* Scholarships */}
+          {/* Scholarships - Static Professional Layout */}
           {active === 'scholarships' && (
             <>
-              <h2 className="content-heading">{getSection('scholarships').title || 'Scholarships'}</h2>
+              <h2 className="content-heading">Scholarships</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('scholarships').content || STATIC_CONTENT.admissions.scholarships)}
+              <p>
+                Shri Satara Polytechnic, Satara provides access to various government and private
+                scholarship schemes for eligible students. These scholarships are designed to make
+                quality technical education affordable and accessible to students from all economic
+                backgrounds. Students from reserved categories, economically weaker sections, and
+                meritorious backgrounds can avail these benefits.
+              </p>
+              <p>
+                Scholarship applications are processed through the Government of Maharashtra's
+                scholarship portal. Students are advised to apply within the prescribed deadline
+                and ensure all required documents are uploaded correctly. The institute's scholarship
+                cell assists students throughout the application process.
+              </p>
+
+              {/* Scholarship Info */}
+              <div className="info-table" style={{ marginTop: '20px' }}>
+                <div className="info-row">
+                  <span className="info-label">Application Portal</span>
+                  <span className="info-value">Government of Maharashtra Scholarship Portal (mahaDBT)</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Eligible Categories</span>
+                  <span className="info-value">SC, ST, VJNT, SBC, OBC, EBC, Minority, EWS and Meritorious students</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Documents Required</span>
+                  <span className="info-value">Caste certificate, income certificate, Aadhaar, bank passbook, marksheet</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Application Deadline</span>
+                  <span className="info-value">As announced by the scholarship authority — typically within 3 months of admission</span>
+                </div>
+                <div className="info-row">
+                  <span className="info-label">Assistance</span>
+                  <span className="info-value">Institute scholarship cell provides guidance for application and document preparation</span>
+                </div>
+              </div>
+
               {renderSubSections(getSection('scholarships').subSections)}
 
               {getSection('scholarships').scholarshipDocs && getSection('scholarships').scholarshipDocs.length > 0 && (
@@ -694,12 +1028,60 @@ function Admissions() {
             </>
           )}
 
-          {/* Brochure */}
+          {/* Brochure - Static Professional Layout */}
           {active === 'brochure' && (
             <>
-              <h2 className="content-heading">{getSection('brochure').title || 'College Brochure'}</h2>
+              <h2 className="content-heading">College Brochure</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('brochure').content || STATIC_CONTENT.admissions.brochure)}
+              <p>
+                Download the official college brochure of Shri Satara Polytechnic, Satara for
+                comprehensive information about the institute. The brochure covers details about
+                all six diploma engineering programmes, admission procedures, fee structure,
+                campus infrastructure, laboratory facilities, library resources, placement records,
+                scholarship opportunities, and campus life.
+              </p>
+              <p>
+                The brochure is published annually and contains the latest information about the
+                institute for the current academic year. Students and parents are encouraged to
+                read the brochure carefully before applying for admission.
+              </p>
+
+              {/* Brochure Contents */}
+              <div style={{ marginTop: '24px' }}>
+                <h3 className="content-sub-heading">What's Inside the Brochure</h3>
+                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div className="info-table">
+                  <div className="info-row">
+                    <span className="info-label">Institute Overview</span>
+                    <span className="info-value">History, vision, mission, and achievements of the institute</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Programmes Offered</span>
+                    <span className="info-value">Details of all 6 diploma engineering branches with intake capacity</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Admission Information</span>
+                    <span className="info-value">Step-by-step admission process, eligibility, and important dates</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Fee Structure</span>
+                    <span className="info-value">Category-wise fee details for First Year and Direct Second Year</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Campus Facilities</span>
+                    <span className="info-value">Labs, library, workshops, canteen, transport, and sports facilities</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Placement Records</span>
+                    <span className="info-value">Year-wise placement statistics and top recruiting companies</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Scholarships</span>
+                    <span className="info-value">Available scholarship schemes and application procedures</span>
+                  </div>
+                </div>
+              </div>
+
               {renderSubSections(getSection('brochure').subSections)}
 
               {getSection('brochure').pdfUrl ? (

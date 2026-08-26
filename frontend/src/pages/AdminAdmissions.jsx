@@ -492,40 +492,13 @@ function AdminAdmissions() {
         {/* Form */}
         <div className="admin-card">
           <div className="admin-card-header">
-            <h3>{activeTab === 'courses' ? 'Course Table' : activeTab === 'eligibility' ? 'Eligibility Points' : 'Section Content'}</h3>
+            <h3>{activeTab === 'courses' ? 'Course Table' : activeTab === 'eligibility' ? 'Eligibility Points' : activeTab === 'process' ? 'Process Steps' : activeTab === 'first-year' ? 'Documents Required' : activeTab === 'direct-second' ? 'Documents Required' : activeTab === 'acap' ? 'Documents Required' : activeTab === 'fees' ? 'Fee Structure' : activeTab === 'scholarships' ? 'Scholarship Categories' : activeTab === 'brochure' ? 'Brochure PDF' : 'Section Content'}</h3>
             {sections[activeTab] && activeTab !== 'courses' && activeTab !== 'eligibility' && (
               <button className="btn btn-danger btn-sm" onClick={handleDelete}>Delete</button>
             )}
           </div>
           <div className="admin-card-body">
-            {/* Title - hidden for courses */}
-            {activeTab !== 'courses' && activeTab !== 'eligibility' && (
-              <div className="form-group">
-                <label>Section Title</label>
-                <input
-                  type="text"
-                  value={form.title}
-                  onChange={(e) => handleChange('title', e.target.value)}
-                  placeholder={`Enter title for ${currentSection?.label}`}
-                />
-              </div>
-            )}
-
-            {/* Content - hidden for courses */}
-            {activeTab !== 'courses' && activeTab !== 'eligibility' && (
-              <div className="form-group">
-                <label>Content</label>
-                <textarea
-                  value={form.content}
-                  onChange={(e) => handleChange('content', e.target.value)}
-                  rows={6}
-                  placeholder="Write the main content here..."
-                  style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', resize: 'vertical', boxSizing: 'border-box' }}
-                />
-              </div>
-            )}
-
-            {/* Sub Sections - hidden for courses */}
+            {/* Sub Sections - hidden for courses and eligibility */}
             {activeTab !== 'courses' && activeTab !== 'eligibility' && (
               <>
                 <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
