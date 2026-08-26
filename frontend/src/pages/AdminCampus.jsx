@@ -337,7 +337,7 @@ function AdminCampus() {
                       <thead>
                         <tr>
                           {table.columns.map((col, ci) => (
-                            <th key={ci} style={ci === 0 ? { width: 50, textAlign: 'center' } : {}}>{col}</th>
+                            <th key={ci} style={ci === 0 ? { width: 50 } : {}}>{col}</th>
                           ))}
                         </tr>
                       </thead>
@@ -345,7 +345,7 @@ function AdminCampus() {
                         {table.rows.map((row, ri) => (
                           <tr key={ri}>
                             {row.map((cell, ci) => (
-                              <td key={ci} style={ci === 0 ? { textAlign: 'center', fontWeight: 600, color: '#243358' } : ci === 1 ? { fontWeight: 500 } : {}}>{cell}</td>
+                              <td key={ci} style={ci === 0 ? { width: 50, fontWeight: 600, color: '#243358' } : ci === 1 ? { fontWeight: 500 } : {}}>{cell}</td>
                             ))}
                           </tr>
                         ))}
@@ -441,7 +441,7 @@ function AdminCampus() {
                       <thead>
                         <tr>
                           {table.columns.map((col, ci) => (
-                            <th key={ci} style={ci === 0 ? { width: 50, textAlign: 'center' } : {}}>{col}</th>
+                            <th key={ci} style={ci === 0 ? { width: 50 } : {}}>{col}</th>
                           ))}
                         </tr>
                       </thead>
