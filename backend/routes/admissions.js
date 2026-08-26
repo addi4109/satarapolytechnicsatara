@@ -27,7 +27,7 @@ router.get('/:section', async (req, res) => {
 // Create or update section
 router.post('/', async (req, res) => {
   try {
-    const { section, title, content, stats, steps, documents, feeTables, courseTable, eligFirstYear, eligDirect2nd, feeRows1, feeRows2, pdfUrl, scholarshipDocs, subSections, active } = req.body;
+    const { section, title, content, stats, steps, documents, feeTables, courseTable, eligFirstYear, eligDirect2nd, feeRows1, feeRows2, pdfUrl, scholarshipDocs, infoRows, active } = req.body;
 
     if (!section) {
       return res.status(400).json({ error: 'Section is required' });
@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
 
     const entry = await Admission.findOneAndUpdate(
       { section },
-      { section, title, content, stats, steps, documents, feeTables, courseTable, eligFirstYear, eligDirect2nd, feeRows1, feeRows2, pdfUrl, scholarshipDocs, subSections, active },
+      { section, title, content, stats, steps, documents, feeTables, courseTable, eligFirstYear, eligDirect2nd, feeRows1, feeRows2, pdfUrl, scholarshipDocs, infoRows, active },
       { new: true, upsert: true }
     );
 

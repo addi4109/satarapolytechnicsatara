@@ -264,44 +264,32 @@ function Admissions() {
                 <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
                 <div className="admission-highlight-grid">
                   <div className="admission-highlight-card">
-                    <div className="highlight-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg>
-                    </div>
+                    <span className="highlight-num">01</span>
                     <h4>Approved by AICTE</h4>
                     <p>All programmes are approved by the All India Council for Technical Education (AICTE), New Delhi, ensuring national-level quality standards.</p>
                   </div>
                   <div className="admission-highlight-card">
-                    <div className="highlight-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
-                    </div>
+                    <span className="highlight-num">02</span>
                     <h4>Modern Infrastructure</h4>
                     <p>Well-equipped laboratories, computer centres, workshops and a library with 15,000+ books and digital resources.</p>
                   </div>
                   <div className="admission-highlight-card">
-                    <div className="highlight-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    </div>
+                    <span className="highlight-num">03</span>
                     <h4>Experienced Faculty</h4>
                     <p>Team of dedicated and qualified faculty members with industry experience committed to student success.</p>
                   </div>
                   <div className="admission-highlight-card">
-                    <div className="highlight-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8l-4 4-4-4"/><path d="M16 16l-4-4-4 4"/></svg>
-                    </div>
+                    <span className="highlight-num">04</span>
                     <h4>Placement Assistance</h4>
                     <p>Dedicated Training &amp; Placement Cell providing campus recruitment drives, soft skill training and career guidance.</p>
                   </div>
                   <div className="admission-highlight-card">
-                    <div className="highlight-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    </div>
+                    <span className="highlight-num">05</span>
                     <h4>Affiliated to MSBTE</h4>
                     <p>Fully affiliated to Maharashtra State Board of Technical Education (MSBTE), Mumbai with proven academic results.</p>
                   </div>
                   <div className="admission-highlight-card">
-                    <div className="highlight-icon">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    </div>
+                    <span className="highlight-num">06</span>
                     <h4>Scholarships Available</h4>
                     <p>Government and private scholarships for SC/ST/OBC/VJNT/Minority and EWS students making education affordable.</p>
                   </div>
@@ -356,32 +344,49 @@ function Admissions() {
               <div style={{ marginTop: '36px' }}>
                 <h3 className="content-sub-heading">Important Information</h3>
                 <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
-                <div className="info-table">
-                  <div className="info-row">
-                    <span className="info-label">Academic Year</span>
-                    <span className="info-value">2026-27</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Duration of Programme</span>
-                    <span className="info-value">3 Years (6 Semesters)</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Admission Mode</span>
-                    <span className="info-value">Central Admission Process (CAP) by DTE Maharashtra</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Institute Level Seats</span>
-                    <span className="info-value">Available for vacant seats after CAP rounds</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Direct Second Year</span>
-                    <span className="info-value">Available for SSC / HSC (Science) / ITI pass candidates</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Contact for Admissions</span>
-                    <span className="info-value">+91-2162 284 040 | satarapolyinfo@gmail.com</span>
-                  </div>
-                </div>
+                {(() => {
+                  const infoRows = getSection('overview').infoRows;
+                  if (infoRows && infoRows.length > 0) {
+                    return (
+                      <div className="info-table">
+                        {infoRows.map((row, i) => (
+                          <div className="info-row" key={i}>
+                            <span className="info-label">{row.label}</span>
+                            <span className="info-value">{row.value}</span>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  }
+                  return (
+                    <div className="info-table">
+                      <div className="info-row">
+                        <span className="info-label">Academic Year</span>
+                        <span className="info-value">2026-27</span>
+                      </div>
+                      <div className="info-row">
+                        <span className="info-label">Duration of Programme</span>
+                        <span className="info-value">3 Years (6 Semesters)</span>
+                      </div>
+                      <div className="info-row">
+                        <span className="info-label">Admission Mode</span>
+                        <span className="info-value">Central Admission Process (CAP) by DTE Maharashtra</span>
+                      </div>
+                      <div className="info-row">
+                        <span className="info-label">Institute Level Seats</span>
+                        <span className="info-value">Available for vacant seats after CAP rounds</span>
+                      </div>
+                      <div className="info-row">
+                        <span className="info-label">Direct Second Year</span>
+                        <span className="info-value">Available for SSC / HSC (Science) / ITI pass candidates</span>
+                      </div>
+                      <div className="info-row">
+                        <span className="info-label">Contact for Admissions</span>
+                        <span className="info-value">+91-2162 284 040 | satarapolyinfo@gmail.com</span>
+                      </div>
+                    </div>
+                  );
+                })()}
               </div>
 
               {/* Admission Routes */}

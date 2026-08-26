@@ -60,6 +60,10 @@ const AdmissionSchema = new mongoose.Schema({
     type: [{ name: String, duration: String, intake: String, direct2nd: String }],
     default: [],
   },
+  infoRows: {
+    type: [{ label: String, value: String }],
+    default: [],
+  },
   subSections: {
     type: [{
       title: { type: String, default: '' },

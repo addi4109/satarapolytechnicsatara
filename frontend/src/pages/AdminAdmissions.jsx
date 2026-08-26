@@ -15,7 +15,17 @@ const courseCellInput = {
   boxSizing: 'border-box',
 };
 
+const defaultInfoRows = [
+  { label: 'Academic Year', value: '2026-27' },
+  { label: 'Duration of Programme', value: '3 Years (6 Semesters)' },
+  { label: 'Admission Mode', value: 'Central Admission Process (CAP) by DTE Maharashtra' },
+  { label: 'Institute Level Seats', value: 'Available for vacant seats after CAP rounds' },
+  { label: 'Direct Second Year', value: 'Available for SSC / HSC (Science) / ITI pass candidates' },
+  { label: 'Contact for Admissions', value: '+91-2162 284 040 | satarapolyinfo@gmail.com' },
+];
+
 const SECTIONS = [
+  { key: 'overview', label: 'Admission Overview' },
   { key: 'courses', label: 'Courses Offered' },
   { key: 'eligibility', label: 'Eligibility' },
   { key: 'process', label: 'Admission Process' },
@@ -50,7 +60,7 @@ const defaultSection = {
   feeRows2: [...defaultFeeRows],
   pdfUrl: '',
   scholarshipDocs: [],
-  subSections: [],
+  infoRows: [...defaultInfoRows],
   active: true,
 };
 
@@ -156,7 +166,7 @@ function AdminAdmissions() {
         feeRows2: existing.feeRows2 && existing.feeRows2.length > 0 ? existing.feeRows2 : [...defaultFeeRows],
         pdfUrl: existing.pdfUrl || '',
         scholarshipDocs: existing.scholarshipDocs || [],
-        subSections: existing.subSections || [],
+        infoRows: existing.infoRows && existing.infoRows.length > 0 ? existing.infoRows : [...defaultInfoRows],
         active: existing.active !== false,
       });
     } else {
@@ -500,65 +510,55 @@ function AdminAdmissions() {
           <div className="admin-card-body">
 
 
-            {/* Overview - Stats */}
+            {/* Overview - Info Table */}
             {activeTab === 'overview' && (
               <>
                 <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Stats (Number - Label)</h4>
-                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'stretch' }}>
-                  {/* Add tile - always first */}
-                  <div
-                    onClick={addEmptyStat}
-                    title="Add Stat"
-                    style={{ width: '150px', boxSizing: 'border-box', minHeight: '104px', background: '#fff', border: '1px dashed #b9c3d4', borderRadius: '6px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '4px', cursor: 'pointer', color: '#243358' }}
-                  >
-                    <span style={{ fontSize: '28px', lineHeight: 1 }}>+</span>
-                    <span style={{ fontSize: '12px', fontWeight: 600 }}>Add Stat</span>
-                  </div>
+                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Important Information</h4>
+                <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Edit the info table shown on the Admission Overview page.</p>
 
-                  {form.stats.map((stat, i) => (
-                    editingStatIdx === i ? (
-                      /* Editing mode - inline inputs inside the small card */
-                      <div key={i} style={{ width: '150px', boxSizing: 'border-box', background: '#fff', border: '1px solid #c8963e', borderRadius: '6px', padding: '10px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                        <input
-                          autoFocus
-                          type="text"
-                          value={stat.num || ''}
-                          onChange={(e) => updateStat(i, 'num', e.target.value)}
-                          onKeyDown={(e) => e.key === 'Enter' && setEditingStatIdx(null)}
-                          placeholder="Number"
-                          style={{ width: '100%', padding: '7px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '12px', boxSizing: 'border-box' }}
-                        />
-                        <input
-                          type="text"
-                          value={stat.label || ''}
-                          onChange={(e) => updateStat(i, 'label', e.target.value)}
-                          onKeyDown={(e) => e.key === 'Enter' && setEditingStatIdx(null)}
-                          placeholder="Label"
-                          style={{ width: '100%', padding: '7px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '12px', boxSizing: 'border-box' }}
-                        />
-                        <button className="btn btn-success btn-sm" onClick={() => setEditingStatIdx(null)} style={{ width: '100%' }}>Done</button>
-                      </div>
-                    ) : (
-                      /* Display mode - same look as the live stat boxes */
-                      <div
-                        key={i}
-                        onClick={() => setEditingStatIdx(i)}
-                        title="Click to edit"
-                        style={{ position: 'relative', width: '150px', boxSizing: 'border-box', background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '6px', padding: '18px 12px 14px', textAlign: 'center', cursor: 'pointer' }}
-                      >
-                        <button
-                          onClick={(e) => { e.stopPropagation(); removeStat(i); }}
-                          title="Remove"
-                          style={{ position: 'absolute', top: '6px', right: '6px', width: '20px', height: '20px', borderRadius: '50%', border: 'none', background: '#fdecea', color: '#d32f2f', fontSize: '12px', fontWeight: 700, lineHeight: 1, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}
-                        >
-                          ×
-                        </button>
-                        <span style={{ display: 'block', fontSize: '22px', fontWeight: 700, color: '#243358', fontFamily: 'Georgia, serif' }}>{stat.num}</span>
-                        <span style={{ display: 'block', fontSize: '11.5px', color: '#777', marginTop: '4px' }}>{stat.label}</span>
-                      </div>
-                    )
-                  ))}
+                {form.infoRows.map((row, i) => (
+                  <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '10px', background: '#f8f9fb', border: '1px solid #e4e8ed', borderRadius: '6px', padding: '10px 12px' }}>
+                    <input
+                      type="text"
+                      value={row.label}
+                      onChange={(e) => {
+                        const updated = [...form.infoRows];
+                        updated[i] = { ...updated[i], label: e.target.value };
+                        handleChange('infoRows', updated);
+                      }}
+                      placeholder="Label"
+                      style={{ width: '200px', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', fontWeight: 600, boxSizing: 'border-box' }}
+                    />
+                    <input
+                      type="text"
+                      value={row.value}
+                      onChange={(e) => {
+                        const updated = [...form.infoRows];
+                        updated[i] = { ...updated[i], value: e.target.value };
+                        handleChange('infoRows', updated);
+                      }}
+                      placeholder="Value"
+                      style={{ flex: 1, padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }}
+                    />
+                    <button
+                      className="member-remove-btn"
+                      title="Remove"
+                      onClick={() => {
+                        handleChange('infoRows', form.infoRows.filter((_, j) => j !== i));
+                      }}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+
+                <div
+                  onClick={() => handleChange('infoRows', [...form.infoRows, { label: '', value: '' }])}
+                  title="Add Row"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px dashed #b9c3d4', borderRadius: '6px', padding: '8px 18px', cursor: 'pointer', color: '#243358', background: '#fff', fontWeight: 600, fontSize: '12.5px' }}
+                >
+                  <span style={{ fontSize: '18px', lineHeight: 1 }}>+</span> Add Row
                 </div>
               </>
             )}
@@ -1067,7 +1067,7 @@ function AdminAdmissions() {
                       feeRows2: sections[activeTab].feeRows2 && sections[activeTab].feeRows2.length > 0 ? sections[activeTab].feeRows2 : [...defaultFeeRows],
                       pdfUrl: sections[activeTab].pdfUrl || '',
                       scholarshipDocs: sections[activeTab].scholarshipDocs || [],
-                      subSections: sections[activeTab].subSections || [],
+                      infoRows: sections[activeTab].infoRows && sections[activeTab].infoRows.length > 0 ? sections[activeTab].infoRows : [...defaultInfoRows],
                       active: sections[activeTab].active !== false,
                     });
                   } else {
