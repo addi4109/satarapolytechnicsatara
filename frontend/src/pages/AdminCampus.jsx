@@ -551,24 +551,20 @@ function AdminCampus() {
                 </div>
 
                 {showStaffForm && (
-                  <div style={{ background: '#f8f9fa', border: '2px solid #c8963e', borderRadius: '10px', padding: '20px', marginBottom: '16px' }}>
+                  <div style={{ background: '#f8f9fa', border: '2px solid #c8963e', borderRadius: '10px', padding: '20px', marginBottom: '16px', maxWidth: '320px', margin: '0 auto 16px auto' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
                       <h4 style={{ margin: 0, fontSize: '14px', color: '#243358' }}>{editStaffIdx !== null ? 'Edit Staff' : 'Add Staff'}</h4>
                       <button onClick={cancelStaffForm} style={{ background: 'none', border: 'none', fontSize: '18px', cursor: 'pointer', color: '#999' }}>×</button>
                     </div>
-                    <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-                      <div style={{ flexShrink: 0 }}><ImageUpload value={staffForm.photoUrl} onChange={(url) => setStaffForm({ ...staffForm, photoUrl: url })} circle /></div>
-                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        <input type="text" value={staffForm.name} onChange={(e) => setStaffForm({ ...staffForm, name: e.target.value })} placeholder="Name *" style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
-                        <input type="text" value={staffForm.designation} onChange={(e) => setStaffForm({ ...staffForm, designation: e.target.value })} placeholder="Designation" style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
-                        <div style={{ display: 'flex', gap: '8px' }}>
-                          <input type="text" value={staffForm.phone} onChange={(e) => setStaffForm({ ...staffForm, phone: e.target.value })} placeholder="Phone" style={{ flex: 1, padding: '8px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
-                          <input type="email" value={staffForm.email} onChange={(e) => setStaffForm({ ...staffForm, email: e.target.value })} placeholder="Email" style={{ flex: 1, padding: '8px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
-                        </div>
-                        <div style={{ display: 'flex', gap: '8px' }}>
-                          <button className="btn btn-success btn-sm" onClick={saveStaff} style={{ flex: 1 }}>{editStaffIdx !== null ? 'Update' : 'Add'}</button>
-                          <button className="btn btn-secondary btn-sm" onClick={cancelStaffForm} style={{ flex: 1 }}>Cancel</button>
-                        </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+                      <div style={{ marginBottom: '4px' }}><ImageUpload value={staffForm.photoUrl} onChange={(url) => setStaffForm({ ...staffForm, photoUrl: url })} circle /></div>
+                      <input type="text" value={staffForm.name} onChange={(e) => setStaffForm({ ...staffForm, name: e.target.value })} placeholder="Name *" style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
+                      <input type="text" value={staffForm.designation} onChange={(e) => setStaffForm({ ...staffForm, designation: e.target.value })} placeholder="Designation" style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
+                      <input type="text" value={staffForm.phone} onChange={(e) => setStaffForm({ ...staffForm, phone: e.target.value })} placeholder="Phone" style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
+                      <input type="email" value={staffForm.email} onChange={(e) => setStaffForm({ ...staffForm, email: e.target.value })} placeholder="Email" style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
+                      <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
+                        <button className="btn btn-success btn-sm" onClick={saveStaff} style={{ flex: 1 }}>{editStaffIdx !== null ? 'Update' : 'Add'}</button>
+                        <button className="btn btn-secondary btn-sm" onClick={cancelStaffForm} style={{ flex: 1 }}>Cancel</button>
                       </div>
                     </div>
                   </div>
