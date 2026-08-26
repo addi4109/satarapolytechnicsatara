@@ -331,8 +331,25 @@
   }
 
   .enquiry-left {
-    width: 100%;
-    height: 160px;
+    display: none;
+  }
+
+  .enquiry-panel {
+    max-width: 480px;
+  }
+
+  .enquiry-close {
+    background: #f0f0f0;
+    color: #555;
+  }
+
+  .enquiry-close:hover {
+    background: #e0e0e0;
+    color: #222;
+  }
+
+  .enquiry-right {
+    padding: 36px 28px 28px;
   }
 
   .enquiry-right {
@@ -365,7 +382,20 @@
   }
 
   .enquiry-left {
-    height: 140px;
+    display: none;
+  }
+
+  .enquiry-panel {
+    max-width: 420px;
+  }
+
+  .enquiry-close {
+    background: #f0f0f0;
+    color: #555;
+  }
+
+  .enquiry-right {
+    padding: 32px 20px 24px;
   }
 
   .enquiry-right {
