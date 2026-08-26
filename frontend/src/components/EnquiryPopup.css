@@ -72,7 +72,7 @@
 .enquiry-left {
   width: 340px;
   flex-shrink: 0;
-  background: #1a2744;
+  background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,7 +85,7 @@
   height: 100%;
   object-fit: contain;
   display: block;
-  background: #1a2744;
+  background: #fff;
 }
 
 /* ===== Right form ===== */
