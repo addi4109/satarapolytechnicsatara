@@ -9,6 +9,7 @@ function Navbar() {
   const [mobileExpanded, setMobileExpanded] = useState(null);
   const [dbCells, setDbCells] = useState([]);
   const [dbDepts, setDbDepts] = useState([]);
+  const [academicTabName, setAcademicTabName] = useState('Academic Calendar');
 
   useEffect(() => {
     fetch(`${API_URL}/cells`)
@@ -19,6 +20,10 @@ function Navbar() {
       .then((res) => res.json())
       .then((data) => setDbDepts(data))
       .catch((err) => console.error('Failed to fetch departments for navbar:', err));
+    fetch(`${API_URL}/settings/academic_calendar_tab_name`)
+      .then((res) => res.json())
+      .then((data) => { if (data.value) setAcademicTabName(data.value); })
+      .catch(() => {});
   }, []);
 
   const menuData = [
@@ -59,10 +64,13 @@ function Navbar() {
       columns: [
         {
           header: 'Departments',
-          items: dbDepts.filter((d) => !d.hideFromHome).map((d) => ({
-            label: d.name,
-            link: `/departments/${d.slug}`,
-          })),
+          items: [
+            ...dbDepts.filter((d) => !d.hideFromHome).map((d) => ({
+              label: d.name,
+              link: `/departments/${d.slug}`,
+            })),
+            { label: academicTabName, link: '/academics/calendar' },
+          ],
         },
         {
           header: 'Cell and Committees',
