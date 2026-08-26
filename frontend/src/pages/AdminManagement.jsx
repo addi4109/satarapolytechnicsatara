@@ -36,6 +36,7 @@ function AdminManagement() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState(null);
+  const [editingRole, setEditingRole] = useState(false);
 
   // Governing Body state
   const [gbMembers, setGbMembers] = useState([]);
@@ -119,6 +120,7 @@ function AdminManagement() {
         setForm({ ...defaultEntry });
       }
       setMsg(null);
+      setEditingRole(false);
     }
   }, [activeTab, entries]);
 
@@ -573,127 +575,129 @@ function AdminManagement() {
             </div>
           )}
 
-          {/* ===== MANAGEMENT ROLE TABS ===== */}
+          {/* ===== MANAGEMENT ROLE TABS - Click to Edit ===== */}
           {activeTab !== 'governing-body' && activeTab !== 'local-governing-body' && (
-            <div style={{ flex: 1, padding: '0 24px 24px', display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
-              {/* Left: Circular Photo + Fields */}
-              <div style={{
-                background: '#fff',
-                border: '1px solid #e4e8ed',
-                borderRadius: '12px',
-                width: '300px',
-                flexShrink: 0,
-                overflow: 'hidden',
-                boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: '24px 20px 20px',
-              }}>
-                {/* Circular Photo Upload */}
-                <ImageUpload
-                  value={form.photoUrl}
-                  onChange={(url) => handleChange('photoUrl', url)}
-                  circle
-                />
+            <div style={{ flex: 1, padding: '0 24px 24px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                <span style={{ fontSize: '12px', color: '#888' }}>Click the card to edit</span>
+              </div>
 
-                {/* Fields below photo */}
-                <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '16px' }}>
-                  <div>
-                    <label style={{ fontSize: '12px', color: '#666', marginBottom: '4px', display: 'block' }}>Full Name *</label>
+              {/* Preview mode - looks like the live website */}
+              {!editingRole ? (
+                <div
+                  className="placement-officer-card"
+                  onClick={() => setEditingRole(true)}
+                  style={{ cursor: 'pointer' }}
+                  title="Click to edit"
+                >
+                  <div className="placement-officer-left">
+                    {form.photoUrl ? (
+                      <div className="placement-officer-photo">
+                        <img src={form.photoUrl} alt={form.name} />
+                      </div>
+                    ) : (
+                      <div className="placement-officer-photo" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f0f3f8' }}>
+                        <span style={{ fontSize: '48px', fontWeight: 700, color: '#243358', fontFamily: 'Georgia, serif' }}>?</span>
+                      </div>
+                    )}
+                    <h4 className="placement-officer-name">{form.name || currentRole?.label || 'Name'}</h4>
+                    <p className="placement-officer-designation">{form.title || currentRole?.label}</p>
+                    {form.qualification && (
+                      <p className="placement-officer-qual">{form.qualification}</p>
+                    )}
+                  </div>
+                  <div className="placement-officer-msg">
+                    {form.message ? (
+                      form.message.split('\n').filter(p => p.trim()).map((para, i) => (
+                        <p key={i}>{para}</p>
+                      ))
+                    ) : (
+                      <p style={{ fontStyle: 'italic', color: '#aaa' }}>No message added yet. Click to edit.</p>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                /* Edit mode */
+                <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', border: '2px solid #c8963e', borderRadius: '10px', padding: '24px', background: '#f5f7fa' }}>
+                  <div className="placement-officer-left">
+                    <div className="placement-officer-photo">
+                      <ImageUpload
+                        value={form.photoUrl}
+                        onChange={(url) => handleChange('photoUrl', url)}
+                        label=""
+                        placeholder="Photo"
+                      />
+                    </div>
                     <input
                       type="text"
                       value={form.name}
                       onChange={(e) => handleChange('name', e.target.value)}
-                      placeholder="e.g. Hon. Dr. Chetna Majgaonkar"
-                      style={{ width: '100%', fontSize: '13px', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', boxSizing: 'border-box' }}
+                      placeholder="Full Name"
+                      style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '14px', fontWeight: 700, fontFamily: 'Georgia, serif', color: '#243358', textAlign: 'center', marginBottom: '6px', boxSizing: 'border-box' }}
                     />
-                  </div>
-
-                  <div>
-                    <label style={{ fontSize: '12px', color: '#666', marginBottom: '4px', display: 'block' }}>Title / Designation</label>
                     <input
                       type="text"
                       value={form.title}
                       onChange={(e) => handleChange('title', e.target.value)}
-                      placeholder="e.g. Chairman, S. E. Society"
-                      style={{ width: '100%', fontSize: '13px', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', boxSizing: 'border-box' }}
+                      placeholder="Title / Designation"
+                      style={{ width: '100%', padding: '5px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', textAlign: 'center', color: '#243358', fontWeight: 500, marginBottom: '6px', boxSizing: 'border-box' }}
                     />
-                  </div>
-
-                  <div>
-                    <label style={{ fontSize: '12px', color: '#666', marginBottom: '4px', display: 'block' }}>Qualification</label>
                     <input
                       type="text"
                       value={form.qualification}
                       onChange={(e) => handleChange('qualification', e.target.value)}
-                      placeholder="e.g. ME (Mechanical)"
-                      style={{ width: '100%', fontSize: '13px', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', boxSizing: 'border-box' }}
+                      placeholder="Qualification"
+                      style={{ width: '100%', padding: '5px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', textAlign: 'center', color: '#666', boxSizing: 'border-box' }}
                     />
                   </div>
-
-                  <div>
-                    <label style={{ fontSize: '12px', color: '#666', marginBottom: '4px', display: 'block' }}>Short Description</label>
-                    <input
-                      type="text"
-                      value={form.shortDesc}
-                      onChange={(e) => handleChange('shortDesc', e.target.value)}
-                      placeholder="One-line description"
-                      style={{ width: '100%', fontSize: '13px', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', boxSizing: 'border-box' }}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Right side: Message + Actions */}
-              <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {/* Message */}
-                <div className="admin-card" style={{ overflow: 'hidden' }}>
-                  <div className="admin-card-header" style={{ padding: '8px 16px', flexShrink: 0 }}>
-                    <h3 style={{ margin: 0, fontSize: '14px' }}>Message / About</h3>
-                  </div>
-                  <div className="admin-card-body" style={{ padding: '12px 16px' }}>
+                  <div className="placement-officer-msg">
                     <textarea
                       value={form.message}
                       onChange={(e) => handleChange('message', e.target.value)}
                       placeholder="Write the message or about section..."
-                      rows={8}
-                      style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', resize: 'vertical', boxSizing: 'border-box', minHeight: '200px' }}
+                      rows={6}
+                      style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', color: '#555', lineHeight: '1.75', resize: 'vertical', boxSizing: 'border-box', minHeight: '120px' }}
                     />
                   </div>
                 </div>
+              )}
 
-                {/* Actions */}
-                <div style={{ display: 'flex', gap: '10px', flexShrink: 0 }}>
+              {editingRole && (
+                <div style={{ marginTop: '14px', display: 'flex', gap: '10px', alignItems: 'center' }}>
                   <button
-                    className="btn btn-primary"
-                    onClick={handleSave}
+                    className="btn btn-success btn-sm"
+                    onClick={() => { handleSave(); setEditingRole(false); }}
                     disabled={saving}
-                    style={{ padding: '10px 28px', fontSize: '14px' }}
+                    style={{ padding: '8px 22px', fontSize: '13px' }}
                   >
-                    {saving ? 'Saving...' : 'Save Details'}
+                    {saving ? 'Saving...' : 'Save & Done'}
                   </button>
                   <button
-                    className="btn btn-secondary"
+                    className="btn btn-secondary btn-sm"
                     onClick={() => {
                       if (activeEntry) {
                         setForm({ ...defaultEntry, ...activeEntry });
                       } else {
                         setForm({ ...defaultEntry });
                       }
+                      setEditingRole(false);
                       setMsg(null);
                     }}
-                    style={{ padding: '10px 28px', fontSize: '14px' }}
+                    style={{ padding: '8px 22px', fontSize: '13px' }}
                   >
-                    Reset
+                    Cancel
                   </button>
                   {activeEntry && (
-                    <button className="btn btn-danger" onClick={handleDelete} style={{ padding: '10px 28px', fontSize: '14px' }}>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => { handleDelete(); setEditingRole(false); }}
+                      style={{ padding: '8px 22px', fontSize: '13px' }}
+                    >
                       Delete
                     </button>
                   )}
                 </div>
-              </div>
+              )}
             </div>
           )}
         </div>
