@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import ImageUpload from '../components/ImageUpload';
 import VideoUpload from '../components/VideoUpload';
-import SortableGrid, { DragHandle } from '../components/SortableGrid';
 import './Admin.css';
 
 const API_URL = '/api';
@@ -110,29 +109,7 @@ function AdminGallery() {
 
   const isEditing = (id) => editingId === id;
 
-  // Drag reorder handler
-  const handleReorder = async (newItems, type) => {
-    // Update local state
-    if (type === 'photos') setPhotos(newItems);
-    else if (type === 'videos') setVideos(newItems);
-    else if (type === 'news') setNews(newItems);
-    else if (type === 'slides') setSlides(newItems);
 
-    // Save new order to backend
-    try {
-      const ep = type === 'photos' ? 'photos' : type === 'videos' ? 'videos' : type === 'news' ? 'news' : 'slides';
-      const updates = newItems.map((item, i) =>
-        fetch(`${API_URL}/${ep}/${item._id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...item, order: i }),
-        })
-      );
-      await Promise.all(updates);
-    } catch (err) {
-      console.error('Failed to save order:', err);
-    }
-  };
 
   // Inline form card
   const renderFormCard = () => (
@@ -304,47 +281,39 @@ function AdminGallery() {
             {/* Inline Form Card */}
             {adding && renderFormCard()}
 
-            {/* ===== PHOTOS with drag reorder ===== */}
-            {tab === 'photos' && (
-              <SortableGrid
-                items={photos}
-                onReorder={(newItems) => handleReorder(newItems, 'photos')}
-                
-                renderItem={(p) => (
-                  isEditing(p._id) ? (
-                    <div key={p._id}>{renderFormCard()}</div>
-                  ) : (
-                    <div key={p._id} style={{
-                      background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', overflow: 'hidden',
-                      transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
-                      position: 'relative',
-                    }}
-                    >
-                      <DragHandle />
-                      <style>{`.photo-drag-parent:hover .drag-handle{opacity:1 !important}`}</style>
-                      {p.image && <img src={p.image} alt={p.title} style={{ width: '100%', height: '160px', objectFit: 'cover' }} />}
-                      {!p.image && <div style={{ height: '160px', background: '#f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ccc', fontSize: '32px' }}>🖼</div>}
-                      <div style={{ padding: '12px 14px' }}>
-                        <span style={{ display: 'inline-block', padding: '2px 8px', background: '#e8f5e9', color: '#2e7d32', borderRadius: '4px', fontSize: '10px', fontWeight: 600, marginBottom: '6px' }}>{p.category}</span>
-                        <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '14px', fontWeight: 700 }}>{p.title}</h4>
-                        {p.description && <p style={{ margin: 0, color: '#666', fontSize: '12px', lineHeight: '1.4' }}>{p.description.substring(0, 60)}{p.description.length > 60 ? '...' : ''}</p>}
-                        <div style={{ display: 'flex', gap: '6px', marginTop: '10px' }}>
-                          <button onClick={(e) => { e.stopPropagation(); startEdit(p); }} style={{ padding: '4px 12px', background: '#fff', color: '#243358', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>Edit</button>
-                          {deleteConfirm === p._id ? (
-                            <>
-                              <button onClick={(e) => { e.stopPropagation(); handleDelete(p._id); }} style={{ padding: '4px 12px', background: '#dc3545', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: 'none', cursor: 'pointer' }}>Yes</button>
-                              <button onClick={(e) => { e.stopPropagation(); setDeleteConfirm(null); }} style={{ padding: '4px 12px', background: '#fff', color: '#555', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>No</button>
-                            </>
-                          ) : (
-                            <button onClick={(e) => { e.stopPropagation(); setDeleteConfirm(p._id); }} style={{ padding: '4px 12px', background: '#fff', color: '#dc3545', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #dc3545', cursor: 'pointer' }}>Delete</button>
-                          )}
-                        </div>
-                      </div>
+            {/* ===== PHOTOS ===== */}
+            {tab === 'photos' && photos.map((p) => (
+              isEditing(p._id) ? (
+                <div key={p._id}>{renderFormCard()}</div>
+              ) : (
+                <div key={p._id} style={{
+                  background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', overflow: 'hidden',
+                  transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
+                }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(36,51,88,0.1)'; e.currentTarget.style.borderColor = '#c8963e'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e4e8ed'; }}
+                >
+                  {p.image && <img src={p.image} alt={p.title} style={{ width: '100%', height: '160px', objectFit: 'cover' }} />}
+                  {!p.image && <div style={{ height: '160px', background: '#f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ccc', fontSize: '32px' }}></div>}
+                  <div style={{ padding: '12px 14px' }}>
+                    <span style={{ display: 'inline-block', padding: '2px 8px', background: '#e8f5e9', color: '#2e7d32', borderRadius: '4px', fontSize: '10px', fontWeight: 600, marginBottom: '6px' }}>{p.category}</span>
+                    <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '14px', fontWeight: 700 }}>{p.title}</h4>
+                    {p.description && <p style={{ margin: 0, color: '#666', fontSize: '12px', lineHeight: '1.4' }}>{p.description.substring(0, 60)}{p.description.length > 60 ? '...' : ''}</p>}
+                    <div style={{ display: 'flex', gap: '6px', marginTop: '10px' }}>
+                      <button onClick={(e) => { e.stopPropagation(); startEdit(p); }} style={{ padding: '4px 12px', background: '#fff', color: '#243358', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>Edit</button>
+                      {deleteConfirm === p._id ? (
+                        <>
+                          <button onClick={(e) => { e.stopPropagation(); handleDelete(p._id); }} style={{ padding: '4px 12px', background: '#dc3545', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: 'none', cursor: 'pointer' }}>Yes</button>
+                          <button onClick={(e) => { e.stopPropagation(); setDeleteConfirm(null); }} style={{ padding: '4px 12px', background: '#fff', color: '#555', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>No</button>
+                        </>
+                      ) : (
+                        <button onClick={(e) => { e.stopPropagation(); setDeleteConfirm(p._id); }} style={{ padding: '4px 12px', background: '#fff', color: '#dc3545', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #dc3545', cursor: 'pointer' }}>Delete</button>
+                      )}
                     </div>
-                  )
-                )}
-              />
-            )}
+                  </div>
+                </div>
+              )
+            ))}
 
             {/* ===== VIDEOS ===== */}
             {tab === 'videos' && videos.map((v) => (

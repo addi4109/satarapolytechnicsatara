@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import ImageUpload from '../components/ImageUpload';
-import SortableGrid, { DragHandle } from '../components/SortableGrid';
+
 import './Admin.css';
 import './Academics.css';
 import './Gallery.css';
@@ -144,18 +144,6 @@ function AdminActivities() {
     setEditingSubIdx(null);
   };
 
-  // Drag reorder handler for sub-sections
-  const handleSubReorder = (newItems) => {
-    handleChange('subSections', newItems);
-  };
-
-  // Drag reorder handler for sub-section images
-  const handleSubImgReorder = (subIdx, newImages) => {
-    const subs = [...form.subSections];
-    subs[subIdx] = { ...subs[subIdx], images: newImages };
-    handleChange('subSections', subs);
-  };
-
   const addSubImage = (subIdx) => {
     if (!newSubImage) return;
     const subs = [...form.subSections];
@@ -232,11 +220,8 @@ function AdminActivities() {
       <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Add individual sports, events or activities with title, description and images.</p>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <SortableGrid
-        items={form.subSections}
-        onReorder={handleSubReorder}
-        renderItem={(sub, i) => (
-        <div style={{ padding: '16px', background: editingSubIdx === i ? '#fffbe6' : '#f8f9fa', border: editingSubIdx === i ? '2px solid #c8963e' : '1px solid #e4e8ed', borderRadius: '10px', position: 'relative' }}>
+      {form.subSections.map((sub, i) => (
+        <div key={i} style={{ padding: '16px', background: editingSubIdx === i ? '#fffbe6' : '#f8f9fa', border: editingSubIdx === i ? '2px solid #c8963e' : '1px solid #e4e8ed', borderRadius: '10px', position: 'relative' }}>
           {editingSubIdx === i ? (
             <>
               <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '10px' }}>
@@ -307,13 +292,11 @@ function AdminActivities() {
                   </div>
                 )}
               </div>
-              <DragHandle />
               <button className="member-remove-btn" onClick={() => removeSubSection(i)}>×</button>
             </div>
           )}
         </div>
-        )}
-      />
+      ))}
       </div>
 
       <button className="btn btn-success btn-sm" onClick={addSubSection}>+ Add Sub-Section</button>

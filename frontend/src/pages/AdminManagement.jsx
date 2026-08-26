@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import ImageUpload from '../components/ImageUpload';
-import SortableGrid, { DragHandle } from '../components/SortableGrid';
+
 
 const API_URL = '/api';
 
@@ -240,39 +240,7 @@ function AdminManagement() {
     setDeleteConfirm(null);
   };
 
-  // Drag reorder handler for governing body
-  const handleGbReorder = async (newItems) => {
-    setGbMembers(newItems);
-    try {
-      const updates = newItems.map((item, i) =>
-        fetch(`${API_URL}/governing-body/${item._id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...item, order: i }),
-        })
-      );
-      await Promise.all(updates);
-    } catch (err) {
-      console.error('Failed to save order:', err);
-    }
-  };
 
-  // Drag reorder handler for local governing body
-  const handleLgbReorder = async (newItems) => {
-    setLgbMembers(newItems);
-    try {
-      const updates = newItems.map((item, i) =>
-        fetch(`${API_URL}/local-governing-body/${item._id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...item, order: i }),
-        })
-      );
-      await Promise.all(updates);
-    } catch (err) {
-      console.error('Failed to save order:', err);
-    }
-  };
 
   // Local Governing Body handlers
   const openAddLgb = () => {
@@ -441,49 +409,43 @@ function AdminManagement() {
                       </div>
                     )}
 
-                    {/* Member Cards - live preview with drag reorder */}
-                    <SortableGrid
-                      items={gbMembers}
-                      onReorder={handleGbReorder}
-                      
-                      renderItem={(member) => (
-                        editGbId === member._id ? (
-                          <div key={member._id} className="gb-member-card" style={{ border: '2px solid #c8963e', background: '#fffbe6' }}>
-                            <div style={{ textAlign: 'center', marginBottom: '14px' }}>
-                              <ImageUpload value={gbForm.photoUrl} onChange={(url) => setGbForm({ ...gbForm, photoUrl: url })} circle />
-                            </div>
-                            <input type="text" className="gb-member-input" value={gbForm.name} onChange={(e) => setGbForm({ ...gbForm, name: e.target.value })} placeholder="Name" required />
-                            <input type="text" className="gb-member-input" value={gbForm.designation} onChange={(e) => setGbForm({ ...gbForm, designation: e.target.value })} placeholder="Designation" required />
-                            <input type="number" className="gb-member-input" value={gbForm.order} onChange={(e) => setGbForm({ ...gbForm, order: Number(e.target.value) })} placeholder="Display Order" min="0" />
-                            <div className="gb-member-actions">
-                              <button className="btn btn-success btn-sm" onClick={handleGbSave} disabled={gbSaving}>{gbSaving ? 'Saving...' : 'Save'}</button>
-                              <button className="btn btn-secondary btn-sm" onClick={cancelGbForm}>Cancel</button>
-                            </div>
+                    {/* Member Cards - live preview */}
+                    {gbMembers.map((member) => (
+                      editGbId === member._id ? (
+                        <div key={member._id} className="gb-member-card" style={{ border: '2px solid #c8963e', background: '#fffbe6' }}>
+                          <div style={{ textAlign: 'center', marginBottom: '14px' }}>
+                            <ImageUpload value={gbForm.photoUrl} onChange={(url) => setGbForm({ ...gbForm, photoUrl: url })} circle />
                           </div>
-                        ) : (
-                          <div key={member._id} className="gb-member-card" onClick={() => openEditGb(member)} style={{ cursor: 'pointer' }} title="Click to edit">
-                            {member.photoUrl ? (
-                              <img src={member.photoUrl} alt={member.name} className="gb-member-photo" />
+                          <input type="text" className="gb-member-input" value={gbForm.name} onChange={(e) => setGbForm({ ...gbForm, name: e.target.value })} placeholder="Name" required />
+                          <input type="text" className="gb-member-input" value={gbForm.designation} onChange={(e) => setGbForm({ ...gbForm, designation: e.target.value })} placeholder="Designation" required />
+                          <input type="number" className="gb-member-input" value={gbForm.order} onChange={(e) => setGbForm({ ...gbForm, order: Number(e.target.value) })} placeholder="Display Order" min="0" />
+                          <div className="gb-member-actions">
+                            <button className="btn btn-success btn-sm" onClick={handleGbSave} disabled={gbSaving}>{gbSaving ? 'Saving...' : 'Save'}</button>
+                            <button className="btn btn-secondary btn-sm" onClick={cancelGbForm}>Cancel</button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div key={member._id} className="gb-member-card" onClick={() => openEditGb(member)} style={{ cursor: 'pointer' }} title="Click to edit">
+                          {member.photoUrl ? (
+                            <img src={member.photoUrl} alt={member.name} className="gb-member-photo" />
+                          ) : (
+                            <div className="gb-member-photo gb-member-photo-empty"><span>{member.name?.split(' ')?.pop()?.charAt(0) || '?'}</span></div>
+                          )}
+                          <h3 className="gb-member-name">{member.name}</h3>
+                          <p className="gb-member-designation">{member.designation}</p>
+                          <div className="gb-member-actions" onClick={(e) => e.stopPropagation()}>
+                            {deleteConfirm === member._id ? (
+                              <>
+                                <button className="btn btn-danger btn-sm" onClick={() => handleGbDelete(member._id)}>Yes, Delete</button>
+                                <button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirm(null)}>Cancel</button>
+                              </>
                             ) : (
-                              <div className="gb-member-photo gb-member-photo-empty"><span>{member.name?.split(' ')?.pop()?.charAt(0) || '?'}</span></div>
+                              <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirm(member._id)}>Delete</button>
                             )}
-                            <h3 className="gb-member-name">{member.name}</h3>
-                            <p className="gb-member-designation">{member.designation}</p>
-                            <DragHandle />
-                            <div className="gb-member-actions" onClick={(e) => e.stopPropagation()}>
-                              {deleteConfirm === member._id ? (
-                                <>
-                                  <button className="btn btn-danger btn-sm" onClick={() => handleGbDelete(member._id)}>Yes, Delete</button>
-                                  <button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirm(null)}>Cancel</button>
-                                </>
-                              ) : (
-                                <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirm(member._id)}>Delete</button>
-                              )}
-                            </div>
                           </div>
-                        )
-                      )}
-                    />
+                        </div>
+                      )
+                    ))}
                   </div>
                 </>
               )}
@@ -529,49 +491,43 @@ function AdminManagement() {
                       </div>
                     )}
 
-                    {/* Member Cards - live preview with drag reorder */}
-                    <SortableGrid
-                      items={lgbMembers}
-                      onReorder={handleLgbReorder}
-                      
-                      renderItem={(member) => (
-                        editLgbId === member._id ? (
-                          <div key={member._id} className="gb-member-card" style={{ border: '2px solid #c8963e', background: '#fffbe6' }}>
-                            <div style={{ textAlign: 'center', marginBottom: '14px' }}>
-                              <ImageUpload value={lgbForm.photoUrl} onChange={(url) => setLgbForm({ ...lgbForm, photoUrl: url })} circle />
-                            </div>
-                            <input type="text" className="gb-member-input" value={lgbForm.name} onChange={(e) => setLgbForm({ ...lgbForm, name: e.target.value })} placeholder="Name" required />
-                            <input type="text" className="gb-member-input" value={lgbForm.designation} onChange={(e) => setLgbForm({ ...lgbForm, designation: e.target.value })} placeholder="Designation" required />
-                            <input type="number" className="gb-member-input" value={lgbForm.order} onChange={(e) => setLgbForm({ ...lgbForm, order: Number(e.target.value) })} placeholder="Display Order" min="0" />
-                            <div className="gb-member-actions">
-                              <button className="btn btn-success btn-sm" onClick={handleLgbSave} disabled={lgbSaving}>{lgbSaving ? 'Saving...' : 'Save'}</button>
-                              <button className="btn btn-secondary btn-sm" onClick={cancelLgbForm}>Cancel</button>
-                            </div>
+                    {/* Member Cards - live preview */}
+                    {lgbMembers.map((member) => (
+                      editLgbId === member._id ? (
+                        <div key={member._id} className="gb-member-card" style={{ border: '2px solid #c8963e', background: '#fffbe6' }}>
+                          <div style={{ textAlign: 'center', marginBottom: '14px' }}>
+                            <ImageUpload value={lgbForm.photoUrl} onChange={(url) => setLgbForm({ ...lgbForm, photoUrl: url })} circle />
                           </div>
-                        ) : (
-                          <div key={member._id} className="gb-member-card" onClick={() => openEditLgb(member)} style={{ cursor: 'pointer' }} title="Click to edit">
-                            {member.photoUrl ? (
-                              <img src={member.photoUrl} alt={member.name} className="gb-member-photo" />
+                          <input type="text" className="gb-member-input" value={lgbForm.name} onChange={(e) => setLgbForm({ ...lgbForm, name: e.target.value })} placeholder="Name" required />
+                          <input type="text" className="gb-member-input" value={lgbForm.designation} onChange={(e) => setLgbForm({ ...lgbForm, designation: e.target.value })} placeholder="Designation" required />
+                          <input type="number" className="gb-member-input" value={lgbForm.order} onChange={(e) => setLgbForm({ ...lgbForm, order: Number(e.target.value) })} placeholder="Display Order" min="0" />
+                          <div className="gb-member-actions">
+                            <button className="btn btn-success btn-sm" onClick={handleLgbSave} disabled={lgbSaving}>{lgbSaving ? 'Saving...' : 'Save'}</button>
+                            <button className="btn btn-secondary btn-sm" onClick={cancelLgbForm}>Cancel</button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div key={member._id} className="gb-member-card" onClick={() => openEditLgb(member)} style={{ cursor: 'pointer' }} title="Click to edit">
+                          {member.photoUrl ? (
+                            <img src={member.photoUrl} alt={member.name} className="gb-member-photo" />
+                          ) : (
+                            <div className="gb-member-photo gb-member-photo-empty"><span>{member.name?.split(' ')?.pop()?.charAt(0) || '?'}</span></div>
+                          )}
+                          <h3 className="gb-member-name">{member.name}</h3>
+                          <p className="gb-member-designation">{member.designation}</p>
+                          <div className="gb-member-actions" onClick={(e) => e.stopPropagation()}>
+                            {deleteConfirmLgb === member._id ? (
+                              <>
+                                <button className="btn btn-danger btn-sm" onClick={() => handleLgbDelete(member._id)}>Yes, Delete</button>
+                                <button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirmLgb(null)}>Cancel</button>
+                              </>
                             ) : (
-                              <div className="gb-member-photo gb-member-photo-empty"><span>{member.name?.split(' ')?.pop()?.charAt(0) || '?'}</span></div>
+                              <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirmLgb(member._id)}>Delete</button>
                             )}
-                            <h3 className="gb-member-name">{member.name}</h3>
-                            <p className="gb-member-designation">{member.designation}</p>
-                            <DragHandle />
-                            <div className="gb-member-actions" onClick={(e) => e.stopPropagation()}>
-                              {deleteConfirmLgb === member._id ? (
-                                <>
-                                  <button className="btn btn-danger btn-sm" onClick={() => handleLgbDelete(member._id)}>Yes, Delete</button>
-                                  <button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirmLgb(null)}>Cancel</button>
-                                </>
-                              ) : (
-                                <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirmLgb(member._id)}>Delete</button>
-                              )}
-                            </div>
                           </div>
-                        )
-                      )}
-                    />
+                        </div>
+                      )
+                    ))}
                   </div>
                 </>
               )}
