@@ -4,7 +4,6 @@ import SEO from './components/SEO';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
-import ChatBot from './components/ChatBot';
 import GoToTop from './components/GoToTop';
 
 // Lazy-loaded page components for code splitting
@@ -148,7 +147,6 @@ function AppLayout() {
         </Routes>
       </Suspense>
       {!isAdmin && <Footer />}
-      {!isAdmin && <ChatBot />}
       {!isAdmin && <GoToTop />}
     </>
   );
