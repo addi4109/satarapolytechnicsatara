@@ -265,6 +265,47 @@ function Campus() {
               <h2 className="content-heading">{getSection('bus-facility').title || 'Bus Facility'}</h2>
               <div className="content-line"></div>
               {renderContent(getSection('bus-facility').content || STATIC_CONTENT.campus['bus-facility'])}
+
+              {/* Bus Routes */}
+              {getSection('bus-facility').busRoutes && getSection('bus-facility').busRoutes.length > 0 && (
+                <div style={{ marginTop: '28px' }}>
+                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', marginBottom: '16px' }}>Bus Routes</h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    {getSection('bus-facility').busRoutes.map((route, ri) => (
+                      <div key={ri} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '12px', padding: '20px 24px', position: 'relative', overflow: 'hidden' }}>
+                        {/* Route header */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+                          <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'linear-gradient(135deg, #243358, #1a2642)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>🚌</div>
+                          <div>
+                            <h4 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#243358' }}>{route.routeName || `Route ${ri + 1}`}</h4>
+                            <p style={{ margin: 0, fontSize: '12px', color: '#888' }}>{route.stops.length} stops</p>
+                          </div>
+                        </div>
+
+                        {/* Visual route with road */}
+                        <div style={{ position: 'relative', paddingLeft: '20px' }}>
+                          {/* Road line */}
+                          <div style={{ position: 'absolute', left: '11px', top: '8px', bottom: '8px', width: '3px', background: 'repeating-linear-gradient(to bottom, #c8963e 0px, #c8963e 8px, transparent 8px, transparent 14px)', borderRadius: '2px' }}></div>
+                          {/* Stops */}
+                          {route.stops.map((stop, si) => (
+                            <div key={si} style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: si < route.stops.length - 1 ? '0' : '0', position: 'relative', paddingBottom: si < route.stops.length - 1 ? '20px' : '0' }}>
+                              {/* Stop dot */}
+                              <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: si === 0 ? '#27ae60' : si === route.stops.length - 1 ? '#c0392b' : '#243358', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700, zIndex: 1, flexShrink: 0, boxShadow: '0 2px 6px rgba(0,0,0,0.15)' }}>{si + 1}</div>
+                              {/* Stop info */}
+                              <div style={{ flex: 1, background: si === 0 ? '#f0faf4' : si === route.stops.length - 1 ? '#fdf2f2' : '#f8f9fa', padding: '10px 16px', borderRadius: '8px', border: `1px solid ${si === 0 ? '#c8e6d4' : si === route.stops.length - 1 ? '#f5c6c6' : '#e8eaed'}` }}>
+                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#333' }}>{stop}</span>
+                                {si === 0 && <span style={{ fontSize: '11px', color: '#27ae60', fontWeight: 600, marginLeft: '8px' }}>START</span>}
+                                {si === route.stops.length - 1 && route.stops.length > 1 && <span style={{ fontSize: '11px', color: '#c0392b', fontWeight: 600, marginLeft: '8px' }}>END</span>}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {renderTables(getSection('bus-facility').tables)}
               {renderInfoRows(getSection('bus-facility').infoRows)}
             </>

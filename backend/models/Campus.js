@@ -53,6 +53,14 @@ const CampusSchema = new mongoose.Schema({
     }],
     default: [],
   },
+  // For bus-facility: bus routes
+  busRoutes: {
+    type: [{
+      routeName: String,
+      stops: [String],
+    }],
+    default: [],
+  },
   // For office-staff: array of staff members
   staffMembers: {
     type: [{

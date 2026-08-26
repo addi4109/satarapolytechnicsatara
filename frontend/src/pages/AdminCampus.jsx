@@ -25,6 +25,7 @@ const defaultForm = {
   tables: [],
   rules: [],
   images: [],
+  busRoutes: [],
   staffMembers: [],
   active: true,
 };
@@ -83,6 +84,7 @@ function AdminCampus() {
         tables: existing.tables || [],
         rules: existing.rules || [],
         images: existing.images || [],
+        busRoutes: existing.busRoutes || [],
         staffMembers: existing.staffMembers || [],
         active: existing.active !== false,
       });
@@ -472,6 +474,34 @@ function AdminCampus() {
             </div>
           )}
 
+          {/* Bus Routes Preview */}
+          {activeTab === 'bus-facility' && form.busRoutes.length > 0 && (
+            <div style={{ marginTop: '24px' }}>
+              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '14px' }}>Bus Routes</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {form.busRoutes.map((route, ri) => (
+                  <div key={ri} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '16px 20px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+                      <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#243358', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }}>🚌</div>
+                      <h4 style={{ margin: 0, fontSize: '15px', fontWeight: 700, color: '#243358' }}>{route.routeName || `Route ${ri + 1}`}</h4>
+                    </div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
+                      {route.stops.map((stop, si) => (
+                        <React.Fragment key={si}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: '#f5f7fa', padding: '6px 12px', borderRadius: '6px', border: '1px solid #e4e8ed' }}>
+                            <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: si === 0 || si === route.stops.length - 1 ? '#c8963e' : '#243358', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700 }}>{si + 1}</div>
+                            <span style={{ fontSize: '13px', fontWeight: 500, color: '#333' }}>{stop}</span>
+                          </div>
+                          {si < route.stops.length - 1 && <span style={{ color: '#b9c3d4', fontSize: '16px' }}>→</span>}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Staff Cards */}
           {(activeTab === 'office-staff' || activeTab === 'non-teaching-staff') && form.staffMembers.length > 0 && (
             <div className="faculty-grid" style={{ marginTop: '20px' }}>
@@ -509,7 +539,7 @@ function AdminCampus() {
           <button className="btn btn-secondary btn-sm" onClick={() => {
             const existing = sections[activeTab];
             if (existing) {
-              setForm({ title: existing.title || '', content: existing.content || '', infoRows: existing.infoRows || [], stats: existing.stats || [], tables: existing.tables || [], rules: existing.rules || [], images: existing.images || [], staffMembers: existing.staffMembers || [], active: existing.active !== false });
+              setForm({ title: existing.title || '', content: existing.content || '', infoRows: existing.infoRows || [], stats: existing.stats || [], tables: existing.tables || [], rules: existing.rules || [], images: existing.images || [], busRoutes: existing.busRoutes || [], staffMembers: existing.staffMembers || [], active: existing.active !== false });
             } else { setForm({ ...defaultForm }); }
             setEditing(false);
             setShowStaffForm(false);
@@ -610,6 +640,49 @@ function AdminCampus() {
                           <div style={{ marginBottom: '6px' }}><ImageUpload value={img.url} onChange={(url) => { const imgs = [...form.images]; imgs[i] = { ...imgs[i], url }; setForm({ ...form, images: imgs }); }} /></div>
                           <input type="text" value={img.caption} onChange={(e) => { const imgs = [...form.images]; imgs[i] = { ...imgs[i], caption: e.target.value }; setForm({ ...form, images: imgs }); }} placeholder="Caption (optional)" style={{ width: '100%', padding: '6px 8px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '12px', boxSizing: 'border-box' }} />
                         </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+
+          {/* Bus Routes (bus-facility only) */}
+          {activeTab === 'bus-facility' && (
+            <>
+              <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
+              <div className="form-group">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                  <div>
+                    <label style={{ fontSize: '13px', fontWeight: 600, color: '#333', margin: 0 }}>Bus Routes ({form.busRoutes.length})</label>
+                    <p style={{ fontSize: '12px', color: '#888', margin: '2px 0 0' }}>Add bus routes with their stops.</p>
+                  </div>
+                  <button className="btn btn-success btn-sm" onClick={() => setForm({ ...form, busRoutes: [...form.busRoutes, { routeName: '', stops: [''] }] })}>+ Add Route</button>
+                </div>
+
+                {form.busRoutes.length === 0 ? (
+                  <div style={{ textAlign: 'center', padding: '20px', border: '1px dashed #b9c3d4', borderRadius: '8px', color: '#888', fontSize: '13px' }}>
+                    No routes yet. Click "+ Add Route" to create one.
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                    {form.busRoutes.map((route, ri) => (
+                      <div key={ri} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '14px 16px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                          <span style={{ fontSize: '12px', fontWeight: 700, color: '#c8963e' }}>Route {ri + 1}</span>
+                          <button onClick={() => setForm({ ...form, busRoutes: form.busRoutes.filter((_, idx) => idx !== ri) })} style={{ background: 'none', border: 'none', color: '#d32f2f', cursor: 'pointer', fontSize: '16px', padding: '0 4px' }} title="Remove route">×</button>
+                        </div>
+                        <input type="text" value={route.routeName} onChange={(e) => { const r = [...form.busRoutes]; r[ri] = { ...r[ri], routeName: e.target.value }; setForm({ ...form, busRoutes: r }); }} placeholder="Route name (e.g. Satara - Pune)" style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', marginBottom: '10px', boxSizing: 'border-box', fontWeight: 600 }} />
+                        <label style={{ fontSize: '12px', fontWeight: 600, color: '#555', marginBottom: '6px', display: 'block' }}>Stops</label>
+                        {route.stops.map((stop, si) => (
+                          <div key={si} style={{ display: 'flex', gap: '6px', marginBottom: '6px', alignItems: 'center' }}>
+                            <span style={{ width: '20px', height: '20px', borderRadius: '50%', background: '#243358', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700, flexShrink: 0 }}>{si + 1}</span>
+                            <input type="text" value={stop} onChange={(e) => { const r = [...form.busRoutes]; const stops = [...r[ri].stops]; stops[si] = e.target.value; r[ri] = { ...r[ri], stops }; setForm({ ...form, busRoutes: r }); }} placeholder="Stop name" style={{ flex: 1, padding: '6px 10px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '12px', boxSizing: 'border-box' }} />
+                            {route.stops.length > 1 && <button onClick={() => { const r = [...form.busRoutes]; const stops = r[ri].stops.filter((_, idx) => idx !== si); r[ri] = { ...r[ri], stops }; setForm({ ...form, busRoutes: r }); }} style={{ width: '22px', height: '22px', borderRadius: '50%', border: 'none', background: '#fdecea', color: '#d32f2f', fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: 0 }}>×</button>}
+                          </div>
+                        ))}
+                        <button onClick={() => { const r = [...form.busRoutes]; r[ri] = { ...r[ri], stops: [...r[ri].stops, ''] }; setForm({ ...form, busRoutes: r }); }} style={{ marginTop: '4px', padding: '4px 10px', border: '1px dashed #b9c3d4', borderRadius: '4px', background: '#fff', color: '#243358', fontSize: '12px', cursor: 'pointer', fontWeight: 600 }}>+ Add Stop</button>
                       </div>
                     ))}
                   </div>
