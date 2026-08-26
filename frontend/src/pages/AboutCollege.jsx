@@ -215,6 +215,21 @@ function AboutCollege() {
               </li>
             ))}
           </ul>
+
+          {/* Mobile top bar tabs */}
+          <ul className="about-mobile-tabs">
+            {sidebarLinks.map((link) => (
+              <li key={link.id}>
+                <button
+                  className={`about-mobile-tab ${active === link.id ? 'active' : ''}`}
+                  onClick={() => setActive(link.id)}
+                >
+                  <span className="arrow">→</span>
+                  {link.label}
+                </button>
+              </li>
+            ))}
+          </ul>
         </aside>
 
         <main className="about-content">

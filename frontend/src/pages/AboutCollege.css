@@ -459,6 +459,18 @@
   }
 }
 
+/* Mobile tabs - hidden on desktop */
+.about-mobile-tabs {
+  display: none;
+}
+
+/* Override global index.css sidebar hide for about page */
+@media (max-width: 1024px) {
+  .about-layout .about-sidebar {
+    display: block !important;
+  }
+}
+
 @media (max-width: 768px) {
   .about-layout {
     flex-direction: column;
@@ -468,33 +480,63 @@
     width: 100%;
   }
 
-  .sidebar-list {
+  /* Hide desktop sidebar on mobile */
+  .about-sidebar .sidebar-heading,
+  .about-sidebar .sidebar-list {
+    display: none !important;
+  }
+
+  /* Show mobile tabs */
+  .about-mobile-tabs {
+    display: block !important;
+    list-style: none;
+    margin: 0 0 18px;
+    padding: 0;
+    border: 1px solid #e4e8ed;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  .about-mobile-tabs li + li {
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .about-mobile-tab {
+    width: 100%;
     display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    background: #fff;
+    border: none;
+    font-size: 14px;
+    color: #444;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: background 0.15s, color 0.15s;
   }
 
-  .sidebar-list::-webkit-scrollbar {
-    display: none;
+  .about-mobile-tab:hover {
+    background: #f5f7fa;
+    color: #243358;
   }
 
-  .sidebar-list li {
-    flex: 0 0 auto;
-    border-bottom: none;
-    border-right: 1px solid #f0f0f0;
+  .about-mobile-tab.active {
+    background: #243358;
+    color: #fff;
+    font-weight: 700;
   }
 
-  .sidebar-list li:last-child {
-    border-right: none;
+  .about-mobile-tab.active .arrow {
+    opacity: 1;
   }
 
-  .sidebar-link {
-    justify-content: center;
+  .about-mobile-tab .arrow {
+    opacity: 0.6;
     font-size: 12px;
-    padding: 10px 12px;
-    white-space: nowrap;
   }
 
   .overview-stats {
