@@ -187,10 +187,12 @@ function DepartmentsPage() {
                 )}
                 <p>{dept.about}</p>
                 <div className="overview-stats">
-                  <div className="stat-box">
-                    <span className="stat-num">{dept.intake}</span>
-                    <span className="stat-txt">Intake</span>
-                  </div>
+                  {dept.slug !== 'general-science' && (
+                    <div className="stat-box">
+                      <span className="stat-num">{dept.intake}</span>
+                      <span className="stat-txt">Intake</span>
+                    </div>
+                  )}
                   <div className="stat-box">
                     <span className="stat-num">{dept.faculty?.length || 0}</span>
                     <span className="stat-txt">Faculty</span>
@@ -199,10 +201,12 @@ function DepartmentsPage() {
                     <span className="stat-num">{dept.labs?.length || 0}</span>
                     <span className="stat-txt">Labs</span>
                   </div>
-                  <div className="stat-box">
-                    <span className="stat-num">3</span>
-                    <span className="stat-txt">Years</span>
-                  </div>
+                  {dept.slug !== 'general-science' && (
+                    <div className="stat-box">
+                      <span className="stat-num">3</span>
+                      <span className="stat-txt">Years</span>
+                    </div>
+                  )}
                 </div>
               </>
             )}
