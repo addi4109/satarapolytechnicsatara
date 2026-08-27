@@ -72,6 +72,16 @@ const CampusSchema = new mongoose.Schema({
     }],
     default: [],
   },
+  // For canteen: food menu items
+  foodMenu: {
+    type: [{
+      name: String,
+      category: String,
+      price: String,
+      time: String,
+    }],
+    default: [],
+  },
   active: {
     type: Boolean,
     default: true,

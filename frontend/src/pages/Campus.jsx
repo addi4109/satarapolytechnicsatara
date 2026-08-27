@@ -317,6 +317,37 @@ function Campus() {
               <h2 className="content-heading">Canteen</h2>
               <div className="content-line"></div>
               {renderContent(STATIC_CONTENT.campus.canteen)}
+
+              {getSection('canteen').foodMenu && getSection('canteen').foodMenu.length > 0 && (
+                <div style={{ marginTop: '24px' }}>
+                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', marginBottom: '14px' }}>Food Menu</h3>
+                  <div className="fee-table-wrap">
+                    <table className="fee-table">
+                      <thead>
+                        <tr>
+                          <th>Sr. No.</th>
+                          <th>Item Name</th>
+                          <th>Category</th>
+                          <th>Price (₹)</th>
+                          <th>Time</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {getSection('canteen').foodMenu.map((item, i) => (
+                          <tr key={i}>
+                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                            <td style={{ fontWeight: 500 }}>{item.name}</td>
+                            <td>{item.category}</td>
+                            <td>{item.price}</td>
+                            <td>{item.time}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
               {renderTables(getSection('canteen').tables)}
               {renderInfoRows(getSection('canteen').infoRows)}
             </>

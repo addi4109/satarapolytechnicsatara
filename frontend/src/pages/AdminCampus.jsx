@@ -27,6 +27,7 @@ const defaultForm = {
   images: [],
   busRoutes: [],
   staffMembers: [],
+  foodMenu: [],
   active: true,
 };
 
@@ -86,6 +87,7 @@ function AdminCampus() {
         images: existing.images || [],
         busRoutes: existing.busRoutes || [],
         staffMembers: existing.staffMembers || [],
+        foodMenu: existing.foodMenu || [],
         active: existing.active !== false,
       });
     } else {
@@ -231,6 +233,11 @@ function AdminCampus() {
     setMsg({ type: 'success', text: editStaffIdx !== null ? 'Staff updated!' : 'Staff added!' });
   };
   const deleteStaff = (idx) => { handleChange('staffMembers', form.staffMembers.filter((_, i) => i !== idx)); setDeleteConfirm(null); };
+
+  // ===== FOOD MENU HELPERS =====
+  const addFoodItem = () => handleChange('foodMenu', [...form.foodMenu, { name: '', category: 'Breakfast', price: '', time: '' }]);
+  const updateFoodItem = (i, field, val) => { const items = [...form.foodMenu]; items[i] = { ...items[i], [field]: val }; handleChange('foodMenu', items); };
+  const removeFoodItem = (i) => handleChange('foodMenu', form.foodMenu.filter((_, idx) => idx !== i));
 
   const currentSection = SECTIONS.find((s) => s.key === activeTab);
 
@@ -479,6 +486,37 @@ function AdminCampus() {
             </div>
           )}
 
+          {/* Food Menu Preview (canteen only) */}
+          {activeTab === 'canteen' && form.foodMenu.length > 0 && (
+            <div style={{ marginTop: '24px' }}>
+              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>Food Menu</h3>
+              <div className="fee-table-wrap">
+                <table className="fee-table">
+                  <thead>
+                    <tr>
+                      <th>Sr. No.</th>
+                      <th>Item Name</th>
+                      <th>Category</th>
+                      <th>Price (₹)</th>
+                      <th>Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {form.foodMenu.map((item, i) => (
+                      <tr key={i}>
+                        <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                        <td>{item.name}</td>
+                        <td>{item.category}</td>
+                        <td>{item.price}</td>
+                        <td>{item.time}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
           {/* Bus Routes Preview */}
           {activeTab === 'bus-facility' && form.busRoutes.length > 0 && (
             <div style={{ marginTop: '24px' }}>
@@ -544,7 +582,7 @@ function AdminCampus() {
           <button className="btn btn-secondary btn-sm" onClick={() => {
             const existing = sections[activeTab];
             if (existing) {
-              setForm({ title: existing.title || '', content: existing.content || '', infoRows: existing.infoRows || [], stats: existing.stats || [], tables: existing.tables || [], rules: existing.rules || [], images: existing.images || [], busRoutes: existing.busRoutes || [], staffMembers: existing.staffMembers || [], active: existing.active !== false });
+              setForm({ title: existing.title || '', content: existing.content || '', infoRows: existing.infoRows || [], stats: existing.stats || [], tables: existing.tables || [], rules: existing.rules || [], images: existing.images || [], busRoutes: existing.busRoutes || [], staffMembers: existing.staffMembers || [], foodMenu: existing.foodMenu || [], active: existing.active !== false });
             } else { setForm({ ...defaultForm }); }
             setEditing(false);
             setShowStaffForm(false);
@@ -576,6 +614,55 @@ function AdminCampus() {
               </div>
             )}
           </div>
+
+          {/* Food Menu (canteen only) */}
+          {activeTab === 'canteen' && (
+            <>
+              <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
+              <div className="form-group">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                  <div>
+                    <label style={{ fontSize: '13px', fontWeight: 600, color: '#333', margin: 0 }}>Food Menu ({form.foodMenu.length})</label>
+                    <p style={{ fontSize: '12px', color: '#888', margin: '2px 0 0' }}>Add food items with name, category, price and availability time.</p>
+                  </div>
+                  <button className="btn btn-success btn-sm" onClick={addFoodItem}>+ Add Item</button>
+                </div>
+
+                {form.foodMenu.length === 0 ? (
+                  <div style={{ textAlign: 'center', padding: '20px', border: '1px dashed #b9c3d4', borderRadius: '8px', color: '#888', fontSize: '13px' }}>
+                    No food items yet. Click "+ Add Item" to add one.
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {/* Table Header */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1fr 1.5fr 40px', gap: '8px', padding: '8px 12px', background: '#243358', color: '#fff', borderRadius: '6px', fontSize: '12px', fontWeight: 700 }}>
+                      <span>Item Name</span>
+                      <span>Category</span>
+                      <span>Price (₹)</span>
+                      <span>Time</span>
+                      <span></span>
+                    </div>
+                    {form.foodMenu.map((item, i) => (
+                      <div key={i} style={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1fr 1.5fr 40px', gap: '8px', alignItems: 'center' }}>
+                        <input type="text" value={item.name} onChange={(e) => updateFoodItem(i, 'name', e.target.value)} placeholder="e.g. Misal Pav" style={{ padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+                        <select value={item.category} onChange={(e) => updateFoodItem(i, 'category', e.target.value)} style={{ padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box', background: '#fff' }}>
+                          <option>Breakfast</option>
+                          <option>Lunch</option>
+                          <option>Dinner</option>
+                          <option>Snacks</option>
+                          <option>Beverages</option>
+                          <option>Special</option>
+                        </select>
+                        <input type="text" value={item.price} onChange={(e) => updateFoodItem(i, 'price', e.target.value)} placeholder="e.g. 40" style={{ padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+                        <input type="text" value={item.time} onChange={(e) => updateFoodItem(i, 'time', e.target.value)} placeholder="e.g. 8-10 AM" style={{ padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+                        <button onClick={() => removeFoodItem(i)} style={{ background: 'none', border: 'none', color: '#d32f2f', cursor: 'pointer', fontSize: '18px', padding: '0 4px' }} title="Remove">×</button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
+          )}
 
           {/* Rules (library only) */}
           {activeTab === 'library' && (
