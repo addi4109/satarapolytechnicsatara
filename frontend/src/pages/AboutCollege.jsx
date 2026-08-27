@@ -283,19 +283,43 @@ function AboutCollege() {
                 <div className="leadership-section">
                   <h2 className="leadership-heading">Our Leadership</h2>
                   <div className="leadership-line"></div>
-                  <div className="leadership-grid">
-                    {['founder', 'chairman', 'principal', 'secretary'].map((role) => {
+                  {/* Row 1: 3 main leaders */}
+                  <div className="leadership-grid leadership-grid-3">
+                    {['founder', 'chairman', 'principal'].map((role) => {
                       const entry = management[role];
                       if (!entry || !entry.active) return null;
                       return (
                         <div key={role} className="leader-card">
-                          {entry.photoUrl ? (
-                            <img className="leader-card-img" src={entry.photoUrl} alt={entry.name} />
-                          ) : (
-                            <div className="leader-card-img" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f0f3f8', color: '#888', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                              No Photo
-                            </div>
-                          )}
+                          <div className="leader-card-img-wrap">
+                            {entry.photoUrl ? (
+                              <img className="leader-card-img" src={entry.photoUrl} alt={entry.name} />
+                            ) : (
+                              <div className="leader-card-img-placeholder">No Photo</div>
+                            )}
+                          </div>
+                          <div className="leader-card-body">
+                            <h3 className="leader-card-name">{entry.name}</h3>
+                            <p className="leader-card-title">{entry.title || role.charAt(0).toUpperCase() + role.slice(1)}</p>
+                            <p className="leader-card-desc">{entry.shortDesc || entry.qualification || ''}</p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {/* Row 2: Secretary + others centered */}
+                  <div className="leadership-grid leadership-grid-4">
+                    {['secretary'].map((role) => {
+                      const entry = management[role];
+                      if (!entry || !entry.active) return null;
+                      return (
+                        <div key={role} className="leader-card">
+                          <div className="leader-card-img-wrap">
+                            {entry.photoUrl ? (
+                              <img className="leader-card-img" src={entry.photoUrl} alt={entry.name} />
+                            ) : (
+                              <div className="leader-card-img-placeholder">No Photo</div>
+                            )}
+                          </div>
                           <div className="leader-card-body">
                             <h3 className="leader-card-name">{entry.name}</h3>
                             <p className="leader-card-title">{entry.title || role.charAt(0).toUpperCase() + role.slice(1)}</p>

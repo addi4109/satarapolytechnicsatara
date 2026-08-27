@@ -374,9 +374,21 @@
 
 .leadership-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
+  gap: 24px;
   justify-items: center;
+  margin-bottom: 28px;
+}
+
+.leadership-grid:last-child {
+  margin-bottom: 0;
+}
+
+.leadership-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.leadership-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .leader-card {
@@ -387,7 +399,6 @@
   text-align: center;
   transition: box-shadow 0.25s, transform 0.25s;
   width: 100%;
-  max-width: 260px;
 }
 
 .leader-card:hover {
@@ -395,16 +406,39 @@
   transform: translateY(-4px);
 }
 
-.leader-card-img {
+.leader-card-img-wrap {
   width: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: contain;
-  background: #fff;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.leader-card-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #e4e8ed;
   display: block;
 }
 
+.leader-card-img-placeholder {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #f0f3f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 3px solid #e4e8ed;
+}
+
 .leader-card-body {
-  padding: 18px 16px 20px;
+  padding: 0 16px 18px;
 }
 
 .leader-card-name {
@@ -431,13 +465,17 @@
 }
 
 @media (max-width: 768px) {
-  .leadership-grid {
+  .leadership-grid-3,
+  .leadership-grid-4 {
     grid-template-columns: 1fr;
   }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
-  .leadership-grid {
+  .leadership-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .leadership-grid-4 {
     grid-template-columns: repeat(2, 1fr);
   }
 }
