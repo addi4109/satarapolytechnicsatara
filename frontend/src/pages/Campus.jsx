@@ -314,9 +314,9 @@ function Campus() {
           {/* Canteen */}
           {active === 'canteen' && (
             <>
-              <h2 className="content-heading">{getSection('canteen').title || 'Canteen'}</h2>
+              <h2 className="content-heading">Canteen</h2>
               <div className="content-line"></div>
-              {renderContent(getSection('canteen').content || STATIC_CONTENT.campus.canteen)}
+              {renderContent(STATIC_CONTENT.campus.canteen)}
               {renderTables(getSection('canteen').tables)}
               {renderInfoRows(getSection('canteen').infoRows)}
             </>

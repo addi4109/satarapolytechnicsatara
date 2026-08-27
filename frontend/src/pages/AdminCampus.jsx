@@ -416,6 +416,7 @@ function AdminCampus() {
 
   // ===== GENERAL SECTION PREVIEW =====
   const renderGeneralPreview = () => {
+    const isCanteen = activeTab === 'canteen';
     const title = form.title || currentSection?.label || '';
     const content = form.content || STATIC_CONTENT.campus?.[activeTab] || '';
 
@@ -427,11 +428,15 @@ function AdminCampus() {
         </div>
 
         <div className="about-content" style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '24px 28px' }}>
-          <h2 className="content-heading">{title}</h2>
-          <div className="content-line"></div>
-          {content.split('\n').filter(p => p.trim()).map((para, i) => (
-            <p key={i}>{para}</p>
-          ))}
+          {!isCanteen && (
+            <>
+              <h2 className="content-heading">{title}</h2>
+              <div className="content-line"></div>
+              {content.split('\n').filter(p => p.trim()).map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </>
+          )}
 
           {form.tables.length > 0 && (
             <div style={{ marginTop: '24px' }}>
