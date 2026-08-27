@@ -30,6 +30,7 @@ const Campus = lazy(() => import('./pages/Campus'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Activities = lazy(() => import('./pages/Activities'));
 const Notices = lazy(() => import('./pages/Notices'));
+const AdmissionNotices = lazy(() => import('./pages/AdmissionNotices'));
 const AdminLogin = lazy(() => import('./pages/AdminLogin'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 const AdminCells = lazy(() => import('./pages/AdminCells'));
@@ -114,6 +115,7 @@ function AppLayout() {
           <Route path="/admissions/apply" element={<ApplyNow />} />
           <Route path="/admissions/:page" element={<Admissions />} />
           <Route path="/notices" element={<Notices />} />
+          <Route path="/notices/admission" element={<AdmissionNotices />} />
           <Route path="/notices/:category" element={<Notices />} />
           <Route path="/placements" element={<Placements />} />
           <Route path="/placements/:page" element={<Placements />} />

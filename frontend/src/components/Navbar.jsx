@@ -99,6 +99,8 @@ function Navbar() {
         { label: 'College Brochure', link: '/admissions/brochure' },
 
         { label: 'Apply Now', link: '/admissions/apply' },
+        { divider: true },
+        { label: 'Admission Notice', link: '/notices/admission' },
       ],
     },
     {

@@ -28,9 +28,11 @@ function AdminNotices() {
 
   useEffect(() => { fetchNotices(); }, []);
 
-  const filteredNotices = notices.filter((n) =>
-    activeTab === 'notices' ? n.category !== 'tinker' : n.category === 'tinker'
-  );
+  const filteredNotices = notices.filter((n) => {
+    if (activeTab === 'notices') return n.category !== 'tinker' && n.category !== 'admission';
+    if (activeTab === 'admission') return n.category === 'admission';
+    return n.category === 'tinker';
+  });
 
   const fetchNotices = async () => {
     setLoading(true);
@@ -47,7 +49,7 @@ function AdminNotices() {
 
   const openAdd = () => {
     setEditId(null);
-    setForm({ ...emptyNotice, category: activeTab === 'tinker' ? 'tinker' : 'general' });
+    setForm({ ...emptyNotice, category: activeTab === 'tinker' ? 'tinker' : activeTab === 'admission' ? 'admission' : 'general' });
     setShowForm(true);
   };
 
@@ -129,7 +131,14 @@ function AdminNotices() {
             onClick={() => { setActiveTab('notices'); setShowForm(false); }}
           >
             Notices
-            <span className="gallery-tab-count" style={{ fontSize: '10px' }}>{notices.filter((n) => n.category !== 'tinker').length}</span>
+            <span className="gallery-tab-count" style={{ fontSize: '10px' }}>{notices.filter((n) => n.category !== 'tinker' && n.category !== 'admission').length}</span>
+          </button>
+          <button
+            className={`gallery-tab ${activeTab === 'admission' ? 'active' : ''}`}
+            onClick={() => { setActiveTab('admission'); setShowForm(false); }}
+          >
+            Admission Notice
+            <span className="gallery-tab-count" style={{ fontSize: '10px' }}>{notices.filter((n) => n.category === 'admission').length}</span>
           </button>
           <button
             className={`gallery-tab ${activeTab === 'tinker' ? 'active' : ''}`}
