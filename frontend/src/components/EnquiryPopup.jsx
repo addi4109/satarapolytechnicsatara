@@ -268,15 +268,46 @@ function EnquiryPopup({ onClose }) {
                 <polyline points="22 4 12 14.01 9 11.01" />
               </svg>
             </div>
-            <h3>Thank You!</h3>
+            <h3 className="enquiry-success-title">Thank You!</h3>
+            <p className="enquiry-success-subtitle">Your admission enquiry has been received</p>
+
+            {/* Submitted details card */}
+            <div className="enquiry-success-card">
+              <div className="enquiry-success-detail">
+                <span className="enquiry-success-label">Name</span>
+                <span className="enquiry-success-value">{formData.fullName}</span>
+              </div>
+              <div className="enquiry-success-detail">
+                <span className="enquiry-success-label">Department</span>
+                <span className="enquiry-success-value">{formData.department}</span>
+              </div>
+              {formData.email && (
+                <div className="enquiry-success-detail">
+                  <span className="enquiry-success-label">Email</span>
+                  <span className="enquiry-success-value">{formData.email}</span>
+                </div>
+              )}
+              {formData.phone && (
+                <div className="enquiry-success-detail">
+                  <span className="enquiry-success-label">Phone</span>
+                  <span className="enquiry-success-value">{formData.phone}</span>
+                </div>
+              )}
+            </div>
+
             {partialSuccess ? (
-              <p style={{ color: '#e67e22', fontWeight: 600 }}>
+              <p className="enquiry-success-warning">
                 {partialSuccess}
               </p>
             ) : (
-              <p>Your enquiry has been submitted successfully. Our admissions team will contact you within 24 hours.</p>
+              <p className="enquiry-success-msg">
+                Our admission team or concerned staff member will contact you soon.
+              </p>
             )}
-            <button className="enquiry-success-btn" onClick={handleClose}>Done</button>
+
+            <div className="enquiry-success-actions">
+              <button className="enquiry-success-btn" onClick={handleClose}>Done</button>
+            </div>
           </div>
         )}
       </div>
