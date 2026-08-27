@@ -50,7 +50,7 @@ function DepartmentsPage() {
       const res = await fetch(`${API_URL}/departments`);
       if (!res.ok) throw new Error('Failed to fetch departments');
       const data = await res.json();
-      setDepartments(data);
+      setDepartments(data.filter((d) => d.slug !== 'general-science'));
     } catch (err) {
       console.error('Failed to fetch departments:', err);
       setError('Failed to load departments. Please try again later.');
