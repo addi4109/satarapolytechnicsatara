@@ -388,7 +388,9 @@
 }
 
 .leadership-grid-4 {
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  justify-content: center;
+  gap: 24px;
 }
 
 .leader-card {
@@ -465,17 +467,13 @@
 }
 
 @media (max-width: 768px) {
-  .leadership-grid-3,
-  .leadership-grid-4 {
+  .leadership-grid-3 {
     grid-template-columns: 1fr;
   }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
   .leadership-grid-3 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .leadership-grid-4 {
     grid-template-columns: repeat(2, 1fr);
   }
 }
