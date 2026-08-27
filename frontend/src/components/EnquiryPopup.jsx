@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import emailjs from '@emailjs/browser';
 import './EnquiryPopup.css';
 
 const DEPARTMENTS = [
@@ -13,7 +14,7 @@ const DEPARTMENTS = [
 function EnquiryPopup({ onClose }) {
   const [visible, setVisible] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     phone: '',
     email: '',
     department: '',
@@ -21,6 +22,8 @@ function EnquiryPopup({ onClose }) {
   });
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [partialSuccess, setPartialSuccess] = useState('');
   const overlayRef = useRef(null);
 
   useEffect(() => {
@@ -41,13 +44,78 @@ function EnquiryPopup({ onClose }) {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (sending) return;
+
     setSending(true);
-    setTimeout(() => {
+    setErrorMessage('');
+    setPartialSuccess('');
+
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const collegeTemplateId = import.meta.env.VITE_EMAILJS_COLLEGE_TEMPLATE_ID;
+    const autoReplyTemplateId = import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !collegeTemplateId || !autoReplyTemplateId || !publicKey) {
+      console.error('Missing EmailJS environment variables!');
+      setErrorMessage(
+        'Email configuration is missing. Please contact the college directly.'
+      );
       setSending(false);
-      setSubmitted(true);
-    }, 1200);
+      return;
+    }
+
+    emailjs.init(publicKey);
+
+    const templateParams = {
+      fullName: formData.fullName,
+      phone: formData.phone,
+      email: formData.email,
+      department: formData.department,
+      message: formData.message || '',
+    };
+
+    console.log('EnquiryPopup - Template params:', templateParams);
+
+    try {
+      // STEP 1: Send college enquiry email (Template 1)
+      console.log('EnquiryPopup - Sending college email...');
+      const collegeResponse = await emailjs.send(
+        serviceId,
+        collegeTemplateId,
+        templateParams,
+        { publicKey }
+      );
+      console.log('EnquiryPopup - College email SUCCESS:', collegeResponse.status);
+
+      // STEP 2: Send student auto-reply email (Template 2)
+      try {
+        console.log('EnquiryPopup - Sending auto-reply email...');
+        const autoReplyResponse = await emailjs.send(
+          serviceId,
+          autoReplyTemplateId,
+          templateParams,
+          { publicKey }
+        );
+        console.log('EnquiryPopup - Auto-reply SUCCESS:', autoReplyResponse.status);
+        setSubmitted(true);
+      } catch (autoReplyError) {
+        console.error('EnquiryPopup - Auto-reply FAILED:', autoReplyError);
+        setPartialSuccess(
+          'Your enquiry was received, but we couldn\'t send the confirmation email. Our admission team will still contact you.'
+        );
+        setSubmitted(true);
+      }
+    } catch (error) {
+      console.error('EnquiryPopup - College email FAILED:', error);
+      setErrorMessage(
+        'Sorry, we couldn\'t submit your enquiry right now. Please try again or contact the college directly.'
+      );
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -82,6 +150,13 @@ function EnquiryPopup({ onClose }) {
                 <h3>Admission Enquiry</h3>
                 <p className="enquiry-subtitle">We'd love to hear from you</p>
 
+                {/* Error message */}
+                {errorMessage && (
+                  <div className="enquiry-error-msg">
+                    {errorMessage}
+                  </div>
+                )}
+
                 <form onSubmit={handleSubmit} className="enquiry-form">
                   <div className="enquiry-field">
                     <label htmlFor="eq-name">Full Name</label>
@@ -89,10 +164,10 @@ function EnquiryPopup({ onClose }) {
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                       <input
                         id="eq-name"
-                        name="name"
+                        name="fullName"
                         type="text"
                         placeholder="Enter your full name"
-                        value={formData.name}
+                        value={formData.fullName}
                         onChange={handleChange}
                         required
                       />
@@ -166,7 +241,10 @@ function EnquiryPopup({ onClose }) {
 
                   <button type="submit" className="enquiry-submit" disabled={sending}>
                     {sending ? (
-                      <span className="enquiry-spinner" />
+                      <>
+                        <span className="enquiry-spinner" />
+                        Submitting...
+                      </>
                     ) : (
                       <>
                         Submit Enquiry
@@ -191,7 +269,13 @@ function EnquiryPopup({ onClose }) {
               </svg>
             </div>
             <h3>Thank You!</h3>
-            <p>Your enquiry has been submitted successfully. Our admissions team will contact you within 24 hours.</p>
+            {partialSuccess ? (
+              <p style={{ color: '#e67e22', fontWeight: 600 }}>
+                {partialSuccess}
+              </p>
+            ) : (
+              <p>Your enquiry has been submitted successfully. Our admissions team will contact you within 24 hours.</p>
+            )}
             <button className="enquiry-success-btn" onClick={handleClose}>Done</button>
           </div>
         )}
