@@ -87,7 +87,6 @@ function PhotoGallery() {
                 </div>
                 <div className="photo-info">
                   <h4 className="photo-title">{photo.title}</h4>
-                  <span className="photo-category">{photo.category}</span>
                 </div>
               </div>
             ))}

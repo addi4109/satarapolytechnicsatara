@@ -6,7 +6,7 @@ import './Admin.css';
 
 const API_URL = '/api';
 
-const emptyPhoto = { title: '', image: '', category: 'general', description: '', order: 0 };
+const emptyPhoto = { title: '', image: '', description: '', order: 0 };
 const emptyVideo = { title: '', videoUrl: '', thumbnail: '', description: '', order: 0 };
 const emptyNews = { title: '', date: '', source: '', summary: '', image: '', order: 0 };
 const emptySlide = { image: '', title: '', link: '', order: 0 };
@@ -128,21 +128,9 @@ function AdminGallery() {
             <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Title *</label>
             <input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Photo title" required style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
           </div>
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Category</label>
-              <select value={form.category || 'general'} onChange={(e) => setForm({ ...form, category: e.target.value })} style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }}>
-                <option value="general">General</option>
-                <option value="campus">Campus</option>
-                <option value="events">Events</option>
-                <option value="labs">Labs</option>
-                <option value="placements">Placements</option>
-              </select>
-            </div>
-            <div style={{ width: '80px' }}>
-              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Order</label>
-              <input type="number" value={form.order || 0} onChange={(e) => setForm({ ...form, order: Number(e.target.value) })} min={0} style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
-            </div>
+          <div style={{ marginBottom: '10px' }}>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Order</label>
+            <input type="number" value={form.order || 0} onChange={(e) => setForm({ ...form, order: Number(e.target.value) })} min={0} style={{ width: '100px', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
           </div>
           <div style={{ marginBottom: '10px' }}>
             <ImageUpload value={form.image || ''} onChange={(url) => setForm({ ...form, image: url })} label="" placeholder="Upload photo..." />
@@ -296,7 +284,6 @@ function AdminGallery() {
                   {p.image && <img src={p.image} alt={p.title} style={{ width: '100%', height: '160px', objectFit: 'cover' }} />}
                   {!p.image && <div style={{ height: '160px', background: '#f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ccc', fontSize: '32px' }}></div>}
                   <div style={{ padding: '12px 14px' }}>
-                    <span style={{ display: 'inline-block', padding: '2px 8px', background: '#e8f5e9', color: '#2e7d32', borderRadius: '4px', fontSize: '10px', fontWeight: 600, marginBottom: '6px' }}>{p.category}</span>
                     <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '14px', fontWeight: 700 }}>{p.title}</h4>
                     {p.description && <p style={{ margin: 0, color: '#666', fontSize: '12px', lineHeight: '1.4' }}>{p.description.substring(0, 60)}{p.description.length > 60 ? '...' : ''}</p>}
                     <div style={{ display: 'flex', gap: '6px', marginTop: '10px' }}>
