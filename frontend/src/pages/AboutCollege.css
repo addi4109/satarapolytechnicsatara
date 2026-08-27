@@ -393,6 +393,11 @@
   gap: 24px;
 }
 
+.leadership-grid-4 .leader-card {
+  width: calc(33.333% - 16px);
+  max-width: 260px;
+}
+
 .leader-card {
   background: #fff;
   border: 1px solid #e4e8ed;
