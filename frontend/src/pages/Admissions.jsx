@@ -296,50 +296,6 @@ function Admissions() {
                 </div>
               </div>
 
-              {/* Quick Links */}
-              <div style={{ marginTop: '36px' }}>
-                <h3 className="content-sub-heading">Quick Navigation</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
-                <div className="admission-quick-grid">
-                  <button className="admission-quick-card" onClick={() => setActive('courses')}>
-                    <span className="quick-card-num">01</span>
-                    <span className="quick-card-label">Courses Offered</span>
-                    <span className="quick-card-desc">6 diploma engineering programmes</span>
-                    <span className="quick-card-arrow">→</span>
-                  </button>
-                  <button className="admission-quick-card" onClick={() => setActive('eligibility')}>
-                    <span className="quick-card-num">02</span>
-                    <span className="quick-card-label">Eligibility</span>
-                    <span className="quick-card-desc">Check admission criteria</span>
-                    <span className="quick-card-arrow">→</span>
-                  </button>
-                  <button className="admission-quick-card" onClick={() => setActive('process')}>
-                    <span className="quick-card-num">03</span>
-                    <span className="quick-card-label">Admission Process</span>
-                    <span className="quick-card-desc">Step-by-step CAP process</span>
-                    <span className="quick-card-arrow">→</span>
-                  </button>
-                  <button className="admission-quick-card" onClick={() => setActive('fees')}>
-                    <span className="quick-card-num">04</span>
-                    <span className="quick-card-label">Fee Structure</span>
-                    <span className="quick-card-desc">Category-wise fee details</span>
-                    <span className="quick-card-arrow">→</span>
-                  </button>
-                  <button className="admission-quick-card" onClick={() => setActive('scholarships')}>
-                    <span className="quick-card-num">05</span>
-                    <span className="quick-card-label">Scholarships</span>
-                    <span className="quick-card-desc">Government scholarship schemes</span>
-                    <span className="quick-card-arrow">→</span>
-                  </button>
-                  <button className="admission-quick-card" onClick={() => setActive('brochure')}>
-                    <span className="quick-card-num">06</span>
-                    <span className="quick-card-label">College Brochure</span>
-                    <span className="quick-card-desc">Download prospectus PDF</span>
-                    <span className="quick-card-arrow">→</span>
-                  </button>
-                </div>
-              </div>
-
               {/* Key Dates / Important Info */}
               <div style={{ marginTop: '36px' }}>
                 <h3 className="content-sub-heading">Important Information</h3>
