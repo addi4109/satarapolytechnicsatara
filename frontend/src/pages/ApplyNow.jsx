@@ -3,19 +3,13 @@ import { Link } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
+import './Academics.css';
 import './ApplyNow.css';
 
 // Initialize EmailJS with public key on module load
 const emailjsPublicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 if (emailjsPublicKey) {
   emailjs.init(emailjsPublicKey);
-}
-
-// Helper to mask sensitive values for debug display
-function maskValue(val) {
-  if (!val) return '❌ NOT SET';
-  if (val.length <= 8) return val;
-  return val.substring(0, 4) + '...' + val.substring(val.length - 4);
 }
 
 const branchOptions = [
@@ -28,30 +22,7 @@ const branchOptions = [
   'General Science',
 ];
 
-const admissionType = [
-  'First Year (FY)',
-  'Direct Second Year (DSY)',
-];
-
-const categoryOptions = [
-  'Open / General',
-  'SC',
-  'ST',
-  'VJ / NT',
-  'OBC',
-  'SBC',
-  'EWS',
-  'Minority',
-  'PwD',
-];
-
 function ApplyNow() {
-  // Read env vars for debug panel display
-  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-  const collegeTemplateId = import.meta.env.VITE_EMAILJS_COLLEGE_TEMPLATE_ID;
-  const autoReplyTemplateId = import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID;
-  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -73,7 +44,6 @@ function ApplyNow() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prevent multiple submissions
     if (sending) return;
 
     setSending(true);
@@ -85,13 +55,6 @@ function ApplyNow() {
     const autoReplyTemplateId = import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID;
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-    console.log('=== EmailJS Debug ===');
-    console.log('serviceId:', serviceId);
-    console.log('collegeTemplateId:', collegeTemplateId);
-    console.log('autoReplyTemplateId:', autoReplyTemplateId);
-    console.log('publicKey:', publicKey ? '***set***' : 'MISSING');
-
-    // Validate env vars are present
     if (!serviceId || !collegeTemplateId || !autoReplyTemplateId || !publicKey) {
       console.error('Missing EmailJS environment variables!');
       setErrorMessage(
@@ -101,7 +64,6 @@ function ApplyNow() {
       return;
     }
 
-    // Re-init with the key to be sure
     emailjs.init(publicKey);
 
     const templateParams = {
@@ -112,42 +74,33 @@ function ApplyNow() {
       message: formData.message || '',
     };
 
-    console.log('Template params:', templateParams);
-
     try {
       // STEP 1: Send college enquiry email (Template 1)
-      console.log('Sending college email with template:', collegeTemplateId);
-      const collegeResponse = await emailjs.send(
+      await emailjs.send(
         serviceId,
         collegeTemplateId,
         templateParams,
         { publicKey }
       );
-      console.log('College email SUCCESS:', collegeResponse.status, collegeResponse.text);
 
       // STEP 2: Send student auto-reply email (Template 2)
       try {
-        console.log('Sending auto-reply email with template:', autoReplyTemplateId);
-        const autoReplyResponse = await emailjs.send(
+        await emailjs.send(
           serviceId,
           autoReplyTemplateId,
           templateParams,
           { publicKey }
         );
-        console.log('Auto-reply email SUCCESS:', autoReplyResponse.status, autoReplyResponse.text);
         setSubmitted(true);
       } catch (autoReplyError) {
-        console.error('Auto-reply email FAILED:', autoReplyError);
+        console.error('Auto-reply email failed:', autoReplyError);
         setPartialSuccess(
           'Your enquiry was received, but we couldn\'t send the confirmation email. Our admission team will still contact you.'
         );
         setSubmitted(true);
       }
     } catch (error) {
-      console.error('College email FAILED:', error);
-      console.error('Error status:', error.status);
-      console.error('Error text:', error.text);
-      console.error('Full error:', JSON.stringify(error, null, 2));
+      console.error('EmailJS error:', error);
       setErrorMessage(
         'Sorry, we couldn\'t submit your enquiry right now. Please try again or contact the college directly.'
       );
@@ -260,31 +213,6 @@ function ApplyNow() {
                 our diploma programmes. Our admission team will get back to you
                 within 24 hours.
               </p>
-            </div>
-
-            {/* Debug panel — shows actual env var values */}
-            <div className="apply-debug-panel">
-              <details>
-                <summary>🔧 Debug Info (click to expand)</summary>
-                <div className="apply-debug-grid">
-                  <div className="apply-debug-row">
-                    <span className="apply-debug-label">VITE_EMAILJS_SERVICE_ID</span>
-                    <span className="apply-debug-val">{maskValue(serviceId)}</span>
-                  </div>
-                  <div className="apply-debug-row">
-                    <span className="apply-debug-label">VITE_EMAILJS_COLLEGE_TEMPLATE_ID</span>
-                    <span className="apply-debug-val">{maskValue(collegeTemplateId)}</span>
-                  </div>
-                  <div className="apply-debug-row">
-                    <span className="apply-debug-label">VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID</span>
-                    <span className="apply-debug-val">{maskValue(autoReplyTemplateId)}</span>
-                  </div>
-                  <div className="apply-debug-row">
-                    <span className="apply-debug-label">VITE_EMAILJS_PUBLIC_KEY</span>
-                    <span className="apply-debug-val">{maskValue(publicKey)}</span>
-                  </div>
-                </div>
-              </details>
             </div>
 
             {/* Error message */}

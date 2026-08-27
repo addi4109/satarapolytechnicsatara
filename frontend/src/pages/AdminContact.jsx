@@ -9,6 +9,13 @@ const defaultDeptRow = { name: '', hod: '', phone: '', email: '', address: '', d
 
 function AdminContact() {
   const [activeTab, setActiveTab] = useState('general');
+
+  // EmailJS config (read-only from env vars)
+  const emailjsServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || '';
+  const emailjsCollegeTemplateId = import.meta.env.VITE_EMAILJS_COLLEGE_TEMPLATE_ID || '';
+  const emailjsAutoReplyTemplateId = import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID || '';
+  const emailjsPublicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '';
+  const collegeEmail = import.meta.env.VITE_COLLEGE_EMAIL || '';
   const [sections, setSections] = useState({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -177,6 +184,7 @@ function AdminContact() {
             { key: 'general', label: 'General Info' },
             { key: 'office', label: 'Office Contacts' },
             { key: 'departments', label: 'Department Details' },
+            { key: 'emailjs', label: 'Email Settings' },
           ].map((tab) => (
             <button
               key={tab.key}
@@ -268,6 +276,85 @@ function AdminContact() {
             </div>
           </div>
         )}
+        {/* EmailJS Settings */}
+        {activeTab === 'emailjs' && (
+          <div className="admin-card">
+            <div className="admin-card-header">
+              <h3>EmailJS Configuration (Admission Enquiry)</h3>
+            </div>
+            <div className="admin-card-body">
+              <p style={{ fontSize: '13px', color: '#666', marginBottom: '16px', lineHeight: '1.6' }}>
+                These settings are configured via environment variables in Vercel. To change them, update the <code style={{ background: '#f1f5f9', padding: '2px 6px', borderRadius: '3px', fontSize: '12px' }}>VITE_*</code> variables in your Vercel Dashboard → Settings → Environment Variables, then redeploy.
+              </p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="form-group">
+                  <label style={labelStyle}>Service ID</label>
+                  <input type="text" value={emailjsServiceId} readOnly style={{ ...inputStyle, background: '#f8f9fa', color: emailjsServiceId ? '#333' : '#dc2626' }} placeholder="Not configured" />
+                </div>
+                <div className="form-group">
+                  <label style={labelStyle}>Public Key</label>
+                  <input type="text" value={emailjsPublicKey ? emailjsPublicKey.substring(0, 8) + '...' + emailjsPublicKey.substring(emailjsPublicKey.length - 4) : ''} readOnly style={{ ...inputStyle, background: '#f8f9fa', color: emailjsPublicKey ? '#333' : '#dc2626' }} placeholder="Not configured" />
+                </div>
+                <div className="form-group">
+                  <label style={labelStyle}>College Template ID</label>
+                  <input type="text" value={emailjsCollegeTemplateId} readOnly style={{ ...inputStyle, background: '#f8f9fa', color: emailjsCollegeTemplateId ? '#333' : '#dc2626' }} placeholder="Not configured" />
+                </div>
+                <div className="form-group">
+                  <label style={labelStyle}>Auto-Reply Template ID</label>
+                  <input type="text" value={emailjsAutoReplyTemplateId} readOnly style={{ ...inputStyle, background: '#f8f9fa', color: emailjsAutoReplyTemplateId ? '#333' : '#dc2626' }} placeholder="Not configured" />
+                </div>
+                <div className="form-group">
+                  <label style={labelStyle}>College Email (To: for Template 1)</label>
+                  <input type="text" value={collegeEmail} readOnly style={{ ...inputStyle, background: '#f8f9fa', color: collegeEmail ? '#333' : '#dc2626' }} placeholder="Not configured" />
+                </div>
+              </div>
+
+              {/* Status summary */}
+              <div style={{ marginTop: '20px', padding: '14px 18px', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '8px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '16px' }}>{emailjsServiceId && emailjsCollegeTemplateId && emailjsAutoReplyTemplateId && emailjsPublicKey ? '✅' : '❌'}</span>
+                  <strong style={{ fontSize: '13px', color: '#166534' }}>
+                    {emailjsServiceId && emailjsCollegeTemplateId && emailjsAutoReplyTemplateId && emailjsPublicKey
+                      ? 'All EmailJS environment variables are configured'
+                      : 'Some EmailJS environment variables are missing'
+                    }
+                  </strong>
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                  {[
+                    { label: 'Service ID', ok: !!emailjsServiceId },
+                    { label: 'Public Key', ok: !!emailjsPublicKey },
+                    { label: 'College Template', ok: !!emailjsCollegeTemplateId },
+                    { label: 'Auto-Reply Template', ok: !!emailjsAutoReplyTemplateId },
+                    { label: 'College Email', ok: !!collegeEmail },
+                  ].map((item) => (
+                    <span key={item.label} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '4px 10px', borderRadius: '20px', fontSize: '11px', fontWeight: 600, background: item.ok ? '#dcfce7' : '#fef2f2', color: item.ok ? '#166534' : '#991b1b' }}>
+                      {item.ok ? '✓' : '✗'} {item.label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Template variable reference */}
+              <div style={{ marginTop: '20px', padding: '14px 18px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+                <h4 style={{ fontSize: '13px', fontWeight: 700, color: '#334155', margin: '0 0 10px' }}>📋 EmailJS Template Variables</h4>
+                <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 10px', lineHeight: '1.5' }}>
+                  Both templates must use these exact variable names in the EmailJS dashboard:
+                </p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                  {['fullName', 'phone', 'email', 'department', 'message'].map((v) => (
+                    <code key={v} style={{ padding: '3px 10px', background: '#e0e7ff', color: '#3730a3', borderRadius: '4px', fontSize: '11px', fontWeight: 600, fontFamily: 'monospace' }}>{'{{'}{v}{'}}'}</code>
+                  ))}
+                </div>
+                <p style={{ fontSize: '12px', color: '#64748b', margin: '10px 0 0', lineHeight: '1.5' }}>
+                  <strong>Template 1 (College):</strong> To Email = college email address<br/>
+                  <strong>Template 2 (Auto-Reply):</strong> To Email = {'{{email}}'}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Department Details */}
         {activeTab === 'departments' && (
           <div className="admin-card">

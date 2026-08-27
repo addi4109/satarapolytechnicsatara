@@ -240,55 +240,6 @@ select.form-input {
   color: #555;
 }
 
-.apply-debug-panel {
-  margin-bottom: 16px;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  background: #f8fafc;
-  overflow: hidden;
-}
-
-.apply-debug-panel summary {
-  padding: 10px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #475569;
-  cursor: pointer;
-  user-select: none;
-}
-
-.apply-debug-panel summary:hover {
-  background: #f1f5f9;
-}
-
-.apply-debug-grid {
-  padding: 0 16px 12px;
-}
-
-.apply-debug-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 0;
-  border-bottom: 1px solid #e2e8f0;
-  font-size: 12px;
-}
-
-.apply-debug-row:last-child {
-  border-bottom: none;
-}
-
-.apply-debug-label {
-  font-family: 'Courier New', monospace;
-  color: #64748b;
-  font-weight: 600;
-}
-
-.apply-debug-val {
-  font-family: 'Courier New', monospace;
-  color: #1e293b;
-}
-
 .apply-error-msg {
   background: #fef2f2;
   border: 1px solid #fca5a5;
