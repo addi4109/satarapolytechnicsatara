@@ -12,7 +12,7 @@ function Departments() {
       .then((res) => res.json())
       .then((data) => {
         if (data && data.length > 0) {
-          setDepartments(data.filter((d) => !d.hideFromHome && d.slug !== 'general-science'));
+          setDepartments(data.filter((d) => !d.hideFromHome && d.slug !== 'general-science' && !d.name.toLowerCase().includes('general science')));
         }
       })
       .catch((err) => console.error('Failed to fetch departments:', err))
