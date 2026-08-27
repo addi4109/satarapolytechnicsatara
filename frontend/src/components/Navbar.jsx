@@ -97,10 +97,8 @@ function Navbar() {
         { label: 'Fee Structure', link: '/admissions/fees' },
         { label: 'Scholarships', link: '/admissions/scholarships' },
         { label: 'College Brochure', link: '/admissions/brochure' },
-
-        { label: 'Apply Now', link: '/admissions/apply' },
-        { divider: true },
         { label: 'Admission Notice', link: '/notices/admission' },
+        { label: 'Apply Now', link: '/admissions/apply' },
       ],
     },
     {
