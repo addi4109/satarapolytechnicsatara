@@ -93,6 +93,7 @@
   color: #243358;
   font-weight: 700;
   margin: 0;
+  animation: fadeInUp 0.4s ease both;
 }
 
 .content-line {
@@ -101,6 +102,17 @@
   background: #c8963e;
   margin: 10px 0 20px;
   border-radius: 2px;
+  animation: expandLine 0.5s ease 0.15s both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes expandLine {
+  from { width: 0; opacity: 0; }
+  to { width: 45px; opacity: 1; }
 }
 
 .about-content p {
@@ -112,16 +124,28 @@
 
 .dept-hero {
   margin-bottom: 20px;
-  border-radius: 6px;
+  border-radius: 12px;
   overflow: hidden;
-  height: 250px;
+  height: 280px;
+  box-shadow: 0 4px 16px rgba(36, 51, 88, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dept-hero:hover {
+  transform: scale(1.01);
+  box-shadow: 0 8px 28px rgba(36, 51, 88, 0.15);
 }
 
 .dept-hero img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
+  transition: transform 0.4s ease;
+}
+
+.dept-hero:hover img {
+  transform: scale(1.03);
 }
 
 .overview-stats {
@@ -134,9 +158,16 @@
 .stat-box {
   background: #f5f7fa;
   border: 1px solid #e4e8ed;
-  border-radius: 6px;
+  border-radius: 8px;
   padding: 18px 12px;
   text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.stat-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(36, 51, 88, 0.1);
+  border-color: #c8963e;
 }
 
 .stat-num {
@@ -198,10 +229,16 @@
 .officer-photo {
   width: 140px;
   height: 170px;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
   border: 3px solid #e4e8ed;
   margin: 0 auto 12px;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.officer-photo:hover {
+  border-color: #c8963e;
+  transform: scale(1.03);
 }
 
 .officer-photo img {
@@ -209,6 +246,11 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.4s ease;
+}
+
+.officer-photo:hover img {
+  transform: scale(1.05);
 }
 
 .officer-photo-placeholder {
@@ -283,14 +325,16 @@
 .faculty-card-new {
   background: #fff;
   border: 1px solid #e4e8ed;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 28px 20px 22px;
   text-align: center;
-  transition: box-shadow 0.2s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .faculty-card-new:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(36, 51, 88, 0.12);
+  border-color: #c8963e;
 }
 
 .fcard-photo {
@@ -304,6 +348,12 @@
   justify-content: center;
   background: #f5f7fa;
   overflow: hidden;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.faculty-card-new:hover .fcard-photo {
+  border-color: #c8963e;
+  transform: scale(1.05);
 }
 
 .fcard-photo img {
@@ -369,14 +419,16 @@
 
 .lab-img-card {
   border: 1px solid #e4e8ed;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
   background: #fff;
-  transition: box-shadow 0.2s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .lab-img-card:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(36, 51, 88, 0.1);
+  border-color: #c8963e;
 }
 
 .lab-img-wrap {
@@ -440,6 +492,10 @@
   padding: 12px 16px;
   border-bottom: 1px solid #e4e8ed;
   color: #444;
+}
+
+.curriculum-table tbody tr {
+  transition: background 0.2s ease;
 }
 
 .curriculum-table tbody tr:nth-child(even) {
