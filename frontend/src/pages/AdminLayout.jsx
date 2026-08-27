@@ -12,7 +12,9 @@ function patchFetchForAdmin() {
   adminFetchPatched = true;
   window.fetch = (url, opts = {}) => {
     const method = (opts.method || 'GET').toUpperCase();
-    if (method !== 'GET' && method !== 'HEAD') {
+    // Only inject admin key for requests to our own API (skip external services like Cloudinary)
+    const isExternal = typeof url === 'string' && !url.startsWith('/api') && !url.startsWith(window.location.origin);
+    if (method !== 'GET' && method !== 'HEAD' && !isExternal) {
       opts.headers = { ...opts.headers, 'x-admin-key': getAdminApiKey() };
     }
     return originalFetch(url, opts);
