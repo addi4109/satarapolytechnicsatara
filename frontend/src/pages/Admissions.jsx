@@ -1066,20 +1066,18 @@ function Admissions() {
               {renderSubSections(getSection('brochure').subSections)}
 
               {getSection('brochure').pdfUrl ? (
-                <div style={{ marginTop: '20px', display: 'flex', gap: '12px' }}>
+                <div style={{ marginTop: '20px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                   <a
                     href={`/api/pdf-proxy?url=${encodeURIComponent(getSection('brochure').pdfUrl)}`}
                     target="_blank"
-                    className="btn btn-primary"
-                    style={{ padding: '10px 24px', fontSize: '14px', textDecoration: 'none' }}
+                    style={{ padding: '10px 28px', fontSize: '14px', fontWeight: 600, textDecoration: 'none', background: '#243358', color: '#fff', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
                   >
                     View Brochure
                   </a>
                   <a
                     href={`/api/pdf-proxy?url=${encodeURIComponent(getSection('brochure').pdfUrl)}`}
                     download
-                    className="btn btn-secondary"
-                    style={{ padding: '10px 24px', fontSize: '14px', textDecoration: 'none', cursor: 'pointer' }}
+                    style={{ padding: '10px 28px', fontSize: '14px', fontWeight: 600, textDecoration: 'none', background: '#fff', color: '#243358', borderRadius: '6px', border: '2px solid #243358', cursor: 'pointer' }}
                   >
                     Download Brochure
                   </a>
