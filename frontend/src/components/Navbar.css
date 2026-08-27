@@ -288,6 +288,15 @@
   padding: 12px 0;
 }
 
+.dropdown-col-depts {
+  min-width: 180px;
+  max-width: 200px;
+}
+
+.dropdown-col-cells {
+  min-width: 260px;
+}
+
 .dropdown-col + .dropdown-col {
   border-left: 1px solid #eee;
 }

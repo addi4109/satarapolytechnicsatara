@@ -65,7 +65,7 @@ function Navbar() {
         {
           header: 'Departments',
           items: [
-            ...dbDepts.filter((d) => !d.hideFromHome).map((d) => ({
+            ...dbDepts.filter((d) => !d.hideFromHome && d.slug !== 'general-science').map((d) => ({
               label: d.name,
               link: `/departments/${d.slug}`,
             })),
@@ -266,7 +266,7 @@ function Navbar() {
                       }`}
                     >
                       {item.columns.map((col, cIdx) => (
-                        <div className="dropdown-col" key={cIdx}>
+                        <div className={`dropdown-col ${col.header === 'Departments' ? 'dropdown-col-depts' : 'dropdown-col-cells'}`} key={cIdx}>
                           <span className="dropdown-col-header">{col.header}</span>
                           <ul className="dropdown-col-list">
                             {col.items.map((child, iIdx) => (
