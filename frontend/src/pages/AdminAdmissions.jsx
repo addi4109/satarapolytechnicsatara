@@ -685,7 +685,8 @@ function AdminAdmissions() {
             <h4>Process Steps</h4>
             <div className="process-steps">
               {form.steps.map((step, i) => (
-                <div className="process-step" key={i}>
+                <div className="process-step" key={i} style={{ position: 'relative' }}>
+                  <button className="member-remove-btn" onClick={() => removeStep(i)} style={{ position: 'absolute', top: '8px', right: '8px', zIndex: 1 }}>×</button>
                   <div className="step-number">{i + 1}</div>
                   <div className="step-content" style={{ flex: 1 }}>
                     {editingStepIdx === i ? (
@@ -695,13 +696,10 @@ function AdminAdmissions() {
                         <button className="btn btn-success btn-sm" onClick={() => setEditingStepIdx(null)}>Done</button>
                       </>
                     ) : (
-                      <>
-                        <div onClick={() => setEditingStepIdx(i)} style={{ cursor: 'pointer' }}>
-                          <h4>{step.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled</em>}</h4>
-                          {step.desc && <p>{step.desc}</p>}
-                        </div>
-                        <button className="member-remove-btn" onClick={() => removeStep(i)}>×</button>
-                      </>
+                      <div onClick={() => setEditingStepIdx(i)} style={{ cursor: 'pointer', paddingRight: '24px' }}>
+                        <h4>{step.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled</em>}</h4>
+                        {step.desc && <p>{step.desc}</p>}
+                      </div>
                     )}
                   </div>
                 </div>
