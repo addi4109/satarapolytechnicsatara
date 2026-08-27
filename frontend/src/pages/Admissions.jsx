@@ -1027,6 +1027,27 @@ function Admissions() {
                 read the brochure carefully before applying for admission.
               </p>
 
+              {getSection('brochure').pdfUrl ? (
+                <div style={{ marginTop: '16px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                  <a
+                    href={`/api/pdf-proxy?url=${encodeURIComponent(getSection('brochure').pdfUrl)}`}
+                    target="_blank"
+                    style={{ padding: '10px 28px', fontSize: '14px', fontWeight: 600, textDecoration: 'none', background: '#243358', color: '#fff', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
+                  >
+                    View Brochure
+                  </a>
+                  <a
+                    href={`/api/pdf-proxy?url=${encodeURIComponent(getSection('brochure').pdfUrl)}`}
+                    download
+                    style={{ padding: '10px 28px', fontSize: '14px', fontWeight: 600, textDecoration: 'none', background: '#fff', color: '#243358', borderRadius: '6px', border: '2px solid #243358', cursor: 'pointer' }}
+                  >
+                    Download Brochure
+                  </a>
+                </div>
+              ) : (
+                <p style={{ marginTop: '16px', color: '#888' }}>No brochure uploaded yet.</p>
+              )}
+
               {/* Brochure Contents */}
               <div style={{ marginTop: '24px' }}>
                 <h3 className="content-sub-heading">What's Inside the Brochure</h3>
@@ -1064,27 +1085,6 @@ function Admissions() {
               </div>
 
               {renderSubSections(getSection('brochure').subSections)}
-
-              {getSection('brochure').pdfUrl ? (
-                <div style={{ marginTop: '20px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                  <a
-                    href={`/api/pdf-proxy?url=${encodeURIComponent(getSection('brochure').pdfUrl)}`}
-                    target="_blank"
-                    style={{ padding: '10px 28px', fontSize: '14px', fontWeight: 600, textDecoration: 'none', background: '#243358', color: '#fff', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
-                  >
-                    View Brochure
-                  </a>
-                  <a
-                    href={`/api/pdf-proxy?url=${encodeURIComponent(getSection('brochure').pdfUrl)}`}
-                    download
-                    style={{ padding: '10px 28px', fontSize: '14px', fontWeight: 600, textDecoration: 'none', background: '#fff', color: '#243358', borderRadius: '6px', border: '2px solid #243358', cursor: 'pointer' }}
-                  >
-                    Download Brochure
-                  </a>
-                </div>
-              ) : (
-                <p style={{ marginTop: '20px', color: '#888' }}>No brochure uploaded yet.</p>
-              )}
               {renderNote(getSection('brochure'))}
             </>
           )}
