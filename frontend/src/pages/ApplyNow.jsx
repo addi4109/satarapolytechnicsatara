@@ -1,8 +1,22 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import emailjs from '@emailjs/browser';
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './ApplyNow.css';
+
+// Initialize EmailJS with public key on module load
+const emailjsPublicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+if (emailjsPublicKey) {
+  emailjs.init(emailjsPublicKey);
+}
+
+// Helper to mask sensitive values for debug display
+function maskValue(val) {
+  if (!val) return '❌ NOT SET';
+  if (val.length <= 8) return val;
+  return val.substring(0, 4) + '...' + val.substring(val.length - 4);
+}
 
 const branchOptions = [
   'Computer Engineering',
@@ -32,6 +46,12 @@ const categoryOptions = [
 ];
 
 function ApplyNow() {
+  // Read env vars for debug panel display
+  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+  const collegeTemplateId = import.meta.env.VITE_EMAILJS_COLLEGE_TEMPLATE_ID;
+  const autoReplyTemplateId = import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID;
+  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -41,15 +61,99 @@ function ApplyNow() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [partialSuccess, setPartialSuccess] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+
+    // Prevent multiple submissions
+    if (sending) return;
+
+    setSending(true);
+    setErrorMessage('');
+    setPartialSuccess('');
+
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const collegeTemplateId = import.meta.env.VITE_EMAILJS_COLLEGE_TEMPLATE_ID;
+    const autoReplyTemplateId = import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    console.log('=== EmailJS Debug ===');
+    console.log('serviceId:', serviceId);
+    console.log('collegeTemplateId:', collegeTemplateId);
+    console.log('autoReplyTemplateId:', autoReplyTemplateId);
+    console.log('publicKey:', publicKey ? '***set***' : 'MISSING');
+
+    // Validate env vars are present
+    if (!serviceId || !collegeTemplateId || !autoReplyTemplateId || !publicKey) {
+      console.error('Missing EmailJS environment variables!');
+      setErrorMessage(
+        'Email configuration is missing. Please contact the college directly.'
+      );
+      setSending(false);
+      return;
+    }
+
+    // Re-init with the key to be sure
+    emailjs.init(publicKey);
+
+    const templateParams = {
+      fullName: formData.fullName,
+      phone: formData.phone,
+      email: formData.email,
+      department: formData.department,
+      message: formData.message || '',
+    };
+
+    console.log('Template params:', templateParams);
+
+    try {
+      // STEP 1: Send college enquiry email (Template 1)
+      console.log('Sending college email with template:', collegeTemplateId);
+      const collegeResponse = await emailjs.send(
+        serviceId,
+        collegeTemplateId,
+        templateParams,
+        { publicKey }
+      );
+      console.log('College email SUCCESS:', collegeResponse.status, collegeResponse.text);
+
+      // STEP 2: Send student auto-reply email (Template 2)
+      try {
+        console.log('Sending auto-reply email with template:', autoReplyTemplateId);
+        const autoReplyResponse = await emailjs.send(
+          serviceId,
+          autoReplyTemplateId,
+          templateParams,
+          { publicKey }
+        );
+        console.log('Auto-reply email SUCCESS:', autoReplyResponse.status, autoReplyResponse.text);
+        setSubmitted(true);
+      } catch (autoReplyError) {
+        console.error('Auto-reply email FAILED:', autoReplyError);
+        setPartialSuccess(
+          'Your enquiry was received, but we couldn\'t send the confirmation email. Our admission team will still contact you.'
+        );
+        setSubmitted(true);
+      }
+    } catch (error) {
+      console.error('College email FAILED:', error);
+      console.error('Error status:', error.status);
+      console.error('Error text:', error.text);
+      console.error('Full error:', JSON.stringify(error, null, 2));
+      setErrorMessage(
+        'Sorry, we couldn\'t submit your enquiry right now. Please try again or contact the college directly.'
+      );
+    } finally {
+      setSending(false);
+    }
   };
 
   if (submitted) {
@@ -71,11 +175,16 @@ function ApplyNow() {
           <div className="apply-success">
             <div className="success-icon">✓</div>
             <h2>Application Submitted Successfully!</h2>
-            <p>
-              Thank you for your interest in Satara Polytechnic. Our admission
-              team will contact you shortly at <strong>{formData.phone}</strong> or{' '}
-              <strong>{formData.email}</strong>.
-            </p>
+            {partialSuccess ? (
+              <p style={{ color: '#e67e22', fontWeight: 600 }}>
+                {partialSuccess}
+              </p>
+            ) : (
+              <p>
+                Thank you! Your admission enquiry has been submitted successfully.
+                Our admission team or concerned staff member will contact you soon.
+              </p>
+            )}
             <div className="success-details">
               <div className="success-row">
                 <span className="success-label">Name</span>
@@ -152,6 +261,38 @@ function ApplyNow() {
                 within 24 hours.
               </p>
             </div>
+
+            {/* Debug panel — shows actual env var values */}
+            <div className="apply-debug-panel">
+              <details>
+                <summary>🔧 Debug Info (click to expand)</summary>
+                <div className="apply-debug-grid">
+                  <div className="apply-debug-row">
+                    <span className="apply-debug-label">VITE_EMAILJS_SERVICE_ID</span>
+                    <span className="apply-debug-val">{maskValue(serviceId)}</span>
+                  </div>
+                  <div className="apply-debug-row">
+                    <span className="apply-debug-label">VITE_EMAILJS_COLLEGE_TEMPLATE_ID</span>
+                    <span className="apply-debug-val">{maskValue(collegeTemplateId)}</span>
+                  </div>
+                  <div className="apply-debug-row">
+                    <span className="apply-debug-label">VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID</span>
+                    <span className="apply-debug-val">{maskValue(autoReplyTemplateId)}</span>
+                  </div>
+                  <div className="apply-debug-row">
+                    <span className="apply-debug-label">VITE_EMAILJS_PUBLIC_KEY</span>
+                    <span className="apply-debug-val">{maskValue(publicKey)}</span>
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            {/* Error message */}
+            {errorMessage && (
+              <div className="apply-error-msg">
+                {errorMessage}
+              </div>
+            )}
 
             <form className="apply-form" onSubmit={handleSubmit}>
           <div className="form-section">
@@ -247,12 +388,17 @@ function ApplyNow() {
 
           {/* Submit */}
           <div className="form-actions">
-            <button type="submit" className="apply-btn submit">
-              Submit Application
+            <button
+              type="submit"
+              className="apply-btn submit"
+              disabled={sending}
+            >
+              {sending ? 'Submitting...' : 'Submit Enquiry'}
             </button>
             <button
               type="reset"
               className="apply-btn reset"
+              disabled={sending}
               onClick={() => {
                 setFormData({
                   fullName: '',
@@ -261,6 +407,8 @@ function ApplyNow() {
                   department: '',
                   message: '',
                 });
+                setErrorMessage('');
+                setPartialSuccess('');
               }}
             >
               Reset Form
