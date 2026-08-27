@@ -65,7 +65,7 @@ function Navbar() {
         {
           header: 'Departments',
           items: [
-            ...dbDepts.filter((d) => !d.hideFromHome && d.slug !== 'general-science' && !d.name.toLowerCase().includes('general science')).map((d) => ({
+            ...dbDepts.filter((d) => !d.hideFromHome).map((d) => ({
               label: d.name,
               link: `/departments/${d.slug}`,
             })),
