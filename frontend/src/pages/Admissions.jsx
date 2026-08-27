@@ -115,6 +115,17 @@ function Admissions() {
     );
   };
 
+  // Helper: render note
+  const renderNote = (section) => {
+    if (!section || !section.note || !section.note.trim()) return null;
+    return (
+      <div style={{ marginTop: '24px', padding: '16px 20px', background: '#fffbe6', borderLeft: '4px solid #c8963e', borderRadius: '0 6px 6px 0' }}>
+        <strong style={{ color: '#243358', fontSize: '13px' }}>📝 Note:</strong>
+        <p style={{ margin: '6px 0 0', color: '#555', fontSize: '13px', lineHeight: '1.7' }}>{section.note}</p>
+      </div>
+    );
+  };
+
   // Helper: render info rows
   const renderInfoRows = (rows) => {
     if (!rows || rows.length === 0) return null;
@@ -369,6 +380,7 @@ function Admissions() {
                   </div>
                 </div>
               </div>
+              {renderNote(getSection('overview'))}
             </>
           )}
 
@@ -470,6 +482,7 @@ function Admissions() {
                   </div>
                 </div>
               </div>
+              {renderNote(getSection('courses'))}
             </>
           )}
 
@@ -502,6 +515,7 @@ function Admissions() {
                   </ul>
                 </>
               )}
+              {renderNote(getSection('eligibility'))}
             </>
           )}
 
@@ -579,6 +593,7 @@ function Admissions() {
               </div>
 
               {renderSubSections(getSection('process').subSections)}
+              {renderNote(getSection('process'))}
             </>
           )}
 
@@ -651,6 +666,7 @@ function Admissions() {
               </div>
 
               {renderSubSections(getSection('first-year').subSections)}
+              {renderNote(getSection('first-year'))}
             </>
           )}
 
@@ -726,6 +742,7 @@ function Admissions() {
               </div>
 
               {renderSubSections(getSection('direct-second').subSections)}
+              {renderNote(getSection('direct-second'))}
             </>
           )}
 
@@ -813,6 +830,7 @@ function Admissions() {
               </div>
 
               {renderSubSections(getSection('acap').subSections)}
+              {renderNote(getSection('acap'))}
             </>
           )}
 
@@ -906,6 +924,7 @@ function Admissions() {
                   </>
                 );
               })()}
+              {renderNote(getSection('fees'))}
             </>
           )}
 
@@ -986,6 +1005,7 @@ function Admissions() {
                   ))}
                 </div>
               )}
+              {renderNote(getSection('scholarships'))}
             </>
           )}
 
@@ -1067,6 +1087,7 @@ function Admissions() {
               ) : (
                 <p style={{ marginTop: '20px', color: '#888' }}>No brochure uploaded yet.</p>
               )}
+              {renderNote(getSection('brochure'))}
             </>
           )}
         </main>

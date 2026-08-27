@@ -16,6 +16,10 @@ const AdmissionSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  note: {
+    type: String,
+    default: '',
+  },
   stats: {
     type: [{ num: String, label: String }],
     default: [],

@@ -51,6 +51,7 @@ const defaultFeeRows = [
 const defaultSection = {
   title: '',
   content: '',
+  note: '',
   stats: [],
   steps: [],
   documents: [],
@@ -160,6 +161,7 @@ function AdminAdmissions() {
       setForm({
         title: existing.title || '',
         content: existing.content || '',
+        note: existing.note || '',
         stats: existing.stats || [],
         steps: existing.steps || [],
         documents: existing.documents || [],
@@ -205,6 +207,7 @@ function AdminAdmissions() {
       setForm({
         title: existing.title || '',
         content: existing.content || '',
+        note: existing.note || '',
         stats: existing.stats || [],
         steps: existing.steps || [],
         documents: existing.documents || [],
@@ -371,6 +374,29 @@ function AdminAdmissions() {
     );
   };
 
+  const renderNotePreview = () => {
+    if (!form.note || !form.note.trim()) return null;
+    return (
+      <div style={{ marginTop: '24px', padding: '16px 20px', background: '#fffbe6', borderLeft: '4px solid #c8963e', borderRadius: '0 6px 6px 0' }}>
+        <strong style={{ color: '#243358', fontSize: '13px' }}>📝 Note:</strong>
+        <p style={{ margin: '6px 0 0', color: '#555', fontSize: '13px', lineHeight: '1.7' }}>{form.note}</p>
+      </div>
+    );
+  };
+
+  const renderNoteEditor = () => (
+    <div style={{ marginTop: '20px' }}>
+      <label style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '5px' }}>Note (optional)</label>
+      <textarea
+        value={form.note || ''}
+        onChange={(e) => handleChange('note', e.target.value)}
+        rows={3}
+        placeholder="Add any important note for this section..."
+        style={{ width: '100%', padding: '9px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', resize: 'vertical', boxSizing: 'border-box' }}
+      />
+    </div>
+  );
+
   const renderFeePreview = (feeRows, label) => {
     if (!feeRows || feeRows.length === 0) return null;
     return (
@@ -413,6 +439,7 @@ function AdminAdmissions() {
             <div className="content-line"></div>
             <p>Welcome to the Admissions section of Satara Polytechnic, Satara. Explore complete information about diploma engineering admissions.</p>
             {renderInfoRows(form.infoRows)}
+            {renderNotePreview()}
           </div>
         );
 
@@ -449,6 +476,7 @@ function AdminAdmissions() {
             ) : (
               <p style={{ color: '#aaa', fontStyle: 'italic' }}>No courses added yet.</p>
             )}
+            {renderNotePreview()}
           </div>
         );
 
@@ -472,6 +500,7 @@ function AdminAdmissions() {
             {form.eligFirstYear.length === 0 && form.eligDirect2nd.length === 0 && (
               <p style={{ color: '#aaa', fontStyle: 'italic' }}>No eligibility points added yet.</p>
             )}
+            {renderNotePreview()}
           </div>
         );
 
@@ -482,6 +511,7 @@ function AdminAdmissions() {
             <div className="content-line"></div>
             {renderSteps(form.steps)}
             {form.steps.length === 0 && <p style={{ color: '#aaa', fontStyle: 'italic' }}>No steps added yet.</p>}
+            {renderNotePreview()}
           </div>
         );
 
@@ -492,6 +522,7 @@ function AdminAdmissions() {
             <div className="content-line"></div>
             {renderDocuments(form.documents)}
             {form.documents.length === 0 && <p style={{ color: '#aaa', fontStyle: 'italic' }}>No documents added yet.</p>}
+            {renderNotePreview()}
           </div>
         );
 
@@ -502,6 +533,7 @@ function AdminAdmissions() {
             <div className="content-line"></div>
             {renderDocuments(form.documents)}
             {form.documents.length === 0 && <p style={{ color: '#aaa', fontStyle: 'italic' }}>No documents added yet.</p>}
+            {renderNotePreview()}
           </div>
         );
 
@@ -512,6 +544,7 @@ function AdminAdmissions() {
             <div className="content-line"></div>
             {renderDocuments(form.documents)}
             {form.documents.length === 0 && <p style={{ color: '#aaa', fontStyle: 'italic' }}>No documents added yet.</p>}
+            {renderNotePreview()}
           </div>
         );
 
@@ -524,6 +557,7 @@ function AdminAdmissions() {
             {renderFeePreview(form.feeRows1, 'First Year')}
             <h3 className="content-sub-heading">Direct Second Year Fee Structure</h3>
             {renderFeePreview(form.feeRows2, 'Direct Second Year')}
+            {renderNotePreview()}
           </div>
         );
 
@@ -548,6 +582,7 @@ function AdminAdmissions() {
             )) : (
               <p style={{ color: '#aaa', fontStyle: 'italic' }}>No scholarship categories added yet.</p>
             )}
+            {renderNotePreview()}
           </div>
         );
 
@@ -565,6 +600,7 @@ function AdminAdmissions() {
             ) : (
               <p style={{ color: '#aaa', fontStyle: 'italic' }}>No brochure uploaded yet.</p>
             )}
+            {renderNotePreview()}
           </div>
         );
 
@@ -588,6 +624,7 @@ function AdminAdmissions() {
               </div>
             ))}
             <button className="btn btn-success btn-sm" onClick={() => handleChange('infoRows', [...form.infoRows, { label: '', value: '' }])}>+ Add Row</button>
+            {renderNoteEditor()}
           </div>
         );
 
@@ -627,6 +664,7 @@ function AdminAdmissions() {
               </table>
             </div>
             <button className="btn btn-success btn-sm" style={{ marginTop: '12px' }} onClick={addEmptyCourse}>+ Add Course</button>
+            {renderNoteEditor()}
           </div>
         );
 
@@ -672,12 +710,13 @@ function AdminAdmissions() {
                   )}
                 </li>
               ))}
-              <li style={{ listStyle: 'none', marginTop: '6px' }}>
-                <button className="btn btn-success btn-sm" onClick={() => addEmptyElig('eligDirect2nd')}>+ Add Point</button>
+              <li style={{ listStyle: 'none', marginTop: '6px' }}>                <button className="btn btn-success btn-sm" onClick={() => addEmptyElig('eligDirect2nd')}>+ Add Point</button>
               </li>
             </ul>
+            {renderNoteEditor()}
           </div>
         );
+
 
       case 'process':
         return (
@@ -706,6 +745,7 @@ function AdminAdmissions() {
               ))}
             </div>
             <button className="btn btn-success btn-sm" style={{ marginTop: '12px' }} onClick={addEmptyStep}>+ Add Step</button>
+            {renderNoteEditor()}
           </div>
         );
 
@@ -735,6 +775,7 @@ function AdminAdmissions() {
                 <button className="btn btn-success btn-sm" onClick={addEmptyDoc}>+ Add Document</button>
               </li>
             </ul>
+            {renderNoteEditor()}
           </div>
         );
 
@@ -745,6 +786,7 @@ function AdminAdmissions() {
             <FeeTableEditor yearLabel="First Year" feeRows={form.feeRows1 || []} onChange={(rows) => handleChange('feeRows1', rows)} />
             <h4 style={{ marginTop: '20px' }}>Direct Second Year Fee Structure</h4>
             <FeeTableEditor yearLabel="Direct Second Year" feeRows={form.feeRows2 || []} onChange={(rows) => handleChange('feeRows2', rows)} />
+            {renderNoteEditor()}
           </div>
         );
 
@@ -790,6 +832,7 @@ function AdminAdmissions() {
               </div>
             ))}
             <button className="btn btn-success btn-sm" onClick={addEmptyScholCategory}>+ Add Category</button>
+            {renderNoteEditor()}
           </div>
         );
 
@@ -808,6 +851,7 @@ function AdminAdmissions() {
                 </p>
               </div>
             )}
+            {renderNoteEditor()}
           </div>
         );
 
