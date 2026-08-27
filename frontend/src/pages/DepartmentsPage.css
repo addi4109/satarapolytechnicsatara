@@ -181,7 +181,7 @@
 .officer-card {
   display: flex;
   gap: 24px;
-  align-items: flex-start;
+  align-items: center;
   background: #f5f7fa;
   border: 1px solid #e4e8ed;
   border-radius: 10px;
