@@ -71,8 +71,8 @@ function Contact() {
         phone: feedbackForm.phone || '',
         subject: feedbackForm.subject,
         message: feedbackForm.message,
-        rating: 0,
-        showOnHome: false,
+        rating: feedbackForm.rating || 0,
+        showOnHome: true,
         createdAt: serverTimestamp(),
       });
       setFeedbackSent(true);

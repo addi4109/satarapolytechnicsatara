@@ -17,15 +17,16 @@ function FeedbackCarousel() {
     const fetchFeedbacks = async () => {
       try {
         const snapshot = await getDocs(collection(db, 'feedbacks'));
-        const data = snapshot.docs
+        const allData = snapshot.docs
           .map((d) => ({ id: d.id, ...d.data() }))
-          .filter((f) => f.showOnHome)
           .sort((a, b) => {
             const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.createdAt || 0);
             const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.createdAt || 0);
             return dateB - dateA;
           });
-        setFeedbacks(data);
+        // Show feedbacks marked for home; fallback to all if none marked
+        const homeFeedbacks = allData.filter((f) => f.showOnHome);
+        setFeedbacks(homeFeedbacks.length > 0 ? homeFeedbacks : allData);
       } catch (err) {
         console.error('Failed to fetch feedbacks:', err);
       } finally {
