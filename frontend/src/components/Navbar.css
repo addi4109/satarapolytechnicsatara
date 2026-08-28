@@ -409,10 +409,11 @@
     background: #2d4060;
     flex-direction: column;
     justify-content: flex-start;
-    overflow-y: auto;
+    overflow-y: scroll;
     transition: right 0.3s ease;
     z-index: 1100;
-    padding: 60px 0 20px;
+    padding: 60px 0 40px;
+    -webkit-overflow-scrolling: touch;
   }
 
   .nav-list.mobile-open {
@@ -440,13 +441,13 @@
     opacity: 1;
     visibility: visible;
     transform: none;
-    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     padding: 0;
   }
 
   .dropdown-menu.show {
-    max-height: 1200px;
+    max-height: none;
+    overflow: visible;
     transform: none;
     padding: 4px 0;
   }
@@ -473,12 +474,12 @@
     opacity: 1;
     visibility: visible;
     transform: none;
-    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .dropdown-multi.show {
-    max-height: 2000px;
+    max-height: none;
+    overflow: visible;
   }
 
   .dropdown-col {
