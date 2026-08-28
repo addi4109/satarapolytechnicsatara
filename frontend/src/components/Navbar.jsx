@@ -271,9 +271,9 @@ function Navbar() {
                           <ul className="dropdown-col-list">
                             {col.items.map((child, iIdx) => (
                               child.divider ? (
-                                <li key={iIdx} className="dropdown-divider" style={{ borderTop: '1px solid #e4e8ed', margin: '8px 0', listStyle: 'none' }}></li>
+                                <li key={iIdx} className="dropdown-divider"></li>
                               ) : child.isTitle ? (
-                                <li key={iIdx} style={{ padding: '4px 18px 2px', fontWeight: 700, color: '#243358', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px', listStyle: 'none' }}>
+                                <li key={iIdx} className="dropdown-section-title">
                                   {child.label}
                                 </li>
                               ) : (
