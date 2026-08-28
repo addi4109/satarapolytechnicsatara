@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AdminLayout from './AdminLayout';
+import { db } from '../lib/firebase';
+import { collection, getDocs } from 'firebase/firestore';
 import './Admin.css';
 
 const API_URL = '/api';
 
 function AdminDashboard() {
-  const [stats, setStats] = useState({ cells: 0, departments: 0, photos: 0, videos: 0, news: 0, recruiters: 0, notices: 0, slides: 0 });
+  const [stats, setStats] = useState({ cells: 0, departments: 0, photos: 0, videos: 0, news: 0, recruiters: 0, notices: 0, slides: 0, enquiries: 0 });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,6 +23,7 @@ function AdminDashboard() {
           fetch(`${API_URL}/recruiters`).then((r) => r.json()),
           fetch(`${API_URL}/notices/all`).then((r) => r.json()),
           fetch(`${API_URL}/slides`).then((r) => r.json()),
+          getDocs(collection(db, 'enquiries')).then((snap) => snap.size),
         ]);
         setStats({
           cells: cells.length,
@@ -31,6 +34,7 @@ function AdminDashboard() {
           recruiters: recruiters.length,
           notices: notices.length,
           slides: slides.length,
+          enquiries: enquiries,
         });
       } catch (err) {
         console.error('Failed to load stats:', err);
@@ -89,6 +93,10 @@ function AdminDashboard() {
           <Link to="/admin/gallery" className="admin-dashboard-stat" style={{ textDecoration: 'none' }}>
             <span className="dashboard-stat-num">{loading ? '—' : stats.notices}</span>
             <span className="dashboard-stat-label">Notices</span>
+          </Link>
+          <Link to="/admin/enquiries" className="admin-dashboard-stat" style={{ textDecoration: 'none' }}>
+            <span className="dashboard-stat-num">{loading ? '—' : stats.enquiries}</span>
+            <span className="dashboard-stat-label">Enquiries</span>
           </Link>
         </div>
 

@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import emailjs from '@emailjs/browser';
+import { db } from '../lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import './EnquiryPopup.css';
 
 const DEPARTMENTS = [
@@ -115,6 +117,22 @@ function EnquiryPopup({ onClose }) {
       );
     } finally {
       setSending(false);
+    }
+
+    // Save enquiry to Firebase Firestore (fire-and-forget)
+    try {
+      await addDoc(collection(db, 'enquiries'), {
+        fullName: formData.fullName,
+        phone: formData.phone,
+        email: formData.email,
+        department: formData.department,
+        message: formData.message || '',
+        createdAt: serverTimestamp(),
+        source: 'website',
+      });
+      console.log('EnquiryPopup - Saved to Firestore');
+    } catch (firestoreError) {
+      console.error('EnquiryPopup - Firestore save FAILED:', firestoreError);
     }
   };
 
