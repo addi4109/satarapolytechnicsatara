@@ -1,15 +1,14 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
-// Firebase config — expects firebaseConfig.js in project root (frontend root)
-// User should create this file with their Firebase project credentials
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: "AIzaSyAP3w7R8PIQLvvw74xJWT1YBu6xQlipKB8",
+  authDomain: "sps-website-1bbf9.firebaseapp.com",
+  projectId: "sps-website-1bbf9",
+  storageBucket: "sps-website-1bbf9.firebasestorage.app",
+  messagingSenderId: "206564245686",
+  appId: "1:206564245686:web:2a4f47b0f75b7e3e58e617",
 };
 
 const app = initializeApp(firebaseConfig);
