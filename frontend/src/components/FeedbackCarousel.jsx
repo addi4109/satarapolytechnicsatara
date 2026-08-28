@@ -9,8 +9,6 @@ function FeedbackCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const carouselRef = useRef(null);
   const autoScrollRef = useRef(null);
 
   useEffect(() => {
@@ -24,7 +22,6 @@ function FeedbackCarousel() {
             const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.createdAt || 0);
             return dateB - dateA;
           });
-        // Show feedbacks marked for home; fallback to all if none marked
         const homeFeedbacks = allData.filter((f) => f.showOnHome);
         setFeedbacks(homeFeedbacks.length > 0 ? homeFeedbacks : allData);
       } catch (err) {
@@ -33,78 +30,62 @@ function FeedbackCarousel() {
         setLoading(false);
       }
     };
-
     fetchFeedbacks();
   }, []);
 
-  // Auto-scroll logic
+  const maxIndex = Math.max(0, feedbacks.length - 3);
+
+  // Auto-scroll
   useEffect(() => {
-    if (feedbacks.length <= 1) return;
-
+    if (feedbacks.length <= 3) return;
     autoScrollRef.current = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % feedbacks.length);
+      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
     }, 4000);
+    return () => { if (autoScrollRef.current) clearInterval(autoScrollRef.current); };
+  }, [feedbacks.length, maxIndex]);
 
-    return () => {
-      if (autoScrollRef.current) clearInterval(autoScrollRef.current);
-    };
-  }, [feedbacks.length]);
-
-  // Reset auto-scroll when manually navigating
   const resetAutoScroll = useCallback(() => {
     if (autoScrollRef.current) clearInterval(autoScrollRef.current);
-    if (feedbacks.length > 1) {
+    if (feedbacks.length > 3) {
       autoScrollRef.current = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % feedbacks.length);
+        setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
       }, 4000);
     }
-  }, [feedbacks.length]);
+  }, [feedbacks.length, maxIndex]);
 
   const goToPrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + feedbacks.length) % feedbacks.length);
+    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
     resetAutoScroll();
   };
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % feedbacks.length);
+    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
     resetAutoScroll();
   };
 
-  // Mouse drag/swipe handlers
+  // Mouse drag
   const handleMouseDown = (e) => {
     setIsDragging(true);
-    setStartX(e.pageX - carouselRef.current.offsetLeft);
-    setScrollLeft(carouselRef.current.scrollLeft);
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.pageX - carouselRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    carouselRef.current.scrollLeft = scrollLeft - walk;
+    setStartX(e.pageX);
   };
 
   const handleMouseUp = (e) => {
     if (!isDragging) return;
     setIsDragging(false);
-    const endX = e.pageX - carouselRef.current.offsetLeft;
-    const diff = startX - endX;
+    const diff = startX - e.pageX;
     if (Math.abs(diff) > 50) {
       if (diff > 0) goToNext();
       else goToPrev();
     }
-    carouselRef.current.scrollLeft = 0;
   };
 
-  // Touch handlers for mobile swipe
+  // Touch swipe
   const handleTouchStart = (e) => {
     setStartX(e.touches[0].pageX);
   };
 
   const handleTouchEnd = (e) => {
-    const endX = e.changedTouches[0].pageX;
-    const diff = startX - endX;
+    const diff = startX - e.changedTouches[0].pageX;
     if (Math.abs(diff) > 50) {
       if (diff > 0) goToNext();
       else goToPrev();
@@ -116,9 +97,7 @@ function FeedbackCarousel() {
     return (
       <div className="feedback-stars">
         {[1, 2, 3, 4, 5].map((star) => (
-          <span key={star} className={`feedback-star ${star <= rating ? 'filled' : ''}`}>
-            ★
-          </span>
+          <span key={star} className={`feedback-star ${star <= rating ? 'filled' : ''}`}>★</span>
         ))}
       </div>
     );
@@ -133,88 +112,84 @@ function FeedbackCarousel() {
     );
   }
 
-  if (feedbacks.length === 0) {
-    return null;
-  }
+  if (feedbacks.length === 0) return null;
 
-  const currentFeedback = feedbacks[currentIndex];
+  // Get the 3 visible cards (with wrapping)
+  const getVisibleCards = () => {
+    const cards = [];
+    for (let i = 0; i < 3; i++) {
+      const idx = (currentIndex + i) % feedbacks.length;
+      cards.push({ ...feedbacks[idx], _key: `${currentIndex}-${i}` });
+    }
+    return cards;
+  };
 
   return (
     <div className="feedback-carousel-section">
       <h2 className="feedback-section-title">What Our Students Say</h2>
 
       <div className="feedback-carousel-wrapper">
-        {/* Previous Arrow */}
-        <button
-          className="feedback-arrow feedback-arrow-left"
-          onClick={goToPrev}
-          aria-label="Previous feedback"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-        </button>
+        {/* Arrow Left */}
+        {feedbacks.length > 3 && (
+          <button className="feedback-arrow feedback-arrow-left" onClick={goToPrev} aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </button>
+        )}
 
-        {/* Carousel Content */}
+        {/* Cards Container */}
         <div
-          ref={carouselRef}
-          className={`feedback-carousel-content ${isDragging ? 'dragging' : ''}`}
+          className="feedback-carousel-content"
           onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
+          onMouseLeave={() => setIsDragging(false)}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          <div className="feedback-card">
-            <div className="feedback-card-quote">
-              <svg viewBox="0 0 24 24" fill="currentColor" opacity="0.15" width="40" height="40">
-                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-              </svg>
-            </div>
-
-            {currentFeedback.rating && renderStars(currentFeedback.rating)}
-
-            <p className="feedback-card-message">"{currentFeedback.message}"</p>
-
-            <div className="feedback-card-author">
-              <div className="feedback-card-avatar">
-                {(currentFeedback.name || 'A').charAt(0).toUpperCase()}
+          <div className="feedback-cards-row">
+            {getVisibleCards().map((fb, idx) => (
+              <div className="feedback-card" key={fb._key}>
+                <div className="feedback-card-quote">
+                  <svg viewBox="0 0 24 24" fill="currentColor" opacity="0.15" width="36" height="36">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                  </svg>
+                </div>
+                {fb.rating ? renderStars(fb.rating) : <div className="feedback-stars">{[1,2,3,4,5].map(s => <span key={s} className="feedback-star">★</span>)}</div>}
+                <p className="feedback-card-message">"{fb.message}"</p>
+                <div className="feedback-card-author">
+                  <div className="feedback-card-avatar">
+                    {(fb.name || 'A').charAt(0).toUpperCase()}
+                  </div>
+                  <div className="feedback-card-info">
+                    <h4 className="feedback-card-name">{fb.name}</h4>
+                    {fb.subject && <p className="feedback-card-subject">{fb.subject}</p>}
+                  </div>
+                </div>
               </div>
-              <div className="feedback-card-info">
-                <h4 className="feedback-card-name">{currentFeedback.name}</h4>
-                {currentFeedback.subject && (
-                  <p className="feedback-card-subject">{currentFeedback.subject}</p>
-                )}
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* Next Arrow */}
-        <button
-          className="feedback-arrow feedback-arrow-right"
-          onClick={goToNext}
-          aria-label="Next feedback"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
-        </button>
+        {/* Arrow Right */}
+        {feedbacks.length > 3 && (
+          <button className="feedback-arrow feedback-arrow-right" onClick={goToNext} aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+        )}
       </div>
 
-      {/* Dots Indicator */}
-      {feedbacks.length > 1 && (
+      {/* Dots */}
+      {feedbacks.length > 3 && (
         <div className="feedback-dots">
-          {feedbacks.map((_, idx) => (
+          {Array.from({ length: maxIndex + 1 }).map((_, idx) => (
             <button
               key={idx}
               className={`feedback-dot ${idx === currentIndex ? 'active' : ''}`}
-              onClick={() => {
-                setCurrentIndex(idx);
-                resetAutoScroll();
-              }}
-              aria-label={`Go to feedback ${idx + 1}`}
+              onClick={() => { setCurrentIndex(idx); resetAutoScroll(); }}
+              aria-label={`Go to slide ${idx + 1}`}
             />
           ))}
         </div>
