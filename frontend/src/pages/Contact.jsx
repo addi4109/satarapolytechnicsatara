@@ -35,7 +35,7 @@ function Contact() {
   const [active, setActive] = useState('contact');
   const [contactData, setContactData] = useState({});
   const [loading, setLoading] = useState(true);
-  const [feedbackForm, setFeedbackForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
+  const [feedbackForm, setFeedbackForm] = useState({ name: '', email: '', phone: '', subject: '', message: '', rating: 0 });
   const [feedbackSent, setFeedbackSent] = useState(false);
 
   useEffect(() => {
@@ -382,6 +382,24 @@ function Contact() {
                   <div className="form-field">
                     <label>Subject *</label>
                     <input type="text" name="subject" value={feedbackForm.subject} onChange={handleFeedbackChange} placeholder="What is this about?" required />
+                  </div>
+                  <div className="form-field">
+                    <label>Rating *</label>
+                    <div className="star-rating-selector">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                          type="button"
+                          key={star}
+                          className={`star-btn ${star <= feedbackForm.rating ? 'active' : ''}`}
+                          onClick={() => setFeedbackForm((prev) => ({ ...prev, rating: star }))}
+                        >
+                          ★
+                        </button>
+                      ))}
+                      {feedbackForm.rating > 0 && (
+                        <span className="star-rating-label">{feedbackForm.rating}/5</span>
+                      )}
+                    </div>
                   </div>
                   <div className="form-field">
                     <label>Your Feedback *</label>
