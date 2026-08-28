@@ -446,7 +446,7 @@
   }
 
   .dropdown-menu.show {
-    max-height: 600px;
+    max-height: 1200px;
     transform: none;
     padding: 4px 0;
   }
@@ -478,7 +478,7 @@
   }
 
   .dropdown-multi.show {
-    max-height: 800px;
+    max-height: 2000px;
   }
 
   .dropdown-col {
