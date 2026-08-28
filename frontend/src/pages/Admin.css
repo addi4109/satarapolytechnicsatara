@@ -16,6 +16,8 @@
   z-index: 100;
   overflow-y: auto;
   font-family: 'Times New Roman', Times, serif;
+  display: flex;
+  flex-direction: column;
 }
 
 .admin-sidebar-header {
@@ -39,6 +41,9 @@
 
 .admin-nav {
   padding: 10px 0;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .admin-nav-item {
@@ -90,36 +95,28 @@
 @media (max-width: 1024px) {
   .admin-mobile-strip {
     display: flex;
-    align-items: center;
-    gap: 12px;
+    flex-direction: column;
     background: #243358;
-    padding: 10px 14px;
+    padding: 10px 14px 6px;
     position: sticky;
     top: 0;
     z-index: 99;
+    gap: 8px;
   }
 
   .admin-mobile-strip-links {
     display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    gap: 8px;
-    flex: 1;
-  }
-
-  .admin-mobile-strip-links::-webkit-scrollbar {
-    display: none;
+    flex-wrap: wrap;
+    gap: 6px;
   }
 
   .admin-mobile-strip-item {
     color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
-    font-size: 14px;
+    font-size: 12px;
     white-space: nowrap;
-    padding: 6px 12px;
-    border-radius: 16px;
+    padding: 5px 10px;
+    border-radius: 14px;
     background: rgba(255, 255, 255, 0.08);
   }
 
@@ -133,12 +130,13 @@
     background: #c0392b;
     color: #fff;
     border: none;
-    padding: 6px 14px;
-    border-radius: 16px;
-    font-size: 14px;
+    padding: 5px 12px;
+    border-radius: 14px;
+    font-size: 12px;
     white-space: nowrap;
     cursor: pointer;
     font-family: 'Times New Roman', Times, serif;
+    align-self: flex-start;
   }
 }
 
