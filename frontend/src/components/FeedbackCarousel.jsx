@@ -116,7 +116,8 @@ function FeedbackCarousel() {
 
   const getVisibleCards = () => {
     const cards = [];
-    for (let i = 0; i < 3; i++) {
+    const count = Math.min(3, feedbacks.length);
+    for (let i = 0; i < count; i++) {
       const idx = (currentIndex + i) % feedbacks.length;
       cards.push({ ...feedbacks[idx], _key: `${currentIndex}-${i}` });
     }
