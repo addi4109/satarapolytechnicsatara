@@ -217,15 +217,34 @@ function AdminEnquiries() {
                           {formatDate(enq.createdAt)}
                         </td>
                         <td>
-                          <button
-                            className="btn btn-danger btn-sm"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDelete(enq.id);
-                            }}
-                          >
-                            Delete
-                          </button>
+                          <div style={{ display: 'flex', gap: '4px' }}>
+                            <button
+                              className="btn btn-primary btn-sm"
+                              title="Send Email"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                if (enq.email) {
+                                  window.open(
+                                    `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(enq.email)}&su=${encodeURIComponent(`Re: Your enquiry - ${enq.department || 'Satara Polytechnic'}`)}`,
+                                    '_blank'
+                                  );
+                                } else {
+                                  alert('No email address provided for this enquiry.');
+                                }
+                              }}
+                            >
+                              ✉
+                            </button>
+                            <button
+                              className="btn btn-danger btn-sm"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDelete(enq.id);
+                              }}
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -258,12 +277,27 @@ function AdminEnquiries() {
                   <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#243358' }}>
                     Enquiry Details
                   </h3>
-                  <button
-                    className="btn btn-secondary btn-sm"
-                    onClick={() => setSelectedEnquiry(null)}
-                  >
-                    Close
-                  </button>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    {selectedEnquiry.email && (
+                      <button
+                        className="btn btn-primary btn-sm"
+                        onClick={() =>
+                          window.open(
+                            `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(selectedEnquiry.email)}&su=${encodeURIComponent(`Re: Your enquiry - ${selectedEnquiry.department || 'Satara Polytechnic'}`)}`,
+                            '_blank'
+                          )
+                        }
+                      >
+                        ✉ Reply via Gmail
+                      </button>
+                    )}
+                    <button
+                      className="btn btn-secondary btn-sm"
+                      onClick={() => setSelectedEnquiry(null)}
+                    >
+                      Close
+                    </button>
+                  </div>
                 </div>
                 <div
                   style={{
@@ -272,6 +306,30 @@ function AdminEnquiries() {
                     gap: '16px',
                   }}
                 >
+                  {selectedEnquiry.email && (
+                    <div style={{ gridColumn: '1 / -1' }}>
+                      <a
+                        href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(selectedEnquiry.email)}&su=${encodeURIComponent(`Re: Your enquiry - ${selectedEnquiry.department || 'Satara Polytechnic'}`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          background: 'linear-gradient(135deg, #d44638 0%, #c23321 100%)',
+                          color: '#fff',
+                          padding: '8px 16px',
+                          borderRadius: '6px',
+                          fontSize: '13px',
+                          fontWeight: 600,
+                          textDecoration: 'none',
+                          fontFamily: "'Times New Roman', Times, serif",
+                        }}
+                      >
+                        ✉ Send Email to {selectedEnquiry.fullName}
+                      </a>
+                    </div>
+                  )}
                   <div>
                     <label style={{ fontSize: '12px', fontWeight: 600, color: '#888' }}>
                       Full Name
