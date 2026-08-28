@@ -22,8 +22,8 @@ function FeedbackCarousel() {
             const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.createdAt || 0);
             return dateB - dateA;
           });
-        const homeFeedbacks = allData.filter((f) => f.showOnHome);
-        setFeedbacks(homeFeedbacks.length > 0 ? homeFeedbacks : allData);
+        const homeFeedbacks = allData.filter((f) => f.showOnHome === true);
+        setFeedbacks(homeFeedbacks);
       } catch (err) {
         console.error('Failed to fetch feedbacks:', err);
       } finally {
