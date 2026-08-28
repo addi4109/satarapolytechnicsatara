@@ -56,6 +56,7 @@ function AdminLayout({ children }) {
     { to: '/admin/notices', label: 'Notices' },
     { to: '/admin/contact', label: 'Contact' },
     { to: '/admin/enquiries', label: 'Enquiries' },
+    { to: '/admin/feedbacks', label: 'Feedbacks' },
   ];
 
   const handleLogout = () => {

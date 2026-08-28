@@ -1,0 +1,261 @@
+/* ===== Feedback Carousel Section ===== */
+.feedback-carousel-section {
+  padding: 50px 0;
+  background: linear-gradient(135deg, #f8f9fb 0%, #eef1f6 100%);
+  margin-top: 40px;
+}
+
+.feedback-section-title {
+  text-align: center;
+  font-family: 'Georgia', serif;
+  font-size: 28px;
+  color: #243358;
+  margin: 0 0 30px;
+  position: relative;
+}
+
+.feedback-section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(135deg, #c8963e, #d4a853);
+  margin: 12px auto 0;
+  border-radius: 2px;
+}
+
+/* ===== Carousel Wrapper ===== */
+.feedback-carousel-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+}
+
+/* ===== Carousel Content ===== */
+.feedback-carousel-content {
+  flex: 1;
+  overflow: hidden;
+  user-select: none;
+  cursor: grab;
+}
+
+.feedback-carousel-content.dragging {
+  cursor: grabbing;
+}
+
+/* ===== Feedback Card ===== */
+.feedback-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 36px 32px;
+  box-shadow: 0 8px 30px rgba(36, 51, 88, 0.08);
+  border: 1px solid #e8ecf1;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInCard 0.4s ease;
+}
+
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.feedback-card:hover {
+  box-shadow: 0 12px 40px rgba(36, 51, 88, 0.12);
+  transform: translateY(-2px);
+}
+
+.feedback-card-quote {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  color: #243358;
+}
+
+.feedback-card-quote svg {
+  width: 40px;
+  height: 40px;
+}
+
+/* ===== Stars ===== */
+.feedback-stars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.feedback-star {
+  font-size: 20px;
+  color: #d1d5db;
+  transition: color 0.2s;
+}
+
+.feedback-star.filled {
+  color: #f59e0b;
+}
+
+/* ===== Message ===== */
+.feedback-card-message {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4b5563;
+  font-style: italic;
+  margin: 0 0 24px;
+  min-height: 60px;
+}
+
+/* ===== Author ===== */
+.feedback-card-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 20px;
+  border-top: 1px solid #eef1f6;
+}
+
+.feedback-card-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #243358, #2c3e6b);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'Georgia', serif;
+  flex-shrink: 0;
+}
+
+.feedback-card-info {
+  flex: 1;
+}
+
+.feedback-card-name {
+  font-family: 'Georgia', serif;
+  font-size: 15px;
+  color: #243358;
+  margin: 0;
+  font-weight: 600;
+}
+
+.feedback-card-subject {
+  font-size: 13px;
+  color: #888;
+  margin: 2px 0 0;
+}
+
+/* ===== Arrow Buttons ===== */
+.feedback-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #243358;
+  background: #fff;
+  color: #243358;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(36, 51, 88, 0.1);
+}
+
+.feedback-arrow:hover {
+  background: #243358;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(36, 51, 88, 0.3);
+  transform: scale(1.05);
+}
+
+.feedback-arrow:active {
+  transform: scale(0.95);
+}
+
+.feedback-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ===== Dots Indicator ===== */
+.feedback-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.feedback-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid #243358;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.feedback-dot.active {
+  background: #243358;
+  transform: scale(1.2);
+}
+
+.feedback-dot:hover {
+  background: rgba(36, 51, 88, 0.4);
+}
+
+/* ===== Loading ===== */
+.feedback-loading {
+  text-align: center;
+  padding: 40px;
+  color: #888;
+  font-size: 14px;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 768px) {
+  .feedback-carousel-section {
+    padding: 30px 0;
+  }
+
+  .feedback-section-title {
+    font-size: 22px;
+  }
+
+  .feedback-carousel-wrapper {
+    gap: 10px;
+    padding: 0 10px;
+  }
+
+  .feedback-card {
+    padding: 24px 20px;
+  }
+
+  .feedback-card-message {
+    font-size: 14px;
+  }
+
+  .feedback-arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .feedback-arrow svg {
+    width: 16px;
+    height: 16px;
+  }
+}

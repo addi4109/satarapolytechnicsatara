@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import { SkeletonPage } from '../components/Skeleton';
 import SEO, { breadcrumbSchema } from '../components/SEO';
+import FeedbackCarousel from '../components/FeedbackCarousel';
+import { db } from '../lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import './Academics.css';
 import './Contact.css';
 
@@ -59,9 +62,24 @@ function Contact() {
     setFeedbackForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleFeedbackSubmit = (e) => {
+  const handleFeedbackSubmit = async (e) => {
     e.preventDefault();
-    setFeedbackSent(true);
+    try {
+      await addDoc(collection(db, 'feedbacks'), {
+        name: feedbackForm.name,
+        email: feedbackForm.email,
+        phone: feedbackForm.phone || '',
+        subject: feedbackForm.subject,
+        message: feedbackForm.message,
+        rating: 0,
+        showOnHome: false,
+        createdAt: serverTimestamp(),
+      });
+      setFeedbackSent(true);
+    } catch (err) {
+      console.error('Failed to submit feedback:', err);
+      alert('Failed to submit feedback. Please try again.');
+    }
   };
 
   const seoTitle = active === 'enquiry' ? 'Admission Enquiry' :
@@ -372,6 +390,9 @@ function Contact() {
                   <button type="submit" className="contact-submit-btn">Submit Feedback</button>
                 </form>
               )}
+
+              {/* Feedback Carousel */}
+              <FeedbackCarousel />
             </>
           )}
         </main>

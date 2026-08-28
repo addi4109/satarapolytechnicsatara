@@ -48,6 +48,7 @@ const AdminCampus = lazy(() => import('./pages/AdminCampus'));
 const AdminActivities = lazy(() => import('./pages/AdminActivities'));
 const AdminContact = lazy(() => import('./pages/AdminContact'));
 const AdminEnquiries = lazy(() => import('./pages/AdminEnquiries'));
+const AdminFeedbacks = lazy(() => import('./pages/AdminFeedbacks'));
 
 // Loading fallback with skeleton
 function PageLoader() {
@@ -153,6 +154,7 @@ function AppLayout() {
           <Route path="/admin/activities" element={<AdminActivities />} />
           <Route path="/admin/contact" element={<AdminContact />} />
           <Route path="/admin/enquiries" element={<AdminEnquiries />} />
+          <Route path="/admin/feedbacks" element={<AdminFeedbacks />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </Suspense>
