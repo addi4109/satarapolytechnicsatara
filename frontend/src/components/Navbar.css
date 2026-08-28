@@ -412,7 +412,7 @@
     overflow-y: scroll;
     transition: right 0.3s ease;
     z-index: 1100;
-    padding: 60px 0 40px;
+    padding: 60px 0 60px;
     -webkit-overflow-scrolling: touch;
   }
 
