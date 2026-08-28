@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { db } from '../lib/firebase';
-import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import './FeedbackCarousel.css';
 
 function FeedbackCarousel() {
@@ -16,27 +16,18 @@ function FeedbackCarousel() {
   useEffect(() => {
     const fetchFeedbacks = async () => {
       try {
-        const q = query(
-          collection(db, 'feedbacks'),
-          where('showOnHome', '==', true),
-          orderBy('createdAt', 'desc')
-        );
-        const snapshot = await getDocs(q);
-        const data = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+        const snapshot = await getDocs(collection(db, 'feedbacks'));
+        const data = snapshot.docs
+          .map((d) => ({ id: d.id, ...d.data() }))
+          .filter((f) => f.showOnHome)
+          .sort((a, b) => {
+            const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.createdAt || 0);
+            const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(b.createdAt || 0);
+            return dateB - dateA;
+          });
         setFeedbacks(data);
       } catch (err) {
         console.error('Failed to fetch feedbacks:', err);
-        // Fallback: try fetching all feedbacks without showOnHome filter
-        try {
-          const q = query(collection(db, 'feedbacks'), orderBy('createdAt', 'desc'));
-          const snapshot = await getDocs(q);
-          const data = snapshot.docs
-            .map((d) => ({ id: d.id, ...d.data() }))
-            .filter((f) => f.showOnHome);
-          setFeedbacks(data);
-        } catch (fallbackErr) {
-          console.error('Fallback fetch also failed:', fallbackErr);
-        }
       } finally {
         setLoading(false);
       }
