@@ -35,7 +35,6 @@ function FeedbackCarousel() {
 
   const maxIndex = Math.max(0, feedbacks.length - 3);
 
-  // Auto-scroll
   useEffect(() => {
     if (feedbacks.length <= 3) return;
     autoScrollRef.current = setInterval(() => {
@@ -63,7 +62,6 @@ function FeedbackCarousel() {
     resetAutoScroll();
   };
 
-  // Mouse drag
   const handleMouseDown = (e) => {
     setIsDragging(true);
     setStartX(e.pageX);
@@ -79,7 +77,6 @@ function FeedbackCarousel() {
     }
   };
 
-  // Touch swipe
   const handleTouchStart = (e) => {
     setStartX(e.touches[0].pageX);
   };
@@ -92,29 +89,31 @@ function FeedbackCarousel() {
     }
   };
 
-  const renderStars = (rating) => {
-    if (!rating) return null;
-    return (
-      <div className="feedback-stars">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <span key={star} className={`feedback-star ${star <= rating ? 'filled' : ''}`}>★</span>
-        ))}
-      </div>
-    );
+  const renderStars = (rating) => (
+    <div className="fb-stars">
+      {[1, 2, 3, 4, 5].map((s) => (
+        <span key={s} className={`fb-star ${s <= rating ? 'on' : ''}`}>★</span>
+      ))}
+    </div>
+  );
+
+  const formatDate = (ts) => {
+    if (!ts) return '';
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
   };
 
   if (loading) {
     return (
-      <div className="feedback-carousel-section">
-        <h2 className="feedback-section-title">What Our Students Say</h2>
-        <div className="feedback-loading">Loading feedbacks...</div>
+      <div className="fb-section">
+        <h2 className="fb-heading">What Our Students Say</h2>
+        <div className="fb-loading">Loading feedbacks...</div>
       </div>
     );
   }
 
   if (feedbacks.length === 0) return null;
 
-  // Get the 3 visible cards (with wrapping)
   const getVisibleCards = () => {
     const cards = [];
     for (let i = 0; i < 3; i++) {
@@ -125,71 +124,72 @@ function FeedbackCarousel() {
   };
 
   return (
-    <div className="feedback-carousel-section">
-      <h2 className="feedback-section-title">What Our Students Say</h2>
+    <div className="fb-section">
+      <div className="fb-header">
+        <span className="fb-badge">TESTIMONIALS</span>
+        <h2 className="fb-heading">What Our Students Say</h2>
+        <p className="fb-subheading">Hear from our students about their experience at Satara Polytechnic</p>
+      </div>
 
-      <div className="feedback-carousel-wrapper">
-        {/* Arrow Left */}
+      <div className="fb-carousel">
         {feedbacks.length > 3 && (
-          <button className="feedback-arrow feedback-arrow-left" onClick={goToPrev} aria-label="Previous">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
+          <button className="fb-arrow fb-arrow-l" onClick={goToPrev} aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
           </button>
         )}
 
-        {/* Cards Container */}
         <div
-          className="feedback-carousel-content"
+          className="fb-track"
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           onMouseLeave={() => setIsDragging(false)}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          <div className="feedback-cards-row">
-            {getVisibleCards().map((fb, idx) => (
-              <div className="feedback-card" key={fb._key}>
-                <div className="feedback-card-quote">
-                  <svg viewBox="0 0 24 24" fill="currentColor" opacity="0.15" width="36" height="36">
+          <div className="fb-grid">
+            {getVisibleCards().map((fb) => (
+              <div className="fb-card" key={fb._key}>
+                <div className="fb-card-top">
+                  <div className="fb-card-accent" />
+                  <svg className="fb-quote-icon" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                 </div>
-                {fb.rating ? renderStars(fb.rating) : <div className="feedback-stars">{[1,2,3,4,5].map(s => <span key={s} className="feedback-star">★</span>)}</div>}
-                <p className="feedback-card-message">"{fb.message}"</p>
-                <div className="feedback-card-author">
-                  <div className="feedback-card-avatar">
+
+                {fb.rating ? renderStars(fb.rating) : renderStars(0)}
+
+                <p className="fb-card-text">{fb.message}</p>
+
+                <div className="fb-card-footer">
+                  <div className="fb-avatar">
                     {(fb.name || 'A').charAt(0).toUpperCase()}
                   </div>
-                  <div className="feedback-card-info">
-                    <h4 className="feedback-card-name">{fb.name}</h4>
-                    {fb.subject && <p className="feedback-card-subject">{fb.subject}</p>}
+                  <div className="fb-author">
+                    <span className="fb-author-name">{fb.name}</span>
+                    {fb.subject && <span className="fb-author-role">{fb.subject}</span>}
                   </div>
+                  {fb.createdAt && <span className="fb-date">{formatDate(fb.createdAt)}</span>}
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Arrow Right */}
         {feedbacks.length > 3 && (
-          <button className="feedback-arrow feedback-arrow-right" onClick={goToNext} aria-label="Next">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
+          <button className="fb-arrow fb-arrow-r" onClick={goToNext} aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
           </button>
         )}
       </div>
 
-      {/* Dots */}
       {feedbacks.length > 3 && (
-        <div className="feedback-dots">
+        <div className="fb-dots">
           {Array.from({ length: maxIndex + 1 }).map((_, idx) => (
             <button
               key={idx}
-              className={`feedback-dot ${idx === currentIndex ? 'active' : ''}`}
+              className={`fb-dot ${idx === currentIndex ? 'active' : ''}`}
               onClick={() => { setCurrentIndex(idx); resetAutoScroll(); }}
-              aria-label={`Go to slide ${idx + 1}`}
+              aria-label={`Slide ${idx + 1}`}
             />
           ))}
         </div>
