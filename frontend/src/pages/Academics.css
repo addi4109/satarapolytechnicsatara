@@ -741,6 +741,57 @@
   transform: translateX(0);
 }
 
+/* Exam & Notice table action buttons */
+.exam-action-btns {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.exam-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.exam-btn-view {
+  background: #243358;
+  color: #fff;
+}
+
+.exam-btn-view:hover {
+  background: #2a3f6a;
+}
+
+.exam-btn-download {
+  background: transparent;
+  color: #243358;
+  border: 1.5px solid #243358;
+  padding: 5px 10px;
+  min-width: 32px;
+}
+
+.exam-btn-download:hover {
+  background: #243358;
+  color: #fff;
+}
+
+.exam-download-text {
+  display: inline;
+}
+
+.exam-download-icon {
+  display: none;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .admission-highlight-grid {
@@ -971,5 +1022,15 @@
     padding: 6px 5px;
     font-size: 10.5px;
     word-break: break-word;
+  }
+  .exam-download-text {
+    display: none;
+  }
+  .exam-download-icon {
+    display: inline-flex;
+    align-items: center;
+  }
+  .exam-btn-download {
+    padding: 5px 8px;
   }
 }

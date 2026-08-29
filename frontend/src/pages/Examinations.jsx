@@ -139,17 +139,23 @@ function Examinations() {
                           <td style={{ textAlign: 'center' }}>{item.endDate}</td>
                           <td style={{ textAlign: 'center' }}>
                             {item.pdfUrl ? (
-                              <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
+                              <div className="exam-action-btns">
                                 <a
                                   href={`/api/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
                                   target="_blank"
-                                  style={{ padding: '4px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
+                                  className="exam-btn exam-btn-view"
                                 >View</a>
                                 <a
                                   href={`/api/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
                                   download
-                                  style={{ padding: '4px 12px', background: '#7A263A', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
-                                >Download</a>
+                                  className="exam-btn exam-btn-download"
+                                  title="Download"
+                                >
+                                  <span className="exam-download-text">Download</span>
+                                  <span className="exam-download-icon">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                  </span>
+                                </a>
                               </div>
                             ) : (
                               <span style={{ color: '#ccc', fontSize: '12px' }}>—</span>
@@ -402,17 +408,23 @@ function Examinations() {
                           <td style={{ fontSize: '13px', color: '#666' }}>{item.date}</td>
                           <td style={{ textAlign: 'center' }}>
                             {item.pdfUrl ? (
-                              <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
+                              <div className="exam-action-btns">
                                 <a
                                   href={`/api/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
                                   target="_blank"
-                                  style={{ padding: '4px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
+                                  className="exam-btn exam-btn-view"
                                 >View</a>
                                 <a
                                   href={`/api/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
                                   download
-                                  style={{ padding: '4px 12px', background: '#7A263A', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
-                                >Download</a>
+                                  className="exam-btn exam-btn-download"
+                                  title="Download"
+                                >
+                                  <span className="exam-download-text">Download</span>
+                                  <span className="exam-download-icon">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                  </span>
+                                </a>
                               </div>
                             ) : (
                               <span style={{ color: '#ccc', fontSize: '12px' }}>—</span>
