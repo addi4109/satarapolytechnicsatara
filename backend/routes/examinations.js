@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
     const {
       section, title, content,
       schedules, rules, ruleSubSections, resultsData,
-      revaluationSteps, revaluationFee, revaluationDeadline,
+      revaluationSteps, revaluationFee, revaluationDeadline, revaluationPortalUrl,
       noticesData, resultPortalUrl, active,
     } = req.body;
 
@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
       {
         section, title, content,
         schedules, rules, ruleSubSections, resultsData,
-        revaluationSteps, revaluationFee, revaluationDeadline,
+        revaluationSteps, revaluationFee, revaluationDeadline, revaluationPortalUrl,
         noticesData, resultPortalUrl, active,
       },
       { new: true, upsert: true }

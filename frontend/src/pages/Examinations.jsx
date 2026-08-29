@@ -356,6 +356,28 @@ function Examinations() {
                 </div>
               )}
 
+              {getSection('revaluation').revaluationPortalUrl ? (
+                <div style={{ marginTop: '24px', textAlign: 'center' }}>
+                  <a
+                    href={getSection('revaluation').revaluationPortalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="result-portal-btn"
+                  >
+                    <span>Visit Portal</span>
+                    <span className="btn-arrow">→</span>
+                  </a>
+                </div>
+              ) : (
+                <div style={{ marginTop: '24px', textAlign: 'center' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', background: '#f0f2f5', borderRadius: '50px', color: '#aaa', fontSize: '16px', fontWeight: 600 }}>
+                    <span>Visit Portal</span>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', background: 'rgba(0,0,0,0.05)', borderRadius: '50%', fontSize: '14px' }}>→</span>
+                  </div>
+                  <p style={{ marginTop: '12px', fontSize: '13px', color: '#888' }}>Portal link will be available soon.</p>
+                </div>
+              )}
+
               {getSection('revaluation').revaluationSteps && getSection('revaluation').revaluationSteps.length > 0 && (
                 <div style={{ marginTop: '20px' }}>
                   {getSection('revaluation').revaluationSteps.map((step, i) => (

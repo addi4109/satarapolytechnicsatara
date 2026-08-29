@@ -33,6 +33,7 @@ const defaultForm = {
   revaluationSteps: [],
   revaluationFee: '',
   revaluationDeadline: '',
+  revaluationPortalUrl: '',
   noticesData: [],
   resultPortalUrl: '',
   active: true,
@@ -83,6 +84,7 @@ function AdminExaminations() {
         revaluationSteps: existing.revaluationSteps || [],
         revaluationFee: existing.revaluationFee || '',
         revaluationDeadline: existing.revaluationDeadline || '',
+        revaluationPortalUrl: existing.revaluationPortalUrl || '',
         noticesData: existing.noticesData || [],
         resultPortalUrl: existing.resultPortalUrl || '',
         active: existing.active !== false,
@@ -109,7 +111,7 @@ function AdminExaminations() {
     const existing = sections[activeTab];
     if (existing) {
       setForm({
-        title: existing.title || '', content: existing.content || '', schedules: existing.schedules || [], rules: existing.rules || [], ruleSubSections: existing.ruleSubSections || [], resultsData: existing.resultsData || [], revaluationSteps: existing.revaluationSteps || [], revaluationFee: existing.revaluationFee || '', revaluationDeadline: existing.revaluationDeadline || '', noticesData: existing.noticesData || [], resultPortalUrl: existing.resultPortalUrl || '', active: existing.active !== false,
+        title: existing.title || '', content: existing.content || '', schedules: existing.schedules || [], rules: existing.rules || [], ruleSubSections: existing.ruleSubSections || [], resultsData: existing.resultsData || [], revaluationSteps: existing.revaluationSteps || [],        revaluationFee: existing.revaluationFee || '', revaluationDeadline: existing.revaluationDeadline || '', revaluationPortalUrl: existing.revaluationPortalUrl || '', noticesData: existing.noticesData || [], resultPortalUrl: existing.resultPortalUrl || '', active: existing.active !== false,
       });
     } else { setForm({ ...defaultForm }); }
     setView('preview'); resetInputs();
@@ -271,6 +273,26 @@ function AdminExaminations() {
           {form.revaluationDeadline && <div className="info-row"><span className="info-label">Last Date to Apply</span><span className="info-value">{form.revaluationDeadline}</span></div>}
         </div>
       )}
+      {form.revaluationPortalUrl ? (
+        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+          <a
+            href={form.revaluationPortalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', background: 'linear-gradient(135deg, #243358 0%, #3a5080 100%)', color: '#fff', fontSize: '16px', fontWeight: 600, borderRadius: '50px', textDecoration: 'none', boxShadow: '0 4px 15px rgba(36, 51, 88, 0.3)' }}
+          >
+            Visit Portal <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', background: 'rgba(255,255,255,0.2)', borderRadius: '50%' }}>→</span>
+          </a>
+        </div>
+      ) : (
+        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', background: '#f0f2f5', borderRadius: '50px', color: '#aaa', fontSize: '16px', fontWeight: 600 }}>
+            Visit Portal <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', background: 'rgba(0,0,0,0.05)', borderRadius: '50%' }}>→</span>
+          </div>
+          <p style={{ marginTop: '12px', fontSize: '13px', color: '#888' }}>Portal link will be available soon.</p>
+        </div>
+      )}
+
       {form.revaluationSteps.length > 0 && (
         <div style={{ marginTop: '20px' }}>
           {form.revaluationSteps.map((step, i) => (
@@ -440,6 +462,11 @@ function AdminExaminations() {
           <label>Last Date to Apply</label>
           <input type="text" value={form.revaluationDeadline} onChange={(e) => handleChange('revaluationDeadline', e.target.value)} placeholder="e.g. 30/06/2026" style={{ width: '100%', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box' }} />
         </div>
+      </div>
+
+      <div className="form-group" style={{ marginBottom: '20px' }}>
+        <label>Revaluation Portal Link</label>
+        <input type="text" value={form.revaluationPortalUrl} onChange={(e) => handleChange('revaluationPortalUrl', e.target.value)} placeholder="https://portal.example.com/..." style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', boxSizing: 'border-box' }} />
       </div>
 
       <h4>Revaluation Process Steps</h4>

@@ -98,6 +98,12 @@ const ExaminationSchema = new mongoose.Schema({
     type: String,
     default: '',
   },
+  // Portal URL for revaluation
+  revaluationPortalUrl: {
+    type: String,
+    default: '',
+    trim: true,
+  },
   // For notices section: array of notice items
   noticesData: {
     type: [{
