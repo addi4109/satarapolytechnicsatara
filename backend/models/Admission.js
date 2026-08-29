@@ -48,6 +48,10 @@ const AdmissionSchema = new mongoose.Schema({
     type: [{ particular: String, open: String, vjnt: String, scst: String, girls: String }],
     default: [],
   },
+  feePdfUrl: {
+    type: String,
+    default: '',
+  },
   pdfUrl: {
     type: String,
     default: '',
