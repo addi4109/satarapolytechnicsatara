@@ -920,4 +920,17 @@
   .fee-table-wrap {
     overflow-x: visible;
   }
+  .library-table .fee-table {
+    font-size: 11px;
+  }
+  .library-table .fee-table thead th {
+    padding: 7px 5px;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+  .library-table .fee-table tbody td {
+    padding: 6px 5px;
+    font-size: 10.5px;
+    word-break: break-word;
+  }
 }
