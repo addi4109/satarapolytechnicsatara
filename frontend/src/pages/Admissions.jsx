@@ -995,18 +995,18 @@ function Admissions() {
               </p>
 
               {getSection('brochure').pdfUrl ? (
-                <div style={{ marginTop: '16px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <div className="brochure-btn-row">
                   <a
                     href={`/api/pdf-proxy?url=${encodeURIComponent(getSection('brochure').pdfUrl)}`}
                     target="_blank"
-                    style={{ padding: '10px 28px', fontSize: '14px', fontWeight: 600, textDecoration: 'none', background: '#243358', color: '#fff', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
+                    className="brochure-btn brochure-btn-view"
                   >
                     View Brochure
                   </a>
                   <a
                     href={`/api/pdf-proxy?url=${encodeURIComponent(getSection('brochure').pdfUrl)}`}
                     download
-                    style={{ padding: '10px 28px', fontSize: '14px', fontWeight: 600, textDecoration: 'none', background: '#fff', color: '#243358', borderRadius: '6px', border: '2px solid #243358', cursor: 'pointer' }}
+                    className="brochure-btn brochure-btn-download"
                   >
                     Download Brochure
                   </a>
