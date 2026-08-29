@@ -51,7 +51,7 @@ function AdminContact() {
       setPhone(office.phone || '+91-2162 284 040');
       setEmail(office.email || 'satarapolyinfo@gmail.com');
       setAddress(office.address || 'At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra');
-      setOfficeHours(office.officeHours || 'Monday – Saturday, 8:00 AM – 6:00 PM');
+      setOfficeHours(office.officeHours || 'Monday – Saturday, 10:30 AM – 5:00 PM');
       setMapEmbedUrl(office.mapEmbedUrl || '');
       setOfficeContacts(office.officeContacts && office.officeContacts.length > 0 ? office.officeContacts : [{ ...defaultOfficeRow }]);
       const deptSection = mapped['departments'] || {};
@@ -224,7 +224,7 @@ function AdminContact() {
               </div>
               <div className="form-group">
                 <label style={labelStyle}>Office Hours</label>
-                <input type="text" value={officeHours} onChange={(e) => setOfficeHours(e.target.value)} style={inputStyle} placeholder="e.g. Monday – Saturday, 8 AM – 6 PM" />
+                <input type="text" value={officeHours} onChange={(e) => setOfficeHours(e.target.value)} style={inputStyle} placeholder="e.g. Monday – Saturday, 10:30 AM – 5:00 PM" />
               </div>
               <div className="form-group">
                 <label style={labelStyle}>Google Maps Embed URL</label>

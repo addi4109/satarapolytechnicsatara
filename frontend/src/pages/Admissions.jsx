@@ -5,6 +5,7 @@ import { SkeletonPage } from '../components/Skeleton';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './Academics.css';
+import { getAcademicYearFull } from '../lib/siteConfig';
 
 const routeMap = {
   overview: 'overview',
@@ -183,9 +184,9 @@ function Admissions() {
   return (
     <>
       <SEO
-        title={`${active === 'fees' ? 'Fee Structure' : active === 'eligibility' ? 'Eligibility Criteria' : active === 'process' ? 'Admission Process' : active === 'first-year' ? 'First Year Admission' : active === 'direct-second' ? 'Direct Second Year' : active === 'acap' ? 'A-CAP Admission' : active === 'scholarships' ? 'Scholarships' : active === 'brochure' ? 'College Brochure' : active === 'courses' ? 'Courses Offered' : 'Admission Overview'} | Admissions 2026-27`}
+        title={`${active === 'fees' ? 'Fee Structure' : active === 'eligibility' ? 'Eligibility Criteria' : active === 'process' ? 'Admission Process' : active === 'first-year' ? 'First Year Admission' : active === 'direct-second' ? 'Direct Second Year' : active === 'acap' ? 'A-CAP Admission' : active === 'scholarships' ? 'Scholarships' : active === 'brochure' ? 'College Brochure' : active === 'courses' ? 'Courses Offered' : 'Admission Overview'} | Admissions ${getAcademicYearFull()}`}
         description={`${active === 'fees' ? 'Complete fee structure for First Year and Direct Second Year diploma programs at Satara Polytechnic.' : active === 'eligibility' ? 'Eligibility criteria for FY and Direct Second Year admission at Satara Polytechnic.' : active === 'process' ? 'Step-by-step admission process for diploma programs.' : active === 'first-year' ? 'First year diploma admission details and required documents.' : active === 'direct-second' ? 'Direct second year admission for SSC passed students.' : active === 'acap' ? 'A-CAP admission process for Maharashtra students.' : active === 'scholarships' ? 'Government and private scholarships for SC/ST/OBC/Minority students.' : active === 'brochure' ? 'Download the official college brochure for Satara Polytechnic.' : active === 'courses' ? '6 diploma engineering courses offered at Satara Polytechnic.' : 'Admission information for diploma engineering programs at Satara Polytechnic, Satara.'}`}
-        keywords={`polytechnic admission 2026, ${active} admission, fee structure, eligibility, Satara Polytechnic admission, diploma admission`}
+        keywords={`polytechnic admission ${getAcademicYearFull()}, ${active} admission, fee structure, eligibility, Satara Polytechnic admission, diploma admission`}
         url={`/admissions/${page || 'overview'}`}
         structuredData={breadcrumbSchema([
           { name: 'Home', url: '/' },
@@ -329,7 +330,7 @@ function Admissions() {
                     <div className="info-table">
                       <div className="info-row">
                         <span className="info-label">Academic Year</span>
-                        <span className="info-value">2026-27</span>
+                        <span className="info-value">{getAcademicYearFull()}</span>
                       </div>
                       <div className="info-row">
                         <span className="info-label">Duration of Programme</span>

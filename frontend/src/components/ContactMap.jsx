@@ -1,4 +1,5 @@
 import './ContactMap.css';
+import { getCollegeYears, OFFICE_HOURS } from '../lib/siteConfig';
 
 function ContactMap() {
   return (
@@ -8,7 +9,7 @@ function ContactMap() {
           <h2 className="contact-name">Satara Polytechnic Satara</h2>
           <p className="contact-society">Satara Education Society's</p>
           <p className="contact-desc">
-            With a legacy of over 40 years, SPS, Satara is one of the best
+            With a legacy of over {getCollegeYears()} years, SPS, Satara is one of the best
             Diploma engineering colleges in Satara, with a meritorious track
             record in academics, placements, and holistic growth, making it a
             veritable Cradle of Achievers.
@@ -21,7 +22,7 @@ function ContactMap() {
           </div>
           <div className="contact-info">
             <h3 className="contact-label">Office Hours</h3>
-            <p className="contact-detail">8 AM – 6 PM (Mon - Sun)</p>
+            <p className="contact-detail">{OFFICE_HOURS}</p>
           </div>
         </div>
         <div className="contact-right">

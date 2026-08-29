@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Academics.css';
+import { getAcademicYear } from '../lib/siteConfig';
 
 const routeMap = {
   'overview': 'overview',
@@ -17,7 +18,7 @@ const routeMap = {
   'cells': 'cells',
 };
 
-const calendarPdf = 'https://msbteadmin.bynaricexam.com/uploads/circular/1778829186168_A.Y._2026-27_Academic_Calander.pdf';
+const calendarPdf = `https://msbteadmin.bynaricexam.com/uploads/circular/1778829186168_A.Y._${getAcademicYear()}_Academic_Calander.pdf`;
 
 const sidebarLinks = [
   { id: 'overview', label: 'Academic Overview' },
@@ -204,7 +205,7 @@ function Academics() {
               <h2 className="content-heading">Academic Calendar</h2>
               <div className="content-line"></div>
               <p>
-                The academic calendar for the year A.Y. 2026-27 as prescribed by
+                The academic calendar for the year A.Y. {getAcademicYear()} as prescribed by
                 MSBTE, Mumbai. All dates are subject to change as per board
                 notifications.
               </p>
@@ -219,7 +220,7 @@ function Academics() {
                 </a>
                 <a
                   href={calendarPdf}
-                  download="MSBTE_Academic_Calendar_2026-27.pdf"
+                  download={`MSBTE_Academic_Calendar_${getAcademicYear()}.pdf`}
                   className="cal-btn download"
                 >
                   Download PDF

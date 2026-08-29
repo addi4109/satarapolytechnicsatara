@@ -33,7 +33,7 @@ const ContactSchema = new mongoose.Schema({
   },
   officeHours: {
     type: String,
-    default: 'Monday – Saturday, 8:00 AM – 6:00 PM',
+    default: 'Monday – Saturday, 10:30 AM – 5:00 PM',
   },
   mapEmbedUrl: {
     type: String,

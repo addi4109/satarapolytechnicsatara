@@ -1,4 +1,5 @@
 import './Footer.css';
+import { getCopyrightYear } from '../lib/siteConfig';
 
 function Footer() {
   return (
@@ -68,7 +69,7 @@ function Footer() {
 
       <div className="footer-bottom">
         <div className="footer-bottom-inner">
-          <p>© 2026 Satara Polytechnic, Satara. All rights reserved.</p>
+          <p>© {getCopyrightYear()} Satara Polytechnic, Satara. All rights reserved.</p>
           <a href="/admin/login" className="footer-admin-link">Admin</a>
           <span className="built-by">Built by Aditya Sawant</span>
         </div>

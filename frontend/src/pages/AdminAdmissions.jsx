@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import PdfUpload from '../components/PdfUpload';
 import './Academics.css';
+import { getAcademicYear } from '../lib/siteConfig';
 import './Admin.css';
 
 const API_URL = '/api';
@@ -17,7 +18,7 @@ const courseCellInput = {
 };
 
 const defaultInfoRows = [
-  { label: 'Academic Year', value: '2026-27' },
+  { label: 'Academic Year', value: getAcademicYear() },
   { label: 'Duration of Programme', value: '3 Years (6 Semesters)' },
   { label: 'Admission Mode', value: 'Central Admission Process (CAP) by DTE Maharashtra' },
   { label: 'Institute Level Seats', value: 'Available for vacant seats after CAP rounds' },

@@ -177,7 +177,7 @@ function Contact() {
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                   </div>
                   <h4>Office Hours</h4>
-                  <p>{(getContact('office').officeHours || 'Monday – Saturday, 8:00 AM – 6:00 PM').replace(', ', ' \u2013 ')}</p>
+                  <p>{(getContact('office').officeHours || 'Monday – Saturday, 10:30 AM – 5:00 PM').replace(', ', ' \u2013 ')}</p>
                 </div>
               </div>
             </>
@@ -347,7 +347,7 @@ function Contact() {
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                   <div>
                     <strong>Office Hours</strong>
-                    <p>{getContact('office').officeHours || 'Monday – Saturday, 8:00 AM – 6:00 PM'}</p>
+                    <p>{getContact('office').officeHours || 'Monday – Saturday, 10:30 AM – 5:00 PM'}</p>
                   </div>
                 </div>
               </div>
