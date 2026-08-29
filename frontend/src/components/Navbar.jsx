@@ -43,6 +43,7 @@ function Navbar() {
             { label: 'Mandatory Disclosure', link: '/about/disclosure' },
             { label: 'Vision & Mission', link: '/about/vision-mission' },
             { label: 'Affiliation & Approval', link: '/about/affiliation' },
+            { label: 'Institute Policy', link: '/about/policy' },
           ],
         },
         {

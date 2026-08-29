@@ -30,6 +30,7 @@ import pdfProxyRouter from './routes/pdf-proxy.js';
 import authRouter from './routes/auth.js';
 import rulesRouter from './routes/rules.js';
 import alumniRouter from './routes/alumni.js';
+import entrepreneursRouter from './routes/entrepreneurs.js';
 
 // Use Google DNS to resolve MongoDB Atlas SRV records
 dns.setServers(['8.8.8.8', '8.8.4.4']);
@@ -87,6 +88,7 @@ app.use('/api/settings', settingsRouter);
 app.use('/api/contact', contactRouter);
 app.use('/api/rules', rulesRouter);
 app.use('/api/alumni', alumniRouter);
+app.use('/api/entrepreneurs', entrepreneursRouter);
 app.use('/api/pdf-proxy', pdfProxyRouter);
 
 // Health check

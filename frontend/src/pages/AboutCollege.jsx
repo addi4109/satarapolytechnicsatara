@@ -18,6 +18,7 @@ const routeMap = {
   'disclosure': 'disclosure',
   'founder': 'founder',
   'society': 'society',
+  'policy': 'policy',
   'governing-body': 'governing-body',
   'local-governing-body': 'local-governing-body',
 };
@@ -28,6 +29,7 @@ const sidebarLinks = [
   { id: 'disclosure', label: 'Mandatory Disclosure' },
   { id: 'vision', label: 'Vision & Mission' },
   { id: 'affiliation', label: 'Affiliation & Approval' },
+  { id: 'policy', label: 'Institute Policy' },
   { id: 'founder', label: 'Founder' },
   { id: 'chairman', label: 'Chairman' },
   { id: 'secretary', label: 'Secretary' },
@@ -164,12 +166,14 @@ function AboutCollege() {
   const getDisclosure = () => about.disclosure || {};
   const getVision = () => about.vision || {};
   const getAffiliation = () => about.affiliation || {};
+  const getPolicy = () => about.policy || {};
 
   const seoTitle = active === 'society' ? 'Satara Education Society' :
     active === 'institute' ? 'Institute Overview' :
     active === 'disclosure' ? 'Mandatory Disclosure' :
     active === 'vision' ? 'Vision & Mission' :
     active === 'affiliation' ? 'Affiliation & Approval' :
+    active === 'policy' ? 'Institute Policy' :
     active === 'founder' ? 'Founder' :
     active === 'chairman' ? "Chairman's Message" :
     active === 'secretary' ? "Secretary's Message" :
@@ -220,11 +224,11 @@ function AboutCollege() {
 
           {/* Mobile top bar tabs */}
           <div className="about-mobile-tabs">
-            {['society', 'institute', 'disclosure', 'vision', 'affiliation'].includes(active) && (
+            {['society', 'institute', 'disclosure', 'vision', 'affiliation', 'policy'].includes(active) && (
               <>
                 <h4 className="about-mobile-group-heading">About</h4>
                 <ul className="about-mobile-tabs-list">
-                  {sidebarLinks.filter((l) => ['society', 'institute', 'disclosure', 'vision', 'affiliation'].includes(l.id)).map((link) => (
+                  {sidebarLinks.filter((l) => ['society', 'institute', 'disclosure', 'vision', 'affiliation', 'policy'].includes(l.id)).map((link) => (
                     <li key={link.id}>
                       <button
                         className={`about-mobile-tab ${active === link.id ? 'active' : ''}`}
@@ -372,6 +376,16 @@ function AboutCollege() {
               <div className="content-line"></div>
               {renderContent(getAffiliation().content || STATIC_CONTENT.about.affiliation)}
               {renderInfoRows(getAffiliation().infoRows)}
+            </>
+          )}
+
+          {/* Institute Policy */}
+          {active === 'policy' && (
+            <>
+              <h2 className="content-heading">{getPolicy().title || 'Institute Policy'}</h2>
+              <div className="content-line"></div>
+              {renderContent(getPolicy().content || 'Institute policy details will be updated soon. Please check back later.')}
+              {renderInfoRows(getPolicy().infoRows)}
             </>
           )}
 

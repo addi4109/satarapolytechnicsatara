@@ -12,6 +12,7 @@ const SECTIONS = [
   { key: 'disclosure', label: 'Mandatory Disclosure' },
   { key: 'vision', label: 'Vision & Mission' },
   { key: 'affiliation', label: 'Affiliation & Approval' },
+  { key: 'policy', label: 'Institute Policy' },
 ];
 
 const defaultSection = {
@@ -295,6 +296,16 @@ function AdminAbout() {
           </PreviewCard>
         );
 
+      case 'policy':
+        return (
+          <PreviewCard>
+            <h2 className="content-heading">{currentData.title || 'Institute Policy'}</h2>
+            <div className="content-line"></div>
+            <ContentPreview text={currentData.content} />
+            <InfoTablePreview rows={currentData.infoRows} />
+          </PreviewCard>
+        );
+
       default:
         return null;
     }
@@ -414,6 +425,21 @@ function AdminAbout() {
             <div className="form-group">
               <label>Content</label>
               <textarea value={editForm.content} onChange={(e) => handleChange('content', e.target.value)} rows={8} placeholder="Write the content here..." />
+            </div>
+            {renderInfoRowsEditor()}
+          </div>
+        );
+
+      case 'policy':
+        return (
+          <div className="about-edit-form">
+            <div className="form-group">
+              <label>Section Title</label>
+              <input type="text" value={editForm.title} onChange={(e) => handleChange('title', e.target.value)} placeholder="Enter title..." />
+            </div>
+            <div className="form-group">
+              <label>Content</label>
+              <textarea value={editForm.content} onChange={(e) => handleChange('content', e.target.value)} rows={10} placeholder="Write institute policy details here..." />
             </div>
             {renderInfoRowsEditor()}
           </div>

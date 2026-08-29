@@ -27,6 +27,7 @@ function Alumni() {
   const { page } = useParams();
   const [active, setActive] = useState('about');
   const [loading, setLoading] = useState(false);
+  const [entrepreneurs, setEntrepreneurs] = useState([]);
   const [regForm, setRegForm] = useState({
     fullName: '',
     email: '',
@@ -44,6 +45,13 @@ function Alumni() {
       setActive(routeMap[page]);
     }
   }, [page]);
+
+  useEffect(() => {
+    fetch('/api/entrepreneurs/public')
+      .then((r) => r.json())
+      .then((data) => setEntrepreneurs(data))
+      .catch(() => {});
+  }, []);
 
   const handleRegChange = (e) => {
     setRegForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -296,6 +304,46 @@ function Alumni() {
                 </div>
               </div>
 
+              {/* Dynamic Entrepreneurs Table */}
+              {entrepreneurs.length > 0 && (
+                <div style={{ marginTop: '36px' }}>
+                  <h3 className="content-sub-heading">Our Alumni Entrepreneurs</h3>
+                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                  <div style={{ overflowX: 'auto' }}>
+                    <table className="courses-table">
+                      <thead>
+                        <tr>
+                          <th style={{ width: 60 }}>Sr. No.</th>
+                          <th>Name of Alumni</th>
+                          <th>Firm / Company</th>
+                          <th>Sector</th>
+                          <th>Department</th>
+                          <th>Passing Year</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {entrepreneurs.map((e, i) => (
+                          <tr key={e._id}>
+                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                            <td style={{ fontWeight: 500 }}>{e.name}</td>
+                            <td>{e.firm}</td>
+                            <td>
+                              {e.sector && (
+                                <span style={{ background: '#e3f2fd', color: '#1565c0', padding: '2px 8px', borderRadius: '10px', fontSize: '12px', fontWeight: 600 }}>
+                                  {e.sector}
+                                </span>
+                              )}
+                            </td>
+                            <td style={{ fontSize: '13px', color: '#666' }}>{e.department || '—'}</td>
+                            <td style={{ fontSize: '13px', color: '#666' }}>{e.passingYear || '—'}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
               {/* Sectors */}
               <div style={{ marginTop: '36px' }}>
                 <h3 className="content-sub-heading">Entrepreneurship Sectors</h3>
@@ -315,7 +363,7 @@ function Alumni() {
                   </div>
                   <div className="info-row">
                     <span className="info-label">Construction & Infrastructure</span>
-                    <span className="info-value">Civil contracting firms, real estate development, interior design studios, and建筑 material supply businesses.</span>
+                    <span className="info-value">Civil contracting firms, real estate development, interior design studios, and material supply businesses.</span>
                   </div>
                   <div className="info-row">
                     <span className="info-label">Electrical & Electronics</span>
@@ -326,24 +374,6 @@ function Alumni() {
                     <span className="info-value">Chemical processing units, water treatment plants, environmental consulting, and food processing businesses.</span>
                   </div>
                 </div>
-              </div>
-
-              {/* Success Stories */}
-              <div style={{ marginTop: '36px' }}>
-                <h3 className="content-sub-heading">Success Stories</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
-                <p>
-                  Our alumni entrepreneurs have made their mark across diverse sectors. From running
-                  successful manufacturing units in Satara and Pune to launching tech startups in
-                  Mumbai and Bangalore, our graduates have shown that a diploma from Satara
-                  Polytechnic is a strong foundation for entrepreneurial success.
-                </p>
-                <p>
-                  The institute regularly invites successful alumni entrepreneurs to share their
-                  journey and insights with current students through guest lectures, workshops, and
-                  mentorship sessions. These interactions inspire students and provide practical
-                  guidance for those aspiring to start their own ventures.
-                </p>
               </div>
 
               {/* CTA */}
