@@ -60,7 +60,7 @@ function Footer() {
               </li>
               <li>
                 <span className="fc-icon">✉</span>
-                <span>info@college.ac.in</span>
+                <span>satarapolyinfo@gmail.com</span>
               </li>
             </ul>
           </div>
