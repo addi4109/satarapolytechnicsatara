@@ -283,9 +283,6 @@ function Alumni() {
                           <th style={{ width: 60 }}>Sr. No.</th>
                           <th>Name of Alumni</th>
                           <th>Firm / Company</th>
-                          <th>Sector</th>
-                          <th>Department</th>
-                          <th>Passing Year</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -294,15 +291,6 @@ function Alumni() {
                             <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                             <td style={{ fontWeight: 500 }}>{e.name}</td>
                             <td>{e.firm}</td>
-                            <td>
-                              {e.sector && (
-                                <span style={{ background: '#e3f2fd', color: '#1565c0', padding: '2px 8px', borderRadius: '10px', fontSize: '12px', fontWeight: 600 }}>
-                                  {e.sector}
-                                </span>
-                              )}
-                            </td>
-                            <td style={{ fontSize: '13px', color: '#666' }}>{e.department || '—'}</td>
-                            <td style={{ fontSize: '13px', color: '#666' }}>{e.passingYear || '—'}</td>
                           </tr>
                         ))}
                       </tbody>

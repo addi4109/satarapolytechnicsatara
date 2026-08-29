@@ -159,14 +159,14 @@ function AdminAlumni() {
 
   const startAddEnt = () => {
     setEntAdding(true);
-    setEntForm({ name: '', firm: '', department: '', passingYear: '', phone: '', email: '', address: '', sector: '', description: '', order: 0 });
+    setEntForm({ name: '', firm: '' });
   };
 
   const startEditEnt = (ent) => {
     setEntAdding(false);
     setSelectedEnt(ent);
     setEntEditing(true);
-    setEntForm({ name: ent.name || '', firm: ent.firm || '', department: ent.department || '', passingYear: ent.passingYear || '', phone: ent.phone || '', email: ent.email || '', address: ent.address || '', sector: ent.sector || '', description: ent.description || '', order: ent.order || 0 });
+    setEntForm({ name: ent.name || '', firm: ent.firm || '' });
   };
 
   const handleSaveEnt = async () => {
@@ -484,9 +484,6 @@ function AdminAlumni() {
                         <th style={{ width: 60 }}>Sr. No.</th>
                         <th>Name of Alumni</th>
                         <th>Firm / Company</th>
-                        <th>Sector</th>
-                        <th>Department</th>
-                        <th>Year</th>
                         <th style={{ width: 120 }}>Actions</th>
                       </tr>
                     </thead>
@@ -496,9 +493,6 @@ function AdminAlumni() {
                           <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                           <td style={{ fontWeight: 500 }}>{e.name}</td>
                           <td>{e.firm}</td>
-                          <td>{e.sector ? <span style={{ background: '#e3f2fd', color: '#1565c0', padding: '2px 8px', borderRadius: '10px', fontSize: '12px', fontWeight: 600 }}>{e.sector}</span> : '—'}</td>
-                          <td style={{ fontSize: '13px', color: '#666' }}>{e.department || '—'}</td>
-                          <td style={{ fontSize: '13px', color: '#666' }}>{e.passingYear || '—'}</td>
                           <td>
                             <div style={{ display: 'flex', gap: '4px' }}>
                               <button className="btn btn-primary btn-sm" onClick={() => startEditEnt(e)}>Edit</button>
@@ -526,14 +520,6 @@ function AdminAlumni() {
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                   <div style={{ gridColumn: '1 / -1' }}><label style={labelStyle}>Alumni Name *</label><input type="text" value={entForm.name} onChange={(e) => setEntForm((p) => ({ ...p, name: e.target.value }))} placeholder="e.g. Mr. Akshay Ghadge" style={inputStyle} required /></div>
                   <div style={{ gridColumn: '1 / -1' }}><label style={labelStyle}>Firm / Company *</label><input type="text" value={entForm.firm} onChange={(e) => setEntForm((p) => ({ ...p, firm: e.target.value }))} placeholder="e.g. Microcraft Enterprises, Satara" style={inputStyle} required /></div>
-                  <div><label style={labelStyle}>Sector</label><input type="text" value={entForm.sector} onChange={(e) => setEntForm((p) => ({ ...p, sector: e.target.value }))} placeholder="e.g. Manufacturing, IT, Automobile" style={inputStyle} /></div>
-                  <div><label style={labelStyle}>Department</label><select value={entForm.department} onChange={(e) => setEntForm((p) => ({ ...p, department: e.target.value }))} style={inputStyle}><option value="">Select</option><option value="Computer Engineering">Computer Engineering</option><option value="Electronics & Telecommunication">Electronics & Telecommunication</option><option value="Mechanical Engineering">Mechanical Engineering</option><option value="Chemical Engineering">Chemical Engineering</option><option value="Electrical Engineering">Electrical Engineering</option><option value="Automobile Engineering">Automobile Engineering</option></select></div>
-                  <div><label style={labelStyle}>Passing Year</label><input type="text" value={entForm.passingYear} onChange={(e) => setEntForm((p) => ({ ...p, passingYear: e.target.value }))} placeholder="e.g. 2012" style={inputStyle} /></div>
-                  <div><label style={labelStyle}>Phone</label><input type="text" value={entForm.phone} onChange={(e) => setEntForm((p) => ({ ...p, phone: e.target.value }))} placeholder="+91 XXXXX XXXXX" style={inputStyle} /></div>
-                  <div><label style={labelStyle}>Email</label><input type="email" value={entForm.email} onChange={(e) => setEntForm((p) => ({ ...p, email: e.target.value }))} placeholder="email@example.com" style={inputStyle} /></div>
-                  <div><label style={labelStyle}>Address</label><input type="text" value={entForm.address} onChange={(e) => setEntForm((p) => ({ ...p, address: e.target.value }))} placeholder="City, State" style={inputStyle} /></div>
-                  <div><label style={labelStyle}>Sort Order</label><input type="number" value={entForm.order} onChange={(e) => setEntForm((p) => ({ ...p, order: parseInt(e.target.value) || 0 }))} min={0} style={inputStyle} /></div>
-                  <div style={{ gridColumn: '1 / -1' }}><label style={labelStyle}>Description (optional)</label><textarea value={entForm.description} onChange={(e) => setEntForm((p) => ({ ...p, description: e.target.value }))} rows={3} placeholder="Brief description about the entrepreneur..." style={{ ...inputStyle, resize: 'vertical' }} /></div>
                 </div>
               </div>
             )}
