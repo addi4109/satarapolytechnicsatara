@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import AdminLayout from './AdminLayout';
 import ImageUpload from '../components/ImageUpload';
@@ -126,11 +126,15 @@ function AdminDepartmentForm() {
   };
 
   // Curriculum management
+  const curriculumEndRef = useRef(null);
   const addSubject = () => {
     setForm((prev) => ({
       ...prev,
       curriculum: [...prev.curriculum, { year: '1st Year', semester: 1, name: '', url: '' }],
     }));
+    setTimeout(() => {
+      curriculumEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }, 100);
   };
   const updateCurriculum = (idx, field, val) => {
     setForm((prev) => {
@@ -433,7 +437,6 @@ function AdminDepartmentForm() {
                 <h3>Curriculum / Syllabus</h3>
                 <p>Add subjects with a PDF link or website link</p>
               </div>
-              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addSubject}>+ Add Subject</button>
             </div>
             <div className="dept-form-card-body">
               {form.curriculum.length === 0 ? (
@@ -457,6 +460,10 @@ function AdminDepartmentForm() {
                   ))}
                 </div>
               )}
+              <div style={{ marginTop: '12px' }}>
+                <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addSubject}>+ Add Subject</button>
+              </div>
+              <div ref={curriculumEndRef} />
             </div>
           </div>
 
