@@ -56,6 +56,13 @@ function AdminDashboard() {
         <h1>Dashboard</h1>
       </div>
       <div className="admin-content">
+        {/* Header */}
+        <div className="dash-header">
+          <h2 className="dash-header-title">Satara Polytechnic, Satara</h2>
+          <p className="dash-header-sub">Admin Panel</p>
+          <p className="dash-header-by">Built by Aditya Sawant</p>
+        </div>
+
         {/* Stats */}
         <div className="dash-stats-grid">
           <Link to="/admin/cells" className="dash-stat-card">

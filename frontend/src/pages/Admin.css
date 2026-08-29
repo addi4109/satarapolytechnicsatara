@@ -2603,9 +2603,40 @@
 }
 
 /* ─── Dashboard ─── */
+.dash-header {
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.dash-header-title {
+  font-family: 'Georgia', serif;
+  font-size: 22px;
+  color: #243358;
+  margin: 0 0 4px;
+}
+
+.dash-header-sub {
+  font-size: 14px;
+  color: #888;
+  margin: 0 0 8px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.dash-header-by {
+  font-size: 12px;
+  color: #315C4A;
+  font-weight: 600;
+  margin: 0;
+  font-family: 'Times New Roman', Times, serif;
+}
+
 .dash-stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
   margin-bottom: 28px;
 }
@@ -2709,6 +2740,9 @@
 @media (max-width: 768px) {
   .dash-stats-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+  .dash-header-title {
+    font-size: 18px;
   }
   .dash-actions-grid {
     grid-template-columns: 1fr;
