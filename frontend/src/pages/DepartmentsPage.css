@@ -485,8 +485,22 @@
   color: #fff;
 }
 
-.curr-download svg {
-  display: block;
+.curr-download-text {
+  display: inline;
+}
+
+.curr-download-icon {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .curr-download-text {
+    display: none;
+  }
+  .curr-download-icon {
+    display: inline-flex;
+    align-items: center;
+  }
 }
 
 /* Mobile tabs - hidden on desktop, visible on mobile */
@@ -630,5 +644,8 @@
   .curr-btn {
     padding: 4px 10px;
     font-size: 11px;
+  }
+  .curr-download {
+    padding: 6px 8px;
   }
 }
