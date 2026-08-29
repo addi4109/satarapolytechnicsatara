@@ -4,6 +4,7 @@ import PageBanner from '../components/PageBanner';
 import { SkeletonPage } from '../components/Skeleton';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Academics.css';
+import './Contact.css';
 import './Alumni.css';
 
 const routeMap = {
@@ -284,26 +285,6 @@ function Alumni() {
                 acumen gained during their diploma years.
               </p>
 
-              {/* Stats */}
-              <div className="overview-stats">
-                <div className="stat-box">
-                  <span className="stat-num">500+</span>
-                  <span className="stat-txt">Alumni Entrepreneurs</span>
-                </div>
-                <div className="stat-box">
-                  <span className="stat-num">200+</span>
-                  <span className="stat-txt">Businesses Started</span>
-                </div>
-                <div className="stat-box">
-                  <span className="stat-num">5000+</span>
-                  <span className="stat-txt">Jobs Created</span>
-                </div>
-                <div className="stat-box">
-                  <span className="stat-num">10+</span>
-                  <span className="stat-txt">Industry Sectors</span>
-                </div>
-              </div>
-
               {/* Dynamic Entrepreneurs Table */}
               {entrepreneurs.length > 0 && (
                 <div style={{ marginTop: '36px' }}>
@@ -343,38 +324,6 @@ function Alumni() {
                   </div>
                 </div>
               )}
-
-              {/* Sectors */}
-              <div style={{ marginTop: '36px' }}>
-                <h3 className="content-sub-heading">Entrepreneurship Sectors</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
-                <div className="info-table">
-                  <div className="info-row">
-                    <span className="info-label">Manufacturing</span>
-                    <span className="info-value">CNC machining units, fabrication workshops, auto component manufacturing, and precision engineering businesses.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">IT & Software</span>
-                    <span className="info-value">Software development firms, web agencies, mobile app companies, and IT consulting services.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Automobile Services</span>
-                    <span className="info-value">Auto repair workshops, dealership showrooms, spare parts businesses, and vehicle customization studios.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Construction & Infrastructure</span>
-                    <span className="info-value">Civil contracting firms, real estate development, interior design studios, and material supply businesses.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Electrical & Electronics</span>
-                    <span className="info-value">Electrical contracting, solar energy installation, home automation, and electronics repair services.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Chemical & Process</span>
-                    <span className="info-value">Chemical processing units, water treatment plants, environmental consulting, and food processing businesses.</span>
-                  </div>
-                </div>
-              </div>
 
               {/* CTA */}
               <div style={{ marginTop: '36px', background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '28px', textAlign: 'center' }}>
