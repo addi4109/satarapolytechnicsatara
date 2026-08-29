@@ -333,15 +333,16 @@ function AdminAlumni() {
       {/* ─── TOPBAR ─── */}
       <div className="admin-topbar">
         <h1>Alumni Management</h1>
-        <div className="admin-topbar-actions">
-          <button className={`btn ${activeTab === 'registrations' ? 'btn-primary' : 'btn-secondary'} btn-sm`} onClick={() => setActiveTab('registrations')}>Registrations</button>
-          <button className={`btn ${activeTab === 'entrepreneurs' ? 'btn-primary' : 'btn-secondary'} btn-sm`} onClick={() => setActiveTab('entrepreneurs')}>Entrepreneurs</button>
-          <button className={`btn ${activeTab === 'association' ? 'btn-primary' : 'btn-secondary'} btn-sm`} onClick={() => setActiveTab('association')}>Alumni Association</button>
-          <button className={`btn ${activeTab === 'vision-mission' ? 'btn-primary' : 'btn-secondary'} btn-sm`} onClick={() => setActiveTab('vision-mission')}>Vision & Mission</button>
-        </div>
       </div>
 
-      <div className="admin-content">
+      <div className="admin-content" style={{ paddingTop: '0' }}>
+        <div className="about-admin-tabs">
+          <button className={`about-admin-tab ${activeTab === 'registrations' ? 'active' : ''}`} onClick={() => setActiveTab('registrations')}>Registrations</button>
+          <button className={`about-admin-tab ${activeTab === 'entrepreneurs' ? 'active' : ''}`} onClick={() => setActiveTab('entrepreneurs')}>Entrepreneurs</button>
+          <button className={`about-admin-tab ${activeTab === 'association' ? 'active' : ''}`} onClick={() => setActiveTab('association')}>Alumni Association</button>
+          <button className={`about-admin-tab ${activeTab === 'vision-mission' ? 'active' : ''}`} onClick={() => setActiveTab('vision-mission')}>Vision & Mission</button>
+        </div>
+
         {/* ═══════════════════════════════════════════ */}
         {/* REGISTRATIONS TAB */}
         {/* ═══════════════════════════════════════════ */}
