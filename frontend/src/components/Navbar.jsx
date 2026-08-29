@@ -277,7 +277,7 @@ function Navbar() {
                       }`}
                     >
                       {item.columns.map((col, cIdx) => (
-                        <div className={`dropdown-col ${col.header === 'Departments' ? 'dropdown-col-depts' : 'dropdown-col-cells'}`} key={cIdx}>
+                        <div className={`dropdown-col ${col.header === 'Departments' ? 'dropdown-col-depts' : col.header === 'Cell and Committees' ? 'dropdown-col-cells' : ''}`} key={cIdx}>
                           <span className="dropdown-col-header">{col.header}</span>
                           <ul className="dropdown-col-list">
                             {col.items.map((child, iIdx) => (
