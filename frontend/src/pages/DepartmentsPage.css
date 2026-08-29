@@ -597,4 +597,29 @@
   .dept-hero {
     height: 180px;
   }
+
+  .curriculum-wrapper {
+    padding: 14px 12px;
+    overflow-x: auto;
+  }
+
+  .curriculum-table {
+    font-size: 13px;
+    min-width: 280px;
+  }
+
+  .curriculum-table thead th {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .curriculum-table tbody td {
+    padding: 10px 10px;
+    word-break: break-word;
+  }
+
+  .curr-btn {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
 }

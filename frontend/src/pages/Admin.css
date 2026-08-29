@@ -1278,6 +1278,38 @@
   border-color: #c8963e;
 }
 
+.curriculum-item-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.curriculum-select {
+  padding: 8px 10px;
+  border: 1px solid #DDD7CA;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: 'Times New Roman', Times, serif;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.curriculum-input {
+  flex: 1;
+  min-width: 150px;
+  padding: 8px 10px;
+  border: 1px solid #DDD7CA;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: 'Times New Roman', Times, serif;
+  box-sizing: border-box;
+}
+
+.curriculum-remove-btn {
+  flex-shrink: 0;
+}
+
 .admin-dashboard-stat {
   background: #fff;
   border: 1px solid #e4e8ed;
@@ -1345,6 +1377,26 @@
     margin-left: 0;
     width: 100%;
     text-align: center;
+  }
+  .curriculum-item-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .curriculum-select {
+    width: 100%;
+  }
+  .curriculum-input {
+    min-width: 0;
+    width: 100%;
+  }
+  .dept-form-card-body {
+    padding: 16px;
+  }
+  .curriculum-sem-card {
+    padding: 12px;
+  }
+  .dept-form-card-header {
+    padding: 14px 16px;
   }
 }
 

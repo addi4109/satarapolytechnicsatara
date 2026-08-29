@@ -445,16 +445,16 @@ function AdminDepartmentForm() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   {form.curriculum.map((item, idx) => (
                     <div key={idx} className="curriculum-sem-card">
-                      <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
-                        <select value={item.year} onChange={(e) => updateCurriculum(idx, 'year', e.target.value)} style={{ padding: '8px 10px', border: '1px solid #DDD7CA', borderRadius: '6px', fontSize: '13px', fontFamily: "'Times New Roman', Times, serif" }}>
+                      <div className="curriculum-item-row">
+                        <select value={item.year} onChange={(e) => updateCurriculum(idx, 'year', e.target.value)} className="curriculum-select">
                           {years.map((y) => <option key={y} value={y}>{y}</option>)}
                         </select>
-                        <select value={item.semester} onChange={(e) => updateCurriculum(idx, 'semester', Number(e.target.value))} style={{ padding: '8px 10px', border: '1px solid #DDD7CA', borderRadius: '6px', fontSize: '13px', fontFamily: "'Times New Roman', Times, serif" }}>
+                        <select value={item.semester} onChange={(e) => updateCurriculum(idx, 'semester', Number(e.target.value))} className="curriculum-select">
                           {(semestersByYear[item.year] || [1, 2]).map((s) => <option key={s} value={s}>Sem {s}</option>)}
                         </select>
-                        <input type="text" placeholder="Subject name" value={item.name} onChange={(e) => updateCurriculum(idx, 'name', e.target.value)} style={{ flex: 1, minWidth: '150px', padding: '8px 10px', border: '1px solid #DDD7CA', borderRadius: '6px', fontSize: '13px', fontFamily: "'Times New Roman', Times, serif" }} />
+                        <input type="text" placeholder="Subject name" value={item.name} onChange={(e) => updateCurriculum(idx, 'name', e.target.value)} className="curriculum-input" />
                         <PdfUpload value={item.url} onChange={(url) => updateCurriculum(idx, 'url', url)} />
-                        <button type="button" className="btn btn-danger btn-sm" onClick={() => removeSubject(idx)}>✕</button>
+                        <button type="button" className="btn btn-danger btn-sm curriculum-remove-btn" onClick={() => removeSubject(idx)}>✕</button>
                       </div>
                     </div>
                   ))}
