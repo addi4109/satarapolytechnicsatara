@@ -65,6 +65,29 @@ function AdminEnquiries() {
 
   const departments = [...new Set(enquiries.map((e) => e.department).filter(Boolean))];
 
+  const buildGmailUrl = (enq) => {
+    if (!enq.email) return null;
+    const body = [
+      `Dear ${enq.fullName || 'Student'},`,
+      ``,
+      `Thank you for your enquiry regarding ${enq.department || 'Satara Polytechnic'}.`,
+      ``,
+      `Here are the details of your enquiry:`,
+      `  Name: ${enq.fullName || 'N/A'}`,
+      `  Phone: ${enq.phone || 'N/A'}`,
+      `  Email: ${enq.email || 'N/A'}`,
+      `  Department: ${enq.department || 'N/A'}`,
+      `  Message: ${enq.message || 'No message'}`,
+      `  Date: ${formatDate(enq.createdAt)}`,
+      ``,
+      `[Write your reply here]`,
+      ``,
+      `Best regards,`,
+      `Satara Polytechnic`,
+    ].join('\n');
+    return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(enq.email)}&su=${encodeURIComponent(`Re: Your enquiry - ${enq.department || 'Satara Polytechnic'}`)}&body=${encodeURIComponent(body)}`;
+  };
+
   const filtered = enquiries.filter((e) => {
     const matchesSearch =
       !searchTerm ||
@@ -223,11 +246,9 @@ function AdminEnquiries() {
                               title="Send Email"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                if (enq.email) {
-                                  window.open(
-                                    `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(enq.email)}&su=${encodeURIComponent(`Re: Your enquiry - ${enq.department || 'Satara Polytechnic'}`)}`,
-                                    '_blank'
-                                  );
+                                const url = buildGmailUrl(enq);
+                                if (url) {
+                                  window.open(url, '_blank');
                                 } else {
                                   alert('No email address provided for this enquiry.');
                                 }
@@ -281,12 +302,10 @@ function AdminEnquiries() {
                     {selectedEnquiry.email && (
                       <button
                         className="btn btn-primary btn-sm"
-                        onClick={() =>
-                          window.open(
-                            `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(selectedEnquiry.email)}&su=${encodeURIComponent(`Re: Your enquiry - ${selectedEnquiry.department || 'Satara Polytechnic'}`)}`,
-                            '_blank'
-                          )
-                        }
+                        onClick={() => {
+                          const url = buildGmailUrl(selectedEnquiry);
+                          if (url) window.open(url, '_blank');
+                        }}
                       >
                         ✉ Reply via Gmail
                       </button>
@@ -309,7 +328,7 @@ function AdminEnquiries() {
                   {selectedEnquiry.email && (
                     <div style={{ gridColumn: '1 / -1' }}>
                       <a
-                        href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(selectedEnquiry.email)}&su=${encodeURIComponent(`Re: Your enquiry - ${selectedEnquiry.department || 'Satara Polytechnic'}`)}`}
+                        href={buildGmailUrl(selectedEnquiry) || '#'}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{
