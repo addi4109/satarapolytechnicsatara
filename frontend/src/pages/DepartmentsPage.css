@@ -451,13 +451,16 @@
 }
 
 .curr-btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 6px 16px;
   font-size: 12.5px;
   font-weight: 600;
   text-decoration: none;
   border-radius: 4px;
   transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
 }
 
 .curr-view {
@@ -466,21 +469,24 @@
 }
 
 .curr-view:hover {
-  background: #243358;
+  background: #2a3f6a;
 }
 
 .curr-download {
   background: transparent;
   color: #243358;
   border: 1.5px solid #243358;
-  padding: 6px 10px;
+  padding: 6px 8px;
   min-width: 32px;
-  text-align: center;
 }
 
 .curr-download:hover {
   background: #243358;
   color: #fff;
+}
+
+.curr-download svg {
+  display: block;
 }
 
 /* Mobile tabs - hidden on desktop, visible on mobile */
