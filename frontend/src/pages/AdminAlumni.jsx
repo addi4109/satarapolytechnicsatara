@@ -48,7 +48,7 @@ function AdminAlumni() {
   const [vmData, setVmData] = useState(null);
   const [vmLoading, setVmLoading] = useState(true);
   const [vmEditing, setVmEditing] = useState(false);
-  const [vmForm, setVmForm] = useState({ title: '', visionContent: '', missionPoints: [] });
+  const [vmForm, setVmForm] = useState({ visionContent: '', missionPoints: [] });
   const [vmSaving, setVmSaving] = useState(false);
   const [newMissionPoint, setNewMissionPoint] = useState('');
 
@@ -284,7 +284,6 @@ function AdminAlumni() {
 
   const startEditVm = () => {
     setVmForm({
-      title: vmData?.title || '',
       visionContent: vmData?.visionContent || '',
       missionPoints: vmData?.missionPoints ? [...vmData.missionPoints] : [],
     });
@@ -647,7 +646,6 @@ function AdminAlumni() {
                   </div>
                 </div>
                 <div style={{ display: 'grid', gap: '16px' }}>
-                  <div><label style={labelStyle}>Section Title</label><input type="text" value={vmForm.title} onChange={(e) => setVmForm((p) => ({ ...p, title: e.target.value }))} placeholder="e.g. Alumni Vision & Mission" style={inputStyle} /></div>
                   <div><label style={labelStyle}>Vision Content</label><textarea value={vmForm.visionContent} onChange={(e) => setVmForm((p) => ({ ...p, visionContent: e.target.value }))} rows={6} placeholder="Write the vision content..." style={{ ...inputStyle, resize: 'vertical' }} /></div>
                   <div>
                     <label style={labelStyle}>Mission Points</label>
@@ -677,7 +675,7 @@ function AdminAlumni() {
                       <div style={{ textAlign: 'center', padding: '40px', color: '#888' }}>No content added yet. Click "Add Content" to get started.</div>
                     ) : (
                       <div>
-                        <h2 className="content-heading">{vmData.title || 'Alumni Vision & Mission'}</h2>
+                        <h2 className="content-heading">Alumni Vision & Mission</h2>
                         <div className="content-line"></div>
                         <div className="alumni-vm-card">
                           <div className="alumni-vm-icon alumni-vm-vision">

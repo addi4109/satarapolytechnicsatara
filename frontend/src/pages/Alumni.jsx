@@ -205,7 +205,7 @@ function Alumni() {
           {/* Alumni Vision & Mission */}
           {active === 'vision-mission' && (
             <>
-              <h2 className="content-heading">{alumniVision?.title || 'Alumni Vision & Mission'}</h2>
+              <h2 className="content-heading">Alumni Vision & Mission</h2>
               <div className="content-line"></div>
 
               {/* Vision */}
