@@ -43,6 +43,7 @@ function AdminLayout({ children }) {
   const isActive = (path) => location.pathname === path;
 
   const NAV_LINKS = [
+    { to: '/admin', label: 'Dashboard' },
     { to: '/admin/about', label: 'About' },
     { to: '/admin/admissions', label: 'Admissions' },
     { to: '/admin/placements', label: 'Placements' },

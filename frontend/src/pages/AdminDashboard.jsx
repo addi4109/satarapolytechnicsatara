@@ -9,7 +9,10 @@ import './Admin.css';
 const API_URL = '/api';
 
 function AdminDashboard() {
-  const [stats, setStats] = useState({ cells: 0, departments: 0, photos: 0, videos: 0, news: 0, recruiters: 0, notices: 0, slides: 0, enquiries: 0 });
+  const [stats, setStats] = useState({
+    cells: 0, departments: 0, photos: 0, videos: 0,
+    news: 0, recruiters: 0, notices: 0, slides: 0, enquiries: 0,
+  });
   const [loading, setLoading] = useState(true);
   const [showDebug, setShowDebug] = useState(false);
 
@@ -25,8 +28,8 @@ function AdminDashboard() {
           fetch(`${API_URL}/recruiters`).then((r) => r.json()),
           fetch(`${API_URL}/notices/all`).then((r) => r.json()),
           fetch(`${API_URL}/slides`).then((r) => r.json()),
-          getDocs(collection(db, 'enquiries')).then((snap) => snap.size),
         ]);
+        const enquiriesSnap = await getDocs(collection(db, 'enquiries'));
         setStats({
           cells: cells.length,
           departments: depts.length,
@@ -36,7 +39,7 @@ function AdminDashboard() {
           recruiters: recruiters.length,
           notices: notices.length,
           slides: slides.length,
-          enquiries: enquiries,
+          enquiries: enquiriesSnap.size,
         });
       } catch (err) {
         console.error('Failed to load stats:', err);
@@ -50,76 +53,125 @@ function AdminDashboard() {
   return (
     <AdminLayout>
       <div className="admin-topbar">
-        <h1>Welcome, Admin</h1>
+        <h1>Dashboard</h1>
       </div>
       <div className="admin-content">
-        {/* Welcome Card */}
-        <div className="admin-card" style={{ marginBottom: '24px' }}>
-          <div style={{ padding: '30px', textAlign: 'center' }}>
-            <h2 style={{ fontFamily: "'Georgia', serif", fontSize: '24px', color: '#7A263A', margin: '0 0 8px' }}>Satara Polytechnic Admin Panel</h2>
-            <p style={{ fontSize: '14px', color: '#888', margin: '0 0 12px' }}>Manage your website content from here</p>
-            <p style={{ fontSize: '12px', color: '#315C4A', fontWeight: 600, margin: 0 }}>Built by Aditya Sawant</p>
-          </div>
-        </div>
-
-        {/* Stats Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '30px' }}>
-          <Link to="/admin/cells" className="admin-dashboard-stat" style={{ textDecoration: 'none' }}>
-            <span className="dashboard-stat-num">{loading ? '—' : stats.cells}</span>
-            <span className="dashboard-stat-label">Cells & Committees</span>
+        {/* Stats */}
+        <div className="dash-stats-grid">
+          <Link to="/admin/cells" className="dash-stat-card">
+            <div className="dash-stat-num">{loading ? '—' : stats.cells}</div>
+            <div className="dash-stat-label">Cells & Committees</div>
           </Link>
-          <Link to="/admin/departments" className="admin-dashboard-stat" style={{ textDecoration: 'none' }}>
-            <span className="dashboard-stat-num">{loading ? '—' : stats.departments}</span>
-            <span className="dashboard-stat-label">Departments</span>
+          <Link to="/admin/departments" className="dash-stat-card">
+            <div className="dash-stat-num">{loading ? '—' : stats.departments}</div>
+            <div className="dash-stat-label">Departments</div>
           </Link>
-          <Link to="/admin/gallery" className="admin-dashboard-stat" style={{ textDecoration: 'none' }}>
-            <span className="dashboard-stat-num">{loading ? '—' : stats.photos}</span>
-            <span className="dashboard-stat-label">Photos</span>
+          <Link to="/admin/gallery" className="dash-stat-card">
+            <div className="dash-stat-num">{loading ? '—' : stats.photos}</div>
+            <div className="dash-stat-label">Photos</div>
           </Link>
-          <Link to="/admin/gallery" className="admin-dashboard-stat" style={{ textDecoration: 'none' }}>
-            <span className="dashboard-stat-num">{loading ? '—' : stats.videos}</span>
-            <span className="dashboard-stat-label">Videos</span>
+          <Link to="/admin/gallery" className="dash-stat-card">
+            <div className="dash-stat-num">{loading ? '—' : stats.videos}</div>
+            <div className="dash-stat-label">Videos</div>
           </Link>
-          <Link to="/admin/gallery" className="admin-dashboard-stat" style={{ textDecoration: 'none' }}>
-            <span className="dashboard-stat-num">{loading ? '—' : stats.news}</span>
-            <span className="dashboard-stat-label">News</span>
+          <Link to="/admin/gallery" className="dash-stat-card">
+            <div className="dash-stat-num">{loading ? '—' : stats.news}</div>
+            <div className="dash-stat-label">News</div>
           </Link>
-          <Link to="/admin/gallery" className="admin-dashboard-stat" style={{ textDecoration: 'none' }}>
-            <span className="dashboard-stat-num">{loading ? '—' : stats.recruiters}</span>
-            <span className="dashboard-stat-label">Recruiters</span>
+          <Link to="/admin/gallery" className="dash-stat-card">
+            <div className="dash-stat-num">{loading ? '—' : stats.recruiters}</div>
+            <div className="dash-stat-label">Recruiters</div>
           </Link>
-          <Link to="/admin/gallery" className="admin-dashboard-stat" style={{ textDecoration: 'none' }}>
-            <span className="dashboard-stat-num">{loading ? '—' : stats.slides}</span>
-            <span className="dashboard-stat-label">Slider</span>
+          <Link to="/admin/gallery" className="dash-stat-card">
+            <div className="dash-stat-num">{loading ? '—' : stats.slides}</div>
+            <div className="dash-stat-label">Slider</div>
           </Link>
-          <Link to="/admin/gallery" className="admin-dashboard-stat" style={{ textDecoration: 'none' }}>
-            <span className="dashboard-stat-num">{loading ? '—' : stats.notices}</span>
-            <span className="dashboard-stat-label">Notices</span>
+          <Link to="/admin/notices" className="dash-stat-card">
+            <div className="dash-stat-num">{loading ? '—' : stats.notices}</div>
+            <div className="dash-stat-label">Notices</div>
           </Link>
-          <Link to="/admin/enquiries" className="admin-dashboard-stat" style={{ textDecoration: 'none' }}>
-            <span className="dashboard-stat-num">{loading ? '—' : stats.enquiries}</span>
-            <span className="dashboard-stat-label">Enquiries</span>
+          <Link to="/admin/enquiries" className="dash-stat-card">
+            <div className="dash-stat-num">{loading ? '—' : stats.enquiries}</div>
+            <div className="dash-stat-label">Enquiries</div>
           </Link>
         </div>
 
         {/* Quick Actions */}
-        <div className="admin-card">
-          <div className="admin-card-header">
-            <h3>Quick Actions</h3>
-          </div>
-          <div style={{ padding: '20px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <Link to="/admin/cells/new" className="btn btn-success">+ Add Cell</Link>
-            <Link to="/admin/departments/new" className="btn btn-success">+ Add Department</Link>
-            <Link to="/admin/gallery" className="btn btn-primary">Manage Gallery</Link>
-            <button
-              className="btn btn-secondary"
-              onClick={() => setShowDebug(true)}
-              style={{ cursor: 'pointer' }}
-            >
-              🛠️ Debug Panel
-            </button>
-            <a href="/" target="_blank" className="btn btn-secondary">View Website ↗</a>
-          </div>
+        <h3 className="dash-section-title">Quick Actions</h3>
+        <div className="dash-actions-grid">
+          <Link to="/admin/cells/new" className="dash-action-card">
+            <div className="dash-action-icon" style={{ background: '#d4edda', color: '#155724' }}>+</div>
+            <div className="dash-action-info">
+              <span className="dash-action-name">Add Cell</span>
+              <span className="dash-action-desc">Create a new cell or committee</span>
+            </div>
+          </Link>
+
+          <Link to="/admin/departments/new" className="dash-action-card">
+            <div className="dash-action-icon" style={{ background: '#d4edda', color: '#155724' }}>+</div>
+            <div className="dash-action-info">
+              <span className="dash-action-name">Add Department</span>
+              <span className="dash-action-desc">Create a new department</span>
+            </div>
+          </Link>
+
+          <Link to="/admin/gallery" className="dash-action-card">
+            <div className="dash-action-icon" style={{ background: '#e3f2fd', color: '#1565c0' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+            <div className="dash-action-info">
+              <span className="dash-action-name">Gallery</span>
+              <span className="dash-action-desc">Manage photos, videos & news</span>
+            </div>
+          </Link>
+
+          <Link to="/admin/notices" className="dash-action-card">
+            <div className="dash-action-icon" style={{ background: '#fff3cd', color: '#856404' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div className="dash-action-info">
+              <span className="dash-action-name">Notices</span>
+              <span className="dash-action-desc">Post & manage notices</span>
+            </div>
+          </Link>
+
+          <Link to="/admin/enquiries" className="dash-action-card">
+            <div className="dash-action-icon" style={{ background: '#f8d7da', color: '#721c24' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div className="dash-action-info">
+              <span className="dash-action-name">Enquiries</span>
+              <span className="dash-action-desc">View admission enquiries</span>
+            </div>
+          </Link>
+
+          <Link to="/admin/placements" className="dash-action-card">
+            <div className="dash-action-icon" style={{ background: '#e8f5e9', color: '#2e7d32' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3h-8l-2 4h12z"/></svg>
+            </div>
+            <div className="dash-action-info">
+              <span className="dash-action-name">Placements</span>
+              <span className="dash-action-desc">Manage placement records</span>
+            </div>
+          </Link>
+
+          <a href="/" target="_blank" className="dash-action-card">
+            <div className="dash-action-icon" style={{ background: '#f0f3f8', color: '#243358' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </div>
+            <div className="dash-action-info">
+              <span className="dash-action-name">View Website</span>
+              <span className="dash-action-desc">Open live site in new tab</span>
+            </div>
+          </a>
+
+          <button className="dash-action-card" onClick={() => setShowDebug(true)}>
+            <div className="dash-action-icon" style={{ background: '#f5f0ff', color: '#6f42c1' }}>🛠️</div>
+            <div className="dash-action-info">
+              <span className="dash-action-name">Debug Panel</span>
+              <span className="dash-action-desc">Check integration status</span>
+            </div>
+          </button>
         </div>
 
         <DebugPanel isOpen={showDebug} onClose={() => setShowDebug(false)} />
