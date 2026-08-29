@@ -30,6 +30,7 @@ function Alumni() {
   const [loading, setLoading] = useState(false);
   const [entrepreneurs, setEntrepreneurs] = useState([]);
   const [associationMembers, setAssociationMembers] = useState([]);
+  const [alumniVision, setAlumniVision] = useState(null);
   const [regForm, setRegForm] = useState({
     fullName: '',
     email: '',
@@ -56,6 +57,10 @@ function Alumni() {
     fetch('/api/alumni-association/public')
       .then((r) => r.json())
       .then((data) => setAssociationMembers(data))
+      .catch(() => {});
+    fetch('/api/alumni-vision')
+      .then((r) => r.json())
+      .then((data) => setAlumniVision(data))
       .catch(() => {});
   }, []);
 
@@ -200,7 +205,7 @@ function Alumni() {
           {/* Alumni Vision & Mission */}
           {active === 'vision-mission' && (
             <>
-              <h2 className="content-heading">Alumni Vision & Mission</h2>
+              <h2 className="content-heading">{alumniVision?.title || 'Alumni Vision & Mission'}</h2>
               <div className="content-line"></div>
 
               {/* Vision */}
@@ -212,13 +217,13 @@ function Alumni() {
                   </svg>
                 </div>
                 <h3>Our Vision</h3>
-                <p>
-                  To build a vibrant, engaged, and ever-growing alumni network that strengthens the
-                  bond between Satara Polytechnic and its graduates. We envision a community where
-                  alumni actively contribute to the institute's growth through mentorship, knowledge
-                  sharing, industry partnerships, and philanthropic support — creating a legacy of
-                  excellence that inspires future generations.
-                </p>
+                {alumniVision?.visionContent ? (
+                  alumniVision.visionContent.split('\n').filter(p => p.trim()).map((para, i) => (
+                    <p key={i}>{para}</p>
+                  ))
+                ) : (
+                  <p>Vision details will be updated soon.</p>
+                )}
               </div>
 
               {/* Mission */}
@@ -235,39 +240,15 @@ function Alumni() {
                   Our mission is to connect, engage, and empower the alumni community of Satara
                   Polytechnic by:
                 </p>
-                <ul className="alumni-mission-list">
-                  <li>Fostering lifelong relationships between alumni and the institute</li>
-                  <li>Facilitating mentorship and career guidance for current students</li>
-                  <li>Organizing alumni meets, reunions, and networking events</li>
-                  <li>Creating opportunities for alumni to contribute to institute development</li>
-                  <li>Supporting industry-academia collaboration and knowledge exchange</li>
-                  <li>Promoting entrepreneurship and innovation among alumni</li>
-                  <li>Recognizing and celebrating alumni achievements</li>
-                </ul>
-              </div>
-
-              {/* Core Values */}
-              <div style={{ marginTop: '36px' }}>
-                <h3 className="content-sub-heading">Core Values</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
-                <div className="info-table">
-                  <div className="info-row">
-                    <span className="info-label">Connection</span>
-                    <span className="info-value">Building and maintaining strong bonds between alumni, students, and the institute through regular engagement and communication.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Giving Back</span>
-                    <span className="info-value">Encouraging alumni to contribute their time, expertise, and resources for the betterment of current students and institute infrastructure.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Excellence</span>
-                    <span className="info-value">Upholding the highest standards of professional and personal excellence in all endeavors, reflecting the values of Satara Polytechnic.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Innovation</span>
-                    <span className="info-value">Promoting a culture of continuous learning, innovation, and adaptation to stay relevant in the rapidly evolving engineering landscape.</span>
-                  </div>
-                </div>
+                {alumniVision?.missionPoints && alumniVision.missionPoints.length > 0 ? (
+                  <ul className="alumni-mission-list">
+                    {alumniVision.missionPoints.map((point, i) => (
+                      <li key={i}>{point}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>Mission details will be updated soon.</p>
+                )}
               </div>
             </>
           )}

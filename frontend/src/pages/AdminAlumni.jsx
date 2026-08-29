@@ -44,6 +44,14 @@ function AdminAlumni() {
   const [assocSaving, setAssocSaving] = useState(false);
   const [assocAdding, setAssocAdding] = useState(false);
 
+  // ─── Alumni Vision & Mission state ───
+  const [vmData, setVmData] = useState(null);
+  const [vmLoading, setVmLoading] = useState(true);
+  const [vmEditing, setVmEditing] = useState(false);
+  const [vmForm, setVmForm] = useState({ title: '', visionContent: '', missionPoints: [] });
+  const [vmSaving, setVmSaving] = useState(false);
+  const [newMissionPoint, setNewMissionPoint] = useState('');
+
   useEffect(() => {
     if (!sessionStorage.getItem('adminAuth') || !getAdminApiKey()) {
       navigate('/admin/login');
@@ -52,6 +60,7 @@ function AdminAlumni() {
     fetchAlumni();
     fetchEntrepreneurs();
     fetchAssocMembers();
+    fetchVmData();
   }, [navigate]);
 
   // ═══════════════════════════════════════════
@@ -256,6 +265,67 @@ function AdminAlumni() {
     setAssocForm(null);
   };
 
+  // ═══════════════════════════════════════════
+  // ALUMNI VISION & MISSION
+  // ═══════════════════════════════════════════
+
+  const fetchVmData = async () => {
+    setVmLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/alumni-vision`);
+      const data = await res.json();
+      setVmData(data._id ? data : null);
+    } catch {
+      setVmData(null);
+    } finally {
+      setVmLoading(false);
+    }
+  };
+
+  const startEditVm = () => {
+    setVmForm({
+      title: vmData?.title || '',
+      visionContent: vmData?.visionContent || '',
+      missionPoints: vmData?.missionPoints ? [...vmData.missionPoints] : [],
+    });
+    setVmEditing(true);
+  };
+
+  const handleSaveVm = async () => {
+    setVmSaving(true);
+    try {
+      const res = await fetch(`${API_URL}/alumni-vision`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(vmForm),
+      });
+      if (res.ok) {
+        const saved = await res.json();
+        setVmData(saved);
+        setVmEditing(false);
+      } else { alert('Failed to save'); }
+    } catch { alert('Network error'); } finally { setVmSaving(false); }
+  };
+
+  const handleDeleteVm = async () => {
+    if (!window.confirm('Delete this content?')) return;
+    try {
+      await fetch(`${API_URL}/alumni-vision`, { method: 'DELETE' });
+      setVmData(null);
+      setVmEditing(false);
+    } catch { alert('Failed to delete'); }
+  };
+
+  const addMissionPoint = () => {
+    if (!newMissionPoint.trim()) return;
+    setVmForm((p) => ({ ...p, missionPoints: [...p.missionPoints, newMissionPoint.trim()] }));
+    setNewMissionPoint('');
+  };
+
+  const removeMissionPoint = (i) => {
+    setVmForm((p) => ({ ...p, missionPoints: p.missionPoints.filter((_, idx) => idx !== i) }));
+  };
+
   const inputStyle = { width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', marginTop: '4px', boxSizing: 'border-box' };
   const labelStyle = { fontSize: '12px', fontWeight: 600, color: '#888' };
 
@@ -268,6 +338,7 @@ function AdminAlumni() {
           <button className={`btn ${activeTab === 'registrations' ? 'btn-primary' : 'btn-secondary'} btn-sm`} onClick={() => setActiveTab('registrations')}>Registrations</button>
           <button className={`btn ${activeTab === 'entrepreneurs' ? 'btn-primary' : 'btn-secondary'} btn-sm`} onClick={() => setActiveTab('entrepreneurs')}>Entrepreneurs</button>
           <button className={`btn ${activeTab === 'association' ? 'btn-primary' : 'btn-secondary'} btn-sm`} onClick={() => setActiveTab('association')}>Alumni Association</button>
+          <button className={`btn ${activeTab === 'vision-mission' ? 'btn-primary' : 'btn-secondary'} btn-sm`} onClick={() => setActiveTab('vision-mission')}>Vision & Mission</button>
         </div>
       </div>
 
@@ -544,6 +615,96 @@ function AdminAlumni() {
                   <div><label style={labelStyle}>Phone</label><input type="text" value={assocForm.phone} onChange={(e) => setAssocForm((p) => ({ ...p, phone: e.target.value }))} placeholder="+91 XXXXX XXXXX" style={inputStyle} /></div>
                   <div><label style={labelStyle}>Email</label><input type="email" value={assocForm.email} onChange={(e) => setAssocForm((p) => ({ ...p, email: e.target.value }))} placeholder="email@example.com" style={inputStyle} /></div>
                   <div><label style={labelStyle}>Sort Order</label><input type="number" value={assocForm.order} onChange={(e) => setAssocForm((p) => ({ ...p, order: parseInt(e.target.value) || 0 }))} min={0} style={inputStyle} /></div>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+        {/* ═══════════════════════════════════════════ */}
+        {/* ALUMNI VISION & MISSION TAB */}
+        {/* ═══════════════════════════════════════════ */}
+        {activeTab === 'vision-mission' && (
+          <>
+            <div style={{ display: 'flex', gap: '12px', marginBottom: '20px', alignItems: 'center' }}>
+              {!vmEditing && (
+                <button className="btn btn-primary" onClick={startEditVm}>{vmData ? 'Edit Content' : 'Add Content'}</button>
+              )}
+              {vmData && !vmEditing && (
+                <button className="btn btn-danger btn-sm" onClick={handleDeleteVm}>Delete</button>
+              )}
+            </div>
+
+            {vmLoading ? (
+              <div style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</div>
+            ) : vmEditing ? (
+              /* ─── EDITOR ─── */
+              <div style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '24px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid #e4e8ed' }}>
+                  <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#243358' }}>Edit Vision & Mission</h3>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button className="btn btn-primary btn-sm" onClick={handleSaveVm} disabled={vmSaving}>{vmSaving ? 'Saving...' : 'Save'}</button>
+                    <button className="btn btn-secondary btn-sm" onClick={() => setVmEditing(false)}>Cancel</button>
+                  </div>
+                </div>
+                <div style={{ display: 'grid', gap: '16px' }}>
+                  <div><label style={labelStyle}>Section Title</label><input type="text" value={vmForm.title} onChange={(e) => setVmForm((p) => ({ ...p, title: e.target.value }))} placeholder="e.g. Alumni Vision & Mission" style={inputStyle} /></div>
+                  <div><label style={labelStyle}>Vision Content</label><textarea value={vmForm.visionContent} onChange={(e) => setVmForm((p) => ({ ...p, visionContent: e.target.value }))} rows={6} placeholder="Write the vision content..." style={{ ...inputStyle, resize: 'vertical' }} /></div>
+                  <div>
+                    <label style={labelStyle}>Mission Points</label>
+                    <div style={{ display: 'flex', gap: '8px', marginTop: '4px', marginBottom: '10px' }}>
+                      <input type="text" value={newMissionPoint} onChange={(e) => setNewMissionPoint(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && addMissionPoint()} placeholder="Add a mission point..." style={{ ...inputStyle, marginTop: 0, flex: 1 }} />
+                      <button className="btn btn-primary btn-sm" onClick={addMissionPoint}>Add</button>
+                    </div>
+                    {vmForm.missionPoints.map((point, i) => (
+                      <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 12px', background: '#f5f7fa', borderRadius: '6px', marginBottom: '6px' }}>
+                        <span style={{ fontSize: '14px', color: '#333', flex: 1 }}>{point}</span>
+                        <button className="btn btn-danger btn-sm" onClick={() => removeMissionPoint(i)} style={{ padding: '2px 8px' }}>×</button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              /* ─── LIVE PREVIEW ─── */
+              <div>
+                <div className="admin-card" style={{ overflow: 'hidden', marginBottom: '20px' }}>
+                  <div style={{ padding: '16px 20px', borderBottom: '1px solid #e4e8ed', background: '#f9fafb' }}>
+                    <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#243358', fontSize: '16px' }}>Live Preview — Alumni Vision & Mission</h3>
+                    <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#888' }}>This is how the content appears on the public Alumni Vision & Mission page.</p>
+                  </div>
+                  <div style={{ padding: '24px' }}>
+                    {!vmData ? (
+                      <div style={{ textAlign: 'center', padding: '40px', color: '#888' }}>No content added yet. Click "Add Content" to get started.</div>
+                    ) : (
+                      <div>
+                        <h2 className="content-heading">{vmData.title || 'Alumni Vision & Mission'}</h2>
+                        <div className="content-line"></div>
+                        <div className="alumni-vm-card">
+                          <div className="alumni-vm-icon alumni-vm-vision">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>
+                          </div>
+                          <h3>Our Vision</h3>
+                          {vmData.visionContent ? vmData.visionContent.split('\n').filter(p => p.trim()).map((para, i) => (
+                            <p key={i}>{para}</p>
+                          )) : <p style={{ color: '#aaa', fontStyle: 'italic' }}>No vision content yet.</p>}
+                        </div>
+                        <div className="alumni-vm-card">
+                          <div className="alumni-vm-icon alumni-vm-mission">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+                          </div>
+                          <h3>Our Mission</h3>
+                          <p>Our mission is to connect, engage, and empower the alumni community of Satara Polytechnic by:</p>
+                          {vmData.missionPoints && vmData.missionPoints.length > 0 ? (
+                            <ul className="alumni-mission-list">
+                              {vmData.missionPoints.map((point, i) => (
+                                <li key={i}>{point}</li>
+                              ))}
+                            </ul>
+                          ) : <p style={{ color: '#aaa', fontStyle: 'italic' }}>No mission points yet.</p>}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             )}
