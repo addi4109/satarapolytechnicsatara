@@ -12,9 +12,12 @@ const integrations = [
       { key: 'authDomain', source: 'Hardcoded in firebase.js' },
       { key: 'projectId', source: 'Hardcoded in firebase.js' },
     ],
-    check: () => {
+    check: async () => {
       try {
-        return typeof window !== 'undefined' && navigator.onLine;
+        const { db } = await import('../lib/firebase');
+        const { collection, getDocs, limit, query } = await import('firebase/firestore');
+        await getDocs(query(collection(db, 'enquiries'), limit(1)));
+        return true;
       } catch { return false; }
     },
   },
@@ -30,8 +33,11 @@ const integrations = [
       { key: 'VITE_EMAILJS_PUBLIC_KEY', source: 'Vercel env' },
     ],
     check: () => {
-      const val = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-      return !!(val && val.length > 0);
+      const a = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const b = import.meta.env.VITE_EMAILJS_COLLEGE_TEMPLATE_ID;
+      const c = import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID;
+      const d = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+      return !!(a && b && c && d);
     },
   },
   {
@@ -44,8 +50,9 @@ const integrations = [
       { key: 'VITE_CLOUDINARY_UPLOAD_PRESET', source: 'Vercel env' },
     ],
     check: () => {
-      const val = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-      return !!(val && val.length > 0);
+      const a = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+      const b = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+      return !!(a && b);
     },
   },
   {
@@ -58,8 +65,9 @@ const integrations = [
       { key: 'VITE_SUPABASE_ANON_KEY', source: 'Vercel env' },
     ],
     check: () => {
-      const val = import.meta.env.VITE_SUPABASE_URL;
-      return !!(val && val.length > 0);
+      const a = import.meta.env.VITE_SUPABASE_URL;
+      const b = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      return !!(a && b);
     },
   },
   {
@@ -84,8 +92,10 @@ const integrations = [
       { key: 'VITE_*', source: 'Vercel build env vars' },
     ],
     check: () => {
-      // If running on Vercel, we can infer from deployment URL
-      return typeof window !== 'undefined' && window.location.hostname.includes('vercel.app');
+      return typeof window !== 'undefined' && (
+        window.location.hostname.includes('vercel.app') ||
+        !!import.meta.env.VITE_SUPABASE_URL
+      );
     },
   },
   {
@@ -109,14 +119,18 @@ function DebugPanel({ isOpen, onClose }) {
   useEffect(() => {
     if (isOpen) {
       const newStatuses = {};
-      integrations.forEach((intg) => {
-        if (intg.check) {
-          newStatuses[intg.id] = intg.check();
-        } else {
-          newStatuses[intg.id] = null; // unknown — backend-only
+      const runChecks = async () => {
+        for (const intg of integrations) {
+          if (intg.check) {
+            const result = intg.check();
+            newStatuses[intg.id] = result instanceof Promise ? await result : result;
+          } else {
+            newStatuses[intg.id] = null; // unknown — backend-only
+          }
+          setStatuses({ ...newStatuses });
         }
-      });
-      setStatuses(newStatuses);
+      };
+      runChecks();
     }
   }, [isOpen]);
 
