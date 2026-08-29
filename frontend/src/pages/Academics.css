@@ -903,3 +903,21 @@
     font-size: 13px;
   }
 }
+
+@media (max-width: 768px) {
+  .fee-table {
+    min-width: 0;
+    font-size: 12px;
+  }
+  .fee-table thead th {
+    padding: 8px 6px;
+    font-size: 11px;
+  }
+  .fee-table tbody td {
+    padding: 7px 6px;
+    font-size: 11px;
+  }
+  .fee-table-wrap {
+    overflow-x: visible;
+  }
+}

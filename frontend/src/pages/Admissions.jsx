@@ -428,11 +428,11 @@ function Admissions() {
                     <table className="fee-table">
                       <thead>
                         <tr>
-                          <th style={{ width: 60 }}>Sr. No.</th>
+                          <th style={{ width: 40 }}>Sr.</th>
                           <th style={{ textAlign: 'left' }}>Course Name</th>
-                          <th style={{ width: 100 }}>Duration</th>
-                          <th style={{ width: 80 }}>Intake</th>
-                          <th style={{ width: 120 }}>Direct 2nd Year</th>
+                          <th style={{ width: 70 }}>Duration</th>
+                          <th style={{ width: 60 }}>Intake</th>
+                          <th style={{ width: 90 }}>Direct 2nd Yr</th>
                         </tr>
                       </thead>
                       <tbody>
