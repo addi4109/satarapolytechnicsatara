@@ -310,7 +310,7 @@ function DepartmentsPage() {
                                           {sub.url ? (
                                             <div style={{ display: 'flex', gap: '6px' }}>
                                               <a href={sub.url} className="curr-btn curr-view" target="_blank" rel="noreferrer">View</a>
-                                              <a href={sub.url} className="curr-btn curr-download" download>Download</a>
+                                              <a href={sub.url} className="curr-btn curr-download" download>↓</a>
                                             </div>
                                           ) : (
                                             <span style={{ color: '#ccc' }}>—</span>

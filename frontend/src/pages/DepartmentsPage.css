@@ -473,6 +473,9 @@
   background: transparent;
   color: #243358;
   border: 1.5px solid #243358;
+  padding: 6px 10px;
+  min-width: 32px;
+  text-align: center;
 }
 
 .curr-download:hover {
