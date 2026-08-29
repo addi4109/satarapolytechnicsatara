@@ -31,6 +31,7 @@ const Contact = lazy(() => import('./pages/Contact'));
 const Activities = lazy(() => import('./pages/Activities'));
 const Notices = lazy(() => import('./pages/Notices'));
 const AdmissionNotices = lazy(() => import('./pages/AdmissionNotices'));
+const Alumni = lazy(() => import('./pages/Alumni'));
 const AdminLogin = lazy(() => import('./pages/AdminLogin'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 const AdminCells = lazy(() => import('./pages/AdminCells'));
@@ -49,6 +50,7 @@ const AdminActivities = lazy(() => import('./pages/AdminActivities'));
 const AdminContact = lazy(() => import('./pages/AdminContact'));
 const AdminEnquiries = lazy(() => import('./pages/AdminEnquiries'));
 const AdminFeedbacks = lazy(() => import('./pages/AdminFeedbacks'));
+const AdminAlumni = lazy(() => import('./pages/AdminAlumni'));
 
 // Loading fallback with skeleton
 function PageLoader() {
@@ -118,6 +120,8 @@ function AppLayout() {
           <Route path="/admissions/:page" element={<Admissions />} />
           <Route path="/notices" element={<Notices />} />
           <Route path="/notices/admission" element={<AdmissionNotices />} />
+          <Route path="/alumni" element={<Alumni />} />
+          <Route path="/alumni/:page" element={<Alumni />} />
           <Route path="/notices/:category" element={<Notices />} />
           <Route path="/placements" element={<Placements />} />
           <Route path="/placements/:page" element={<Placements />} />
@@ -155,6 +159,7 @@ function AppLayout() {
           <Route path="/admin/contact" element={<AdminContact />} />
           <Route path="/admin/enquiries" element={<AdminEnquiries />} />
           <Route path="/admin/feedbacks" element={<AdminFeedbacks />} />
+          <Route path="/admin/alumni" element={<AdminAlumni />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </Suspense>

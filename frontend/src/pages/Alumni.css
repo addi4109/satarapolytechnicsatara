@@ -1,0 +1,89 @@
+/* ===== Alumni Vision & Mission Cards ===== */
+.alumni-vm-card {
+  background: #f5f7fa;
+  border: 1px solid #e4e8ed;
+  border-radius: 10px;
+  padding: 28px;
+  margin-top: 24px;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.alumni-vm-card:hover {
+  box-shadow: 0 4px 16px rgba(36, 51, 88, 0.08);
+  border-color: #c8963e;
+}
+
+.alumni-vm-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.alumni-vm-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.alumni-vm-vision {
+  background: #243358;
+  color: #fff;
+}
+
+.alumni-vm-mission {
+  background: #c8963e;
+  color: #fff;
+}
+
+.alumni-vm-card h3 {
+  font-family: 'Georgia', serif;
+  font-size: 20px;
+  color: #243358;
+  margin: 0 0 12px;
+}
+
+.alumni-vm-card p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.7;
+  margin: 0 0 12px;
+}
+
+/* ===== Mission List ===== */
+.alumni-mission-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+}
+
+.alumni-mission-list li {
+  position: relative;
+  padding: 8px 0 8px 24px;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.alumni-mission-list li:last-child {
+  border-bottom: none;
+}
+
+.alumni-mission-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #16a34a;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 768px) {
+  .alumni-vm-card {
+    padding: 20px;
+  }
+}
