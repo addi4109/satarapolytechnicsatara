@@ -38,16 +38,6 @@ const SECTIONS = [
   { key: 'brochure', label: 'Brochure' },
 ];
 
-const defaultFeeRows = [
-  { particular: 'Tuition Fee', open: '', vjnt: '', scst: '', girls: '' },
-  { particular: 'Development Fee', open: '', vjnt: '', scst: '', girls: '' },
-  { particular: 'Enrollment Fees', open: '', vjnt: '', scst: '', girls: '' },
-  { particular: 'Eligibility Fees', open: '', vjnt: '', scst: '', girls: '' },
-  { particular: 'Insurance Fees', open: '', vjnt: '', scst: '', girls: '' },
-  { particular: 'Identity Card Fees', open: '', vjnt: '', scst: '', girls: '' },
-  { particular: 'Total Payable Fee', open: '', vjnt: '', scst: '', girls: '' },
-];
-
 const defaultSection = {
   title: '',
   content: '',
@@ -58,66 +48,14 @@ const defaultSection = {
   courseTable: [],
   eligFirstYear: [],
   eligDirect2nd: [],
-  feeRows1: [...defaultFeeRows],
-  feeRows2: [...defaultFeeRows],
+  feePdfUrl: '',
   pdfUrl: '',
   scholarshipDocs: [],
   infoRows: [...defaultInfoRows],
   active: true,
 };
 
-// Fee Table Editor Component
-function FeeTableEditor({ yearLabel, feeRows, onChange }) {
-  const handleCellChange = (index, field, value) => {
-    const updated = feeRows.map((row, i) =>
-      i === index ? { ...row, [field]: value } : row
-    );
-    onChange(updated);
-  };
 
-  const inputStyle = {
-    width: '100%',
-    padding: '6px 8px',
-    border: '1px solid #ddd',
-    borderRadius: '4px',
-    fontSize: '13px',
-    textAlign: 'center',
-    boxSizing: 'border-box',
-  };
-
-  return (
-    <div style={{ overflowX: 'auto', marginBottom: '20px' }}>
-      <table className="admin-table" style={{ width: '100%' }}>
-        <thead>
-          <tr>
-            <th style={{ width: 80 }}>Year</th>
-            <th>Fee Particulars</th>
-            <th>OPEN/OBC/EWS/SEBC</th>
-            <th>VJNT/SBC</th>
-            <th>SC/ST</th>
-            <th>Girls</th>
-          </tr>
-        </thead>
-        <tbody>
-          {feeRows.map((row, i) => (
-            <tr key={i} style={i === feeRows.length - 1 ? { fontWeight: 700, background: '#f8f9fa' } : {}}>
-              {i === 0 && (
-                <td rowSpan={feeRows.length} style={{ fontWeight: 600, textAlign: 'center', verticalAlign: 'middle' }}>
-                  {yearLabel}
-                </td>
-              )}
-              <td style={{ fontWeight: 500 }}>{row.particular}</td>
-              <td><input type="text" value={row.open} onChange={(e) => handleCellChange(i, 'open', e.target.value)} style={inputStyle} placeholder="0/-" /></td>
-              <td><input type="text" value={row.vjnt} onChange={(e) => handleCellChange(i, 'vjnt', e.target.value)} style={inputStyle} placeholder="0/-" /></td>
-              <td><input type="text" value={row.scst} onChange={(e) => handleCellChange(i, 'scst', e.target.value)} style={inputStyle} placeholder="0/-" /></td>
-              <td><input type="text" value={row.girls} onChange={(e) => handleCellChange(i, 'girls', e.target.value)} style={inputStyle} placeholder="0/-" /></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
 
 function AdminAdmissions() {
   const [activeTab, setActiveTab] = useState('courses');
@@ -168,8 +106,7 @@ function AdminAdmissions() {
         courseTable: existing.courseTable || [],
         eligFirstYear: existing.eligFirstYear || [],
         eligDirect2nd: existing.eligDirect2nd || [],
-        feeRows1: existing.feeRows1 && existing.feeRows1.length > 0 ? existing.feeRows1 : [...defaultFeeRows],
-        feeRows2: existing.feeRows2 && existing.feeRows2.length > 0 ? existing.feeRows2 : [...defaultFeeRows],
+        feePdfUrl: existing.feePdfUrl || '',
         pdfUrl: existing.pdfUrl || '',
         scholarshipDocs: existing.scholarshipDocs || [],
         infoRows: existing.infoRows && existing.infoRows.length > 0 ? existing.infoRows : [...defaultInfoRows],
@@ -214,8 +151,7 @@ function AdminAdmissions() {
         courseTable: existing.courseTable || [],
         eligFirstYear: existing.eligFirstYear || [],
         eligDirect2nd: existing.eligDirect2nd || [],
-        feeRows1: existing.feeRows1 && existing.feeRows1.length > 0 ? existing.feeRows1 : [...defaultFeeRows],
-        feeRows2: existing.feeRows2 && existing.feeRows2.length > 0 ? existing.feeRows2 : [...defaultFeeRows],
+        feePdfUrl: existing.feePdfUrl || '',
         pdfUrl: existing.pdfUrl || '',
         scholarshipDocs: existing.scholarshipDocs || [],
         infoRows: existing.infoRows && existing.infoRows.length > 0 ? existing.infoRows : [...defaultInfoRows],
@@ -553,10 +489,15 @@ function AdminAdmissions() {
           <div className="admission-preview-card">
             <h2 className="content-heading">Fee Structure</h2>
             <div className="content-line"></div>
-            <h3 className="content-sub-heading">First Year Fee Structure</h3>
-            {renderFeePreview(form.feeRows1, 'First Year')}
-            <h3 className="content-sub-heading">Direct Second Year Fee Structure</h3>
-            {renderFeePreview(form.feeRows2, 'Direct Second Year')}
+            {form.feePdfUrl ? (
+              <div style={{ padding: '16px', background: '#f8f9fa', borderRadius: '8px', border: '1px solid #e4e8ed' }}>
+                <p style={{ margin: 0, fontSize: '14px', color: '#444' }}>
+                  📄 <a href={`/api/pdf-proxy?url=${encodeURIComponent(form.feePdfUrl)}`} target="_blank" style={{ color: '#243358', fontWeight: 600 }}>View Fee Structure PDF</a>
+                </p>
+              </div>
+            ) : (
+              <p style={{ color: '#aaa', fontStyle: 'italic' }}>No fee structure PDF uploaded yet.</p>
+            )}
             {renderNotePreview()}
           </div>
         );
@@ -782,10 +723,18 @@ function AdminAdmissions() {
       case 'fees':
         return (
           <div className="admission-edit-form">
-            <h4>First Year Fee Structure</h4>
-            <FeeTableEditor yearLabel="First Year" feeRows={form.feeRows1 || []} onChange={(rows) => handleChange('feeRows1', rows)} />
-            <h4 style={{ marginTop: '20px' }}>Direct Second Year Fee Structure</h4>
-            <FeeTableEditor yearLabel="Direct Second Year" feeRows={form.feeRows2 || []} onChange={(rows) => handleChange('feeRows2', rows)} />
+            <h4>Fee Structure PDF</h4>
+            <div className="form-group">
+              <label>Upload Fee Structure PDF</label>
+              <PdfUpload value={form.feePdfUrl} onChange={(url) => handleChange('feePdfUrl', url)} />
+            </div>
+            {form.feePdfUrl && (
+              <div style={{ marginTop: '12px', padding: '12px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '6px' }}>
+                <p style={{ margin: 0, fontSize: '13px', color: '#444' }}>
+                  📄 <a href={`/api/pdf-proxy?url=${encodeURIComponent(form.feePdfUrl)}`} target="_blank" style={{ color: '#243358', fontWeight: 600 }}>View current PDF</a>
+                </p>
+              </div>
+            )}
             {renderNoteEditor()}
           </div>
         );

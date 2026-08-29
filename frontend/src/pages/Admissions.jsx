@@ -871,58 +871,25 @@ function Admissions() {
                 </div>
               </div>
 
-              {/* Helper: render a fee table */}
+              {/* Fee Structure PDF */}
               {(() => {
-                const renderFeeTable = (rows, yearLabel) => {
-                  if (!rows || rows.length === 0) return null;
+                const feePdfUrl = getSection('fees').feePdfUrl;
+                if (feePdfUrl) {
                   return (
-                    <div className="fee-table-wrap" style={{ marginTop: '20px' }}>
-                      <table className="fee-table">
-                        <thead>
-                          <tr>
-                            <th style={{ width: 80 }}>Year</th>
-                            <th style={{ textAlign: 'left' }}>Fee Particulars</th>
-                            <th>OPEN / OBC / EWS / SEBC</th>
-                            <th>VJNT / SBC</th>
-                            <th>SC / ST</th>
-                            <th>OPEN / OBC / EWS / SEBC VJNT / SBC Category Girls</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {rows.map((row, i) => {
-                            const isTotal = row.particular?.toLowerCase().includes('total');
-                            return (
-                              <tr key={i} className={isTotal ? 'fee-total-row' : ''}>
-                                {i === 0 && <td rowSpan={rows.length} className="fee-year-cell">{yearLabel}</td>}
-                                <td className="fee-particular">{row.particular}</td>
-                                <td className={isTotal ? 'fee-total' : 'fee-amount'}>{row.open || '—'}</td>
-                                <td className={isTotal ? 'fee-total' : 'fee-amount'}>{row.vjnt || '—'}</td>
-                                <td className={isTotal ? 'fee-total' : 'fee-amount'}>{row.scst || '—'}</td>
-                                <td className={isTotal ? 'fee-total' : 'fee-amount'}>{row.girls || '—'}</td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
+                    <div style={{ marginTop: '24px', padding: '20px', background: '#f8f9fa', borderRadius: '10px', border: '1px solid #e4e8ed', textAlign: 'center' }}>
+                      <p style={{ margin: '0 0 16px', fontSize: '15px', color: '#444', fontWeight: 600 }}>📄 Fee Structure</p>
+                      <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                        <a href={`/api/pdf-proxy?url=${encodeURIComponent(feePdfUrl)}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 24px', background: '#243358', color: '#fff', fontSize: '14px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none' }}>
+                          View PDF
+                        </a>
+                        <a href={`/api/pdf-proxy?url=${encodeURIComponent(feePdfUrl)}`} download style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 24px', background: '#fff', color: '#243358', fontSize: '14px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none', border: '1.5px solid #243358' }}>
+                          Download PDF
+                        </a>
+                      </div>
                     </div>
                   );
-                };
-
-                const feeRows1 = getSection('fees').feeRows1 || [];
-                const feeRows2 = getSection('fees').feeRows2 || [];
-
-                return (
-                  <>
-                    {renderFeeTable(feeRows1, 'First Year')}
-                    {renderFeeTable(feeRows2, 'Direct Second Year')}
-                    {(feeRows1.length > 0 || feeRows2.length > 0) && (
-                      <p className="fee-note" style={{ marginTop: '12px', fontSize: 12, color: '#888' }}>
-                        Note: Above shown fee structure is applicable to candidate whose parent
-                        income is up to ₹ 8,00,000/-
-                      </p>
-                    )}
-                  </>
-                );
+                }
+                return null;
               })()}
               {renderNote(getSection('fees'))}
             </>
