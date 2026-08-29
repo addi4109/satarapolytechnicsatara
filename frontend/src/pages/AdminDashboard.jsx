@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AdminLayout from './AdminLayout';
+import DebugPanel from '../components/DebugPanel';
 import { db } from '../lib/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import './Admin.css';
@@ -10,6 +11,7 @@ const API_URL = '/api';
 function AdminDashboard() {
   const [stats, setStats] = useState({ cells: 0, departments: 0, photos: 0, videos: 0, news: 0, recruiters: 0, notices: 0, slides: 0, enquiries: 0 });
   const [loading, setLoading] = useState(true);
+  const [showDebug, setShowDebug] = useState(false);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -109,9 +111,18 @@ function AdminDashboard() {
             <Link to="/admin/cells/new" className="btn btn-success">+ Add Cell</Link>
             <Link to="/admin/departments/new" className="btn btn-success">+ Add Department</Link>
             <Link to="/admin/gallery" className="btn btn-primary">Manage Gallery</Link>
+            <button
+              className="btn btn-secondary"
+              onClick={() => setShowDebug(true)}
+              style={{ cursor: 'pointer' }}
+            >
+              🛠️ Debug Panel
+            </button>
             <a href="/" target="_blank" className="btn btn-secondary">View Website ↗</a>
           </div>
         </div>
+
+        <DebugPanel isOpen={showDebug} onClose={() => setShowDebug(false)} />
       </div>
     </AdminLayout>
   );
