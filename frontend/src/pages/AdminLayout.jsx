@@ -73,7 +73,6 @@ function AdminLayout({ children }) {
       <aside className="admin-sidebar">
         <div className="admin-sidebar-header">
           <h2>Admin Panel</h2>
-          <p>Satara Polytechnic</p>
         </div>
         <nav className="admin-nav">
           {NAV_LINKS.map((link) => (

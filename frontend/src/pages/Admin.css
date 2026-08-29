@@ -21,14 +21,14 @@
 }
 
 .admin-sidebar-header {
-  padding: 20px;
+  padding: 14px 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   text-align: center;
 }
 
 .admin-sidebar-header h2 {
   font-family: 'Times New Roman', Times, serif;
-  font-size: 18px;
+  font-size: 16px;
   margin: 0;
   color: #c8963e;
 }
@@ -40,7 +40,7 @@
 }
 
 .admin-nav {
-  padding: 10px 0;
+  padding: 6px 0;
   flex: 1;
   overflow-y: auto;
   min-height: 0;
@@ -48,10 +48,10 @@
 
 .admin-nav-item {
   display: block;
-  padding: 12px 20px;
+  padding: 9px 16px;
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   transition: all 0.2s;
   border-left: 3px solid transparent;
@@ -758,14 +758,14 @@
 }
 
 .admin-sidebar-footer {
-  padding: 16px 20px;
+  padding: 12px 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin-top: auto;
 }
 
 .admin-logout-btn {
   width: 100%;
-  padding: 10px;
+  padding: 8px;
   background: rgba(220, 53, 69, 0.15);
   color: #ff6b6b;
   border: 1px solid rgba(220, 53, 69, 0.3);
