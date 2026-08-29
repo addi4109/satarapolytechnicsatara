@@ -350,7 +350,7 @@ function Admissions() {
                       </div>
                       <div className="info-row">
                         <span className="info-label">Contact for Admissions</span>
-                        <span className="info-value">+91-2162 284 040 | satarapolyinfo@gmail.com</span>
+                        <span className="info-value">+91-94233 42843 | satarapolyinfo@gmail.com</span>
                       </div>
                     </div>
                   );

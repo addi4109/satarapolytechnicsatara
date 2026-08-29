@@ -21,7 +21,7 @@ const ContactSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    default: '+91-2162 284 040',
+    default: '+91-94233 42843',
   },
   email: {
     type: String,

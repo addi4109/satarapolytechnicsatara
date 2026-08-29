@@ -545,8 +545,8 @@ function Placements() {
                   Partner with Satara Polytechnic for your next campus recruitment drive. Our Training &amp; Placement Cell will coordinate the entire process.
                 </p>
                 <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <a href="tel:+912162284040" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#243358', color: '#fff', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
-                    📞 +91-2162 284 040
+                  <a href="tel:+919423342843" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#243358', color: '#fff', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
+                    📞 +91-94233 42843
                   </a>
                   <a href="mailto:satarapolyinfo@gmail.com" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#fff', color: '#243358', border: '1px solid #243358', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
                     ✉ satarapolyinfo@gmail.com

@@ -56,7 +56,7 @@ function Footer() {
               </li>
               <li>
                 <span className="fc-icon">✆</span>
-                <span>+91-XXXXXXXXXX</span>
+                <span>+91-94233 42843</span>
               </li>
               <li>
                 <span className="fc-icon">✉</span>

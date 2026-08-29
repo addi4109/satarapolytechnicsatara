@@ -48,7 +48,7 @@ function AdminContact() {
 
       // Load general settings from office section or defaults
       const office = mapped['office'] || {};
-      setPhone(office.phone || '+91-2162 284 040');
+      setPhone(office.phone || '+91-94233 42843');
       setEmail(office.email || 'satarapolyinfo@gmail.com');
       setAddress(office.address || 'At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra');
       setOfficeHours(office.officeHours || 'Monday – Saturday, 10:30 AM – 5:00 PM');

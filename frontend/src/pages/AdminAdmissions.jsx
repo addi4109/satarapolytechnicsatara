@@ -23,7 +23,7 @@ const defaultInfoRows = [
   { label: 'Admission Mode', value: 'Central Admission Process (CAP) by DTE Maharashtra' },
   { label: 'Institute Level Seats', value: 'Available for vacant seats after CAP rounds' },
   { label: 'Direct Second Year', value: 'Available for SSC / HSC (Science) / ITI pass candidates' },
-  { label: 'Contact for Admissions', value: '+91-2162 284 040 | satarapolyinfo@gmail.com' },
+  { label: 'Contact for Admissions', value: '+91-94233 42843 | satarapolyinfo@gmail.com' },
 ];
 
 const SECTIONS = [
