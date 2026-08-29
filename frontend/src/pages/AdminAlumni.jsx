@@ -33,6 +33,17 @@ function AdminAlumni() {
   const [entSaving, setEntSaving] = useState(false);
   const [entAdding, setEntAdding] = useState(false);
 
+  // ─── Alumni Association state ───
+  const [assocMembers, setAssocMembers] = useState([]);
+  const [assocLoading, setAssocLoading] = useState(true);
+  const [assocError, setAssocError] = useState('');
+  const [assocSearch, setAssocSearch] = useState('');
+  const [selectedAssoc, setSelectedAssoc] = useState(null);
+  const [assocEditing, setAssocEditing] = useState(false);
+  const [assocForm, setAssocForm] = useState(null);
+  const [assocSaving, setAssocSaving] = useState(false);
+  const [assocAdding, setAssocAdding] = useState(false);
+
   useEffect(() => {
     if (!sessionStorage.getItem('adminAuth') || !getAdminApiKey()) {
       navigate('/admin/login');
@@ -40,6 +51,7 @@ function AdminAlumni() {
     }
     fetchAlumni();
     fetchEntrepreneurs();
+    fetchAssocMembers();
   }, [navigate]);
 
   // ═══════════════════════════════════════════
@@ -178,6 +190,72 @@ function AdminAlumni() {
     setEntForm(null);
   };
 
+  // ═══════════════════════════════════════════
+  // ALUMNI ASSOCIATION
+  // ═══════════════════════════════════════════
+
+  const fetchAssocMembers = async () => {
+    setAssocLoading(true);
+    setAssocError('');
+    try {
+      const res = await fetch(`${API_URL}/alumni-association`);
+      const data = await res.json();
+      setAssocMembers(data);
+    } catch {
+      setAssocError('Failed to load alumni association members.');
+    } finally {
+      setAssocLoading(false);
+    }
+  };
+
+  const filteredAssoc = assocMembers.filter((m) => {
+    if (!assocSearch) return true;
+    const s = assocSearch.toLowerCase();
+    return (m.name || '').toLowerCase().includes(s) || (m.designation || '').toLowerCase().includes(s);
+  });
+
+  const startAddAssoc = () => {
+    setAssocAdding(true);
+    setAssocForm({ name: '', designation: '', department: '', passingYear: '', phone: '', email: '', order: 0 });
+  };
+
+  const startEditAssoc = (m) => {
+    setAssocAdding(false);
+    setSelectedAssoc(m);
+    setAssocEditing(true);
+    setAssocForm({ name: m.name || '', designation: m.designation || '', department: m.department || '', passingYear: m.passingYear || '', phone: m.phone || '', email: m.email || '', order: m.order || 0 });
+  };
+
+  const handleSaveAssoc = async () => {
+    setAssocSaving(true);
+    try {
+      if (assocAdding) {
+        const res = await fetch(`${API_URL}/alumni-association`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(assocForm) });
+        if (res.ok) { const created = await res.json(); setAssocMembers((p) => [...p, created]); cancelAssocForm(); }
+        else { alert('Failed to add'); }
+      } else if (selectedAssoc) {
+        const res = await fetch(`${API_URL}/alumni-association/${selectedAssoc._id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(assocForm) });
+        if (res.ok) { const updated = await res.json(); setAssocMembers((p) => p.map((m) => (m._id === selectedAssoc._id ? updated : m))); cancelAssocForm(); }
+        else { alert('Failed to save'); }
+      }
+    } catch { alert('Network error'); } finally { setAssocSaving(false); }
+  };
+
+  const handleDeleteAssoc = async (id) => {
+    if (!window.confirm('Delete this member?')) return;
+    try {
+      const res = await fetch(`${API_URL}/alumni-association/${id}`, { method: 'DELETE' });
+      if (res.ok) { setAssocMembers((p) => p.filter((m) => m._id !== id)); if (selectedAssoc?._id === id) { setSelectedAssoc(null); setAssocEditing(false); setAssocForm(null); } }
+    } catch { alert('Failed to delete'); }
+  };
+
+  const cancelAssocForm = () => {
+    setAssocAdding(false);
+    setAssocEditing(false);
+    setSelectedAssoc(null);
+    setAssocForm(null);
+  };
+
   const inputStyle = { width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', marginTop: '4px', boxSizing: 'border-box' };
   const labelStyle = { fontSize: '12px', fontWeight: 600, color: '#888' };
 
@@ -189,6 +267,7 @@ function AdminAlumni() {
         <div className="admin-topbar-actions">
           <button className={`btn ${activeTab === 'registrations' ? 'btn-primary' : 'btn-secondary'} btn-sm`} onClick={() => setActiveTab('registrations')}>Registrations</button>
           <button className={`btn ${activeTab === 'entrepreneurs' ? 'btn-primary' : 'btn-secondary'} btn-sm`} onClick={() => setActiveTab('entrepreneurs')}>Entrepreneurs</button>
+          <button className={`btn ${activeTab === 'association' ? 'btn-primary' : 'btn-secondary'} btn-sm`} onClick={() => setActiveTab('association')}>Alumni Association</button>
         </div>
       </div>
 
@@ -384,6 +463,87 @@ function AdminAlumni() {
                   <div><label style={labelStyle}>Address</label><input type="text" value={entForm.address} onChange={(e) => setEntForm((p) => ({ ...p, address: e.target.value }))} placeholder="City, State" style={inputStyle} /></div>
                   <div><label style={labelStyle}>Sort Order</label><input type="number" value={entForm.order} onChange={(e) => setEntForm((p) => ({ ...p, order: parseInt(e.target.value) || 0 }))} min={0} style={inputStyle} /></div>
                   <div style={{ gridColumn: '1 / -1' }}><label style={labelStyle}>Description (optional)</label><textarea value={entForm.description} onChange={(e) => setEntForm((p) => ({ ...p, description: e.target.value }))} rows={3} placeholder="Brief description about the entrepreneur..." style={{ ...inputStyle, resize: 'vertical' }} /></div>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+        {/* ═══════════════════════════════════════════ */}
+        {/* ALUMNI ASSOCIATION TAB */}
+        {/* ═══════════════════════════════════════════ */}
+        {activeTab === 'association' && (
+          <>
+            {assocError && <div className="alert alert-error">{assocError}<button style={{ float: 'right', background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px', color: 'inherit' }} onClick={() => setAssocError('')}>×</button></div>}
+
+            <div style={{ display: 'flex', gap: '12px', marginBottom: '20px', flexWrap: 'wrap', alignItems: 'center' }}>
+              <input type="text" placeholder="Search by name or designation..." value={assocSearch} onChange={(e) => setAssocSearch(e.target.value)} style={{ flex: 1, minWidth: '200px', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', fontFamily: "'Times New Roman', Times, serif" }} />
+              <button className="btn btn-success" onClick={startAddAssoc}>+ Add Member</button>
+              <button className="btn btn-primary" onClick={fetchAssocMembers}>Refresh</button>
+            </div>
+
+            {/* Live Preview Table */}
+            <div className="admin-card" style={{ overflow: 'hidden', marginBottom: '20px' }}>
+              <div style={{ padding: '16px 20px', borderBottom: '1px solid #e4e8ed', background: '#f9fafb' }}>
+                <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#243358', fontSize: '16px' }}>Live Preview — Public Alumni Association Table</h3>
+                <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#888' }}>This is how the table appears on the public Alumni Association page.</p>
+              </div>
+              <div style={{ overflowX: 'auto' }}>
+                {assocLoading ? (
+                  <div style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</div>
+                ) : filteredAssoc.length === 0 ? (
+                  <div style={{ textAlign: 'center', padding: '40px', color: '#888' }}>{assocMembers.length === 0 ? 'No members added yet. Click "Add Member" to get started.' : 'No records match your search.'}</div>
+                ) : (
+                  <table className="courses-table">
+                    <thead>
+                      <tr>
+                        <th style={{ width: 60 }}>Sr. No.</th>
+                        <th>Name of Alumni</th>
+                        <th>Designation</th>
+                        <th>Department</th>
+                        <th>Year</th>
+                        <th style={{ width: 120 }}>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredAssoc.map((m, i) => (
+                        <tr key={m._id} style={{ background: selectedAssoc?._id === m._id ? '#f0f3f8' : 'transparent' }}>
+                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                          <td style={{ fontWeight: 500 }}>{m.name}</td>
+                          <td><span style={{ background: '#e3f2fd', color: '#1565c0', padding: '2px 8px', borderRadius: '10px', fontSize: '12px', fontWeight: 600 }}>{m.designation}</span></td>
+                          <td style={{ fontSize: '13px', color: '#666' }}>{m.department || '—'}</td>
+                          <td style={{ fontSize: '13px', color: '#666' }}>{m.passingYear || '—'}</td>
+                          <td>
+                            <div style={{ display: 'flex', gap: '4px' }}>
+                              <button className="btn btn-primary btn-sm" onClick={() => startEditAssoc(m)}>Edit</button>
+                              <button className="btn btn-danger btn-sm" onClick={() => handleDeleteAssoc(m._id)}>Del</button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
+
+            {/* Add / Edit Form */}
+            {(assocAdding || assocEditing) && assocForm && (
+              <div style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '24px', marginTop: '20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid #e4e8ed' }}>
+                  <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#243358' }}>{assocAdding ? 'Add New Member' : 'Edit Member'}</h3>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button className="btn btn-primary btn-sm" onClick={handleSaveAssoc} disabled={assocSaving}>{assocSaving ? 'Saving...' : 'Save'}</button>
+                    <button className="btn btn-secondary btn-sm" onClick={cancelAssocForm}>Cancel</button>
+                  </div>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div style={{ gridColumn: '1 / -1' }}><label style={labelStyle}>Name *</label><input type="text" value={assocForm.name} onChange={(e) => setAssocForm((p) => ({ ...p, name: e.target.value }))} placeholder="e.g. Mr. Amit Jaywant Mane" style={inputStyle} required /></div>
+                  <div style={{ gridColumn: '1 / -1' }}><label style={labelStyle}>Designation *</label><input type="text" value={assocForm.designation} onChange={(e) => setAssocForm((p) => ({ ...p, designation: e.target.value }))} placeholder="e.g. President, Secretary" style={inputStyle} required /></div>
+                  <div><label style={labelStyle}>Department</label><select value={assocForm.department} onChange={(e) => setAssocForm((p) => ({ ...p, department: e.target.value }))} style={inputStyle}><option value="">Select</option><option value="Computer Engineering">Computer Engineering</option><option value="Electronics & Telecommunication">Electronics & Telecommunication</option><option value="Mechanical Engineering">Mechanical Engineering</option><option value="Chemical Engineering">Chemical Engineering</option><option value="Electrical Engineering">Electrical Engineering</option><option value="Automobile Engineering">Automobile Engineering</option></select></div>
+                  <div><label style={labelStyle}>Passing Year</label><input type="text" value={assocForm.passingYear} onChange={(e) => setAssocForm((p) => ({ ...p, passingYear: e.target.value }))} placeholder="e.g. 2010" style={inputStyle} /></div>
+                  <div><label style={labelStyle}>Phone</label><input type="text" value={assocForm.phone} onChange={(e) => setAssocForm((p) => ({ ...p, phone: e.target.value }))} placeholder="+91 XXXXX XXXXX" style={inputStyle} /></div>
+                  <div><label style={labelStyle}>Email</label><input type="email" value={assocForm.email} onChange={(e) => setAssocForm((p) => ({ ...p, email: e.target.value }))} placeholder="email@example.com" style={inputStyle} /></div>
+                  <div><label style={labelStyle}>Sort Order</label><input type="number" value={assocForm.order} onChange={(e) => setAssocForm((p) => ({ ...p, order: parseInt(e.target.value) || 0 }))} min={0} style={inputStyle} /></div>
                 </div>
               </div>
             )}

@@ -29,6 +29,7 @@ function Alumni() {
   const [active, setActive] = useState('about');
   const [loading, setLoading] = useState(false);
   const [entrepreneurs, setEntrepreneurs] = useState([]);
+  const [associationMembers, setAssociationMembers] = useState([]);
   const [regForm, setRegForm] = useState({
     fullName: '',
     email: '',
@@ -51,6 +52,10 @@ function Alumni() {
     fetch('/api/entrepreneurs/public')
       .then((r) => r.json())
       .then((data) => setEntrepreneurs(data))
+      .catch(() => {});
+    fetch('/api/alumni-association/public')
+      .then((r) => r.json())
+      .then((data) => setAssociationMembers(data))
       .catch(() => {});
   }, []);
 
@@ -349,72 +354,44 @@ function Alumni() {
                 and its graduates, the association serves as a platform for networking, knowledge
                 sharing, and mutual growth.
               </p>
-              <p>
-                The association organizes regular alumni meets, annual reunions, technical workshops,
-                and social events that bring together alumni from different batches and branches.
-                These events provide opportunities to reconnect with old friends, share professional
-                experiences, and contribute to the institute's development.
-              </p>
 
-              {/* Association Structure */}
-              <div style={{ marginTop: '28px' }}>
-                <h3 className="content-sub-heading">Association Structure</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
-                <div className="info-table">
-                  <div className="info-row">
-                    <span className="info-label">President</span>
-                    <span className="info-value">Senior alumni leader who oversees the association's activities and represents the alumni community.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Vice President</span>
-                    <span className="info-value">Supports the president and coordinates special initiatives and alumni engagement programs.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Secretary</span>
-                    <span className="info-value">Manages official communications, meeting minutes, and day-to-day operations of the association.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Treasurer</span>
-                    <span className="info-value">Handles the association's finances, membership fees, and fundraising activities.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Executive Committee</span>
-                    <span className="info-value">Representatives from each department and batch who help plan and execute alumni events and initiatives.</span>
+              {/* Dynamic Association Members Table */}
+              {associationMembers.length > 0 && (
+                <div style={{ marginTop: '28px' }}>
+                  <h3 className="content-sub-heading">Alumni Association</h3>
+                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                  <div style={{ overflowX: 'auto' }}>
+                    <table className="courses-table">
+                      <thead>
+                        <tr>
+                          <th style={{ width: 60 }}>Sr. No.</th>
+                          <th>Name of Alumni</th>
+                          <th>Designation</th>
+                          <th>Department</th>
+                          <th>Passing Year</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {associationMembers.map((m, i) => (
+                          <tr key={m._id}>
+                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                            <td style={{ fontWeight: 500 }}>{m.name}</td>
+                            <td>
+                              {m.designation && (
+                                <span style={{ background: '#e3f2fd', color: '#1565c0', padding: '2px 8px', borderRadius: '10px', fontSize: '12px', fontWeight: 600 }}>
+                                  {m.designation}
+                                </span>
+                              )}
+                            </td>
+                            <td style={{ fontSize: '13px', color: '#666' }}>{m.department || '—'}</td>
+                            <td style={{ fontSize: '13px', color: '#666' }}>{m.passingYear || '—'}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-              </div>
-
-              {/* Activities */}
-              <div style={{ marginTop: '36px' }}>
-                <h3 className="content-sub-heading">Key Activities</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
-                <div className="info-table">
-                  <div className="info-row">
-                    <span className="info-label">Annual Alumni Meet</span>
-                    <span className="info-value">A grand annual gathering where alumni from all batches come together to reconnect, share memories, and celebrate their journey.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Batch Reunions</span>
-                    <span className="info-value">Dedicated reunion events for specific batches to celebrate milestones and reconnect with classmates and faculty.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Mentorship Program</span>
-                    <span className="info-value">Alumni mentors guide current students with career advice, interview preparation, and industry insights.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Guest Lectures</span>
-                    <span className="info-value">Alumni experts deliver technical and professional lectures, sharing real-world industry experience with students.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Scholarship Fund</span>
-                    <span className="info-value">Alumni contribute to scholarship funds that support meritorious and economically disadvantaged students.</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="info-label">Industry Connect</span>
-                    <span className="info-value">Alumni help facilitate industry visits, internships, and placement opportunities for current students.</span>
-                  </div>
-                </div>
-              </div>
+              )}
 
               {/* Join CTA */}
               <div style={{ marginTop: '36px', background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '28px', textAlign: 'center' }}>
