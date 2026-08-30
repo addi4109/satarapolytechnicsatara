@@ -28,6 +28,7 @@ const emptyForm = {
   pos: [],
   psos: [],
   cos: [],
+  deptNotices: [],
   order: 0,
 };
 
@@ -80,6 +81,7 @@ function AdminDepartmentForm() {
           pos: dept.pos || [],
           psos: dept.psos || [],
           cos: dept.cos || [],
+          deptNotices: dept.deptNotices || [],
           order: dept.order || 0,
         });
       } else {
@@ -173,6 +175,21 @@ function AdminDepartmentForm() {
     setForm((prev) => ({ ...prev, [field]: prev[field].filter((_, i) => i !== idx) }));
   };
 
+  // Department Notices management
+  const addDeptNotice = () => {
+    setForm((prev) => ({ ...prev, deptNotices: [...prev.deptNotices, { title: '', url: '' }] }));
+  };
+  const updateDeptNotice = (idx, field, val) => {
+    setForm((prev) => {
+      const n = [...prev.deptNotices];
+      n[idx] = { ...n[idx], [field]: val };
+      return { ...prev, deptNotices: n };
+    });
+  };
+  const removeDeptNotice = (idx) => {
+    setForm((prev) => ({ ...prev, deptNotices: prev.deptNotices.filter((_, i) => i !== idx) }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -190,6 +207,7 @@ function AdminDepartmentForm() {
         pos: form.pos.filter((p) => p.title.trim() || p.description.trim()),
         psos: form.psos.filter((p) => p.title.trim() || p.description.trim()),
         cos: form.cos.filter((p) => p.title.trim() || p.description.trim()),
+        deptNotices: form.deptNotices.filter((n) => n.title.trim()),
         faculty: form.faculty.filter((f) => f.name.trim()),
         labs: form.labs.filter((l) => l.name.trim()),
         infrastructure: [],
@@ -531,6 +549,36 @@ function AdminDepartmentForm() {
                   </div>
                 );
               })}
+            </div>
+          </div>
+
+          {/* Card 7: Department Notices */}
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </div>
+              <div>
+                <h3>Department Notices</h3>
+                <p>Notices specific to this department</p>
+              </div>
+              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addDeptNotice}>+ Add Notice</button>
+            </div>
+            <div className="dept-form-card-body">
+              {form.deptNotices.length === 0 ? (
+                <div className="members-empty">No notices added yet. Click "+ Add Notice" to add one.</div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  {form.deptNotices.map((notice, idx) => (
+                    <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'center', padding: '10px', background: '#f8f9fb', borderRadius: '6px', border: '1px solid #e4e8ed' }}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '32px', height: '28px', background: '#2a5a8a', color: '#fff', fontSize: '12px', fontWeight: 700, borderRadius: '4px', flexShrink: 0 }}>{idx + 1}</span>
+                      <input type="text" placeholder="Notice title" value={notice.title} onChange={(e) => updateDeptNotice(idx, 'title', e.target.value)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px' }} />
+                      <PdfUpload value={notice.url} onChange={(url) => updateDeptNotice(idx, 'url', url)} />
+                      <button type="button" className="btn btn-danger btn-sm" onClick={() => removeDeptNotice(idx)} style={{ flexShrink: 0, padding: '4px 8px' }}>✕</button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 

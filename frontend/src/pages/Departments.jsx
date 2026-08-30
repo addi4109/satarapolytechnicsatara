@@ -8,7 +8,7 @@ import './Gallery.css';
 
 const API_URL = '/api';
 const years = ['1st Year', '2nd Year', '3rd Year'];
-const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe'];
+const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe', 'notices'];
 
 function DepartmentsPage() {
   const { deptId } = useParams();
@@ -72,6 +72,7 @@ function DepartmentsPage() {
     { id: 'infrastructure', label: 'Infrastructure' },
     { id: 'curriculum', label: 'Curriculum / Syllabus' },
     { id: 'obe', label: 'Outcome Based Education' },
+    { id: 'notices', label: 'Notices' },
   ];
 
   if (loading) {
@@ -449,6 +450,50 @@ function DepartmentsPage() {
                   )}
                 </div>
               </div>
+            )}
+
+            {activeTab === 'notices' && (
+              <>
+                <h2 className="content-heading">Notices</h2>
+                <div className="content-line"></div>
+                {dept.deptNotices && dept.deptNotices.length > 0 ? (
+                  <div className="dept-notices-table-wrap">
+                    <table className="dept-notices-table">
+                      <thead>
+                        <tr>
+                          <th style={{ width: '50px', textAlign: 'center' }}>Sr. No.</th>
+                          <th>Title</th>
+                          <th style={{ width: '120px', textAlign: 'center' }}>Date</th>
+                          <th style={{ width: '140px', textAlign: 'center' }}>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {dept.deptNotices.map((notice, i) => (
+                          <tr key={i}>
+                            <td style={{ textAlign: 'center' }}>{i + 1}</td>
+                            <td>{notice.title}</td>
+                            <td style={{ textAlign: 'center' }}>{new Date(notice.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
+                            <td>
+                              <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
+                                {notice.url ? (
+                                  <>
+                                    <a href={notice.url} target="_blank" rel="noreferrer" className="dept-notice-btn dept-notice-view">View</a>
+                                    <a href={notice.url} download className="dept-notice-btn dept-notice-download">Download</a>
+                                  </>
+                                ) : (
+                                  <span style={{ color: '#ccc' }}>—</span>
+                                )}
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <p style={{ color: '#888', fontStyle: 'italic' }}>No notices available for this department.</p>
+                )}
+              </>
             )}
 
             {activeTab === 'hod' && (

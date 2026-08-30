@@ -22,6 +22,12 @@ const curriculumSchema = new mongoose.Schema({
   url: { type: String, default: '' },
 });
 
+const deptNoticeSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  url: { type: String, default: '' },
+  createdAt: { type: Date, default: Date.now },
+});
+
 const departmentSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
@@ -44,6 +50,7 @@ const departmentSchema = new mongoose.Schema(
     pos: [{ title: { type: String, default: '' }, description: { type: String, default: '' } }],
     psos: [{ title: { type: String, default: '' }, description: { type: String, default: '' } }],
     cos: [{ title: { type: String, default: '' }, description: { type: String, default: '' } }],
+    deptNotices: [deptNoticeSchema],
     order: { type: Number, default: 0 },
     hideFromHome: { type: Boolean, default: false },
   },
