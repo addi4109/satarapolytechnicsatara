@@ -568,7 +568,12 @@ function AdminExaminations() {
         </div>
 
         {/* Preview or Editor */}
-        {view === 'preview' ? renderPreview() : (
+        {view === 'preview' ? (
+          <div style={{ position: 'relative' }} onClick={startEditing}>
+            <div className="about-preview-hint">Click to edit</div>
+            {renderPreview()}
+          </div>
+        ) : (
           <div className="admission-editor-panel">
             <div className="admission-editor-header">
               <h3>Editing: {currentSection?.label}</h3>

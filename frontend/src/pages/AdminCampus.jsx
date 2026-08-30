@@ -326,13 +326,10 @@ function AdminCampus() {
     const content = form.content || STATIC_CONTENT.campus.library;
 
     return (
-      <div style={{ position: 'relative' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <span style={{ fontSize: '12px', color: '#888' }}>Preview — matches the live website</span>
-          <button className="btn btn-primary btn-sm" onClick={() => setEditing(true)}>Edit</button>
-        </div>
+      <div style={{ position: 'relative' }} onClick={() => setEditing(true)}>
+        <div className="about-preview-hint">Click to edit</div>
 
-        <div className="about-content" style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '24px 28px' }}>
+        <div className="about-content" style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '24px 28px', cursor: 'pointer', transition: 'border-color 0.25s, box-shadow 0.25s' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#c8963e'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(200, 150, 62, 0.1)'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e4e8ed'; e.currentTarget.style.boxShadow = 'none'; }}>
           <h2 className="content-heading">{title}</h2>
           <div className="content-line"></div>
           {content.split('\n').filter(p => p.trim()).map((para, i) => (
@@ -432,13 +429,10 @@ function AdminCampus() {
     const content = form.content || STATIC_CONTENT.campus?.[activeTab] || '';
 
     return (
-      <div style={{ position: 'relative' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <span style={{ fontSize: '12px', color: '#888' }}>Preview — matches the live website</span>
-          <button className="btn btn-primary btn-sm" onClick={() => setEditing(true)}>Edit</button>
-        </div>
+      <div style={{ position: 'relative' }} onClick={() => setEditing(true)}>
+        <div className="about-preview-hint">Click to edit</div>
 
-        <div className="about-content" style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '24px 28px' }}>
+        <div className="about-content" style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '24px 28px', cursor: 'pointer', transition: 'border-color 0.25s, box-shadow 0.25s' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#c8963e'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(200, 150, 62, 0.1)'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#e4e8ed'; e.currentTarget.style.boxShadow = 'none'; }}>
           {!isCanteen && (
             <>
               <h2 className="content-heading">{title}</h2>
