@@ -83,34 +83,6 @@ const integrations = [
     ],
     check: null, // Backend-only, can't check from frontend
   },
-  {
-    id: 'vercel',
-    name: 'Vercel',
-    icon: '▲',
-    description: 'Frontend hosting & deployment',
-    envVars: [
-      { key: 'VITE_*', source: 'Vercel build env vars' },
-    ],
-    check: () => {
-      return typeof window !== 'undefined' && (
-        window.location.hostname.includes('vercel.app') ||
-        !!import.meta.env.VITE_SUPABASE_URL
-      );
-    },
-  },
-  {
-    id: 'render',
-    name: 'Render',
-    icon: '🖥️',
-    description: 'Backend API hosting',
-    envVars: [
-      { key: 'MONGO_URI', source: 'Render env dashboard' },
-      { key: 'ADMIN_API_KEY', source: 'Render env dashboard' },
-      { key: 'ADMIN_EMAILS', source: 'Render env dashboard' },
-      { key: 'ADMIN_PASSWORDS', source: 'Render env dashboard' },
-    ],
-    check: null, // Backend-only
-  },
 ];
 
 function DebugPanel({ isOpen, onClose }) {
@@ -184,7 +156,7 @@ function DebugPanel({ isOpen, onClose }) {
         <div className="debug-footer">
           <span>Frontend: Vercel</span>
           <span>Backend: Render</span>
-          <span>Database: MongoDB Atlas</span>
+          <span>DB: MongoDB Atlas</span>
         </div>
       </div>
     </div>
