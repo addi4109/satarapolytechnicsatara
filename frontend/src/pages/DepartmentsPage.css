@@ -744,8 +744,19 @@
   transform: translateY(-2px);
 }
 
+.dept-event-img-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.dept-event-img-wrap:has(> :only-child) {
+  grid-template-columns: 1fr;
+}
+
 .dept-event-img {
-  height: 180px;
+  height: 160px;
   overflow: hidden;
   cursor: pointer;
 }

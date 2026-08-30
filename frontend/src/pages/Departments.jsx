@@ -505,15 +505,16 @@ function DepartmentsPage() {
                   <div className="dept-events-grid">
                     {dept.deptEvents.map((event, i) => (
                       <div key={i} className="dept-event-card">
-                        {event.image && (
-                          <div className="dept-event-img" onClick={() => setLightbox({ image: event.image, name: event.title })}>
-                            <img src={event.image} alt={event.title} />
+                        {event.images && event.images.length > 0 && (
+                          <div className="dept-event-img-wrap">
+                            {event.images.map((img, j) => (
+                              <div key={j} className="dept-event-img" onClick={() => setLightbox({ image: img, name: event.title })}>
+                                <img src={img} alt={`${event.title} ${j + 1}`} />
+                              </div>
+                            ))}
                           </div>
                         )}
                         <div className="dept-event-body">
-                          <span className="dept-event-date">
-                            {new Date(event.eventDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
-                          </span>
                           <h4 className="dept-event-title">{event.title}</h4>
                           {event.description && <p className="dept-event-desc">{event.description}</p>}
                         </div>

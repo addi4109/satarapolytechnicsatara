@@ -194,12 +194,35 @@ function AdminDepartmentForm() {
 
   // Department Events management
   const addDeptEvent = () => {
-    setForm((prev) => ({ ...prev, deptEvents: [...prev.deptEvents, { title: '', description: '', image: '', eventDate: new Date().toISOString().split('T')[0] }] }));
+    setForm((prev) => ({ ...prev, deptEvents: [...prev.deptEvents, { title: '', description: '', images: [] }] }));
   };
   const updateDeptEvent = (idx, field, val) => {
     setForm((prev) => {
       const e = [...prev.deptEvents];
       e[idx] = { ...e[idx], [field]: val };
+      return { ...prev, deptEvents: e };
+    });
+  };
+  const addEventImage = (idx) => {
+    setForm((prev) => {
+      const e = [...prev.deptEvents];
+      e[idx] = { ...e[idx], images: [...(e[idx].images || []), ''] };
+      return { ...prev, deptEvents: e };
+    });
+  };
+  const updateEventImage = (eventIdx, imgIdx, val) => {
+    setForm((prev) => {
+      const e = [...prev.deptEvents];
+      const imgs = [...(e[eventIdx].images || [])];
+      imgs[imgIdx] = val;
+      e[eventIdx] = { ...e[eventIdx], images: imgs };
+      return { ...prev, deptEvents: e };
+    });
+  };
+  const removeEventImage = (eventIdx, imgIdx) => {
+    setForm((prev) => {
+      const e = [...prev.deptEvents];
+      e[eventIdx] = { ...e[eventIdx], images: (e[eventIdx].images || []).filter((_, i) => i !== imgIdx) };
       return { ...prev, deptEvents: e };
     });
   };
@@ -622,16 +645,27 @@ function AdminDepartmentForm() {
                       <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
                         <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '32px', height: '28px', background: '#2a5a8a', color: '#fff', fontSize: '12px', fontWeight: 700, borderRadius: '4px', flexShrink: 0 }}>{idx + 1}</span>
                         <input type="text" placeholder="Event title" value={event.title} onChange={(e) => updateDeptEvent(idx, 'title', e.target.value)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px' }} />
-                        <input type="date" value={event.eventDate ? new Date(event.eventDate).toISOString().split('T')[0] : ''} onChange={(e) => updateDeptEvent(idx, 'eventDate', e.target.value)} style={{ padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px' }} />
                         <button type="button" className="btn btn-danger btn-sm" onClick={() => removeDeptEvent(idx)} style={{ flexShrink: 0, padding: '4px 8px' }}>✕</button>
                       </div>
                       <textarea placeholder="Description (optional)" value={event.description} onChange={(e) => updateDeptEvent(idx, 'description', e.target.value)} rows={2} style={{ width: '100%', padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }} />
-                      <ImageUpload
-                        value={event.image}
-                        onChange={(url) => updateDeptEvent(idx, 'image', url)}
-                        label="Event Image"
-                        placeholder="Upload event image..."
-                      />
+                      {/* Multiple images */}
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        {(event.images || []).map((img, imgIdx) => (
+                          <div key={imgIdx} style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                            <span style={{ fontSize: '11px', color: '#888', minWidth: '50px' }}>Image {imgIdx + 1}</span>
+                            <div style={{ flex: 1 }}>
+                              <ImageUpload
+                                value={img}
+                                onChange={(url) => updateEventImage(idx, imgIdx, url)}
+                                label=""
+                                placeholder={`Upload image ${imgIdx + 1}...`}
+                              />
+                            </div>
+                            <button type="button" className="btn btn-danger btn-sm" onClick={() => removeEventImage(idx, imgIdx)} style={{ flexShrink: 0, padding: '4px 8px' }}>✕</button>
+                          </div>
+                        ))}
+                      </div>
+                      <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={() => addEventImage(idx)} style={{ marginTop: '8px' }}>+ Add Image</button>
                     </div>
                   ))}
                 </div>

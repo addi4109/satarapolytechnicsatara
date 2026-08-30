@@ -31,8 +31,7 @@ const deptNoticeSchema = new mongoose.Schema({
 const deptEventSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, default: '' },
-  image: { type: String, default: '' },
-  eventDate: { type: Date, default: Date.now },
+  images: [{ type: String }],
 });
 
 const departmentSchema = new mongoose.Schema(
