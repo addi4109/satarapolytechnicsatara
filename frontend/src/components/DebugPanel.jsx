@@ -6,11 +6,11 @@ const integrations = [
     id: 'firebase',
     name: 'Firebase',
     icon: '🔥',
-    description: 'Firestore database for enquiries',
-    envVars: [
-      { key: 'apiKey', source: 'Hardcoded in firebase.js' },
-      { key: 'authDomain', source: 'Hardcoded in firebase.js' },
-      { key: 'projectId', source: 'Hardcoded in firebase.js' },
+    desc: 'Stores enquiry form data',
+    vars: [
+      { key: 'apiKey', where: 'firebase.js' },
+      { key: 'authDomain', where: 'firebase.js' },
+      { key: 'projectId', where: 'firebase.js' },
     ],
     check: async () => {
       try {
@@ -25,12 +25,12 @@ const integrations = [
     id: 'emailjs',
     name: 'EmailJS',
     icon: '📧',
-    description: 'Email service for admission enquiries & auto-replies',
-    envVars: [
-      { key: 'VITE_EMAILJS_SERVICE_ID', source: 'Vercel env' },
-      { key: 'VITE_EMAILJS_COLLEGE_TEMPLATE_ID', source: 'Vercel env' },
-      { key: 'VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID', source: 'Vercel env' },
-      { key: 'VITE_EMAILJS_PUBLIC_KEY', source: 'Vercel env' },
+    desc: 'Sends emails on admission enquiry',
+    vars: [
+      { key: 'VITE_EMAILJS_SERVICE_ID', where: 'Vercel' },
+      { key: 'VITE_EMAILJS_COLLEGE_TEMPLATE_ID', where: 'Vercel' },
+      { key: 'VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID', where: 'Vercel' },
+      { key: 'VITE_EMAILJS_PUBLIC_KEY', where: 'Vercel' },
     ],
     check: () => {
       const a = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -44,10 +44,10 @@ const integrations = [
     id: 'cloudinary',
     name: 'Cloudinary',
     icon: '☁️',
-    description: 'Image & video uploads',
-    envVars: [
-      { key: 'VITE_CLOUDINARY_CLOUD_NAME', source: 'Vercel env' },
-      { key: 'VITE_CLOUDINARY_UPLOAD_PRESET', source: 'Vercel env' },
+    desc: 'Handles image & video uploads',
+    vars: [
+      { key: 'VITE_CLOUDINARY_CLOUD_NAME', where: 'Vercel' },
+      { key: 'VITE_CLOUDINARY_UPLOAD_PRESET', where: 'Vercel' },
     ],
     check: () => {
       const a = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
@@ -59,10 +59,10 @@ const integrations = [
     id: 'supabase',
     name: 'Supabase',
     icon: '⚡',
-    description: 'PDF file storage for notices',
-    envVars: [
-      { key: 'VITE_SUPABASE_URL', source: 'Vercel env' },
-      { key: 'VITE_SUPABASE_ANON_KEY', source: 'Vercel env' },
+    desc: 'Stores PDFs for notices',
+    vars: [
+      { key: 'VITE_SUPABASE_URL', where: 'Vercel' },
+      { key: 'VITE_SUPABASE_ANON_KEY', where: 'Vercel' },
     ],
     check: () => {
       const a = import.meta.env.VITE_SUPABASE_URL;
@@ -74,14 +74,14 @@ const integrations = [
     id: 'mongodb',
     name: 'MongoDB',
     icon: '🍃',
-    description: 'Backend database via Render',
-    envVars: [
-      { key: 'MONGO_URI', source: 'Render env' },
-      { key: 'ADMIN_API_KEY', source: 'Render env' },
-      { key: 'FRONTEND_URL', source: 'Render env' },
-      { key: 'PORT', source: 'Render env (default: 5000)' },
+    desc: 'Main backend database',
+    vars: [
+      { key: 'MONGO_URI', where: 'Render' },
+      { key: 'ADMIN_API_KEY', where: 'Render' },
+      { key: 'FRONTEND_URL', where: 'Render' },
+      { key: 'PORT', where: 'Render (default: 5000)' },
     ],
-    check: null, // Backend-only, can't check from frontend
+    check: null,
   },
 ];
 
@@ -97,7 +97,7 @@ function DebugPanel({ isOpen, onClose }) {
             const result = intg.check();
             newStatuses[intg.id] = result instanceof Promise ? await result : result;
           } else {
-            newStatuses[intg.id] = null; // unknown — backend-only
+            newStatuses[intg.id] = null;
           }
           setStatuses({ ...newStatuses });
         }
@@ -120,31 +120,31 @@ function DebugPanel({ isOpen, onClose }) {
         </div>
 
         <div className="debug-panel-subtitle">
-          Integration status & environment variables overview
+          Quick check if services are connected
         </div>
 
         <div className="debug-grid">
           {integrations.map((intg) => {
-            const status = statuses[intg.id];
+            const s = statuses[intg.id];
             return (
-              <div key={intg.id} className={`debug-card ${status === true ? 'connected' : status === false ? 'disconnected' : 'unknown'}`}>
+              <div key={intg.id} className={`debug-card ${s === true ? 'connected' : s === false ? 'disconnected' : 'unknown'}`}>
                 <div className="debug-card-header">
                   <span className="debug-card-icon">{intg.icon}</span>
                   <div className="debug-card-info">
                     <h3>{intg.name}</h3>
-                    <p>{intg.description}</p>
+                    <p>{intg.desc}</p>
                   </div>
-                  <span className={`debug-status-badge ${status === true ? 'connected' : status === false ? 'disconnected' : 'unknown'}`}>
-                    {status === true ? '● Connected' : status === false ? '● Not Set' : '● Backend Only'}
+                  <span className={`debug-status-badge ${s === true ? 'connected' : s === false ? 'disconnected' : 'unknown'}`}>
+                    {s === true ? '● OK' : s === false ? '● Missing' : '● Server-side'}
                   </span>
                 </div>
 
                 <div className="debug-env-list">
-                  <div className="debug-env-label">Environment Variables</div>
-                  {intg.envVars.map((ev, i) => (
+                  <div className="debug-env-label">Env Vars</div>
+                  {intg.vars.map((v, i) => (
                     <div key={i} className="debug-env-row">
-                      <code className="debug-env-key">{ev.key}</code>
-                      <span className="debug-env-source">{ev.source}</span>
+                      <code className="debug-env-key">{v.key}</code>
+                      <span className="debug-env-source">{v.where}</span>
                     </div>
                   ))}
                 </div>
@@ -154,9 +154,9 @@ function DebugPanel({ isOpen, onClose }) {
         </div>
 
         <div className="debug-footer">
-          <span>Frontend: Vercel</span>
-          <span>Backend: Render</span>
-          <span>DB: MongoDB Atlas</span>
+          <span>Vercel</span>
+          <span>Render</span>
+          <span>MongoDB Atlas</span>
         </div>
       </div>
     </div>
