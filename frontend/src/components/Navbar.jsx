@@ -230,13 +230,13 @@ function Navbar() {
                   className="logo-img"
                 />
               </div>
-              <div className="logo-text">
-                <p className="society-name">Satara Education Society's</p>
-                <h1 className="college-name">Satara Polytechnic, Satara</h1>
-                <p className="address-line">At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra</p>
-                <p className="affiliation-line">Approved by AICTE Delhi, DTE Maharashtra State, Affiliated to MSBTE, Mumbai</p>
-                <p className="motto">"Jai Jagat, Jai Bharat"</p>
-              </div>
+            </div>
+            <div className="logo-text">
+              <p className="society-name">Satara Education Society's</p>
+              <h1 className="college-name">Satara Polytechnic, Satara</h1>
+              <p className="address-line">At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra</p>
+              <p className="affiliation-line">Approved by AICTE Delhi, DTE Maharashtra State, Affiliated to MSBTE, Mumbai</p>
+              <p className="motto">"Jai Jagat, Jai Bharat"</p>
             </div>
             {founder && founder.photoUrl && (
               <div className="founder-area">

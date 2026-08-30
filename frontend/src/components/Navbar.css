@@ -73,7 +73,7 @@
 .logo-area {
   display: flex;
   align-items: center;
-  gap: 28px;
+  flex-shrink: 0;
 }
 
 .logo-circle {
@@ -109,6 +109,9 @@
 .logo-text {
   text-align: center;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .society-name {
@@ -163,8 +166,8 @@
 }
 
 .founder-circle {
-  width: 90px;
-  height: 90px;
+  width: 105px;
+  height: 105px;
   border-radius: 50%;
   border: 4px solid transparent;
   background-image: linear-gradient(#fff, #fff), linear-gradient(135deg, #d4a54a, #e0b860);
@@ -686,8 +689,8 @@
   }
 
   .founder-circle {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
   }
 
   .founder-circle:hover {
