@@ -570,11 +570,16 @@
 
 .obe-list-item {
   align-items: flex-start;
-  padding: 14px 18px;
-  background: #f8f9fb;
+  padding: 16px 20px;
+  background: #fff;
   border: 1px solid #e4e8ed;
   border-radius: 8px;
-  border-left: 3px solid #d4a54a;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.obe-list-item:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
 }
 
 .obe-list-item strong {
