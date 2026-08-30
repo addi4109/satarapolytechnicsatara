@@ -8,7 +8,7 @@ import './Gallery.css';
 
 const API_URL = '/api';
 const years = ['1st Year', '2nd Year', '3rd Year'];
-const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe', 'notices', 'events'];
+const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe', 'notices', 'events', 'timetable'];
 
 function DepartmentsPage() {
   const { deptId } = useParams();
@@ -74,6 +74,7 @@ function DepartmentsPage() {
     { id: 'obe', label: 'Outcome Based Education' },
     { id: 'notices', label: 'Notices' },
     { id: 'events', label: 'Events & Activities' },
+    { id: 'timetable', label: 'Time Table' },
   ];
 
   if (loading) {
@@ -523,6 +524,59 @@ function DepartmentsPage() {
                   </div>
                 ) : (
                   <p style={{ color: '#888', fontStyle: 'italic' }}>No events or activities added yet.</p>
+                )}
+              </>
+            )}
+
+            {activeTab === 'timetable' && (
+              <>
+                <h2 className="content-heading">Time Table</h2>
+                <div className="content-line"></div>
+                {dept.deptTimetable && dept.deptTimetable.length > 0 ? (
+                  <div className="dept-timetable-wrap">
+                    {['1st Year', '2nd Year', '3rd Year'].map((yr) => {
+                      const items = dept.deptTimetable.filter((t) => t.year === yr);
+                      if (items.length === 0) return null;
+                      return (
+                        <div key={yr} className="dept-timetable-section">
+                          <h3 className="dept-timetable-year">{yr}</h3>
+                          <div className="dept-timetable-table-wrap">
+                            <table className="dept-timetable-table">
+                              <thead>
+                                <tr>
+                                  <th style={{ width: '50px', textAlign: 'center' }}>Sr. No.</th>
+                                  <th>Title</th>
+                                  <th style={{ width: '140px', textAlign: 'center' }}>Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {items.map((t, i) => (
+                                  <tr key={i}>
+                                    <td style={{ textAlign: 'center' }}>{i + 1}</td>
+                                    <td>{t.title}</td>
+                                    <td>
+                                      <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
+                                        {t.url ? (
+                                          <>
+                                            <a href={t.url} target="_blank" rel="noreferrer" className="dept-tt-btn dept-tt-view">View</a>
+                                            <a href={t.url} download className="dept-tt-btn dept-tt-download">Download</a>
+                                          </>
+                                        ) : (
+                                          <span style={{ color: '#ccc' }}>—</span>
+                                        )}
+                                      </div>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <p style={{ color: '#888', fontStyle: 'italic' }}>No time table entries available for this department.</p>
                 )}
               </>
             )}

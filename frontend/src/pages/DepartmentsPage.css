@@ -812,6 +812,112 @@
   }
 }
 
+/* ===== Department Time Table ===== */
+.dept-timetable-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 16px;
+}
+
+.dept-timetable-section {
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.dept-timetable-year {
+  font-family: 'Georgia', serif;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 700;
+  margin: 0;
+  padding: 10px 20px;
+  background: #2a5a8a;
+}
+
+.dept-timetable-table-wrap {
+  overflow-x: auto;
+}
+
+.dept-timetable-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.dept-timetable-table thead th {
+  background: #f0f4f8;
+  color: #2a5a8a;
+  font-weight: 600;
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 13px;
+  border-bottom: 2px solid #e4e8ed;
+}
+
+.dept-timetable-table tbody td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #444;
+  vertical-align: middle;
+}
+
+.dept-timetable-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.dept-timetable-table tbody tr:hover {
+  background: #f8f9fb;
+}
+
+.dept-tt-btn {
+  display: inline-block;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.dept-tt-view {
+  background: #2a5a8a;
+  color: #fff;
+}
+
+.dept-tt-view:hover {
+  background: #2a3f6a;
+}
+
+.dept-tt-download {
+  background: #fff;
+  color: #2a5a8a;
+  border: 1px solid #2a5a8a;
+}
+
+.dept-tt-download:hover {
+  background: #2a5a8a;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .dept-timetable-table {
+    font-size: 12px;
+    min-width: 350px;
+  }
+  .dept-timetable-table thead th,
+  .dept-timetable-table tbody td {
+    padding: 8px 12px;
+  }
+  .dept-tt-btn {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+}
+
 /* Mobile tabs - hidden on desktop, visible on mobile */
 .dept-mobile-tabs {
   display: none;

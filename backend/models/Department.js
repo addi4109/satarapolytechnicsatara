@@ -34,6 +34,12 @@ const deptEventSchema = new mongoose.Schema({
   images: [{ type: String }],
 });
 
+const deptTimetableSchema = new mongoose.Schema({
+  year: { type: String, required: true, enum: ['1st Year', '2nd Year', '3rd Year'] },
+  title: { type: String, required: true },
+  url: { type: String, default: '' },
+});
+
 const departmentSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
@@ -58,6 +64,7 @@ const departmentSchema = new mongoose.Schema(
     cos: [{ title: { type: String, default: '' }, description: { type: String, default: '' } }],
     deptNotices: [deptNoticeSchema],
     deptEvents: [deptEventSchema],
+    deptTimetable: [deptTimetableSchema],
     order: { type: Number, default: 0 },
     hideFromHome: { type: Boolean, default: false },
   },
