@@ -342,7 +342,7 @@ function DepartmentsPage() {
             )}
 
             {activeTab === 'obe' && (
-              <>
+              <div className="obe-main-card">
                 <h2 className="content-heading">Outcome Based Education</h2>
                 <div className="content-line"></div>
                 <p>
@@ -368,7 +368,7 @@ function DepartmentsPage() {
 
                 <div className="obe-content">
                   {obeTab === 'peos' && (
-                    <>
+                    <div className="obe-sub-card">
                       <h3 className="obe-sub-heading">Program Educational Objectives (PEOs)</h3>
                       <p className="obe-desc">PEOs are broad statements that describe the career and professional achievements that the program is preparing graduates to achieve.</p>
                       {dept.peos && dept.peos.length > 0 ? (
@@ -385,10 +385,10 @@ function DepartmentsPage() {
                       ) : (
                         <p style={{ color: '#888', fontStyle: 'italic' }}>PEOs not added yet.</p>
                       )}
-                    </>
+                    </div>
                   )}
                   {obeTab === 'pos' && (
-                    <>
+                    <div className="obe-sub-card">
                       <h3 className="obe-sub-heading">Program Outcomes (POs)</h3>
                       <p className="obe-desc">POs are measurable outcomes that students are expected to achieve by the time of graduation.</p>
                       {dept.pos && dept.pos.length > 0 ? (
@@ -405,10 +405,10 @@ function DepartmentsPage() {
                       ) : (
                         <p style={{ color: '#888', fontStyle: 'italic' }}>POs not added yet.</p>
                       )}
-                    </>
+                    </div>
                   )}
                   {obeTab === 'psos' && (
-                    <>
+                    <div className="obe-sub-card">
                       <h3 className="obe-sub-heading">Program Specific Outcomes (PSOs)</h3>
                       <p className="obe-desc">PSOs are outcomes that differentiate the program from other programs and reflect the discipline-specific competencies.</p>
                       {dept.psos && dept.psos.length > 0 ? (
@@ -425,10 +425,10 @@ function DepartmentsPage() {
                       ) : (
                         <p style={{ color: '#888', fontStyle: 'italic' }}>PSOs not added yet.</p>
                       )}
-                    </>
+                    </div>
                   )}
                   {obeTab === 'cos' && (
-                    <>
+                    <div className="obe-sub-card">
                       <h3 className="obe-sub-heading">Course Outcomes (COs)</h3>
                       <p className="obe-desc">COs are specific measurable outcomes that students should demonstrate upon successful completion of a course.</p>
                       {dept.cos && dept.cos.length > 0 ? (
@@ -445,10 +445,10 @@ function DepartmentsPage() {
                       ) : (
                         <p style={{ color: '#888', fontStyle: 'italic' }}>COs not added yet.</p>
                       )}
-                    </>
+                    </div>
                   )}
                 </div>
-              </>
+              </div>
             )}
 
             {activeTab === 'hod' && (
