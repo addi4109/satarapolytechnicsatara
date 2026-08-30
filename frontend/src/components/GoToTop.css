@@ -1,60 +1,41 @@
 .go-to-top {
   position: fixed;
-  bottom: 28px;
-  right: 28px;
+  bottom: 24px;
+  right: 24px;
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: #5b8abf;
+  background: #243358;
   color: #fff;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.15);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 18px rgba(91, 138, 191, 0.35);
+  box-shadow: 0 4px 18px rgba(36, 51, 88, 0.4);
   z-index: 9997;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(16px);
-  transition: opacity 0.35s ease,
-              visibility 0.35s ease,
-              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-              background 0.25s ease,
-              box-shadow 0.25s ease;
+  transition: opacity 0.3s, visibility 0.3s, background 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
-.go-to-top.show {
+.go-to-top.visible {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
-}
-
-.go-to-top:hover {
-  background: #d4a54a;
-  box-shadow: 0 6px 24px rgba(212, 165, 74, 0.4);
-  transform: translateY(-3px);
-}
-
-.go-to-top:active {
-  transform: translateY(-1px);
 }
 
 .go-to-top svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
 }
 
-@media (max-width: 480px) {
-  .go-to-top {
-    bottom: 20px;
-    right: 20px;
-    width: 44px;
-    height: 44px;
-  }
+.go-to-top:hover {
+  background: #c8963e;
+  box-shadow: 0 6px 24px rgba(200, 150, 62, 0.45);
+  transform: translateY(-3px);
+}
 
-  .go-to-top svg {
-    width: 20px;
-    height: 20px;
-  }
+.go-to-top:hover svg {
+  transform: translateY(-2px);
 }

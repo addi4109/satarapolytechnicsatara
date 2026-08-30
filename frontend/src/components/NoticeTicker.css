@@ -1,79 +1,63 @@
 .ticker-section {
-  background: #e0ecf5;
+  background: #243358;
   display: flex;
   align-items: center;
   overflow: hidden;
-  height: 36px;
+  padding: 0;
+  height: 38px;
 }
 
 .ticker-label {
-  background: #d4a54a;
+  background: #b8860b;
   color: #fff;
   font-size: 13px;
   font-weight: 700;
-  padding: 0 14px;
+  padding: 0 16px;
   height: 100%;
   display: flex;
   align-items: center;
   white-space: nowrap;
   flex-shrink: 0;
-  z-index: 1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 2;
 }
 
-.ticker-wrap {
-  flex: 1;
+.ticker-track {
+  display: flex;
   overflow: hidden;
-  position: relative;
+  flex: 1;
+  height: 100%;
+  align-items: center;
 }
 
 .ticker-scroll {
   display: flex;
+  animation: tickerScroll 30s linear infinite;
   white-space: nowrap;
-  width: max-content;
-  animation: ticker-scroll 30s linear infinite;
+}
+
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .ticker-item {
-  color: #4a5568;
+  color: #e0e0e0;
   font-size: 14px;
   white-space: nowrap;
   padding: 0 50px;
   position: relative;
-  flex-shrink: 0;
 }
 
 .ticker-item::after {
   content: '|';
   position: absolute;
   right: 0;
-  color: rgba(91, 138, 191, 0.3);
+  color: rgba(255,255,255,0.3);
 }
 
 /* Pause animation on hover */
-.ticker-wrap:hover .ticker-scroll {
+.ticker-section:hover .ticker-scroll {
   animation-play-state: paused;
-}
-
-@keyframes ticker-scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-@media (max-width: 768px) {
-  .ticker-section {
-    height: 32px;
-  }
-
-  .ticker-label {
-    font-size: 11px;
-    padding: 0 10px;
-  }
-
-  .ticker-scroll span {
-    font-size: 11px;
-  }
 }

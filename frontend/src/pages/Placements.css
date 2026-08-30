@@ -15,7 +15,7 @@
 }
 
 .recruiter-item {
-  background: #f0f4f8;
+  background: #f5f7fa;
   border: 1px solid #e4e8ed;
   border-radius: 8px;
   padding: 20px 16px;
@@ -41,7 +41,7 @@
 .recruiter-item-name {
   font-size: 13px;
   font-weight: 600;
-  color: #2a5a8a;
+  color: #243358;
 }
 
 /* Placement Officer Card */
@@ -49,7 +49,7 @@
   display: flex;
   gap: 24px;
   align-items: flex-start;
-  background: #f0f4f8;
+  background: #f5f7fa;
   border: 1px solid #e4e8ed;
   border-radius: 10px;
   padding: 24px;
@@ -81,14 +81,14 @@
 .placement-officer-name {
   font-family: 'Georgia', serif;
   font-size: 20px;
-  color: #2a5a8a;
+  color: #243358;
   font-weight: 700;
   margin: 0 0 4px;
 }
 
 .placement-officer-designation {
   font-size: 14px;
-  color: #2a5a8a;
+  color: #243358;
   font-weight: 500;
   margin: 0 0 8px;
 }
@@ -103,7 +103,7 @@
   flex: 1;
   min-width: 0;
   background: #fff;
-  border-left: 3px solid #d4a54a;
+  border-left: 3px solid #c8963e;
   padding: 20px 24px;
   border-radius: 0 8px 8px 0;
 }
@@ -145,7 +145,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f0f4f8;
+  background: #f5f7fa;
   overflow: hidden;
 }
 
@@ -159,20 +159,20 @@
 .placement-team-photo span {
   font-size: 28px;
   font-weight: 700;
-  color: #2a5a8a;
+  color: #243358;
   font-family: 'Georgia', serif;
 }
 
 .placement-team-name {
   font-size: 15px;
   font-weight: 700;
-  color: #2a5a8a;
+  color: #243358;
   margin: 0 0 4px;
 }
 
 .placement-team-designation {
   font-size: 13px;
-  color: #2a5a8a;
+  color: #243358;
   font-weight: 500;
   margin: 0 0 6px;
 }
@@ -185,7 +185,7 @@
 
 .placement-team-email {
   font-size: 12px;
-  color: #2a5a8a;
+  color: #243358;
   text-decoration: none;
 }
 
@@ -215,7 +215,7 @@
 
   .placement-officer-msg {
     border-left: none;
-    border-top: 3px solid #d4a54a;
+    border-top: 3px solid #c8963e;
     border-radius: 0 0 8px 8px;
     padding: 16px;
   }
