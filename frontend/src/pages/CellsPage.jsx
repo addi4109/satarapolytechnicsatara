@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import PageBanner from '../components/PageBanner';
-import { SkeletonCards } from '../components/Skeleton';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './CellsPage.css';
 
@@ -51,7 +50,7 @@ function CellsPage() {
         </p>
 
         {loading ? (
-          <SkeletonCards count={6} />
+          <div style={{ minHeight: "20vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
         ) : cells.length === 0 ? (
           <p style={{ color: '#888', textAlign: 'center', padding: '40px 0' }}>
             No cells or committees available yet.

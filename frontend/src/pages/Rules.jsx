@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import PageBanner from '../components/PageBanner';
-import { SkeletonPage } from '../components/Skeleton';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Academics.css';
 
@@ -22,7 +21,7 @@ function Rules() {
     return (
       <>
         <SEO title="Rules & Regulations | Satara Polytechnic" description="College rules and regulations at Satara Polytechnic, Satara." keywords="college rules, regulations, code of conduct" url="/rules" />
-        <SkeletonPage />
+        <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
       </>
     );
   }

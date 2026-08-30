@@ -53,13 +53,12 @@ const AdminEnquiries = lazy(() => import('./pages/AdminEnquiries'));
 const AdminFeedbacks = lazy(() => import('./pages/AdminFeedbacks'));
 const AdminAlumni = lazy(() => import('./pages/AdminAlumni'));
 
-// Loading fallback with skeleton
+// Loading fallback
 function PageLoader() {
   return (
     <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ textAlign: 'center' }}>
-        <div className="skeleton skeleton-block" style={{ width: 200, height: 12, margin: '0 auto 12px' }} />
-        <div className="skeleton skeleton-text" style={{ width: 140, height: 10, margin: '0 auto' }} />
+      <div style={{ textAlign: 'center', color: '#888', fontSize: '14px' }}>
+        Loading...
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
-import { SkeletonPage } from '../components/Skeleton';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './DepartmentsPage.css';
 import './Gallery.css';
@@ -81,7 +80,7 @@ function DepartmentsPage() {
     return (
       <>
         <SEO title="Departments | Satara Polytechnic" description="Explore 6 engineering departments at Satara Polytechnic." keywords="engineering departments, polytechnic departments" url="/departments/computer" />
-        <SkeletonPage />
+        <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
       </>
     );
   }

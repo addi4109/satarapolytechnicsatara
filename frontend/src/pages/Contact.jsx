@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
-import { SkeletonPage } from '../components/Skeleton';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import FeedbackCarousel from '../components/FeedbackCarousel';
 import { db } from '../lib/firebase';
@@ -92,7 +91,7 @@ function Contact() {
     return (
       <>
         <SEO title="Contact Us | Satara Polytechnic" description="Get in touch with Satara Polytechnic, Satara." keywords="contact Satara Polytechnic, college phone, college email" url="/contact" />
-        <SkeletonPage />
+        <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
       </>
     );
   }

@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
-import { SkeletonPage } from '../components/Skeleton';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './Placements.css';
@@ -103,7 +102,7 @@ function Placements() {
     return (
       <>
         <SEO title="Placements | Satara Polytechnic" description="Training & Placement Cell at Satara Polytechnic offering campus recruitment drives." keywords="polytechnic placements, campus recruitment" url="/placements" />
-        <SkeletonPage />
+        <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
       </>
     );
   }

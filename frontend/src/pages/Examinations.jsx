@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
-import { SkeletonPage } from '../components/Skeleton';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './Academics.css';
@@ -61,7 +60,7 @@ function Examinations() {
     return (
       <>
         <SEO title="Examination | Satara Polytechnic" description="MSBTE exam schedule, rules, and results." keywords="MSBTE exam, exam schedule, results" url="/examination" />
-        <SkeletonPage />
+        <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
       </>
     );
   }

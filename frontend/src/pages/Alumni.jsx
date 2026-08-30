@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
-import { SkeletonPage } from '../components/Skeleton';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Academics.css';
 import './Contact.css';
@@ -83,7 +82,7 @@ function Alumni() {
     return (
       <>
         <SEO title="Alumni | Satara Polytechnic" description="Alumni network of Satara Polytechnic, Satara." keywords="alumni, Satara Polytechnic alumni" url="/alumni" />
-        <SkeletonPage />
+        <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
       </>
     );
   }

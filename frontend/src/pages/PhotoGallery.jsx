@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import PageBanner from '../components/PageBanner';
-import { SkeletonCards } from '../components/Skeleton';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Gallery.css';
 
@@ -68,7 +67,7 @@ function PhotoGallery() {
         </p>
 
         {loading ? (
-          <SkeletonCards count={8} />
+          <div style={{ minHeight: "20vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
         ) : photos.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>No photos available yet.</p>
         ) : (

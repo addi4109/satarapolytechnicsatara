@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
-import { SkeletonPage } from '../components/Skeleton';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './Academics.css';
@@ -176,7 +175,7 @@ function Admissions() {
     return (
       <>
         <SEO title="Admissions | Satara Polytechnic" description="Diploma admission information at Satara Polytechnic." keywords="polytechnic admission, fee structure" url="/admissions/overview" />
-        <SkeletonPage />
+        <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
       </>
     );
   }

@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
-import { SkeletonPage } from '../components/Skeleton';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Academics.css';
 import './Gallery.css';
@@ -87,7 +86,7 @@ function Activities() {
     return (
       <>
         <SEO title="Activities | Satara Polytechnic" description="Student activities at Satara Polytechnic." keywords="college activities, sports, cultural events" url="/activities" />
-        <SkeletonPage />
+        <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
       </>
     );
   }
