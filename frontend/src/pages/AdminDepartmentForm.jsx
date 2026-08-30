@@ -667,19 +667,19 @@ function AdminDepartmentForm() {
                       </div>
                       <textarea placeholder="Description (optional)" value={event.description} onChange={(e) => updateDeptEvent(idx, 'description', e.target.value)} rows={2} style={{ width: '100%', padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }} />
                       {/* Multiple images */}
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div className="dept-event-images-grid">
                         {(event.images || []).map((img, imgIdx) => (
-                          <div key={imgIdx} style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                            <span style={{ fontSize: '11px', color: '#888', minWidth: '50px' }}>Image {imgIdx + 1}</span>
-                            <div style={{ flex: 1 }}>
+                          <div key={imgIdx} className="dept-event-image-item">
+                            <span className="dept-event-image-num">{imgIdx + 1}</span>
+                            <div className="dept-event-image-upload">
                               <ImageUpload
                                 value={img}
                                 onChange={(url) => updateEventImage(idx, imgIdx, url)}
                                 label=""
-                                placeholder={`Upload image ${imgIdx + 1}...`}
+                                placeholder={`Image ${imgIdx + 1}`}
                               />
                             </div>
-                            <button type="button" className="btn btn-danger btn-sm" onClick={() => removeEventImage(idx, imgIdx)} style={{ flexShrink: 0, padding: '4px 8px' }}>✕</button>
+                            <button type="button" className="btn btn-danger btn-sm" onClick={() => removeEventImage(idx, imgIdx)} style={{ flexShrink: 0, padding: '3px 7px', fontSize: '11px' }}>✕</button>
                           </div>
                         ))}
                       </div>
