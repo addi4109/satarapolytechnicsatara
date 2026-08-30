@@ -96,6 +96,11 @@
   z-index: 3;
 }
 
+.spark-dot-wrap:hover,
+.spark-dot-wrap:has(.spark-dot.active) {
+  z-index: 50;
+}
+
 /* Letter dot */
 .spark-dot {
   width: 52px;
@@ -134,7 +139,7 @@
   padding: 16px;
   box-shadow: 0 8px 28px rgba(36, 51, 88, 0.12);
   text-align: left;
-  z-index: 10;
+  z-index: 100;
   pointer-events: auto;
   animation: sparkPopupIn 0.2s ease;
 }
