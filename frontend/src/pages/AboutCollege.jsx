@@ -155,7 +155,7 @@ function AboutCollege() {
     return (
       <>
         <SEO title="About College | Satara Polytechnic" description="Learn about Satara Polytechnic, Satara - its history, vision, mission, and leadership." keywords="about Satara Polytechnic, college history" url="/about/college" />
-        <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
+        null
       </>
     );
   }

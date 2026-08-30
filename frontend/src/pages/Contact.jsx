@@ -91,7 +91,7 @@ function Contact() {
     return (
       <>
         <SEO title="Contact Us | Satara Polytechnic" description="Get in touch with Satara Polytechnic, Satara." keywords="contact Satara Polytechnic, college phone, college email" url="/contact" />
-        <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
+        null
       </>
     );
   }

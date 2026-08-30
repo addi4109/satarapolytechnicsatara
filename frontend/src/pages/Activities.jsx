@@ -86,7 +86,7 @@ function Activities() {
     return (
       <>
         <SEO title="Activities | Satara Polytechnic" description="Student activities at Satara Polytechnic." keywords="college activities, sports, cultural events" url="/activities" />
-        <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
+        null
       </>
     );
   }

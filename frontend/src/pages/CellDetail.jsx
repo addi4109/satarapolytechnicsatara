@@ -23,7 +23,7 @@ function CellDetail() {
     return (
       <>
         <SEO title="Cell | Satara Polytechnic" description="Loading cell details..." url={`/cells/${cellId}`} />
-        <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
+        null
       </>
     );
   }

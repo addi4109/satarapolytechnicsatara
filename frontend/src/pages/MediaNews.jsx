@@ -74,7 +74,7 @@ function MediaNews() {
         </p>
 
         {loading ? (
-          <div style={{ minHeight: "20vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
+          null
         ) : newsItems.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>No news available yet.</p>
         ) : (

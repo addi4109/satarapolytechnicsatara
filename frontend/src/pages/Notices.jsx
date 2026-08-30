@@ -53,7 +53,7 @@ function Notices() {
       <div className="notices-page-wrap">
         <div className="notices-table-wrap">
           {loading ? (
-            <div style={{ minHeight: "20vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
+            null
           ) : notices.length === 0 ? (
             <div className="notices-empty">
               <p>No notices available.</p>

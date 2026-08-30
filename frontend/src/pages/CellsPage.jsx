@@ -50,7 +50,7 @@ function CellsPage() {
         </p>
 
         {loading ? (
-          <div style={{ minHeight: "20vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
+          null
         ) : cells.length === 0 ? (
           <p style={{ color: '#888', textAlign: 'center', padding: '40px 0' }}>
             No cells or committees available yet.

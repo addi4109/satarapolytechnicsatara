@@ -63,7 +63,7 @@ function VideoGallery() {
         </p>
 
         {loading ? (
-          <div style={{ minHeight: "20vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
+          null
         ) : videos.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>No videos available yet.</p>
         ) : (

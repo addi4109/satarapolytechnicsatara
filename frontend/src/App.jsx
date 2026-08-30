@@ -56,11 +56,7 @@ const AdminAlumni = lazy(() => import('./pages/AdminAlumni'));
 // Loading fallback
 function PageLoader() {
   return (
-    <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ textAlign: 'center', color: '#888', fontSize: '14px' }}>
-        Loading...
-      </div>
-    </div>
+    <div style={{ minHeight: '60vh' }} />
   );
 }
 

@@ -175,7 +175,7 @@ function Admissions() {
     return (
       <>
         <SEO title="Admissions | Satara Polytechnic" description="Diploma admission information at Satara Polytechnic." keywords="polytechnic admission, fee structure" url="/admissions/overview" />
-        <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
+        null
       </>
     );
   }

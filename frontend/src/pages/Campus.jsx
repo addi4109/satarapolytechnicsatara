@@ -124,7 +124,7 @@ function Campus() {
     return (
       <>
         <SEO title="Campus | Satara Polytechnic" description="Explore campus facilities at Satara Polytechnic." keywords="college campus, library, canteen" url="/campus" />
-        <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
+        null
       </>
     );
   }

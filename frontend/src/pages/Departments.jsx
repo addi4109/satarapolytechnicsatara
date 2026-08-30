@@ -80,7 +80,7 @@ function DepartmentsPage() {
     return (
       <>
         <SEO title="Departments | Satara Polytechnic" description="Explore 6 engineering departments at Satara Polytechnic." keywords="engineering departments, polytechnic departments" url="/departments/computer" />
-        <div style={{ minHeight: "40vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
+        null
       </>
     );
   }

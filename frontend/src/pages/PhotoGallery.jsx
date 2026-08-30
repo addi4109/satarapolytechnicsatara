@@ -67,7 +67,7 @@ function PhotoGallery() {
         </p>
 
         {loading ? (
-          <div style={{ minHeight: "20vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "14px" }}>Loading...</div>
+          null
         ) : photos.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>No photos available yet.</p>
         ) : (
