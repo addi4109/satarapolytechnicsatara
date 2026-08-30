@@ -10,7 +10,6 @@ function Navbar() {
   const [dbCells, setDbCells] = useState([]);
   const [dbDepts, setDbDepts] = useState([]);
   const [academicTabName, setAcademicTabName] = useState('Academic Calendar');
-  const [founder, setFounder] = useState(null);
 
   useEffect(() => {
     fetch(`${API_URL}/cells`)
@@ -25,10 +24,7 @@ function Navbar() {
       .then((res) => res.json())
       .then((data) => { if (data.value) setAcademicTabName(data.value); })
       .catch(() => {});
-    fetch(`${API_URL}/management/founder`)
-      .then((res) => res.json())
-      .then((data) => { if (data.photoUrl) setFounder(data); })
-      .catch(() => {});
+
   }, []);
 
   const menuData = [
@@ -238,18 +234,7 @@ function Navbar() {
               <p className="affiliation-line">Approved by AICTE Delhi, DTE Maharashtra State, Affiliated to MSBTE, Mumbai</p>
               <p className="motto">"Jai Jagat, Jai Bharat"</p>
             </div>
-            {founder && founder.photoUrl && (
-              <div className="founder-area">
-                <div className="founder-circle">
-                  <img
-                    src={founder.photoUrl}
-                    alt={founder.name || 'Founder'}
-                    className="founder-img"
-                  />
-                </div>
-                <p className="founder-label">Founder</p>
-              </div>
-            )}
+
           </div>
         </div>
       </div>

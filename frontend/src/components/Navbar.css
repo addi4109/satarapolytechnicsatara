@@ -80,7 +80,7 @@
   width: 105px;
   height: 105px;
   border-radius: 50%;
-  border: 4px solid transparent;
+  border: 2px solid transparent;
   background-image: linear-gradient(#fff, #fff), linear-gradient(135deg, #1e2d4d, #243358);
   background-origin: border-box;
   background-clip: padding-box, border-box;
