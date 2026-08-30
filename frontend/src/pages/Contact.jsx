@@ -268,15 +268,14 @@ function Contact() {
                 return (
                   <div className="contact-cards-grid" style={{ marginTop: '16px' }}>
                     {rows.map((row, i) => (
-                      <div className="contact-card" key={i}>
-                        <div className="contact-card-icon">
-                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                      <div className="contact-card" key={i} style={{ textAlign: 'left' }}>
+                        <h4 style={{ marginBottom: '2px' }}>{row.name || '—'}</h4>
+                        {row.designation && <p style={{ fontSize: '12px', color: '#7A263A', fontWeight: 600, margin: '0 0 10px' }}>{row.designation}</p>}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                          {row.phone && <p style={{ margin: 0 }}><a href={`tel:${row.phone.replace(/[^0-9+]/g, '')}`}>{row.phone}</a></p>}
+                          {row.email && <p style={{ margin: 0 }}><a href={`mailto:${row.email}`}>{row.email}</a></p>}
+                          {!row.phone && !row.email && <p style={{ color: '#aaa', fontSize: '12px', margin: 0 }}>No contact info</p>}
                         </div>
-                        <h4>{row.name || '—'}</h4>
-                        <p style={{ fontSize: '12px', color: '#243358', fontWeight: 500, marginBottom: '8px' }}>{row.designation || ''}</p>
-                        {row.phone && <p><a href={`tel:${row.phone.replace(/[^0-9+]/g, '')}`}>{row.phone}</a></p>}
-                        {row.email && <p><a href={`mailto:${row.email}`}>{row.email}</a></p>}
-                        {!row.phone && !row.email && <p style={{ color: '#aaa', fontSize: '12px' }}>No contact info</p>}
                       </div>
                     ))}
                   </div>
