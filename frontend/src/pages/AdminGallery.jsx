@@ -9,7 +9,7 @@ const API_URL = '/api';
 const emptyPhoto = { title: '', image: '', description: '', order: 0 };
 const emptyVideo = { title: '', videoUrl: '', thumbnail: '', description: '', order: 0 };
 const emptyNews = { title: '', date: '', source: '', summary: '', image: '', order: 0 };
-const emptySlide = { image: '', title: '', link: '', order: 0 };
+const emptySlide = { image: '', title: '', subtitle: '', link: '', order: 0 };
 
 function AdminGallery() {
   const [tab, setTab] = useState('photos');
@@ -195,10 +195,18 @@ function AdminGallery() {
         {tab === 'slides' && <>
           <div style={{ marginBottom: '10px' }}><ImageUpload value={form.image || ''} onChange={(url) => setForm({ ...form, image: url })} label="" placeholder="Slide image..." /></div>
           {form.image && <img src={form.image} alt="Preview" style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '6px', marginBottom: '10px', border: '1px solid #e4e8ed' }} />}
+          <div style={{ marginBottom: '10px' }}>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Title</label>
+            <input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Slide title" style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+          </div>
+          <div style={{ marginBottom: '10px' }}>
+            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Subtitle</label>
+            <input type="text" value={form.subtitle || ''} onChange={(e) => setForm({ ...form, subtitle: e.target.value })} placeholder="Slide subtitle" style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+          </div>
           <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
             <div style={{ flex: 1 }}>
-              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Title</label>
-              <input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Slide title" style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
+              <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Link</label>
+              <input type="text" value={form.link || ''} onChange={(e) => setForm({ ...form, link: e.target.value })} placeholder="Optional link" style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
             </div>
             <div style={{ width: '80px' }}>
               <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#333', marginBottom: '4px' }}>Order</label>
