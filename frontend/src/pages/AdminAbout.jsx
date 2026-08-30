@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
+import AdminAlert from '../components/AdminAlert';
+import AdminTabs from '../components/AdminTabs';
+import AdminLoading from '../components/AdminLoading';
 import ImageUpload from '../components/ImageUpload';
 import './Admin.css';
 import './AboutCollege.css';
@@ -180,7 +183,7 @@ function AdminAbout() {
   if (loading) {
     return (
       <AdminLayout>
-        <div style={{ padding: '40px', textAlign: 'center', color: '#888' }}>Loading...</div>
+        <AdminLoading text="Loading about..." />
       </AdminLayout>
     );
   }
@@ -484,24 +487,10 @@ function AdminAbout() {
       </div>
 
       <div className="admin-content">
-        {/* Sub-tabs */}
-        <div className="about-admin-tabs">
-          {SECTIONS.map((sec) => (
-            <button
-              key={sec.key}
-              className={`about-admin-tab ${activeTab === sec.key ? 'active' : ''}`}
-              onClick={() => setActiveTab(sec.key)}
-            >
-              {sec.label}
-              {sections[sec.key] && <span className="about-tab-saved">Saved</span>}
-            </button>
-          ))}
-        </div>
+        <AdminTabs tabs={SECTIONS.map((s) => ({ ...s, saved: !!sections[s.key] }))} activeTab={activeTab} onChange={setActiveTab} />
 
         {/* Alert */}
-        {msg && (
-          <div className={`alert alert-${msg.type}`}>{msg.text}</div>
-        )}
+        <AdminAlert type={msg?.type} message={msg} onDismiss={() => setMsg(null)} />
 
         {/* Preview or Editor */}
         {editing ? (

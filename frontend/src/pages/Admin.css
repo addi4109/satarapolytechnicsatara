@@ -2867,3 +2867,136 @@
   }
 }
 
+/* ═══════════════════════════════════════
+   Reusable Components
+   ═══════════════════════════════════════ */
+
+/* AdminAlert dismiss button */
+.alert-dismiss-btn {
+  float: right;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: inherit;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+/* AdminLoading */
+.admin-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 60px 20px;
+  color: #888;
+  font-size: 14px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.admin-loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e4e8ed;
+  border-top-color: #243358;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+/* AdminContentCard */
+.admin-content-card {
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  cursor: default;
+}
+
+.admin-content-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(36, 51, 88, 0.1);
+  border-color: #c8963e;
+}
+
+.admin-content-card-img {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.admin-content-card-placeholder {
+  background: #f0f2f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ccc;
+  font-size: 32px;
+}
+
+.admin-content-card-body {
+  padding: 12px 14px;
+}
+
+.admin-content-card-badges {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.admin-content-card-title {
+  margin: 0 0 4px;
+  color: #243358;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.admin-content-card-desc {
+  margin: 0;
+  color: #666;
+  font-size: 12px;
+  line-height: 1.4;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.admin-content-card-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+/* AdminTabs — consistent tab bar */
+.admin-tabs-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  border-radius: 8px;
+  padding: 4px;
+  flex-wrap: wrap;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+/* AdminSectionPage — consistent section title */
+.admin-section-title-bar {
+  margin-bottom: 20px;
+}
+
+.admin-section-title {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  font-size: 22px;
+  color: #243358;
+}
+
+/* Consistent edit hint text */
+.admin-edit-hint {
+  font-size: 12px;
+  color: #888;
+  margin: 0 0 16px;
+}
+

@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
+import AdminAlert from '../components/AdminAlert';
+import AdminTabs from '../components/AdminTabs';
+import AdminStaffCard from '../components/AdminStaffCard';
+import AdminLoading from '../components/AdminLoading';
 import ImageUpload from '../components/ImageUpload';
-
 
 const API_URL = '/api';
 
@@ -12,22 +15,18 @@ const ROLES = [
   { key: 'principal', label: 'Principal' },
 ];
 
+const STAFF_FIELDS = [
+  { key: 'name', label: 'Name', placeholder: 'Name' },
+  { key: 'designation', label: 'Designation', placeholder: 'Designation' },
+  { key: 'order', label: 'Display Order', placeholder: 'Display Order', type: 'number', min: 0 },
+];
+
 const defaultEntry = {
-  name: '',
-  title: '',
-  qualification: '',
-  photoUrl: '',
-  message: '',
-  shortDesc: '',
-  active: true,
+  name: '', title: '', qualification: '', photoUrl: '', message: '', shortDesc: '', active: true,
 };
 
 const defaultGbMember = {
-  name: '',
-  designation: '',
-  photoUrl: '',
-  order: 0,
-  active: true,
+  name: '', designation: '', photoUrl: '', order: 0, active: true,
 };
 
 function AdminManagement() {
@@ -57,27 +56,29 @@ function AdminManagement() {
   const [lgbSaving, setLgbSaving] = useState(false);
   const [deleteConfirmLgb, setDeleteConfirmLgb] = useState(null);
 
-  useEffect(() => {
-    fetchEntries();
-  }, []);
+  useEffect(() => { fetchEntries(); }, []);
 
   useEffect(() => {
-    if (activeTab === 'governing-body') {
-      fetchGbMembers();
-    }
-    if (activeTab === 'local-governing-body') {
-      fetchLgbMembers();
-    }
+    if (activeTab === 'governing-body') fetchGbMembers();
+    if (activeTab === 'local-governing-body') fetchLgbMembers();
   }, [activeTab]);
 
+  useEffect(() => {
+    if (activeTab !== 'governing-body' && activeTab !== 'local-governing-body') {
+      const existing = entries[activeTab];
+      setForm(existing ? { ...defaultEntry, ...existing } : { ...defaultEntry });
+      setMsg(null);
+      setEditingRole(false);
+    }
+  }, [activeTab, entries]);
+
+  // ── Fetch helpers ──
   const fetchEntries = async () => {
     try {
       const res = await fetch(`${API_URL}/management`);
       const data = await res.json();
       const mapped = {};
-      data.forEach((entry) => {
-        mapped[entry.role] = entry;
-      });
+      data.forEach((entry) => { mapped[entry.role] = entry; });
       setEntries(mapped);
     } catch (err) {
       console.error('Failed to fetch management:', err);
@@ -90,8 +91,7 @@ function AdminManagement() {
     setGbLoading(true);
     try {
       const res = await fetch(`${API_URL}/governing-body/all`);
-      const data = await res.json();
-      setGbMembers(data);
+      setGbMembers(await res.json());
     } catch (err) {
       console.error('Failed to fetch governing body:', err);
     } finally {
@@ -103,8 +103,7 @@ function AdminManagement() {
     setLgbLoading(true);
     try {
       const res = await fetch(`${API_URL}/local-governing-body/all`);
-      const data = await res.json();
-      setLgbMembers(data);
+      setLgbMembers(await res.json());
     } catch (err) {
       console.error('Failed to fetch local governing body:', err);
     } finally {
@@ -112,111 +111,56 @@ function AdminManagement() {
     }
   };
 
-  useEffect(() => {
-    if (activeTab !== 'governing-body' && activeTab !== 'local-governing-body') {
-      const existing = entries[activeTab];
-      if (existing) {
-        setForm({ ...defaultEntry, ...existing });
-      } else {
-        setForm({ ...defaultEntry });
-      }
-      setMsg(null);
-      setEditingRole(false);
-    }
-  }, [activeTab, entries]);
-
-  const handleChange = (field, value) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
-  };
+  // ── Management role handlers ──
+  const handleChange = (field, value) => setForm((prev) => ({ ...prev, [field]: value }));
 
   const handleSave = async () => {
-    if (!form.name.trim()) {
-      setMsg({ type: 'error', text: 'Name is required' });
-      return;
-    }
-
+    if (!form.name.trim()) { setMsg({ type: 'error', text: 'Name is required' }); return; }
     setSaving(true);
     setMsg(null);
-
     try {
       const res = await fetch(`${API_URL}/management`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, role: activeTab, order: 0 }),
       });
-
       if (!res.ok) throw new Error('Failed to save');
-
       const saved = await res.json();
       setEntries((prev) => ({ ...prev, [activeTab]: saved }));
-      setMsg({ type: 'success', text: `${ROLES.find((r) => r.key === activeTab)?.label} details saved successfully!` });
-    } catch (err) {
-      setMsg({ type: 'error', text: 'Failed to save. Please try again.' });
+      setMsg({ type: 'success', text: `${ROLES.find((r) => r.key === activeTab)?.label} saved!` });
+    } catch {
+      setMsg({ type: 'error', text: 'Failed to save.' });
     } finally {
       setSaving(false);
     }
   };
 
   const handleDelete = async () => {
-    if (!window.confirm(`Are you sure you want to delete ${ROLES.find((r) => r.key === activeTab)?.label} details?`)) {
-      return;
-    }
-
+    if (!window.confirm(`Delete ${ROLES.find((r) => r.key === activeTab)?.label} details?`)) return;
     try {
       await fetch(`${API_URL}/management/${activeTab}`, { method: 'DELETE' });
-      setEntries((prev) => {
-        const updated = { ...prev };
-        delete updated[activeTab];
-        return updated;
-      });
+      setEntries((prev) => { const u = { ...prev }; delete u[activeTab]; return u; });
       setForm({ ...defaultEntry });
-      setMsg({ type: 'success', text: 'Deleted successfully!' });
-    } catch (err) {
+      setMsg({ type: 'success', text: 'Deleted!' });
+    } catch {
       setMsg({ type: 'error', text: 'Failed to delete.' });
     }
   };
 
-  // Governing Body handlers
-  const openAddGb = () => {
-    setEditGbId(null);
-    setGbForm({ ...defaultGbMember });
-    setShowGbForm(true);
-  };
+  // ── GB handlers ──
+  const openAddGb = () => { setEditGbId(null); setGbForm({ ...defaultGbMember }); setShowGbForm(true); };
+  const openEditGb = (m) => { setEditGbId(m._id); setGbForm({ name: m.name || '', designation: m.designation || '', photoUrl: m.photoUrl || '', order: m.order || 0, active: m.active !== false }); setShowGbForm(true); };
+  const cancelGbForm = () => { setShowGbForm(false); setEditGbId(null); setGbForm({ ...defaultGbMember }); };
 
-  const openEditGb = (member) => {
-    setEditGbId(member._id);
-    setGbForm({
-      name: member.name || '',
-      designation: member.designation || '',
-      photoUrl: member.photoUrl || '',
-      order: member.order || 0,
-      active: member.active !== false,
-    });
-    setShowGbForm(true);
-  };
-
-  const cancelGbForm = () => {
-    setShowGbForm(false);
-    setEditGbId(null);
-    setGbForm({ ...defaultGbMember });
-  };
-
-  const handleGbSave = async (e) => {
-    e.preventDefault();
+  const handleGbSave = async () => {
     setGbSaving(true);
     try {
       const url = editGbId ? `${API_URL}/governing-body/${editGbId}` : `${API_URL}/governing-body`;
       const method = editGbId ? 'PUT' : 'POST';
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(gbForm),
-      });
+      const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(gbForm) });
       if (res.ok) {
         setMsg({ type: 'success', text: editGbId ? 'Member updated!' : 'Member added!' });
-        setShowGbForm(false);
-        setEditGbId(null);
-        setGbForm({ ...defaultGbMember });
+        cancelGbForm();
         fetchGbMembers();
       } else {
         const err = await res.json();
@@ -240,49 +184,20 @@ function AdminManagement() {
     setDeleteConfirm(null);
   };
 
+  // ── LGB handlers ──
+  const openAddLgb = () => { setEditLgbId(null); setLgbForm({ ...defaultGbMember }); setShowLgbForm(true); };
+  const openEditLgb = (m) => { setEditLgbId(m._id); setLgbForm({ name: m.name || '', designation: m.designation || '', photoUrl: m.photoUrl || '', order: m.order || 0, active: m.active !== false }); setShowLgbForm(true); };
+  const cancelLgbForm = () => { setShowLgbForm(false); setEditLgbId(null); setLgbForm({ ...defaultGbMember }); };
 
-
-  // Local Governing Body handlers
-  const openAddLgb = () => {
-    setEditLgbId(null);
-    setLgbForm({ ...defaultGbMember });
-    setShowLgbForm(true);
-  };
-
-  const openEditLgb = (member) => {
-    setEditLgbId(member._id);
-    setLgbForm({
-      name: member.name || '',
-      designation: member.designation || '',
-      photoUrl: member.photoUrl || '',
-      order: member.order || 0,
-      active: member.active !== false,
-    });
-    setShowLgbForm(true);
-  };
-
-  const cancelLgbForm = () => {
-    setShowLgbForm(false);
-    setEditLgbId(null);
-    setLgbForm({ ...defaultGbMember });
-  };
-
-  const handleLgbSave = async (e) => {
-    e.preventDefault();
+  const handleLgbSave = async () => {
     setLgbSaving(true);
     try {
       const url = editLgbId ? `${API_URL}/local-governing-body/${editLgbId}` : `${API_URL}/local-governing-body`;
       const method = editLgbId ? 'PUT' : 'POST';
-      const res = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(lgbForm),
-      });
+      const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(lgbForm) });
       if (res.ok) {
         setMsg({ type: 'success', text: editLgbId ? 'Member updated!' : 'Member added!' });
-        setShowLgbForm(false);
-        setEditLgbId(null);
-        setLgbForm({ ...defaultGbMember });
+        cancelLgbForm();
         fetchLgbMembers();
       } else {
         const err = await res.json();
@@ -308,14 +223,25 @@ function AdminManagement() {
 
   const activeEntry = entries[activeTab];
   const currentRole = ROLES.find((r) => r.key === activeTab);
+  const isGbTab = activeTab === 'governing-body';
+  const isLgbTab = activeTab === 'local-governing-body';
 
   if (loading) {
     return (
       <AdminLayout>
-        <div style={{ padding: '40px', textAlign: 'center', color: '#888' }}>Loading...</div>
+        <AdminLoading text="Loading management..." />
       </AdminLayout>
     );
   }
+
+  const allTabs = [
+    ...ROLES.map((r) => ({ key: r.key, label: r.label, saved: !!entries[r.key] })),
+    { key: 'governing-body', label: 'Governing Body', badge: gbMembers.length },
+    { key: 'local-governing-body', label: 'Local Governing Body', badge: lgbMembers.length },
+  ];
+
+  // Staff fields for add/edit form
+  const staffFields = STAFF_FIELDS;
 
   return (
     <AdminLayout>
@@ -325,79 +251,38 @@ function AdminManagement() {
         </div>
 
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-          {/* Sub-tabs */}
           <div style={{ padding: '16px 24px 0', flexShrink: 0 }}>
-            <div className="gallery-admin-tabs" style={{ marginBottom: 0 }}>
-              {ROLES.map((role) => (
-                <button
-                  key={role.key}
-                  className={`gallery-tab ${activeTab === role.key ? 'active' : ''}`}
-                  onClick={() => setActiveTab(role.key)}
-                >
-                  {role.label}
-                  {entries[role.key] && <span className="gallery-tab-count" style={{ fontSize: '10px' }}>Saved</span>}
-                </button>
-              ))}
-              <button
-                className={`gallery-tab ${activeTab === 'governing-body' ? 'active' : ''}`}
-                onClick={() => setActiveTab('governing-body')}
-              >
-                Governing Body
-                {gbMembers.length > 0 && <span className="gallery-tab-count" style={{ fontSize: '10px' }}>{gbMembers.length}</span>}
-              </button>
-              <button
-                className={`gallery-tab ${activeTab === 'local-governing-body' ? 'active' : ''}`}
-                onClick={() => setActiveTab('local-governing-body')}
-              >
-                Local Governing Body
-                {lgbMembers.length > 0 && <span className="gallery-tab-count" style={{ fontSize: '10px' }}>{lgbMembers.length}</span>}
-              </button>
-            </div>
+            <AdminTabs tabs={allTabs} activeTab={activeTab} onChange={setActiveTab} />
           </div>
 
-          {/* Title */}
           <div style={{ padding: '10px 24px', textAlign: 'center', flexShrink: 0 }}>
-            <h2 style={{ margin: 0, fontFamily: 'Georgia, serif', fontSize: '22px', color: '#243358' }}>
-              {activeTab === 'governing-body' ? 'Governing Body Management' : activeTab === 'local-governing-body' ? 'Local Governing Body Management' : `${currentRole?.label} Management`}
+            <h2 className="admin-section-title">
+              {isGbTab ? 'Governing Body' : isLgbTab ? 'Local Governing Body' : `${currentRole?.label} Management`}
             </h2>
           </div>
 
-          {/* Alert */}
-          {msg && (
-            <div className={`alert alert-${msg.type}`} style={{ margin: '0 24px 8px', flexShrink: 0 }}>
-              {msg.text}
-              <button style={{ float: 'right', background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px', color: 'inherit' }} onClick={() => setMsg(null)}>x</button>
-            </div>
-          )}
+          <div style={{ flex: 1, padding: '0 24px 24px' }}>
+            <AdminAlert type={msg?.type} message={msg} onDismiss={() => setMsg(null)} />
 
-          {/* ===== GOVERNING BODY TAB ===== */}
-          {activeTab === 'governing-body' && (
-            <div style={{ flex: 1, padding: '0 24px 24px' }}>
-              {gbLoading ? (
-                <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
-              ) : (
-                <>
-                  <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Click a card to edit. Click the + box to add a new member.</p>
-
+            {/* ── Governing Body Tab ── */}
+            {isGbTab && (
+              <>
+                <p className="admin-edit-hint">Click a card to edit. Click the + box to add a new member.</p>
+                {gbLoading ? (
+                  <AdminLoading text="Loading governing body..." />
+                ) : (
                   <div className="gb-cards-grid">
-                    {/* Add Member Box */}
+                    {/* Add Member */}
                     {showGbForm && !editGbId ? (
-                      <div className="gb-member-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'solid', borderColor: '#c8963e', background: '#fffbe6' }}>
-                        <div style={{ textAlign: 'center', marginBottom: '14px' }}>
-                          <ImageUpload
-                            value={gbForm.photoUrl}
-                            onChange={(url) => setGbForm({ ...gbForm, photoUrl: url })}
-                            circle
-                          />
-                        </div>
-                        <input type="text" className="gb-member-input" value={gbForm.name} onChange={(e) => setGbForm({ ...gbForm, name: e.target.value })} placeholder="Name" required />
-                        <input type="text" className="gb-member-input" value={gbForm.designation} onChange={(e) => setGbForm({ ...gbForm, designation: e.target.value })} placeholder="Designation" required />
-                        <input type="number" className="gb-member-input" value={gbForm.order} onChange={(e) => setGbForm({ ...gbForm, order: Number(e.target.value) })} placeholder="Display Order" min="0" />
-                        <div className="gb-member-actions">
-                          <button className="btn btn-success btn-sm" onClick={handleGbSave} disabled={gbSaving}>{gbSaving ? 'Saving...' : 'Save'}</button>
-                          <button className="btn btn-secondary btn-sm" onClick={cancelGbForm}>Cancel</button>
-                        </div>
-                      </div>
+                      <AdminStaffCard
+                        isAddMode
+                        editForm={gbForm}
+                        onFormChange={setGbForm}
+                        onSave={handleGbSave}
+                        onCancel={cancelGbForm}
+                        saving={gbSaving}
+                        fields={staffFields}
+                      />
                     ) : (
                       <div
                         className="gb-member-card"
@@ -409,77 +294,49 @@ function AdminManagement() {
                       </div>
                     )}
 
-                    {/* Member Cards - live preview */}
+                    {/* Member Cards */}
                     {gbMembers.map((member) => (
-                      editGbId === member._id ? (
-                        <div key={member._id} className="gb-member-card" style={{ border: '2px solid #c8963e', background: '#fffbe6' }}>
-                          <div style={{ textAlign: 'center', marginBottom: '14px' }}>
-                            <ImageUpload value={gbForm.photoUrl} onChange={(url) => setGbForm({ ...gbForm, photoUrl: url })} circle />
-                          </div>
-                          <input type="text" className="gb-member-input" value={gbForm.name} onChange={(e) => setGbForm({ ...gbForm, name: e.target.value })} placeholder="Name" required />
-                          <input type="text" className="gb-member-input" value={gbForm.designation} onChange={(e) => setGbForm({ ...gbForm, designation: e.target.value })} placeholder="Designation" required />
-                          <input type="number" className="gb-member-input" value={gbForm.order} onChange={(e) => setGbForm({ ...gbForm, order: Number(e.target.value) })} placeholder="Display Order" min="0" />
-                          <div className="gb-member-actions">
-                            <button className="btn btn-success btn-sm" onClick={handleGbSave} disabled={gbSaving}>{gbSaving ? 'Saving...' : 'Save'}</button>
-                            <button className="btn btn-secondary btn-sm" onClick={cancelGbForm}>Cancel</button>
-                          </div>
-                        </div>
-                      ) : (
-                        <div key={member._id} className="gb-member-card" onClick={() => openEditGb(member)} style={{ cursor: 'pointer' }} title="Click to edit">
-                          {member.photoUrl ? (
-                            <img src={member.photoUrl} alt={member.name} className="gb-member-photo" />
-                          ) : (
-                            <div className="gb-member-photo gb-member-photo-empty"><span>{member.name?.split(' ')?.pop()?.charAt(0) || '?'}</span></div>
-                          )}
-                          <h3 className="gb-member-name">{member.name}</h3>
-                          <p className="gb-member-designation">{member.designation}</p>
-                          <div className="gb-member-actions" onClick={(e) => e.stopPropagation()}>
-                            {deleteConfirm === member._id ? (
-                              <>
-                                <button className="btn btn-danger btn-sm" onClick={() => handleGbDelete(member._id)}>Yes, Delete</button>
-                                <button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirm(null)}>Cancel</button>
-                              </>
-                            ) : (
-                              <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirm(member._id)}>Delete</button>
-                            )}
-                          </div>
-                        </div>
-                      )
+                      <AdminStaffCard
+                        key={member._id}
+                        member={member}
+                        isEditing={editGbId === member._id}
+                        editForm={gbForm}
+                        onFormChange={setGbForm}
+                        onStartEdit={() => openEditGb(member)}
+                        onSave={handleGbSave}
+                        onCancel={cancelGbForm}
+                        onDelete={() => handleGbDelete(member._id)}
+                        deleteConfirm={deleteConfirm === member._id}
+                        onCancelDelete={() => setDeleteConfirm(null)}
+                        saving={gbSaving}
+                        fields={staffFields}
+                        order={member.order}
+                      />
                     ))}
                   </div>
-                </>
-              )}
-            </div>
-          )}
+                )}
+              </>
+            )}
 
-          {/* ===== LOCAL GOVERNING BODY TAB ===== */}
-          {activeTab === 'local-governing-body' && (
-            <div style={{ flex: 1, padding: '0 24px 24px' }}>
-              {lgbLoading ? (
-                <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
-              ) : (
-                <>
-                  <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Click a card to edit. Click the + box to add a new member.</p>
-
+            {/* ── Local Governing Body Tab ── */}
+            {isLgbTab && (
+              <>
+                <p className="admin-edit-hint">Click a card to edit. Click the + box to add a new member.</p>
+                {lgbLoading ? (
+                  <AdminLoading text="Loading local governing body..." />
+                ) : (
                   <div className="gb-cards-grid">
-                    {/* Add Member Box */}
+                    {/* Add Member */}
                     {showLgbForm && !editLgbId ? (
-                      <div className="gb-member-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'solid', borderColor: '#c8963e', background: '#fffbe6' }}>
-                        <div style={{ textAlign: 'center', marginBottom: '14px' }}>
-                          <ImageUpload
-                            value={lgbForm.photoUrl}
-                            onChange={(url) => setLgbForm({ ...lgbForm, photoUrl: url })}
-                            circle
-                          />
-                        </div>
-                        <input type="text" className="gb-member-input" value={lgbForm.name} onChange={(e) => setLgbForm({ ...lgbForm, name: e.target.value })} placeholder="Name" required />
-                        <input type="text" className="gb-member-input" value={lgbForm.designation} onChange={(e) => setLgbForm({ ...lgbForm, designation: e.target.value })} placeholder="Designation" required />
-                        <input type="number" className="gb-member-input" value={lgbForm.order} onChange={(e) => setLgbForm({ ...lgbForm, order: Number(e.target.value) })} placeholder="Display Order" min="0" />
-                        <div className="gb-member-actions">
-                          <button className="btn btn-success btn-sm" onClick={handleLgbSave} disabled={lgbSaving}>{lgbSaving ? 'Saving...' : 'Save'}</button>
-                          <button className="btn btn-secondary btn-sm" onClick={cancelLgbForm}>Cancel</button>
-                        </div>
-                      </div>
+                      <AdminStaffCard
+                        isAddMode
+                        editForm={lgbForm}
+                        onFormChange={setLgbForm}
+                        onSave={handleLgbSave}
+                        onCancel={cancelLgbForm}
+                        saving={lgbSaving}
+                        fields={staffFields}
+                      />
                     ) : (
                       <div
                         className="gb-member-card"
@@ -491,174 +348,104 @@ function AdminManagement() {
                       </div>
                     )}
 
-                    {/* Member Cards - live preview */}
+                    {/* Member Cards */}
                     {lgbMembers.map((member) => (
-                      editLgbId === member._id ? (
-                        <div key={member._id} className="gb-member-card" style={{ border: '2px solid #c8963e', background: '#fffbe6' }}>
-                          <div style={{ textAlign: 'center', marginBottom: '14px' }}>
-                            <ImageUpload value={lgbForm.photoUrl} onChange={(url) => setLgbForm({ ...lgbForm, photoUrl: url })} circle />
-                          </div>
-                          <input type="text" className="gb-member-input" value={lgbForm.name} onChange={(e) => setLgbForm({ ...lgbForm, name: e.target.value })} placeholder="Name" required />
-                          <input type="text" className="gb-member-input" value={lgbForm.designation} onChange={(e) => setLgbForm({ ...lgbForm, designation: e.target.value })} placeholder="Designation" required />
-                          <input type="number" className="gb-member-input" value={lgbForm.order} onChange={(e) => setLgbForm({ ...lgbForm, order: Number(e.target.value) })} placeholder="Display Order" min="0" />
-                          <div className="gb-member-actions">
-                            <button className="btn btn-success btn-sm" onClick={handleLgbSave} disabled={lgbSaving}>{lgbSaving ? 'Saving...' : 'Save'}</button>
-                            <button className="btn btn-secondary btn-sm" onClick={cancelLgbForm}>Cancel</button>
-                          </div>
-                        </div>
-                      ) : (
-                        <div key={member._id} className="gb-member-card" onClick={() => openEditLgb(member)} style={{ cursor: 'pointer' }} title="Click to edit">
-                          {member.photoUrl ? (
-                            <img src={member.photoUrl} alt={member.name} className="gb-member-photo" />
-                          ) : (
-                            <div className="gb-member-photo gb-member-photo-empty"><span>{member.name?.split(' ')?.pop()?.charAt(0) || '?'}</span></div>
-                          )}
-                          <h3 className="gb-member-name">{member.name}</h3>
-                          <p className="gb-member-designation">{member.designation}</p>
-                          <div className="gb-member-actions" onClick={(e) => e.stopPropagation()}>
-                            {deleteConfirmLgb === member._id ? (
-                              <>
-                                <button className="btn btn-danger btn-sm" onClick={() => handleLgbDelete(member._id)}>Yes, Delete</button>
-                                <button className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirmLgb(null)}>Cancel</button>
-                              </>
-                            ) : (
-                              <button className="btn btn-danger btn-sm" onClick={() => setDeleteConfirmLgb(member._id)}>Delete</button>
-                            )}
-                          </div>
-                        </div>
-                      )
+                      <AdminStaffCard
+                        key={member._id}
+                        member={member}
+                        isEditing={editLgbId === member._id}
+                        editForm={lgbForm}
+                        onFormChange={setLgbForm}
+                        onStartEdit={() => openEditLgb(member)}
+                        onSave={handleLgbSave}
+                        onCancel={cancelLgbForm}
+                        onDelete={() => handleLgbDelete(member._id)}
+                        deleteConfirm={deleteConfirmLgb === member._id}
+                        onCancelDelete={() => setDeleteConfirmLgb(null)}
+                        saving={lgbSaving}
+                        fields={staffFields}
+                        order={member.order}
+                      />
                     ))}
                   </div>
-                </>
-              )}
-            </div>
-          )}
+                )}
+              </>
+            )}
 
-          {/* ===== MANAGEMENT ROLE TABS - Click to Edit ===== */}
-          {activeTab !== 'governing-body' && activeTab !== 'local-governing-body' && (
-            <div style={{ flex: 1, padding: '0 24px 24px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                <span style={{ fontSize: '12px', color: '#888' }}>Click the card to edit</span>
-              </div>
+            {/* ── Management Role Tabs (Founder/Chairman/etc.) ── */}
+            {!isGbTab && !isLgbTab && (
+              <>
+                <p className="admin-edit-hint">Click the card to edit.</p>
 
-              {/* Preview mode - looks like the live website */}
-              {!editingRole ? (
-                <div
-                  className="placement-officer-card"
-                  onClick={() => setEditingRole(true)}
-                  style={{ cursor: 'pointer' }}
-                  title="Click to edit"
-                >
-                  <div className="placement-officer-left">
-                    {form.photoUrl ? (
-                      <div className="placement-officer-photo">
-                        <img src={form.photoUrl} alt={form.name} />
-                      </div>
-                    ) : (
-                      <div className="placement-officer-photo" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f5f7fa' }}>
-                        <span style={{ fontSize: '48px', fontWeight: 700, color: '#243358', fontFamily: 'Georgia, serif' }}>?</span>
-                      </div>
-                    )}
-                    <h4 className="placement-officer-name">{form.name || currentRole?.label || 'Name'}</h4>
-                    <p className="placement-officer-designation">{form.title || currentRole?.label}</p>
-                    {form.qualification && (
-                      <p className="placement-officer-qual">{form.qualification}</p>
-                    )}
-                  </div>
-                  <div className="placement-officer-msg">
-                    {form.message ? (
-                      form.message.split('\n').filter(p => p.trim()).map((para, i) => (
-                        <p key={i}>{para}</p>
-                      ))
-                    ) : (
-                      <p style={{ fontStyle: 'italic', color: '#aaa' }}>No message added yet. Click to edit.</p>
-                    )}
-                  </div>
-                </div>
-              ) : (
-                /* Edit mode */
-                <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', border: '2px solid #c8963e', borderRadius: '10px', padding: '24px', background: '#f5f7fa' }}>
-                  <div className="placement-officer-left">
-                    <div className="placement-officer-photo">
-                      <ImageUpload
-                        value={form.photoUrl}
-                        onChange={(url) => handleChange('photoUrl', url)}
-                        label=""
-                        placeholder="Photo"
-                      />
+                {/* Preview mode */}
+                {!editingRole ? (
+                  <div
+                    className="placement-officer-card"
+                    onClick={() => setEditingRole(true)}
+                    style={{ cursor: 'pointer' }}
+                    title="Click to edit"
+                  >
+                    <div className="placement-officer-left">
+                      {form.photoUrl ? (
+                        <div className="placement-officer-photo">
+                          <img src={form.photoUrl} alt={form.name} />
+                        </div>
+                      ) : (
+                        <div className="placement-officer-photo" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f5f7fa' }}>
+                          <span style={{ fontSize: '48px', fontWeight: 700, color: '#243358', fontFamily: 'Georgia, serif' }}>?</span>
+                        </div>
+                      )}
+                      <h4 className="placement-officer-name">{form.name || currentRole?.label || 'Name'}</h4>
+                      <p className="placement-officer-designation">{form.title || currentRole?.label}</p>
+                      {form.qualification && <p className="placement-officer-qual">{form.qualification}</p>}
                     </div>
-                    <input
-                      type="text"
-                      value={form.name}
-                      onChange={(e) => handleChange('name', e.target.value)}
-                      placeholder="Full Name"
-                      style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '14px', fontWeight: 700, fontFamily: 'Georgia, serif', color: '#243358', textAlign: 'center', marginBottom: '6px', boxSizing: 'border-box' }}
-                    />
-                    <input
-                      type="text"
-                      value={form.title}
-                      onChange={(e) => handleChange('title', e.target.value)}
-                      placeholder="Title / Designation"
-                      style={{ width: '100%', padding: '5px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', textAlign: 'center', color: '#243358', fontWeight: 500, marginBottom: '6px', boxSizing: 'border-box' }}
-                    />
-                    <input
-                      type="text"
-                      value={form.qualification}
-                      onChange={(e) => handleChange('qualification', e.target.value)}
-                      placeholder="Qualification"
-                      style={{ width: '100%', padding: '5px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', textAlign: 'center', color: '#666', boxSizing: 'border-box' }}
-                    />
+                    <div className="placement-officer-msg">
+                      {form.message ? (
+                        form.message.split('\n').filter((p) => p.trim()).map((para, i) => <p key={i}>{para}</p>)
+                      ) : (
+                        <p style={{ fontStyle: 'italic', color: '#aaa' }}>No message added yet. Click to edit.</p>
+                      )}
+                    </div>
                   </div>
-                  <div className="placement-officer-msg">
-                    <textarea
-                      value={form.message}
-                      onChange={(e) => handleChange('message', e.target.value)}
-                      placeholder="Write the message or about section..."
-                      rows={6}
-                      style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', color: '#555', lineHeight: '1.75', resize: 'vertical', boxSizing: 'border-box', minHeight: '120px' }}
-                    />
+                ) : (
+                  /* Edit mode */
+                  <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', border: '2px solid #c8963e', borderRadius: '10px', padding: '24px', background: '#f5f7fa' }}>
+                    <div className="placement-officer-left">
+                      <div className="placement-officer-photo">
+                        <ImageUpload value={form.photoUrl} onChange={(url) => handleChange('photoUrl', url)} label="" placeholder="Photo" />
+                      </div>
+                      <input type="text" value={form.name} onChange={(e) => handleChange('name', e.target.value)} placeholder="Full Name"
+                        style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '14px', fontWeight: 700, fontFamily: 'Georgia, serif', color: '#243358', textAlign: 'center', marginBottom: '6px', boxSizing: 'border-box' }} />
+                      <input type="text" value={form.title} onChange={(e) => handleChange('title', e.target.value)} placeholder="Title / Designation"
+                        style={{ width: '100%', padding: '5px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', textAlign: 'center', color: '#243358', fontWeight: 500, marginBottom: '6px', boxSizing: 'border-box' }} />
+                      <input type="text" value={form.qualification} onChange={(e) => handleChange('qualification', e.target.value)} placeholder="Qualification"
+                        style={{ width: '100%', padding: '5px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', textAlign: 'center', color: '#666', boxSizing: 'border-box' }} />
+                    </div>
+                    <div className="placement-officer-msg">
+                      <textarea value={form.message} onChange={(e) => handleChange('message', e.target.value)} placeholder="Write the message or about section..." rows={6}
+                        style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', color: '#555', lineHeight: '1.75', resize: 'vertical', boxSizing: 'border-box', minHeight: '120px' }} />
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {editingRole && (
-                <div style={{ marginTop: '14px', display: 'flex', gap: '10px', alignItems: 'center' }}>
-                  <button
-                    className="btn btn-success btn-sm"
-                    onClick={() => { handleSave(); setEditingRole(false); }}
-                    disabled={saving}
-                    style={{ padding: '8px 22px', fontSize: '13px' }}
-                  >
-                    {saving ? 'Saving...' : 'Save & Done'}
-                  </button>
-                  <button
-                    className="btn btn-secondary btn-sm"
-                    onClick={() => {
-                      if (activeEntry) {
-                        setForm({ ...defaultEntry, ...activeEntry });
-                      } else {
-                        setForm({ ...defaultEntry });
-                      }
-                      setEditingRole(false);
-                      setMsg(null);
-                    }}
-                    style={{ padding: '8px 22px', fontSize: '13px' }}
-                  >
-                    Cancel
-                  </button>
-                  {activeEntry && (
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => { handleDelete(); setEditingRole(false); }}
-                      style={{ padding: '8px 22px', fontSize: '13px' }}
-                    >
-                      Delete
+                {editingRole && (
+                  <div style={{ marginTop: '14px', display: 'flex', gap: '10px', alignItems: 'center' }}>
+                    <button className="btn btn-success btn-sm" onClick={() => { handleSave(); setEditingRole(false); }} disabled={saving} style={{ padding: '8px 22px', fontSize: '13px' }}>
+                      {saving ? 'Saving...' : 'Save & Done'}
                     </button>
-                  )}
-                </div>
-              )}
-            </div>
-          )}
+                    <button className="btn btn-secondary btn-sm" onClick={() => { setForm(activeEntry ? { ...defaultEntry, ...activeEntry } : { ...defaultEntry }); setEditingRole(false); setMsg(null); }} style={{ padding: '8px 22px', fontSize: '13px' }}>
+                      Cancel
+                    </button>
+                    {activeEntry && (
+                      <button className="btn btn-danger btn-sm" onClick={() => { handleDelete(); setEditingRole(false); }} style={{ padding: '8px 22px', fontSize: '13px' }}>
+                        Delete
+                      </button>
+                    )}
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </AdminLayout>

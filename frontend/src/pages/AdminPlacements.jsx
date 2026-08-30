@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
+import AdminAlert from '../components/AdminAlert';
+import AdminTabs from '../components/AdminTabs';
+import AdminLoading from '../components/AdminLoading';
 import ImageUpload from '../components/ImageUpload';
 import PdfUpload from '../components/PdfUpload';
 import './Academics.css';
@@ -212,7 +215,7 @@ function AdminPlacements() {
   if (loading) {
     return (
       <AdminLayout>
-        <div style={{ padding: '40px', textAlign: 'center', color: '#888' }}>Loading...</div>
+        <AdminLoading text="Loading placements..." />
       </AdminLayout>
     );
   }
@@ -224,27 +227,12 @@ function AdminPlacements() {
       </div>
 
       <div className="admin-content">
-        {/* Sub-tabs */}
-        <div style={{ display: 'flex', gap: '4px', marginBottom: '20px', background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '4px', flexWrap: 'wrap' }}>
-          {SECTIONS.map((sec) => (
-            <button
-              key={sec.key}
-              className={`gallery-tab ${activeTab === sec.key ? 'active' : ''}`}
-              onClick={() => setActiveTab(sec.key)}
-            >
-              {sec.label}
-              {sections[sec.key] && <span className="gallery-tab-count" style={{ fontSize: '10px' }}>Saved</span>}
-            </button>
-          ))}
-        </div>
+        <AdminTabs tabs={SECTIONS.map((s) => ({ ...s, saved: !!sections[s.key] }))} activeTab={activeTab} onChange={setActiveTab} />
 
-        {/* Alert */}
-        {msg && (
-          <div className={`alert alert-${msg.type}`}>{msg.text}</div>
-        )}
+        <AdminAlert type={msg?.type} message={msg} onDismiss={() => setMsg(null)} />
 
         {/* Title */}
-        <h2 style={{ margin: '0 0 20px', fontFamily: 'Georgia, serif', fontSize: '22px', color: '#243358' }}>
+        <h2 className="admin-section-title" style={{ marginBottom: '20px' }}>
           {currentSection?.label}
         </h2>
 

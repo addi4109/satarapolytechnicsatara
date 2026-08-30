@@ -4,6 +4,7 @@ import { db } from '../lib/firebase';
 import { collection, getDocs, deleteDoc, doc, orderBy, query, updateDoc } from 'firebase/firestore';
 import { getAdminApiKey } from '../lib/adminApi';
 import AdminLayout from './AdminLayout';
+import AdminAlert from '../components/AdminAlert';
 import './Admin.css';
 
 function AdminFeedbacks() {
@@ -109,24 +110,7 @@ function AdminFeedbacks() {
       </div>
 
       <div className="admin-content">
-        {error && (
-          <div className="alert alert-error">
-            {error}
-            <button
-              style={{
-                float: 'right',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '16px',
-                color: 'inherit',
-              }}
-              onClick={() => setError(null)}
-            >
-              ×
-            </button>
-          </div>
-        )}
+        <AdminAlert type="error" message={error} onDismiss={() => setError('')} />
 
         {/* Filters */}
         <div

@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
+import AdminAlert from '../components/AdminAlert';
+import AdminTabs from '../components/AdminTabs';
+import AdminLoading from '../components/AdminLoading';
 import PdfUpload from '../components/PdfUpload';
 import './Academics.css';
 import { getAcademicYear } from '../lib/siteConfig';
@@ -825,22 +828,10 @@ function AdminAdmissions() {
       </div>
 
       <div className="admin-content">
-        {/* Tabs */}
-        <div className="about-admin-tabs">
-          {SECTIONS.map((sec) => (
-            <button
-              key={sec.key}
-              className={`about-admin-tab ${activeTab === sec.key ? 'active' : ''}`}
-              onClick={() => setActiveTab(sec.key)}
-            >
-              {sec.label}
-              {sections[sec.key] && <span className="about-tab-saved">Saved</span>}
-            </button>
-          ))}
-        </div>
+        <AdminTabs tabs={SECTIONS.map((s) => ({ ...s, saved: !!sections[s.key] }))} activeTab={activeTab} onChange={setActiveTab} />
 
         {/* Alert */}
-        {msg && <div className={`alert alert-${msg.type}`}>{msg.text}</div>}
+        <AdminAlert type={msg?.type} message={msg} onDismiss={() => setMsg(null)} />
 
         {/* Action Bar */}
         <div className="admission-action-bar">

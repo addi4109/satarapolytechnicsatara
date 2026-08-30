@@ -4,6 +4,8 @@ import { db } from '../lib/firebase';
 import { collection, getDocs, deleteDoc, doc, orderBy, query } from 'firebase/firestore';
 import { getAdminApiKey } from '../lib/adminApi';
 import AdminLayout from './AdminLayout';
+import AdminAlert from '../components/AdminAlert';
+import AdminLoading from '../components/AdminLoading';
 import './Admin.css';
 
 function AdminEnquiries() {
@@ -111,24 +113,7 @@ function AdminEnquiries() {
       </div>
 
       <div className="admin-content">
-        {error && (
-          <div className="alert alert-error">
-            {error}
-            <button
-              style={{
-                float: 'right',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '16px',
-                color: 'inherit',
-              }}
-              onClick={() => setError(null)}
-            >
-              ×
-            </button>
-          </div>
-        )}
+        <AdminAlert type="error" message={error} onDismiss={() => setError('')} />
 
         {/* Filters */}
         <div
@@ -179,9 +164,7 @@ function AdminEnquiries() {
         </div>
 
         {loading ? (
-          <div style={{ textAlign: 'center', padding: '40px', color: '#888' }}>
-            Loading enquiries...
-          </div>
+          <AdminLoading text="Loading enquiries..." />
         ) : filtered.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '40px', color: '#888' }}>
             {enquiries.length === 0

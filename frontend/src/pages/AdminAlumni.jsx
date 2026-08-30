@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAdminApiKey } from '../lib/adminApi';
 import AdminLayout from './AdminLayout';
+import AdminAlert from '../components/AdminAlert';
 import './Admin.css';
 
 const API_URL = '/api';
@@ -347,8 +348,7 @@ function AdminAlumni() {
         {/* REGISTRATIONS TAB */}
         {/* ═══════════════════════════════════════════ */}
         {activeTab === 'registrations' && (
-          <>
-            {alumniError && <div className="alert alert-error">{alumniError}<button style={{ float: 'right', background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px', color: 'inherit' }} onClick={() => setAlumniError('')}>×</button></div>}
+          <>             <AdminAlert type="error" message={alumniError} onDismiss={() => setAlumniError('')} />
 
             <div style={{ display: 'flex', gap: '12px', marginBottom: '20px', flexWrap: 'wrap' }}>
               <input type="text" placeholder="Search by name, email, phone, or company..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} style={{ flex: 1, minWidth: '200px', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', fontFamily: "'Times New Roman', Times, serif" }} />
@@ -456,8 +456,7 @@ function AdminAlumni() {
         {/* ENTREPRENEURS TAB */}
         {/* ═══════════════════════════════════════════ */}
         {activeTab === 'entrepreneurs' && (
-          <>
-            {entError && <div className="alert alert-error">{entError}<button style={{ float: 'right', background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px', color: 'inherit' }} onClick={() => setEntError('')}>×</button></div>}
+          <>             <AdminAlert type="error" message={entError} onDismiss={() => setEntError('')} />
 
             {/* Top bar */}
             <div style={{ display: 'flex', gap: '12px', marginBottom: '20px', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -529,8 +528,7 @@ function AdminAlumni() {
         {/* ALUMNI ASSOCIATION TAB */}
         {/* ═══════════════════════════════════════════ */}
         {activeTab === 'association' && (
-          <>
-            {assocError && <div className="alert alert-error">{assocError}<button style={{ float: 'right', background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px', color: 'inherit' }} onClick={() => setAssocError('')}>×</button></div>}
+          <>             <AdminAlert type="error" message={assocError} onDismiss={() => setAssocError('')} />
 
             <div style={{ display: 'flex', gap: '12px', marginBottom: '20px', flexWrap: 'wrap', alignItems: 'center' }}>
               <input type="text" placeholder="Search by name or designation..." value={assocSearch} onChange={(e) => setAssocSearch(e.target.value)} style={{ flex: 1, minWidth: '200px', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', fontFamily: "'Times New Roman', Times, serif" }} />

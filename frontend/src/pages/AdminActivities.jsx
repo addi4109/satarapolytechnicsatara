@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
+import AdminAlert from '../components/AdminAlert';
+import AdminTabs from '../components/AdminTabs';
+import AdminLoading from '../components/AdminLoading';
 import ImageUpload from '../components/ImageUpload';
 
 import './Admin.css';
@@ -308,17 +311,8 @@ function AdminActivities() {
       <div className="admin-topbar"><h1>Activities</h1></div>
 
       <div className="admin-content">
-        {/* Tabs */}
-        <div className="about-admin-tabs">
-          {SECTIONS.map((sec) => (
-            <button key={sec.key} className={`about-admin-tab ${activeTab === sec.key ? 'active' : ''}`} onClick={() => setActiveTab(sec.key)}>
-              {sec.label}
-              {sections[sec.key] && <span className="about-tab-saved">Saved</span>}
-            </button>
-          ))}
-        </div>
-
-        {msg && <div className={`alert alert-${msg.type}`}>{msg.text}</div>}
+        <AdminTabs tabs={SECTIONS.map((s) => ({ ...s, saved: !!sections[s.key] }))} activeTab={activeTab} onChange={setActiveTab} />
+        <AdminAlert type={msg?.type} message={msg} onDismiss={() => setMsg(null)} />
 
         {/* Action Bar */}
         <div className="admission-action-bar">

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AdminLayout from './AdminLayout';
+import AdminAlert from '../components/AdminAlert';
+import AdminLoading from '../components/AdminLoading';
 import './Admin.css';
 import './CellsPage.css';
 
@@ -144,7 +146,7 @@ function AdminCells() {
   if (loading) {
     return (
       <AdminLayout>
-        <div style={{ padding: '40px', textAlign: 'center', color: '#888' }}>Loading...</div>
+        <AdminLoading text="Loading cells..." />
       </AdminLayout>
     );
   }
@@ -166,12 +168,7 @@ function AdminCells() {
       </div>
 
       <div className="admin-content">
-        {message && (
-          <div className={`alert alert-${message.type}`}>
-            {message.text}
-            <button style={{ float: 'right', background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px', color: 'inherit' }} onClick={() => setMessage(null)}>×</button>
-          </div>
-        )}
+        <AdminAlert type={message?.type} message={message} onDismiss={() => setMessage(null)} />
 
         {/* ─── LIST VIEW ─── */}
         {view === 'list' && (

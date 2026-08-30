@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
+import AdminAlert from '../components/AdminAlert';
+import AdminLoading from '../components/AdminLoading';
 import PdfUpload from '../components/PdfUpload';
 import ImageUpload from '../components/ImageUpload';
 import './Admin.css';
@@ -117,12 +119,7 @@ function AdminNotices() {
         <h1>Notices</h1>
       </div>
       <div className="admin-content">
-        {message && (
-          <div className={`alert alert-${message.type}`}>
-            {message.text}
-            <button style={{ float: 'right', background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px', color: 'inherit' }} onClick={() => setMessage(null)}>x</button>
-          </div>
-        )}
+        <AdminAlert type={message?.type} message={message} onDismiss={() => setMessage(null)} />
 
         {/* Sub-tabs */}
         <div style={{ display: 'flex', gap: '4px', marginBottom: '20px', background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '4px', flexWrap: 'wrap' }}>
@@ -151,7 +148,7 @@ function AdminNotices() {
 
         {/* Card Grid */}
         {loading ? (
-          <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading...</p>
+          <AdminLoading text="Loading notices..." />
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
             {/* Add New Card */}

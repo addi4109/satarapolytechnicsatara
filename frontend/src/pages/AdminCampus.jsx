@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
+import AdminAlert from '../components/AdminAlert';
+import AdminTabs from '../components/AdminTabs';
+import AdminStaffCard from '../components/AdminStaffCard';
+import AdminLoading from '../components/AdminLoading';
 import ImageUpload from '../components/ImageUpload';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './Admin.css';
@@ -818,45 +822,62 @@ function AdminCampus() {
               <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
               <div className="form-group">
                 <label style={{ fontSize: '13px', fontWeight: 600, color: '#333', marginBottom: '12px', display: 'block' }}>Staff Members ({form.staffMembers.length})</label>
+                <p className="admin-edit-hint">Click a card to edit. Click the + box to add a new member.</p>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '16px' }}>
+                <div className="gb-cards-grid">
                   {/* Existing staff cards */}
                   {form.staffMembers.map((member, index) => (
-                    <div key={index} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '16px', textAlign: 'center', position: 'relative', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
-                      <button onClick={() => deleteStaff(index)} style={{ position: 'absolute', top: '8px', right: '8px', width: '24px', height: '24px', borderRadius: '50%', border: 'none', background: '#fdecea', color: '#d32f2f', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }} title="Remove">×</button>
-                      <div style={{ width: '80px', height: '80px', borderRadius: '50%', border: '3px solid #e4e8ed', margin: '0 auto 12px', overflow: 'hidden', background: '#f5f7fa', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        {member.photoUrl ? (
-                          <img src={member.photoUrl} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        ) : (
-                          <span style={{ fontSize: '28px', fontWeight: 700, color: '#243358', fontFamily: 'Georgia, serif' }}>{member.name?.split(' ')?.pop()?.charAt(0) || '?'}</span>
-                        )}
-                      </div>
-                      <h4 style={{ margin: '0 0 4px', fontSize: '14px', fontWeight: 700, color: '#243358' }}>{member.name}</h4>
-                      <p style={{ margin: '0 0 8px', fontSize: '12px', color: '#666' }}>{member.designation}</p>
-                      {member.phone && <p style={{ margin: '0 0 2px', fontSize: '12px', color: '#555' }}>{member.phone}</p>}
-                      {member.email && <p style={{ margin: '0 0 10px', fontSize: '11px', color: '#888' }}>{member.email}</p>}
-                      <button className="btn btn-primary btn-sm" onClick={() => openEditStaff(index)} style={{ width: '100%', fontSize: '12px' }}>Edit</button>
-                    </div>
+                    editStaffIdx === index ? (
+                      <AdminStaffCard
+                        key={index}
+                        isEditing
+                        editForm={staffForm}
+                        onFormChange={setStaffForm}
+                        onSave={saveStaff}
+                        onCancel={cancelStaffForm}
+                        saving={false}
+                        fields={[
+                          { key: 'name', label: 'Name', placeholder: 'Name *' },
+                          { key: 'designation', label: 'Designation', placeholder: 'Designation' },
+                          { key: 'phone', label: 'Phone', placeholder: 'Phone' },
+                          { key: 'email', label: 'Email', placeholder: 'Email' },
+                        ]}
+                      />
+                    ) : (
+                      <AdminStaffCard
+                        key={index}
+                        member={member}
+                        onStartEdit={() => openEditStaff(index)}
+                        onDelete={() => deleteStaff(index)}
+                        deleteConfirm={false}
+                        fields={[]}
+                      />
+                    )
                   ))}
 
                   {/* Add new card */}
                   {showStaffForm ? (
-                    <div style={{ background: '#f8f9fa', border: '2px solid #c8963e', borderRadius: '10px', padding: '16px', textAlign: 'center' }}>
-                      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px' }}>
-                        <button onClick={cancelStaffForm} style={{ background: 'none', border: 'none', fontSize: '18px', cursor: 'pointer', color: '#999' }}>×</button>
-                      </div>
-                      <div style={{ marginBottom: '12px' }}><ImageUpload value={staffForm.photoUrl} onChange={(url) => setStaffForm({ ...staffForm, photoUrl: url })} circle /></div>
-                      <input type="text" value={staffForm.name} onChange={(e) => setStaffForm({ ...staffForm, name: e.target.value })} placeholder="Name *" style={{ width: '100%', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box', marginBottom: '8px' }} />
-                      <input type="text" value={staffForm.designation} onChange={(e) => setStaffForm({ ...staffForm, designation: e.target.value })} placeholder="Designation" style={{ width: '100%', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box', marginBottom: '8px' }} />
-                      <input type="text" value={staffForm.phone} onChange={(e) => setStaffForm({ ...staffForm, phone: e.target.value })} placeholder="Phone" style={{ width: '100%', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box', marginBottom: '8px' }} />
-                      <input type="email" value={staffForm.email} onChange={(e) => setStaffForm({ ...staffForm, email: e.target.value })} placeholder="Email" style={{ width: '100%', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', boxSizing: 'border-box', marginBottom: '10px' }} />
-                      <button className="btn btn-success btn-sm" onClick={saveStaff} style={{ width: '100%' }}>{editStaffIdx !== null ? 'Update' : 'Add'} Staff</button>
-                    </div>
+                    <AdminStaffCard
+                      isAddMode
+                      editForm={staffForm}
+                      onFormChange={setStaffForm}
+                      onSave={saveStaff}
+                      onCancel={cancelStaffForm}
+                      fields={[
+                        { key: 'name', label: 'Name', placeholder: 'Name *' },
+                        { key: 'designation', label: 'Designation', placeholder: 'Designation' },
+                        { key: 'phone', label: 'Phone', placeholder: 'Phone' },
+                        { key: 'email', label: 'Email', placeholder: 'Email' },
+                      ]}
+                    />
                   ) : (
-                    <div onClick={openAddStaff} style={{ background: '#fff', border: '2px dashed #b9c3d4', borderRadius: '10px', padding: '16px', textAlign: 'center', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '280px', transition: 'border-color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = '#c8963e'} onMouseLeave={(e) => e.currentTarget.style.borderColor = '#b9c3d4'}>
-                      <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#f5f7fa', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', color: '#243358', marginBottom: '10px' }}>+</div>
-                      <span style={{ fontSize: '13px', fontWeight: 600, color: '#243358' }}>Add Staff</span>
-                      <span style={{ fontSize: '11px', color: '#999', marginTop: '4px' }}>Click to add new member</span>
+                    <div
+                      onClick={openAddStaff}
+                      className="gb-member-card"
+                      style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'dashed', minHeight: '240px' }}
+                    >
+                      <span style={{ fontSize: '36px', color: '#bbb', marginBottom: '6px' }}>+</span>
+                      <span style={{ fontSize: '13px', color: '#999', fontWeight: 600 }}>Add Staff</span>
                     </div>
                   )}
                 </div>
@@ -869,7 +890,7 @@ function AdminCampus() {
   );
 
   if (loading) {
-    return <AdminLayout><div style={{ padding: '40px', textAlign: 'center', color: '#888' }}>Loading...</div></AdminLayout>;
+    return <AdminLayout><AdminLoading text="Loading campus..." /></AdminLayout>;
   }
 
   return (
@@ -878,25 +899,11 @@ function AdminCampus() {
         <h1>Campus</h1>
       </div>
       <div className="admin-content">
-        {/* Tabs */}
-        <div style={{ display: 'flex', gap: '6px', marginBottom: '20px', background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '4px', flexWrap: 'wrap' }}>
-          {SECTIONS.map((sec) => (
-            <button key={sec.key} className={`gallery-tab ${activeTab === sec.key ? 'active' : ''}`} onClick={() => setActiveTab(sec.key)}>
-              {sec.label}
-              {sections[sec.key] && <span className="gallery-tab-count" style={{ fontSize: '10px' }}>Saved</span>}
-            </button>
-          ))}
-        </div>
+        <AdminTabs tabs={SECTIONS.map((s) => ({ ...s, saved: !!sections[s.key] }))} activeTab={activeTab} onChange={setActiveTab} />
 
-        {/* Alert */}
-        {msg && (
-          <div className={`alert alert-${msg.type}`} style={{ marginBottom: '16px' }}>
-            {msg.text}
-            <button style={{ float: 'right', background: 'none', border: 'none', cursor: 'pointer', fontSize: '16px', color: 'inherit' }} onClick={() => setMsg(null)}>x</button>
-          </div>
-        )}
+        <AdminAlert type={msg?.type} message={msg} onDismiss={() => setMsg(null)} />
 
-        <h2 style={{ margin: '0 0 20px', fontFamily: 'Georgia, serif', fontSize: '22px', color: '#243358' }}>
+        <h2 className="admin-section-title" style={{ marginBottom: '20px' }}>
           {currentSection?.label}
         </h2>
 

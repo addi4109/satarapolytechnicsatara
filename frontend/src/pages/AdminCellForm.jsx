@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import AdminLayout from './AdminLayout';
+import AdminAlert from '../components/AdminAlert';
 import './Admin.css';
 
 const API_URL = '/api';
@@ -146,24 +147,7 @@ function AdminCellForm() {
         <h1>{isEdit ? 'Edit Cell / Committee' : 'Add New Cell / Committee'}</h1>
       </div>
       <div className="admin-content">
-        {message && (
-          <div className={`alert alert-${message.type}`}>
-            {message.text}
-            <button
-              style={{
-                float: 'right',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '16px',
-                color: 'inherit',
-              }}
-              onClick={() => setMessage(null)}
-            >
-              x
-            </button>
-          </div>
-        )}
+        <AdminAlert type={message?.type} message={message} onDismiss={() => setMessage(null)} />
 
         {/* Live Preview */}
         <div className="live-preview">
