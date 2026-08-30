@@ -42,7 +42,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 28px;
+  padding: 12px 20px;
   border-bottom: 1px solid #e4e8ed;
   background: #243358;
   border-radius: 16px 16px 0 0;
@@ -57,12 +57,12 @@
 .debug-panel-title h2 {
   margin: 0;
   font-family: 'Georgia', serif;
-  font-size: 20px;
+  font-size: 16px;
   color: #c8963e;
 }
 
 .debug-panel-icon {
-  font-size: 24px;
+  font-size: 18px;
 }
 
 .debug-close-btn {
@@ -87,8 +87,8 @@
 
 /* ─── Subtitle ─── */
 .debug-panel-subtitle {
-  padding: 14px 28px;
-  font-size: 13px;
+  padding: 8px 20px;
+  font-size: 11px;
   color: #888;
   border-bottom: 1px solid #e4e8ed;
   background: #f8f9fb;
@@ -97,9 +97,9 @@
 /* ─── Grid ─── */
 .debug-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 16px;
-  padding: 20px 28px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 10px;
+  padding: 12px 20px;
 }
 
 /* ─── Card ─── */
@@ -133,15 +133,14 @@
 /* ─── Card Header ─── */
 .debug-card-header {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 16px 18px 12px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px 8px;
 }
 
 .debug-card-icon {
-  font-size: 28px;
+  font-size: 22px;
   flex-shrink: 0;
-  margin-top: 2px;
 }
 
 .debug-card-info {
@@ -150,26 +149,26 @@
 }
 
 .debug-card-info h3 {
-  margin: 0 0 2px;
+  margin: 0 0 1px;
   font-family: 'Georgia', serif;
-  font-size: 15px;
+  font-size: 13px;
   color: #243358;
   font-weight: 700;
 }
 
 .debug-card-info p {
   margin: 0;
-  font-size: 12px;
+  font-size: 11px;
   color: #888;
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
 /* ─── Status Badge ─── */
 .debug-status-badge {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 12px;
+  padding: 3px 8px;
+  border-radius: 10px;
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -191,26 +190,26 @@
 
 /* ─── Env List ─── */
 .debug-env-list {
-  padding: 0 18px 14px;
+  padding: 0 14px 8px;
   border-top: 1px solid #f0f0f0;
-  margin-top: 4px;
-  padding-top: 12px;
+  margin-top: 2px;
+  padding-top: 6px;
 }
 
 .debug-env-label {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.8px;
   color: #aaa;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .debug-env-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 0;
+  padding: 3px 0;
   border-bottom: 1px solid #f8f8f8;
 }
 
@@ -220,31 +219,31 @@
 
 .debug-env-key {
   font-family: 'Courier New', monospace;
-  font-size: 11px;
+  font-size: 10px;
   color: #243358;
   background: #f0f3f8;
-  padding: 2px 8px;
-  border-radius: 4px;
+  padding: 1px 6px;
+  border-radius: 3px;
   word-break: break-all;
 }
 
 .debug-env-source {
-  font-size: 10px;
+  font-size: 9px;
   color: #aaa;
   white-space: nowrap;
-  margin-left: 8px;
+  margin-left: 6px;
 }
 
 /* ─── Footer ─── */
 .debug-footer {
   display: flex;
   justify-content: center;
-  gap: 24px;
-  padding: 14px 28px;
+  gap: 16px;
+  padding: 8px 20px;
   border-top: 1px solid #e4e8ed;
   background: #f8f9fb;
   border-radius: 0 0 16px 16px;
-  font-size: 12px;
+  font-size: 11px;
   color: #888;
 }
 
@@ -270,17 +269,17 @@
   }
 
   .debug-panel-header {
-    padding: 16px 20px;
+    padding: 10px 14px;
   }
 
   .debug-panel-subtitle {
-    padding: 12px 20px;
+    padding: 6px 14px;
   }
 
   .debug-footer {
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    padding: 12px 20px;
+    gap: 4px;
+    padding: 6px 14px;
   }
 }
