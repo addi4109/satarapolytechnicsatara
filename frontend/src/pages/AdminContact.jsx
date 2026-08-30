@@ -224,38 +224,40 @@ function AdminContact() {
           <div className="admin-card">
             <div className="admin-card-header">
               <h3>Office Staff Contacts</h3>
-              <button className="btn btn-success btn-sm" onClick={addOfficeRow}>+ Add Staff</button>
+              <button className="btn btn-success btn-sm" onClick={addOfficeRow}>+ Add Row</button>
             </div>
             <div className="admin-card-body">
-              <p className="admin-edit-hint">Click a card to edit. Click the + box to add a new staff member.</p>
-              <div className="gb-cards-grid">
-                {officeContacts.map((row, i) => (
-                  <AdminStaffCard
-                    key={i}
-                    member={{ name: row.name, designation: row.designation, phone: row.phone, email: row.email }}
-                    isEditing={editingOfficeIdx === i}
-                    editForm={row}
-                    onFormChange={(updated) => updateOfficeRow(i, null, null, updated)}
-                    onStartEdit={() => setEditingOfficeIdx(i)}
-                    onSave={() => setEditingOfficeIdx(null)}
-                    onCancel={() => setEditingOfficeIdx(null)}
-                    onDelete={() => removeOfficeRow(i)}
-                    deleteConfirm={false}
-                    onCancelDelete={() => {}}
-                    fields={[
-                      { key: 'designation', label: 'Designation', placeholder: 'e.g. Principal' },
-                      { key: 'name', label: 'Name', placeholder: 'Staff name' },
-                      { key: 'phone', label: 'Phone', placeholder: 'Phone number' },
-                      { key: 'email', label: 'Email', placeholder: 'Email' },
-                    ]}
-                  />
-                ))}
-                {officeContacts.length === 0 && (
-                  <div className="gb-member-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'dashed', minHeight: '200px' }}>
-                    <span style={{ fontSize: '13px', color: '#999' }}>No staff added yet. Click "+ Add Staff" above.</span>
+              {officeContacts.length === 0 && (
+                <p style={{ textAlign: 'center', color: '#999', padding: '20px' }}>No office contacts yet. Click "+ Add Row" to add one.</p>
+              )}
+              {officeContacts.map((row, i) => (
+                <div key={i} style={{ background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '16px', marginBottom: '12px', position: 'relative' }}>
+                  <button
+                    className="member-remove-btn"
+                    title="Remove"
+                    onClick={() => removeOfficeRow(i)}
+                    style={{ position: 'absolute', top: '10px', right: '10px' }}
+                  >×</button>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                    <div className="form-group">
+                      <label style={labelStyle}>Designation</label>
+                      <input type="text" value={row.designation} onChange={(e) => updateOfficeRow(i, 'designation', e.target.value)} style={inputStyle} placeholder="e.g. Principal" />
+                    </div>
+                    <div className="form-group">
+                      <label style={labelStyle}>Name</label>
+                      <input type="text" value={row.name} onChange={(e) => updateOfficeRow(i, 'name', e.target.value)} style={inputStyle} placeholder="Staff name" />
+                    </div>
+                    <div className="form-group">
+                      <label style={labelStyle}>Phone</label>
+                      <input type="text" value={row.phone} onChange={(e) => updateOfficeRow(i, 'phone', e.target.value)} style={inputStyle} placeholder="Phone number" />
+                    </div>
+                    <div className="form-group">
+                      <label style={labelStyle}>Email</label>
+                      <input type="email" value={row.email} onChange={(e) => updateOfficeRow(i, 'email', e.target.value)} style={inputStyle} placeholder="Email address" />
+                    </div>
                   </div>
-                )}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         )}

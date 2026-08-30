@@ -266,19 +266,17 @@ function Contact() {
                   { designation: 'General Office', name: 'Satara Polytechnic', phone: fallbackPhone, email: '' },
                 ];
                 return (
-                  <div className="faculty-grid" style={{ marginTop: '16px' }}>
+                  <div className="contact-cards-grid" style={{ marginTop: '16px' }}>
                     {rows.map((row, i) => (
-                      <div className="faculty-card-new" key={i}>
-                        <div className="fcard-photo">
-                          <span>{row.name ? row.name.charAt(0) : '?'}</span>
+                      <div className="contact-card" key={i}>
+                        <div className="contact-card-icon">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                         </div>
-                        <h4 className="fcard-name">{row.name || '—'}</h4>
-                        <p className="fcard-designation">{row.designation || ''}</p>
-                        <div className="fcard-details">
-                          {row.phone && <span><strong>Phone:</strong> <a href={`tel:${row.phone.replace(/[^0-9+]/g, '')}`}>{row.phone}</a></span>}
-                          {row.email && <span><strong>Email:</strong> <a href={`mailto:${row.email}`}>{row.email}</a></span>}
-                          {!row.phone && !row.email && <span>No contact info</span>}
-                        </div>
+                        <h4>{row.name || '—'}</h4>
+                        <p style={{ fontSize: '12px', color: '#243358', fontWeight: 500, marginBottom: '8px' }}>{row.designation || ''}</p>
+                        {row.phone && <p><a href={`tel:${row.phone.replace(/[^0-9+]/g, '')}`}>{row.phone}</a></p>}
+                        {row.email && <p><a href={`mailto:${row.email}`}>{row.email}</a></p>}
+                        {!row.phone && !row.email && <p style={{ color: '#aaa', fontSize: '12px' }}>No contact info</p>}
                       </div>
                     ))}
                   </div>
