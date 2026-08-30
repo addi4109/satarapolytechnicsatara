@@ -68,7 +68,7 @@ function PhotoGallery() {
         </p>
 
         {loading ? (
-          null
+          <LoadingSpinner />
         ) : photos.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>No photos available yet.</p>
         ) : (

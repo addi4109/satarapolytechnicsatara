@@ -56,7 +56,7 @@ function AdmissionNotices() {
       <div className="notices-page-wrap">
         <div className="notices-table-wrap">
           {loading ? (
-            null
+            <LoadingSpinner />
           ) : notices.length === 0 ? (
             <div className="notices-empty">
               <p>No admission notices available.</p>

@@ -51,7 +51,7 @@ function CellsPage() {
         </p>
 
         {loading ? (
-          null
+          <LoadingSpinner />
         ) : cells.length === 0 ? (
           <p style={{ color: '#888', textAlign: 'center', padding: '40px 0' }}>
             No cells or committees available yet.

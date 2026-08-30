@@ -75,7 +75,7 @@ function MediaNews() {
         </p>
 
         {loading ? (
-          null
+          <LoadingSpinner />
         ) : newsItems.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>No news available yet.</p>
         ) : (

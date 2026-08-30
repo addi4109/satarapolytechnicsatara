@@ -54,7 +54,7 @@ function Notices() {
       <div className="notices-page-wrap">
         <div className="notices-table-wrap">
           {loading ? (
-            null
+            <LoadingSpinner />
           ) : notices.length === 0 ? (
             <div className="notices-empty">
               <p>No notices available.</p>

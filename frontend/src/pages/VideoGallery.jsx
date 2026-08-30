@@ -64,7 +64,7 @@ function VideoGallery() {
         </p>
 
         {loading ? (
-          null
+          <LoadingSpinner />
         ) : videos.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>No videos available yet.</p>
         ) : (
