@@ -723,6 +723,84 @@
   }
 }
 
+/* ===== Department Events & Activities ===== */
+.dept-events-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 16px;
+}
+
+.dept-event-card {
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.dept-event-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.dept-event-img {
+  height: 180px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.dept-event-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s;
+}
+
+.dept-event-card:hover .dept-event-img img {
+  transform: scale(1.05);
+}
+
+.dept-event-body {
+  padding: 16px 18px;
+}
+
+.dept-event-date {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #2a5a8a;
+  background: #e0ecf5;
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.dept-event-title {
+  font-family: 'Georgia', serif;
+  font-size: 15px;
+  color: #2a5a8a;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.dept-event-desc {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .dept-events-grid {
+    grid-template-columns: 1fr;
+  }
+  .dept-event-img {
+    height: 160px;
+  }
+}
+
 /* Mobile tabs - hidden on desktop, visible on mobile */
 .dept-mobile-tabs {
   display: none;

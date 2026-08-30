@@ -29,6 +29,7 @@ const emptyForm = {
   psos: [],
   cos: [],
   deptNotices: [],
+  deptEvents: [],
   order: 0,
 };
 
@@ -82,6 +83,7 @@ function AdminDepartmentForm() {
           psos: dept.psos || [],
           cos: dept.cos || [],
           deptNotices: dept.deptNotices || [],
+          deptEvents: dept.deptEvents || [],
           order: dept.order || 0,
         });
       } else {
@@ -190,6 +192,21 @@ function AdminDepartmentForm() {
     setForm((prev) => ({ ...prev, deptNotices: prev.deptNotices.filter((_, i) => i !== idx) }));
   };
 
+  // Department Events management
+  const addDeptEvent = () => {
+    setForm((prev) => ({ ...prev, deptEvents: [...prev.deptEvents, { title: '', description: '', image: '', eventDate: new Date().toISOString().split('T')[0] }] }));
+  };
+  const updateDeptEvent = (idx, field, val) => {
+    setForm((prev) => {
+      const e = [...prev.deptEvents];
+      e[idx] = { ...e[idx], [field]: val };
+      return { ...prev, deptEvents: e };
+    });
+  };
+  const removeDeptEvent = (idx) => {
+    setForm((prev) => ({ ...prev, deptEvents: prev.deptEvents.filter((_, i) => i !== idx) }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -208,6 +225,7 @@ function AdminDepartmentForm() {
         psos: form.psos.filter((p) => p.title.trim() || p.description.trim()),
         cos: form.cos.filter((p) => p.title.trim() || p.description.trim()),
         deptNotices: form.deptNotices.filter((n) => n.title.trim()),
+        deptEvents: form.deptEvents.filter((e) => e.title.trim()),
         faculty: form.faculty.filter((f) => f.name.trim()),
         labs: form.labs.filter((l) => l.name.trim()),
         infrastructure: [],
@@ -575,6 +593,45 @@ function AdminDepartmentForm() {
                       <input type="text" placeholder="Notice title" value={notice.title} onChange={(e) => updateDeptNotice(idx, 'title', e.target.value)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px' }} />
                       <PdfUpload value={notice.url} onChange={(url) => updateDeptNotice(idx, 'url', url)} />
                       <button type="button" className="btn btn-danger btn-sm" onClick={() => removeDeptNotice(idx)} style={{ flexShrink: 0, padding: '4px 8px' }}>✕</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Card 8: Department Events & Activities */}
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <div>
+                <h3>Events & Activities</h3>
+                <p>Department events and activities</p>
+              </div>
+              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addDeptEvent}>+ Add Event</button>
+            </div>
+            <div className="dept-form-card-body">
+              {form.deptEvents.length === 0 ? (
+                <div className="members-empty">No events added yet. Click "+ Add Event" to add one.</div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {form.deptEvents.map((event, idx) => (
+                    <div key={idx} style={{ padding: '14px', background: '#f8f9fb', borderRadius: '8px', border: '1px solid #e4e8ed' }}>
+                      <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '32px', height: '28px', background: '#2a5a8a', color: '#fff', fontSize: '12px', fontWeight: 700, borderRadius: '4px', flexShrink: 0 }}>{idx + 1}</span>
+                        <input type="text" placeholder="Event title" value={event.title} onChange={(e) => updateDeptEvent(idx, 'title', e.target.value)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px' }} />
+                        <input type="date" value={event.eventDate ? new Date(event.eventDate).toISOString().split('T')[0] : ''} onChange={(e) => updateDeptEvent(idx, 'eventDate', e.target.value)} style={{ padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px' }} />
+                        <button type="button" className="btn btn-danger btn-sm" onClick={() => removeDeptEvent(idx)} style={{ flexShrink: 0, padding: '4px 8px' }}>✕</button>
+                      </div>
+                      <textarea placeholder="Description (optional)" value={event.description} onChange={(e) => updateDeptEvent(idx, 'description', e.target.value)} rows={2} style={{ width: '100%', padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }} />
+                      <ImageUpload
+                        value={event.image}
+                        onChange={(url) => updateDeptEvent(idx, 'image', url)}
+                        label="Event Image"
+                        placeholder="Upload event image..."
+                      />
                     </div>
                   ))}
                 </div>

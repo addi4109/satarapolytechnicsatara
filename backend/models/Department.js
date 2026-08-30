@@ -28,6 +28,13 @@ const deptNoticeSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+const deptEventSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String, default: '' },
+  image: { type: String, default: '' },
+  eventDate: { type: Date, default: Date.now },
+});
+
 const departmentSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
@@ -51,6 +58,7 @@ const departmentSchema = new mongoose.Schema(
     psos: [{ title: { type: String, default: '' }, description: { type: String, default: '' } }],
     cos: [{ title: { type: String, default: '' }, description: { type: String, default: '' } }],
     deptNotices: [deptNoticeSchema],
+    deptEvents: [deptEventSchema],
     order: { type: Number, default: 0 },
     hideFromHome: { type: Boolean, default: false },
   },

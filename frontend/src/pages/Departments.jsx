@@ -8,7 +8,7 @@ import './Gallery.css';
 
 const API_URL = '/api';
 const years = ['1st Year', '2nd Year', '3rd Year'];
-const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe', 'notices'];
+const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe', 'notices', 'events'];
 
 function DepartmentsPage() {
   const { deptId } = useParams();
@@ -73,6 +73,7 @@ function DepartmentsPage() {
     { id: 'curriculum', label: 'Curriculum / Syllabus' },
     { id: 'obe', label: 'Outcome Based Education' },
     { id: 'notices', label: 'Notices' },
+    { id: 'events', label: 'Events & Activities' },
   ];
 
   if (loading) {
@@ -492,6 +493,35 @@ function DepartmentsPage() {
                   </div>
                 ) : (
                   <p style={{ color: '#888', fontStyle: 'italic' }}>No notices available for this department.</p>
+                )}
+              </>
+            )}
+
+            {activeTab === 'events' && (
+              <>
+                <h2 className="content-heading">Events & Activities</h2>
+                <div className="content-line"></div>
+                {dept.deptEvents && dept.deptEvents.length > 0 ? (
+                  <div className="dept-events-grid">
+                    {dept.deptEvents.map((event, i) => (
+                      <div key={i} className="dept-event-card">
+                        {event.image && (
+                          <div className="dept-event-img" onClick={() => setLightbox({ image: event.image, name: event.title })}>
+                            <img src={event.image} alt={event.title} />
+                          </div>
+                        )}
+                        <div className="dept-event-body">
+                          <span className="dept-event-date">
+                            {new Date(event.eventDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
+                          </span>
+                          <h4 className="dept-event-title">{event.title}</h4>
+                          {event.description && <p className="dept-event-desc">{event.description}</p>}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p style={{ color: '#888', fontStyle: 'italic' }}>No events or activities added yet.</p>
                 )}
               </>
             )}
