@@ -9,6 +9,11 @@ body {
   min-height: 100vh;
 }
 
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* Public page sidebars: only on large screens (laptop/desktop) */
 @media (max-width: 1024px) {
   .about-sidebar {

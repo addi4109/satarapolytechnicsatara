@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import LoadingSpinner from "../components/LoadingSpinner";
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Gallery.css';
