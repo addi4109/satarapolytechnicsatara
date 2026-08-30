@@ -120,8 +120,8 @@ function Admissions() {
   const renderNote = (section) => {
     if (!section || !section.note || !section.note.trim()) return null;
     return (
-      <div style={{ marginTop: '24px', padding: '16px 20px', background: '#fffbe6', borderLeft: '4px solid #c8963e', borderRadius: '0 6px 6px 0' }}>
-        <strong style={{ color: '#243358', fontSize: '13px' }}>📝 Note:</strong>
+      <div style={{ marginTop: '24px', padding: '16px 20px', background: '#fffbe6', borderLeft: '4px solid #d4a54a', borderRadius: '0 6px 6px 0' }}>
+        <strong style={{ color: '#2a5a8a', fontSize: '13px' }}>📝 Note:</strong>
         <p style={{ margin: '6px 0 0', color: '#555', fontSize: '13px', lineHeight: '1.7' }}>{section.note}</p>
       </div>
     );
@@ -150,7 +150,7 @@ function Admissions() {
         {sub.title && (
           <>
             <h3 className="content-sub-heading">{sub.title}</h3>
-            <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '16px', borderRadius: '2px' }}></div>
+            <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '16px', borderRadius: '2px' }}></div>
           </>
         )}
         {renderContent(sub.content)}
@@ -273,7 +273,7 @@ function Admissions() {
               {/* Why Choose Us */}
               <div style={{ marginTop: '36px' }}>
                 <h3 className="content-sub-heading">Why Choose Satara Polytechnic, Satara?</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                 <div className="admission-highlight-grid">
                   <div className="admission-highlight-card">
                     <span className="highlight-num">01</span>
@@ -311,7 +311,7 @@ function Admissions() {
               {/* Key Dates / Important Info */}
               <div style={{ marginTop: '36px' }}>
                 <h3 className="content-sub-heading">Important Information</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                 {(() => {
                   const infoRows = getSection('overview').infoRows;
                   if (infoRows && infoRows.length > 0) {
@@ -360,10 +360,10 @@ function Admissions() {
               {/* Admission Routes */}
               <div style={{ marginTop: '36px' }}>
                 <h3 className="content-sub-heading">Admission Routes</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
-                  <div style={{ background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '24px' }}>
-                    <h4 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', margin: '0 0 10px' }}>Central Admission Process (CAP)</h4>
+                  <div style={{ background: '#f0f4f8', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '24px' }}>
+                    <h4 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#2a5a8a', margin: '0 0 10px' }}>Central Admission Process (CAP)</h4>
                     <p style={{ fontSize: '13.5px', color: '#555', lineHeight: '1.7', margin: 0 }}>
                       Admission through online CAP rounds conducted by DTE Maharashtra. Students must
                       register on the DTE portal, fill preference forms, and confirm admission at the
@@ -371,8 +371,8 @@ function Admissions() {
                       are covered under this process.
                     </p>
                   </div>
-                  <div style={{ background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '24px' }}>
-                    <h4 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', margin: '0 0 10px' }}>Institute Level / Management</h4>
+                  <div style={{ background: '#f0f4f8', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '24px' }}>
+                    <h4 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#2a5a8a', margin: '0 0 10px' }}>Institute Level / Management</h4>
                     <p style={{ fontSize: '13.5px', color: '#555', lineHeight: '1.7', margin: 0 }}>
                       Vacant seats after CAP rounds are filled under Institute Level / Management quota.
                       Interested candidates can contact the institute directly for availability and
@@ -424,7 +424,7 @@ function Admissions() {
               {getSection('courses').courseTable && getSection('courses').courseTable.length > 0 && (
                 <div style={{ marginTop: '36px' }}>
                   <h3 className="content-sub-heading">Course Details</h3>
-                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                  <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                   <div className="fee-table-wrap">
                     <table className="fee-table">
                       <thead>
@@ -455,7 +455,7 @@ function Admissions() {
               {/* Key Features */}
               <div style={{ marginTop: '36px' }}>
                 <h3 className="content-sub-heading">Key Features</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                 <div className="info-table">
                   <div className="info-row">
                     <span className="info-label">Curriculum</span>
@@ -564,7 +564,7 @@ function Admissions() {
               {/* Important Notes */}
               <div style={{ marginTop: '36px' }}>
                 <h3 className="content-sub-heading">Important Guidelines</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                 <div className="info-table">
                   <div className="info-row">
                     <span className="info-label">Registration</span>
@@ -649,7 +649,7 @@ function Admissions() {
               {/* Fee Payment Info */}
               <div style={{ marginTop: '32px' }}>
                 <h3 className="content-sub-heading">Fee Payment Guidelines</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                 <div className="info-table">
                   <div className="info-row">
                     <span className="info-label">Payment Mode</span>
@@ -721,7 +721,7 @@ function Admissions() {
               {/* Key Benefits */}
               <div style={{ marginTop: '32px' }}>
                 <h3 className="content-sub-heading">Benefits of Direct Second Year</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                 <div className="info-table">
                   <div className="info-row">
                     <span className="info-label">Time Saving</span>
@@ -797,7 +797,7 @@ function Admissions() {
               {/* Process Steps */}
               <div style={{ marginTop: '32px' }}>
                 <h3 className="content-sub-heading">A-CAP Admission Steps</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                 <div className="process-steps">
                   <div className="process-step">
                     <div className="step-number">1</div>
@@ -880,10 +880,10 @@ function Admissions() {
                     <div style={{ marginTop: '24px', padding: '20px', background: '#f8f9fa', borderRadius: '10px', border: '1px solid #e4e8ed', textAlign: 'center' }}>
                       <p style={{ margin: '0 0 16px', fontSize: '15px', color: '#444', fontWeight: 600 }}>📄 Fee Structure</p>
                       <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                        <a href={`/api/pdf-proxy?url=${encodeURIComponent(feePdfUrl)}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 24px', background: '#243358', color: '#fff', fontSize: '14px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none' }}>
+                        <a href={`/api/pdf-proxy?url=${encodeURIComponent(feePdfUrl)}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 24px', background: '#2a5a8a', color: '#fff', fontSize: '14px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none' }}>
                           View PDF
                         </a>
-                        <a href={`/api/pdf-proxy?url=${encodeURIComponent(feePdfUrl)}`} download style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 24px', background: '#fff', color: '#243358', fontSize: '14px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none', border: '1.5px solid #243358' }}>
+                        <a href={`/api/pdf-proxy?url=${encodeURIComponent(feePdfUrl)}`} download style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 24px', background: '#fff', color: '#2a5a8a', fontSize: '14px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none', border: '1.5px solid #2a5a8a' }}>
                           Download PDF
                         </a>
                       </div>
@@ -1019,7 +1019,7 @@ function Admissions() {
               {/* Brochure Contents */}
               <div style={{ marginTop: '24px' }}>
                 <h3 className="content-sub-heading">What's Inside the Brochure</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                 <div className="info-table">
                   <div className="info-row">
                     <span className="info-label">Institute Overview</span>

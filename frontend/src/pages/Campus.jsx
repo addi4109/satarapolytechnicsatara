@@ -78,7 +78,7 @@ function Campus() {
       <div style={{ marginTop: '24px' }}>
         {tables.map((table, ti) => (
           <div key={ti} style={{ marginBottom: '24px' }}>
-            {table.title && <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>{table.title}</h3>}
+            {table.title && <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#2a5a8a', marginBottom: '12px' }}>{table.title}</h3>}
             <div className={`fee-table-wrap ${wrapClass || ''}`}>
               <table className="fee-table">
                 <thead>
@@ -92,7 +92,7 @@ function Campus() {
                   {table.rows && table.rows.map((row, ri) => (
                     <tr key={ri}>
                       {row.map((cell, ci) => (
-                        <td key={ci} style={ci === 0 ? { width: 50, fontWeight: 600, color: '#243358' } : ci === 1 ? { fontWeight: 500 } : {}}>{cell}</td>
+                        <td key={ci} style={ci === 0 ? { width: 50, fontWeight: 600, color: '#2a5a8a' } : ci === 1 ? { fontWeight: 500 } : {}}>{cell}</td>
                       ))}
                     </tr>
                   ))}
@@ -225,7 +225,7 @@ function Campus() {
               {/* Library Rules */}
               {getSection('library').rules && getSection('library').rules.length > 0 && (
                 <div style={{ marginTop: '24px' }}>
-                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', marginBottom: '12px' }}>Library Rules</h3>
+                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#2a5a8a', marginBottom: '12px' }}>Library Rules</h3>
                   <div className="rules-list">
                     {getSection('library').rules.map((rule, i) => (
                       <div className="rule-item" key={i}>
@@ -243,11 +243,11 @@ function Campus() {
               {/* Library Images */}
               {getSection('library').images && getSection('library').images.length > 0 && (
                 <div style={{ marginTop: '24px' }}>
-                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', marginBottom: '14px' }}>Library Gallery</h3>
+                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#2a5a8a', marginBottom: '14px' }}>Library Gallery</h3>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '16px' }}>
                     {getSection('library').images.map((img, i) => (
                       <div key={i} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', overflow: 'hidden', transition: 'box-shadow 0.2s', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'none'}>
-                        <div style={{ width: '100%', height: '180px', background: '#f5f7fa', overflow: 'hidden' }}>
+                        <div style={{ width: '100%', height: '180px', background: '#f0f4f8', overflow: 'hidden' }}>
                           {img.url && <img src={img.url} alt={img.caption || 'Library'} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
                         </div>
                         {img.caption && <p style={{ margin: 0, padding: '10px 14px', fontSize: '13px', color: '#555', textAlign: 'center', fontWeight: 500 }}>{img.caption}</p>}
@@ -269,15 +269,15 @@ function Campus() {
               {/* Bus Routes */}
               {getSection('bus-facility').busRoutes && getSection('bus-facility').busRoutes.length > 0 && (
                 <div style={{ marginTop: '28px' }}>
-                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', marginBottom: '16px' }}>Bus Routes</h3>
+                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#2a5a8a', marginBottom: '16px' }}>Bus Routes</h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     {getSection('bus-facility').busRoutes.map((route, ri) => (
                       <div key={ri} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '12px', padding: '20px 24px', position: 'relative', overflow: 'hidden' }}>
                         {/* Route header */}
                         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-                          <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'linear-gradient(135deg, #243358, #1a2642)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>🚌</div>
+                          <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'linear-gradient(135deg, #2a5a8a, #1a2642)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px' }}>🚌</div>
                           <div>
-                            <h4 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#243358' }}>{route.routeName || `Route ${ri + 1}`}</h4>
+                            <h4 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#2a5a8a' }}>{route.routeName || `Route ${ri + 1}`}</h4>
                             <p style={{ margin: 0, fontSize: '12px', color: '#888' }}>{route.stops.length} stops</p>
                           </div>
                         </div>
@@ -285,12 +285,12 @@ function Campus() {
                         {/* Visual route with road */}
                         <div style={{ position: 'relative', paddingLeft: '20px' }}>
                           {/* Road line */}
-                          <div style={{ position: 'absolute', left: '11px', top: '8px', bottom: '8px', width: '3px', background: 'repeating-linear-gradient(to bottom, #c8963e 0px, #c8963e 8px, transparent 8px, transparent 14px)', borderRadius: '2px' }}></div>
+                          <div style={{ position: 'absolute', left: '11px', top: '8px', bottom: '8px', width: '3px', background: 'repeating-linear-gradient(to bottom, #d4a54a 0px, #d4a54a 8px, transparent 8px, transparent 14px)', borderRadius: '2px' }}></div>
                           {/* Stops */}
                           {route.stops.map((stop, si) => (
                             <div key={si} style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: si < route.stops.length - 1 ? '0' : '0', position: 'relative', paddingBottom: si < route.stops.length - 1 ? '20px' : '0' }}>
                               {/* Stop dot */}
-                              <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: si === 0 ? '#27ae60' : si === route.stops.length - 1 ? '#c0392b' : '#243358', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700, zIndex: 1, flexShrink: 0, boxShadow: '0 2px 6px rgba(0,0,0,0.15)' }}>{si + 1}</div>
+                              <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: si === 0 ? '#27ae60' : si === route.stops.length - 1 ? '#c0392b' : '#2a5a8a', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700, zIndex: 1, flexShrink: 0, boxShadow: '0 2px 6px rgba(0,0,0,0.15)' }}>{si + 1}</div>
                               {/* Stop info */}
                               <div style={{ flex: 1, background: si === 0 ? '#f0faf4' : si === route.stops.length - 1 ? '#fdf2f2' : '#f8f9fa', padding: '10px 16px', borderRadius: '8px', border: `1px solid ${si === 0 ? '#c8e6d4' : si === route.stops.length - 1 ? '#f5c6c6' : '#e8eaed'}` }}>
                                 <span style={{ fontSize: '14px', fontWeight: 600, color: '#333' }}>{stop}</span>
@@ -320,7 +320,7 @@ function Campus() {
 
               {getSection('canteen').foodMenu && getSection('canteen').foodMenu.length > 0 && (
                 <div style={{ marginTop: '24px' }}>
-                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', marginBottom: '14px' }}>Food Menu</h3>
+                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#2a5a8a', marginBottom: '14px' }}>Food Menu</h3>
                   <div className="fee-table-wrap">
                     <table className="fee-table">
                       <thead>
@@ -335,7 +335,7 @@ function Campus() {
                       <tbody>
                         {getSection('canteen').foodMenu.map((item, i) => (
                           <tr key={i}>
-                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{i + 1}</td>
                             <td style={{ fontWeight: 500 }}>{item.name}</td>
                             <td>{item.category}</td>
                             <td>{item.price}</td>

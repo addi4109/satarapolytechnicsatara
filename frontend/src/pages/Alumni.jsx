@@ -179,7 +179,7 @@ function Alumni() {
               {/* Notable Alumni */}
               <div style={{ marginTop: '36px' }}>
                 <h3 className="content-sub-heading">Our Alumni Achievements</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                 <div className="info-table">
                   <div className="info-row">
                     <span className="info-label">Industry Leaders</span>
@@ -275,7 +275,7 @@ function Alumni() {
               {entrepreneurs.length > 0 && (
                 <div style={{ marginTop: '36px' }}>
                   <h3 className="content-sub-heading">Our Alumni Entrepreneurs</h3>
-                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                  <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                   <div style={{ overflowX: 'auto' }}>
                     <table className="courses-table">
                       <thead>
@@ -288,7 +288,7 @@ function Alumni() {
                       <tbody>
                         {entrepreneurs.map((e, i) => (
                           <tr key={e._id}>
-                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{i + 1}</td>
                             <td style={{ fontWeight: 500 }}>{e.name}</td>
                             <td>{e.firm}</td>
                           </tr>
@@ -300,12 +300,12 @@ function Alumni() {
               )}
 
               {/* CTA */}
-              <div style={{ marginTop: '36px', background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '28px', textAlign: 'center' }}>
-                <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', margin: '0 0 8px' }}>Are You an Alumni Entrepreneur?</h3>
+              <div style={{ marginTop: '36px', background: '#f0f4f8', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '28px', textAlign: 'center' }}>
+                <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#2a5a8a', margin: '0 0 8px' }}>Are You an Alumni Entrepreneur?</h3>
                 <p style={{ fontSize: '14px', color: '#666', margin: '0 0 16px', lineHeight: '1.6' }}>
                   Share your success story with us! We would love to feature your journey and inspire the next generation of entrepreneurs.
                 </p>
-                <a href="mailto:satarapolyinfo@gmail.com" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#243358', color: '#fff', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
+                <a href="mailto:satarapolyinfo@gmail.com" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#2a5a8a', color: '#fff', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
                   ✉ Share Your Story
                 </a>
               </div>
@@ -328,7 +328,7 @@ function Alumni() {
               {associationMembers.length > 0 && (
                 <div style={{ marginTop: '28px' }}>
                   <h3 className="content-sub-heading">Alumni Association</h3>
-                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                  <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                   <div style={{ overflowX: 'auto' }}>
                     <table className="courses-table">
                       <thead>
@@ -343,7 +343,7 @@ function Alumni() {
                       <tbody>
                         {associationMembers.map((m, i) => (
                           <tr key={m._id}>
-                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{i + 1}</td>
                             <td style={{ fontWeight: 500 }}>{m.name}</td>
                             <td>
                               {m.designation && (
@@ -363,12 +363,12 @@ function Alumni() {
               )}
 
               {/* Join CTA */}
-              <div style={{ marginTop: '36px', background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '28px', textAlign: 'center' }}>
-                <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', margin: '0 0 8px' }}>Join the Alumni Association</h3>
+              <div style={{ marginTop: '36px', background: '#f0f4f8', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '28px', textAlign: 'center' }}>
+                <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#2a5a8a', margin: '0 0 8px' }}>Join the Alumni Association</h3>
                 <p style={{ fontSize: '14px', color: '#666', margin: '0 0 16px', lineHeight: '1.6' }}>
                   Become a member of SPAA and stay connected with your alma mater. Register today to receive updates about events, reunions, and networking opportunities.
                 </p>
-                <a href="/alumni/registration" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#243358', color: '#fff', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
+                <a href="/alumni/registration" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#2a5a8a', color: '#fff', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
                   Register Now →
                 </a>
               </div>

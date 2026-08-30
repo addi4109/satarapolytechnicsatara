@@ -15,7 +15,7 @@
 
 .notices-tab {
   padding: 10px 20px;
-  background: #f5f7fa;
+  background: #f0f4f8;
   border: 1px solid #e4e8ed;
   border-radius: 6px;
   font-size: 13px;
@@ -28,13 +28,13 @@
 
 .notices-tab:hover {
   background: #e8ecf1;
-  color: #243358;
+  color: #2a5a8a;
 }
 
 .notices-tab.active {
-  background: #243358;
+  background: #2a5a8a;
   color: #fff;
-  border-color: #243358;
+  border-color: #2a5a8a;
 }
 
 .notices-table-wrap {
@@ -48,7 +48,7 @@
 }
 
 .notices-table thead th {
-  background: #243358;
+  background: #2a5a8a;
   color: #fff;
   font-weight: 600;
   padding: 14px 16px;
@@ -65,7 +65,7 @@
 }
 
 .notices-table tbody tr:hover {
-  background: #f5f7fa;
+  background: #f0f4f8;
 }
 
 .notices-table tbody tr:nth-child(even) {
@@ -73,12 +73,12 @@
 }
 
 .notices-table tbody tr:nth-child(even):hover {
-  background: #f0f4fa;
+  background: #e0ecf5;
 }
 
 .notice-title-cell {
   font-weight: 500;
-  color: #243358;
+  color: #2a5a8a;
   line-height: 1.5;
 }
 
@@ -94,22 +94,22 @@
 }
 
 .notice-view-btn {
-  background: #243358;
+  background: #2a5a8a;
   color: #fff;
 }
 
 .notice-view-btn:hover {
-  background: #243358;
+  background: #2a5a8a;
 }
 
 .notice-download-btn {
   background: #fff;
-  color: #243358;
-  border: 1px solid #243358;
+  color: #2a5a8a;
+  border: 1px solid #2a5a8a;
 }
 
 .notice-download-btn:hover {
-  background: #f0f4fa;
+  background: #e0ecf5;
 }
 
 .notice-btn.disabled {

@@ -7,7 +7,7 @@
 .cells-main-heading {
   font-family: 'Georgia', serif;
   font-size: 28px;
-  color: #243358;
+  color: #2a5a8a;
   font-weight: 700;
   margin: 0;
 }
@@ -15,7 +15,7 @@
 .cells-main-line {
   width: 45px;
   height: 3px;
-  background: #c8963e;
+  background: #d4a54a;
   margin: 10px 0 20px;
   border-radius: 2px;
 }
@@ -51,18 +51,18 @@
 
 .cell-card-link:hover .cell-card {
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  border-color: #243358;
+  border-color: #2a5a8a;
 }
 
 .cell-card-heading {
   font-family: 'Georgia', serif;
   font-size: 17px;
-  color: #243358;
+  color: #2a5a8a;
   margin: 0 0 8px;
 }
 
 .cell-card-link:hover .cell-card-heading {
-  color: #243358;
+  color: #2a5a8a;
 }
 
 .cell-card-desc {
@@ -76,7 +76,7 @@
 .cell-card-arrow {
   font-size: 13px;
   font-weight: 600;
-  color: #243358;
+  color: #2a5a8a;
   opacity: 0.8;
   transition: opacity 0.2s;
 }
@@ -92,7 +92,7 @@
 }
 
 .cell-card-table thead th {
-  background: #243358;
+  background: #2a5a8a;
   color: #fff;
   padding: 10px 16px;
   text-align: left;
@@ -119,7 +119,7 @@
 }
 
 .cell-card-table tbody tr:hover {
-  background: #f0f4fa;
+  background: #e0ecf5;
 }
 
 
@@ -133,7 +133,7 @@
 }
 
 .cell-card-table thead th {
-  background: #243358;
+  background: #2a5a8a;
   color: #fff;
   padding: 12px 18px;
   text-align: left;
@@ -161,7 +161,7 @@
 .cell-card-table tbody td:first-child {
   text-align: center;
   font-weight: 600;
-  color: #243358;
+  color: #2a5a8a;
 }
 
 .cell-card-table tbody tr:nth-child(even) {
@@ -169,7 +169,7 @@
 }
 
 .cell-card-table tbody tr:hover {
-  background: #f0f4fa;
+  background: #e0ecf5;
 }
 
 .cell-card-table tbody tr:last-child td {
@@ -183,7 +183,7 @@
   margin-bottom: 24px;
   padding: 16px 20px;
   background: #f9fafc;
-  border-left: 3px solid #c8963e;
+  border-left: 3px solid #d4a54a;
   border-radius: 0 6px 6px 0;
 }
 

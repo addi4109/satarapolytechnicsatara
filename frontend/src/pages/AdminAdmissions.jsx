@@ -314,8 +314,8 @@ function AdminAdmissions() {
   const renderNotePreview = () => {
     if (!form.note || !form.note.trim()) return null;
     return (
-      <div style={{ marginTop: '24px', padding: '16px 20px', background: '#fffbe6', borderLeft: '4px solid #c8963e', borderRadius: '0 6px 6px 0' }}>
-        <strong style={{ color: '#243358', fontSize: '13px' }}>📝 Note:</strong>
+      <div style={{ marginTop: '24px', padding: '16px 20px', background: '#fffbe6', borderLeft: '4px solid #d4a54a', borderRadius: '0 6px 6px 0' }}>
+        <strong style={{ color: '#2a5a8a', fontSize: '13px' }}>📝 Note:</strong>
         <p style={{ margin: '6px 0 0', color: '#555', fontSize: '13px', lineHeight: '1.7' }}>{form.note}</p>
       </div>
     );
@@ -400,7 +400,7 @@ function AdminAdmissions() {
                   <tbody>
                     {form.courseTable.map((c, i) => (
                       <tr key={i}>
-                        <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                        <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{i + 1}</td>
                         <td style={{ fontWeight: 500 }}>{c.name}</td>
                         <td>{c.duration}</td>
                         <td>{c.intake}</td>
@@ -493,7 +493,7 @@ function AdminAdmissions() {
             {form.feePdfUrl ? (
               <div style={{ padding: '16px', background: '#f8f9fa', borderRadius: '8px', border: '1px solid #e4e8ed' }}>
                 <p style={{ margin: 0, fontSize: '14px', color: '#444' }}>
-                  📄 <a href={`/api/pdf-proxy?url=${encodeURIComponent(form.feePdfUrl)}`} target="_blank" style={{ color: '#243358', fontWeight: 600 }}>View Fee Structure PDF</a>
+                  📄 <a href={`/api/pdf-proxy?url=${encodeURIComponent(form.feePdfUrl)}`} target="_blank" style={{ color: '#2a5a8a', fontWeight: 600 }}>View Fee Structure PDF</a>
                 </p>
               </div>
             ) : (
@@ -536,7 +536,7 @@ function AdminAdmissions() {
             {form.pdfUrl ? (
               <div style={{ padding: '16px', background: '#f8f9fa', borderRadius: '8px', border: '1px solid #e4e8ed' }}>
                 <p style={{ margin: 0, fontSize: '14px', color: '#444' }}>
-                  📄 <a href={`/api/pdf-proxy?url=${encodeURIComponent(form.pdfUrl)}`} target="_blank" style={{ color: '#243358', fontWeight: 600 }}>View Brochure PDF</a>
+                  📄 <a href={`/api/pdf-proxy?url=${encodeURIComponent(form.pdfUrl)}`} target="_blank" style={{ color: '#2a5a8a', fontWeight: 600 }}>View Brochure PDF</a>
                 </p>
               </div>
             ) : (
@@ -619,7 +619,7 @@ function AdminAdmissions() {
                 <li key={i}>
                   {editingElig && editingElig.field === 'eligFirstYear' && editingElig.index === i ? (
                     <div style={{ display: 'flex', gap: '8px' }}>
-                      <input autoFocus type="text" value={item} onChange={(e) => updateEligItem('eligFirstYear', i, e.target.value)} onKeyDown={(e) => e.key === 'Enter' && setEditingElig(null)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px' }} />
+                      <input autoFocus type="text" value={item} onChange={(e) => updateEligItem('eligFirstYear', i, e.target.value)} onKeyDown={(e) => e.key === 'Enter' && setEditingElig(null)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #d4a54a', borderRadius: '5px', fontSize: '13px' }} />
                       <button className="btn btn-success btn-sm" onClick={() => setEditingElig(null)}>Done</button>
                     </div>
                   ) : (
@@ -641,7 +641,7 @@ function AdminAdmissions() {
                 <li key={i}>
                   {editingElig && editingElig.field === 'eligDirect2nd' && editingElig.index === i ? (
                     <div style={{ display: 'flex', gap: '8px' }}>
-                      <input autoFocus type="text" value={item} onChange={(e) => updateEligItem('eligDirect2nd', i, e.target.value)} onKeyDown={(e) => e.key === 'Enter' && setEditingElig(null)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px' }} />
+                      <input autoFocus type="text" value={item} onChange={(e) => updateEligItem('eligDirect2nd', i, e.target.value)} onKeyDown={(e) => e.key === 'Enter' && setEditingElig(null)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #d4a54a', borderRadius: '5px', fontSize: '13px' }} />
                       <button className="btn btn-success btn-sm" onClick={() => setEditingElig(null)}>Done</button>
                     </div>
                   ) : (
@@ -672,8 +672,8 @@ function AdminAdmissions() {
                   <div className="step-content" style={{ flex: 1 }}>
                     {editingStepIdx === i ? (
                       <>
-                        <input autoFocus type="text" value={step.title} onChange={(e) => updateStep(i, 'title', e.target.value)} placeholder="Step title" style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', marginBottom: '6px' }} />
-                        <textarea value={step.desc} onChange={(e) => updateStep(i, 'desc', e.target.value)} placeholder="Description" rows={2} style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', resize: 'vertical', marginBottom: '8px' }} />
+                        <input autoFocus type="text" value={step.title} onChange={(e) => updateStep(i, 'title', e.target.value)} placeholder="Step title" style={{ width: '100%', padding: '7px 10px', border: '1px solid #d4a54a', borderRadius: '5px', fontSize: '13px', marginBottom: '6px' }} />
+                        <textarea value={step.desc} onChange={(e) => updateStep(i, 'desc', e.target.value)} placeholder="Description" rows={2} style={{ width: '100%', padding: '7px 10px', border: '1px solid #d4a54a', borderRadius: '5px', fontSize: '13px', resize: 'vertical', marginBottom: '8px' }} />
                         <button className="btn btn-success btn-sm" onClick={() => setEditingStepIdx(null)}>Done</button>
                       </>
                     ) : (
@@ -702,7 +702,7 @@ function AdminAdmissions() {
                 <li key={i}>
                   {editingDocIdx === i ? (
                     <div style={{ display: 'flex', gap: '8px' }}>
-                      <input autoFocus type="text" value={doc} onChange={(e) => updateDoc(i, e.target.value)} onKeyDown={(e) => e.key === 'Enter' && setEditingDocIdx(null)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px' }} />
+                      <input autoFocus type="text" value={doc} onChange={(e) => updateDoc(i, e.target.value)} onKeyDown={(e) => e.key === 'Enter' && setEditingDocIdx(null)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #d4a54a', borderRadius: '5px', fontSize: '13px' }} />
                       <button className="btn btn-success btn-sm" onClick={() => setEditingDocIdx(null)}>Done</button>
                     </div>
                   ) : (
@@ -732,7 +732,7 @@ function AdminAdmissions() {
             {form.feePdfUrl && (
               <div style={{ marginTop: '12px', padding: '12px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '6px' }}>
                 <p style={{ margin: 0, fontSize: '13px', color: '#444' }}>
-                  📄 <a href={`/api/pdf-proxy?url=${encodeURIComponent(form.feePdfUrl)}`} target="_blank" style={{ color: '#243358', fontWeight: 600 }}>View current PDF</a>
+                  📄 <a href={`/api/pdf-proxy?url=${encodeURIComponent(form.feePdfUrl)}`} target="_blank" style={{ color: '#2a5a8a', fontWeight: 600 }}>View current PDF</a>
                 </p>
               </div>
             )}
@@ -748,9 +748,9 @@ function AdminAdmissions() {
               <div key={catIdx} style={{ marginBottom: '24px', paddingBottom: '18px', borderBottom: catIdx < form.scholarshipDocs.length - 1 ? '1px solid #f0f0f0' : 'none' }}>
                 {editingScholCatIdx === catIdx ? (
                   <>
-                    <input autoFocus type="text" value={cat.category} onChange={(e) => updateScholCategory(catIdx, 'category', e.target.value)} placeholder="Category" style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', marginBottom: '6px' }} />
+                    <input autoFocus type="text" value={cat.category} onChange={(e) => updateScholCategory(catIdx, 'category', e.target.value)} placeholder="Category" style={{ width: '100%', padding: '7px 10px', border: '1px solid #d4a54a', borderRadius: '5px', fontSize: '13px', marginBottom: '6px' }} />
                     <div style={{ display: 'flex', gap: '8px' }}>
-                      <input type="text" value={cat.scheme} onChange={(e) => updateScholCategory(catIdx, 'scheme', e.target.value)} placeholder="Scheme" style={{ flex: 1, padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px' }} />
+                      <input type="text" value={cat.scheme} onChange={(e) => updateScholCategory(catIdx, 'scheme', e.target.value)} placeholder="Scheme" style={{ flex: 1, padding: '7px 10px', border: '1px solid #d4a54a', borderRadius: '5px', fontSize: '13px' }} />
                       <button className="btn btn-success btn-sm" onClick={() => setEditingScholCatIdx(null)}>Done</button>
                     </div>
                   </>
@@ -797,7 +797,7 @@ function AdminAdmissions() {
             {form.pdfUrl && (
               <div style={{ marginTop: '12px', padding: '12px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '6px' }}>
                 <p style={{ margin: 0, fontSize: '13px', color: '#444' }}>
-                  <strong>Current:</strong> <a href={`/api/pdf-proxy?url=${encodeURIComponent(form.pdfUrl)}`} target="_blank" style={{ color: '#243358' }}>{form.pdfUrl}</a>
+                  <strong>Current:</strong> <a href={`/api/pdf-proxy?url=${encodeURIComponent(form.pdfUrl)}`} target="_blank" style={{ color: '#2a5a8a' }}>{form.pdfUrl}</a>
                 </p>
               </div>
             )}

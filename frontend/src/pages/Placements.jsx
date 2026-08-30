@@ -222,7 +222,7 @@ function Placements() {
                       <tbody>
                         {placementCell.members.map((member, i) => (
                           <tr key={i}>
-                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{i + 1}</td>
                             <td className="fee-particular" style={{ fontWeight: 500 }}>{member.name}</td>
                             <td style={{ textAlign: 'center' }}>{member.designation}</td>
                             <td style={{ textAlign: 'center' }}>{member.phone}</td>
@@ -232,7 +232,7 @@ function Placements() {
                     </table>
                   </div>
                   <p style={{ marginTop: '12px' }}>
-                    <a href={`/cells/${placementCell.slug}`} style={{ color: '#243358', fontWeight: 600, fontSize: '14px' }}>
+                    <a href={`/cells/${placementCell.slug}`} style={{ color: '#2a5a8a', fontWeight: 600, fontSize: '14px' }}>
                       View Full Details →
                     </a>
                   </p>
@@ -283,7 +283,7 @@ function Placements() {
               {getSection('process').steps && getSection('process').steps.length > 0 && (
                 <div style={{ marginTop: '32px' }}>
                   <h3 className="content-sub-heading">How It Works</h3>
-                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '16px', borderRadius: '2px' }}></div>
+                  <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '16px', borderRadius: '2px' }}></div>
                   {renderSteps(getSection('process').steps)}
                 </div>
               )}
@@ -291,7 +291,7 @@ function Placements() {
               {/* Key Features */}
               <div style={{ marginTop: '36px' }}>
                 <h3 className="content-sub-heading">Why Our Placements Stand Out</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                 <div className="info-table">
                   <div className="info-row">
                     <span className="info-label">Aptitude Training</span>
@@ -338,7 +338,7 @@ function Placements() {
               {getSection('records').recordTable && getSection('records').recordTable.length > 0 && (
                 <div style={{ marginTop: '28px' }}>
                   <h3 className="content-sub-heading">Year-wise Placement Records</h3>
-                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                  <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                   <div className="fee-table-wrap">
                     <table className="fee-table">
                       <thead>
@@ -351,7 +351,7 @@ function Placements() {
                       <tbody>
                         {getSection('records').recordTable.map((rec, i) => (
                           <tr key={i}>
-                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{i + 1}</td>
                             <td className="fee-particular" style={{ fontWeight: 600 }}>{rec.year}</td>
                             <td style={{ textAlign: 'center' }}>
                               {rec.pdfUrl ? (
@@ -360,14 +360,14 @@ function Placements() {
                                     href={`/api/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '5px 14px', background: '#243358', color: '#fff', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}
+                                    style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '5px 14px', background: '#2a5a8a', color: '#fff', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}
                                   >
                                     View
                                   </a>
                                   <a
                                     href={`/api/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`}
                                     download
-                                    style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '5px 14px', background: '#fff', color: '#243358', border: '1px solid #243358', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}
+                                    style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '5px 14px', background: '#fff', color: '#2a5a8a', border: '1px solid #2a5a8a', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}
                                   >
                                     Download
                                   </a>
@@ -388,7 +388,7 @@ function Placements() {
               {getSection('records').recordImages && getSection('records').recordImages.length > 0 && (
                 <div style={{ marginTop: '36px' }}>
                   <h3 className="content-sub-heading">Placement Record Gallery</h3>
-                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                  <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px' }}>
                     {getSection('records').recordImages.map((img, i) => (                          <div key={i} style={{ textAlign: 'center', cursor: 'pointer' }} onClick={() => img.imageUrl && setLightbox({ url: img.imageUrl, caption: img.title })}>
                             {img.imageUrl && (
@@ -401,7 +401,7 @@ function Placements() {
                               </div>
                             )}
                         {img.title && (
-                          <p style={{ fontFamily: 'Georgia, serif', fontSize: '16px', fontWeight: 700, color: '#243358', margin: 0 }}>{img.title}</p>
+                          <p style={{ fontFamily: 'Georgia, serif', fontSize: '16px', fontWeight: 700, color: '#2a5a8a', margin: 0 }}>{img.title}</p>
                         )}
                       </div>
                     ))}
@@ -460,7 +460,7 @@ function Placements() {
               {getSection('recruiters').recruiters && getSection('recruiters').recruiters.length > 0 && (
                 <div style={{ marginTop: '36px' }}>
                   <h3 className="content-sub-heading">Companies That Recruit From Us</h3>
-                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                  <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                   <div className="recruiters-grid">
                     {getSection('recruiters').recruiters.map((rec, i) => (
                       <div className="recruiter-item" key={i}>
@@ -477,7 +477,7 @@ function Placements() {
               {/* Industry Sectors */}
               <div style={{ marginTop: '36px' }}>
                 <h3 className="content-sub-heading">Recruitment Sectors</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                 <div className="info-table">
                   <div className="info-row">
                     <span className="info-label">Information Technology</span>
@@ -509,7 +509,7 @@ function Placements() {
               {/* Why Companies Choose Us */}
               <div style={{ marginTop: '36px' }}>
                 <h3 className="content-sub-heading">Why Companies Choose Our Graduates</h3>
-                <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
+                <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '20px', borderRadius: '2px' }}></div>
                 <div className="info-table">
                   <div className="info-row">
                     <span className="info-label">Industry-Ready Skills</span>
@@ -539,16 +539,16 @@ function Placements() {
               </div>
 
               {/* Contact CTA */}
-              <div style={{ marginTop: '36px', background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '28px', textAlign: 'center' }}>
-                <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', margin: '0 0 8px' }}>Want to Recruit From Our Campus?</h3>
+              <div style={{ marginTop: '36px', background: '#f0f4f8', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '28px', textAlign: 'center' }}>
+                <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#2a5a8a', margin: '0 0 8px' }}>Want to Recruit From Our Campus?</h3>
                 <p style={{ fontSize: '14px', color: '#666', margin: '0 0 16px', lineHeight: '1.6' }}>
                   Partner with Satara Polytechnic for your next campus recruitment drive. Our Training &amp; Placement Cell will coordinate the entire process.
                 </p>
                 <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <a href="tel:+919423342843" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#243358', color: '#fff', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
+                  <a href="tel:+919423342843" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#2a5a8a', color: '#fff', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
                     📞 +91-94233 42843
                   </a>
-                  <a href="mailto:satarapolyinfo@gmail.com" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#fff', color: '#243358', border: '1px solid #243358', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
+                  <a href="mailto:satarapolyinfo@gmail.com" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#fff', color: '#2a5a8a', border: '1px solid #2a5a8a', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
                     ✉ satarapolyinfo@gmail.com
                   </a>
                 </div>

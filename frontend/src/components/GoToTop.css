@@ -5,14 +5,14 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: #243358;
+  background: #5b8abf;
   color: #fff;
-  border: 2px solid rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 18px rgba(36, 51, 88, 0.4);
+  box-shadow: 0 4px 18px rgba(91, 138, 191, 0.35);
   z-index: 9997;
   opacity: 0;
   visibility: hidden;
@@ -31,8 +31,8 @@
 }
 
 .go-to-top:hover {
-  background: #c8963e;
-  box-shadow: 0 6px 24px rgba(200, 150, 62, 0.45);
+  background: #d4a54a;
+  box-shadow: 0 6px 24px rgba(212, 165, 74, 0.4);
   transform: translateY(-3px);
 }
 

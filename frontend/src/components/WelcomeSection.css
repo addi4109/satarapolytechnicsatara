@@ -1,5 +1,5 @@
 .welcome-section {
-  background: #f5f7fa;
+  background: #f0f4f8;
   padding: 50px 0;
 }
 
@@ -32,7 +32,7 @@
 .welcome-heading {
   font-family: 'Georgia', serif;
   font-size: 28px;
-  color: #243358;
+  color: #2a5a8a;
   font-weight: 700;
   margin: 0 0 6px;
   line-height: 1.3;
@@ -41,14 +41,14 @@
 .welcome-line {
   width: 45px;
   height: 3px;
-  background: #c8963e;
+  background: #d4a54a;
   margin: 12px 0 16px;
   border-radius: 2px;
 }
 
 .welcome-text {
   font-size: 14px;
-  color: #444;
+  color: #4a5568;
   line-height: 1.75;
   margin: 0 0 20px;
 }
@@ -56,7 +56,7 @@
 .welcome-btn {
   display: inline-block;
   padding: 10px 28px;
-  background: #243358;
+  background: #5b8abf;
   color: #fff;
   text-decoration: none;
   font-size: 13px;

@@ -74,7 +74,7 @@ function AdmissionNotices() {
               <tbody>
                 {notices.map((notice, index) => (
                   <tr key={notice._id}>
-                    <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{index + 1}</td>
+                    <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{index + 1}</td>
                     <td>
                       <div className="notice-title-cell">{notice.title}</div>
                       {notice.text && <div style={{ fontSize: '12px', color: '#888', marginTop: '2px' }}>{notice.text.substring(0, 80)}{notice.text.length > 80 ? '...' : ''}</div>}
@@ -86,14 +86,14 @@ function AdmissionNotices() {
                           <a
                             href={notice.pdfUrl ? `/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl}
                             target="_blank"
-                            style={{ padding: '5px 14px', background: '#243358', color: '#fff', fontSize: '12px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
+                            style={{ padding: '5px 14px', background: '#2a5a8a', color: '#fff', fontSize: '12px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
                           >View</a>
                         )}
                         {(notice.pdfUrl || notice.imageUrl) && (
                           <a
                             href={notice.pdfUrl ? `/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl}
                             download
-                            style={{ padding: '5px 14px', background: '#fff', color: '#243358', fontSize: '12px', fontWeight: 600, borderRadius: '4px', border: '1px solid #243358', textDecoration: 'none', cursor: 'pointer' }}
+                            style={{ padding: '5px 14px', background: '#fff', color: '#2a5a8a', fontSize: '12px', fontWeight: 600, borderRadius: '4px', border: '1px solid #2a5a8a', textDecoration: 'none', cursor: 'pointer' }}
                           >Download</a>
                         )}
                       </div>

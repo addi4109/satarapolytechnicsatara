@@ -1,5 +1,5 @@
 .recruiters-section {
-  background: #f5f7fa;
+  background: #f0f4f8;
   padding: 40px 0 36px;
   overflow: hidden;
 }
@@ -8,7 +8,7 @@
   text-align: center;
   font-family: 'Georgia', serif;
   font-size: 26px;
-  color: #243358;
+  color: #2a5a8a;
   font-weight: 700;
   margin: 0;
 }
@@ -16,7 +16,7 @@
 .recruiters-line {
   width: 50px;
   height: 3px;
-  background: #c8963e;
+  background: #d4a54a;
   margin: 10px auto 30px;
   border-radius: 2px;
 }

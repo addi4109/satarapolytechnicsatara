@@ -1,5 +1,5 @@
 .ticker-section {
-  background: #243358;
+  background: #e0ecf5;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -7,7 +7,7 @@
 }
 
 .ticker-label {
-  background: #b8860b;
+  background: #d4a54a;
   color: #fff;
   font-size: 13px;
   font-weight: 700;
@@ -34,7 +34,7 @@
 }
 
 .ticker-item {
-  color: #e0e0e0;
+  color: #4a5568;
   font-size: 14px;
   white-space: nowrap;
   padding: 0 50px;
@@ -46,7 +46,7 @@
   content: '|';
   position: absolute;
   right: 0;
-  color: rgba(255,255,255,0.3);
+  color: rgba(91, 138, 191, 0.3);
 }
 
 /* Pause animation on hover */

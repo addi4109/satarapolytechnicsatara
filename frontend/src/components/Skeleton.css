@@ -11,7 +11,7 @@
 }
 
 .skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, #f0f4f8 25%, #e0e8f0 50%, #f0f4f8 75%);
   background-size: 800px 100%;
   animation: shimmer 1.5s ease-in-out infinite;
   border-radius: 6px;
@@ -45,7 +45,7 @@
 }
 
 .skeleton-banner {
-  background: linear-gradient(135deg, #243358 0%, #1a2744 100%);
+  background: linear-gradient(135deg, #e0ecf5 0%, #d0e0f0 100%);
   padding: 40px 24px;
   display: flex;
   flex-direction: column;
@@ -53,7 +53,7 @@
 }
 
 .skeleton-banner .skeleton {
-  background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%);
+  background: linear-gradient(90deg, rgba(91, 138, 191, 0.08) 25%, rgba(91, 138, 191, 0.15) 50%, rgba(91, 138, 191, 0.08) 75%);
   background-size: 800px 100%;
 }
 

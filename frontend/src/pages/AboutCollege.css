@@ -12,7 +12,7 @@
 }
 
 .sidebar-heading {
-  background: #243358;
+  background: #2a5a8a;
   color: #fff;
   font-size: 15px;
   font-weight: 700;
@@ -56,12 +56,12 @@
 }
 
 .sidebar-link:hover {
-  background: #f5f7fa;
-  color: #243358;
+  background: #f0f4f8;
+  color: #2a5a8a;
 }
 
 .sidebar-link.active {
-  background: #243358;
+  background: #2a5a8a;
   color: #fff;
 }
 
@@ -82,7 +82,7 @@
 .content-heading {
   font-family: 'Georgia', serif;
   font-size: 26px;
-  color: #243358;
+  color: #2a5a8a;
   font-weight: 700;
   margin: 0;
 }
@@ -90,7 +90,7 @@
 .content-line {
   width: 45px;
   height: 3px;
-  background: #c8963e;
+  background: #d4a54a;
   margin: 10px 0 20px;
   border-radius: 2px;
 }
@@ -121,7 +121,7 @@
 .vm-title {
   font-family: 'Georgia', serif;
   font-size: 18px;
-  color: #243358;
+  color: #2a5a8a;
   margin: 0 0 10px;
 }
 
@@ -156,7 +156,7 @@
 .timeline-year {
   font-size: 14px;
   font-weight: 700;
-  color: #243358;
+  color: #2a5a8a;
   min-width: 50px;
 }
 
@@ -166,8 +166,8 @@
 }
 
 .message-card {
-  background: #f5f7fa;
-  border-left: 3px solid #c8963e;
+  background: #f0f4f8;
+  border-left: 3px solid #d4a54a;
   padding: 20px 24px;
   border-radius: 0 6px 6px 0;
 }
@@ -175,7 +175,7 @@
 .message-quote {
   font-size: 15px;
   font-style: italic;
-  color: #243358;
+  color: #2a5a8a;
   line-height: 1.7;
   margin: 0 0 16px;
 }
@@ -183,7 +183,7 @@
 .message-sign {
   margin-top: 16px;
   margin-bottom: 0;
-  color: #243358;
+  color: #2a5a8a;
 }
 
 .overview-stats {
@@ -194,7 +194,7 @@
 }
 
 .stat-box {
-  background: #f5f7fa;
+  background: #f0f4f8;
   border: 1px solid #e4e8ed;
   border-radius: 6px;
   padding: 18px 12px;
@@ -205,7 +205,7 @@
   display: block;
   font-size: 22px;
   font-weight: 700;
-  color: #243358;
+  color: #2a5a8a;
   font-family: 'Georgia', serif;
 }
 
@@ -233,7 +233,7 @@
 
 .info-label {
   font-weight: 700;
-  color: #243358;
+  color: #2a5a8a;
   min-width: 180px;
 }
 
@@ -258,7 +258,7 @@
   display: flex;
   gap: 24px;
   align-items: center;
-  background: #f5f7fa;
+  background: #f0f4f8;
   border: 1px solid #e4e8ed;
   border-radius: 10px;
   padding: 24px;
@@ -291,27 +291,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f0f3f8;
+  background: #e8f0fa;
 }
 
 .officer-photo-placeholder span {
   font-size: 48px;
   font-weight: 700;
-  color: #243358;
+  color: #2a5a8a;
   font-family: 'Georgia', serif;
 }
 
 .officer-name {
   font-family: 'Georgia', serif;
   font-size: 20px;
-  color: #243358;
+  color: #2a5a8a;
   font-weight: 700;
   margin: 0 0 4px;
 }
 
 .officer-designation {
   font-size: 14px;
-  color: #243358;
+  color: #2a5a8a;
   font-weight: 500;
   margin: 0 0 8px;
 }
@@ -326,7 +326,7 @@
   flex: 1;
   min-width: 0;
   background: #fff;
-  border-left: 3px solid #c8963e;
+  border-left: 3px solid #d4a54a;
   padding: 20px 24px;
   border-radius: 0 8px 8px 0;
 }
@@ -345,7 +345,7 @@
 .officer-msg .message-quote {
   font-size: 15px;
   font-style: italic;
-  color: #243358;
+  color: #2a5a8a;
   line-height: 1.7;
   margin-bottom: 16px;
 }
@@ -358,7 +358,7 @@
 .leadership-heading {
   font-family: 'Georgia', serif;
   font-size: 22px;
-  color: #243358;
+  color: #2a5a8a;
   font-weight: 700;
   margin: 0 0 6px;
   text-align: center;
@@ -367,7 +367,7 @@
 .leadership-line {
   width: 45px;
   height: 3px;
-  background: #c8963e;
+  background: #d4a54a;
   margin: 0 auto 30px;
   border-radius: 2px;
 }
@@ -433,7 +433,7 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: #f0f3f8;
+  background: #e8f0fa;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -452,13 +452,13 @@
   font-family: 'Georgia', serif;
   font-size: 16px;
   font-weight: 700;
-  color: #243358;
+  color: #2a5a8a;
   margin: 0 0 4px;
 }
 
 .leader-card-title {
   font-size: 13px;
-  color: #c8963e;
+  color: #d4a54a;
   font-weight: 600;
   margin: 0 0 10px;
   letter-spacing: 0.3px;
@@ -524,7 +524,7 @@
   border: 3px solid #e4e8ed;
   margin: 0 auto 16px;
   display: block;
-  background: #f0f3f8;
+  background: #e8f0fa;
 }
 
 .staff-card-photo-placeholder {
@@ -545,7 +545,7 @@
   font-family: 'Georgia', serif;
   font-size: 15px;
   font-weight: 700;
-  color: #243358;
+  color: #2a5a8a;
   margin: 0 0 4px;
 }
 
@@ -603,7 +603,7 @@
   }
 
   .about-mobile-group-heading {
-    background: #243358;
+    background: #2a5a8a;
     color: #fff;
     font-size: 13px;
     font-weight: 700;
@@ -650,12 +650,12 @@
   }
 
   .about-mobile-tab:hover {
-    background: #f5f7fa;
-    color: #243358;
+    background: #f0f4f8;
+    color: #2a5a8a;
   }
 
   .about-mobile-tab.active {
-    background: #243358;
+    background: #2a5a8a;
     color: #fff;
     font-weight: 700;
   }
@@ -689,7 +689,7 @@
 
   .officer-msg {
     border-left: none;
-    border-top: 3px solid #c8963e;
+    border-top: 3px solid #d4a54a;
     border-radius: 0 0 8px 8px;
     padding: 16px;
   }

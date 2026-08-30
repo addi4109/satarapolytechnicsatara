@@ -146,7 +146,7 @@ function Activities() {
               {getSection(active).subSections.map((sub, i) => (
                 <div key={i} style={{ marginBottom: '32px' }}>
                   <h3 className="content-sub-heading">{sub.title}</h3>
-                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '16px', borderRadius: '2px' }}></div>
+                  <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '16px', borderRadius: '2px' }}></div>
                   {sub.description && <p style={{ color: '#555', lineHeight: '1.7', marginBottom: '16px' }}>{sub.description}</p>}
                   {sub.images && sub.images.length > 0 && (
                     <div className="photo-grid">

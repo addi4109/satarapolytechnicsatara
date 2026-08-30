@@ -1,7 +1,7 @@
 .page-banner {
-  background: #243358;
+  background: linear-gradient(135deg, #e0ecf5, #d0e0f0);
   padding: 28px 20px;
-  border-bottom: 3px solid #c8963e;
+  border-bottom: 3px solid #d4a54a;
 }
 
 .page-banner-inner {
@@ -11,18 +11,18 @@
 
 .page-breadcrumb {
   font-size: 13px;
-  color: #a8bde0;
+  color: #6b8ab0;
   display: block;
   margin-bottom: 6px;
 }
 
 .page-breadcrumb a {
-  color: #a8bde0;
+  color: #6b8ab0;
   text-decoration: none;
 }
 
 .page-breadcrumb a:hover {
-  color: #fff;
+  color: #2a5a8a;
 }
 
 .page-breadcrumb .sep {
@@ -33,7 +33,7 @@
 .page-title {
   font-family: 'Georgia', serif;
   font-size: 28px;
-  color: #fff;
+  color: #2a5a8a;
   font-weight: 700;
   margin: 0;
 }

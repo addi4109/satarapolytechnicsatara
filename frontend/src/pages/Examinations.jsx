@@ -115,7 +115,7 @@ function Examinations() {
               align-items: center;
               gap: 10px;
               padding: 14px 36px;
-              background: linear-gradient(135deg, #243358 0%, #3a5080 100%);
+              background: linear-gradient(135deg, #2a5a8a 0%, #7a9fc5 100%);
               color: #fff;
               font-size: 16px;
               font-weight: 600;
@@ -174,7 +174,7 @@ function Examinations() {
                     <tbody>
                       {getSection('schedule').schedules.map((item, i) => (
                         <tr key={i}>
-                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{i + 1}</td>
                           <td className="fee-particular" style={{ fontWeight: 500 }}>{item.examName}</td>
                           <td style={{ textAlign: 'center' }}>{item.semester}</td>
                           <td style={{ textAlign: 'center' }}>{item.startDate}</td>
@@ -227,20 +227,20 @@ function Examinations() {
                 .exam-rule-card:hover {
                   transform: translateY(-3px);
                   box-shadow: 0 8px 24px rgba(36, 51, 88, 0.12);
-                  border-color: #c8963e;
+                  border-color: #d4a54a;
                 }
                 .exam-subsection-card {
                   transition: box-shadow 0.3s ease, border-color 0.3s ease;
                 }
                 .exam-subsection-card:hover {
                   box-shadow: 0 4px 16px rgba(36, 51, 88, 0.08);
-                  border-color: #c8963e;
+                  border-color: #d4a54a;
                 }
                 .exam-subsection-title {
                   transition: color 0.2s ease;
                 }
                 .exam-subsection-title:hover {
-                  color: #c8963e !important;
+                  color: #d4a54a !important;
                 }
               `}</style>
 
@@ -249,12 +249,12 @@ function Examinations() {
                 <div style={{ marginTop: '20px' }}>
                   {getSection('rules').ruleSubSections.map((subSection, ssIdx) => (
                     <div key={ssIdx} className="exam-subsection-card" style={{ marginBottom: '24px', padding: '16px', border: '1px solid #e4e8ed', borderRadius: '10px', background: '#fff' }}>
-                      <h3 className="exam-subsection-title" style={{ margin: '0 0 12px', color: '#243358', fontSize: '21px', borderBottom: '2px solid #c8963e', paddingBottom: '6px' }}>
+                      <h3 className="exam-subsection-title" style={{ margin: '0 0 12px', color: '#2a5a8a', fontSize: '21px', borderBottom: '2px solid #d4a54a', paddingBottom: '6px' }}>
                         {subSection.subTitle || 'Untitled Section'}
                       </h3>
                       {subSection.rules && subSection.rules.map((rule, rIdx) => (
                         <div key={rIdx} className="exam-rule-card" style={{ marginBottom: '12px', padding: '14px 16px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px', marginLeft: '8px' }}>
-                          <h4 style={{ margin: '0 0 6px', color: '#243358', fontSize: '18px' }}>
+                          <h4 style={{ margin: '0 0 6px', color: '#2a5a8a', fontSize: '18px' }}>
                             <span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {rIdx + 1}:</span>
                             {rule.title}
                           </h4>
@@ -280,7 +280,7 @@ function Examinations() {
                 <div style={{ marginTop: '20px' }}>
                   {getSection('rules').rules.map((rule, i) => (
                     <div key={i} className="exam-rule-card" style={{ marginBottom: '16px', padding: '16px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px' }}>
-                      <h4 style={{ margin: '0 0 8px', color: '#243358', fontSize: '18px' }}>
+                      <h4 style={{ margin: '0 0 8px', color: '#2a5a8a', fontSize: '18px' }}>
                         <span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {i + 1}:</span>
                         {rule.title}
                       </h4>
@@ -423,7 +423,7 @@ function Examinations() {
                     <tbody>
                       {getSection('notices').noticesData.map((item, i) => (
                         <tr key={i}>
-                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{i + 1}</td>
                           <td>
                             <div className="fee-particular" style={{ fontWeight: 500 }}>{item.title}</div>
                             {item.description && <div style={{ fontSize: '12px', color: '#888', marginTop: '4px' }}>{item.description}</div>}

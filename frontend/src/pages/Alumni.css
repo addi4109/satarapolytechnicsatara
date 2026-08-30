@@ -1,6 +1,6 @@
 /* ===== Alumni Vision & Mission Cards ===== */
 .alumni-vm-card {
-  background: #f5f7fa;
+  background: #f0f4f8;
   border: 1px solid #e4e8ed;
   border-radius: 10px;
   padding: 28px;
@@ -10,7 +10,7 @@
 
 .alumni-vm-card:hover {
   box-shadow: 0 4px 16px rgba(36, 51, 88, 0.08);
-  border-color: #c8963e;
+  border-color: #d4a54a;
 }
 
 .alumni-vm-icon {
@@ -29,19 +29,19 @@
 }
 
 .alumni-vm-vision {
-  background: #243358;
+  background: #2a5a8a;
   color: #fff;
 }
 
 .alumni-vm-mission {
-  background: #c8963e;
+  background: #d4a54a;
   color: #fff;
 }
 
 .alumni-vm-card h3 {
   font-family: 'Georgia', serif;
   font-size: 20px;
-  color: #243358;
+  color: #2a5a8a;
   margin: 0 0 12px;
 }
 

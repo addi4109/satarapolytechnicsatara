@@ -215,10 +215,10 @@ function AdminEnquiries() {
                         style={{
                           cursor: 'pointer',
                           background:
-                            selectedEnquiry?.id === enq.id ? '#f0f3f8' : 'transparent',
+                            selectedEnquiry?.id === enq.id ? '#e8f0fa' : 'transparent',
                         }}
                       >
-                        <td style={{ fontWeight: 600, color: '#243358' }}>{idx + 1}</td>
+                        <td style={{ fontWeight: 600, color: '#2a5a8a' }}>{idx + 1}</td>
                         <td style={{ fontWeight: 500 }}>{enq.fullName || 'N/A'}</td>
                         <td>{enq.phone || 'N/A'}</td>
                         <td>{enq.email || 'N/A'}</td>
@@ -295,7 +295,7 @@ function AdminEnquiries() {
                     borderBottom: '1px solid #e4e8ed',
                   }}
                 >
-                  <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#243358' }}>
+                  <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#2a5a8a' }}>
                     Enquiry Details
                   </h3>
                   <div style={{ display: 'flex', gap: '8px' }}>
