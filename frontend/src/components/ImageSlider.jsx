@@ -109,6 +109,28 @@ function ImageSlider() {
             <a href={slide.link || '#'} onClick={(e) => e.preventDefault()}>
               <img src={slide.image} alt={slide.title || `Slide ${idx + 1}`} draggable={false} />
             </a>
+            <div className="slider-text-overlay">
+              {slide.title && <h2 className="slider-title">{slide.title}</h2>}
+              {slide.subtitle && <p className="slider-subtitle">{slide.subtitle}</p>}
+              {!slide.title && idx === 0 && (
+                <>
+                  <h2 className="slider-title">Satara Polytechnic, Satara</h2>
+                  <p className="slider-subtitle">Excellence in Technical Education Since 1983</p>
+                </>
+              )}
+              {!slide.title && idx === 1 && (
+                <>
+                  <h2 className="slider-title">Shape Your Future</h2>
+                  <p className="slider-subtitle">6 Engineering Departments • 100% Placement Assistance</p>
+                </>
+              )}
+              {!slide.title && idx === 2 && (
+                <>
+                  <h2 className="slider-title">Admissions Open 2025-26</h2>
+                  <p className="slider-subtitle">Apply Now for Diploma Engineering Programs</p>
+                </>
+              )}
+            </div>
           </div>
         ))}
         <div className="slider-dots">
