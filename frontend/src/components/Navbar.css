@@ -64,6 +64,12 @@
   padding: 0 24px;
 }
 
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .logo-area {
   display: flex;
   align-items: center;
@@ -145,6 +151,53 @@
   font-weight: 700;
   font-style: italic;
   letter-spacing: 0.5px;
+}
+
+/* ===== founder area ===== */
+.founder-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.founder-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 4px solid transparent;
+  background-image: linear-gradient(#fff, #fff), linear-gradient(135deg, #d4a54a, #e0b860);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 20px rgba(212, 165, 74, 0.2);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s;
+}
+
+.founder-circle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 32px rgba(212, 165, 74, 0.3);
+}
+
+.founder-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.founder-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #d4a54a;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
 }
 
 /* ===== main nav ===== */
@@ -625,5 +678,19 @@
 
   .motto {
     font-size: 14px;
+  }
+
+  .header-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .founder-circle {
+    width: 80px;
+    height: 80px;
+  }
+
+  .founder-circle:hover {
+    transform: scale(1.02);
   }
 }

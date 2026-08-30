@@ -10,6 +10,7 @@ function Navbar() {
   const [dbCells, setDbCells] = useState([]);
   const [dbDepts, setDbDepts] = useState([]);
   const [academicTabName, setAcademicTabName] = useState('Academic Calendar');
+  const [founder, setFounder] = useState(null);
 
   useEffect(() => {
     fetch(`${API_URL}/cells`)
@@ -23,6 +24,10 @@ function Navbar() {
     fetch(`${API_URL}/settings/academic_calendar_tab_name`)
       .then((res) => res.json())
       .then((data) => { if (data.value) setAcademicTabName(data.value); })
+      .catch(() => {});
+    fetch(`${API_URL}/management/founder`)
+      .then((res) => res.json())
+      .then((data) => { if (data.photoUrl) setFounder(data); })
       .catch(() => {});
   }, []);
 
@@ -216,21 +221,35 @@ function Navbar() {
       {/* main header with logo */}
       <div className="main-header">
         <div className="main-header-inner">
-          <div className="logo-area">
-            <div className="logo-circle">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10"
-                alt="College Logo"
-                className="logo-img"
-              />
+          <div className="header-row">
+            <div className="logo-area">
+              <div className="logo-circle">
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10"
+                  alt="College Logo"
+                  className="logo-img"
+                />
+              </div>
+              <div className="logo-text">
+                <p className="society-name">Satara Education Society's</p>
+                <h1 className="college-name">Satara Polytechnic, Satara</h1>
+                <p className="address-line">At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra</p>
+                <p className="affiliation-line">Approved by AICTE Delhi, DTE Maharashtra State, Affiliated to MSBTE, Mumbai</p>
+                <p className="motto">"Jai Jagat, Jai Bharat"</p>
+              </div>
             </div>
-            <div className="logo-text">
-              <p className="society-name">Satara Education Society's</p>
-              <h1 className="college-name">Satara Polytechnic, Satara</h1>
-              <p className="address-line">At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra</p>
-              <p className="affiliation-line">Approved by AICTE Delhi, DTE Maharashtra State, Affiliated to MSBTE, Mumbai</p>
-              <p className="motto">"Jai Jagat, Jai Bharat"</p>
-            </div>
+            {founder && founder.photoUrl && (
+              <div className="founder-area">
+                <div className="founder-circle">
+                  <img
+                    src={founder.photoUrl}
+                    alt={founder.name || 'Founder'}
+                    className="founder-img"
+                  />
+                </div>
+                <p className="founder-label">Founder</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
