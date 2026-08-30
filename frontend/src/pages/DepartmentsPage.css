@@ -691,7 +691,7 @@
 }
 
 .obe-tab:hover {
-  background: #1e2d4d;
+  background: #e0ecf5;
   color: #243358;
 }
 
@@ -817,7 +817,7 @@
 }
 
 .dept-notices-table tbody tr:hover {
-  background: #1e2d4d;
+  background: #e0ecf5;
 }
 
 .dept-notices-table tbody tr:last-child td {
@@ -929,7 +929,7 @@
   font-size: 11px;
   font-weight: 600;
   color: #243358;
-  background: #1e2d4d;
+  background: #e0ecf5;
   padding: 3px 10px;
   border-radius: 4px;
   margin-bottom: 8px;
