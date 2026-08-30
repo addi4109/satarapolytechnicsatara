@@ -191,7 +191,7 @@ function AdminActivities() {
           {form.subSections.map((sub, i) => (
             <div key={i} className="activity-sub-preview" style={{ marginBottom: '28px', padding: '20px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '10px' }}>
               <h3 className="content-sub-heading" style={{ margin: '0 0 8px' }}>{sub.title || 'Untitled'}</h3>
-              <div style={{ width: '35px', height: '2px', background: '#d4a54a', marginBottom: '12px', borderRadius: '2px' }}></div>
+              <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '12px', borderRadius: '2px' }}></div>
               {sub.description && <p style={{ color: '#555', lineHeight: '1.7', marginBottom: '12px' }}>{sub.description}</p>}
               {sub.images && sub.images.length > 0 && (
                 <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: '12px' }}>
@@ -221,11 +221,11 @@ function AdminActivities() {
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       {form.subSections.map((sub, i) => (
-        <div key={i} style={{ padding: '16px', background: editingSubIdx === i ? '#fffbe6' : '#f8f9fa', border: editingSubIdx === i ? '2px solid #d4a54a' : '1px solid #e4e8ed', borderRadius: '10px', position: 'relative' }}>
+        <div key={i} style={{ padding: '16px', background: editingSubIdx === i ? '#fffbe6' : '#f8f9fa', border: editingSubIdx === i ? '2px solid #c8963e' : '1px solid #e4e8ed', borderRadius: '10px', position: 'relative' }}>
           {editingSubIdx === i ? (
             <>
               <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '10px' }}>
-                <input autoFocus type="text" value={sub.title} onChange={(e) => updateSubSection(i, 'title', e.target.value)} placeholder="Title (e.g. Cricket, Chess, Annual Day)" style={{ flex: 1, padding: '8px 12px', border: '1px solid #d4a54a', borderRadius: '6px', fontSize: '14px', fontWeight: 600, boxSizing: 'border-box' }} />
+                <input autoFocus type="text" value={sub.title} onChange={(e) => updateSubSection(i, 'title', e.target.value)} placeholder="Title (e.g. Cricket, Chess, Annual Day)" style={{ flex: 1, padding: '8px 12px', border: '1px solid #c8963e', borderRadius: '6px', fontSize: '14px', fontWeight: 600, boxSizing: 'border-box' }} />
                 <button className="btn btn-success btn-sm" onClick={() => { setEditingSubIdx(null); setEditingSubImgIdx(null); }}>Done</button>
               </div>
               <textarea value={sub.description} onChange={(e) => updateSubSection(i, 'description', e.target.value)} placeholder="Description..." rows={3} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', resize: 'vertical', marginBottom: '12px', boxSizing: 'border-box' }} />
@@ -242,7 +242,7 @@ function AdminActivities() {
                         <span style={{ fontSize: '12px', color: '#999', marginTop: '4px' }}>Click to upload</span>
                       </div>
                     ) : (
-                      <div style={{ width: '160px', background: '#fff', border: '2px solid #d4a54a', borderRadius: '10px', overflow: 'hidden' }}>
+                      <div style={{ width: '160px', background: '#fff', border: '2px solid #c8963e', borderRadius: '10px', overflow: 'hidden' }}>
                         <div style={{ width: '160px', height: '160px', overflow: 'hidden' }}>
                           <img src={newSubImage} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         </div>
@@ -265,7 +265,7 @@ function AdminActivities() {
                       <button onClick={() => removeSubImage(i, j)} style={{ position: 'absolute', top: '6px', right: '6px', background: '#fdecea', border: 'none', color: '#d32f2f', cursor: 'pointer', fontSize: '12px', width: '22px', height: '22px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
                       {editingSubImgIdx === `${i}-${j}` ? (
                         <div style={{ display: 'flex', gap: '4px', marginTop: '6px' }}>
-                          <input autoFocus type="text" value={img.caption} onChange={(e) => updateSubImageCaption(i, j, e.target.value)} placeholder="Caption" style={{ flex: 1, padding: '6px 8px', border: '1px solid #d4a54a', borderRadius: '5px', fontSize: '12px', boxSizing: 'border-box' }} />
+                          <input autoFocus type="text" value={img.caption} onChange={(e) => updateSubImageCaption(i, j, e.target.value)} placeholder="Caption" style={{ flex: 1, padding: '6px 8px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '12px', boxSizing: 'border-box' }} />
                           <button className="btn btn-success btn-sm" onClick={() => setEditingSubImgIdx(null)} style={{ padding: '6px 8px', fontSize: '11px' }}>Done</button>
                         </div>
                       ) : (
@@ -279,7 +279,7 @@ function AdminActivities() {
           ) : (
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <div onClick={() => { setEditingSubIdx(i); setEditingSubImgIdx(null); }} style={{ cursor: 'pointer', flex: 1 }}>
-                <h4 style={{ margin: '0 0 4px', color: '#2a5a8a', fontSize: '16px' }}>{sub.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled</em>}</h4>
+                <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '16px' }}>{sub.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled</em>}</h4>
                 {sub.description && <p style={{ margin: '0 0 8px', color: '#555', fontSize: '13px', lineHeight: '1.5' }}>{sub.description.length > 120 ? sub.description.substring(0, 120) + '...' : sub.description}</p>}
                 {sub.images && sub.images.length > 0 && (
                   <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>

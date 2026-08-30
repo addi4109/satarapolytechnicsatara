@@ -244,7 +244,7 @@ function AdminPlacements() {
         )}
 
         {/* Title */}
-        <h2 style={{ margin: '0 0 20px', fontFamily: 'Georgia, serif', fontSize: '22px', color: '#2a5a8a' }}>
+        <h2 style={{ margin: '0 0 20px', fontFamily: 'Georgia, serif', fontSize: '22px', color: '#243358' }}>
           {currentSection?.label}
         </h2>
 
@@ -306,7 +306,7 @@ function AdminPlacements() {
               <>
                 <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                  <h4 style={{ margin: 0, color: '#2a5a8a', fontSize: '15px' }}>Placement Officer</h4>
+                  <h4 style={{ margin: 0, color: '#243358', fontSize: '15px' }}>Placement Officer</h4>
                   <span style={{ fontSize: '12px', color: '#888' }}>Click the card to edit</span>
                 </div>
 
@@ -324,8 +324,8 @@ function AdminPlacements() {
                           <img src={form.officerPhoto} alt={form.officerName} />
                         </div>
                       ) : (
-                        <div className="placement-officer-photo" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#e8f0fa' }}>
-                          <span style={{ fontSize: '48px', fontWeight: 700, color: '#2a5a8a', fontFamily: 'Georgia, serif' }}>?</span>
+                        <div className="placement-officer-photo" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f5f7fa' }}>
+                          <span style={{ fontSize: '48px', fontWeight: 700, color: '#243358', fontFamily: 'Georgia, serif' }}>?</span>
                         </div>
                       )}
                       <h4 className="placement-officer-name">{form.officerName || 'Officer Name'}</h4>
@@ -340,7 +340,7 @@ function AdminPlacements() {
                   </div>
                 ) : (
                   /* Edit mode */
-                  <div className="placement-officer-card" style={{ border: '2px solid #d4a54a' }}>
+                  <div className="placement-officer-card" style={{ border: '2px solid #c8963e' }}>
                     <div className="placement-officer-left">
                       <div className="placement-officer-photo">
                         <ImageUpload
@@ -355,7 +355,7 @@ function AdminPlacements() {
                         value={form.officerName}
                         onChange={(e) => handleChange('officerName', e.target.value)}
                         placeholder="Officer Name"
-                        style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '14px', fontWeight: 700, fontFamily: 'Georgia, serif', color: '#2a5a8a', textAlign: 'center', marginBottom: '6px', boxSizing: 'border-box' }}
+                        style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '14px', fontWeight: 700, fontFamily: 'Georgia, serif', color: '#243358', textAlign: 'center', marginBottom: '6px', boxSizing: 'border-box' }}
                       />
                       <p className="placement-officer-designation">Placement Officer</p>
                       <input
@@ -389,7 +389,7 @@ function AdminPlacements() {
             {activeTab === 'about' && (
               <>
                 <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#2a5a8a', fontSize: '15px' }}>Placement & Training Office Team</h4>
+                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Placement & Training Office Team</h4>
                 <div className="faculty-cards-grid">
                   {/* Existing team members as editable cards */}
                   {form.officeTeam.map((member, idx) => (
@@ -449,7 +449,7 @@ function AdminPlacements() {
                 {view === 'preview' ? (
                   /* Preview */
                   <>
-                    <h4 style={{ margin: '0 0 6px', color: '#2a5a8a', fontSize: '15px' }}>Process Steps</h4>
+                    <h4 style={{ margin: '0 0 6px', color: '#243358', fontSize: '15px' }}>Process Steps</h4>
                     <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Preview of how steps appear on the live website.</p>
                     <div className="process-steps" style={{ marginTop: '12px' }}>
                       {form.steps.map((step, i) => (
@@ -467,7 +467,7 @@ function AdminPlacements() {
                 ) : (
                   /* Edit mode */
                   <>
-                    <h4 style={{ margin: '0 0 6px', color: '#2a5a8a', fontSize: '15px' }}>Process Steps</h4>
+                    <h4 style={{ margin: '0 0 6px', color: '#243358', fontSize: '15px' }}>Process Steps</h4>
                     <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>Click a step to edit it.</p>
                     <div className="process-steps" style={{ marginTop: '12px' }}>
                       {form.steps.map((step, i) => (
@@ -476,8 +476,8 @@ function AdminPlacements() {
                           <div className="step-content" style={{ flex: 1 }}>
                             {editingStepIdx === i ? (
                               <>
-                                <input autoFocus type="text" value={step.title} onChange={(e) => { const u = [...form.steps]; u[i] = { ...u[i], title: e.target.value }; handleChange('steps', u); }} placeholder="Step title" style={{ width: '100%', padding: '7px 10px', border: '1px solid #d4a54a', borderRadius: '5px', fontSize: '13px', marginBottom: '6px', boxSizing: 'border-box' }} />
-                                <textarea value={step.desc} onChange={(e) => { const u = [...form.steps]; u[i] = { ...u[i], desc: e.target.value }; handleChange('steps', u); }} placeholder="Description" rows={2} style={{ width: '100%', padding: '7px 10px', border: '1px solid #d4a54a', borderRadius: '5px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }} />
+                                <input autoFocus type="text" value={step.title} onChange={(e) => { const u = [...form.steps]; u[i] = { ...u[i], title: e.target.value }; handleChange('steps', u); }} placeholder="Step title" style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', marginBottom: '6px', boxSizing: 'border-box' }} />
+                                <textarea value={step.desc} onChange={(e) => { const u = [...form.steps]; u[i] = { ...u[i], desc: e.target.value }; handleChange('steps', u); }} placeholder="Description" rows={2} style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }} />
                                 <div style={{ display: 'flex', gap: '8px' }}>
                                   <button className="btn btn-success btn-sm" onClick={() => setEditingStepIdx(null)}>Done</button>
                                   <button onClick={() => removeStep(i)} style={{ background: 'none', border: 'none', color: '#dc3545', cursor: 'pointer', fontSize: '12px', fontWeight: 600 }}>Remove</button>
@@ -505,7 +505,7 @@ function AdminPlacements() {
                 {view === 'preview' ? (
                   /* Preview */
                   <>
-                    <h4 style={{ margin: '0 0 12px', color: '#2a5a8a', fontSize: '15px' }}>Placement Records</h4>
+                    <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Placement Records</h4>
                     <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Preview of how records appear on the live website.</p>
 
                     {/* Record Table Preview */}
@@ -516,13 +516,13 @@ function AdminPlacements() {
                           <tbody>
                             {form.recordTable.map((rec, i) => (
                               <tr key={i}>
-                                <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{i + 1}</td>
+                                <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                                 <td className="fee-particular" style={{ fontWeight: 600 }}>{rec.year}</td>
                                 <td style={{ textAlign: 'center' }}>
                                   {rec.pdfUrl ? (
                                     <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
-                                      <a href={`/api/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`} target="_blank" style={{ padding: '5px 14px', background: '#2a5a8a', color: '#fff', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}>View</a>
-                                      <a href={`/api/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`} download style={{ padding: '5px 14px', background: '#fff', color: '#2a5a8a', border: '1px solid #2a5a8a', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}>Download</a>
+                                      <a href={`/api/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`} target="_blank" style={{ padding: '5px 14px', background: '#243358', color: '#fff', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}>View</a>
+                                      <a href={`/api/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`} download style={{ padding: '5px 14px', background: '#fff', color: '#243358', border: '1px solid #243358', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}>Download</a>
                                     </div>
                                   ) : <span style={{ color: '#ccc' }}>No PDF</span>}
                                 </td>
@@ -536,7 +536,7 @@ function AdminPlacements() {
                     {/* Record Images Preview */}
                     {form.recordImages.length > 0 && (
                       <div style={{ marginTop: '24px' }}>
-                        <h4 style={{ margin: '0 0 16px', color: '#2a5a8a', fontSize: '15px' }}>Record Gallery</h4>
+                        <h4 style={{ margin: '0 0 16px', color: '#243358', fontSize: '15px' }}>Record Gallery</h4>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px' }}>
                           {form.recordImages.map((img, i) => (
                             <div key={i} style={{ textAlign: 'center' }}>
@@ -545,7 +545,7 @@ function AdminPlacements() {
                                   <img src={img.imageUrl} alt={img.title || 'Record'} style={{ width: '100%', height: 'auto', display: 'block' }} />
                                 </div>
                               )}
-                              {img.title && <p style={{ fontFamily: 'Georgia, serif', fontSize: '16px', fontWeight: 700, color: '#2a5a8a', margin: 0 }}>{img.title}</p>}
+                              {img.title && <p style={{ fontFamily: 'Georgia, serif', fontSize: '16px', fontWeight: 700, color: '#243358', margin: 0 }}>{img.title}</p>}
                             </div>
                           ))}
                         </div>
@@ -557,10 +557,10 @@ function AdminPlacements() {
                 ) : (
                   /* Edit mode */
                   <>
-                    <h4 style={{ margin: '0 0 12px', color: '#2a5a8a', fontSize: '15px' }}>Record Table</h4>
+                    <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Record Table</h4>
                     {form.recordTable.map((row, i) => (
                       <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '10px', background: '#f8f9fb', border: '1px solid #e4e8ed', borderRadius: '6px', padding: '10px 12px' }}>
-                        <span style={{ fontSize: '13px', fontWeight: 600, color: '#2a5a8a', minWidth: '30px' }}>{i + 1}.</span>
+                        <span style={{ fontSize: '13px', fontWeight: 600, color: '#243358', minWidth: '30px' }}>{i + 1}.</span>
                         <input type="text" value={row.year} onChange={(e) => { const u = [...form.recordTable]; u[i] = { ...u[i], year: e.target.value }; handleChange('recordTable', u); }} placeholder="Year" style={{ width: '140px', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
                         <div style={{ flex: 1 }}><PdfUpload value={row.pdfUrl} onChange={(url) => { const u = [...form.recordTable]; u[i] = { ...u[i], pdfUrl: url }; handleChange('recordTable', u); }} compact /></div>
                         <button className="member-remove-btn" onClick={() => handleChange('recordTable', form.recordTable.filter((_, j) => j !== i))}>×</button>
@@ -569,7 +569,7 @@ function AdminPlacements() {
                     <button className="btn btn-success btn-sm" style={{ marginBottom: '20px' }} onClick={() => handleChange('recordTable', [...form.recordTable, { year: '', pdfUrl: '' }])}>+ Add Row</button>
 
                     <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                    <h4 style={{ margin: '0 0 12px', color: '#2a5a8a', fontSize: '15px' }}>Record Images</h4>
+                    <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Record Images</h4>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '14px' }}>
                       {form.recordImages.map((img, i) => (
                         <div key={i} style={{ background: '#f8f9fb', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '12px', position: 'relative' }}>
@@ -594,7 +594,7 @@ function AdminPlacements() {
             {activeTab === 'recruiters' && (
               <>
                 <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#2a5a8a', fontSize: '15px' }}>Our Recruiters</h4>
+                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Our Recruiters</h4>
                 <div className="faculty-cards-grid">
                   {/* Add new recruiter card first */}
                   <div className="faculty-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', borderStyle: 'dashed', minHeight: '180px' }} onClick={addRecruiter}>

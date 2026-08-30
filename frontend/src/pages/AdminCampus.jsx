@@ -243,13 +243,13 @@ function AdminCampus() {
 
   // ===== TABLE EDITOR (used in edit mode for all sections with tables) =====
   const renderTableEditor = (table, tableIdx) => (
-    <div key={tableIdx} style={{ marginBottom: '20px', background: '#fff', border: editingTableIdx === tableIdx ? '2px solid #d4a54a' : '1px solid #e4e8ed', borderRadius: '10px', overflow: 'hidden' }}>
+    <div key={tableIdx} style={{ marginBottom: '20px', background: '#fff', border: editingTableIdx === tableIdx ? '2px solid #c8963e' : '1px solid #e4e8ed', borderRadius: '10px', overflow: 'hidden' }}>
       {/* Table Header */}
-      <div style={{ padding: '12px 16px', background: '#f0f4f8', borderBottom: '1px solid #e4e8ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ padding: '12px 16px', background: '#f5f7fa', borderBottom: '1px solid #e4e8ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         {editingTableIdx === tableIdx ? (
           <input autoFocus type="text" value={table.title} onChange={(e) => updateTableTitle(tableIdx, e.target.value)} placeholder="Table title (e.g. Book Collection by Department)" style={{ flex: 1, padding: '6px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '14px', fontWeight: 600, marginRight: '10px' }} />
         ) : (
-          <h4 style={{ margin: 0, fontSize: '14px', color: '#2a5a8a', fontWeight: 700 }}>{table.title || 'Untitled Table'}</h4>
+          <h4 style={{ margin: 0, fontSize: '14px', color: '#243358', fontWeight: 700 }}>{table.title || 'Untitled Table'}</h4>
         )}
         <div style={{ display: 'flex', gap: '6px' }}>
           {editingTableIdx === tableIdx ? (
@@ -270,13 +270,13 @@ function AdminCampus() {
           <div style={{ display: 'flex', gap: '4px', marginBottom: '8px', alignItems: 'center' }}>
             {table.columns.map((col, ci) => (
               <div key={ci} style={{ flex: ci === 0 ? '0 60px' : 1, position: 'relative' }}>
-                <input type="text" value={col} onChange={(e) => updateColumnName(tableIdx, ci, e.target.value)} style={{ width: '100%', padding: '6px 8px', border: '1px solid #d4a54a', borderRadius: '4px', fontSize: '12px', fontWeight: 700, background: '#fffbe6', boxSizing: 'border-box' }} />
+                <input type="text" value={col} onChange={(e) => updateColumnName(tableIdx, ci, e.target.value)} style={{ width: '100%', padding: '6px 8px', border: '1px solid #c8963e', borderRadius: '4px', fontSize: '12px', fontWeight: 700, background: '#fffbe6', boxSizing: 'border-box' }} />
                 {ci > 0 && (
                   <button onClick={() => removeColumn(tableIdx, ci)} style={{ position: 'absolute', top: '-6px', right: '-6px', width: '16px', height: '16px', borderRadius: '50%', border: 'none', background: '#fdecea', color: '#d32f2f', fontSize: '10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>×</button>
                 )}
               </div>
             ))}
-            <button onClick={() => addColumn(tableIdx)} style={{ width: '28px', height: '28px', borderRadius: '50%', border: '1px dashed #b9c3d4', background: '#fff', color: '#2a5a8a', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>+</button>
+            <button onClick={() => addColumn(tableIdx)} style={{ width: '28px', height: '28px', borderRadius: '50%', border: '1px dashed #b9c3d4', background: '#fff', color: '#243358', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>+</button>
           </div>
 
           {/* Rows */}
@@ -289,7 +289,7 @@ function AdminCampus() {
             </div>
           ))}
 
-          <button onClick={() => addRow(tableIdx)} style={{ marginTop: '6px', padding: '4px 12px', border: '1px dashed #b9c3d4', borderRadius: '4px', background: '#fff', color: '#2a5a8a', fontSize: '12px', cursor: 'pointer', fontWeight: 600 }}>+ Add Row</button>
+          <button onClick={() => addRow(tableIdx)} style={{ marginTop: '6px', padding: '4px 12px', border: '1px dashed #b9c3d4', borderRadius: '4px', background: '#fff', color: '#243358', fontSize: '12px', cursor: 'pointer', fontWeight: 600 }}>+ Add Row</button>
         </div>
       ) : (
         <div style={{ overflowX: 'auto' }}>
@@ -297,7 +297,7 @@ function AdminCampus() {
             <thead>
               <tr>
                 {table.columns.map((col, ci) => (
-                  <th key={ci} style={{ padding: '10px 12px', textAlign: ci === 0 ? 'center' : 'left', background: '#2a5a8a', color: '#fff', fontWeight: 600, fontSize: '12px', whiteSpace: 'nowrap' }}>{col}</th>
+                  <th key={ci} style={{ padding: '10px 12px', textAlign: ci === 0 ? 'center' : 'left', background: '#243358', color: '#fff', fontWeight: 600, fontSize: '12px', whiteSpace: 'nowrap' }}>{col}</th>
                 ))}
               </tr>
             </thead>
@@ -305,7 +305,7 @@ function AdminCampus() {
               {table.rows.map((row, ri) => (
                 <tr key={ri}>
                   {row.map((cell, ci) => (
-                    <td key={ci} style={{ padding: '8px 12px', borderBottom: '1px solid #e4e8ed', textAlign: ci === 0 ? 'center' : 'left', fontWeight: ci === 0 ? 600 : 400, color: ci === 0 ? '#2a5a8a' : '#333' }}>{cell}</td>
+                    <td key={ci} style={{ padding: '8px 12px', borderBottom: '1px solid #e4e8ed', textAlign: ci === 0 ? 'center' : 'left', fontWeight: ci === 0 ? 600 : 400, color: ci === 0 ? '#243358' : '#333' }}>{cell}</td>
                   ))}
                 </tr>
               ))}
@@ -340,7 +340,7 @@ function AdminCampus() {
             <div style={{ marginTop: '24px' }}>
               {form.tables.map((table, ti) => (
                 <div key={ti} style={{ marginBottom: '24px' }}>
-                  {table.title && <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#2a5a8a', marginBottom: '12px' }}>{table.title}</h3>}
+                  {table.title && <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>{table.title}</h3>}
                   <div className="fee-table-wrap library-table">
                     <table className="fee-table">
                       <thead>
@@ -354,7 +354,7 @@ function AdminCampus() {
                         {table.rows.map((row, ri) => (
                           <tr key={ri}>
                             {row.map((cell, ci) => (
-                              <td key={ci} style={ci === 0 ? { width: 50, fontWeight: 600, color: '#2a5a8a' } : ci === 1 ? { fontWeight: 500 } : {}}>{cell}</td>
+                              <td key={ci} style={ci === 0 ? { width: 50, fontWeight: 600, color: '#243358' } : ci === 1 ? { fontWeight: 500 } : {}}>{cell}</td>
                             ))}
                           </tr>
                         ))}
@@ -381,7 +381,7 @@ function AdminCampus() {
           {/* Library Rules */}
           {form.rules.length > 0 && (
             <div style={{ marginTop: '24px' }}>
-              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#2a5a8a', marginBottom: '12px' }}>Library Rules</h3>
+              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>Library Rules</h3>
               <div className="rules-list">
                 {form.rules.map((rule, i) => (
                   <div className="rule-item" key={i}>
@@ -399,11 +399,11 @@ function AdminCampus() {
           {/* Library Images */}
           {form.images.length > 0 && (
             <div style={{ marginTop: '24px' }}>
-              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#2a5a8a', marginBottom: '12px' }}>Library Gallery</h3>
+              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>Library Gallery</h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
                 {form.images.map((img, i) => (
                   <div key={i} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', overflow: 'hidden' }}>
-                    <div style={{ width: '100%', height: '160px', background: '#f0f4f8', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ width: '100%', height: '160px', background: '#f5f7fa', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       {img.url ? (
                         <img src={img.url} alt={img.caption || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                       ) : (
@@ -449,7 +449,7 @@ function AdminCampus() {
             <div style={{ marginTop: '24px' }}>
               {form.tables.map((table, ti) => (
                 <div key={ti} style={{ marginBottom: '24px' }}>
-                  {table.title && <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#2a5a8a', marginBottom: '12px' }}>{table.title}</h3>}
+                  {table.title && <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>{table.title}</h3>}
                   <div className="fee-table-wrap">
                     <table className="fee-table">
                       <thead>
@@ -463,7 +463,7 @@ function AdminCampus() {
                         {table.rows.map((row, ri) => (
                           <tr key={ri}>
                             {row.map((cell, ci) => (
-                              <td key={ci} style={ci === 0 ? { textAlign: 'center', fontWeight: 600, color: '#2a5a8a' } : {}}>{cell}</td>
+                              <td key={ci} style={ci === 0 ? { textAlign: 'center', fontWeight: 600, color: '#243358' } : {}}>{cell}</td>
                             ))}
                           </tr>
                         ))}
@@ -489,7 +489,7 @@ function AdminCampus() {
           {/* Food Menu Preview (canteen only) */}
           {activeTab === 'canteen' && form.foodMenu.length > 0 && (
             <div style={{ marginTop: '24px' }}>
-              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#2a5a8a', marginBottom: '12px' }}>Food Menu</h3>
+              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>Food Menu</h3>
               <div className="fee-table-wrap">
                 <table className="fee-table">
                   <thead>
@@ -504,7 +504,7 @@ function AdminCampus() {
                   <tbody>
                     {form.foodMenu.map((item, i) => (
                       <tr key={i}>
-                        <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{i + 1}</td>
+                        <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                         <td>{item.name}</td>
                         <td>{item.category}</td>
                         <td>{item.price}</td>
@@ -520,19 +520,19 @@ function AdminCampus() {
           {/* Bus Routes Preview */}
           {activeTab === 'bus-facility' && form.busRoutes.length > 0 && (
             <div style={{ marginTop: '24px' }}>
-              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#2a5a8a', marginBottom: '14px' }}>Bus Routes</h3>
+              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '14px' }}>Bus Routes</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {form.busRoutes.map((route, ri) => (
                   <div key={ri} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '16px 20px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-                      <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#2a5a8a', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }}>🚌</div>
-                      <h4 style={{ margin: 0, fontSize: '15px', fontWeight: 700, color: '#2a5a8a' }}>{route.routeName || `Route ${ri + 1}`}</h4>
+                      <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#243358', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }}>🚌</div>
+                      <h4 style={{ margin: 0, fontSize: '15px', fontWeight: 700, color: '#243358' }}>{route.routeName || `Route ${ri + 1}`}</h4>
                     </div>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
                       {route.stops.map((stop, si) => (
                         <React.Fragment key={si}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: '#f0f4f8', padding: '6px 12px', borderRadius: '6px', border: '1px solid #e4e8ed' }}>
-                            <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: si === 0 || si === route.stops.length - 1 ? '#d4a54a' : '#2a5a8a', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700 }}>{si + 1}</div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: '#f5f7fa', padding: '6px 12px', borderRadius: '6px', border: '1px solid #e4e8ed' }}>
+                            <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: si === 0 || si === route.stops.length - 1 ? '#c8963e' : '#243358', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700 }}>{si + 1}</div>
                             <span style={{ fontSize: '13px', fontWeight: 500, color: '#333' }}>{stop}</span>
                           </div>
                           {si < route.stops.length - 1 && <span style={{ color: '#b9c3d4', fontSize: '16px' }}>→</span>}
@@ -635,7 +635,7 @@ function AdminCampus() {
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     {/* Table Header */}
-                    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1fr 1.5fr 40px', gap: '8px', padding: '8px 12px', background: '#2a5a8a', color: '#fff', borderRadius: '6px', fontSize: '12px', fontWeight: 700 }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1fr 1.5fr 40px', gap: '8px', padding: '8px 12px', background: '#243358', color: '#fff', borderRadius: '6px', fontSize: '12px', fontWeight: 700 }}>
                       <span>Item Name</span>
                       <span>Category</span>
                       <span>Price (₹)</span>
@@ -686,7 +686,7 @@ function AdminCampus() {
                     {form.rules.map((rule, i) => (
                       <div key={i} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '14px 16px', position: 'relative' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                          <span style={{ fontSize: '12px', fontWeight: 700, color: '#d4a54a' }}>Rule {i + 1}</span>
+                          <span style={{ fontSize: '12px', fontWeight: 700, color: '#c8963e' }}>Rule {i + 1}</span>
                           <button onClick={() => setForm({ ...form, rules: form.rules.filter((_, idx) => idx !== i) })} style={{ background: 'none', border: 'none', color: '#d32f2f', cursor: 'pointer', fontSize: '16px', padding: '0 4px' }} title="Remove">×</button>
                         </div>
                         <input type="text" value={rule.ruleTitle} onChange={(e) => { const r = [...form.rules]; r[i] = { ...r[i], ruleTitle: e.target.value }; setForm({ ...form, rules: r }); }} placeholder="Rule title (e.g. Return Policy)" style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', marginBottom: '8px', boxSizing: 'border-box', fontWeight: 600 }} />
@@ -721,7 +721,7 @@ function AdminCampus() {
                     {form.images.map((img, i) => (
                       <div key={i} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', overflow: 'hidden', position: 'relative' }}>
                         <button onClick={() => setForm({ ...form, images: form.images.filter((_, idx) => idx !== i) })} style={{ position: 'absolute', top: '6px', right: '6px', width: '22px', height: '22px', borderRadius: '50%', border: 'none', background: 'rgba(0,0,0,0.5)', color: '#fff', fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, zIndex: 2 }} title="Remove">×</button>
-                        <div style={{ width: '100%', height: '140px', background: '#f0f4f8', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                        <div style={{ width: '100%', height: '140px', background: '#f5f7fa', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                           {img.url ? (
                             <img src={img.url} alt={img.caption || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                           ) : (
@@ -762,19 +762,19 @@ function AdminCampus() {
                     {form.busRoutes.map((route, ri) => (
                       <div key={ri} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '14px 16px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                          <span style={{ fontSize: '12px', fontWeight: 700, color: '#d4a54a' }}>Route {ri + 1}</span>
+                          <span style={{ fontSize: '12px', fontWeight: 700, color: '#c8963e' }}>Route {ri + 1}</span>
                           <button onClick={() => setForm({ ...form, busRoutes: form.busRoutes.filter((_, idx) => idx !== ri) })} style={{ background: 'none', border: 'none', color: '#d32f2f', cursor: 'pointer', fontSize: '16px', padding: '0 4px' }} title="Remove route">×</button>
                         </div>
                         <input type="text" value={route.routeName} onChange={(e) => { const r = [...form.busRoutes]; r[ri] = { ...r[ri], routeName: e.target.value }; setForm({ ...form, busRoutes: r }); }} placeholder="Route name (e.g. Satara - Pune)" style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', marginBottom: '10px', boxSizing: 'border-box', fontWeight: 600 }} />
                         <label style={{ fontSize: '12px', fontWeight: 600, color: '#555', marginBottom: '6px', display: 'block' }}>Stops</label>
                         {route.stops.map((stop, si) => (
                           <div key={si} style={{ display: 'flex', gap: '6px', marginBottom: '6px', alignItems: 'center' }}>
-                            <span style={{ width: '20px', height: '20px', borderRadius: '50%', background: '#2a5a8a', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700, flexShrink: 0 }}>{si + 1}</span>
+                            <span style={{ width: '20px', height: '20px', borderRadius: '50%', background: '#243358', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700, flexShrink: 0 }}>{si + 1}</span>
                             <input type="text" value={stop} onChange={(e) => { const r = [...form.busRoutes]; const stops = [...r[ri].stops]; stops[si] = e.target.value; r[ri] = { ...r[ri], stops }; setForm({ ...form, busRoutes: r }); }} placeholder="Stop name" style={{ flex: 1, padding: '6px 10px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '12px', boxSizing: 'border-box' }} />
                             {route.stops.length > 1 && <button onClick={() => { const r = [...form.busRoutes]; const stops = r[ri].stops.filter((_, idx) => idx !== si); r[ri] = { ...r[ri], stops }; setForm({ ...form, busRoutes: r }); }} style={{ width: '22px', height: '22px', borderRadius: '50%', border: 'none', background: '#fdecea', color: '#d32f2f', fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: 0 }}>×</button>}
                           </div>
                         ))}
-                        <button onClick={() => { const r = [...form.busRoutes]; r[ri] = { ...r[ri], stops: [...r[ri].stops, ''] }; setForm({ ...form, busRoutes: r }); }} style={{ marginTop: '4px', padding: '4px 10px', border: '1px dashed #b9c3d4', borderRadius: '4px', background: '#fff', color: '#2a5a8a', fontSize: '12px', cursor: 'pointer', fontWeight: 600 }}>+ Add Stop</button>
+                        <button onClick={() => { const r = [...form.busRoutes]; r[ri] = { ...r[ri], stops: [...r[ri].stops, ''] }; setForm({ ...form, busRoutes: r }); }} style={{ marginTop: '4px', padding: '4px 10px', border: '1px dashed #b9c3d4', borderRadius: '4px', background: '#fff', color: '#243358', fontSize: '12px', cursor: 'pointer', fontWeight: 600 }}>+ Add Stop</button>
                       </div>
                     ))}
                   </div>
@@ -824,14 +824,14 @@ function AdminCampus() {
                   {form.staffMembers.map((member, index) => (
                     <div key={index} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '16px', textAlign: 'center', position: 'relative', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
                       <button onClick={() => deleteStaff(index)} style={{ position: 'absolute', top: '8px', right: '8px', width: '24px', height: '24px', borderRadius: '50%', border: 'none', background: '#fdecea', color: '#d32f2f', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }} title="Remove">×</button>
-                      <div style={{ width: '80px', height: '80px', borderRadius: '50%', border: '3px solid #e4e8ed', margin: '0 auto 12px', overflow: 'hidden', background: '#f0f4f8', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <div style={{ width: '80px', height: '80px', borderRadius: '50%', border: '3px solid #e4e8ed', margin: '0 auto 12px', overflow: 'hidden', background: '#f5f7fa', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         {member.photoUrl ? (
                           <img src={member.photoUrl} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         ) : (
-                          <span style={{ fontSize: '28px', fontWeight: 700, color: '#2a5a8a', fontFamily: 'Georgia, serif' }}>{member.name?.split(' ')?.pop()?.charAt(0) || '?'}</span>
+                          <span style={{ fontSize: '28px', fontWeight: 700, color: '#243358', fontFamily: 'Georgia, serif' }}>{member.name?.split(' ')?.pop()?.charAt(0) || '?'}</span>
                         )}
                       </div>
-                      <h4 style={{ margin: '0 0 4px', fontSize: '14px', fontWeight: 700, color: '#2a5a8a' }}>{member.name}</h4>
+                      <h4 style={{ margin: '0 0 4px', fontSize: '14px', fontWeight: 700, color: '#243358' }}>{member.name}</h4>
                       <p style={{ margin: '0 0 8px', fontSize: '12px', color: '#666' }}>{member.designation}</p>
                       {member.phone && <p style={{ margin: '0 0 2px', fontSize: '12px', color: '#555' }}>{member.phone}</p>}
                       {member.email && <p style={{ margin: '0 0 10px', fontSize: '11px', color: '#888' }}>{member.email}</p>}
@@ -841,7 +841,7 @@ function AdminCampus() {
 
                   {/* Add new card */}
                   {showStaffForm ? (
-                    <div style={{ background: '#f8f9fa', border: '2px solid #d4a54a', borderRadius: '10px', padding: '16px', textAlign: 'center' }}>
+                    <div style={{ background: '#f8f9fa', border: '2px solid #c8963e', borderRadius: '10px', padding: '16px', textAlign: 'center' }}>
                       <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px' }}>
                         <button onClick={cancelStaffForm} style={{ background: 'none', border: 'none', fontSize: '18px', cursor: 'pointer', color: '#999' }}>×</button>
                       </div>
@@ -853,9 +853,9 @@ function AdminCampus() {
                       <button className="btn btn-success btn-sm" onClick={saveStaff} style={{ width: '100%' }}>{editStaffIdx !== null ? 'Update' : 'Add'} Staff</button>
                     </div>
                   ) : (
-                    <div onClick={openAddStaff} style={{ background: '#fff', border: '2px dashed #b9c3d4', borderRadius: '10px', padding: '16px', textAlign: 'center', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '280px', transition: 'border-color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = '#d4a54a'} onMouseLeave={(e) => e.currentTarget.style.borderColor = '#b9c3d4'}>
-                      <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#e8f0fa', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', color: '#2a5a8a', marginBottom: '10px' }}>+</div>
-                      <span style={{ fontSize: '13px', fontWeight: 600, color: '#2a5a8a' }}>Add Staff</span>
+                    <div onClick={openAddStaff} style={{ background: '#fff', border: '2px dashed #b9c3d4', borderRadius: '10px', padding: '16px', textAlign: 'center', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '280px', transition: 'border-color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.borderColor = '#c8963e'} onMouseLeave={(e) => e.currentTarget.style.borderColor = '#b9c3d4'}>
+                      <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#f5f7fa', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', color: '#243358', marginBottom: '10px' }}>+</div>
+                      <span style={{ fontSize: '13px', fontWeight: 600, color: '#243358' }}>Add Staff</span>
                       <span style={{ fontSize: '11px', color: '#999', marginTop: '4px' }}>Click to add new member</span>
                     </div>
                   )}
@@ -896,7 +896,7 @@ function AdminCampus() {
           </div>
         )}
 
-        <h2 style={{ margin: '0 0 20px', fontFamily: 'Georgia, serif', fontSize: '22px', color: '#2a5a8a' }}>
+        <h2 style={{ margin: '0 0 20px', fontFamily: 'Georgia, serif', fontSize: '22px', color: '#243358' }}>
           {currentSection?.label}
         </h2>
 

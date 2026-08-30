@@ -357,7 +357,7 @@ function AdminManagement() {
 
           {/* Title */}
           <div style={{ padding: '10px 24px', textAlign: 'center', flexShrink: 0 }}>
-            <h2 style={{ margin: 0, fontFamily: 'Georgia, serif', fontSize: '22px', color: '#2a5a8a' }}>
+            <h2 style={{ margin: 0, fontFamily: 'Georgia, serif', fontSize: '22px', color: '#243358' }}>
               {activeTab === 'governing-body' ? 'Governing Body Management' : activeTab === 'local-governing-body' ? 'Local Governing Body Management' : `${currentRole?.label} Management`}
             </h2>
           </div>
@@ -382,7 +382,7 @@ function AdminManagement() {
                   <div className="gb-cards-grid">
                     {/* Add Member Box */}
                     {showGbForm && !editGbId ? (
-                      <div className="gb-member-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'solid', borderColor: '#d4a54a', background: '#fffbe6' }}>
+                      <div className="gb-member-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'solid', borderColor: '#c8963e', background: '#fffbe6' }}>
                         <div style={{ textAlign: 'center', marginBottom: '14px' }}>
                           <ImageUpload
                             value={gbForm.photoUrl}
@@ -412,7 +412,7 @@ function AdminManagement() {
                     {/* Member Cards - live preview */}
                     {gbMembers.map((member) => (
                       editGbId === member._id ? (
-                        <div key={member._id} className="gb-member-card" style={{ border: '2px solid #d4a54a', background: '#fffbe6' }}>
+                        <div key={member._id} className="gb-member-card" style={{ border: '2px solid #c8963e', background: '#fffbe6' }}>
                           <div style={{ textAlign: 'center', marginBottom: '14px' }}>
                             <ImageUpload value={gbForm.photoUrl} onChange={(url) => setGbForm({ ...gbForm, photoUrl: url })} circle />
                           </div>
@@ -464,7 +464,7 @@ function AdminManagement() {
                   <div className="gb-cards-grid">
                     {/* Add Member Box */}
                     {showLgbForm && !editLgbId ? (
-                      <div className="gb-member-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'solid', borderColor: '#d4a54a', background: '#fffbe6' }}>
+                      <div className="gb-member-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'solid', borderColor: '#c8963e', background: '#fffbe6' }}>
                         <div style={{ textAlign: 'center', marginBottom: '14px' }}>
                           <ImageUpload
                             value={lgbForm.photoUrl}
@@ -494,7 +494,7 @@ function AdminManagement() {
                     {/* Member Cards - live preview */}
                     {lgbMembers.map((member) => (
                       editLgbId === member._id ? (
-                        <div key={member._id} className="gb-member-card" style={{ border: '2px solid #d4a54a', background: '#fffbe6' }}>
+                        <div key={member._id} className="gb-member-card" style={{ border: '2px solid #c8963e', background: '#fffbe6' }}>
                           <div style={{ textAlign: 'center', marginBottom: '14px' }}>
                             <ImageUpload value={lgbForm.photoUrl} onChange={(url) => setLgbForm({ ...lgbForm, photoUrl: url })} circle />
                           </div>
@@ -555,8 +555,8 @@ function AdminManagement() {
                         <img src={form.photoUrl} alt={form.name} />
                       </div>
                     ) : (
-                      <div className="placement-officer-photo" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#e8f0fa' }}>
-                        <span style={{ fontSize: '48px', fontWeight: 700, color: '#2a5a8a', fontFamily: 'Georgia, serif' }}>?</span>
+                      <div className="placement-officer-photo" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f5f7fa' }}>
+                        <span style={{ fontSize: '48px', fontWeight: 700, color: '#243358', fontFamily: 'Georgia, serif' }}>?</span>
                       </div>
                     )}
                     <h4 className="placement-officer-name">{form.name || currentRole?.label || 'Name'}</h4>
@@ -577,7 +577,7 @@ function AdminManagement() {
                 </div>
               ) : (
                 /* Edit mode */
-                <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', border: '2px solid #d4a54a', borderRadius: '10px', padding: '24px', background: '#f0f4f8' }}>
+                <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', border: '2px solid #c8963e', borderRadius: '10px', padding: '24px', background: '#f5f7fa' }}>
                   <div className="placement-officer-left">
                     <div className="placement-officer-photo">
                       <ImageUpload
@@ -592,14 +592,14 @@ function AdminManagement() {
                       value={form.name}
                       onChange={(e) => handleChange('name', e.target.value)}
                       placeholder="Full Name"
-                      style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '14px', fontWeight: 700, fontFamily: 'Georgia, serif', color: '#2a5a8a', textAlign: 'center', marginBottom: '6px', boxSizing: 'border-box' }}
+                      style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '14px', fontWeight: 700, fontFamily: 'Georgia, serif', color: '#243358', textAlign: 'center', marginBottom: '6px', boxSizing: 'border-box' }}
                     />
                     <input
                       type="text"
                       value={form.title}
                       onChange={(e) => handleChange('title', e.target.value)}
                       placeholder="Title / Designation"
-                      style={{ width: '100%', padding: '5px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', textAlign: 'center', color: '#2a5a8a', fontWeight: 500, marginBottom: '6px', boxSizing: 'border-box' }}
+                      style={{ width: '100%', padding: '5px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', textAlign: 'center', color: '#243358', fontWeight: 500, marginBottom: '6px', boxSizing: 'border-box' }}
                     />
                     <input
                       type="text"

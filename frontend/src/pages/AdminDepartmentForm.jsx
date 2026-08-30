@@ -587,14 +587,14 @@ function AdminDepartmentForm() {
                 const labels = { peos: 'PEOs', pos: 'POs', psos: 'PSOs', cos: 'COs' };
                 return (
                   <div key={field} style={{ marginBottom: '24px' }}>
-                    <h4 style={{ margin: '0 0 10px', fontFamily: "'Georgia', serif", fontSize: '16px', color: '#2a5a8a', borderBottom: '2px solid #d4a54a', paddingBottom: '6px' }}>{labels[field]}</h4>
+                    <h4 style={{ margin: '0 0 10px', fontFamily: "'Georgia', serif", fontSize: '16px', color: '#243358', borderBottom: '2px solid #c8963e', paddingBottom: '6px' }}>{labels[field]}</h4>
                     {form[field].length === 0 ? (
                       <div className="members-empty">No {labels[field]} added yet.</div>
                     ) : (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                         {form[field].map((item, idx) => (
                           <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', padding: '10px', background: '#f8f9fb', borderRadius: '6px', border: '1px solid #e4e8ed' }}>
-                            <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '40px', height: '28px', background: '#2a5a8a', color: '#fff', fontSize: '11px', fontWeight: 700, borderRadius: '4px', flexShrink: 0 }}>{labels[field].slice(0, -1)} {idx + 1}</span>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '40px', height: '28px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 700, borderRadius: '4px', flexShrink: 0 }}>{labels[field].slice(0, -1)} {idx + 1}</span>
                             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' }}>
                               <input type="text" placeholder="Title (optional)" value={item.title} onChange={(e) => updateObeItem(field, idx, 'title', e.target.value)} style={{ padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px' }} />
                               <textarea placeholder="Description" value={item.description} onChange={(e) => updateObeItem(field, idx, 'description', e.target.value)} rows={2} style={{ padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px', resize: 'vertical' }} />
@@ -630,7 +630,7 @@ function AdminDepartmentForm() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   {form.deptNotices.map((notice, idx) => (
                     <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'center', padding: '10px', background: '#f8f9fb', borderRadius: '6px', border: '1px solid #e4e8ed' }}>
-                      <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '32px', height: '28px', background: '#2a5a8a', color: '#fff', fontSize: '12px', fontWeight: 700, borderRadius: '4px', flexShrink: 0 }}>{idx + 1}</span>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '32px', height: '28px', background: '#243358', color: '#fff', fontSize: '12px', fontWeight: 700, borderRadius: '4px', flexShrink: 0 }}>{idx + 1}</span>
                       <input type="text" placeholder="Notice title" value={notice.title} onChange={(e) => updateDeptNotice(idx, 'title', e.target.value)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px' }} />
                       <PdfUpload value={notice.url} onChange={(url) => updateDeptNotice(idx, 'url', url)} />
                       <button type="button" className="btn btn-danger btn-sm" onClick={() => removeDeptNotice(idx)} style={{ flexShrink: 0, padding: '4px 8px' }}>✕</button>
@@ -661,7 +661,7 @@ function AdminDepartmentForm() {
                   {form.deptEvents.map((event, idx) => (
                     <div key={idx} style={{ padding: '14px', background: '#f8f9fb', borderRadius: '8px', border: '1px solid #e4e8ed' }}>
                       <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
-                        <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '32px', height: '28px', background: '#2a5a8a', color: '#fff', fontSize: '12px', fontWeight: 700, borderRadius: '4px', flexShrink: 0 }}>{idx + 1}</span>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '32px', height: '28px', background: '#243358', color: '#fff', fontSize: '12px', fontWeight: 700, borderRadius: '4px', flexShrink: 0 }}>{idx + 1}</span>
                         <input type="text" placeholder="Event title" value={event.title} onChange={(e) => updateDeptEvent(idx, 'title', e.target.value)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px' }} />
                         <button type="button" className="btn btn-danger btn-sm" onClick={() => removeDeptEvent(idx)} style={{ flexShrink: 0, padding: '4px 8px' }}>✕</button>
                       </div>
@@ -709,7 +709,7 @@ function AdminDepartmentForm() {
                 return (
                   <div key={yr} style={{ marginBottom: '20px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                      <h4 style={{ margin: 0, fontFamily: "'Georgia', serif", fontSize: '15px', color: '#2a5a8a', fontWeight: 700 }}>{yr}</h4>
+                      <h4 style={{ margin: 0, fontFamily: "'Georgia', serif", fontSize: '15px', color: '#243358', fontWeight: 700 }}>{yr}</h4>
                       <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={() => addTimetableEntry(yr)}>+ Add</button>
                     </div>
                     {items.length === 0 ? (
@@ -720,7 +720,7 @@ function AdminDepartmentForm() {
                           const realIdx = form.deptTimetable.indexOf(item);
                           return (
                             <div key={realIdx} style={{ display: 'flex', gap: '8px', alignItems: 'center', padding: '10px', background: '#f8f9fb', borderRadius: '6px', border: '1px solid #e4e8ed' }}>
-                              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '32px', height: '28px', background: '#2a5a8a', color: '#fff', fontSize: '12px', fontWeight: 700, borderRadius: '4px', flexShrink: 0 }}>{i + 1}</span>
+                              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '32px', height: '28px', background: '#243358', color: '#fff', fontSize: '12px', fontWeight: 700, borderRadius: '4px', flexShrink: 0 }}>{i + 1}</span>
                               <input type="text" placeholder="Title" value={item.title} onChange={(e) => updateTimetableEntry(realIdx, 'title', e.target.value)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px' }} />
                               <PdfUpload value={item.url} onChange={(url) => updateTimetableEntry(realIdx, 'url', url)} />
                               <button type="button" className="btn btn-danger btn-sm" onClick={() => removeTimetableEntry(realIdx)} style={{ flexShrink: 0, padding: '4px 8px' }}>✕</button>

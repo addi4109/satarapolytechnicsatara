@@ -181,7 +181,7 @@ function AdminExaminations() {
             <tbody>
               {form.schedules.map((s, i) => (
                 <tr key={i}>
-                  <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{i + 1}</td>
+                  <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                   <td style={{ fontWeight: 500 }}>{s.examName}</td>
                   <td style={{ textAlign: 'center' }}>{s.semester}</td>
                   <td style={{ textAlign: 'center' }}>{s.startDate}</td>
@@ -189,7 +189,7 @@ function AdminExaminations() {
                   <td style={{ textAlign: 'center' }}>
                     {s.pdfUrl ? (
                       <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
-                        <a href={`/api/pdf-proxy?url=${encodeURIComponent(s.pdfUrl)}`} target="_blank" style={{ padding: '4px 12px', background: '#2a5a8a', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}>View</a>
+                        <a href={`/api/pdf-proxy?url=${encodeURIComponent(s.pdfUrl)}`} target="_blank" style={{ padding: '4px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}>View</a>
                         <a href={`/api/pdf-proxy?url=${encodeURIComponent(s.pdfUrl)}`} download style={{ padding: '4px 12px', background: '#7A263A', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}>Download</a>
                       </div>
                     ) : <span style={{ color: '#ccc' }}>—</span>}
@@ -210,10 +210,10 @@ function AdminExaminations() {
       {form.ruleSubSections && form.ruleSubSections.length > 0 ? (
         form.ruleSubSections.map((sub, ssIdx) => (
           <div key={ssIdx} style={{ marginBottom: '24px', padding: '16px', border: '1px solid #e4e8ed', borderRadius: '10px', background: '#fff' }}>
-            <h3 style={{ margin: '0 0 12px', color: '#2a5a8a', fontSize: '21px', borderBottom: '2px solid #d4a54a', paddingBottom: '6px' }}>{sub.subTitle || 'Untitled'}</h3>
+            <h3 style={{ margin: '0 0 12px', color: '#243358', fontSize: '21px', borderBottom: '2px solid #c8963e', paddingBottom: '6px' }}>{sub.subTitle || 'Untitled'}</h3>
             {sub.rules && sub.rules.map((rule, rIdx) => (
               <div key={rIdx} style={{ marginBottom: '12px', padding: '14px 16px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px', marginLeft: '8px' }}>
-                <h4 style={{ margin: '0 0 6px', color: '#2a5a8a', fontSize: '18px' }}><span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {rIdx + 1}:</span>{rule.title}</h4>
+                <h4 style={{ margin: '0 0 6px', color: '#243358', fontSize: '18px' }}><span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {rIdx + 1}:</span>{rule.title}</h4>
                 {rule.description && <p style={{ margin: '0 0 6px', color: '#555', fontSize: '16px', lineHeight: '1.6' }}>{rule.description}</p>}
                 {rule.subPoints && rule.subPoints.length > 0 && (
                   <ul style={{ margin: '6px 0 0', paddingLeft: '20px' }}>
@@ -227,7 +227,7 @@ function AdminExaminations() {
       ) : form.rules && form.rules.length > 0 ? (
         form.rules.map((rule, i) => (
           <div key={i} style={{ marginBottom: '16px', padding: '16px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px' }}>
-            <h4 style={{ margin: '0 0 8px', color: '#2a5a8a', fontSize: '18px' }}><span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {i + 1}:</span>{rule.title}</h4>
+            <h4 style={{ margin: '0 0 8px', color: '#243358', fontSize: '18px' }}><span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {i + 1}:</span>{rule.title}</h4>
             {rule.description && <p style={{ margin: '0 0 6px', color: '#555', fontSize: '16px', lineHeight: '1.6' }}>{rule.description}</p>}
             {rule.subPoints && rule.subPoints.length > 0 && (
               <ul style={{ margin: '8px 0 0', paddingLeft: '20px' }}>
@@ -247,7 +247,7 @@ function AdminExaminations() {
       <p>Examination results declared by MSBTE, Mumbai can be checked by students through the official result portal.</p>
       {form.resultPortalUrl ? (
         <div style={{ marginTop: '24px', textAlign: 'center' }}>
-          <a href={form.resultPortalUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', background: 'linear-gradient(135deg, #2a5a8a 0%, #7a9fc5 100%)', color: '#fff', fontSize: '16px', fontWeight: 600, borderRadius: '50px', textDecoration: 'none', boxShadow: '0 4px 15px rgba(36, 51, 88, 0.3)' }}>
+          <a href={form.resultPortalUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', background: 'linear-gradient(135deg, #243358 0%, #7a9fc5 100%)', color: '#fff', fontSize: '16px', fontWeight: 600, borderRadius: '50px', textDecoration: 'none', boxShadow: '0 4px 15px rgba(36, 51, 88, 0.3)' }}>
             View Result Portal <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', background: 'rgba(255,255,255,0.2)', borderRadius: '50%' }}>→</span>
           </a>
         </div>
@@ -279,7 +279,7 @@ function AdminExaminations() {
             href={form.revaluationPortalUrl}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', background: 'linear-gradient(135deg, #2a5a8a 0%, #7a9fc5 100%)', color: '#fff', fontSize: '16px', fontWeight: 600, borderRadius: '50px', textDecoration: 'none', boxShadow: '0 4px 15px rgba(36, 51, 88, 0.3)' }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', background: 'linear-gradient(135deg, #243358 0%, #7a9fc5 100%)', color: '#fff', fontSize: '16px', fontWeight: 600, borderRadius: '50px', textDecoration: 'none', boxShadow: '0 4px 15px rgba(36, 51, 88, 0.3)' }}
           >
             Visit Portal <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', background: 'rgba(255,255,255,0.2)', borderRadius: '50%' }}>→</span>
           </a>
@@ -321,12 +321,12 @@ function AdminExaminations() {
             <tbody>
               {form.noticesData.map((n, i) => (
                 <tr key={i}>
-                  <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{i + 1}</td>
+                  <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                   <td style={{ fontWeight: 500 }}>{n.title}</td>
                   <td style={{ textAlign: 'center' }}>{n.date}</td>
                   <td>{n.description}</td>
                   <td style={{ textAlign: 'center' }}>
-                    {n.pdfUrl ? <a href={`/api/pdf-proxy?url=${encodeURIComponent(n.pdfUrl)}`} target="_blank" style={{ padding: '4px 12px', background: '#2a5a8a', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}>View</a> : <span style={{ color: '#ccc' }}>—</span>}
+                    {n.pdfUrl ? <a href={`/api/pdf-proxy?url=${encodeURIComponent(n.pdfUrl)}`} target="_blank" style={{ padding: '4px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}>View</a> : <span style={{ color: '#ccc' }}>—</span>}
                   </td>
                 </tr>
               ))}
@@ -358,7 +358,7 @@ function AdminExaminations() {
           <tbody>
             {form.schedules.map((s, i) => (
               <tr key={i}>
-                <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{i + 1}</td>
+                <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                 <td><input type="text" value={s.examName} onChange={(e) => updateRow('schedules', i, 'examName', e.target.value)} placeholder="Exam Name" style={cellInput} /></td>
                 <td><input type="text" value={s.semester} onChange={(e) => updateRow('schedules', i, 'semester', e.target.value)} placeholder="Semester" style={cellInput} /></td>
                 <td><input type="text" value={s.startDate} onChange={(e) => updateRow('schedules', i, 'startDate', e.target.value)} placeholder="01/06/2026" style={cellInput} /></td>
@@ -378,15 +378,15 @@ function AdminExaminations() {
     <div className="admission-edit-form">
       <h4>Exam Rules & Sub-Sections</h4>
       {(form.ruleSubSections || []).map((subSection, ssIdx) => (
-        <div key={ssIdx} style={{ marginBottom: '18px', padding: '16px', background: '#fff', border: editingSubSectionIdx === ssIdx ? '2px solid #d4a54a' : '1px solid #e4e8ed', borderRadius: '8px' }}>
+        <div key={ssIdx} style={{ marginBottom: '18px', padding: '16px', background: '#fff', border: editingSubSectionIdx === ssIdx ? '2px solid #c8963e' : '1px solid #e4e8ed', borderRadius: '8px' }}>
           {editingSubSectionIdx === ssIdx ? (
             <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '12px' }}>
-              <input autoFocus type="text" value={subSection.subTitle} onChange={(e) => updateSubSectionTitle(ssIdx, e.target.value)} placeholder="Sub-section title" style={{ flex: 1, padding: '8px 12px', border: '1px solid #d4a54a', borderRadius: '5px', fontSize: '14px', fontWeight: 600, boxSizing: 'border-box' }} />
+              <input autoFocus type="text" value={subSection.subTitle} onChange={(e) => updateSubSectionTitle(ssIdx, e.target.value)} placeholder="Sub-section title" style={{ flex: 1, padding: '8px 12px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '14px', fontWeight: 600, boxSizing: 'border-box' }} />
               <button className="btn btn-success btn-sm" onClick={() => { setEditingSubSectionIdx(null); setEditingSubSectionRuleIdx(null); }}>Done</button>
             </div>
           ) : (
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-              <h4 onClick={() => setEditingSubSectionIdx(ssIdx)} style={{ margin: 0, color: '#2a5a8a', fontSize: '20px', cursor: 'pointer', flex: 1 }}>
+              <h4 onClick={() => setEditingSubSectionIdx(ssIdx)} style={{ margin: 0, color: '#243358', fontSize: '20px', cursor: 'pointer', flex: 1 }}>
                 <span style={{ color: '#7A263A', marginRight: '8px' }}>§{ssIdx + 1}</span>
                 {subSection.subTitle || <em style={{ fontWeight: 400, color: '#aaa' }}>Untitled</em>}
               </h4>
@@ -395,28 +395,28 @@ function AdminExaminations() {
           )}
 
           {subSection.rules.map((rule, rIdx) => (
-            <div key={rIdx} style={{ position: 'relative', marginBottom: '10px', padding: '12px 14px', background: '#f8f9fa', border: editingSubSectionRuleIdx === rIdx && editingSubSectionIdx === ssIdx ? '1px solid #d4a54a' : '1px solid #e8ecf0', borderRadius: '6px', marginLeft: '12px' }}>
+            <div key={rIdx} style={{ position: 'relative', marginBottom: '10px', padding: '12px 14px', background: '#f8f9fa', border: editingSubSectionRuleIdx === rIdx && editingSubSectionIdx === ssIdx ? '1px solid #c8963e' : '1px solid #e8ecf0', borderRadius: '6px', marginLeft: '12px' }}>
               {editingSubSectionRuleIdx === rIdx && editingSubSectionIdx === ssIdx ? (
                 <>
-                  <input type="text" value={rule.title} onChange={(e) => updateSubSectionRule(ssIdx, rIdx, 'title', e.target.value)} placeholder="Rule title" style={{ width: '100%', padding: '6px 10px', border: '1px solid #d4a54a', borderRadius: '4px', fontSize: '13px', marginBottom: '6px', boxSizing: 'border-box' }} />
-                  <textarea value={rule.description} onChange={(e) => updateSubSectionRule(ssIdx, rIdx, 'description', e.target.value)} placeholder="Rule description" rows={2} style={{ width: '100%', padding: '6px 10px', border: '1px solid #d4a54a', borderRadius: '4px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }} />
+                  <input type="text" value={rule.title} onChange={(e) => updateSubSectionRule(ssIdx, rIdx, 'title', e.target.value)} placeholder="Rule title" style={{ width: '100%', padding: '6px 10px', border: '1px solid #c8963e', borderRadius: '4px', fontSize: '13px', marginBottom: '6px', boxSizing: 'border-box' }} />
+                  <textarea value={rule.description} onChange={(e) => updateSubSectionRule(ssIdx, rIdx, 'description', e.target.value)} placeholder="Rule description" rows={2} style={{ width: '100%', padding: '6px 10px', border: '1px solid #c8963e', borderRadius: '4px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }} />
                   <div style={{ marginBottom: '8px' }}>
                     <label style={{ fontSize: '11px', fontWeight: 600, color: '#555', marginBottom: '4px', display: 'block' }}>Sub-Points</label>
                     {(rule.subPoints || []).map((sp, spIdx) => (
                       <div key={spIdx} style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '3px' }}>
                         <span style={{ color: '#7A263A', fontWeight: 700 }}>•</span>
-                        <input type="text" value={sp} onChange={(e) => updateSubPointInSubSectionRule(ssIdx, rIdx, spIdx, e.target.value)} style={{ flex: 1, padding: '4px 8px', border: '1px solid #d4a54a', borderRadius: '4px', fontSize: '12px', boxSizing: 'border-box' }} />
+                        <input type="text" value={sp} onChange={(e) => updateSubPointInSubSectionRule(ssIdx, rIdx, spIdx, e.target.value)} style={{ flex: 1, padding: '4px 8px', border: '1px solid #c8963e', borderRadius: '4px', fontSize: '12px', boxSizing: 'border-box' }} />
                         <button onClick={() => removeSubPointFromSubSectionRule(ssIdx, rIdx, spIdx)} style={{ background: 'none', border: 'none', color: '#c0392b', cursor: 'pointer', fontSize: '15px', fontWeight: 700, padding: '0 3px' }}>×</button>
                       </div>
                     ))}
-                    <button onClick={() => addSubPointToSubSectionRule(ssIdx, rIdx)} style={{ marginTop: '3px', background: 'none', border: '1px dashed #b9c3d4', borderRadius: '3px', padding: '3px 10px', cursor: 'pointer', color: '#2a5a8a', fontSize: '11px', fontWeight: 600 }}>+ Add Sub-Point</button>
+                    <button onClick={() => addSubPointToSubSectionRule(ssIdx, rIdx)} style={{ marginTop: '3px', background: 'none', border: '1px dashed #b9c3d4', borderRadius: '3px', padding: '3px 10px', cursor: 'pointer', color: '#243358', fontSize: '11px', fontWeight: 600 }}>+ Add Sub-Point</button>
                   </div>
                   <button className="btn btn-success btn-sm" onClick={() => setEditingSubSectionRuleIdx(null)}>Done</button>
                 </>
               ) : (
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div onClick={() => { setEditingSubSectionIdx(ssIdx); setEditingSubSectionRuleIdx(rIdx); }} style={{ cursor: 'pointer', flex: 1 }}>
-                    <h5 style={{ margin: '0 0 4px', color: '#2a5a8a', fontSize: '17px' }}><span style={{ color: '#7A263A', marginRight: '6px' }}>Rule {rIdx + 1}:</span>{rule.title || <em style={{ fontWeight: 400, color: '#aaa' }}>Untitled</em>}</h5>
+                    <h5 style={{ margin: '0 0 4px', color: '#243358', fontSize: '17px' }}><span style={{ color: '#7A263A', marginRight: '6px' }}>Rule {rIdx + 1}:</span>{rule.title || <em style={{ fontWeight: 400, color: '#aaa' }}>Untitled</em>}</h5>
                     {rule.description && <p style={{ margin: '0 0 4px', color: '#555', fontSize: '15px', lineHeight: '1.5' }}>{rule.description}</p>}
                     {rule.subPoints && rule.subPoints.length > 0 && <ul style={{ margin: '4px 0 0', paddingLeft: '18px' }}>{rule.subPoints.map((sp, spIdx) => <li key={spIdx} style={{ color: '#555', fontSize: '14px' }}>{sp}</li>)}</ul>}
                   </div>
@@ -444,7 +444,7 @@ function AdminExaminations() {
       </div>
       {form.resultPortalUrl && (
         <div style={{ marginTop: '12px', padding: '12px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '6px' }}>
-          <p style={{ margin: 0, fontSize: '13px', color: '#444' }}><strong>Current:</strong> <a href={form.resultPortalUrl} target="_blank" style={{ color: '#2a5a8a' }}>{form.resultPortalUrl}</a></p>
+          <p style={{ margin: 0, fontSize: '13px', color: '#444' }}><strong>Current:</strong> <a href={form.resultPortalUrl} target="_blank" style={{ color: '#243358' }}>{form.resultPortalUrl}</a></p>
         </div>
       )}
     </div>
@@ -471,29 +471,29 @@ function AdminExaminations() {
 
       <h4>Revaluation Process Steps</h4>
       {form.revaluationSteps.map((step, i) => (
-        <div key={i} style={{ position: 'relative', marginBottom: '12px', padding: '14px', background: '#f8f9fa', border: editingRevStepIdx === i ? '2px solid #d4a54a' : '1px solid #e4e8ed', borderRadius: '8px', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+        <div key={i} style={{ position: 'relative', marginBottom: '12px', padding: '14px', background: '#f8f9fa', border: editingRevStepIdx === i ? '2px solid #c8963e' : '1px solid #e4e8ed', borderRadius: '8px', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
           <div className="step-number">{i + 1}</div>
           <div style={{ flex: 1 }}>
             {editingRevStepIdx === i ? (
               <>
-                <input autoFocus type="text" value={step.title} onChange={(e) => updateRow('revaluationSteps', i, 'title', e.target.value)} placeholder="Step title" style={{ width: '100%', padding: '7px 10px', border: '1px solid #d4a54a', borderRadius: '5px', fontSize: '14px', marginBottom: '6px', boxSizing: 'border-box' }} />
-                <textarea value={step.description} onChange={(e) => updateRow('revaluationSteps', i, 'description', e.target.value)} placeholder="Description" rows={2} style={{ width: '100%', padding: '7px 10px', border: '1px solid #d4a54a', borderRadius: '5px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }} />
+                <input autoFocus type="text" value={step.title} onChange={(e) => updateRow('revaluationSteps', i, 'title', e.target.value)} placeholder="Step title" style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '14px', marginBottom: '6px', boxSizing: 'border-box' }} />
+                <textarea value={step.description} onChange={(e) => updateRow('revaluationSteps', i, 'description', e.target.value)} placeholder="Description" rows={2} style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }} />
                 <div style={{ marginBottom: '10px' }}>
                   <label style={{ fontSize: '12px', fontWeight: 600, color: '#555', marginBottom: '6px', display: 'block' }}>Sub-Points</label>
                   {(step.subPoints || []).map((sp, spIdx) => (
                     <div key={spIdx} style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
                       <span style={{ color: '#7A263A', fontWeight: 700 }}>•</span>
-                      <input type="text" value={sp} onChange={(e) => updateRevStepSubPoint(i, spIdx, e.target.value)} style={{ flex: 1, padding: '5px 8px', border: '1px solid #d4a54a', borderRadius: '4px', fontSize: '12.5px', boxSizing: 'border-box' }} />
+                      <input type="text" value={sp} onChange={(e) => updateRevStepSubPoint(i, spIdx, e.target.value)} style={{ flex: 1, padding: '5px 8px', border: '1px solid #c8963e', borderRadius: '4px', fontSize: '12.5px', boxSizing: 'border-box' }} />
                       <button onClick={() => removeRevStepSubPoint(i, spIdx)} style={{ background: 'none', border: 'none', color: '#c0392b', cursor: 'pointer', fontSize: '16px', fontWeight: 700, padding: '0 4px' }}>×</button>
                     </div>
                   ))}
-                  <button onClick={() => addRevStepSubPoint(i)} style={{ marginTop: '4px', background: 'none', border: '1px dashed #b9c3d4', borderRadius: '4px', padding: '4px 12px', cursor: 'pointer', color: '#2a5a8a', fontSize: '12px', fontWeight: 600 }}>+ Add Sub-Point</button>
+                  <button onClick={() => addRevStepSubPoint(i)} style={{ marginTop: '4px', background: 'none', border: '1px dashed #b9c3d4', borderRadius: '4px', padding: '4px 12px', cursor: 'pointer', color: '#243358', fontSize: '12px', fontWeight: 600 }}>+ Add Sub-Point</button>
                 </div>
                 <button className="btn btn-success btn-sm" onClick={() => setEditingRevStepIdx(null)}>Done</button>
               </>
             ) : (
               <div onClick={() => setEditingRevStepIdx(i)} style={{ cursor: 'pointer' }}>
-                <h4 style={{ margin: '0 0 4px', color: '#2a5a8a', fontSize: '16px' }}>{step.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled</em>}</h4>
+                <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '16px' }}>{step.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled</em>}</h4>
                 {step.description && <p style={{ margin: '0 0 4px', color: '#555', fontSize: '14px', lineHeight: '1.5' }}>{step.description}</p>}
                 {step.subPoints && step.subPoints.length > 0 && <ul style={{ margin: '4px 0 0', paddingLeft: '18px' }}>{step.subPoints.map((sp, spIdx) => <li key={spIdx} style={{ color: '#555', fontSize: '13px' }}>{sp}</li>)}</ul>}
               </div>
@@ -515,7 +515,7 @@ function AdminExaminations() {
           <tbody>
             {form.noticesData.map((n, i) => (
               <tr key={i}>
-                <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{i + 1}</td>
+                <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                 <td><input type="text" value={n.title} onChange={(e) => updateRow('noticesData', i, 'title', e.target.value)} placeholder="Notice Title" style={cellInput} /></td>
                 <td><input type="text" value={n.date} onChange={(e) => updateRow('noticesData', i, 'date', e.target.value)} placeholder="15/06/2026" style={cellInput} /></td>
                 <td><input type="text" value={n.description} onChange={(e) => updateRow('noticesData', i, 'description', e.target.value)} placeholder="Description" style={cellInput} /></td>

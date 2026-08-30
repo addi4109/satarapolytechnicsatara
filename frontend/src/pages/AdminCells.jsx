@@ -350,7 +350,7 @@ function AdminCells() {
                       <tbody>
                         {selectedCell.members.map((member, index) => (
                           <tr key={index}>
-                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{index + 1}</td>
+                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{index + 1}</td>
                             <td style={{ fontWeight: 500 }}>{member.name}</td>
                             <td>{member.position || member.designation || '-'}</td>
                             <td>{member.phone}</td>

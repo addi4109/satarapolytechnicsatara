@@ -138,7 +138,7 @@ function AdminRules() {
                       {form.rules.map((rule, i) => (
                         <div key={i} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '14px 16px', position: 'relative' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                            <span style={{ fontSize: '12px', fontWeight: 700, color: '#d4a54a' }}>Rule {i + 1}</span>
+                            <span style={{ fontSize: '12px', fontWeight: 700, color: '#c8963e' }}>Rule {i + 1}</span>
                             <button onClick={() => removeRule(i)} style={{ background: 'none', border: 'none', color: '#d32f2f', cursor: 'pointer', fontSize: '16px', padding: '0 4px' }} title="Remove rule">×</button>
                           </div>
                           <input type="text" value={rule.ruleTitle} onChange={(e) => updateRule(i, 'ruleTitle', e.target.value)} placeholder="Rule title (e.g. Attendance Policy)" style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', marginBottom: '8px', boxSizing: 'border-box', fontWeight: 600 }} />
@@ -160,8 +160,8 @@ function AdminRules() {
 
             <div className="admin-card">
               <div className="admin-card-body">
-                <h2 style={{ fontFamily: 'Georgia, serif', fontSize: '22px', color: '#2a5a8a', marginBottom: '8px' }}>{form.title}</h2>
-                <div style={{ width: '60px', height: '3px', background: '#d4a54a', marginBottom: '16px', borderRadius: '2px' }}></div>
+                <h2 style={{ fontFamily: 'Georgia, serif', fontSize: '22px', color: '#243358', marginBottom: '8px' }}>{form.title}</h2>
+                <div style={{ width: '60px', height: '3px', background: '#c8963e', marginBottom: '16px', borderRadius: '2px' }}></div>
 
                 {form.description && (
                   <p style={{ marginBottom: '20px', lineHeight: '1.7', color: '#555', fontSize: '14px' }}>{form.description}</p>
@@ -171,9 +171,9 @@ function AdminRules() {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     {form.rules.map((rule, i) => (
                       <div key={i} style={{ display: 'flex', gap: '14px', padding: '14px 16px', background: '#f8f9fa', borderRadius: '8px', border: '1px solid #e8eaed' }}>
-                        <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#2a5a8a', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '14px', flexShrink: 0 }}>{i + 1}</div>
+                        <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#243358', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '14px', flexShrink: 0 }}>{i + 1}</div>
                         <div>
-                          <h4 style={{ margin: '0 0 4px', fontSize: '14px', color: '#2a5a8a' }}>{rule.ruleTitle || `Rule ${i + 1}`}</h4>
+                          <h4 style={{ margin: '0 0 4px', fontSize: '14px', color: '#243358' }}>{rule.ruleTitle || `Rule ${i + 1}`}</h4>
                           <p style={{ margin: 0, fontSize: '13px', color: '#555', lineHeight: '1.6' }}>{rule.ruleDesc}</p>
                         </div>
                       </div>

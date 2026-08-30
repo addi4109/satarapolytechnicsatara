@@ -162,11 +162,11 @@ function AdminNotices() {
                 minHeight: '180px', border: '2px dashed #b9c3d4', borderRadius: '10px', cursor: 'pointer',
                 background: '#fff', transition: 'all 0.25s ease', gap: '10px',
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#2a5a8a'; e.currentTarget.style.background = '#f8f9fa'; }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#243358'; e.currentTarget.style.background = '#f8f9fa'; }}
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#b9c3d4'; e.currentTarget.style.background = '#fff'; }}
             >
-              <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', color: '#2a5a8a', fontWeight: 300 }}>+</div>
-              <span style={{ fontSize: '14px', fontWeight: 600, color: '#2a5a8a' }}>Add Notice</span>
+              <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', color: '#243358', fontWeight: 300 }}>+</div>
+              <span style={{ fontSize: '14px', fontWeight: 600, color: '#243358' }}>Add Notice</span>
             </div>
 
             {/* Notice Cards */}
@@ -176,7 +176,7 @@ function AdminNotices() {
                 display: 'flex', flexDirection: 'column', position: 'relative',
                 transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
               }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(36,51,88,0.1)'; e.currentTarget.style.borderColor = '#d4a54a'; }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(36,51,88,0.1)'; e.currentTarget.style.borderColor = '#c8963e'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e4e8ed'; }}
               >
                 {/* Status Badge */}
@@ -190,7 +190,7 @@ function AdminNotices() {
                 )}
 
                 {/* Title */}
-                <h4 style={{ margin: '0 0 4px', color: '#2a5a8a', fontSize: '15px', fontWeight: 700, paddingRight: '60px' }}>{notice.title}</h4>
+                <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '15px', fontWeight: 700, paddingRight: '60px' }}>{notice.title}</h4>
 
                 {/* Description */}
                 {notice.text && (
@@ -208,7 +208,7 @@ function AdminNotices() {
                     <a
                       href={notice.pdfUrl ? `/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl}
                       target="_blank"
-                      style={{ padding: '5px 12px', background: '#2a5a8a', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}
+                      style={{ padding: '5px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}
                     >View</a>
                   )}
                   {(notice.pdfUrl || notice.imageUrl) && (
@@ -232,7 +232,7 @@ function AdminNotices() {
                           URL.revokeObjectURL(url);
                         } catch { window.open(fileUrl, '_blank'); }
                       }}
-                      style={{ padding: '5px 12px', background: '#fff', color: '#2a5a8a', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #2a5a8a', textDecoration: 'none', cursor: 'pointer' }}
+                      style={{ padding: '5px 12px', background: '#fff', color: '#243358', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #243358', textDecoration: 'none', cursor: 'pointer' }}
                     >Download</a>
                   )}
                   <button
@@ -273,7 +273,7 @@ function AdminNotices() {
           }}>
             {/* Modal Header */}
             <div style={{ padding: '16px 20px', borderBottom: '1px solid #e4e8ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h3 style={{ margin: 0, color: '#2a5a8a', fontSize: '17px' }}>{editId ? 'Edit' : 'Add'} {activeTab === 'tinker' ? 'Tinker Notice' : 'Notice'}</h3>
+              <h3 style={{ margin: 0, color: '#243358', fontSize: '17px' }}>{editId ? 'Edit' : 'Add'} {activeTab === 'tinker' ? 'Tinker Notice' : 'Notice'}</h3>
               <button onClick={cancelForm} style={{ background: 'none', border: 'none', fontSize: '22px', cursor: 'pointer', color: '#999', lineHeight: 1 }}>×</button>
             </div>
 

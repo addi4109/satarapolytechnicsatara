@@ -95,7 +95,7 @@ function PdfUpload({ value, onChange, compact, label = 'Upload PDF' }) {
           {value && (
             <>
               <span style={{ fontSize: '12px', color: '#333' }}>{fileName || getFileIcon(value)}</span>
-              <a href={value} target="_blank" rel="noopener noreferrer" style={{ color: '#2a5a8a', fontWeight: 600, fontSize: '11px', textDecoration: 'none' }}>View</a>
+              <a href={value} target="_blank" rel="noopener noreferrer" style={{ color: '#243358', fontWeight: 600, fontSize: '11px', textDecoration: 'none' }}>View</a>
               <button
                 type="button"
                 onClick={handleRemove}
@@ -125,7 +125,7 @@ function PdfUpload({ value, onChange, compact, label = 'Upload PDF' }) {
           <span style={{ fontSize: '20px' }}>{getFileIcon(value)}</span>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: '13px', fontWeight: 500, color: '#333' }}>{fileName || 'Uploaded file'}</div>
-            <a href={`/api/pdf-proxy?url=${encodeURIComponent(value)}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#2a5a8a', textDecoration: 'none' }}>View file →</a>
+            <a href={`/api/pdf-proxy?url=${encodeURIComponent(value)}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#243358', textDecoration: 'none' }}>View file →</a>
           </div>
           <button
             type="button"
@@ -142,14 +142,14 @@ function PdfUpload({ value, onChange, compact, label = 'Upload PDF' }) {
             cursor: 'pointer', transition: 'border-color 0.2s, background 0.2s',
             background: uploading ? '#f8f9fa' : '#fff',
           }}
-          onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#2a5a8a'; e.currentTarget.style.background = '#f8f9fa'; }}
+          onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#243358'; e.currentTarget.style.background = '#f8f9fa'; }}
           onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#d7dde6'; e.currentTarget.style.background = '#fff'; }}
         >
           {uploading ? (
             <div>
-              <div style={{ fontSize: '13px', color: '#2a5a8a', fontWeight: 600 }}>Uploading... {progress}%</div>
+              <div style={{ fontSize: '13px', color: '#243358', fontWeight: 600 }}>Uploading... {progress}%</div>
               <div style={{ marginTop: '8px', width: '100%', height: '4px', background: '#e4e8ed', borderRadius: '2px', overflow: 'hidden' }}>
-                <div style={{ width: `${progress}%`, height: '100%', background: '#2a5a8a', borderRadius: '2px', transition: 'width 0.3s' }}></div>
+                <div style={{ width: `${progress}%`, height: '100%', background: '#243358', borderRadius: '2px', transition: 'width 0.3s' }}></div>
               </div>
             </div>
           ) : (

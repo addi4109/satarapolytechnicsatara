@@ -114,11 +114,11 @@ function AdminGallery() {
   // Inline form card
   const renderFormCard = () => (
     <div style={{
-      background: '#fff', border: '2px solid #d4a54a', borderRadius: '10px', padding: '16px',
+      background: '#fff', border: '2px solid #c8963e', borderRadius: '10px', padding: '16px',
       minHeight: '280px',
     }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-        <h4 style={{ margin: 0, color: '#2a5a8a', fontSize: '15px' }}>{editingId ? 'Edit' : 'Add New'} {tab === 'photos' ? 'Photo' : tab === 'videos' ? 'Video' : tab === 'news' ? 'News' : 'Slide'}</h4>
+        <h4 style={{ margin: 0, color: '#243358', fontSize: '15px' }}>{editingId ? 'Edit' : 'Add New'} {tab === 'photos' ? 'Photo' : tab === 'videos' ? 'Video' : tab === 'news' ? 'News' : 'Slide'}</h4>
         <button onClick={cancelForm} style={{ background: 'none', border: 'none', fontSize: '18px', cursor: 'pointer', color: '#999' }}>×</button>
       </div>
       <form onSubmit={handleSave}>
@@ -258,11 +258,11 @@ function AdminGallery() {
                   minHeight: '200px', border: '2px dashed #b9c3d4', borderRadius: '10px', cursor: 'pointer',
                   background: '#fff', transition: 'all 0.25s ease', gap: '10px',
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#2a5a8a'; e.currentTarget.style.background = '#f8f9fa'; }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#243358'; e.currentTarget.style.background = '#f8f9fa'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#b9c3d4'; e.currentTarget.style.background = '#fff'; }}
               >
-                <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', color: '#2a5a8a', fontWeight: 300 }}>+</div>
-                <span style={{ fontSize: '14px', fontWeight: 600, color: '#2a5a8a' }}>Add {tab === 'photos' ? 'Photo' : tab === 'videos' ? 'Video' : tab === 'news' ? 'News' : 'Slide'}</span>
+                <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', color: '#243358', fontWeight: 300 }}>+</div>
+                <span style={{ fontSize: '14px', fontWeight: 600, color: '#243358' }}>Add {tab === 'photos' ? 'Photo' : tab === 'videos' ? 'Video' : tab === 'news' ? 'News' : 'Slide'}</span>
               </div>
             )}
 
@@ -278,16 +278,16 @@ function AdminGallery() {
                   background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', overflow: 'hidden',
                   transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
                 }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(36,51,88,0.1)'; e.currentTarget.style.borderColor = '#d4a54a'; }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(36,51,88,0.1)'; e.currentTarget.style.borderColor = '#c8963e'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e4e8ed'; }}
                 >
                   {p.image && <img src={p.image} alt={p.title} style={{ width: '100%', height: '160px', objectFit: 'cover' }} />}
                   {!p.image && <div style={{ height: '160px', background: '#f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ccc', fontSize: '32px' }}></div>}
                   <div style={{ padding: '12px 14px' }}>
-                    <h4 style={{ margin: '0 0 4px', color: '#2a5a8a', fontSize: '14px', fontWeight: 700 }}>{p.title}</h4>
+                    <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '14px', fontWeight: 700 }}>{p.title}</h4>
                     {p.description && <p style={{ margin: 0, color: '#666', fontSize: '12px', lineHeight: '1.4' }}>{p.description.substring(0, 60)}{p.description.length > 60 ? '...' : ''}</p>}
                     <div style={{ display: 'flex', gap: '6px', marginTop: '10px' }}>
-                      <button onClick={(e) => { e.stopPropagation(); startEdit(p); }} style={{ padding: '4px 12px', background: '#fff', color: '#2a5a8a', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>Edit</button>
+                      <button onClick={(e) => { e.stopPropagation(); startEdit(p); }} style={{ padding: '4px 12px', background: '#fff', color: '#243358', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>Edit</button>
                       {deleteConfirm === p._id ? (
                         <>
                           <button onClick={(e) => { e.stopPropagation(); handleDelete(p._id); }} style={{ padding: '4px 12px', background: '#dc3545', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: 'none', cursor: 'pointer' }}>Yes</button>
@@ -311,16 +311,16 @@ function AdminGallery() {
                   background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', overflow: 'hidden',
                   transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
                 }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(36,51,88,0.1)'; e.currentTarget.style.borderColor = '#d4a54a'; }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(36,51,88,0.1)'; e.currentTarget.style.borderColor = '#c8963e'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e4e8ed'; }}
                 >
                   <div style={{ height: '160px', background: '#1a1a2e', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                     {v.thumbnail ? <img src={v.thumbnail} alt={v.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span style={{ color: '#fff', fontSize: '36px' }}>▶</span>}
                   </div>
                   <div style={{ padding: '12px 14px' }}>
-                    <h4 style={{ margin: '0 0 4px', color: '#2a5a8a', fontSize: '14px', fontWeight: 700 }}>{v.title}</h4>
+                    <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '14px', fontWeight: 700 }}>{v.title}</h4>
                     <div style={{ display: 'flex', gap: '6px', marginTop: '10px' }}>
-                      <button onClick={() => startEdit(v)} style={{ padding: '4px 12px', background: '#fff', color: '#2a5a8a', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>Edit</button>
+                      <button onClick={() => startEdit(v)} style={{ padding: '4px 12px', background: '#fff', color: '#243358', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>Edit</button>
                       {deleteConfirm === v._id ? (
                         <>
                           <button onClick={() => handleDelete(v._id)} style={{ padding: '4px 12px', background: '#dc3545', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: 'none', cursor: 'pointer' }}>Yes</button>
@@ -344,7 +344,7 @@ function AdminGallery() {
                   background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', overflow: 'hidden',
                   transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
                 }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(36,51,88,0.1)'; e.currentTarget.style.borderColor = '#d4a54a'; }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(36,51,88,0.1)'; e.currentTarget.style.borderColor = '#c8963e'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e4e8ed'; }}
                 >
                   {n.image && <img src={n.image} alt={n.title} style={{ width: '100%', height: '140px', objectFit: 'cover' }} />}
@@ -353,10 +353,10 @@ function AdminGallery() {
                       <span style={{ padding: '2px 8px', background: '#e8f5e9', color: '#2e7d32', borderRadius: '4px', fontSize: '10px', fontWeight: 600 }}>{n.date}</span>
                       {n.source && <span style={{ padding: '2px 8px', background: '#e3f2fd', color: '#1565c0', borderRadius: '4px', fontSize: '10px', fontWeight: 600 }}>{n.source}</span>}
                     </div>
-                    <h4 style={{ margin: '0 0 4px', color: '#2a5a8a', fontSize: '14px', fontWeight: 700 }}>{n.title}</h4>
+                    <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '14px', fontWeight: 700 }}>{n.title}</h4>
                     {n.summary && <p style={{ margin: 0, color: '#666', fontSize: '12px', lineHeight: '1.4' }}>{n.summary.substring(0, 80)}{n.summary.length > 80 ? '...' : ''}</p>}
                     <div style={{ display: 'flex', gap: '6px', marginTop: '10px' }}>
-                      <button onClick={() => startEdit(n)} style={{ padding: '4px 12px', background: '#fff', color: '#2a5a8a', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>Edit</button>
+                      <button onClick={() => startEdit(n)} style={{ padding: '4px 12px', background: '#fff', color: '#243358', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>Edit</button>
                       {deleteConfirm === n._id ? (
                         <>
                           <button onClick={() => handleDelete(n._id)} style={{ padding: '4px 12px', background: '#dc3545', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: 'none', cursor: 'pointer' }}>Yes</button>
@@ -380,14 +380,14 @@ function AdminGallery() {
                   background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', overflow: 'hidden',
                   transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
                 }}
-                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(36,51,88,0.1)'; e.currentTarget.style.borderColor = '#d4a54a'; }}
+                  onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(36,51,88,0.1)'; e.currentTarget.style.borderColor = '#c8963e'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e4e8ed'; }}
                 >
                   {s.image && <img src={s.image} alt={s.title} style={{ width: '100%', height: '140px', objectFit: 'cover' }} />}
                   <div style={{ padding: '12px 14px' }}>
-                    {s.title && <h4 style={{ margin: '0 0 4px', color: '#2a5a8a', fontSize: '14px', fontWeight: 700 }}>{s.title}</h4>}
+                    {s.title && <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '14px', fontWeight: 700 }}>{s.title}</h4>}
                     <div style={{ display: 'flex', gap: '6px', marginTop: '10px' }}>
-                      <button onClick={() => startEdit(s)} style={{ padding: '4px 12px', background: '#fff', color: '#2a5a8a', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>Edit</button>
+                      <button onClick={() => startEdit(s)} style={{ padding: '4px 12px', background: '#fff', color: '#243358', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #ddd', cursor: 'pointer' }}>Edit</button>
                       {deleteConfirm === s._id ? (
                         <>
                           <button onClick={() => handleDelete(s._id)} style={{ padding: '4px 12px', background: '#dc3545', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: 'none', cursor: 'pointer' }}>Yes</button>

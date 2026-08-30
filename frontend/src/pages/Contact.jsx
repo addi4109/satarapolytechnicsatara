@@ -275,7 +275,7 @@ function Contact() {
                       <tbody>
                         {officeRows.map((row, i) => (
                           <tr key={i}>
-                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>{i + 1}</td>
+                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                             <td>{row.designation || '—'}</td>
                             <td>{row.name || '—'}</td>
                             <td>
@@ -302,7 +302,7 @@ function Contact() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#2a5a8a' }}>1</td>
+                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>1</td>
                           <td>General Office</td>
                           <td>Satara Polytechnic</td>
                           <td><a href={`tel:${fallbackPhone.replace(/[^0-9+]/g, '')}`}>{fallbackPhone}</a></td>
