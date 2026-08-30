@@ -11,7 +11,6 @@ import EnquiryPopup from './components/EnquiryPopup';
 const ImageSlider = lazy(() => import('./components/ImageSlider'));
 const NoticeTicker = lazy(() => import('./components/NoticeTicker'));
 const WelcomeSection = lazy(() => import('./components/WelcomeSection'));
-const SparkSection = lazy(() => import('./components/SparkSection'));
 const Departments = lazy(() => import('./components/Departments'));
 const Recruiters = lazy(() => import('./components/Recruiters'));
 const ContactMap = lazy(() => import('./components/ContactMap'));
@@ -90,7 +89,6 @@ function HomePage() {
       <ImageSlider />
       <NoticeTicker />
       <WelcomeSection />
-      <SparkSection />
       <Departments />
       <Recruiters />
       <ContactMap />
