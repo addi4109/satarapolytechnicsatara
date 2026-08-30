@@ -44,70 +44,117 @@ function SparkSection() {
   }, []);
 
   const handleLeave = useCallback(() => {
-    timeoutRef.current = setTimeout(() => setActiveIdx(null), 150);
+    timeoutRef.current = setTimeout(() => setActiveIdx(null), 200);
   }, []);
 
   return (
     <section className="spark-section">
       <div className="spark-inner">
+        <h2 className="spark-college-name">Satara Polytechnic, Satara</h2>
         <p className="spark-subtitle">Our Word. Our Promise.</p>
-        <h2 className="spark-heading">
+        <h3 className="spark-heading">
           <span className="spark-s">S</span>
           <span className="spark-p">P</span>
           <span className="spark-a">A</span>
           <span className="spark-r">R</span>
           <span className="spark-k">K</span>
-        </h2>
+        </h3>
 
-        <div className="spark-circle-wrap">
-          <div className="spark-circle">
-            {sparkValues.map((v, i) => {
-              const angle = (i * 360) / 5 - 90;
-              const rad = (angle * Math.PI) / 180;
-              const radius = 110;
-              const x = Math.cos(rad) * radius;
-              const y = Math.sin(rad) * radius;
-              const isRight = Math.cos(rad) > 0;
-
+        <div className="spark-layout">
+          {/* Left cards */}
+          <div className="spark-side spark-side-left">
+            {sparkValues.filter((_, i) => i % 2 === 0).map((v) => {
+              const idx = sparkValues.indexOf(v);
               return (
-                <div key={v.letter} className="spark-letter-group">
+                <div
+                  key={v.letter}
+                  className={`spark-card ${activeIdx === idx ? 'active' : ''}`}
+                  style={{ '--card-color': v.color }}
+                  onMouseEnter={() => handleEnter(idx)}
+                  onMouseLeave={handleLeave}
+                >
+                  <div className="spark-card-letter" style={{ background: v.color }}>{v.letter}</div>
+                  <div className="spark-card-info">
+                    <h4 className="spark-card-title">{v.letter} – {v.title}</h4>
+                    <p className="spark-card-desc">{v.desc}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Center wheel */}
+          <div className="spark-wheel">
+            <div className="spark-wheel-ring">
+              {sparkValues.map((v, i) => {
+                const angle = (i * 360) / 5 - 90;
+                const rad = (angle * Math.PI) / 180;
+                const r = 90;
+                const x = Math.cos(rad) * r;
+                const y = Math.sin(rad) * r;
+
+                return (
                   <button
-                    className={`spark-dot ${activeIdx === i ? 'active' : ''}`}
+                    key={v.letter}
+                    className={`spark-letter ${activeIdx === i ? 'active' : ''}`}
                     style={{
-                      '--dot-color': v.color,
-                      '--tx': `${x}px`,
-                      '--ty': `${y}px`,
+                      '--letter-color': v.color,
+                      transform: `translate(${x}px, ${y}px)`,
                     }}
                     onMouseEnter={() => handleEnter(i)}
                     onMouseLeave={handleLeave}
                   >
                     {v.letter}
                   </button>
+                );
+              })}
+              <div className="spark-wheel-center">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.5" className="spark-center-icon">
+                  <circle cx="12" cy="7" r="4"/>
+                  <path d="M5.5 21v-2a4.5 4.5 0 0 1 4.5-4.5h4a4.5 4.5 0 0 1 4.5 4.5v2"/>
+                </svg>
+              </div>
+            </div>
+          </div>
 
-                  {activeIdx === i && (
-                    <div
-                      className={`spark-popup ${isRight ? 'popup-right' : 'popup-left'}`}
-                      style={{ '--popup-color': v.color, '--tx': `${x}px`, '--ty': `${y}px` }}
-                      onMouseEnter={() => handleEnter(i)}
-                      onMouseLeave={handleLeave}
-                    >
-                      <h4 className="spark-popup-title">
-                        {v.letter} – {v.title}
-                      </h4>
-                      <p className="spark-popup-desc">{v.desc}</p>
-                    </div>
-                  )}
+          {/* Right cards */}
+          <div className="spark-side spark-side-right">
+            {sparkValues.filter((_, i) => i % 2 === 1).map((v) => {
+              const idx = sparkValues.indexOf(v);
+              return (
+                <div
+                  key={v.letter}
+                  className={`spark-card ${activeIdx === idx ? 'active' : ''}`}
+                  style={{ '--card-color': v.color }}
+                  onMouseEnter={() => handleEnter(idx)}
+                  onMouseLeave={handleLeave}
+                >
+                  <div className="spark-card-letter" style={{ background: v.color }}>{v.letter}</div>
+                  <div className="spark-card-info">
+                    <h4 className="spark-card-title">{v.letter} – {v.title}</h4>
+                    <p className="spark-card-desc">{v.desc}</p>
+                  </div>
                 </div>
               );
             })}
-            <div className="spark-center">
-              <svg viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.5" className="spark-center-icon">
-                <circle cx="12" cy="7" r="4"/>
-                <path d="M5.5 21v-2a4.5 4.5 0 0 1 4.5-4.5h4a4.5 4.5 0 0 1 4.5 4.5v2"/>
-              </svg>
-            </div>
           </div>
         </div>
+
+        {/* Active card detail below wheel */}
+        {activeIdx !== null && (
+          <div
+            className="spark-detail"
+            style={{ '--detail-color': sparkValues[activeIdx].color }}
+          >
+            <span className="spark-detail-letter" style={{ background: sparkValues[activeIdx].color }}>
+              {sparkValues[activeIdx].letter}
+            </span>
+            <div>
+              <h4 className="spark-detail-title">{sparkValues[activeIdx].title}</h4>
+              <p className="spark-detail-desc">{sparkValues[activeIdx].desc}</p>
+            </div>
+          </div>
+        )}
 
         <div className="spark-tagline">
           <span className="spark-tag-s">S</span><span className="spark-tag-p">P</span><span className="spark-tag-a">A</span><span className="spark-tag-r">R</span><span className="spark-tag-k">K</span>
