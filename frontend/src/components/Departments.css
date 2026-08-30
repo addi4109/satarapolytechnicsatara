@@ -1,6 +1,11 @@
-.departments-section {
+.dept-section {
   background: #fff;
-  padding: 50px 20px 60px;
+  padding: 50px 20px;
+}
+
+.dept-inner {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .dept-heading {
@@ -21,45 +26,38 @@
 }
 
 .dept-grid {
-  max-width: 1200px;
-  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 
 .dept-card {
   background: #fff;
-  border: 1px solid #e8ecf0;
-  border-radius: 12px;
+  border: 1px solid #e4e8ed;
+  border-radius: 6px;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-  display: flex;
-  flex-direction: column;
 }
 
 .dept-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(36, 51, 88, 0.15);
+  box-shadow: 0 12px 28px rgba(36, 51, 88, 0.12);
   border-color: #c8963e;
 }
 
 .dept-img-wrap {
-  width: 100%;
-  height: 180px;
+  height: 200px;
   overflow: hidden;
-  background: #f5f7fa;
 }
 
 .dept-img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
 }
 
-.dept-card:hover .dept-img-wrap img {
-  transform: scale(1.06);
+.dept-body {
+  padding: 20px;
 }
 
 .dept-name {
@@ -77,52 +75,37 @@
 
 .dept-desc {
   font-size: 13px;
-  color: #666;
-  line-height: 1.7;
-  margin: 0 0 16px;
-  flex: 1;
-}
-
-.dept-info {
-  padding: 18px 20px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+  color: #555;
+  line-height: 1.6;
+  margin: 0 0 14px;
 }
 
 .dept-meta {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  gap: 16px;
+  font-size: 12px;
+  color: #777;
   margin-bottom: 16px;
 }
 
-.dept-tag {
-  font-size: 11px;
-  color: #666;
-  background: #f5f7fa;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-weight: 500;
+.dept-meta span {
+  white-space: nowrap;
 }
 
-.dept-actions {
+.dept-btns {
   display: flex;
   gap: 10px;
 }
 
 .dept-btn {
-  padding: 8px 20px;
-  border-radius: 6px;
-  font-size: 12px;
+  flex: 1;
+  text-align: center;
+  padding: 9px 0;
+  font-size: 13px;
   font-weight: 600;
   text-decoration: none;
-  transition: all 0.25s ease;
-  cursor: pointer;
-  border: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  border-radius: 4px;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
 }
 
 .dept-btn.primary {
@@ -131,7 +114,7 @@
 }
 
 .dept-btn.primary:hover {
-  background: #1a2542;
+  background: #4a7ab0;
 }
 
 .dept-btn.secondary {
@@ -144,4 +127,26 @@
   background: #243358;
   color: #fff;
   transform: translateY(-1px);
+}
+
+.dept-btn.primary:hover {
+  transform: translateY(-1px);
+}
+
+
+
+@media (max-width: 900px) {
+  .dept-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .dept-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dept-heading {
+    font-size: 22px;
+  }
 }
