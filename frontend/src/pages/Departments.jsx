@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import LoadingSpinner from "../components/LoadingSpinner";
+import { SkeletonPage } from "../components/Skeleton";
 import { useParams, useSearchParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';

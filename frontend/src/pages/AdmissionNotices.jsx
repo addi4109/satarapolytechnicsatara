@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import LoadingSpinner from "../components/LoadingSpinner";
+import { SkeletonTable } from "../components/Skeleton";
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Notices.css';
@@ -56,7 +56,7 @@ function AdmissionNotices() {
       <div className="notices-page-wrap">
         <div className="notices-table-wrap">
           {loading ? (
-            <LoadingSpinner />
+            <SkeletonTable rows={8} cols={4} />
           ) : notices.length === 0 ? (
             <div className="notices-empty">
               <p>No admission notices available.</p>

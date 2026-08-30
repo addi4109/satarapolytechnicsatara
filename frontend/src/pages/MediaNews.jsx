@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import LoadingSpinner from "../components/LoadingSpinner";
+import { SkeletonCards } from "../components/Skeleton";
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Gallery.css';
@@ -75,7 +75,7 @@ function MediaNews() {
         </p>
 
         {loading ? (
-          <LoadingSpinner />
+          <SkeletonCards count={6} />
         ) : newsItems.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>No news available yet.</p>
         ) : (
