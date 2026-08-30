@@ -6,7 +6,7 @@
   width: 100vw;
   height: 100vh;
   z-index: 99999;
-  background: linear-gradient(160deg, #f5f7fa 0%, #1e2d4d 40%, #1e2d4d 100%);
+  background: #243358;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,10 +49,10 @@
   font-family: 'Georgia', serif;
   font-size: 26px;
   font-weight: 700;
-  color: #243358;
+  color: #fff;
   margin: 0;
   text-align: center;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .loading-tagline {
@@ -75,7 +75,7 @@
 .loading-progress-bar {
   width: 220px;
   height: 4px;
-  background: rgba(36, 51, 88, 0.15);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 4px;
   overflow: hidden;
 }
@@ -89,7 +89,7 @@
 
 .loading-progress-text {
   font-size: 13px;
-  color: rgba(42, 90, 138, 0.5);
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 500;
   min-width: 36px;
 }
@@ -103,7 +103,7 @@
 
 .loading-footer p {
   font-size: 11px;
-  color: rgba(42, 90, 138, 0.3);
+  color: rgba(255, 255, 255, 0.35);
   margin: 0;
   letter-spacing: 0.5px;
 }
