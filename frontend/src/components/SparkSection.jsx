@@ -34,6 +34,15 @@ const sparkValues = [
   },
 ];
 
+// Positions for 5 letters around the circle (top, right, bottom-right, bottom-left, left)
+const letterPositions = [
+  { top: '0%', left: '50%', popupDir: 'right' },   // S - top center
+  { top: '28%', left: '100%', popupDir: 'left' },   // P - right
+  { top: '82%', left: '88%', popupDir: 'left' },    // A - bottom right
+  { top: '82%', left: '12%', popupDir: 'right' },   // R - bottom left
+  { top: '28%', left: '0%', popupDir: 'right' },    // K - left
+];
+
 function SparkSection() {
   const [activeIdx, setActiveIdx] = useState(null);
   const timeoutRef = useRef(null);
@@ -60,101 +69,70 @@ function SparkSection() {
           <span className="spark-k">K</span>
         </h3>
 
-        <div className="spark-layout">
-          {/* Left cards */}
-          <div className="spark-side spark-side-left">
-            {sparkValues.filter((_, i) => i % 2 === 0).map((v) => {
-              const idx = sparkValues.indexOf(v);
+        <div className="spark-circle-area">
+          {/* The wheel */}
+          <div className="spark-wheel-ring">
+            {/* SVG decorative ring */}
+            <svg className="spark-ring-svg" viewBox="0 0 240 240">
+              <circle cx="120" cy="120" r="110" fill="none" stroke="#e4e8ed" strokeWidth="2" strokeDasharray="4 4"/>
+              {/* Connecting lines from center to each letter */}
+              {letterPositions.map((pos, i) => (
+                <line
+                  key={i}
+                  x1="120" y1="120"
+                  x2={parseFloat(pos.left) / 100 * 240}
+                  y2={parseFloat(pos.top) / 100 * 240}
+                  stroke={activeIdx === i ? sparkValues[i].color : '#e4e8ed'}
+                  strokeWidth={activeIdx === i ? 2 : 1}
+                  strokeDasharray={activeIdx === i ? 'none' : '3 3'}
+                  style={{ transition: 'all 0.3s ease' }}
+                />
+              ))}
+            </svg>
+
+            {/* Center */}
+            <div className="spark-wheel-center">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.5" className="spark-center-icon">
+                <circle cx="12" cy="7" r="4"/>
+                <path d="M5.5 21v-2a4.5 4.5 0 0 1 4.5-4.5h4a4.5 4.5 0 0 1 4.5 4.5v2"/>
+              </svg>
+            </div>
+
+            {/* Fixed letter dots */}
+            {sparkValues.map((v, i) => {
+              const pos = letterPositions[i];
+              const isActive = activeIdx === i;
+
               return (
-                <div
-                  key={v.letter}
-                  className={`spark-card ${activeIdx === idx ? 'active' : ''}`}
-                  style={{ '--card-color': v.color }}
-                  onMouseEnter={() => handleEnter(idx)}
-                  onMouseLeave={handleLeave}
-                >
-                  <div className="spark-card-letter" style={{ background: v.color }}>{v.letter}</div>
-                  <div className="spark-card-info">
-                    <h4 className="spark-card-title">{v.letter} – {v.title}</h4>
-                    <p className="spark-card-desc">{v.desc}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Center wheel */}
-          <div className="spark-wheel">
-            <div className="spark-wheel-ring">
-              {sparkValues.map((v, i) => {
-                const angle = (i * 360) / 5 - 90;
-                const rad = (angle * Math.PI) / 180;
-                const r = 90;
-                const x = Math.cos(rad) * r;
-                const y = Math.sin(rad) * r;
-
-                return (
+                <div key={v.letter} className="spark-dot-wrap" style={{ top: pos.top, left: pos.left }}>
                   <button
-                    key={v.letter}
-                    className={`spark-letter ${activeIdx === i ? 'active' : ''}`}
-                    style={{
-                      '--letter-color': v.color,
-                      transform: `translate(${x}px, ${y}px)`,
-                    }}
+                    className={`spark-dot ${isActive ? 'active' : ''}`}
+                    style={{ '--dot-color': v.color }}
                     onMouseEnter={() => handleEnter(i)}
                     onMouseLeave={handleLeave}
                   >
                     {v.letter}
                   </button>
-                );
-              })}
-              <div className="spark-wheel-center">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#243358" strokeWidth="1.5" className="spark-center-icon">
-                  <circle cx="12" cy="7" r="4"/>
-                  <path d="M5.5 21v-2a4.5 4.5 0 0 1 4.5-4.5h4a4.5 4.5 0 0 1 4.5 4.5v2"/>
-                </svg>
-              </div>
-            </div>
-          </div>
 
-          {/* Right cards */}
-          <div className="spark-side spark-side-right">
-            {sparkValues.filter((_, i) => i % 2 === 1).map((v) => {
-              const idx = sparkValues.indexOf(v);
-              return (
-                <div
-                  key={v.letter}
-                  className={`spark-card ${activeIdx === idx ? 'active' : ''}`}
-                  style={{ '--card-color': v.color }}
-                  onMouseEnter={() => handleEnter(idx)}
-                  onMouseLeave={handleLeave}
-                >
-                  <div className="spark-card-letter" style={{ background: v.color }}>{v.letter}</div>
-                  <div className="spark-card-info">
-                    <h4 className="spark-card-title">{v.letter} – {v.title}</h4>
-                    <p className="spark-card-desc">{v.desc}</p>
-                  </div>
+                  {/* Popup next to this letter */}
+                  {isActive && (
+                    <div
+                      className={`spark-popup popup-${pos.popupDir}`}
+                      style={{ '--popup-color': v.color }}
+                      onMouseEnter={() => handleEnter(i)}
+                      onMouseLeave={handleLeave}
+                    >
+                      <h4 className="spark-popup-title">
+                        <span style={{ color: v.color }}>{v.letter}</span> – {v.title}
+                      </h4>
+                      <p className="spark-popup-desc">{v.desc}</p>
+                    </div>
+                  )}
                 </div>
               );
             })}
           </div>
         </div>
-
-        {/* Active card detail below wheel */}
-        {activeIdx !== null && (
-          <div
-            className="spark-detail"
-            style={{ '--detail-color': sparkValues[activeIdx].color }}
-          >
-            <span className="spark-detail-letter" style={{ background: sparkValues[activeIdx].color }}>
-              {sparkValues[activeIdx].letter}
-            </span>
-            <div>
-              <h4 className="spark-detail-title">{sparkValues[activeIdx].title}</h4>
-              <p className="spark-detail-desc">{sparkValues[activeIdx].desc}</p>
-            </div>
-          </div>
-        )}
 
         <div className="spark-tagline">
           <span className="spark-tag-s">S</span><span className="spark-tag-p">P</span><span className="spark-tag-a">A</span><span className="spark-tag-r">R</span><span className="spark-tag-k">K</span>
