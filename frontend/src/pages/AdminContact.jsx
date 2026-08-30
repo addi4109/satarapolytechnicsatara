@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import AdminAlert from '../components/AdminAlert';
 import AdminTabs from '../components/AdminTabs';
+import AdminStaffCard from '../components/AdminStaffCard';
 import './Academics.css';
 
 const API_URL = '/api';
@@ -27,6 +28,7 @@ function AdminContact() {
 
   // Office contacts
   const [officeContacts, setOfficeContacts] = useState([]);
+  const [editingOfficeIdx, setEditingOfficeIdx] = useState(null);
 
   // Department details
   const [departmentDetails, setDepartmentDetails] = useState([]);
@@ -110,9 +112,9 @@ function AdminContact() {
     setOfficeContacts([...officeContacts, { ...defaultOfficeRow }]);
   };
 
-  const updateOfficeRow = (index, field, value) => {
+  const updateOfficeRow = (index, field, value, fullUpdate) => {
     const updated = officeContacts.map((row, i) =>
-      i === index ? { ...row, [field]: value } : row
+      i === index ? (fullUpdate ? fullUpdate : { ...row, [field]: value }) : row
     );
     setOfficeContacts(updated);
   };
@@ -222,40 +224,38 @@ function AdminContact() {
           <div className="admin-card">
             <div className="admin-card-header">
               <h3>Office Staff Contacts</h3>
-              <button className="btn btn-success btn-sm" onClick={addOfficeRow}>+ Add Row</button>
+              <button className="btn btn-success btn-sm" onClick={addOfficeRow}>+ Add Staff</button>
             </div>
-            <div className="admin-card-body" style={{ overflowX: 'auto' }}>
-              <table className="admin-table" style={{ width: '100%' }}>
-                <thead>
-                  <tr>
-                    <th style={{ width: 50 }}>Sr.</th>
-                    <th>Designation</th>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th style={{ width: 60 }}>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {officeContacts.map((row, i) => (
-                    <tr key={i}>
-                      <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
-                      <td><input type="text" value={row.designation} onChange={(e) => updateOfficeRow(i, 'designation', e.target.value)} style={inputStyle} placeholder="e.g. Principal" /></td>
-                      <td><input type="text" value={row.name} onChange={(e) => updateOfficeRow(i, 'name', e.target.value)} style={inputStyle} placeholder="Staff name" /></td>
-                      <td><input type="text" value={row.phone} onChange={(e) => updateOfficeRow(i, 'phone', e.target.value)} style={inputStyle} placeholder="Phone number" /></td>
-                      <td><input type="text" value={row.email} onChange={(e) => updateOfficeRow(i, 'email', e.target.value)} style={inputStyle} placeholder="Email" /></td>
-                      <td style={{ textAlign: 'center' }}>
-                        <button className="member-remove-btn" title="Remove" onClick={() => removeOfficeRow(i)}>×</button>
-                      </td>
-                    </tr>
-                  ))}
-                  {officeContacts.length === 0 && (
-                    <tr>
-                      <td colSpan={6} style={{ textAlign: 'center', color: '#999', padding: '20px' }}>No office contacts added yet. Click "+ Add Row" to add one.</td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+            <div className="admin-card-body">
+              <p className="admin-edit-hint">Click a card to edit. Click the + box to add a new staff member.</p>
+              <div className="gb-cards-grid">
+                {officeContacts.map((row, i) => (
+                  <AdminStaffCard
+                    key={i}
+                    member={{ name: row.name, designation: row.designation, phone: row.phone, email: row.email }}
+                    isEditing={editingOfficeIdx === i}
+                    editForm={row}
+                    onFormChange={(updated) => updateOfficeRow(i, null, null, updated)}
+                    onStartEdit={() => setEditingOfficeIdx(i)}
+                    onSave={() => setEditingOfficeIdx(null)}
+                    onCancel={() => setEditingOfficeIdx(null)}
+                    onDelete={() => removeOfficeRow(i)}
+                    deleteConfirm={false}
+                    onCancelDelete={() => {}}
+                    fields={[
+                      { key: 'designation', label: 'Designation', placeholder: 'e.g. Principal' },
+                      { key: 'name', label: 'Name', placeholder: 'Staff name' },
+                      { key: 'phone', label: 'Phone', placeholder: 'Phone number' },
+                      { key: 'email', label: 'Email', placeholder: 'Email' },
+                    ]}
+                  />
+                ))}
+                {officeContacts.length === 0 && (
+                  <div className="gb-member-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'dashed', minHeight: '200px' }}>
+                    <span style={{ fontSize: '13px', color: '#999' }}>No staff added yet. Click "+ Add Staff" above.</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}

@@ -8,6 +8,7 @@ import { db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import './Academics.css';
 import './Contact.css';
+import './DepartmentsPage.css';
 
 const routeMap = {
   '': 'contact',
@@ -261,54 +262,25 @@ function Contact() {
               {(() => {
                 const officeRows = getContact('office').officeContacts || [];
                 const fallbackPhone = getContact('office').phone || '+91-94233 42843';
-                return officeRows.length > 0 ? (
-                  <div className="contact-office-table-wrap">
-                    <table className="courses-table">
-                      <thead>
-                        <tr>
-                          <th style={{ width: 60 }}>Sr. No.</th>
-                          <th>Designation</th>
-                          <th>Name</th>
-                          <th>Contact</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {officeRows.map((row, i) => (
-                          <tr key={i}>
-                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
-                            <td>{row.designation || '—'}</td>
-                            <td>{row.name || '—'}</td>
-                            <td>
-                              {row.phone && <a href={`tel:${row.phone.replace(/[^0-9+]/g, '')}`}>{row.phone}</a>}
-                              {row.phone && row.email && ' / '}
-                              {row.email && <a href={`mailto:${row.email}`}>{row.email}</a>}
-                              {!row.phone && !row.email && '—'}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                ) : (
-                  <div className="contact-office-table-wrap">
-                    <table className="courses-table">
-                      <thead>
-                        <tr>
-                          <th style={{ width: 60 }}>Sr. No.</th>
-                          <th>Designation</th>
-                          <th>Name</th>
-                          <th>Contact</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>1</td>
-                          <td>General Office</td>
-                          <td>Satara Polytechnic</td>
-                          <td><a href={`tel:${fallbackPhone.replace(/[^0-9+]/g, '')}`}>{fallbackPhone}</a></td>
-                        </tr>
-                      </tbody>
-                    </table>
+                const rows = officeRows.length > 0 ? officeRows : [
+                  { designation: 'General Office', name: 'Satara Polytechnic', phone: fallbackPhone, email: '' },
+                ];
+                return (
+                  <div className="faculty-grid" style={{ marginTop: '16px' }}>
+                    {rows.map((row, i) => (
+                      <div className="faculty-card-new" key={i}>
+                        <div className="fcard-photo">
+                          <span>{row.name ? row.name.charAt(0) : '?'}</span>
+                        </div>
+                        <h4 className="fcard-name">{row.name || '—'}</h4>
+                        <p className="fcard-designation">{row.designation || ''}</p>
+                        <div className="fcard-details">
+                          {row.phone && <span><strong>Phone:</strong> <a href={`tel:${row.phone.replace(/[^0-9+]/g, '')}`}>{row.phone}</a></span>}
+                          {row.email && <span><strong>Email:</strong> <a href={`mailto:${row.email}`}>{row.email}</a></span>}
+                          {!row.phone && !row.email && <span>No contact info</span>}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 );
               })()}
