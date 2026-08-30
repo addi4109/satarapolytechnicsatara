@@ -1,4 +1,4 @@
-/* ─── Debug Panel Overlay ─── */
+/* Debug Panel Overlay */
 .debug-overlay {
   position: fixed;
   top: 0;
@@ -12,89 +12,65 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
-  animation: debugFadeIn 0.2s ease;
 }
 
-@keyframes debugFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* ─── Debug Panel ─── */
+/* Debug Panel */
 .debug-panel {
   background: #fff;
-  border-radius: 16px;
+  border-radius: 12px;
   width: 100%;
   max-width: 860px;
   overflow: visible;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
-  animation: debugSlideUp 0.25s ease;
   font-family: 'Times New Roman', Times, serif;
 }
 
-@keyframes debugSlideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ─── Header ─── */
+/* Header */
 .debug-panel-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 20px;
+  padding: 14px 20px;
   border-bottom: 1px solid #e4e8ed;
   background: #243358;
-  border-radius: 16px 16px 0 0;
+  border-radius: 12px 12px 0 0;
 }
 
-.debug-panel-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.debug-panel-title h2 {
+.debug-panel-header h2 {
   margin: 0;
   font-family: 'Georgia', serif;
   font-size: 16px;
   color: #c8963e;
 }
 
-.debug-panel-icon {
-  font-size: 18px;
-}
-
 .debug-close-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
 }
 
 .debug-close-btn:hover {
   background: rgba(220, 53, 69, 0.3);
-  border-color: rgba(220, 53, 69, 0.5);
 }
 
-/* ─── Subtitle ─── */
+/* Subtitle */
 .debug-panel-subtitle {
   padding: 8px 20px;
-  font-size: 11px;
+  font-size: 12px;
   color: #888;
   border-bottom: 1px solid #e4e8ed;
   background: #f8f9fb;
 }
 
-/* ─── Grid ─── */
+/* Grid */
 .debug-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -102,45 +78,25 @@
   padding: 12px 20px;
 }
 
-/* ─── Card ─── */
+/* Card */
 .debug-card {
   border: 1px solid #e4e8ed;
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.2s;
+  border-radius: 8px;
   background: #fff;
+  transition: box-shadow 0.2s, border-color 0.2s;
 }
 
 .debug-card:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-}
-
-.debug-card.connected {
-  border-color: #28a745;
-  border-left: 4px solid #28a745;
-}
-
-.debug-card.disconnected {
-  border-color: #dc3545;
-  border-left: 4px solid #dc3545;
-}
-
-.debug-card.unknown {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   border-color: #c8963e;
-  border-left: 4px solid #c8963e;
 }
 
-/* ─── Card Header ─── */
+/* Card Header */
 .debug-card-header {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 14px 8px;
-}
-
-.debug-card-icon {
-  font-size: 22px;
-  flex-shrink: 0;
+  padding: 12px 14px 8px;
 }
 
 .debug-card-info {
@@ -149,25 +105,24 @@
 }
 
 .debug-card-info h3 {
-  margin: 0 0 1px;
+  margin: 0 0 2px;
   font-family: 'Georgia', serif;
-  font-size: 13px;
+  font-size: 14px;
   color: #243358;
   font-weight: 700;
 }
 
 .debug-card-info p {
   margin: 0;
-  font-size: 11px;
+  font-size: 12px;
   color: #888;
-  line-height: 1.3;
 }
 
-/* ─── Status Badge ─── */
+/* Status Badge */
 .debug-status-badge {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
-  padding: 3px 8px;
+  padding: 3px 10px;
   border-radius: 10px;
   white-space: nowrap;
   flex-shrink: 0;
@@ -188,19 +143,17 @@
   color: #856404;
 }
 
-/* ─── Env List ─── */
+/* Env List */
 .debug-env-list {
-  padding: 0 14px 8px;
+  padding: 6px 14px 10px;
   border-top: 1px solid #f0f0f0;
-  margin-top: 2px;
-  padding-top: 6px;
 }
 
 .debug-env-label {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.5px;
   color: #aaa;
   margin-bottom: 4px;
 }
@@ -219,22 +172,19 @@
 
 .debug-env-key {
   font-family: 'Courier New', monospace;
-  font-size: 10px;
+  font-size: 11px;
   color: #243358;
   background: #f0f3f8;
   padding: 1px 6px;
   border-radius: 3px;
-  word-break: break-all;
 }
 
 .debug-env-source {
-  font-size: 9px;
+  font-size: 10px;
   color: #aaa;
-  white-space: nowrap;
-  margin-left: 6px;
 }
 
-/* ─── Footer ─── */
+/* Footer */
 .debug-footer {
   display: flex;
   justify-content: center;
@@ -242,18 +192,12 @@
   padding: 8px 20px;
   border-top: 1px solid #e4e8ed;
   background: #f8f9fb;
-  border-radius: 0 0 16px 16px;
+  border-radius: 0 0 12px 12px;
   font-size: 11px;
   color: #888;
 }
 
-.debug-footer span {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-/* ─── Mobile ─── */
+/* Mobile */
 @media (max-width: 768px) {
   .debug-overlay {
     padding: 10px;
@@ -265,15 +209,11 @@
 
   .debug-grid {
     grid-template-columns: 1fr;
-    padding: 16px;
+    padding: 10px;
   }
 
   .debug-panel-header {
     padding: 10px 14px;
-  }
-
-  .debug-panel-subtitle {
-    padding: 6px 14px;
   }
 
   .debug-footer {

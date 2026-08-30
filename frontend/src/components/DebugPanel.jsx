@@ -5,7 +5,6 @@ const integrations = [
   {
     id: 'firebase',
     name: 'Firebase',
-    icon: '🔥',
     desc: 'Stores enquiry form data',
     vars: [
       { key: 'apiKey', where: 'firebase.js' },
@@ -24,7 +23,6 @@ const integrations = [
   {
     id: 'emailjs',
     name: 'EmailJS',
-    icon: '📧',
     desc: 'Sends emails on admission enquiry',
     vars: [
       { key: 'VITE_EMAILJS_SERVICE_ID', where: 'Vercel' },
@@ -43,7 +41,6 @@ const integrations = [
   {
     id: 'cloudinary',
     name: 'Cloudinary',
-    icon: '☁️',
     desc: 'Handles image & video uploads',
     vars: [
       { key: 'VITE_CLOUDINARY_CLOUD_NAME', where: 'Vercel' },
@@ -58,7 +55,6 @@ const integrations = [
   {
     id: 'supabase',
     name: 'Supabase',
-    icon: '⚡',
     desc: 'Stores PDFs for notices',
     vars: [
       { key: 'VITE_SUPABASE_URL', where: 'Vercel' },
@@ -73,7 +69,6 @@ const integrations = [
   {
     id: 'mongodb',
     name: 'MongoDB',
-    icon: '🍃',
     desc: 'Main backend database',
     vars: [
       { key: 'MONGO_URI', where: 'Render' },
@@ -112,11 +107,8 @@ function DebugPanel({ isOpen, onClose }) {
     <div className="debug-overlay" onClick={onClose}>
       <div className="debug-panel" onClick={(e) => e.stopPropagation()}>
         <div className="debug-panel-header">
-          <div className="debug-panel-title">
-            <span className="debug-panel-icon">🛠️</span>
-            <h2>Debug Panel</h2>
-          </div>
-          <button className="debug-close-btn" onClick={onClose}>✕</button>
+          <h2>Debug Panel</h2>
+          <button className="debug-close-btn" onClick={onClose}>x</button>
         </div>
 
         <div className="debug-panel-subtitle">
@@ -129,13 +121,12 @@ function DebugPanel({ isOpen, onClose }) {
             return (
               <div key={intg.id} className={`debug-card ${s === true ? 'connected' : s === false ? 'disconnected' : 'unknown'}`}>
                 <div className="debug-card-header">
-                  <span className="debug-card-icon">{intg.icon}</span>
                   <div className="debug-card-info">
                     <h3>{intg.name}</h3>
                     <p>{intg.desc}</p>
                   </div>
                   <span className={`debug-status-badge ${s === true ? 'connected' : s === false ? 'disconnected' : 'unknown'}`}>
-                    {s === true ? '● OK' : s === false ? '● Missing' : '● Server-side'}
+                    {s === true ? 'Connected' : s === false ? 'Not Set' : 'Server-side'}
                   </span>
                 </div>
 
