@@ -503,6 +503,134 @@
   }
 }
 
+/* ===== Outcome Based Education (OBE) Tabs ===== */
+.obe-tabs {
+  display: flex;
+  gap: 0;
+  margin: 20px 0 0;
+  border-bottom: 2px solid #e4e8ed;
+  flex-wrap: wrap;
+}
+
+.obe-tab {
+  padding: 10px 22px;
+  background: #f0f4f8;
+  border: 1px solid #e4e8ed;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  margin-bottom: -2px;
+}
+
+.obe-tab:hover {
+  background: #e0ecf5;
+  color: #2a5a8a;
+}
+
+.obe-tab.active {
+  background: #fff;
+  color: #2a5a8a;
+  border-color: #e4e8ed;
+  border-bottom: 2px solid #fff;
+  margin-bottom: -2px;
+}
+
+.obe-content {
+  padding: 20px 0;
+}
+
+.obe-sub-heading {
+  font-family: 'Georgia', serif;
+  font-size: 18px;
+  color: #2a5a8a;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.obe-desc {
+  font-size: 13.5px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+
+.obe-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.obe-list-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px 18px;
+  background: #f8f9fb;
+  border: 1px solid #e4e8ed;
+  border-radius: 8px;
+  border-left: 3px solid #d4a54a;
+}
+
+.obe-item-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  height: 28px;
+  background: #2a5a8a;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 4px;
+  flex-shrink: 0;
+  letter-spacing: 0.3px;
+}
+
+.obe-list-item strong {
+  display: block;
+  font-size: 14px;
+  color: #2a5a8a;
+  margin-bottom: 4px;
+}
+
+.obe-list-item p {
+  font-size: 13.5px;
+  color: #555;
+  line-height: 1.65;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .obe-tabs {
+    gap: 0;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .obe-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .obe-tab {
+    flex: 0 0 auto;
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+  .obe-list-item {
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 14px;
+  }
+}
+
 /* Mobile tabs - hidden on desktop, visible on mobile */
 .dept-mobile-tabs {
   display: none;

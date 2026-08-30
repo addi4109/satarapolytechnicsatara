@@ -24,6 +24,10 @@ const emptyForm = {
   labs: [],
   infrastructure: [],
   curriculum: [],
+  peos: [],
+  pos: [],
+  psos: [],
+  cos: [],
   order: 0,
 };
 
@@ -72,6 +76,10 @@ function AdminDepartmentForm() {
           labs: [...(dept.labs || []), ...(dept.infrastructure || [])],
           infrastructure: [],
           curriculum: dept.curriculum || [],
+          peos: dept.peos || [],
+          pos: dept.pos || [],
+          psos: dept.psos || [],
+          cos: dept.cos || [],
           order: dept.order || 0,
         });
       } else {
@@ -150,6 +158,21 @@ function AdminDepartmentForm() {
     setForm((prev) => ({ ...prev, curriculum: prev.curriculum.filter((_, i) => i !== idx) }));
   };
 
+  // OBE management
+  const addObeItem = (field) => {
+    setForm((prev) => ({ ...prev, [field]: [...prev[field], { title: '', description: '' }] }));
+  };
+  const updateObeItem = (field, idx, subField, val) => {
+    setForm((prev) => {
+      const items = [...prev[field]];
+      items[idx] = { ...items[idx], [subField]: val };
+      return { ...prev, [field]: items };
+    });
+  };
+  const removeObeItem = (field, idx) => {
+    setForm((prev) => ({ ...prev, [field]: prev[field].filter((_, i) => i !== idx) }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -163,6 +186,10 @@ function AdminDepartmentForm() {
         ...form,
         mission: form.mission.split('\n').filter((m) => m.trim()),
         curriculum: form.curriculum.filter((s) => s.name.trim()),
+        peos: form.peos.filter((p) => p.title.trim() || p.description.trim()),
+        pos: form.pos.filter((p) => p.title.trim() || p.description.trim()),
+        psos: form.psos.filter((p) => p.title.trim() || p.description.trim()),
+        cos: form.cos.filter((p) => p.title.trim() || p.description.trim()),
         faculty: form.faculty.filter((f) => f.name.trim()),
         labs: form.labs.filter((l) => l.name.trim()),
         infrastructure: [],
@@ -464,6 +491,46 @@ function AdminDepartmentForm() {
                 <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addSubject}>+ Add Subject</button>
               </div>
               <div ref={curriculumEndRef} />
+            </div>
+          </div>
+
+          {/* Card 5: Outcome Based Education */}
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+              </div>
+              <div>
+                <h3>Outcome Based Education</h3>
+                <p>PEOs, POs, PSOs, and COs</p>
+              </div>
+            </div>
+            <div className="dept-form-card-body">
+              {['peos', 'pos', 'psos', 'cos'].map((field) => {
+                const labels = { peos: 'PEOs', pos: 'POs', psos: 'PSOs', cos: 'COs' };
+                return (
+                  <div key={field} style={{ marginBottom: '24px' }}>
+                    <h4 style={{ margin: '0 0 10px', fontFamily: "'Georgia', serif", fontSize: '16px', color: '#2a5a8a', borderBottom: '2px solid #d4a54a', paddingBottom: '6px' }}>{labels[field]}</h4>
+                    {form[field].length === 0 ? (
+                      <div className="members-empty">No {labels[field]} added yet.</div>
+                    ) : (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        {form[field].map((item, idx) => (
+                          <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', padding: '10px', background: '#f8f9fb', borderRadius: '6px', border: '1px solid #e4e8ed' }}>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '40px', height: '28px', background: '#2a5a8a', color: '#fff', fontSize: '11px', fontWeight: 700, borderRadius: '4px', flexShrink: 0 }}>{labels[field].slice(0, -1)} {idx + 1}</span>
+                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                              <input type="text" placeholder="Title (optional)" value={item.title} onChange={(e) => updateObeItem(field, idx, 'title', e.target.value)} style={{ padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px' }} />
+                              <textarea placeholder="Description" value={item.description} onChange={(e) => updateObeItem(field, idx, 'description', e.target.value)} rows={2} style={{ padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px', resize: 'vertical' }} />
+                            </div>
+                            <button type="button" className="btn btn-danger btn-sm" onClick={() => removeObeItem(field, idx)} style={{ flexShrink: 0, padding: '4px 8px' }}>✕</button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={() => addObeItem(field)} style={{ marginTop: '8px' }}>+ Add {labels[field].slice(0, -1)}</button>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
