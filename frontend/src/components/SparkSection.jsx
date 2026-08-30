@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import './SparkSection.css';
 
 const sparkValues = [
@@ -36,6 +36,16 @@ const sparkValues = [
 
 function SparkSection() {
   const [activeIdx, setActiveIdx] = useState(null);
+  const timeoutRef = useRef(null);
+
+  const handleEnter = useCallback((i) => {
+    clearTimeout(timeoutRef.current);
+    setActiveIdx(i);
+  }, []);
+
+  const handleLeave = useCallback(() => {
+    timeoutRef.current = setTimeout(() => setActiveIdx(null), 150);
+  }, []);
 
   return (
     <section className="spark-section">
@@ -57,20 +67,37 @@ function SparkSection() {
               const radius = 110;
               const x = Math.cos(rad) * radius;
               const y = Math.sin(rad) * radius;
+              const isRight = Math.cos(rad) > 0;
 
               return (
-                <button
-                  key={v.letter}
-                  className={`spark-dot ${activeIdx === i ? 'active' : ''}`}
-                  style={{
-                    '--dot-color': v.color,
-                    transform: `translate(${x}px, ${y}px)`,
-                  }}
-                  onMouseEnter={() => setActiveIdx(i)}
-                  onMouseLeave={() => setActiveIdx(null)}
-                >
-                  {v.letter}
-                </button>
+                <div key={v.letter} className="spark-letter-group">
+                  <button
+                    className={`spark-dot ${activeIdx === i ? 'active' : ''}`}
+                    style={{
+                      '--dot-color': v.color,
+                      '--tx': `${x}px`,
+                      '--ty': `${y}px`,
+                    }}
+                    onMouseEnter={() => handleEnter(i)}
+                    onMouseLeave={handleLeave}
+                  >
+                    {v.letter}
+                  </button>
+
+                  {activeIdx === i && (
+                    <div
+                      className={`spark-popup ${isRight ? 'popup-right' : 'popup-left'}`}
+                      style={{ '--popup-color': v.color, '--tx': `${x}px`, '--ty': `${y}px` }}
+                      onMouseEnter={() => handleEnter(i)}
+                      onMouseLeave={handleLeave}
+                    >
+                      <h4 className="spark-popup-title">
+                        {v.letter} – {v.title}
+                      </h4>
+                      <p className="spark-popup-desc">{v.desc}</p>
+                    </div>
+                  )}
+                </div>
               );
             })}
             <div className="spark-center">
@@ -80,21 +107,6 @@ function SparkSection() {
               </svg>
             </div>
           </div>
-
-          {/* Popup card shown on hover */}
-          {activeIdx !== null && (
-            <div
-              className="spark-popup"
-              style={{ '--popup-color': sparkValues[activeIdx].color }}
-              onMouseEnter={() => setActiveIdx(activeIdx)}
-              onMouseLeave={() => setActiveIdx(null)}
-            >
-              <h4 className="spark-popup-title">
-                {sparkValues[activeIdx].letter} – {sparkValues[activeIdx].title}
-              </h4>
-              <p className="spark-popup-desc">{sparkValues[activeIdx].desc}</p>
-            </div>
-          )}
         </div>
 
         <div className="spark-tagline">
