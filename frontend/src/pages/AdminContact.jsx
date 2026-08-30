@@ -23,7 +23,7 @@ function AdminContact() {
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [officeHours, setOfficeHours] = useState('');
-  const [mapEmbedUrl, setMapEmbedUrl] = useState('');
+
 
   // Office contacts
   const [officeContacts, setOfficeContacts] = useState([]);
@@ -49,7 +49,7 @@ function AdminContact() {
       setEmail(office.email || 'satarapolyinfo@gmail.com');
       setAddress(office.address || 'At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra');
       setOfficeHours(office.officeHours || 'Monday – Saturday, 10:30 AM – 5:00 PM');
-      setMapEmbedUrl(office.mapEmbedUrl || '');
+
       setOfficeContacts(office.officeContacts && office.officeContacts.length > 0 ? office.officeContacts : [{ ...defaultOfficeRow }]);
       const deptSection = mapped['departments'] || {};
       setDepartmentDetails(deptSection.departmentDetails && deptSection.departmentDetails.length > 0 ? deptSection.departmentDetails : []);
@@ -69,7 +69,7 @@ function AdminContact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           section: 'office',
-          phone, email, address, officeHours, mapEmbedUrl, officeContacts,
+          phone, email, address, officeHours, officeContacts,
         }),
       });
       if (!res.ok) throw new Error('Failed to save');
@@ -212,10 +212,6 @@ function AdminContact() {
               <div className="form-group">
                 <label style={labelStyle}>Office Hours</label>
                 <input type="text" value={officeHours} onChange={(e) => setOfficeHours(e.target.value)} style={inputStyle} placeholder="e.g. Monday – Saturday, 10:30 AM – 5:00 PM" />
-              </div>
-              <div className="form-group">
-                <label style={labelStyle}>Google Maps Embed URL</label>
-                <input type="text" value={mapEmbedUrl} onChange={(e) => setMapEmbedUrl(e.target.value)} style={inputStyle} placeholder="https://www.google.com/maps/embed?..." />
               </div>
             </div>
           </div>
