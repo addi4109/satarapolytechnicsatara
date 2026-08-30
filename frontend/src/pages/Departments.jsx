@@ -375,7 +375,6 @@ function DepartmentsPage() {
                         <ul className="obe-list">
                           {dept.peos.map((peo, i) => (
                             <li key={i} className="obe-list-item">
-                              <span className="obe-item-num">PEO {i + 1}</span>
                               <div>
                                 {peo.title && <strong>{peo.title}</strong>}
                                 {peo.description && <p>{peo.description}</p>}
@@ -396,7 +395,6 @@ function DepartmentsPage() {
                         <ul className="obe-list">
                           {dept.pos.map((po, i) => (
                             <li key={i} className="obe-list-item">
-                              <span className="obe-item-num">PO {i + 1}</span>
                               <div>
                                 {po.title && <strong>{po.title}</strong>}
                                 {po.description && <p>{po.description}</p>}
@@ -417,7 +415,6 @@ function DepartmentsPage() {
                         <ul className="obe-list">
                           {dept.psos.map((pso, i) => (
                             <li key={i} className="obe-list-item">
-                              <span className="obe-item-num">PSO {i + 1}</span>
                               <div>
                                 {pso.title && <strong>{pso.title}</strong>}
                                 {pso.description && <p>{pso.description}</p>}
@@ -438,7 +435,6 @@ function DepartmentsPage() {
                         <ul className="obe-list">
                           {dept.cos.map((co, i) => (
                             <li key={i} className="obe-list-item">
-                              <span className="obe-item-num">CO {i + 1}</span>
                               <div>
                                 {co.title && <strong>{co.title}</strong>}
                                 {co.description && <p>{co.description}</p>}
