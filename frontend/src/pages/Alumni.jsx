@@ -83,7 +83,7 @@ function Alumni() {
     return (
       <>
         <SEO title="Alumni | Satara Polytechnic" description="Alumni network of Satara Polytechnic, Satara." keywords="alumni, Satara Polytechnic alumni" url="/alumni" />
-        null
+        <SkeletonPage />
       </>
     );
   }

@@ -125,7 +125,7 @@ function Campus() {
     return (
       <>
         <SEO title="Campus | Satara Polytechnic" description="Explore campus facilities at Satara Polytechnic." keywords="college campus, library, canteen" url="/campus" />
-        null
+        <SkeletonPage />
       </>
     );
   }

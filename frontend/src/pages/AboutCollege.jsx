@@ -156,7 +156,7 @@ function AboutCollege() {
     return (
       <>
         <SEO title="About College | Satara Polytechnic" description="Learn about Satara Polytechnic, Satara - its history, vision, mission, and leadership." keywords="about Satara Polytechnic, college history" url="/about/college" />
-        null
+        <SkeletonPage />
       </>
     );
   }

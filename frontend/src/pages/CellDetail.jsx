@@ -24,7 +24,7 @@ function CellDetail() {
     return (
       <>
         <SEO title="Cell | Satara Polytechnic" description="Loading cell details..." url={`/cells/${cellId}`} />
-        null
+        <SkeletonPage />
       </>
     );
   }

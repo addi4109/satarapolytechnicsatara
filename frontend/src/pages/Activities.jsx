@@ -87,7 +87,7 @@ function Activities() {
     return (
       <>
         <SEO title="Activities | Satara Polytechnic" description="Student activities at Satara Polytechnic." keywords="college activities, sports, cultural events" url="/activities" />
-        null
+        <SkeletonPage />
       </>
     );
   }

@@ -103,7 +103,7 @@ function Placements() {
     return (
       <>
         <SEO title="Placements | Satara Polytechnic" description="Training & Placement Cell at Satara Polytechnic offering campus recruitment drives." keywords="polytechnic placements, campus recruitment" url="/placements" />
-        null
+        <SkeletonPage />
       </>
     );
   }

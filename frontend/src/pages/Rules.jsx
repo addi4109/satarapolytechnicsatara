@@ -22,7 +22,7 @@ function Rules() {
     return (
       <>
         <SEO title="Rules & Regulations | Satara Polytechnic" description="College rules and regulations at Satara Polytechnic, Satara." keywords="college rules, regulations, code of conduct" url="/rules" />
-        null
+        <SkeletonPage />
       </>
     );
   }

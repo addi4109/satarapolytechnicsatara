@@ -61,7 +61,7 @@ function Examinations() {
     return (
       <>
         <SEO title="Examination | Satara Polytechnic" description="MSBTE exam schedule, rules, and results." keywords="MSBTE exam, exam schedule, results" url="/examination" />
-        null
+        <SkeletonPage />
       </>
     );
   }
