@@ -37,23 +37,23 @@ function Navbar() {
       type: 'multi-column',
       columns: [
         {
-          header: 'Institute',
+          header: 'About',
           items: [
-            { label: 'About Institute', link: '/about/institute' },
-            { label: 'Society / Trust', link: '/about/society' },
-            { label: 'Vision & Mission', link: '/about/vision-mission' },
-            { label: 'Affiliation & Approvals', link: '/about/affiliation' },
-            { label: 'Institute Policy', link: '/about/policy' },
+            { label: 'Satara Education Society', link: '/about/society' },
+            { label: 'Institute', link: '/about/institute' },
             { label: 'Mandatory Disclosure', link: '/about/disclosure' },
+            { label: 'Vision & Mission', link: '/about/vision-mission' },
+            { label: 'Affiliation & Approval', link: '/about/affiliation' },
+            { label: 'Institute Policy', link: '/about/policy' },
           ],
         },
         {
-          header: 'Leadership',
+          header: 'Management',
           items: [
-            { label: 'Principal', link: '/about/principal' },
+            { label: 'Founder', link: '/about/founder' },
             { label: 'Chairman', link: '/about/chairman' },
             { label: 'Secretary', link: '/about/secretary' },
-            { label: 'Founder', link: '/about/founder' },
+            { label: 'Principal', link: '/about/principal' },
             { label: 'Governing Body', link: '/about/governing-body' },
             { label: 'Local Governing Body', link: '/about/local-governing-body' },
           ],
@@ -71,75 +71,74 @@ function Navbar() {
               label: d.name,
               link: `/departments/${d.slug}`,
             })),
+            { divider: true },
+            { label: academicTabName, isTitle: true },
+            { label: academicTabName, link: '/academics/calendar' },
           ],
         },
         {
-          header: 'Resources',
-          items: [
-            { label: 'Faculty & Staff', link: '/campus/office-staff' },
-            { label: academicTabName, link: '/academics/calendar' },
-            { label: 'Academic Resources', link: '/academics/calendar' },
-          ],
+          header: 'Cell and Committees',
+          items: dbCells.map((c) => ({
+            label: c.name,
+            link: `/cells/${c.slug}`,
+          })),
         },
       ],
     },
     {
       label: 'ADMISSIONS',
-      type: 'multi-column',
-      columns: [
-        {
-          header: 'Process',
-          items: [
-            { label: 'Admission Overview', link: '/admissions/overview' },
-            { label: 'Courses Offered', link: '/admissions/courses' },
-            { label: 'Eligibility', link: '/admissions/eligibility' },
-            { label: 'Admission Process', link: '/admissions/process' },
-            { label: 'First Year', link: '/admissions/first-year' },
-            { label: 'Direct Second Year', link: '/admissions/direct-second' },
-            { label: 'A-CAP', link: '/admissions/acap' },
-          ],
-        },
-        {
-          header: 'Resources',
-          items: [
-            { label: 'Fee Structure', link: '/admissions/fees' },
-            { label: 'Scholarships', link: '/admissions/scholarships' },
-            { label: 'College Brochure', link: '/admissions/brochure' },
-            { label: 'Admission Notices', link: '/notices/admission' },
-            { divider: true },
-            { label: 'Apply Now', link: '/admissions/apply' },
-          ],
-        },
+      children: [
+        { label: 'Admission Overview', link: '/admissions/overview' },
+        { label: 'Courses Offered', link: '/admissions/courses' },
+        { label: 'Eligibility', link: '/admissions/eligibility' },
+        { label: 'Admission Process', link: '/admissions/process' },
+        { label: 'First Year Admission', link: '/admissions/first-year' },
+        { label: 'Direct Second Year', link: '/admissions/direct-second' },
+        { label: 'A-CAP', link: '/admissions/acap' },
+
+        { label: 'Fee Structure', link: '/admissions/fees' },
+        { label: 'Scholarships', link: '/admissions/scholarships' },
+        { label: 'College Brochure', link: '/admissions/brochure' },
+        { label: 'Admission Notice', link: '/notices/admission' },
+        { label: 'Apply Now', link: '/admissions/apply' },
       ],
-    },
-    {
-      label: 'DEPARTMENTS',
-      children: dbDepts.filter((d) => !d.hideFromHome).map((d) => ({
-        label: d.name,
-        link: `/departments/${d.slug}`,
-      })),
     },
     {
       label: 'CAMPUS',
-      children: [
-        { label: 'Library', link: '/campus/library' },
-        { label: 'Bus Facility', link: '/campus/bus-facility' },
-        { label: 'Canteen', link: '/campus/canteen' },
-        { type: 'header', label: 'Office & Staff' },
-        { label: "Registrar's Desk", link: '/campus/registrar' },
-        { label: 'Office Staff', link: '/campus/office-staff' },
-        { label: 'Non Teaching Staff', link: '/campus/non-teaching-staff' },
+      type: 'multi-column',
+      columns: [
+        {
+          header: 'Facility',
+          items: [
+            { label: 'Library', link: '/campus/library' },
+            { label: 'Bus Facility', link: '/campus/bus-facility' },
+            { label: 'Canteen', link: '/campus/canteen' },
+          ],
+        },
+        {
+          header: 'Office',
+          items: [
+            { label: "Registrar's Desk", link: '/campus/registrar' },
+            { label: 'Office Staff', link: '/campus/office-staff' },
+            { label: 'Non Teaching Staff', link: '/campus/non-teaching-staff' },
+          ],
+        },
       ],
     },
     {
-      label: 'STUDENT LIFE',
+      label: 'PLACEMENTS',
+      children: [
+        { label: 'About Placement Cell', link: '/placements/about' },
+        { label: 'Placement Process', link: '/placements/process' },
+        { label: 'Placement Records', link: '/placements/records' },
+        { label: 'Our Recruiters', link: '/placements/recruiters' },
+      ],
+    },        { label: 'ACTIVITIES',
       children: [
         { label: 'Sports', link: '/activities/sports' },
-        { label: 'Cultural Activities', link: '/activities/cultural' },
+        { label: 'Cultural', link: '/activities/cultural' },
         { label: 'Technical Events', link: '/activities/technical' },
-        { label: 'Academic Events', link: '/activities/academic-events' },
-        { type: 'header', label: 'Student Support' },
-        { label: 'Feedback', link: '/contact/feedback' },
+        { label: 'Academic Events & Activities', link: '/activities/academic-events' },
       ],
     },
     {
@@ -153,56 +152,36 @@ function Navbar() {
       ],
     },
     {
-      label: 'PLACEMENTS',
-      children: [
-        { label: 'About Placement Cell', link: '/placements/about' },
-        { label: 'Placement Process', link: '/placements/process' },
-        { label: 'Placement Records', link: '/placements/records' },
-        { label: 'Our Recruiters', link: '/placements/recruiters' },
-      ],
-    },
-    {
-      label: 'COMMITTEES',
-      children: dbCells.map((c) => ({
-        label: c.name,
-        link: `/cells/${c.slug}`,
-      })),
-    },
-    {
       label: 'GALLERY',
       children: [
         { label: 'Photo Gallery', link: '/gallery/photos' },
         { label: 'Video Gallery', link: '/gallery/videos' },
-        { label: 'Media / News', link: '/gallery/media' },
-        { type: 'header', label: 'Updates' },
-        { label: 'All Notices', link: '/notices' },
-        { label: 'Admission Notices', link: '/notices/admission' },
+        { label: 'Media News', link: '/gallery/media' },
+      ],
+    },
+    {
+      label: 'NOTICES',
+      link: '/notices',
+    },
+    {
+      label: 'ALUMNI',
+      children: [
+        { label: 'About Alumni', link: '/alumni/about' },
+        { label: 'Alumni Vision & Mission', link: '/alumni/vision-mission' },
+        { label: 'Entrepreneurs', link: '/alumni/entrepreneurs' },
+        { label: 'Alumni Association', link: '/alumni/association' },
+        { label: 'Alumni Registration Form', link: '/alumni/registration' },
       ],
     },
     {
       label: 'CONTACT',
-      type: 'multi-column',
-      columns: [
-        {
-          header: 'Alumni',
-          items: [
-            { label: 'About Alumni', link: '/alumni/about' },
-            { label: 'Alumni Association', link: '/alumni/association' },
-            { label: 'Entrepreneurs', link: '/alumni/entrepreneurs' },
-            { label: 'Alumni Registration', link: '/alumni/registration' },
-          ],
-        },
-        {
-          header: 'Contact Us',
-          items: [
-            { label: 'Contact Us', link: '/contact' },
-            { label: 'Department Contacts', link: '/contact/departments' },
-            { label: 'Office Contacts', link: '/contact/office' },
-            { label: 'Location & Map', link: '/contact/location' },
-            { label: 'Admission Enquiry', link: '/contact/admission-enquiry' },
-            { label: 'Feedback', link: '/contact/feedback' },
-          ],
-        },
+      children: [
+        { label: 'Contact Us', link: '/contact' },
+        { label: 'Admission Enquiry', link: '/contact/admission-enquiry' },
+        { label: 'Department Contacts', link: '/contact/departments' },
+        { label: 'Office Contacts', link: '/contact/office' },
+        { label: 'Location', link: '/contact/location' },
+        { label: 'Feedback', link: '/contact/feedback' },
       ],
     },
   ];
