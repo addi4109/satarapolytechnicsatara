@@ -435,7 +435,7 @@ function AdminDepartmentForm() {
               </div>
               <div className="form-group">
                 <label>Mission (one per line)</label>
-                <textarea name="mission" value={form.mission} onChange={handleChange} placeholder="Mission point 1\nMission point 2\nMission point 3" rows={4} />
+                <textarea name="mission" value={form.mission} onChange={handleChange} placeholder={"Mission point 1\nMission point 2\nMission point 3"} rows={4} />
               </div>
             </div>
           </div>
@@ -475,7 +475,7 @@ function AdminDepartmentForm() {
               </div>
               <div className="form-group">
                 <label>HOD Message</label>
-                <textarea name="hodMsg" value={form.hodMsg} onChange={handleChange} placeholder="HOD's welcome message...\n(Use Enter for line breaks)" rows={5} />
+                <textarea name="hodMsg" value={form.hodMsg} onChange={handleChange} placeholder={"HOD's welcome message...\n(Use Enter for line breaks)"} rows={5} />
               </div>
             </div>
           </div>
@@ -587,24 +587,24 @@ function AdminDepartmentForm() {
             </div>
             <div className="dept-form-card-body">
               {form.curriculum.length === 0 ? (
-                <div className="members-empty">No subjects added yet. Click "+ Add Subject" to add one.</div>
+                <div className="admin-curriculum-empty">No subjects added yet. Click "+ Add Subject" to add one.</div>
               ) : (
-                <div className="curriculum-wrapper">
+                <div className="admin-curriculum-wrapper">
                   {years.map((year) => {
                     const yearSubjects = form.curriculum
                       .map((item, idx) => ({ ...item, idx }))
                       .filter((c) => c.year === year);
                     if (yearSubjects.length === 0) return null;
                     return (
-                      <div key={year} style={{ marginBottom: '24px' }}>
-                        <h3 className="curriculum-year">{year}</h3>
+                      <div key={year}>
+                        <h3 className="admin-curriculum-year">{year}</h3>
                         {[...new Set(yearSubjects.map((c) => c.semester))].sort((a, b) => a - b).map((sem) => {
                           const semSubjects = yearSubjects.filter((c) => c.semester === sem);
                           return (
                             <div key={sem} style={{ marginBottom: '16px' }}>
-                              <h4 style={{ fontSize: '14px', color: '#7A263A', margin: '0 0 8px', fontWeight: 600 }}>Semester {sem}</h4>
+                              <h4 className="admin-curriculum-sem-label">Semester {sem}</h4>
                               <div style={{ overflowX: 'auto' }}>
-                                <table className="curriculum-table" style={{ width: '100%' }}>
+                                <table className="admin-curriculum-table">
                                   <thead>
                                     <tr>
                                       <th style={{ width: '45%' }}>Subject</th>
@@ -617,18 +617,18 @@ function AdminDepartmentForm() {
                                       <tr key={sub.idx}>
                                         <td>
                                           <input
-n                                            type="text"
+                                            className="subj-input"
+                                            type="text"
                                             placeholder="Subject name"
                                             value={sub.name}
                                             onChange={(e) => updateCurriculum(sub.idx, 'name', e.target.value)}
-                                            style={{ width: '100%', padding: '6px 8px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px', boxSizing: 'border-box' }}
                                           />
                                         </td>
                                         <td>
                                           <PdfUpload value={sub.url} onChange={(url) => updateCurriculum(sub.idx, 'url', url)} />
                                         </td>
                                         <td style={{ textAlign: 'center' }}>
-                                          <button type="button" className="btn btn-danger btn-sm" onClick={() => removeSubject(sub.idx)} style={{ padding: '4px 10px', fontSize: '12px' }}>
+                                          <button type="button" className="btn btn-danger btn-sm" onClick={() => removeSubject(sub.idx)}>
                                             Delete
                                           </button>
                                         </td>

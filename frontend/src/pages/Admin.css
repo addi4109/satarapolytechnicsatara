@@ -1376,6 +1376,89 @@
   flex-shrink: 0;
 }
 
+/* Curriculum Table Styles */
+.admin-curriculum-wrapper {
+  border: 1.5px solid #cdd4df;
+  border-radius: 6px;
+  padding: 20px 24px;
+  background: #fff;
+}
+
+.admin-curriculum-year {
+  font-family: 'Georgia', serif;
+  font-size: 18px;
+  color: #243358;
+  margin: 20px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #c8963e;
+}
+
+.admin-curriculum-year:first-child {
+  margin-top: 0;
+}
+
+.admin-curriculum-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.admin-curriculum-table thead th {
+  background: #243358;
+  color: #fff;
+  padding: 10px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.admin-curriculum-table tbody td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #e4e8ed;
+  color: #444;
+  vertical-align: middle;
+}
+
+.admin-curriculum-table tbody tr:nth-child(even) {
+  background: #f9fafc;
+}
+
+.admin-curriculum-table tbody tr:hover {
+  background: #f0f4fa;
+}
+
+.admin-curriculum-table .subj-input {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid #e4e8ed;
+  border-radius: 4px;
+  font-size: 13px;
+  font-family: inherit;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.admin-curriculum-table .subj-input:focus {
+  outline: none;
+  border-color: #c8963e;
+  box-shadow: 0 0 0 2px rgba(200, 150, 62, 0.15);
+}
+
+.admin-curriculum-sem-label {
+  font-size: 14px;
+  color: #7A263A;
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+.admin-curriculum-empty {
+  text-align: center;
+  padding: 24px;
+  color: #999;
+  font-style: italic;
+}
+
 .admin-dashboard-stat {
   background: #fff;
   border: 1px solid #e4e8ed;
