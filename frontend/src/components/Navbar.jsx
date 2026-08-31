@@ -37,25 +37,25 @@ function Navbar() {
       type: 'multi-column',
       columns: [
         {
-          header: 'About',
+          header: 'Institute',
           items: [
             { label: 'Satara Education Society', link: '/about/society' },
-            { label: 'Institute', link: '/about/institute' },
-            { label: 'Mandatory Disclosure', link: '/about/disclosure' },
+            { label: 'Institute Profile', link: '/about/institute' },
             { label: 'Vision & Mission', link: '/about/vision-mission' },
             { label: 'Affiliation & Approval', link: '/about/affiliation' },
+            { label: 'Mandatory Disclosure', link: '/about/disclosure' },
             { label: 'Institute Policy', link: '/about/policy' },
           ],
         },
         {
-          header: 'Management',
+          header: 'Leadership',
           items: [
-            { label: 'Founder', link: '/about/founder' },
-            { label: 'Chairman', link: '/about/chairman' },
-            { label: 'Secretary', link: '/about/secretary' },
             { label: 'Principal', link: '/about/principal' },
             { label: 'Governing Body', link: '/about/governing-body' },
             { label: 'Local Governing Body', link: '/about/local-governing-body' },
+            { label: 'Chairman', link: '/about/chairman' },
+            { label: 'Secretary', link: '/about/secretary' },
+            { label: 'Founder', link: '/about/founder' },
           ],
         },
       ],
@@ -77,30 +77,51 @@ function Navbar() {
           ],
         },
         {
-          header: 'Cell and Committees',
+          header: 'Cells & Committees',
           items: dbCells.map((c) => ({
             label: c.name,
             link: `/cells/${c.slug}`,
           })),
         },
+        {
+          header: 'Examinations',
+          items: [
+            { label: 'Exam Schedule', link: '/examination/schedule' },
+            { label: 'Exam Rules', link: '/examination/rules' },
+            { label: 'Results', link: '/examination/results' },
+            { label: 'Revaluation', link: '/examination/revaluation' },
+            { label: 'Exam Notices', link: '/examination/notices' },
+          ],
+        },
       ],
     },
     {
       label: 'ADMISSIONS',
-      children: [
-        { label: 'Admission Overview', link: '/admissions/overview' },
-        { label: 'Courses Offered', link: '/admissions/courses' },
-        { label: 'Eligibility', link: '/admissions/eligibility' },
-        { label: 'Admission Process', link: '/admissions/process' },
-        { label: 'First Year Admission', link: '/admissions/first-year' },
-        { label: 'Direct Second Year', link: '/admissions/direct-second' },
-        { label: 'A-CAP', link: '/admissions/acap' },
-
-        { label: 'Fee Structure', link: '/admissions/fees' },
-        { label: 'Scholarships', link: '/admissions/scholarships' },
-        { label: 'College Brochure', link: '/admissions/brochure' },
-        { label: 'Admission Notice', link: '/notices/admission' },
-        { label: 'Apply Now', link: '/admissions/apply' },
+      type: 'multi-column',
+      columns: [
+        {
+          header: 'Admission Process',
+          items: [
+            { label: 'Admission Overview', link: '/admissions/overview' },
+            { label: 'Courses Offered', link: '/admissions/courses' },
+            { label: 'Eligibility', link: '/admissions/eligibility' },
+            { label: 'Admission Process', link: '/admissions/process' },
+            { label: 'First Year Admission', link: '/admissions/first-year' },
+            { label: 'Direct Second Year', link: '/admissions/direct-second' },
+            { label: 'A-CAP', link: '/admissions/acap' },
+          ],
+        },
+        {
+          header: 'Fees & Resources',
+          items: [
+            { label: 'Fee Structure', link: '/admissions/fees' },
+            { label: 'Scholarships', link: '/admissions/scholarships' },
+            { label: 'College Brochure', link: '/admissions/brochure' },
+            { label: 'Admission Notice', link: '/notices/admission' },
+            { divider: true },
+            { label: 'Apply Now', link: '/admissions/apply', isHighlight: true },
+          ],
+        },
       ],
     },
     {
@@ -108,7 +129,7 @@ function Navbar() {
       type: 'multi-column',
       columns: [
         {
-          header: 'Facility',
+          header: 'Facilities',
           items: [
             { label: 'Library', link: '/campus/library' },
             { label: 'Bus Facility', link: '/campus/bus-facility' },
@@ -116,7 +137,7 @@ function Navbar() {
           ],
         },
         {
-          header: 'Office',
+          header: 'Office & Staff',
           items: [
             { label: "Registrar's Desk", link: '/campus/registrar' },
             { label: 'Office Staff', link: '/campus/office-staff' },
@@ -126,51 +147,44 @@ function Navbar() {
       ],
     },
     {
-      label: 'PLACEMENTS',
-      children: [
-        { label: 'About Placement Cell', link: '/placements/about' },
-        { label: 'Placement Process', link: '/placements/process' },
-        { label: 'Placement Records', link: '/placements/records' },
-        { label: 'Our Recruiters', link: '/placements/recruiters' },
+      label: 'CAREER',
+      type: 'multi-column',
+      columns: [
+        {
+          header: 'Placements',
+          items: [
+            { label: 'About Placement Cell', link: '/placements/about' },
+            { label: 'Placement Process', link: '/placements/process' },
+            { label: 'Placement Records', link: '/placements/records' },
+            { label: 'Our Recruiters', link: '/placements/recruiters' },
+          ],
+        },
+        {
+          header: 'Alumni',
+          items: [
+            { label: 'About Alumni', link: '/alumni/about' },
+            { label: 'Alumni Vision & Mission', link: '/alumni/vision-mission' },
+            { label: 'Alumni Association', link: '/alumni/association' },
+            { label: 'Entrepreneurs', link: '/alumni/entrepreneurs' },
+            { label: 'Alumni Registration', link: '/alumni/registration' },
+          ],
+        },
       ],
-    },        { label: 'ACTIVITIES',
+    },
+    {
+      label: 'STUDENT LIFE',
       children: [
         { label: 'Sports', link: '/activities/sports' },
-        { label: 'Cultural', link: '/activities/cultural' },
+        { label: 'Cultural Events', link: '/activities/cultural' },
         { label: 'Technical Events', link: '/activities/technical' },
-        { label: 'Academic Events & Activities', link: '/activities/academic-events' },
-      ],
-    },
-    {
-      label: 'EXAMINATION',
-      children: [
-        { label: 'Exam Schedule', link: '/examination/schedule' },
-        { label: 'Exam Rules', link: '/examination/rules' },
-        { label: 'Results', link: '/examination/results' },
-        { label: 'Revaluation', link: '/examination/revaluation' },
-        { label: 'Exam Notices', link: '/examination/notices' },
-      ],
-    },
-    {
-      label: 'GALLERY',
-      children: [
+        { label: 'Academic Events', link: '/activities/academic-events' },
+        { type: 'header', label: 'Media & Gallery' },
         { label: 'Photo Gallery', link: '/gallery/photos' },
         { label: 'Video Gallery', link: '/gallery/videos' },
         { label: 'Media News', link: '/gallery/media' },
-      ],
-    },
-    {
-      label: 'NOTICES',
-      link: '/notices',
-    },
-    {
-      label: 'ALUMNI',
-      children: [
-        { label: 'About Alumni', link: '/alumni/about' },
-        { label: 'Alumni Vision & Mission', link: '/alumni/vision-mission' },
-        { label: 'Entrepreneurs', link: '/alumni/entrepreneurs' },
-        { label: 'Alumni Association', link: '/alumni/association' },
-        { label: 'Alumni Registration Form', link: '/alumni/registration' },
+        { type: 'header', label: 'Updates' },
+        { label: 'All Notices', link: '/notices' },
+        { label: 'Admission Notices', link: '/notices/admission' },
       ],
     },
     {
@@ -178,9 +192,11 @@ function Navbar() {
       children: [
         { label: 'Contact Us', link: '/contact' },
         { label: 'Admission Enquiry', link: '/contact/admission-enquiry' },
+        { label: 'Location & Map', link: '/contact/location' },
+        { type: 'header', label: 'Departments & Offices' },
         { label: 'Department Contacts', link: '/contact/departments' },
         { label: 'Office Contacts', link: '/contact/office' },
-        { label: 'Location', link: '/contact/location' },
+        { type: 'header', label: 'Connect' },
         { label: 'Feedback', link: '/contact/feedback' },
       ],
     },
@@ -293,7 +309,7 @@ function Navbar() {
                                 </li>
                               ) : (
                                 <li key={iIdx}>
-                                  <a href={child.link} onClick={() => setMobileOpen(false)}>
+                                  <a href={child.link} onClick={() => setMobileOpen(false)} className={child.isHighlight ? 'dropdown-highlight-link' : ''}>
                                     {child.label}
                                   </a>
                                 </li>
