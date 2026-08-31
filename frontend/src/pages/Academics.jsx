@@ -67,25 +67,20 @@ function Academics() {
         }
       />
 
-      <div className="about-layout">
-        <aside className="about-sidebar">
-          <h3 className="sidebar-heading">Academics</h3>
-          <ul className="sidebar-list">
-            {sidebarLinks.map((link) => (
-              <li key={link.id}>
-                <button
-                  className={`sidebar-link ${active === link.id ? 'active' : ''}`}
-                  onClick={() => setActive(link.id)}
-                >
-                  <span className="arrow">→</span>
-                  {link.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </aside>
+      <div className="academics-page">
+        <div className="academics-tabs">
+          {sidebarLinks.map((link) => (
+            <button
+              key={link.id}
+              className={`academics-tab ${active === link.id ? 'active' : ''}`}
+              onClick={() => setActive(link.id)}
+            >
+              {link.label}
+            </button>
+          ))}
+        </div>
 
-        <main className="about-content">
+        <main className="academics-content">
           {active === 'overview' && (
             <>
               <h2 className="content-heading">Academic Overview</h2>
