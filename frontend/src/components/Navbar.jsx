@@ -181,18 +181,28 @@ function Navbar() {
     },
     {
       label: 'CONTACT',
-      children: [
-        { label: 'About Alumni', link: '/alumni/about' },
-        { label: 'Alumni Association', link: '/alumni/association' },
-        { label: 'Entrepreneurs', link: '/alumni/entrepreneurs' },
-        { label: 'Alumni Registration', link: '/alumni/registration' },
-        { type: 'header', label: 'Contact Us' },
-        { label: 'Contact Us', link: '/contact' },
-        { label: 'Department Contacts', link: '/contact/departments' },
-        { label: 'Office Contacts', link: '/contact/office' },
-        { label: 'Location & Map', link: '/contact/location' },
-        { label: 'Admission Enquiry', link: '/contact/admission-enquiry' },
-        { label: 'Feedback', link: '/contact/feedback' },
+      type: 'multi-column',
+      columns: [
+        {
+          header: 'Alumni',
+          items: [
+            { label: 'About Alumni', link: '/alumni/about' },
+            { label: 'Alumni Association', link: '/alumni/association' },
+            { label: 'Entrepreneurs', link: '/alumni/entrepreneurs' },
+            { label: 'Alumni Registration', link: '/alumni/registration' },
+          ],
+        },
+        {
+          header: 'Contact Us',
+          items: [
+            { label: 'Contact Us', link: '/contact' },
+            { label: 'Department Contacts', link: '/contact/departments' },
+            { label: 'Office Contacts', link: '/contact/office' },
+            { label: 'Location & Map', link: '/contact/location' },
+            { label: 'Admission Enquiry', link: '/contact/admission-enquiry' },
+            { label: 'Feedback', link: '/contact/feedback' },
+          ],
+        },
       ],
     },
   ];
