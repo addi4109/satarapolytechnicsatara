@@ -59,7 +59,7 @@ function AdminStaffCard({
   // ── Add mode ──
   if (isAddMode) {
     return (
-      <div className="gb-member-card gb-member-editing" style={{ background: '#fffbe6' }}>
+      <div className="gb-member-card gb-member-editing" style={{ background: '#fff', border: '1px solid #000' }}>
         <div style={{ textAlign: 'center', marginBottom: '14px' }}>
           <ImageUpload
             value={editForm.photoUrl || ''}
@@ -91,7 +91,7 @@ function AdminStaffCard({
   // ── Editing mode (inline) ──
   if (isEditing) {
     return (
-      <div className="gb-member-card gb-member-editing" style={{ background: '#fffbe6' }}>
+      <div className="gb-member-card gb-member-editing" style={{ background: '#fff', border: '1px solid #000' }}>
         <div style={{ textAlign: 'center', marginBottom: '14px' }}>
           <ImageUpload
             value={editForm.photoUrl || ''}
