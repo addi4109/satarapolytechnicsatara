@@ -30,9 +30,6 @@ const emptyForm = {
   pos: [],
   psos: [],
   cos: [],
-  deptNotices: [],
-  deptEvents: [],
-  deptTimetable: [],
   order: 0,
 };
 
@@ -82,9 +79,6 @@ function AdminDepartmentForm() {
           pos: dept.pos || [],
           psos: dept.psos || [],
           cos: dept.cos || [],
-          deptNotices: dept.deptNotices || [],
-          deptEvents: dept.deptEvents || [],
-          deptTimetable: dept.deptTimetable || [],
           order: dept.order || 0,
         });
       } else {
@@ -178,74 +172,6 @@ function AdminDepartmentForm() {
     setForm((prev) => ({ ...prev, [field]: prev[field].filter((_, i) => i !== idx) }));
   };
 
-  // Department Notices management
-  const addDeptNotice = () => {
-    setForm((prev) => ({ ...prev, deptNotices: [...prev.deptNotices, { title: '', url: '' }] }));
-  };
-  const updateDeptNotice = (idx, field, val) => {
-    setForm((prev) => {
-      const n = [...prev.deptNotices];
-      n[idx] = { ...n[idx], [field]: val };
-      return { ...prev, deptNotices: n };
-    });
-  };
-  const removeDeptNotice = (idx) => {
-    setForm((prev) => ({ ...prev, deptNotices: prev.deptNotices.filter((_, i) => i !== idx) }));
-  };
-
-  // Department Events management
-  const addDeptEvent = () => {
-    setForm((prev) => ({ ...prev, deptEvents: [...prev.deptEvents, { title: '', description: '', images: [] }] }));
-  };
-  const updateDeptEvent = (idx, field, val) => {
-    setForm((prev) => {
-      const e = [...prev.deptEvents];
-      e[idx] = { ...e[idx], [field]: val };
-      return { ...prev, deptEvents: e };
-    });
-  };
-  const addEventImage = (idx) => {
-    setForm((prev) => {
-      const e = [...prev.deptEvents];
-      e[idx] = { ...e[idx], images: [...(e[idx].images || []), ''] };
-      return { ...prev, deptEvents: e };
-    });
-  };
-  const updateEventImage = (eventIdx, imgIdx, val) => {
-    setForm((prev) => {
-      const e = [...prev.deptEvents];
-      const imgs = [...(e[eventIdx].images || [])];
-      imgs[imgIdx] = val;
-      e[eventIdx] = { ...e[eventIdx], images: imgs };
-      return { ...prev, deptEvents: e };
-    });
-  };
-  const removeEventImage = (eventIdx, imgIdx) => {
-    setForm((prev) => {
-      const e = [...prev.deptEvents];
-      e[eventIdx] = { ...e[eventIdx], images: (e[eventIdx].images || []).filter((_, i) => i !== imgIdx) };
-      return { ...prev, deptEvents: e };
-    });
-  };
-  const removeDeptEvent = (idx) => {
-    setForm((prev) => ({ ...prev, deptEvents: prev.deptEvents.filter((_, i) => i !== idx) }));
-  };
-
-  // Department Timetable management
-  const addTimetableEntry = (year) => {
-    setForm((prev) => ({ ...prev, deptTimetable: [...prev.deptTimetable, { year, title: '', url: '' }] }));
-  };
-  const updateTimetableEntry = (idx, field, val) => {
-    setForm((prev) => {
-      const t = [...prev.deptTimetable];
-      t[idx] = { ...t[idx], [field]: val };
-      return { ...prev, deptTimetable: t };
-    });
-  };
-  const removeTimetableEntry = (idx) => {
-    setForm((prev) => ({ ...prev, deptTimetable: prev.deptTimetable.filter((_, i) => i !== idx) }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -263,9 +189,6 @@ function AdminDepartmentForm() {
         pos: form.pos.filter((p) => p.title.trim() || p.description.trim()),
         psos: form.psos.filter((p) => p.title.trim() || p.description.trim()),
         cos: form.cos.filter((p) => p.title.trim() || p.description.trim()),
-        deptNotices: form.deptNotices.filter((n) => n.title.trim()),
-        deptEvents: form.deptEvents.filter((e) => e.title.trim()),
-        deptTimetable: form.deptTimetable.filter((t) => t.title.trim()),
         faculty: form.faculty.filter((f) => f.name.trim()),
         labs: form.labs.filter((l) => l.name.trim()),
         infrastructure: [],
@@ -318,9 +241,6 @@ function AdminDepartmentForm() {
             { key: 'infrastructure', label: 'Infrastructure' },
             { key: 'curriculum', label: 'Curriculum' },
             { key: 'obe', label: 'OBE' },
-            { key: 'notices', label: 'Notices' },
-            { key: 'events', label: 'Events' },
-            { key: 'timetable', label: 'Timetable' },
           ]}
           activeTab={activeTab}
           onChange={(tab) => { setActiveTab(tab); if (tab === 'basic') setEditingBasic(false); }}
@@ -671,129 +591,6 @@ function AdminDepartmentForm() {
                       </div>
                     )}
                     <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={() => addObeItem(field)} style={{ marginTop: '8px' }}>+ Add {labels[field].slice(0, -1)}</button>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          )}
-
-          {/* Department Notices */}
-          {activeTab === 'notices' && (
-          <div className="dept-form-card">
-            <div className="dept-form-card-header">
-              <div className="dept-form-card-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-              </div>
-              <div>
-                <h3>Department Notices</h3>
-                <p>Notices specific to this department</p>
-              </div>
-              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addDeptNotice}>+ Add Notice</button>
-            </div>
-            <div className="dept-form-card-body">
-              {form.deptNotices.length === 0 ? (
-                <div className="members-empty">No notices added yet. Click "+ Add Notice" to add one.</div>
-              ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  {form.deptNotices.map((notice, idx) => (
-                    <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'center', padding: '10px', background: '#f8f9fb', borderRadius: '6px', border: '1px solid #e4e8ed' }}>
-                      <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '32px', height: '28px', background: '#243358', color: '#fff', fontSize: '12px', fontWeight: 700, borderRadius: '4px', flexShrink: 0 }}>{idx + 1}</span>
-                      <input type="text" placeholder="Notice title" value={notice.title} onChange={(e) => updateDeptNotice(idx, 'title', e.target.value)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px' }} />
-                      <PdfUpload value={notice.url} onChange={(url) => updateDeptNotice(idx, 'url', url)} />
-                      <button type="button" className="btn btn-danger btn-sm" onClick={() => removeDeptNotice(idx)} style={{ flexShrink: 0, padding: '4px 8px' }}>✕</button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-          )}
-
-          {/* Events & Activities */}
-          {activeTab === 'events' && (
-          <div className="dept-form-card">
-            <div className="dept-form-card-header">
-              <div className="dept-form-card-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              </div>
-              <div>
-                <h3>Events & Activities</h3>
-                <p>Department events and activities</p>
-              </div>
-              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addDeptEvent}>+ Add Event</button>
-            </div>
-            <div className="dept-form-card-body">
-              {form.deptEvents.length === 0 ? (
-                <div className="members-empty">No events added yet. Click "+ Add Event" to add one.</div>
-              ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  {form.deptEvents.map((event, idx) => (
-                    <div key={idx} style={{ padding: '14px', background: '#f8f9fb', borderRadius: '8px', border: '1px solid #e4e8ed' }}>
-                      <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px' }}>
-                        <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '32px', height: '28px', background: '#243358', color: '#fff', fontSize: '12px', fontWeight: 700, borderRadius: '4px', flexShrink: 0 }}>{idx + 1}</span>
-                        <input type="text" placeholder="Event title" value={event.title} onChange={(e) => updateDeptEvent(idx, 'title', e.target.value)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px' }} />
-                        <button type="button" className="btn btn-danger btn-sm" onClick={() => removeDeptEvent(idx)} style={{ flexShrink: 0, padding: '4px 8px' }}>✕</button>
-                      </div>
-                      <textarea placeholder="Description (optional)" value={event.description} onChange={(e) => updateDeptEvent(idx, 'description', e.target.value)} rows={2} style={{ width: '100%', padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }} />
-                      <div className="dept-event-images-grid">
-                        {(event.images || []).map((img, imgIdx) => (
-                          <div key={imgIdx} className="dept-event-image-item">
-                            <span className="dept-event-image-num">{imgIdx + 1}</span>
-                            <div className="dept-event-image-upload">
-                              <ImageUpload value={img} onChange={(url) => updateEventImage(idx, imgIdx, url)} label="" placeholder={`Image ${imgIdx + 1}`} />
-                            </div>
-                            <button type="button" className="btn btn-danger btn-sm" onClick={() => removeEventImage(idx, imgIdx)} style={{ flexShrink: 0, padding: '3px 7px', fontSize: '11px' }}>✕</button>
-                          </div>
-                        ))}
-                      </div>
-                      <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={() => addEventImage(idx)} style={{ marginTop: '8px' }}>+ Add Image</button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-          )}
-
-          {/* Timetable */}
-          {activeTab === 'timetable' && (
-          <div className="dept-form-card">
-            <div className="dept-form-card-header">
-              <div className="dept-form-card-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              </div>
-              <div>
-                <h3>Time Table</h3>
-                <p>Add time tables for each year</p>
-              </div>
-            </div>
-            <div className="dept-form-card-body">
-              {['1st Year', '2nd Year', '3rd Year'].map((yr) => {
-                const items = form.deptTimetable.filter((t) => t.year === yr);
-                return (
-                  <div key={yr} style={{ marginBottom: '20px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                      <h4 style={{ margin: 0, fontFamily: "'Georgia', serif", fontSize: '15px', color: '#243358', fontWeight: 700 }}>{yr}</h4>
-                      <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={() => addTimetableEntry(yr)}>+ Add</button>
-                    </div>
-                    {items.length === 0 ? (
-                      <div className="members-empty">No time table entries for {yr}.</div>
-                    ) : (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        {items.map((item, i) => {
-                          const realIdx = form.deptTimetable.indexOf(item);
-                          return (
-                            <div key={realIdx} style={{ display: 'flex', gap: '8px', alignItems: 'center', padding: '10px', background: '#f8f9fb', borderRadius: '6px', border: '1px solid #e4e8ed' }}>
-                              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '32px', height: '28px', background: '#243358', color: '#fff', fontSize: '12px', fontWeight: 700, borderRadius: '4px', flexShrink: 0 }}>{i + 1}</span>
-                              <input type="text" placeholder="Title" value={item.title} onChange={(e) => updateTimetableEntry(realIdx, 'title', e.target.value)} style={{ flex: 1, padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px' }} />
-                              <PdfUpload value={item.url} onChange={(url) => updateTimetableEntry(realIdx, 'url', url)} />
-                              <button type="button" className="btn btn-danger btn-sm" onClick={() => removeTimetableEntry(realIdx)} style={{ flexShrink: 0, padding: '4px 8px' }}>✕</button>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
                   </div>
                 );
               })}

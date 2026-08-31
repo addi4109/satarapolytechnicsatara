@@ -8,7 +8,7 @@ import './Gallery.css';
 
 const API_URL = '/api';
 const years = ['1st Year', '2nd Year', '3rd Year'];
-const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe', 'notices', 'events', 'timetable'];
+const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe'];
 
 function DepartmentsPage() {
   const { deptId } = useParams();
@@ -72,9 +72,7 @@ function DepartmentsPage() {
     { id: 'infrastructure', label: 'Infrastructure' },
     { id: 'curriculum', label: 'Curriculum / Syllabus' },
     { id: 'obe', label: 'Outcome Based Education' },
-    { id: 'notices', label: 'Notices' },
-    { id: 'events', label: 'Events & Activities' },
-    { id: 'timetable', label: 'Time Table' },
+
   ];
 
   if (loading) {
@@ -452,133 +450,6 @@ function DepartmentsPage() {
                   )}
                 </div>
               </div>
-            )}
-
-            {activeTab === 'notices' && (
-              <>
-                <h2 className="content-heading">Notices</h2>
-                <div className="content-line"></div>
-                {dept.deptNotices && dept.deptNotices.length > 0 ? (
-                  <div className="dept-notices-table-wrap">
-                    <table className="dept-notices-table">
-                      <thead>
-                        <tr>
-                          <th style={{ width: '50px', textAlign: 'center' }}>Sr. No.</th>
-                          <th>Title</th>
-                          <th style={{ width: '120px', textAlign: 'center' }}>Date</th>
-                          <th style={{ width: '140px', textAlign: 'center' }}>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {dept.deptNotices.map((notice, i) => (
-                          <tr key={i}>
-                            <td style={{ textAlign: 'center' }}>{i + 1}</td>
-                            <td>{notice.title}</td>
-                            <td style={{ textAlign: 'center' }}>{new Date(notice.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
-                            <td>
-                              <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
-                                {notice.url ? (
-                                  <>
-                                    <a href={notice.url} target="_blank" rel="noreferrer" className="dept-notice-btn dept-notice-view">View</a>
-                                    <a href={notice.url} download className="dept-notice-btn dept-notice-download">Download</a>
-                                  </>
-                                ) : (
-                                  <span style={{ color: '#ccc' }}>—</span>
-                                )}
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                ) : (
-                  <p style={{ color: '#888', fontStyle: 'italic' }}>No notices available for this department.</p>
-                )}
-              </>
-            )}
-
-            {activeTab === 'events' && (
-              <>
-                <h2 className="content-heading">Events & Activities</h2>
-                <div className="content-line"></div>
-                {dept.deptEvents && dept.deptEvents.length > 0 ? (
-                  <div className="dept-events-grid">
-                    {dept.deptEvents.map((event, i) => (
-                      <div key={i} className="dept-event-card">
-                        {event.images && event.images.length > 0 && (
-                          <div className="dept-event-img-wrap">
-                            {event.images.map((img, j) => (
-                              <div key={j} className="dept-event-img" onClick={() => setLightbox({ image: img, name: event.title })}>
-                                <img src={img} alt={`${event.title} ${j + 1}`} />
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                        <div className="dept-event-body">
-                          <h4 className="dept-event-title">{event.title}</h4>
-                          {event.description && <p className="dept-event-desc">{event.description}</p>}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p style={{ color: '#888', fontStyle: 'italic' }}>No events or activities added yet.</p>
-                )}
-              </>
-            )}
-
-            {activeTab === 'timetable' && (
-              <>
-                <h2 className="content-heading">Time Table</h2>
-                <div className="content-line"></div>
-                {dept.deptTimetable && dept.deptTimetable.length > 0 ? (
-                  <div className="dept-timetable-wrap">
-                    {['1st Year', '2nd Year', '3rd Year'].map((yr) => {
-                      const items = dept.deptTimetable.filter((t) => t.year === yr);
-                      if (items.length === 0) return null;
-                      return (
-                        <div key={yr} className="dept-timetable-section">
-                          <h3 className="dept-timetable-year">{yr}</h3>
-                          <div className="dept-timetable-table-wrap">
-                            <table className="dept-timetable-table">
-                              <thead>
-                                <tr>
-                                  <th style={{ width: '50px', textAlign: 'center' }}>Sr. No.</th>
-                                  <th>Title</th>
-                                  <th style={{ width: '140px', textAlign: 'center' }}>Action</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {items.map((t, i) => (
-                                  <tr key={i}>
-                                    <td style={{ textAlign: 'center' }}>{i + 1}</td>
-                                    <td>{t.title}</td>
-                                    <td>
-                                      <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
-                                        {t.url ? (
-                                          <>
-                                            <a href={t.url} target="_blank" rel="noreferrer" className="dept-tt-btn dept-tt-view">View</a>
-                                            <a href={t.url} download className="dept-tt-btn dept-tt-download">Download</a>
-                                          </>
-                                        ) : (
-                                          <span style={{ color: '#ccc' }}>—</span>
-                                        )}
-                                      </div>
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <p style={{ color: '#888', fontStyle: 'italic' }}>No time table entries available for this department.</p>
-                )}
-              </>
             )}
 
             {activeTab === 'hod' && (
