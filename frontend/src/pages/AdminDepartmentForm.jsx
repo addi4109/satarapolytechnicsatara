@@ -39,11 +39,6 @@ const emptyForm = {
 const years = ['1st Year', '2nd Year', '3rd Year'];
 const semestersByYear = { '1st Year': [1, 2], '2nd Year': [3, 4], '3rd Year': [5, 6] };
 
-function getNextSemester(curriculum, year) {
-  const yearSems = curriculum.filter((c) => c.year === year);
-  return yearSems.length > 0 ? Math.max(...yearSems.map((c) => c.semester)) + 1 : (year === '1st Year' ? 1 : year === '2nd Year' ? 3 : 5);
-}
-
 function AdminDepartmentForm() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -54,6 +49,7 @@ function AdminDepartmentForm() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState(null);
   const [activeTab, setActiveTab] = useState('basic');
+  const [editingBasic, setEditingBasic] = useState(false);
 
   useEffect(() => {
     if (isEdit) fetchDept();
@@ -127,7 +123,7 @@ function AdminDepartmentForm() {
     setForm((prev) => ({ ...prev, faculty: prev.faculty.filter((_, i) => i !== idx) }));
   };
 
-  // Labs management (combined Infrastructure section)
+  // Labs management
   const addLab = () => {
     setForm((prev) => ({ ...prev, labs: [...prev.labs, { name: '', image: '' }] }));
   };
@@ -312,30 +308,6 @@ function AdminDepartmentForm() {
       <div className="admin-content">
         <AdminAlert type={message?.type} message={message} onDismiss={() => setMessage(null)} />
 
-        {/* Live Preview */}
-        <div className="live-preview">
-          <div className="live-preview-header">Live Preview</div>
-          <div className="preview-cell-card">
-            {form.image && (
-              <div style={{ marginBottom: '12px', borderRadius: '6px', overflow: 'hidden', height: '160px' }}>
-                <img src={form.image} alt={form.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-            )}
-            <h3 className="preview-cell-name">{form.name || 'Department Name'}</h3>
-            <p className="preview-cell-desc">{form.about || 'About section will appear here...'}</p>
-            {form.hod && (
-              <div style={{ marginTop: '10px', padding: '10px', background: '#F2E5E8', borderRadius: '4px' }}>
-                <strong>HOD:</strong> {form.hod} {form.hodQual && `(${form.hodQual})`}
-              </div>
-            )}
-            <div style={{ display: 'flex', gap: '16px', marginTop: '10px', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: '12px', color: '#666' }}>Intake: {form.intake}</span>
-              <span style={{ fontSize: '12px', color: '#666' }}>Faculty: {form.faculty.filter(f => f.name.trim()).length}</span>
-              <span style={{ fontSize: '12px', color: '#666' }}>Infrastructure: {form.labs.filter(l => l.name.trim()).length}</span>
-            </div>
-          </div>
-        </div>
-
         {/* Sub-tabs */}
         <AdminTabs
           tabs={[
@@ -351,13 +323,48 @@ function AdminDepartmentForm() {
             { key: 'timetable', label: 'Timetable' },
           ]}
           activeTab={activeTab}
-          onChange={setActiveTab}
+          onChange={(tab) => { setActiveTab(tab); if (tab === 'basic') setEditingBasic(false); }}
         />
 
-        {/* Form */}
         <form className="admin-form" onSubmit={handleSubmit}>
-          {/* Card 1: Basic Info */}
-          {activeTab === 'basic' && (
+          {/* ===== BASIC INFO TAB ===== */}
+          {activeTab === 'basic' && !editingBasic && (
+            <div className="dept-preview-wrapper">
+              <div className="dept-card dept-preview-card" onClick={() => setEditingBasic(true)}>
+                <div className="dept-img-wrap">
+                  {form.image ? (
+                    <img src={form.image} alt={form.name || 'Department'} />
+                  ) : (
+                    <div className="dept-img-placeholder">
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#c8963e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                      <span>No image</span>
+                    </div>
+                  )}
+                </div>
+                <div className="dept-body">
+                  <h3 className="dept-name">{form.name || 'Department Name'}</h3>
+                  <p className="dept-desc">
+                    {form.about
+                      ? form.about.length > 130
+                        ? `${form.about.substring(0, 130).trim()}...`
+                        : form.about
+                      : 'Click to add department details'}
+                  </p>
+                  <div className="dept-meta">
+                    <span>Intake: {form.intake}</span>
+                    {form.directSecond && <span>Direct 2nd Year: Yes</span>}
+                    <span>Faculty: {form.faculty.filter(f => f.name.trim()).length}</span>
+                  </div>
+                  <div className="dept-preview-edit-hint">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    Click to edit basic info
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'basic' && editingBasic && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
               <div className="dept-form-card-icon">
@@ -367,6 +374,9 @@ function AdminDepartmentForm() {
                 <h3>Basic Information</h3>
                 <p>Department name, image, and description</p>
               </div>
+              <button type="button" className="btn btn-secondary btn-sm dept-card-add-btn" onClick={() => setEditingBasic(false)}>
+                ← Back to Preview
+              </button>
             </div>
             <div className="dept-form-card-body">
               <div className="form-group">
@@ -441,7 +451,7 @@ function AdminDepartmentForm() {
           </div>
           )}
 
-          {/* Card 2: HOD Details */}
+          {/* HOD Details */}
           {activeTab === 'hod' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
@@ -481,7 +491,7 @@ function AdminDepartmentForm() {
           </div>
           )}
 
-          {/* Card 3: Faculty Members */}
+          {/* Faculty Members */}
           {activeTab === 'faculty' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
@@ -501,27 +511,16 @@ function AdminDepartmentForm() {
                 <div className="faculty-cards-grid">
                   {form.faculty.map((f, idx) => (
                     <div key={idx} className="faculty-card">
-                      <button type="button" className="faculty-card-remove" onClick={() => removeFaculty(idx)} title="Remove">
-                        ✕
-                      </button>
+                      <button type="button" className="faculty-card-remove" onClick={() => removeFaculty(idx)} title="Remove">✕</button>
                       <div className="faculty-card-img">
-                        <ImageUpload
-                          value={f.image}
-                          onChange={(url) => updateFaculty(idx, 'image', url)}
-                          label=""
-                          placeholder="Photo"
-                          circle
-                        />
+                        <ImageUpload value={f.image} onChange={(url) => updateFaculty(idx, 'image', url)} label="" placeholder="Photo" circle />
                       </div>
                       <div className="faculty-card-fields">
                         <input type="text" placeholder="Name" value={f.name} onChange={(e) => updateFaculty(idx, 'name', e.target.value)} />
                         <input type="text" placeholder="Designation" value={f.designation} onChange={(e) => updateFaculty(idx, 'designation', e.target.value)} />
                         <input type="text" placeholder="Qualification" value={f.qual} onChange={(e) => updateFaculty(idx, 'qual', e.target.value)} />
                         <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                          <input type="text" placeholder="Experience (e.g. 5)" value={f.exp} onChange={(e) => {
-                            updateFaculty(idx, 'exp', e.target.value);
-                            updateFaculty(idx, 'expYear', new Date().getFullYear());
-                          }} style={{ flex: 1 }} />
+                          <input type="text" placeholder="Experience (e.g. 5)" value={f.exp} onChange={(e) => { updateFaculty(idx, 'exp', e.target.value); updateFaculty(idx, 'expYear', new Date().getFullYear()); }} style={{ flex: 1 }} />
                           <input type="number" placeholder="Year" value={f.expYear || new Date().getFullYear()} onChange={(e) => updateFaculty(idx, 'expYear', Number(e.target.value))} style={{ width: '70px' }} title="Year experience was last updated" />
                         </div>
                         <input type="text" placeholder="Email" value={f.email} onChange={(e) => updateFaculty(idx, 'email', e.target.value)} />
@@ -534,7 +533,7 @@ function AdminDepartmentForm() {
           </div>
           )}
 
-          {/* Card 4: Infrastructure (Labs + Facilities) */}
+          {/* Infrastructure */}
           {activeTab === 'infrastructure' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
@@ -556,12 +555,7 @@ function AdminDepartmentForm() {
                     <div key={idx} className="lab-item-card">
                       <button type="button" className="lab-item-remove" onClick={() => removeLab(idx)} title="Remove">✕</button>
                       <div className="lab-item-img">
-                        <ImageUpload
-                          value={l.image}
-                          onChange={(url) => updateLab(idx, 'image', url)}
-                          label=""
-                          placeholder="Photo"
-                        />
+                        <ImageUpload value={l.image} onChange={(url) => updateLab(idx, 'image', url)} label="" placeholder="Photo" />
                       </div>
                       <input type="text" placeholder="Item Name (e.g. CAD Lab)" value={l.name} onChange={(e) => updateLab(idx, 'name', e.target.value)} className="lab-item-input" />
                     </div>
@@ -572,7 +566,7 @@ function AdminDepartmentForm() {
           </div>
           )}
 
-          {/* Card 6: Curriculum / Syllabus */}
+          {/* Curriculum / Syllabus */}
           {activeTab === 'curriculum' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
@@ -616,21 +610,13 @@ function AdminDepartmentForm() {
                                     {semSubjects.map((sub) => (
                                       <tr key={sub.idx}>
                                         <td>
-                                          <input
-                                            className="subj-input"
-                                            type="text"
-                                            placeholder="Subject name"
-                                            value={sub.name}
-                                            onChange={(e) => updateCurriculum(sub.idx, 'name', e.target.value)}
-                                          />
+                                          <input className="subj-input" type="text" placeholder="Subject name" value={sub.name} onChange={(e) => updateCurriculum(sub.idx, 'name', e.target.value)} />
                                         </td>
                                         <td>
                                           <PdfUpload value={sub.url} onChange={(url) => updateCurriculum(sub.idx, 'url', url)} />
                                         </td>
                                         <td style={{ textAlign: 'center' }}>
-                                          <button type="button" className="btn btn-danger btn-sm" onClick={() => removeSubject(sub.idx)}>
-                                            Delete
-                                          </button>
+                                          <button type="button" className="btn btn-danger btn-sm" onClick={() => removeSubject(sub.idx)}>Delete</button>
                                         </td>
                                       </tr>
                                     ))}
@@ -650,7 +636,7 @@ function AdminDepartmentForm() {
           </div>
           )}
 
-          {/* Card 5: Outcome Based Education */}
+          {/* Outcome Based Education */}
           {activeTab === 'obe' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
@@ -692,7 +678,7 @@ function AdminDepartmentForm() {
           </div>
           )}
 
-          {/* Card 7: Department Notices */}
+          {/* Department Notices */}
           {activeTab === 'notices' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
@@ -724,7 +710,7 @@ function AdminDepartmentForm() {
           </div>
           )}
 
-          {/* Card 8: Department Events & Activities */}
+          {/* Events & Activities */}
           {activeTab === 'events' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
@@ -750,18 +736,12 @@ function AdminDepartmentForm() {
                         <button type="button" className="btn btn-danger btn-sm" onClick={() => removeDeptEvent(idx)} style={{ flexShrink: 0, padding: '4px 8px' }}>✕</button>
                       </div>
                       <textarea placeholder="Description (optional)" value={event.description} onChange={(e) => updateDeptEvent(idx, 'description', e.target.value)} rows={2} style={{ width: '100%', padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }} />
-                      {/* Multiple images */}
                       <div className="dept-event-images-grid">
                         {(event.images || []).map((img, imgIdx) => (
                           <div key={imgIdx} className="dept-event-image-item">
                             <span className="dept-event-image-num">{imgIdx + 1}</span>
                             <div className="dept-event-image-upload">
-                              <ImageUpload
-                                value={img}
-                                onChange={(url) => updateEventImage(idx, imgIdx, url)}
-                                label=""
-                                placeholder={`Image ${imgIdx + 1}`}
-                              />
+                              <ImageUpload value={img} onChange={(url) => updateEventImage(idx, imgIdx, url)} label="" placeholder={`Image ${imgIdx + 1}`} />
                             </div>
                             <button type="button" className="btn btn-danger btn-sm" onClick={() => removeEventImage(idx, imgIdx)} style={{ flexShrink: 0, padding: '3px 7px', fontSize: '11px' }}>✕</button>
                           </div>
@@ -776,7 +756,7 @@ function AdminDepartmentForm() {
           </div>
           )}
 
-          {/* Card 9: Department Timetable */}
+          {/* Timetable */}
           {activeTab === 'timetable' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
@@ -791,7 +771,6 @@ function AdminDepartmentForm() {
             <div className="dept-form-card-body">
               {['1st Year', '2nd Year', '3rd Year'].map((yr) => {
                 const items = form.deptTimetable.filter((t) => t.year === yr);
-                const firstIdx = form.deptTimetable.findIndex((t) => t.year === yr);
                 return (
                   <div key={yr} style={{ marginBottom: '20px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
