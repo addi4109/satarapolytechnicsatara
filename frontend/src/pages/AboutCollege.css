@@ -199,6 +199,14 @@
   border-radius: 6px;
   padding: 18px 12px;
   text-align: center;
+  transition: all 0.25s ease;
+}
+
+.stat-box:hover {
+  background: #fff;
+  border-color: #c8963e;
+  box-shadow: 0 4px 16px rgba(200, 150, 62, 0.15);
+  transform: translateY(-3px);
 }
 
 .stat-num {
@@ -263,6 +271,13 @@
   border-radius: 10px;
   padding: 24px;
   margin-top: 24px;
+  transition: all 0.3s ease;
+}
+
+.officer-card:hover {
+  background: #fff;
+  border-color: #c8963e;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .officer-left {
@@ -404,20 +419,18 @@
   border-radius: 10px;
   overflow: hidden;
   text-align: center;
-  transition: box-shadow 0.25s, transform 0.25s;
+  transition: all 0.3s ease;
   width: 100%;
 }
 
 .leader-card:hover {
-  box-shadow: 0 8px 28px rgba(0,0,0,0.1);
-  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  transform: translateY(-6px);
+  border-color: #c8963e;
 }
 
-.leader-card-img-wrap {
-  width: 100%;
-  padding: 16px;
-  display: flex;
-  justify-content: center;
+.leader-card:hover .leader-card-img {
+  border-color: #c8963e;
 }
 
 .leader-card-img {
@@ -427,6 +440,14 @@
   object-fit: cover;
   border: 3px solid #e4e8ed;
   display: block;
+  transition: border-color 0.3s ease;
+}
+
+.leader-card-img-wrap {
+  width: 100%;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
 }
 
 .leader-card-img-placeholder {
@@ -508,12 +529,17 @@
   border-radius: 12px;
   padding: 30px 16px 26px;
   text-align: center;
-  transition: box-shadow 0.25s, transform 0.25s;
+  transition: all 0.3s ease;
 }
 
 .staff-card:hover {
-  box-shadow: 0 8px 28px rgba(0,0,0,0.1);
-  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  transform: translateY(-6px);
+  border-color: #c8963e;
+}
+
+.staff-card:hover .staff-card-photo {
+  border-color: #c8963e;
 }
 
 .staff-card-photo {
@@ -525,7 +551,10 @@
   margin: 0 auto 16px;
   display: block;
   background: #f0f3f8;
+  transition: border-color 0.3s ease;
 }
+
+
 
 .staff-card-photo-placeholder {
   width: 128px;
