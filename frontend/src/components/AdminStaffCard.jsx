@@ -115,50 +115,29 @@ function AdminStaffCard({
             {saving ? 'Saving...' : 'Save'}
           </button>
           <button className="btn btn-secondary btn-sm" onClick={onCancel}>Cancel</button>
+          <button className="btn btn-danger btn-sm" onClick={onDelete}>Delete</button>
         </div>
       </div>
     );
   }
 
-  // ── Display mode ──
+  // ── Display mode (matches live website staff-card) ──
   const name = member?.name || 'Unknown';
-  const initials = name.split(' ')?.map((w) => w.charAt(0)).join('').substring(0, 2).toUpperCase() || '?';
 
   return (
     <div
-      className="gb-member-card"
+      className="staff-card"
       onClick={onStartEdit}
       style={{ cursor: 'pointer' }}
       title="Click to edit"
     >
-      {order != null && <span className="gb-member-order">{order}</span>}
       {member?.photoUrl ? (
-        <img src={member.photoUrl} alt={name} className="gb-member-photo" />
+        <img src={member.photoUrl} alt={name} className="staff-card-photo" />
       ) : (
-        <div className="gb-member-photo gb-member-photo-empty">
-          <span style={{ fontSize: '24px', fontWeight: 700, color: '#243358', fontFamily: 'Georgia, serif' }}>
-            {initials}
-          </span>
-        </div>
+        <div className="staff-card-photo-placeholder">No Photo</div>
       )}
-      <h3 className="gb-member-name">{name}</h3>
-      <p className="gb-member-designation">{member?.designation || member?.position || ''}</p>
-      {member?.phone && (
-        <p style={{ margin: '0 0 4px', fontSize: '12px', color: '#888' }}>{member.phone}</p>
-      )}
-      {member?.email && (
-        <p style={{ margin: 0, fontSize: '11px', color: '#aaa' }}>{member.email}</p>
-      )}
-      <div className="gb-member-actions" onClick={(e) => e.stopPropagation()}>
-        {deleteConfirm ? (
-          <>
-            <button className="btn btn-danger btn-sm" onClick={onDelete}>Yes, Delete</button>
-            <button className="btn btn-secondary btn-sm" onClick={onCancelDelete}>Cancel</button>
-          </>
-        ) : (
-          <button className="btn btn-danger btn-sm" onClick={onDelete}>Delete</button>
-        )}
-      </div>
+      <h3 className="staff-card-name">{name}</h3>
+      <p className="staff-card-designation">{member?.designation || member?.position || ''}</p>
     </div>
   );
 }

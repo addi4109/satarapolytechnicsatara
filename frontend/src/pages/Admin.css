@@ -1753,6 +1753,62 @@
   justify-content: center;
 }
 
+/* Staff Card — matches main website AboutCollege.css */
+.staff-card {
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  border-radius: 12px;
+  padding: 30px 16px 26px;
+  text-align: center;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+
+.staff-card:hover {
+  box-shadow: 0 8px 28px rgba(0,0,0,0.1);
+  transform: translateY(-4px);
+}
+
+.staff-card-photo {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #e4e8ed;
+  margin: 0 auto 16px;
+  display: block;
+  background: #f0f3f8;
+}
+
+.staff-card-photo-placeholder {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  border: 3px dashed #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  font-size: 12px;
+  color: #aaa;
+  background: #f8f9fa;
+}
+
+.staff-card-name {
+  font-family: 'Georgia', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #243358;
+  margin: 0 0 4px;
+}
+
+.staff-card-designation {
+  font-size: 12.5px;
+  color: #7A263A;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
 @media (max-width: 768px) {
   .gb-cards-grid {
     grid-template-columns: 1fr;
