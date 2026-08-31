@@ -68,17 +68,19 @@ function Academics() {
       />
 
       <div className="academics-page">
-        <div className="academics-tabs">
-          {sidebarLinks.map((link) => (
-            <button
-              key={link.id}
-              className={`academics-tab ${active === link.id ? 'active' : ''}`}
-              onClick={() => setActive(link.id)}
-            >
-              {link.label}
-            </button>
-          ))}
-        </div>
+        {active !== 'calendar' && (
+          <div className="academics-tabs">
+            {sidebarLinks.map((link) => (
+              <button
+                key={link.id}
+                className={`academics-tab ${active === link.id ? 'active' : ''}`}
+                onClick={() => setActive(link.id)}
+              >
+                {link.label}
+              </button>
+            ))}
+          </div>
+        )}
 
         <main className="academics-content">
           {active === 'overview' && (
