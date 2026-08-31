@@ -287,7 +287,7 @@ function AdminManagement() {
                       <div
                         className="gb-member-card"
                         onClick={openAddGb}
-                        style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'dashed', minHeight: '240px' }}
+                        style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'dashed', borderColor: '#000', background: '#fff', minHeight: '240px' }}
                       >
                         <span style={{ fontSize: '36px', color: '#bbb', marginBottom: '6px' }}>+</span>
                         <span style={{ fontSize: '13px', color: '#999', fontWeight: 600 }}>Add Member</span>
@@ -341,7 +341,7 @@ function AdminManagement() {
                       <div
                         className="gb-member-card"
                         onClick={openAddLgb}
-                        style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'dashed', minHeight: '240px' }}
+                        style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderStyle: 'dashed', borderColor: '#000', background: '#fff', minHeight: '240px' }}
                       >
                         <span style={{ fontSize: '36px', color: '#bbb', marginBottom: '6px' }}>+</span>
                         <span style={{ fontSize: '13px', color: '#999', fontWeight: 600 }}>Add Member</span>
