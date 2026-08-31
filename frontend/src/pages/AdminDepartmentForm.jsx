@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import AdminLayout from './AdminLayout';
 import AdminAlert from '../components/AdminAlert';
+import AdminTabs from '../components/AdminTabs';
 import ImageUpload from '../components/ImageUpload';
 import PdfUpload from '../components/PdfUpload';
 import './Admin.css';
@@ -52,6 +53,7 @@ function AdminDepartmentForm() {
   const [loading, setLoading] = useState(isEdit);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState(null);
+  const [activeTab, setActiveTab] = useState('basic');
 
   useEffect(() => {
     if (isEdit) fetchDept();
@@ -334,9 +336,28 @@ function AdminDepartmentForm() {
           </div>
         </div>
 
+        {/* Sub-tabs */}
+        <AdminTabs
+          tabs={[
+            { key: 'basic', label: 'Basic Info' },
+            { key: 'vision', label: 'Vision & Mission' },
+            { key: 'hod', label: 'HOD' },
+            { key: 'faculty', label: 'Faculty' },
+            { key: 'infrastructure', label: 'Infrastructure' },
+            { key: 'curriculum', label: 'Curriculum' },
+            { key: 'obe', label: 'OBE' },
+            { key: 'notices', label: 'Notices' },
+            { key: 'events', label: 'Events' },
+            { key: 'timetable', label: 'Timetable' },
+          ]}
+          activeTab={activeTab}
+          onChange={setActiveTab}
+        />
+
         {/* Form */}
         <form className="admin-form" onSubmit={handleSubmit}>
           {/* Card 1: Basic Info */}
+          {activeTab === 'basic' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
               <div className="dept-form-card-icon">
@@ -391,6 +412,23 @@ function AdminDepartmentForm() {
                 <label>About</label>
                 <textarea name="about" value={form.about} onChange={handleChange} placeholder="About the department..." rows={4} />
               </div>
+            </div>
+          </div>
+          )}
+
+          {/* Vision & Mission */}
+          {activeTab === 'vision' && (
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </div>
+              <div>
+                <h3>Vision & Mission</h3>
+                <p>Department vision and mission statements</p>
+              </div>
+            </div>
+            <div className="dept-form-card-body">
               <div className="form-group">
                 <label>Vision</label>
                 <textarea name="vision" value={form.vision} onChange={handleChange} placeholder="Department vision..." rows={2} />
@@ -401,8 +439,10 @@ function AdminDepartmentForm() {
               </div>
             </div>
           </div>
+          )}
 
           {/* Card 2: HOD Details */}
+          {activeTab === 'hod' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
               <div className="dept-form-card-icon">
@@ -439,8 +479,10 @@ function AdminDepartmentForm() {
               </div>
             </div>
           </div>
+          )}
 
           {/* Card 3: Faculty Members */}
+          {activeTab === 'faculty' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
               <div className="dept-form-card-icon">
@@ -490,8 +532,10 @@ function AdminDepartmentForm() {
               )}
             </div>
           </div>
+          )}
 
           {/* Card 4: Infrastructure (Labs + Facilities) */}
+          {activeTab === 'infrastructure' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
               <div className="dept-form-card-icon">
@@ -526,8 +570,10 @@ function AdminDepartmentForm() {
               )}
             </div>
           </div>
+          )}
 
           {/* Card 6: Curriculum / Syllabus */}
+          {activeTab === 'curriculum' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
               <div className="dept-form-card-icon">
@@ -566,8 +612,10 @@ function AdminDepartmentForm() {
               <div ref={curriculumEndRef} />
             </div>
           </div>
+          )}
 
           {/* Card 5: Outcome Based Education */}
+          {activeTab === 'obe' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
               <div className="dept-form-card-icon">
@@ -606,8 +654,10 @@ function AdminDepartmentForm() {
               })}
             </div>
           </div>
+          )}
 
           {/* Card 7: Department Notices */}
+          {activeTab === 'notices' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
               <div className="dept-form-card-icon">
@@ -636,8 +686,10 @@ function AdminDepartmentForm() {
               )}
             </div>
           </div>
+          )}
 
           {/* Card 8: Department Events & Activities */}
+          {activeTab === 'events' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
               <div className="dept-form-card-icon">
@@ -686,8 +738,10 @@ function AdminDepartmentForm() {
               )}
             </div>
           </div>
+          )}
 
           {/* Card 9: Department Timetable */}
+          {activeTab === 'timetable' && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
               <div className="dept-form-card-icon">
@@ -730,6 +784,7 @@ function AdminDepartmentForm() {
               })}
             </div>
           </div>
+          )}
 
           {/* Submit */}
           <div className="dept-form-submit">
