@@ -1459,6 +1459,57 @@
   font-style: italic;
 }
 
+/* Department Card Base Styles (matching Departments.css) */
+.dept-card {
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.dept-img-wrap {
+  height: 200px;
+  overflow: hidden;
+}
+
+.dept-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dept-body {
+  padding: 20px;
+}
+
+.dept-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #243358;
+  margin: 0 0 10px;
+  font-family: 'Georgia', serif;
+  transition: color 0.3s ease;
+}
+
+.dept-desc {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.6;
+  margin: 0 0 14px;
+}
+
+.dept-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 16px;
+}
+
+.dept-meta span {
+  white-space: nowrap;
+}
+
 /* Department Basic Info Preview Card */
 .dept-preview-wrapper {
   max-width: 480px;
