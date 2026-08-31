@@ -78,6 +78,7 @@ function AboutCollege() {
       .finally(() => setLoading(false));
   }, []);
 
+  // Helper: render content paragraphs
   const renderContent = (text) => {
     if (!text) return null;
     return text.split('\n').filter(p => p.trim()).map((para, i) => (
@@ -85,6 +86,7 @@ function AboutCollege() {
     ));
   };
 
+  // Helper: render info rows
   const renderInfoRows = (rows) => {
     if (!rows || rows.length === 0) return null;
     return (
@@ -99,6 +101,7 @@ function AboutCollege() {
     );
   };
 
+  // Helper: render stats
   const renderStats = (stats) => {
     if (!stats || stats.length === 0) return null;
     return (
@@ -113,26 +116,21 @@ function AboutCollege() {
     );
   };
 
+  // Helper: render leadership message (for founder, chairman, secretary, principal)
   const renderLeadership = (role) => {
     const entry = management[role];
     const title = role.charAt(0).toUpperCase() + role.slice(1);
 
     if (!entry) {
-      return <p style={{ color: '#a0aec0', fontStyle: 'italic' }}>Details will be updated soon.</p>;
+      return <p style={{ color: '#888' }}>No details available yet.</p>;
     }
 
     return (
       <div className="officer-card">
         <div className="officer-left">
-          {entry.photoUrl ? (
+          {entry.photoUrl && (
             <div className="officer-photo">
               <img src={entry.photoUrl} alt={entry.name} />
-            </div>
-          ) : (
-            <div className="officer-photo-placeholder">
-              <span style={{ fontSize: '48px', fontWeight: 700, color: '#1e2d4d', fontFamily: 'Georgia, serif' }}>
-                {entry.name?.charAt(0) || '?'}
-              </span>
             </div>
           )}
           <h4 className="officer-name">{entry.name}</h4>
@@ -147,39 +145,12 @@ function AboutCollege() {
               <p key={i}>{para}</p>
             ))
           ) : (
-            <p style={{ color: '#a0aec0', fontStyle: 'italic' }}>Message will be updated soon.</p>
+            <p>No message available.</p>
           )}
         </div>
       </div>
     );
   };
-
-  const renderGBSection = (title, description, members, emptyMsg) => (
-    <>
-      <h2 className="content-heading">{title}</h2>
-      <div className="content-line"></div>
-      <p>{description}</p>
-      {members.length === 0 ? (
-        <p style={{ color: '#a0aec0', fontStyle: 'italic', marginTop: '20px' }}>{emptyMsg}</p>
-      ) : (
-        <div className="staff-cards-grid">
-          {members.map((member) => (
-            <div key={member._id} className="staff-card">
-              {member.photoUrl ? (
-                <img className="staff-card-photo" src={member.photoUrl} alt={member.name} />
-              ) : (
-                <div className="staff-card-photo-placeholder">
-                  <span>{member.name?.charAt(0) || '?'}</span>
-                </div>
-              )}
-              <h3 className="staff-card-name">{member.name}</h3>
-              <p className="staff-card-designation">{member.designation}</p>
-            </div>
-          ))}
-        </div>
-      )}
-    </>
-  );
 
   if (loading) {
     return (
@@ -251,6 +222,7 @@ function AboutCollege() {
             ))}
           </ul>
 
+          {/* Mobile top bar tabs */}
           <div className="about-mobile-tabs">
             {['society', 'institute', 'disclosure', 'vision', 'affiliation', 'policy'].includes(active) && (
               <>
@@ -273,7 +245,7 @@ function AboutCollege() {
 
             {['founder', 'chairman', 'secretary', 'principal', 'governing-body', 'local-governing-body'].includes(active) && (
               <>
-                <h4 className="about-mobile-group-heading">Leadership</h4>
+                <h4 className="about-mobile-group-heading">Management</h4>
                 <ul className="about-mobile-tabs-list">
                   {sidebarLinks.filter((l) => ['founder', 'chairman', 'secretary', 'principal', 'governing-body', 'local-governing-body'].includes(l.id)).map((link) => (
                     <li key={link.id}>
@@ -310,10 +282,12 @@ function AboutCollege() {
               {renderContent(getInstitute().content || STATIC_CONTENT.about.institute)}
               {renderStats(getInstitute().stats)}
 
+              {/* Leadership Photo Cards */}
               {Object.keys(management).length > 0 && (
                 <div className="leadership-section">
                   <h2 className="leadership-heading">Our Leadership</h2>
                   <div className="leadership-line"></div>
+                  {/* Row 1: 3 main leaders */}
                   <div className="leadership-grid leadership-grid-3">
                     {['founder', 'chairman', 'principal'].map((role) => {
                       const entry = management[role];
@@ -324,9 +298,7 @@ function AboutCollege() {
                             {entry.photoUrl ? (
                               <img className="leader-card-img" src={entry.photoUrl} alt={entry.name} />
                             ) : (
-                              <div className="leader-card-img-placeholder">
-                                {entry.name?.charAt(0) || '?'}
-                              </div>
+                              <div className="leader-card-img-placeholder">No Photo</div>
                             )}
                           </div>
                           <div className="leader-card-body">
@@ -338,6 +310,7 @@ function AboutCollege() {
                       );
                     })}
                   </div>
+                  {/* Row 2: Secretary + others centered */}
                   <div className="leadership-grid leadership-grid-4">
                     {['secretary'].map((role) => {
                       const entry = management[role];
@@ -348,9 +321,7 @@ function AboutCollege() {
                             {entry.photoUrl ? (
                               <img className="leader-card-img" src={entry.photoUrl} alt={entry.name} />
                             ) : (
-                              <div className="leader-card-img-placeholder">
-                                {entry.name?.charAt(0) || '?'}
-                              </div>
+                              <div className="leader-card-img-placeholder">No Photo</div>
                             )}
                           </div>
                           <div className="leader-card-body">
@@ -455,19 +426,78 @@ function AboutCollege() {
           )}
 
           {/* Governing Body */}
-          {active === 'governing-body' && renderGBSection(
-            'Governing Body',
-            'The Governing Body of Satara Polytechnic, Satara is responsible for the overall governance, policy-making, and strategic direction of the institute. The members bring diverse expertise and are committed to academic excellence and institutional growth.',
-            gbMembers,
-            'No governing body members added yet.'
+          {active === 'governing-body' && (
+            <>
+              <h2 className="content-heading">Governing Body</h2>
+              <div className="content-line"></div>
+              <p style={{ marginBottom: '24px', color: '#555', lineHeight: '1.7' }}>
+                The Governing Body of Satara Polytechnic, Satara is responsible for the overall
+                governance, policy-making, and strategic direction of the institute. The members
+                bring diverse expertise and are committed to academic excellence and institutional growth.
+              </p>
+
+              {gbMembers.length === 0 ? (
+                <p style={{ color: '#888' }}>No governing body members added yet.</p>
+              ) : (
+                <div className="staff-cards-grid">
+                  {gbMembers.map((member) => (
+                    <div key={member._id} className="staff-card">
+                      {member.photoUrl ? (
+                        <img
+                          className="staff-card-photo"
+                          src={member.photoUrl}
+                          alt={member.name}
+                        />
+                      ) : (
+                        <div className="staff-card-photo-placeholder">
+                          No Photo
+                        </div>
+                      )}
+                      <h3 className="staff-card-name">{member.name}</h3>
+                      <p className="staff-card-designation">{member.designation}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
           )}
 
           {/* Local Governing Body */}
-          {active === 'local-governing-body' && renderGBSection(
-            'Local Governing Body',
-            'The Local Governing Body of Satara Polytechnic, Satara provides local governance, community engagement, and support for the overall development of the institute. The members bring local expertise and are committed to strengthening the institute\'s connection with the community.',
-            lgbMembers,
-            'No local governing body members added yet.'
+          {active === 'local-governing-body' && (
+            <>
+              <h2 className="content-heading">Local Governing Body</h2>
+              <div className="content-line"></div>
+              <p style={{ marginBottom: '24px', color: '#555', lineHeight: '1.7' }}>
+                The Local Governing Body of Satara Polytechnic, Satara provides local governance,
+                community engagement, and support for the overall development of the institute.
+                The members bring local expertise and are committed to strengthening the institute's
+                connection with the community.
+              </p>
+
+              {lgbMembers.length === 0 ? (
+                <p style={{ color: '#888' }}>No local governing body members added yet.</p>
+              ) : (
+                <div className="staff-cards-grid">
+                  {lgbMembers.map((member) => (
+                    <div key={member._id} className="staff-card">
+                      {member.photoUrl ? (
+                        <img
+                          className="staff-card-photo"
+                          src={member.photoUrl}
+                          alt={member.name}
+                        />
+                      ) : (
+                        <div className="staff-card-photo-placeholder">
+                          No Photo
+                        </div>
+                      )}
+                      <h3 className="staff-card-name">{member.name}</h3>
+                      <p className="staff-card-designation">{member.designation}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </main>
       </div>
