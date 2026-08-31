@@ -104,25 +104,19 @@ function Navbar() {
       ],
     },
     {
+      label: 'STUDENT',
+      children: [
+        { label: 'Library', link: '/campus/library' },
+        { label: 'Bus Facility', link: '/campus/bus-facility' },
+        { label: 'Canteen', link: '/campus/canteen' },
+      ],
+    },
+    {
       label: 'CAMPUS',
-      type: 'multi-column',
-      columns: [
-        {
-          header: 'Facility',
-          items: [
-            { label: 'Library', link: '/campus/library' },
-            { label: 'Bus Facility', link: '/campus/bus-facility' },
-            { label: 'Canteen', link: '/campus/canteen' },
-          ],
-        },
-        {
-          header: 'Office',
-          items: [
-            { label: "Registrar's Desk", link: '/campus/registrar' },
-            { label: 'Office Staff', link: '/campus/office-staff' },
-            { label: 'Non Teaching Staff', link: '/campus/non-teaching-staff' },
-          ],
-        },
+      children: [
+        { label: "Registrar's Desk", link: '/campus/registrar' },
+        { label: 'Office Staff', link: '/campus/office-staff' },
+        { label: 'Non Teaching Staff', link: '/campus/non-teaching-staff' },
       ],
     },
     {
