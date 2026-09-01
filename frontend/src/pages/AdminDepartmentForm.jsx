@@ -29,7 +29,7 @@ const emptyForm = {
   peos: [],
   pos: [],
   psos: [],
-  cos: [],
+
   order: 0,
 };
 
@@ -78,7 +78,7 @@ function AdminDepartmentForm() {
           peos: dept.peos || [],
           pos: dept.pos || [],
           psos: dept.psos || [],
-          cos: dept.cos || [],
+
           order: dept.order || 0,
         });
       } else {
@@ -188,7 +188,7 @@ function AdminDepartmentForm() {
         peos: form.peos.filter((p) => p.title.trim() || p.description.trim()),
         pos: form.pos.filter((p) => p.title.trim() || p.description.trim()),
         psos: form.psos.filter((p) => p.title.trim() || p.description.trim()),
-        cos: form.cos.filter((p) => p.title.trim() || p.description.trim()),
+
         faculty: form.faculty.filter((f) => f.name.trim()),
         labs: form.labs.filter((l) => l.name.trim()),
         infrastructure: [],
@@ -565,12 +565,12 @@ function AdminDepartmentForm() {
               </div>
               <div>
                 <h3>Outcome Based Education</h3>
-                <p>PEOs, POs, PSOs, and COs</p>
+                <p>PEOs, POs, and PSOs</p>
               </div>
             </div>
             <div className="dept-form-card-body">
-              {['peos', 'pos', 'psos', 'cos'].map((field) => {
-                const labels = { peos: 'PEOs', pos: 'POs', psos: 'PSOs', cos: 'COs' };
+              {['peos', 'pos', 'psos'].map((field) => {
+                const labels = { peos: 'PEOs', pos: 'POs', psos: 'PSOs' };
                 return (
                   <div key={field} style={{ marginBottom: '24px' }}>
                     <h4 style={{ margin: '0 0 10px', fontFamily: "'Georgia', serif", fontSize: '16px', color: '#243358', borderBottom: '2px solid #c8963e', paddingBottom: '6px' }}>{labels[field]}</h4>

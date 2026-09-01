@@ -353,7 +353,7 @@ function DepartmentsPage() {
 
                 {/* Horizontal sub-tabs */}
                 <div className="obe-tabs">
-                  {['peos', 'pos', 'psos', 'cos'].map((tab) => (
+                  {['peos', 'pos', 'psos'].map((tab) => (
                     <button
                       key={tab}
                       className={`obe-tab ${obeTab === tab ? 'active' : ''}`}
@@ -362,7 +362,6 @@ function DepartmentsPage() {
                       {tab === 'peos' && 'PEOs'}
                       {tab === 'pos' && 'POs'}
                       {tab === 'psos' && 'PSOs'}
-                      {tab === 'cos' && 'COs'}
                     </button>
                   ))}
                 </div>
@@ -428,26 +427,7 @@ function DepartmentsPage() {
                       )}
                     </div>
                   )}
-                  {obeTab === 'cos' && (
-                    <div className="obe-sub-card">
-                      <h3 className="obe-sub-heading">Course Outcomes (COs)</h3>
-                      <p className="obe-desc">COs are specific measurable outcomes that students should demonstrate upon successful completion of a course.</p>
-                      {dept.cos && dept.cos.length > 0 ? (
-                        <ul className="obe-list">
-                          {dept.cos.map((co, i) => (
-                            <li key={i} className="obe-list-item">
-                              <div>
-                                {co.title && <strong>{co.title}</strong>}
-                                {co.description && <p>{co.description}</p>}
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p style={{ color: '#888', fontStyle: 'italic' }}>COs not added yet.</p>
-                      )}
-                    </div>
-                  )}
+
                 </div>
               </div>
             )}
