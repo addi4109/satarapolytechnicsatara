@@ -22,7 +22,7 @@ function WelcomeSection() {
             Patil (Ex. MLA), the foundation of our institute was laid in 1983
             under the aegis of Satara Education Society.
           </p>
-          <a href="/about" className="welcome-btn">Read More</a>
+          <a href="/about/institute" className="welcome-btn">Read More</a>
         </div>
       </div>
     </section>

@@ -47,6 +47,8 @@ function AdminDepartmentForm() {
   const [message, setMessage] = useState(null);
   const [activeTab, setActiveTab] = useState('basic');
   const [editingBasic, setEditingBasic] = useState(false);
+  const [obeEditing, setObEditing] = useState(false);
+  const [hodEditing, setHodEditing] = useState(false);
 
   useEffect(() => {
     if (isEdit) fetchDept();
@@ -243,7 +245,7 @@ function AdminDepartmentForm() {
             { key: 'obe', label: 'OBE' },
           ]}
           activeTab={activeTab}
-          onChange={(tab) => { setActiveTab(tab); if (tab === 'basic') setEditingBasic(false); }}
+          onChange={(tab) => { setActiveTab(tab); if (tab === 'basic') setEditingBasic(false); if (tab === 'obe') setObEditing(false); if (tab === 'hod') setHodEditing(false); }}
         />
 
         <form className="admin-form" onSubmit={handleSubmit}>
@@ -371,8 +373,8 @@ function AdminDepartmentForm() {
           </div>
           )}
 
-          {/* HOD Details */}
-          {activeTab === 'hod' && (
+          {/* HOD Details - Preview */}
+          {activeTab === 'hod' && !hodEditing && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
               <div className="dept-form-card-icon">
@@ -382,6 +384,59 @@ function AdminDepartmentForm() {
                 <h3>HOD Details</h3>
                 <p>Head of Department information</p>
               </div>
+            </div>
+            <div className="dept-form-card-body" style={{ cursor: 'pointer' }} onClick={() => setHodEditing(true)}>
+              <div className="officer-card" style={{ margin: 0 }}>
+                <div className="officer-left">
+                  {form.hodImage ? (
+                    <div className="officer-photo">
+                      <img src={form.hodImage} alt={form.hod} />
+                    </div>
+                  ) : (
+                    <div className="officer-photo officer-photo-placeholder">
+                      <span>{form.hod?.split(' ')?.pop()?.charAt(0) || '?'}</span>
+                    </div>
+                  )}
+                  <h4 className="officer-name">{form.hod || 'HOD Name'}</h4>
+                  <p className="officer-designation">Head of Department</p>
+                  {form.hodQual && (
+                    <p className="officer-qual">{form.hodQual}</p>
+                  )}
+                </div>
+                <div className="officer-msg">
+                  {form.hodMsg ? (
+                    form.hodMsg.split('\n').filter(p => p.trim()).map((para, i) => (
+                      <p key={i}>{para}</p>
+                    ))
+                  ) : (
+                    <p style={{ color: '#888', fontStyle: 'italic' }}>HOD message not added yet.</p>
+                  )}
+                </div>
+              </div>
+              <div style={{ textAlign: 'center', marginTop: '16px' }}>
+                <span style={{ fontSize: '13px', color: '#888' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '4px' }}><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  Click to edit HOD details
+                </span>
+              </div>
+            </div>
+          </div>
+          )}
+
+          {/* HOD Details - Edit */}
+          {activeTab === 'hod' && hodEditing && (
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <div>
+                <h3>HOD Details</h3>
+                <p>Head of Department information</p>
+              </div>
+              <button type="button" className="btn btn-secondary btn-sm dept-card-add-btn" onClick={() => setHodEditing(false)}>
+                ← Back to Preview
+              </button>
             </div>
             <div className="dept-form-card-body">
               <div className="form-row">
@@ -557,7 +612,7 @@ function AdminDepartmentForm() {
           )}
 
           {/* Outcome Based Education */}
-          {activeTab === 'obe' && (
+          {activeTab === 'obe' && !obeEditing && (
           <div className="dept-form-card">
             <div className="dept-form-card-header">
               <div className="dept-form-card-icon">
@@ -567,6 +622,72 @@ function AdminDepartmentForm() {
                 <h3>Outcome Based Education</h3>
                 <p>PEOs, POs, and PSOs</p>
               </div>
+            </div>
+            <div className="dept-form-card-body" style={{ cursor: 'pointer' }} onClick={() => setObEditing(true)}>
+              <div className="obe-main-card" style={{ margin: 0 }}>
+                <div className="obe-tabs">
+                  {['peos', 'pos', 'psos'].map((tab) => (
+                    <button key={tab} className="obe-tab active" style={{ pointerEvents: 'none' }}>
+                      {tab === 'peos' && 'PEOs'}
+                      {tab === 'pos' && 'POs'}
+                      {tab === 'psos' && 'PSOs'}
+                    </button>
+                  ))}
+                </div>
+                <div className="obe-content">
+                  {['peos', 'pos', 'psos'].map((field) => {
+                    const labels = { peos: 'Program Educational Objectives (PEOs)', pos: 'Program Outcomes (POs)', psos: 'Program Specific Outcomes (PSOs)' };
+                    const descs = {
+                      peos: 'PEOs are broad statements that describe the career and professional achievements that the program is preparing graduates to achieve.',
+                      pos: 'POs are measurable outcomes that students are expected to achieve by the time of graduation.',
+                      psos: 'PSOs are outcomes that differentiate the program from other programs and reflect the discipline-specific competencies.',
+                    };
+                    return (
+                      <div key={field} className="obe-sub-card" style={{ marginBottom: '16px' }}>
+                        <h3 className="obe-sub-heading">{labels[field]}</h3>
+                        <p className="obe-desc">{descs[field]}</p>
+                        {form[field] && form[field].length > 0 ? (
+                          <ul className="obe-list">
+                            {form[field].map((item, i) => (
+                              <li key={i} className="obe-list-item">
+                                <div>
+                                  {item.title && <strong>{item.title}</strong>}
+                                  {item.description && <p>{item.description}</p>}
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p style={{ color: '#888', fontStyle: 'italic' }}>{labels[field].replace(/\(.*\)/, '').trim()} not added yet.</p>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div style={{ textAlign: 'center', marginTop: '16px' }}>
+                <span style={{ fontSize: '13px', color: '#888' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '4px' }}><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  Click to edit OBE content
+                </span>
+              </div>
+            </div>
+          </div>
+          )}
+
+          {activeTab === 'obe' && obeEditing && (
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+              </div>
+              <div>
+                <h3>Outcome Based Education</h3>
+                <p>PEOs, POs, and PSOs</p>
+              </div>
+              <button type="button" className="btn btn-secondary btn-sm dept-card-add-btn" onClick={() => setObEditing(false)}>
+                ← Back to Preview
+              </button>
             </div>
             <div className="dept-form-card-body">
               {['peos', 'pos', 'psos'].map((field) => {
@@ -580,7 +701,6 @@ function AdminDepartmentForm() {
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                         {form[field].map((item, idx) => (
                           <div key={idx} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', padding: '10px', background: '#f8f9fb', borderRadius: '6px', border: '1px solid #e4e8ed' }}>
-                            <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: '40px', height: '28px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 700, borderRadius: '4px', flexShrink: 0 }}>{labels[field].slice(0, -1)} {idx + 1}</span>
                             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' }}>
                               <input type="text" placeholder="Title (optional)" value={item.title} onChange={(e) => updateObeItem(field, idx, 'title', e.target.value)} style={{ padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px' }} />
                               <textarea placeholder="Description" value={item.description} onChange={(e) => updateObeItem(field, idx, 'description', e.target.value)} rows={2} style={{ padding: '7px 10px', border: '1px solid #e4e8ed', borderRadius: '4px', fontSize: '13px', resize: 'vertical' }} />
