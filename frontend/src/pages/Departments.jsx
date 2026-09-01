@@ -191,7 +191,7 @@ function DepartmentsPage() {
                 )}
                 <p>{dept.about}</p>
                 <div className="overview-stats">
-                  {dept.slug !== 'general-science' && (
+                  {dept.slug !== 'general-science' && !dept.name?.toLowerCase().includes('general science') && (
                     <div className="stat-box">
                       <span className="stat-num">{dept.intake}</span>
                       <span className="stat-txt">Intake</span>
@@ -205,7 +205,7 @@ function DepartmentsPage() {
                     <span className="stat-num">{dept.labs?.length || 0}</span>
                     <span className="stat-txt">Labs</span>
                   </div>
-                  {dept.slug !== 'general-science' && (
+                  {dept.slug !== 'general-science' && !dept.name?.toLowerCase().includes('general science') && (
                     <div className="stat-box">
                       <span className="stat-num">3</span>
                       <span className="stat-txt">Years</span>

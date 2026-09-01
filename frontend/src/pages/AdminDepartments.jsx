@@ -87,8 +87,8 @@ function AdminDepartments() {
                 </div>
               )}
               <div style={{ display: 'flex', gap: '16px', marginTop: '12px', flexWrap: 'wrap' }}>
-                <span style={{ fontSize: '12px', color: '#666' }}>Intake: {selectedDept.intake}</span>
-                <span style={{ fontSize: '12px', color: '#666' }}>Faculty: {selectedDept.faculty?.length || 0}</span>
+                {selectedDept.slug !== 'general-science' && !selectedDept.name?.toLowerCase().includes('general science') && <span style={{ fontSize: '12px', color: '#666' }}>Intake: {selectedDept.intake}</span>}
+                <span style={{ fontSize: '12px', color: '#666' }}>Faculty: {(selectedDept.faculty?.length || 0) + 1}</span>
                 <span style={{ fontSize: '12px', color: '#666' }}>Infrastructure: {(selectedDept.labs?.length || 0) + (selectedDept.infrastructure?.length || 0)}</span>
               </div>
               <div style={{ marginTop: '12px' }}>
@@ -130,7 +130,7 @@ function AdminDepartments() {
                 )}
                 <div className="cells-admin-card-top">
                   <span className="cells-admin-card-count">
-                    Intake: {dept.intake} | Faculty: {dept.faculty?.length || 0}
+                    {dept.slug !== 'general-science' && !dept.name?.toLowerCase().includes('general science') ? `Intake: ${dept.intake} | ` : ''}Faculty: {(dept.faculty?.length || 0) + 1}
                   </span>
                 </div>
                 <h3 className="cells-admin-card-title">{dept.name}</h3>
