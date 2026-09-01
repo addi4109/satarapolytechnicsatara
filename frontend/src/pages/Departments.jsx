@@ -198,7 +198,7 @@ function DepartmentsPage() {
                     </div>
                   )}
                   <div className="stat-box">
-                    <span className="stat-num">{dept.faculty?.length || 0}</span>
+                    <span className="stat-num">{(dept.faculty?.length || 0) + 1}</span>
                     <span className="stat-txt">Faculty</span>
                   </div>
                   <div className="stat-box">
