@@ -62,7 +62,7 @@ const defaultSection = {
 
 
 function AdminAdmissions() {
-  const [activeTab, setActiveTab] = useState('courses');
+  const [activeTab, setActiveTab] = useState('overview');
   const [sections, setSections] = useState({});
   const [form, setForm] = useState({ ...defaultSection });
   const [loading, setLoading] = useState(true);
