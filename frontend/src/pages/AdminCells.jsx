@@ -6,7 +6,7 @@ import AdminLoading from '../components/AdminLoading';
 import './Admin.css';
 import './CellsPage.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 function AdminCells() {
   const [cells, setCells] = useState([]);

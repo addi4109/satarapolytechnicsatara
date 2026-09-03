@@ -6,7 +6,7 @@ import AdminStaffCard from '../components/AdminStaffCard';
 import AdminLoading from '../components/AdminLoading';
 import ImageUpload from '../components/ImageUpload';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 const ROLES = [
   { key: 'founder', label: 'Founder' },

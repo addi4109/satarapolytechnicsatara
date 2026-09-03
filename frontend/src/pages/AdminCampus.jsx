@@ -10,7 +10,7 @@ import './Admin.css';
 import './Academics.css';
 import './DepartmentsPage.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 const SECTIONS = [
   { key: 'library', label: 'Library' },

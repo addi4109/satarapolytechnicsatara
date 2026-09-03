@@ -4,7 +4,7 @@ import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Gallery.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 function MediaNews() {
   const [newsItems, setNewsItems] = useState([]);

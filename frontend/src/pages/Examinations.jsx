@@ -6,7 +6,7 @@ import SEO, { breadcrumbSchema } from '../components/SEO';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './Academics.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 const routeMap = {
   schedule: 'schedule',
@@ -14,6 +14,7 @@ const routeMap = {
   results: 'results',
   revaluation: 'revaluation',
   notices: 'notices',
+  rankholders: 'rankholders',
 };
 
 const sidebarLinks = [
@@ -22,6 +23,7 @@ const sidebarLinks = [
   { id: 'results', label: 'Results' },
   { id: 'revaluation', label: 'Revaluation' },
   { id: 'notices', label: 'Exam Notices' },
+  { id: 'rankholders', label: 'Rank Holders' },
 ];
 
 function Examinations() {
@@ -183,12 +185,12 @@ function Examinations() {
                             {item.pdfUrl ? (
                               <div className="exam-action-btns">
                                 <a
-                                  href={`/api/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
+                                  href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
                                   target="_blank"
                                   className="exam-btn exam-btn-view"
                                 >View</a>
                                 <a
-                                  href={`/api/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
+                                  href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
                                   download
                                   className="exam-btn exam-btn-download"
                                   title="Download"
@@ -433,12 +435,12 @@ function Examinations() {
                             {item.pdfUrl ? (
                               <div className="exam-action-btns">
                                 <a
-                                  href={`/api/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
+                                  href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
                                   target="_blank"
                                   className="exam-btn exam-btn-view"
                                 >View</a>
                                 <a
-                                  href={`/api/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
+                                  href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(item.pdfUrl)}`}
                                   download
                                   className="exam-btn exam-btn-download"
                                   title="Download"
@@ -457,6 +459,60 @@ function Examinations() {
                       ))}
                     </tbody>
                   </table>
+                </div>
+              )}
+            </>
+          )}
+
+          {/* Rank Holders */}
+          {active === 'rankholders' && (
+            <>
+              <h2 className="content-heading">Rank Holders</h2>
+              <div className="content-line"></div>
+              {renderContent(STATIC_CONTENT.examinations.rankholders)}
+
+              {/* Rank Holders Table */}
+              {getSection('rankholders').rankholders && getSection('rankholders').rankholders.length > 0 ? (
+                <div className="fee-table-wrap" style={{ marginTop: '24px' }}>
+                  <table className="fee-table">
+                    <thead>
+                      <tr>
+                        <th style={{ width: 50 }}>Sr. No.</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Semester</th>
+                        <th>Rank</th>
+                        <th>Marks</th>
+                        <th>Year</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {getSection('rankholders').rankholders.map((holder, i) => (
+                        <tr key={i}>
+                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                          <td className="fee-particular" style={{ fontWeight: 600 }}>{holder.name}</td>
+                          <td style={{ textAlign: 'center' }}>{holder.department}</td>
+                          <td style={{ textAlign: 'center' }}>{holder.semester}</td>
+                          <td style={{ textAlign: 'center' }}>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', background: 'linear-gradient(135deg, #c8963e, #e6b84d)', color: '#fff', borderRadius: '50%', fontSize: '12px', fontWeight: 700 }}>
+                              {holder.rank}
+                            </span>
+                          </td>
+                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{holder.marks}</td>
+                          <td style={{ textAlign: 'center' }}>{holder.year}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div style={{ marginTop: '32px', textAlign: 'center', padding: '48px 24px', background: '#f8f9fa', borderRadius: '10px', border: '1px dashed #d0d5dd' }}>
+                  <div style={{ fontSize: '48px', marginBottom: '16px' }}>🏆</div>
+                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', margin: '0 0 8px' }}>Rank Holders Will Be Updated Soon</h3>
+                  <p style={{ fontSize: '14px', color: '#888', margin: 0, lineHeight: '1.6' }}>
+                    Our top rank holders will be featured here once the results are declared.
+                    <br />Check back after the next examination cycle.
+                  </p>
                 </div>
               )}
             </>

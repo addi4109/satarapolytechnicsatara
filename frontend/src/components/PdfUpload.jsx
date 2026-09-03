@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
+import API_URL from '../lib/api';
 
 const BUCKET_NAME = 'notices';
 
@@ -125,7 +126,7 @@ function PdfUpload({ value, onChange, compact, label = 'Upload PDF' }) {
           <span style={{ fontSize: '20px' }}>{getFileIcon(value)}</span>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: '13px', fontWeight: 500, color: '#333' }}>{fileName || 'Uploaded file'}</div>
-            <a href={`/api/pdf-proxy?url=${encodeURIComponent(value)}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#243358', textDecoration: 'none' }}>View file →</a>
+            <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(value)}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#243358', textDecoration: 'none' }}>View file →</a>
           </div>
           <button
             type="button"

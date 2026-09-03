@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import './ImageSlider.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 function ImageSlider() {
   const [slides, setSlides] = useState([]);

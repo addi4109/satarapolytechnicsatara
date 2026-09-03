@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { SkeletonPage } from "../components/Skeleton";
+import API_URL from '../lib/api';
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
@@ -50,15 +51,15 @@ function Alumni() {
   }, [page]);
 
   useEffect(() => {
-    fetch('/api/entrepreneurs/public')
+    fetch(`${API_URL}/entrepreneurs/public`)
       .then((r) => r.json())
       .then((data) => setEntrepreneurs(data))
       .catch(() => {});
-    fetch('/api/alumni-association/public')
+    fetch(`${API_URL}/alumni-association/public`)
       .then((r) => r.json())
       .then((data) => setAssociationMembers(data))
       .catch(() => {});
-    fetch('/api/alumni-vision')
+    fetch(`${API_URL}/alumni-vision`)
       .then((r) => r.json())
       .then((data) => setAlumniVision(data))
       .catch(() => {});

@@ -6,7 +6,7 @@ import { db } from '../lib/firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import './Admin.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 function AdminDashboard() {
   const [stats, setStats] = useState({

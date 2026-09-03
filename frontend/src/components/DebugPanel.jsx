@@ -25,10 +25,10 @@ const integrations = [
     name: 'EmailJS',
     desc: 'Sends emails on admission enquiry',
     vars: [
-      { key: 'VITE_EMAILJS_SERVICE_ID', where: 'Vercel' },
-      { key: 'VITE_EMAILJS_COLLEGE_TEMPLATE_ID', where: 'Vercel' },
-      { key: 'VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID', where: 'Vercel' },
-      { key: 'VITE_EMAILJS_PUBLIC_KEY', where: 'Vercel' },
+      { key: 'VITE_EMAILJS_SERVICE_ID', where: 'Hostinger' },
+      { key: 'VITE_EMAILJS_COLLEGE_TEMPLATE_ID', where: 'Hostinger' },
+      { key: 'VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID', where: 'Hostinger' },
+      { key: 'VITE_EMAILJS_PUBLIC_KEY', where: 'Hostinger' },
     ],
     check: () => {
       const a = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -43,8 +43,8 @@ const integrations = [
     name: 'Cloudinary',
     desc: 'Handles image & video uploads',
     vars: [
-      { key: 'VITE_CLOUDINARY_CLOUD_NAME', where: 'Vercel' },
-      { key: 'VITE_CLOUDINARY_UPLOAD_PRESET', where: 'Vercel' },
+      { key: 'VITE_CLOUDINARY_CLOUD_NAME', where: 'Hostinger' },
+      { key: 'VITE_CLOUDINARY_UPLOAD_PRESET', where: 'Hostinger' },
     ],
     check: () => {
       const a = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
@@ -57,8 +57,8 @@ const integrations = [
     name: 'Supabase',
     desc: 'Stores PDFs for notices',
     vars: [
-      { key: 'VITE_SUPABASE_URL', where: 'Vercel' },
-      { key: 'VITE_SUPABASE_ANON_KEY', where: 'Vercel' },
+      { key: 'VITE_SUPABASE_URL', where: 'Hostinger' },
+      { key: 'VITE_SUPABASE_ANON_KEY', where: 'Hostinger' },
     ],
     check: () => {
       const a = import.meta.env.VITE_SUPABASE_URL;
@@ -71,10 +71,10 @@ const integrations = [
     name: 'MongoDB',
     desc: 'Main backend database',
     vars: [
-      { key: 'MONGO_URI', where: 'Render' },
-      { key: 'ADMIN_API_KEY', where: 'Render' },
-      { key: 'FRONTEND_URL', where: 'Render' },
-      { key: 'PORT', where: 'Render (default: 5000)' },
+      { key: 'MONGO_URI', where: 'Hostinger' },
+      { key: 'ADMIN_API_KEY', where: 'Hostinger' },
+      { key: 'FRONTEND_URL', where: 'Hostinger' },
+      { key: 'PORT', where: 'Hostinger (default: 5000)' },
     ],
     check: null,
   },
@@ -145,8 +145,8 @@ function DebugPanel({ isOpen, onClose }) {
         </div>
 
         <div className="debug-footer">
-          <span>Vercel</span>
-          <span>Render</span>
+          <span>Hostinger</span>
+          <span>Hostinger</span>
           <span>MongoDB Atlas</span>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { setAdminApiKey, getAdminApiKey } from '../lib/adminApi';
+import API_URL from '../lib/api';
 import './Admin.css';
 
 function AdminLogin() {
@@ -23,7 +24,7 @@ function AdminLogin() {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, apiKey: apiKey.trim() }),

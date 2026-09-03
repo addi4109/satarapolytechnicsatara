@@ -34,7 +34,7 @@ const sidebarLinks = [
   { id: 'apply', label: 'Apply Now' },
 ];
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 function Admissions() {
   const { page } = useParams();
@@ -880,10 +880,10 @@ function Admissions() {
                     <div style={{ marginTop: '24px', padding: '20px', background: '#f8f9fa', borderRadius: '10px', border: '1px solid #e4e8ed', textAlign: 'center' }}>
                       <p style={{ margin: '0 0 16px', fontSize: '15px', color: '#444', fontWeight: 600 }}>📄 Fee Structure</p>
                       <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                        <a href={`/api/pdf-proxy?url=${encodeURIComponent(feePdfUrl)}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 24px', background: '#243358', color: '#fff', fontSize: '14px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none' }}>
+                        <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(feePdfUrl)}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 24px', background: '#243358', color: '#fff', fontSize: '14px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none' }}>
                           View PDF
                         </a>
-                        <a href={`/api/pdf-proxy?url=${encodeURIComponent(feePdfUrl)}`} download style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 24px', background: '#fff', color: '#243358', fontSize: '14px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none', border: '1.5px solid #243358' }}>
+                        <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(feePdfUrl)}`} download style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 24px', background: '#fff', color: '#243358', fontSize: '14px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none', border: '1.5px solid #243358' }}>
                           Download PDF
                         </a>
                       </div>
@@ -998,14 +998,14 @@ function Admissions() {
               {getSection('brochure').pdfUrl ? (
                 <div className="brochure-btn-row">
                   <a
-                    href={`/api/pdf-proxy?url=${encodeURIComponent(getSection('brochure').pdfUrl)}`}
+                    href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(getSection('brochure').pdfUrl)}`}
                     target="_blank"
                     className="brochure-btn brochure-btn-view"
                   >
                     View Brochure
                   </a>
                   <a
-                    href={`/api/pdf-proxy?url=${encodeURIComponent(getSection('brochure').pdfUrl)}`}
+                    href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(getSection('brochure').pdfUrl)}`}
                     download
                     className="brochure-btn brochure-btn-download"
                   >

@@ -5,7 +5,7 @@ import AdminLayout from './AdminLayout';
 import AdminAlert from '../components/AdminAlert';
 import './Admin.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 function AdminAlumni() {
   const navigate = useNavigate();

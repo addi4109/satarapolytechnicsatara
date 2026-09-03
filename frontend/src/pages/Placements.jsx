@@ -6,7 +6,7 @@ import SEO, { breadcrumbSchema } from '../components/SEO';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './Placements.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 const routeMap = {
   about: 'about',
@@ -357,7 +357,7 @@ function Placements() {
                               {rec.pdfUrl ? (
                                 <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
                                   <a
-                                    href={`/api/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`}
+                                    href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '5px 14px', background: '#243358', color: '#fff', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}
@@ -365,7 +365,7 @@ function Placements() {
                                     View
                                   </a>
                                   <a
-                                    href={`/api/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`}
+                                    href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`}
                                     download
                                     style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '5px 14px', background: '#fff', color: '#243358', border: '1px solid #243358', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}
                                   >

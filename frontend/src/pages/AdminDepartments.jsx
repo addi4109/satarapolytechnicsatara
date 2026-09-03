@@ -5,7 +5,7 @@ import AdminAlert from '../components/AdminAlert';
 import AdminLoading from '../components/AdminLoading';
 import './Admin.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 function AdminDepartments() {
   const [departments, setDepartments] = useState([]);

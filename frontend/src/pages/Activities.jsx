@@ -6,7 +6,7 @@ import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Academics.css';
 import './Gallery.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 const routeMap = {
   sports: 'sports',

@@ -4,7 +4,7 @@ const ExaminationSchema = new mongoose.Schema({
   section: {
     type: String,
     required: true,
-    enum: ['schedule', 'rules', 'results', 'revaluation', 'notices'],
+    enum: ['schedule', 'rules', 'results', 'revaluation', 'notices', 'rankholders'],
     unique: true,
   },
   title: {
@@ -111,6 +111,19 @@ const ExaminationSchema = new mongoose.Schema({
       date: String,
       description: String,
       pdfUrl: String,
+    }],
+    default: [],
+  },
+  // For rankholders section
+  rankholders: {
+    type: [{
+      name: String,
+      department: String,
+      semester: String,
+      rank: String,
+      marks: String,
+      year: String,
+      photoUrl: String,
     }],
     default: [],
   },

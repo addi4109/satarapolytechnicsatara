@@ -7,7 +7,7 @@ import { STATIC_CONTENT } from '../data/staticContent';
 import './Academics.css';
 import './DepartmentsPage.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 const routeMap = {
   library: 'library',

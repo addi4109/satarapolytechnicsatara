@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './NoticeTicker.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 function NoticeTicker() {
   const [notices, setNotices] = useState([]);

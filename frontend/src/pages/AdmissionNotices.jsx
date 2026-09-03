@@ -4,7 +4,7 @@ import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Notices.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 function AdmissionNotices() {
   const [notices, setNotices] = useState([]);
@@ -84,14 +84,14 @@ function AdmissionNotices() {
                       <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
                         {(notice.pdfUrl || notice.imageUrl) && (
                           <a
-                            href={notice.pdfUrl ? `/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl}
+                            href={notice.pdfUrl ? `${API_URL}/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl}
                             target="_blank"
                             style={{ padding: '5px 14px', background: '#243358', color: '#fff', fontSize: '12px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
                           >View</a>
                         )}
                         {(notice.pdfUrl || notice.imageUrl) && (
                           <a
-                            href={notice.pdfUrl ? `/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl}
+                            href={notice.pdfUrl ? `${API_URL}/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl}
                             download
                             style={{ padding: '5px 14px', background: '#fff', color: '#243358', fontSize: '12px', fontWeight: 600, borderRadius: '4px', border: '1px solid #243358', textDecoration: 'none', cursor: 'pointer' }}
                           >Download</a>

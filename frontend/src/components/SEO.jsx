@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
 const SITE_NAME = 'Satara Polytechnic, Satara';
-const SITE_URL = 'https://sfrppolytechnic.ac.in';
+const SITE_URL = 'https://satarapolytechnicsatara.com';
 const DEFAULT_IMAGE = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10';
 
 function SEO({
@@ -60,7 +60,7 @@ export const collegeSchema = {
   '@type': 'EducationalOrganization',
   name: 'Satara Polytechnic, Satara',
   alternateName: 'Satara Polytechnic, Satara',
-  url: 'https://sfrppolytechnic.ac.in',
+  url: 'https://satarapolytechnicsatara.com',
   logo: DEFAULT_IMAGE,
   address: {
     '@type': 'PostalAddress',
@@ -87,37 +87,37 @@ export const courseSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Computer Engineering',
-      url: 'https://sfrppolytechnic.ac.in/departments/computer',
+      url: 'https://satarapolytechnicsatara.com/departments/computer',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Electronics & Telecommunication Engineering',
-      url: 'https://sfrppolytechnic.ac.in/departments/electronics-telecommunication',
+      url: 'https://satarapolytechnicsatara.com/departments/electronics-telecommunication',
     },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Mechanical Engineering',
-      url: 'https://sfrppolytechnic.ac.in/departments/mechanical',
+      url: 'https://satarapolytechnicsatara.com/departments/mechanical',
     },
     {
       '@type': 'ListItem',
       position: 4,
       name: 'Chemical Engineering',
-      url: 'https://sfrppolytechnic.ac.in/departments/chemical',
+      url: 'https://satarapolytechnicsatara.com/departments/chemical',
     },
     {
       '@type': 'ListItem',
       position: 5,
       name: 'Electrical Engineering',
-      url: 'https://sfrppolytechnic.ac.in/departments/electrical',
+      url: 'https://satarapolytechnicsatara.com/departments/electrical',
     },
     {
       '@type': 'ListItem',
       position: 6,
       name: 'Automobile Engineering',
-      url: 'https://sfrppolytechnic.ac.in/departments/automobile',
+      url: 'https://satarapolytechnicsatara.com/departments/automobile',
     },
   ],
 };

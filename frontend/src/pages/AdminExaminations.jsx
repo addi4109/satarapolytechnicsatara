@@ -7,7 +7,7 @@ import PdfUpload from '../components/PdfUpload';
 import './Academics.css';
 import './Admin.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 const cellInput = {
   width: '100%',
@@ -192,8 +192,8 @@ function AdminExaminations() {
                   <td style={{ textAlign: 'center' }}>
                     {s.pdfUrl ? (
                       <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
-                        <a href={`/api/pdf-proxy?url=${encodeURIComponent(s.pdfUrl)}`} target="_blank" style={{ padding: '4px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}>View</a>
-                        <a href={`/api/pdf-proxy?url=${encodeURIComponent(s.pdfUrl)}`} download style={{ padding: '4px 12px', background: '#7A263A', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}>Download</a>
+                        <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(s.pdfUrl)}`} target="_blank" style={{ padding: '4px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}>View</a>
+                        <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(s.pdfUrl)}`} download style={{ padding: '4px 12px', background: '#7A263A', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}>Download</a>
                       </div>
                     ) : <span style={{ color: '#ccc' }}>—</span>}
                   </td>
@@ -329,7 +329,7 @@ function AdminExaminations() {
                   <td style={{ textAlign: 'center' }}>{n.date}</td>
                   <td>{n.description}</td>
                   <td style={{ textAlign: 'center' }}>
-                    {n.pdfUrl ? <a href={`/api/pdf-proxy?url=${encodeURIComponent(n.pdfUrl)}`} target="_blank" style={{ padding: '4px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}>View</a> : <span style={{ color: '#ccc' }}>—</span>}
+                    {n.pdfUrl ? <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(n.pdfUrl)}`} target="_blank" style={{ padding: '4px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}>View</a> : <span style={{ color: '#ccc' }}>—</span>}
                   </td>
                 </tr>
               ))}

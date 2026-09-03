@@ -7,7 +7,7 @@ import ImageUpload from '../components/ImageUpload';
 import VideoUpload from '../components/VideoUpload';
 import './Admin.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 const emptyPhoto = { title: '', image: '', description: '', order: 0 };
 const emptyVideo = { title: '', videoUrl: '', thumbnail: '', description: '', order: 0 };

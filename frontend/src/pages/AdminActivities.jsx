@@ -9,7 +9,7 @@ import './Admin.css';
 import './Academics.css';
 import './Gallery.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 const SECTIONS = [
   { key: 'sports', label: 'Sports' },

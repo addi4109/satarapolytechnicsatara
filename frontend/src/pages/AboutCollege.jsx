@@ -38,7 +38,7 @@ const sidebarLinks = [
   { id: 'local-governing-body', label: 'Local Governing Body' },
 ];
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 function AboutCollege() {
   const { page } = useParams();

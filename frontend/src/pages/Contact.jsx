@@ -29,7 +29,7 @@ const sidebarLinks = [
   { id: 'feedback', label: 'Feedback' },
 ];
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 function Contact() {
   const { page } = useParams();

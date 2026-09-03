@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './Departments.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 function Departments() {
   const [departments, setDepartments] = useState([]);

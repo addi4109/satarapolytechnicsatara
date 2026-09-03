@@ -364,7 +364,7 @@ function ApplyNow() {
                 <polyline points="22,6 12,13 2,6"/>
               </svg>
             </span>
-            <span className="contact-text">info@sfrppolytechnic.ac.in</span>
+            <span className="contact-text">info@satarapolytechnicsatara.com</span>
           </div>
           <div className="contact-divider"></div>
           <div className="contact-item">

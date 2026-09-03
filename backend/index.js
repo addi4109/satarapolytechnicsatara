@@ -42,11 +42,15 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/sps';
-const FRONTEND_URL = process.env.FRONTEND_URL || 'https://satarapolytechnicsatara-5mm8.vercel.app';
+const FRONTEND_URL = process.env.FRONTEND_URL || 'https://satarapolytechnicsatara.com';
 
 // CORS — restrict to known origins
+const allowedOrigins = [FRONTEND_URL];
+if (process.env.NODE_ENV !== 'production') {
+  allowedOrigins.push('http://localhost:5173', 'http://localhost:3000');
+}
 app.use(cors({
-  origin: [FRONTEND_URL, 'http://localhost:5173', 'http://localhost:3000'],
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'x-admin-key'],
 }));

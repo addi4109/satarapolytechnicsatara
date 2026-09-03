@@ -6,7 +6,7 @@ import PdfUpload from '../components/PdfUpload';
 import ImageUpload from '../components/ImageUpload';
 import './Admin.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 const emptyNotice = { title: '', text: '', category: 'general', pdfUrl: '', imageUrl: '', active: true, order: 0 };
 
@@ -203,7 +203,7 @@ function AdminNotices() {
                 <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                   {(notice.pdfUrl || notice.imageUrl) && (
                     <a
-                      href={notice.pdfUrl ? `/api/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl}
+                      href={notice.pdfUrl ? `${API_URL}/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl}
                       target="_blank"
                       style={{ padding: '5px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}
                     >View</a>

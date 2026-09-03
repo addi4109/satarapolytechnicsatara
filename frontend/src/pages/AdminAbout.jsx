@@ -7,7 +7,7 @@ import ImageUpload from '../components/ImageUpload';
 import './Admin.css';
 import './AboutCollege.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 const SECTIONS = [
   { key: 'society', label: 'Satara Education Society' },

@@ -7,7 +7,7 @@ import ImageUpload from '../components/ImageUpload';
 import PdfUpload from '../components/PdfUpload';
 import './Admin.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 const emptyForm = {
   name: '',

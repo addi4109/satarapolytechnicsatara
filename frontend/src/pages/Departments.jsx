@@ -6,7 +6,7 @@ import SEO, { breadcrumbSchema } from '../components/SEO';
 import './DepartmentsPage.css';
 import './Gallery.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 const years = ['1st Year', '2nd Year', '3rd Year'];
 const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe'];
 

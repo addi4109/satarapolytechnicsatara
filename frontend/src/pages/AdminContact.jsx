@@ -5,7 +5,7 @@ import AdminTabs from '../components/AdminTabs';
 import AdminStaffCard from '../components/AdminStaffCard';
 import './Academics.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 const defaultOfficeRow = { designation: '', name: '', phone: '', email: '' };
 const defaultDeptRow = { name: '', hod: '', phone: '', email: '', address: '', description: '' };

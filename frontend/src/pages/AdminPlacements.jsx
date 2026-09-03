@@ -7,7 +7,7 @@ import ImageUpload from '../components/ImageUpload';
 import PdfUpload from '../components/PdfUpload';
 import './Academics.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 const SECTIONS = [
   { key: 'about', label: 'About Placement Cell' },
@@ -509,8 +509,8 @@ function AdminPlacements() {
                                 <td style={{ textAlign: 'center' }}>
                                   {rec.pdfUrl ? (
                                     <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
-                                      <a href={`/api/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`} target="_blank" style={{ padding: '5px 14px', background: '#243358', color: '#fff', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}>View</a>
-                                      <a href={`/api/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`} download style={{ padding: '5px 14px', background: '#fff', color: '#243358', border: '1px solid #243358', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}>Download</a>
+                                      <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`} target="_blank" style={{ padding: '5px 14px', background: '#243358', color: '#fff', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}>View</a>
+                                      <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`} download style={{ padding: '5px 14px', background: '#fff', color: '#243358', border: '1px solid #243358', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}>Download</a>
                                     </div>
                                   ) : <span style={{ color: '#ccc' }}>No PDF</span>}
                                 </td>

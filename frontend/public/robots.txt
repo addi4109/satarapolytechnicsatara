@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/*
 
-Sitemap: https://sfrppolytechnic.ac.in/sitemap.xml
+Sitemap: https://satarapolytechnicsatara.com/sitemap.xml

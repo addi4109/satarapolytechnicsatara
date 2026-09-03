@@ -5,7 +5,7 @@ import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './CellsPage.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 function CellDetail() {
   const { cellId } = useParams();

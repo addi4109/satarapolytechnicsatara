@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './Recruiters.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 function Recruiters() {
   const [recruiters, setRecruiters] = useState([]);
