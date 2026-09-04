@@ -196,6 +196,9 @@ function Navbar() {
 
   const toggleMobile = (index) => {
     setMobileExpanded(mobileExpanded === index ? null : index);
+    // Clear hover state so a synthesized mouseenter on touch
+    // doesn't keep the dropdown open after tapping to close it.
+    setOpenMenu(null);
   };
 
   return (
