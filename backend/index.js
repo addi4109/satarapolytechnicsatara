@@ -73,6 +73,26 @@ app.use(cors({
 // Body parser with size limit
 app.use(express.json({ limit: '5mb' }));
 
+// Legacy root aliases — older frontend builds call the API without the /api
+// prefix (e.g. /slides instead of /api/slides). Rewrite those to /api/... so
+// already-deployed bundles keep working alongside fixed ones.
+const API_RESOURCE_PATHS = new Set([
+  'slides', 'notices', 'departments', 'cells', 'recruiters', 'photos', 'videos',
+  'news', 'about', 'contact', 'campus', 'activities', 'examinations',
+  'placements', 'placements-admin', 'admissions-admin', 'management',
+  'governing-body', 'local-governing-body', 'alumni', 'alumni-association',
+  'alumni-vision', 'entrepreneurs', 'settings', 'auth', 'pdf-proxy', 'rules',
+]);
+app.use((req, res, next) => {
+  if (!req.path.startsWith('/api/') && req.path !== '/api') {
+    const first = req.path.split('/')[1] || '';
+    if (API_RESOURCE_PATHS.has(first)) {
+      req.url = '/api' + req.url;
+    }
+  }
+  next();
+});
+
 // Global rate limiter: 200 requests per minute per IP
 app.use(rateLimit({ windowMs: 60000, maxRequests: 200 }));
 
