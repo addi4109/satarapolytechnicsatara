@@ -190,7 +190,7 @@ function DepartmentsPage() {
                   </div>
                 )}
                 <p>{dept.about}</p>
-                <div className="overview-stats" style={(dept.slug === 'general-science' || dept.name?.toLowerCase().includes('general science')) ? { justifyContent: 'center' } : {}}>
+                <div className="overview-stats" style={(dept.slug === 'general-science' || dept.name?.toLowerCase().includes('general science')) ? { display: 'flex', justifyContent: 'center', gap: '16px' } : {}}>
                   {dept.slug !== 'general-science' && !dept.name?.toLowerCase().includes('general science') && (
                     <div className="stat-box">
                       <span className="stat-num">{dept.intake}</span>
