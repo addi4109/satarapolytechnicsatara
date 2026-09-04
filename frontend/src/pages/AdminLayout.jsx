@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getAdminApiKey, clearAdminApiKey } from '../lib/adminApi';
+import API_URL from '../lib/api';
 import './Admin.css';
 
-// Intercept fetch in admin context to auto-inject x-admin-key
+// Intercept fetch in admin context to auto-inject x-admin-key.
+// The API lives on a different origin than the site (Render vs Vercel), so
+// match against the configured API base instead of the current origin.
 const originalFetch = window.fetch;
 let adminFetchPatched = false;
 
@@ -13,8 +16,8 @@ function patchFetchForAdmin() {
   window.fetch = (url, opts = {}) => {
     const method = (opts.method || 'GET').toUpperCase();
     // Only inject admin key for requests to our own API (skip external services like Cloudinary)
-    const isExternal = typeof url === 'string' && !url.startsWith('/api') && !url.startsWith(window.location.origin);
-    if (method !== 'GET' && method !== 'HEAD' && !isExternal) {
+    const isApiRequest = typeof url === 'string' && (url.startsWith(API_URL) || url.startsWith('/api'));
+    if (method !== 'GET' && method !== 'HEAD' && isApiRequest) {
       opts.headers = { ...opts.headers, 'x-admin-key': getAdminApiKey() };
     }
     return originalFetch(url, opts);
