@@ -195,14 +195,12 @@ function AdminCells() {
                   </p>
                   <div className="cells-admin-card-actions">
                     <button className="btn btn-primary btn-sm" onClick={() => openCell(cell)}>Edit</button>
-                    {window.confirm && false ? null : (
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={() => handleDelete(cell._id)}
-                      >
-                        Delete
-                      </button>
-                    )}
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDelete(cell._id)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               ))}

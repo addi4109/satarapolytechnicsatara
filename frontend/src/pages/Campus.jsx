@@ -105,20 +105,6 @@ function Campus() {
     );
   };
 
-  const renderStats = (stats) => {
-    if (!stats || stats.length === 0) return null;
-    return (
-      <div className="overview-stats">
-        {stats.map((stat, i) => (
-          <div className="stat-box" key={i}>
-            <span className="stat-num">{stat.num}</span>
-            <span className="stat-txt">{stat.label}</span>
-          </div>
-        ))}
-      </div>
-    );
-  };
-
   const getSection = (key) => sections[key] || {};
 
   if (loading) {

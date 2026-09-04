@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import AdminAlert from '../components/AdminAlert';
 import AdminTabs from '../components/AdminTabs';
-import AdminLoading from '../components/AdminLoading';
 import ImageUpload from '../components/ImageUpload';
 
 import './Admin.css';
@@ -40,8 +39,8 @@ function AdminActivities() {
   const [view, setView] = useState('preview');
 
   // Inline editing state
-  const [editingStatIdx, setEditingStatIdx] = useState(null);
-  const [editingInfoIdx, setEditingInfoIdx] = useState(null);
+  const [, setEditingStatIdx] = useState(null);
+  const [, setEditingInfoIdx] = useState(null);
   const [editingSubIdx, setEditingSubIdx] = useState(null);
   const [editingSubImgIdx, setEditingSubImgIdx] = useState(null);
   const [newSubImage, setNewSubImage] = useState('');

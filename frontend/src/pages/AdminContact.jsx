@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import AdminAlert from '../components/AdminAlert';
 import AdminTabs from '../components/AdminTabs';
-import AdminStaffCard from '../components/AdminStaffCard';
 import './Academics.css';
 
 import API_URL from '../lib/api';
@@ -14,7 +13,7 @@ function AdminContact() {
   const [activeTab, setActiveTab] = useState('general');
 
 
-  const [sections, setSections] = useState({});
+  const [, setSections] = useState({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState(null);
@@ -28,7 +27,6 @@ function AdminContact() {
 
   // Office contacts
   const [officeContacts, setOfficeContacts] = useState([]);
-  const [editingOfficeIdx, setEditingOfficeIdx] = useState(null);
 
   // Department details
   const [departmentDetails, setDepartmentDetails] = useState([]);

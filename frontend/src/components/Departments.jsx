@@ -5,7 +5,7 @@ import API_URL from '../lib/api';
 
 function Departments() {
   const [departments, setDepartments] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${API_URL}/departments`)

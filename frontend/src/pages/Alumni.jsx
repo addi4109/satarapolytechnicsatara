@@ -28,7 +28,7 @@ const sidebarLinks = [
 function Alumni() {
   const { page } = useParams();
   const [active, setActive] = useState('about');
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const [entrepreneurs, setEntrepreneurs] = useState([]);
   const [associationMembers, setAssociationMembers] = useState([]);
   const [alumniVision, setAlumniVision] = useState(null);
