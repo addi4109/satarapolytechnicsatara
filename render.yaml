@@ -12,7 +12,7 @@ services:
       - key: MONGO_URI
         sync: false
       - key: FRONTEND_URL
-        value: https://satarapolytechnicsatara.com
+        value: https://satarapolytechnicsatara-5mm8.vercel.app,https://satarapolytechnicsatara.com
       - key: ADMIN_EMAIL
         sync: false
       - key: ADMIN_PASSWORD
