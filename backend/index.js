@@ -43,16 +43,29 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/sps';
 const FRONTEND_URLS = process.env.FRONTEND_URL
-  ? process.env.FRONTEND_URL.split(',').map((u) => u.trim())
-  : ['https://satarapolytechnicsatara.com'];
+  ? process.env.FRONTEND_URL.split(',').map((u) => u.trim()).filter(Boolean)
+  : ['https://satarapolytechnicsatara-5mm8.vercel.app', 'https://satarapolytechnicsatara.com'];
 
-// CORS — restrict to known origins
+// CORS — allow configured origins plus any Vercel deployment of this project.
+// Vercel gives the app a fresh URL per deployment/preview
+// (e.g. satarapolytechnicsatara-5mm8.vercel.app, …-git-<branch>-<hash>.vercel.app),
+// so a fixed list alone keeps breaking CORS after redeploys.
 const allowedOrigins = [...FRONTEND_URLS];
 if (process.env.NODE_ENV !== 'production') {
   allowedOrigins.push('http://localhost:5173', 'http://localhost:3000');
 }
+const isFrontendOrigin = (origin) =>
+  allowedOrigins.includes(origin) ||
+  /^https:\/\/satarapolytechnicsatara([a-z0-9-]*)\.vercel\.app$/.test(origin);
+
 app.use(cors({
-  origin: allowedOrigins,
+  origin(origin, callback) {
+    if (!origin) {
+      // Non-browser request (curl, health checks) — CORS is not needed.
+      return callback(null, false);
+    }
+    callback(null, isFrontendOrigin(origin));
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'x-admin-key'],
 }));
