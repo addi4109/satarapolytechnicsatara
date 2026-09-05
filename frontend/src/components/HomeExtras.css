@@ -276,23 +276,16 @@
   background: #f5f7fa;
 }
 
+/* Plain section on the home page - no card, no hover effect */
 .principal-card {
   max-width: 900px;
   margin: 0 auto;
-  background: #f5f7fa;
-  border: 1px solid #e4e8ed;
-  border-radius: 10px;
-  padding: 24px;
+  background: transparent;
+  border: none;
+  padding: 0;
   display: flex;
   gap: 24px;
   align-items: center;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.principal-card:hover {
-  background: #fff;
-  border-color: #c8963e;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 /* Photo + name column (matches About page officer card) */
@@ -308,7 +301,7 @@
   height: 240px;
   border-radius: 8px;
   overflow: hidden;
-  border: 3px solid #e4e8ed;
+  border: 3px solid #dfe4ec;
   margin: 0 auto 10px;
   object-fit: cover;
   display: block;
@@ -343,10 +336,10 @@
 .principal-body {
   flex: 1;
   min-width: 0;
-  background: #fff;
+  background: transparent;
   border-left: 3px solid #c8963e;
-  padding: 18px 22px;
-  border-radius: 0 8px 8px 0;
+  padding: 4px 0 4px 22px;
+  border-radius: 0;
 }
 
 .principal-text {
@@ -467,7 +460,7 @@
 
   .principal-card {
     flex-direction: column;
-    padding: 20px 16px;
+    padding: 0;
   }
 
   .principal-photo-wrap {
@@ -483,8 +476,8 @@
   .principal-body {
     border-left: none;
     border-top: 3px solid #c8963e;
-    border-radius: 0 0 8px 8px;
-    padding: 16px;
+    border-radius: 0;
+    padding: 16px 0 0;
   }
 
   .cta-title {
