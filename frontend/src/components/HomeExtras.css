@@ -285,14 +285,14 @@
 /* Photo + name column (matches About page officer card) */
 .principal-photo-wrap {
   flex: 0 0 auto;
-  width: 130px;
+  width: 200px;
   text-align: center;
 }
 
 .principal-photo,
 .principal-initial {
-  width: 130px;
-  height: 155px;
+  width: 200px;
+  height: 240px;
   border-radius: 8px;
   overflow: hidden;
   border: 3px solid #e4e8ed;
@@ -454,6 +454,16 @@
   .principal-card {
     flex-direction: column;
     padding: 20px 16px;
+  }
+
+  .principal-photo-wrap {
+    width: 160px;
+  }
+
+  .principal-photo,
+  .principal-initial {
+    width: 160px;
+    height: 190px;
   }
 
   .principal-body {

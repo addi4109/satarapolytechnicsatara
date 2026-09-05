@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './Navbar.css';
 
 import API_URL from '../lib/api';
@@ -186,12 +186,28 @@ function Navbar() {
     },
   ];
 
+  // Grace period before closing a dropdown so the pointer can cross the
+  // gap between tabs/panel without the menu rapidly closing and reopening.
+  const closeTimerRef = useRef(null);
+
+  useEffect(() => () => {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+  }, []);
+
   const handleMouseEnter = (index) => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
     setOpenMenu(index);
   };
 
   const handleMouseLeave = () => {
-    setOpenMenu(null);
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = setTimeout(() => {
+      setOpenMenu(null);
+      closeTimerRef.current = null;
+    }, 150);
   };
 
   const toggleMobile = (index) => {

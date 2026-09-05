@@ -231,6 +231,23 @@
   position: relative;
 }
 
+/* Invisible bridge over the gap between tab and its panel so the pointer
+   can travel from tab to menu without triggering mouseleave flicker */
+.nav-item.has-dropdown::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background: transparent;
+}
+
+.nav-item.has-dropdown:hover::after,
+.nav-item.active::after {
+  background: transparent; /* stays invisible, just catches the pointer */
+}
+
 .nav-link {
   display: flex;
   align-items: center;
