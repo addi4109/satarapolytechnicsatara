@@ -107,30 +107,33 @@ const WHY_US = [
 ];
 
 const FACILITIES = [
-  { icon: Icon.book, title: 'Library', text: 'Textbooks, reference books, journals and e-resources with a spacious reading hall.' },
-  { icon: Icon.flask, title: 'Laboratories', text: 'Branch-wise labs with modern equipment for practical, hands-on learning.' },
-  { icon: Icon.monitor, title: 'Computer Centre', text: 'Computing facilities with internet access for students and academic work.' },
-  { icon: Icon.wifi, title: 'Internet', text: 'Internet connectivity available across the campus for academic use.' },
-  { icon: Icon.bus, title: 'Bus Facility', text: 'Institute buses on major routes across Satara city and nearby villages.' },
-  { icon: Icon.cup, title: 'Canteen', text: 'Clean, hygienic canteen serving breakfast, meals and snacks at reasonable rates.' },
-  { icon: Icon.target, title: 'Sports Grounds', text: 'Well-maintained grounds with coaches for inter-collegiate and university sports.' },
-  { icon: Icon.globe, title: 'Industrial Visits', text: 'Regular visits to industries for first-hand exposure to processes and practices.' },
+  { icon: Icon.book, tone: 't1', title: 'Library', text: 'Textbooks, reference books, journals and e-resources with a spacious reading hall.' },
+  { icon: Icon.flask, tone: 't2', title: 'Laboratories', text: 'Branch-wise labs with modern equipment for practical, hands-on learning.' },
+  { icon: Icon.monitor, tone: 't5', title: 'Computer Centre', text: 'Computing facilities with internet access for students and academic work.' },
+  { icon: Icon.wifi, tone: 't6', title: 'Internet', text: 'Internet connectivity available across the campus for academic use.' },
+  { icon: Icon.bus, tone: 't3', title: 'Bus Facility', text: 'Institute buses on major routes across Satara city and nearby villages.' },
+  { icon: Icon.cup, tone: 't4', title: 'Canteen', text: 'Clean, hygienic canteen serving breakfast, meals and snacks at reasonable rates.' },
+  { icon: Icon.target, tone: 't2', title: 'Sports Grounds', text: 'Well-maintained grounds with coaches for inter-collegiate and university sports.' },
+  { icon: Icon.globe, tone: 't5', title: 'Industrial Visits', text: 'Regular visits to industries for first-hand exposure to processes and practices.' },
 ];
 
 const EVENTS = [
   {
     title: 'Annual Gathering',
     tag: 'Cultural',
+    tone: 'b1',
     text: 'Music, dance, drama and fine arts events organised through the year, including the annual social gathering and youth festival competitions.',
   },
   {
     title: 'Technical Events',
     tag: 'Technical',
+    tone: 'b2',
     text: 'Paper presentations, project exhibitions, coding contests, robo-races and workshops that sharpen innovation and problem-solving skills.',
   },
   {
     title: 'Sports Events',
     tag: 'Sports',
+    tone: 'b3',
     text: 'Annual sports events with qualified coaches and well-maintained grounds, with participation at inter-collegiate, university and state level.',
   },
 ];
@@ -210,7 +213,7 @@ function HomeExtras() {
           <div className="fac-grid">
             {FACILITIES.map((f) => (
               <div className="fac-card" key={f.title}>
-                <div className="fac-icon">{f.icon}</div>
+                <div className={`fac-icon ${f.tone}`}>{f.icon}</div>
                 <h3 className="fac-title">{f.title}</h3>
                 <p className="fac-text">{f.text}</p>
               </div>
@@ -226,7 +229,7 @@ function HomeExtras() {
           <div className="events-grid">
             {EVENTS.map((ev) => (
               <div className="event-card" key={ev.title}>
-                <div className="event-banner">
+                <div className={`event-banner ${ev.tone}`}>
                   <h3 className="event-title">{ev.title}</h3>
                   <span className="event-year">{ev.tag}</span>
                 </div>
