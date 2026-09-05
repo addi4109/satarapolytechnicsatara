@@ -286,7 +286,7 @@
   font-size: 9px;
   opacity: 0.7;
   margin-left: 3px;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.3s ease;
 }
 
 .nav-item.active .arrow {
@@ -307,18 +307,33 @@
   box-shadow: 0 8px 24px rgba(36, 51, 88, 0.18);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-8px) scale(0.97);
+  transform: translateY(-6px);
   transform-origin: top center;
-  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              visibility 0.25s;
+  transition: opacity 0.3s ease,
+              transform 0.3s ease,
+              visibility 0s linear 0.3s;
+  will-change: opacity, transform;
   z-index: 1100;
 }
 
 .dropdown-menu.show {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
+  transition: opacity 0.3s ease,
+              transform 0.3s ease;
+}
+
+/* Soft fade on the items so the panel doesn't "pop" */
+.dropdown-menu li,
+.dropdown-multi .dropdown-col {
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+.dropdown-menu:not(.show) li,
+.dropdown-multi:not(.show) .dropdown-col {
+  opacity: 0;
 }
 
 .dropdown-menu li a {
@@ -368,18 +383,21 @@
   box-shadow: 0 8px 24px rgba(36, 51, 88, 0.18);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-8px) scale(0.97);
+  transform: translateY(-6px);
   transform-origin: top center;
-  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              visibility 0.25s;
+  transition: opacity 0.3s ease,
+              transform 0.3s ease,
+              visibility 0s linear 0.3s;
+  will-change: opacity, transform;
   z-index: 1100;
 }
 
 .dropdown-multi.show {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
+  transition: opacity 0.3s ease,
+              transform 0.3s ease;
 }
 
 .dropdown-col {
@@ -561,13 +579,14 @@
     opacity: 1;
     visibility: visible;
     transform: none;
-    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: max-height 0.45s ease;
     padding: 0;
   }
 
   .dropdown-menu.show {
-    max-height: none;
-    overflow: visible;
+    /* generous ceiling so the accordion opens fully and smoothly */
+    max-height: 600px;
+    overflow-y: auto;
     transform: none;
     padding: 4px 0;
   }
@@ -595,12 +614,12 @@
     opacity: 1;
     visibility: visible;
     transform: none;
-    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: max-height 0.45s ease;
   }
 
   .dropdown-multi.show {
-    max-height: none;
-    overflow: visible;
+    max-height: 1000px;
+    overflow-y: auto;
   }
 
   .dropdown-col {

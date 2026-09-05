@@ -266,50 +266,49 @@
 .principal-card {
   max-width: 900px;
   margin: 0 auto;
-  background: #fff;
+  background: #f5f7fa;
   border: 1px solid #e4e8ed;
-  border-radius: 6px;
-  padding: 28px 30px;
+  border-radius: 10px;
+  padding: 24px;
   display: flex;
-  gap: 28px;
-  align-items: flex-start;
+  gap: 24px;
+  align-items: center;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+.principal-card:hover {
+  background: #fff;
+  border-color: #c8963e;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Photo + name column (matches About page officer card) */
 .principal-photo-wrap {
-  flex-shrink: 0;
-  width: 110px;
-  height: 110px;
-  border-radius: 6px;
-  overflow: hidden;
-  border: 1px solid #e4e8ed;
-  background: #eef2f8;
+  flex: 0 0 auto;
+  width: 130px;
+  text-align: center;
 }
 
-.principal-photo {
-  width: 100%;
-  height: 100%;
+.principal-photo,
+.principal-initial {
+  width: 130px;
+  height: 155px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 3px solid #e4e8ed;
+  margin: 0 auto 10px;
   object-fit: cover;
   display: block;
 }
 
 .principal-initial {
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Georgia', serif;
-  font-size: 40px;
+  font-size: 44px;
   color: #243358;
-  background: #eef2f8;
-}
-
-.principal-text {
-  font-size: 14px;
-  color: #444;
-  line-height: 1.8;
-  margin: 0 0 12px;
-  font-style: italic;
+  background: #f0f3f8;
 }
 
 .principal-name {
@@ -321,9 +320,31 @@
 }
 
 .principal-role {
-  font-size: 12.5px;
-  color: #888;
-  margin: 2px 0 0;
+  font-size: 12px;
+  color: #c8963e;
+  font-weight: 600;
+  margin: 3px 0 0;
+}
+
+/* Message column */
+.principal-body {
+  flex: 1;
+  min-width: 0;
+  background: #fff;
+  border-left: 3px solid #c8963e;
+  padding: 18px 22px;
+  border-radius: 0 8px 8px 0;
+}
+
+.principal-text {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.75;
+  margin: 0 0 12px;
+}
+
+.principal-text:last-of-type {
+  margin-bottom: 0;
 }
 
 /* ============================================================
@@ -432,7 +453,14 @@
 
   .principal-card {
     flex-direction: column;
-    padding: 24px 20px;
+    padding: 20px 16px;
+  }
+
+  .principal-body {
+    border-left: none;
+    border-top: 3px solid #c8963e;
+    border-radius: 0 0 8px 8px;
+    padding: 16px;
   }
 
   .cta-title {

@@ -1,4 +1,7 @@
+import { useEffect, useState } from 'react';
 import './HomeExtras.css';
+
+import API_URL from '../lib/api';
 
 /* ------------------------------------------------------------
    Small inline SVG icons (thin outline, single colour)
@@ -132,10 +135,13 @@ const EVENTS = [
   },
 ];
 
-const PRINCIPAL = {
-  name: 'Dr. K. R. Patil',
+// Fallback shown on the home page until the real principal entry is added
+// from Admin → Management. When present, live data replaces this entirely.
+const PRINCIPAL_FALLBACK = {
+  name: 'Principal',
   role: 'Principal, Satara Polytechnic, Satara',
   photo: '',
+  qualification: '',
   text: 'Our aim is simple — every student who joins Satara Polytechnic should leave as a confident, skilled and disciplined diploma engineer. Along with classroom teaching, we focus on practical training, punctuality and personal attention, so that our graduates are ready for both higher education and employment. I welcome students and parents to visit our campus and see this for themselves.',
 };
 
@@ -153,6 +159,18 @@ function SectionHead({ title, sub }) {
 }
 
 function HomeExtras() {
+  // Live principal entry from Admin → Management (same data as About page)
+  const [principal, setPrincipal] = useState(PRINCIPAL_FALLBACK);
+
+  useEffect(() => {
+    fetch(`${API_URL}/management/principal`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((entry) => {
+        if (entry && entry.name && !entry.error) setPrincipal(entry);
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <>
       {/* ===== 1. QUICK FACTS ===== */}
@@ -228,16 +246,26 @@ function HomeExtras() {
           <SectionHead title="Principal's Message" />
           <div className="principal-card">
             <div className="principal-photo-wrap">
-              {PRINCIPAL.photo ? (
-                <img className="principal-photo" src={PRINCIPAL.photo} alt={PRINCIPAL.name} />
+              {principal.photoUrl ? (
+                <img className="principal-photo" src={principal.photoUrl} alt={principal.name} />
               ) : (
-                <div className="principal-initial">{PRINCIPAL.name.replace('Dr. ', '').charAt(0)}</div>
+                <div className="principal-initial">{(principal.name || 'P').replace('Dr. ', '').charAt(0)}</div>
               )}
             </div>
-            <div>
-              <p className="principal-text">“{PRINCIPAL.text}”</p>
-              <p className="principal-name">{PRINCIPAL.name}</p>
-              <p className="principal-role">{PRINCIPAL.role}</p>
+            <div className="principal-body">
+              {(principal.message || principal.text)
+                ? String(principal.message || principal.text)
+                    .split('\n')
+                    .filter((p) => p.trim())
+                    .map((para, i) => (
+                      <p className="principal-text" key={i}>{para}</p>
+                    ))
+                : null}
+              <p className="principal-name">{principal.name}</p>
+              <p className="principal-role">
+                {principal.title || principal.role}
+                {principal.qualification ? ` · ${principal.qualification}` : ''}
+              </p>
             </div>
           </div>
         </div>
