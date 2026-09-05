@@ -12,13 +12,14 @@
 }
 
 .sidebar-heading {
-  background: #243358;
+  background: var(--sp-navy);
   color: #fff;
   font-size: 15px;
   font-weight: 700;
   padding: 12px 16px;
   margin: 0;
   border-radius: 4px 4px 0 0;
+  border-bottom: 3px solid var(--sp-gold);
 }
 
 .sidebar-list {

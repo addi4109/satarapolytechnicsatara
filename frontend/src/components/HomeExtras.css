@@ -1,9 +1,8 @@
 /* ============================================================
-   HOME PAGE — extra content sections (flat, in keeping with
-   the site's navy/gold, Georgia-heading style)
+   HOME PAGE — extra content sections. Colours come from the
+   official theme variables (theme.css); layout only lives here.
    ============================================================ */
 
-/* ---------- Shared section header ---------- */
 .hs-section {
   padding: 50px 20px;
 }
@@ -13,38 +12,12 @@
   margin: 0 auto;
 }
 
-.hs-heading {
-  text-align: center;
-  font-family: 'Georgia', serif;
-  font-size: 28px;
-  color: #243358;
-  font-weight: 700;
-  margin: 0;
-}
-
-.hs-line {
-  width: 50px;
-  height: 3px;
-  background: #c8963e;
-  margin: 12px auto 36px;
-  border-radius: 2px;
-}
-
-.hs-sub {
-  text-align: center;
-  font-size: 14px;
-  color: #555;
-  line-height: 1.7;
-  max-width: 700px;
-  margin: -22px auto 34px;
-}
-
 /* ============================================================
    1. QUICK FACTS (numbers row)
    ============================================================ */
 .stats-strip {
-  background: #243358;
-  border-top: 4px solid #c8963e;
+  background: var(--sp-navy);
+  border-top: 4px solid var(--sp-gold);
   padding: 34px 20px;
 }
 
@@ -86,7 +59,7 @@
    2. WHY CHOOSE US
    ============================================================ */
 .why-section {
-  background: #f7f4ec; /* warm cream to break the blue-grey rhythm */
+  background: var(--sp-cream);
 }
 
 .why-grid {
@@ -128,7 +101,7 @@
    3. FACILITIES
    ============================================================ */
 .fac-section {
-  background: #eef4f2; /* soft teal-grey tint */
+  background: var(--sp-teal-tint);
 }
 
 .fac-grid {
@@ -151,7 +124,7 @@
   box-shadow: 0 8px 20px rgba(36, 51, 88, 0.08);
 }
 
-/* Muted, distinct icon chip colours (tones already used across the site) */
+/* Muted, distinct icon chip colours (tones from the official theme) */
 .fac-icon {
   width: 44px;
   height: 44px;
@@ -163,12 +136,12 @@
   color: #fff;
 }
 
-.fac-icon.t1 { background: #243358; }  /* navy    */
-.fac-icon.t2 { background: #0f766e; }  /* teal    */
-.fac-icon.t3 { background: #7A263A; }  /* maroon  */
-.fac-icon.t4 { background: #b07b1e; }  /* gold    */
-.fac-icon.t5 { background: #4a7ab0; }  /* steel   */
-.fac-icon.t6 { background: #5b6b8c; }  /* slate   */
+.fac-icon.t1 { background: var(--sp-navy); }
+.fac-icon.t2 { background: var(--sp-teal); }
+.fac-icon.t3 { background: var(--sp-maroon); }
+.fac-icon.t4 { background: var(--sp-gold-dark); }
+.fac-icon.t5 { background: var(--sp-navy-light); }
+.fac-icon.t6 { background: #5b6b8c; }
 
 .fac-icon svg {
   width: 21px;
@@ -194,7 +167,7 @@
    4. EVENTS
    ============================================================ */
 .events-section {
-  background: #f7f4ec;
+  background: var(--sp-cream);
 }
 
 .events-grid {
@@ -226,9 +199,9 @@
   color: #fff;
 }
 
-.event-banner.b1 { background: #7A263A; }  /* maroon - cultural */
-.event-banner.b2 { background: #0f766e; }  /* teal   - technical */
-.event-banner.b3 { background: #b07b1e; }  /* gold   - sports */
+.event-banner.b1 { background: var(--sp-maroon); }
+.event-banner.b2 { background: var(--sp-teal); }
+.event-banner.b3 { background: var(--sp-gold-dark); }
 
 .event-title {
   font-family: 'Georgia', serif;
@@ -357,8 +330,8 @@
    6. ADMISSIONS CALL-OUT
    ============================================================ */
 .cta-banner {
-  background: #243358;
-  border-top: 4px solid #c8963e;
+  background: var(--sp-navy);
+  border-top: 4px solid var(--sp-gold);
   padding: 40px 20px;
 }
 

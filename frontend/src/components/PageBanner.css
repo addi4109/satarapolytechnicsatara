@@ -1,7 +1,7 @@
 .page-banner {
-  background: #243358;
-  padding: 28px 20px;
-  border-bottom: 3px solid #c8963e;
+  background: var(--sp-navy-deep);
+  padding: 30px 20px;
+  border-bottom: 3px solid var(--sp-gold);
 }
 
 .page-banner-inner {

@@ -1,0 +1,121 @@
+/*
+  THEME.CSS — Satara Polytechnic official theme
+  =============================================
+  Single source of truth for the colours and shared patterns used
+  across every page. Import once in main.jsx.
+
+  Palette
+  -------
+  --sp-navy        #243358  page sections, cards, headings
+  --sp-navy-deep   #1e2d4d  navbar, footer, banner chrome
+  --sp-gold        #c8963e  accent rules, links, buttons
+  --sp-gold-dark   #a5721c  gold text on light backgrounds
+  --sp-maroon      #7A263A  secondary accent (staff, cultural)
+  --sp-teal        #0f766e  secondary accent (technical, sports)
+  --sp-cream       #f7f4ec  warm section background
+  --sp-teal-tint   #eef4f2  cool section background
+  --sp-page        #f5f7fa  default page background
+  --sp-line        #e4e8ed  card and table borders
+  --sp-ink         #555     body text
+*/
+
+:root {
+  --sp-navy: #243358;
+  --sp-navy-deep: #1e2d4d;
+  --sp-navy-light: #4a7ab0;
+  --sp-gold: #c8963e;
+  --sp-gold-dark: #a5721c;
+  --sp-maroon: #7a263a;
+  --sp-teal: #0f766e;
+  --sp-cream: #f7f4ec;
+  --sp-teal-tint: #eef4f2;
+  --sp-page: #f5f7fa;
+  --sp-line: #e4e8ed;
+  --sp-ink: #555;
+  --sp-muted: #6b7a94;
+}
+
+/* ============================================================
+   Shared section header — used on the home page and any page
+   that lists content outside the sidebar layout.
+   ============================================================ */
+.section-heading {
+  text-align: center;
+  font-family: 'Georgia', serif;
+  font-size: 28px;
+  color: var(--sp-navy);
+  font-weight: 700;
+  margin: 0;
+}
+
+.section-heading-rule {
+  width: 50px;
+  height: 3px;
+  background: var(--sp-gold);
+  margin: 12px auto 32px;
+  border-radius: 2px;
+}
+
+.section-heading-sub {
+  text-align: center;
+  font-size: 14px;
+  color: var(--sp-ink);
+  line-height: 1.7;
+  max-width: 700px;
+  margin: -22px auto 32px;
+}
+
+/* ============================================================
+   Shared buttons — the two official button styles.
+   ============================================================ */
+.btn-primary {
+  display: inline-block;
+  padding: 10px 26px;
+  background: var(--sp-navy);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.btn-primary:hover {
+  background: var(--sp-gold);
+}
+
+.btn-outline {
+  display: inline-block;
+  padding: 10px 26px;
+  background: #fff;
+  color: var(--sp-navy);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--sp-navy);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.btn-outline:hover {
+  background: var(--sp-navy);
+  color: #fff;
+}
+
+/* ============================================================
+   Shared card — flat white card with the thin official border.
+   ============================================================ */
+.theme-card {
+  background: #fff;
+  border: 1px solid var(--sp-line);
+  border-radius: 6px;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.theme-card:hover {
+  border-color: var(--sp-gold);
+  box-shadow: 0 8px 20px rgba(36, 51, 88, 0.08);
+}

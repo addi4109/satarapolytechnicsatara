@@ -149,14 +149,15 @@ const PRINCIPAL_FALLBACK = {
 };
 
 /* ------------------------------------------------------------
-   Section header (kept consistent across the page)
+   Section header — uses the shared official theme classes so it
+   matches the headers on every other page.
 ------------------------------------------------------------ */
 function SectionHead({ title, sub }) {
   return (
     <>
-      <h2 className="hs-heading">{title}</h2>
-      <div className="hs-line"></div>
-      {sub ? <p className="hs-sub">{sub}</p> : null}
+      <h2 className="section-heading">{title}</h2>
+      <div className="section-heading-rule"></div>
+      {sub ? <p className="section-heading-sub">{sub}</p> : null}
     </>
   );
 }
