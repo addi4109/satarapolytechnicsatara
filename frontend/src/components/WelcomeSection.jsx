@@ -9,16 +9,9 @@ function WelcomeSection() {
             src="https://www.satarapolytechnicsatara.com/assets/std1-DtQ9UsRF.png"
             alt="Students studying together"
           />
-          <div className="welcome-badge">
-            <strong>40+</strong>
-            <span>Years of Excellence</span>
-          </div>
         </div>
         <div className="welcome-content">
-          <span className="welcome-eyebrow">About SPS</span>
-          <h2 className="welcome-heading">
-            The Cradle of <span className="accent">Achievers</span>
-          </h2>
+          <h2 className="welcome-heading">The Cradle of Achievers</h2>
           <div className="welcome-line"></div>
           <p className="welcome-text">
             In the early 1980s, establishing non-grant technical education in
@@ -29,15 +22,7 @@ function WelcomeSection() {
             Patil (Ex. MLA), the foundation of our institute was laid in 1983
             under the aegis of Satara Education Society.
           </p>
-          <ul className="welcome-points">
-            <li>AICTE Approved &amp; MSBTE Affiliated</li>
-            <li>6 Engineering Branches</li>
-            <li>Excellent Placement Record</li>
-            <li>Experienced &amp; Caring Faculty</li>
-          </ul>
-          <a href="/about/institute" className="welcome-btn">
-            Discover Our Story →
-          </a>
+          <a href="/about/institute" className="welcome-btn">Read More</a>
         </div>
       </div>
     </section>

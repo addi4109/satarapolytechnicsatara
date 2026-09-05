@@ -1,59 +1,20 @@
-/* ============================================================
-   GLOBAL STYLES — Modern & Premium Design System
-   Palette: Deep Navy #243358 · Gold #c8963e · Soft Blue #f5f7fa
-   ============================================================ */
-
-:root {
-  --navy: #243358;
-  --navy-dark: #1d2b50;
-  --navy-light: #4a7ab0;
-  --gold: #c8963e;
-  --gold-light: #e8c877;
-  --bg-soft: #f5f7fa;
-  --ink: #1d2b50;
-  --muted: #5d6b85;
-}
-
 body {
   margin: 0;
-  font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  background: var(--bg-soft);
+  background: #f5f7fa;
 }
 
 #root {
   min-height: 100vh;
-  overflow-x: hidden;
 }
 
-::selection {
-  background: rgba(200, 150, 62, 0.35);
-}
-
-/* ---------- Modern thin scrollbar ---------- */
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background: #eef1f6;
-}
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #243358, #4a7ab0);
-  border-radius: 8px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #1d2b50, #3a669b);
-}
-
-/* ---------- Keyframes ---------- */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-/* ============================================================
-   Public page sidebars: only on large screens (laptop/desktop)
-   ============================================================ */
+/* Public page sidebars: only on large screens (laptop/desktop) */
 @media (max-width: 1024px) {
   .about-sidebar {
     display: none !important;

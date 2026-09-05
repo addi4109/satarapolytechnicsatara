@@ -1,158 +1,95 @@
 .dept-section {
-  background: linear-gradient(180deg, #f5f7fa 0%, #eef2f8 100%);
-  padding: 72px 20px;
-  position: relative;
-  overflow: hidden;
-}
-
-.dept-section::before {
-  content: '';
-  position: absolute;
-  top: -160px;
-  right: -160px;
-  width: 420px;
-  height: 420px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(200, 150, 62, 0.08), transparent 70%);
-  pointer-events: none;
+  background: #fff;
+  padding: 50px 20px;
 }
 
 .dept-inner {
   max-width: 1200px;
   margin: 0 auto;
-  position: relative;
-}
-
-.dept-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: #b07b1e;
-  background: rgba(200, 150, 62, 0.1);
-  border: 1px solid rgba(200, 150, 62, 0.35);
-  padding: 6px 16px;
-  border-radius: 999px;
-  margin-bottom: 16px;
 }
 
 .dept-heading {
   text-align: center;
   font-family: 'Georgia', serif;
-  font-size: 34px;
-  color: #1d2b50;
+  font-size: 28px;
+  color: #243358;
   font-weight: 700;
   margin: 0;
 }
 
-.dept-heading .accent {
-  background: linear-gradient(100deg, #c8963e, #e8c877, #c8963e);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-size: 200% auto;
-  animation: deptShimmer 4s linear infinite;
-}
-
-@keyframes deptShimmer {
-  to { background-position: 200% center; }
-}
-
 .dept-line {
-  width: 60px;
-  height: 4px;
-  background: linear-gradient(90deg, #c8963e, #e8c877);
-  margin: 16px auto 40px;
-  border-radius: 3px;
+  width: 50px;
+  height: 3px;
+  background: #c8963e;
+  margin: 10px auto 36px;
+  border-radius: 2px;
 }
 
 .dept-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 26px;
+  gap: 24px;
 }
 
 .dept-card {
   background: #fff;
-  border: 1px solid #e8ecf3;
-  border-radius: 18px;
+  border: 1px solid #e4e8ed;
+  border-radius: 6px;
   overflow: hidden;
-  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .dept-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 24px 48px rgba(29, 43, 80, 0.16);
-  border-color: rgba(200, 150, 62, 0.5);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(36, 51, 88, 0.12);
+  border-color: #c8963e;
 }
 
 .dept-img-wrap {
   height: 200px;
   overflow: hidden;
-  position: relative;
-}
-
-.dept-img-wrap::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(29, 43, 80, 0.35), transparent 45%);
 }
 
 .dept-img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.dept-card:hover .dept-img-wrap img {
-  transform: scale(1.08);
 }
 
 .dept-body {
-  padding: 22px;
+  padding: 20px;
 }
 
 .dept-name {
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 700;
-  color: #1d2b50;
+  color: #243358;
   margin: 0 0 10px;
   font-family: 'Georgia', serif;
   transition: color 0.3s ease;
 }
 
 .dept-card:hover .dept-name {
-  color: #b07b1e;
+  color: #c8963e;
 }
 
 .dept-desc {
-  font-size: 13.5px;
-  color: #5d6b85;
-  line-height: 1.65;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.6;
   margin: 0 0 14px;
 }
 
 .dept-meta {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  gap: 16px;
   font-size: 12px;
-  margin-bottom: 18px;
+  color: #777;
+  margin-bottom: 16px;
 }
 
 .dept-meta span {
   white-space: nowrap;
-  background: #eef2f8;
-  color: #31447a;
-  font-weight: 600;
-  border: 1px solid #dfe6f0;
-  padding: 4px 12px;
-  border-radius: 999px;
 }
 
 .dept-btns {
@@ -163,36 +100,34 @@
 .dept-btn {
   flex: 1;
   text-align: center;
-  padding: 10px 0;
+  padding: 9px 0;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
-  border-radius: 9px;
-  transition: background 0.3s ease, color 0.3s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  border-radius: 4px;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
 }
 
 .dept-btn.primary {
-  background: linear-gradient(135deg, #243358, #31447a);
+  background: #243358;
   color: #fff;
-  box-shadow: 0 6px 16px rgba(36, 51, 88, 0.28);
 }
 
 .dept-btn.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(36, 51, 88, 0.4);
+  background: #4a7ab0;
+  transform: translateY(-1px);
 }
 
 .dept-btn.secondary {
   background: #fff;
   color: #243358;
-  border: 1px solid #c9d3e4;
+  border: 1px solid #243358;
 }
 
 .dept-btn.secondary:hover {
   background: #243358;
   color: #fff;
-  border-color: #243358;
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 900px) {
@@ -207,10 +142,6 @@
   }
 
   .dept-heading {
-    font-size: 25px;
-  }
-
-  .dept-section {
-    padding: 52px 16px;
+    font-size: 22px;
   }
 }

@@ -24,10 +24,7 @@ function Departments() {
   return (
     <section className="dept-section">
       <div className="dept-inner">
-        <span className="dept-eyebrow">Academics</span>
-        <h2 className="dept-heading">
-          Explore Our <span className="accent">Departments</span>
-        </h2>
+        <h2 className="dept-heading">Our Departments</h2>
         <div className="dept-line"></div>
 
         <div className="dept-grid">

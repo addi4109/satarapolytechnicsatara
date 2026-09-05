@@ -1,26 +1,24 @@
 .recruiters-section {
-  background:
-    radial-gradient(600px 260px at 100% 0%, rgba(200, 150, 62, 0.07), transparent 65%),
-    linear-gradient(180deg, #f5f7fa 0%, #eef2f8 100%);
-  padding: 64px 0 56px;
+  background: #f5f7fa;
+  padding: 40px 0 36px;
   overflow: hidden;
 }
 
 .recruiters-heading {
   text-align: center;
   font-family: 'Georgia', serif;
-  font-size: 30px;
-  color: #1d2b50;
+  font-size: 26px;
+  color: #243358;
   font-weight: 700;
   margin: 0;
 }
 
 .recruiters-line {
-  width: 60px;
-  height: 4px;
-  background: linear-gradient(90deg, #c8963e, #e8c877);
-  margin: 14px auto 36px;
-  border-radius: 3px;
+  width: 50px;
+  height: 3px;
+  background: #c8963e;
+  margin: 10px auto 30px;
+  border-radius: 2px;
 }
 
 .marquee-wrapper {
@@ -54,20 +52,12 @@
   width: 240px;
   height: 130px;
   background: #fff;
-  border: 1px solid #e8ecf3;
-  border-radius: 14px;
+  border: 1px solid #e4e8ed;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px 24px;
-  box-shadow: 0 6px 18px rgba(29, 43, 80, 0.06);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-.recruiter-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(200, 150, 62, 0.5);
-  box-shadow: 0 16px 34px rgba(29, 43, 80, 0.12);
 }
 
 .recruiter-logo {
