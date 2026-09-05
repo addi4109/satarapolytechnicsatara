@@ -11,9 +11,11 @@ import EnquiryPopup from './components/EnquiryPopup';
 const ImageSlider = lazy(() => import('./components/ImageSlider'));
 const NoticeTicker = lazy(() => import('./components/NoticeTicker'));
 const WelcomeSection = lazy(() => import('./components/WelcomeSection'));
+const HomeExtras = lazy(() => import('./components/HomeExtras'));
 const Departments = lazy(() => import('./components/Departments'));
 const Recruiters = lazy(() => import('./components/Recruiters'));
 const ContactMap = lazy(() => import('./components/ContactMap'));
+const FeedbackCarousel = lazy(() => import('./components/FeedbackCarousel'));
 const AboutCollege = lazy(() => import('./pages/AboutCollege'));
 const Academics = lazy(() => import('./pages/Academics'));
 const DepartmentsPage = lazy(() => import('./pages/Departments'));
@@ -89,7 +91,9 @@ function HomePage() {
       <ImageSlider />
       <NoticeTicker />
       <WelcomeSection />
+      <HomeExtras />
       <Departments />
+      <FeedbackCarousel />
       <Recruiters />
       <ContactMap />
     </Suspense>

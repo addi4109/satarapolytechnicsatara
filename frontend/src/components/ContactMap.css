@@ -1,6 +1,20 @@
 .contact-section {
   background: #fff;
-  padding: 50px 20px;
+  padding: 72px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-section::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  right: -120px;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(74, 122, 176, 0.09), transparent 70%);
+  pointer-events: none;
 }
 
 .contact-inner {
@@ -9,6 +23,7 @@
   display: flex;
   gap: 50px;
   align-items: stretch;
+  position: relative;
 }
 
 .contact-left {
@@ -58,11 +73,12 @@
 
 .contact-right {
   flex: 1;
-  min-height: 300px;
-  border-radius: 8px;
+  min-height: 320px;
+  border-radius: 18px;
   overflow: hidden;
-  border: 1px solid #e4e8ed;
+  border: 1px solid #e8ecf3;
   position: relative;
+  box-shadow: 0 20px 48px rgba(29, 43, 80, 0.14);
 }
 
 /* Map always fills the full box, no empty space below */

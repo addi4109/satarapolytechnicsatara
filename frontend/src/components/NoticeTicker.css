@@ -1,18 +1,19 @@
 .ticker-section {
-  background: #243358;
+  background: linear-gradient(90deg, #1d2b50, #243358 50%, #1d2b50);
   display: flex;
   align-items: center;
   overflow: hidden;
   padding: 0;
-  height: 38px;
+  height: 40px;
+  box-shadow: 0 4px 18px rgba(29, 43, 80, 0.25);
 }
 
 .ticker-label {
-  background: #b8860b;
+  background: linear-gradient(135deg, #c8963e, #e8c877);
   color: #fff;
   font-size: 13px;
   font-weight: 700;
-  padding: 0 16px;
+  padding: 0 18px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -21,6 +22,7 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   z-index: 2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .ticker-track {
