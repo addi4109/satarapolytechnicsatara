@@ -24,6 +24,7 @@ const SECTIONS = [
   { key: 'results', label: 'Results' },
   { key: 'revaluation', label: 'Revaluation' },
   { key: 'notices', label: 'Exam Notices' },
+  { key: 'rankholders', label: 'Rank Holders' },
 ];
 
 const defaultForm = {
@@ -39,6 +40,7 @@ const defaultForm = {
   revaluationPortalUrl: '',
   noticesData: [],
   resultPortalUrl: '',
+  rankholders: [],
   active: true,
 };
 
@@ -90,6 +92,7 @@ function AdminExaminations() {
         revaluationPortalUrl: existing.revaluationPortalUrl || '',
         noticesData: existing.noticesData || [],
         resultPortalUrl: existing.resultPortalUrl || '',
+        rankholders: existing.rankholders || [],
         active: existing.active !== false,
       });
     } else {
@@ -114,7 +117,7 @@ function AdminExaminations() {
     const existing = sections[activeTab];
     if (existing) {
       setForm({
-        title: existing.title || '', content: existing.content || '', schedules: existing.schedules || [], rules: existing.rules || [], ruleSubSections: existing.ruleSubSections || [], resultsData: existing.resultsData || [], revaluationSteps: existing.revaluationSteps || [],        revaluationFee: existing.revaluationFee || '', revaluationDeadline: existing.revaluationDeadline || '', revaluationPortalUrl: existing.revaluationPortalUrl || '', noticesData: existing.noticesData || [], resultPortalUrl: existing.resultPortalUrl || '', active: existing.active !== false,
+        title: existing.title || '', content: existing.content || '', schedules: existing.schedules || [], rules: existing.rules || [], ruleSubSections: existing.ruleSubSections || [], resultsData: existing.resultsData || [], revaluationSteps: existing.revaluationSteps || [],        revaluationFee: existing.revaluationFee || '', revaluationDeadline: existing.revaluationDeadline || '', revaluationPortalUrl: existing.revaluationPortalUrl || '', noticesData: existing.noticesData || [], resultPortalUrl: existing.resultPortalUrl || '', rankholders: existing.rankholders || [], active: existing.active !== false,
       });
     } else { setForm({ ...defaultForm }); }
     setView('preview'); resetInputs();
@@ -340,6 +343,33 @@ function AdminExaminations() {
     </div>
   );
 
+  const renderRankHoldersPreview = () => (
+    <div className="admission-preview-card">
+      <h2 className="content-heading">Rank Holders</h2>
+      <div className="content-line"></div>
+      {form.rankholders.length > 0 ? (
+        <div style={{ overflowX: 'auto' }}>
+          <table className="fee-table">
+            <thead><tr><th style={{ width: 50 }}>Sr.</th><th>Name</th><th>Department</th><th>Semester</th><th>Rank</th><th>Marks</th><th>Year</th></tr></thead>
+            <tbody>
+              {form.rankholders.map((h, i) => (
+                <tr key={i}>
+                  <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                  <td style={{ fontWeight: 500 }}>{h.name}</td>
+                  <td style={{ textAlign: 'center' }}>{h.department}</td>
+                  <td style={{ textAlign: 'center' }}>{h.semester}</td>
+                  <td style={{ textAlign: 'center', fontWeight: 700, color: '#c8963e' }}>{h.rank}</td>
+                  <td style={{ textAlign: 'center' }}>{h.marks}</td>
+                  <td style={{ textAlign: 'center' }}>{h.year}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : <p style={{ color: '#aaa', fontStyle: 'italic' }}>No rank holders added yet.</p>}
+    </div>
+  );
+
   const renderPreview = () => {
     switch (activeTab) {
       case 'schedule': return renderSchedulePreview();
@@ -347,6 +377,7 @@ function AdminExaminations() {
       case 'results': return renderResultsPreview();
       case 'revaluation': return renderRevaluationPreview();
       case 'notices': return renderNoticesPreview();
+      case 'rankholders': return renderRankHoldersPreview();
       default: return null;
     }
   };
@@ -533,6 +564,32 @@ function AdminExaminations() {
     </div>
   );
 
+  const renderRankHoldersEditor = () => (
+    <div className="admission-edit-form">
+      <h4>Rank Holders Table</h4>
+      <div className="fee-table-wrap">
+        <table className="fee-table" style={{ minWidth: '720px' }}>
+          <thead><tr><th style={{ width: 50 }}>Sr.</th><th style={{ textAlign: 'left' }}>Name</th><th style={{ textAlign: 'left' }}>Department</th><th style={{ width: 90 }}>Semester</th><th style={{ width: 70 }}>Rank</th><th style={{ width: 90 }}>Marks</th><th style={{ width: 90 }}>Year</th><th style={{ width: 50 }}></th></tr></thead>
+          <tbody>
+            {form.rankholders.map((h, i) => (
+              <tr key={i}>
+                <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                <td><input type="text" value={h.name} onChange={(e) => updateRow('rankholders', i, 'name', e.target.value)} placeholder="Student Name" style={cellInput} /></td>
+                <td><input type="text" value={h.department} onChange={(e) => updateRow('rankholders', i, 'department', e.target.value)} placeholder="Department" style={cellInput} /></td>
+                <td><input type="text" value={h.semester} onChange={(e) => updateRow('rankholders', i, 'semester', e.target.value)} placeholder="e.g. VI" style={cellInput} /></td>
+                <td><input type="text" value={h.rank} onChange={(e) => updateRow('rankholders', i, 'rank', e.target.value)} placeholder="e.g. 1" style={cellInput} /></td>
+                <td><input type="text" value={h.marks} onChange={(e) => updateRow('rankholders', i, 'marks', e.target.value)} placeholder="e.g. 92.50%" style={cellInput} /></td>
+                <td><input type="text" value={h.year} onChange={(e) => updateRow('rankholders', i, 'year', e.target.value)} placeholder="e.g. 2025-26" style={cellInput} /></td>
+                <td style={{ textAlign: 'center' }}><button className="member-remove-btn" onClick={() => removeRow('rankholders', i)}>×</button></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <button className="btn btn-success btn-sm" style={{ marginTop: '12px' }} onClick={() => addEmptyRow('rankholders', { name: '', department: '', semester: '', rank: '', marks: '', year: '' })}>+ Add Rank Holder</button>
+    </div>
+  );
+
   const renderEditor = () => {
     switch (activeTab) {
       case 'schedule': return renderScheduleEditor();
@@ -540,6 +597,7 @@ function AdminExaminations() {
       case 'results': return renderResultsEditor();
       case 'revaluation': return renderRevaluationEditor();
       case 'notices': return renderNoticesEditor();
+      case 'rankholders': return renderRankHoldersEditor();
       default: return null;
     }
   };

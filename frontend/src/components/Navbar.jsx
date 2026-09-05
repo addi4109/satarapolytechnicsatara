@@ -149,6 +149,7 @@ function Navbar() {
         { label: 'Results', link: '/examination/results' },
         { label: 'Revaluation', link: '/examination/revaluation' },
         { label: 'Exam Notices', link: '/examination/notices' },
+        { label: 'Rank Holders', link: '/examination/rankholders' },
       ],
     },
     {
