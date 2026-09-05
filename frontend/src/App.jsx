@@ -15,7 +15,6 @@ const HomeExtras = lazy(() => import('./components/HomeExtras'));
 const Departments = lazy(() => import('./components/Departments'));
 const Recruiters = lazy(() => import('./components/Recruiters'));
 const ContactMap = lazy(() => import('./components/ContactMap'));
-const FeedbackCarousel = lazy(() => import('./components/FeedbackCarousel'));
 const AboutCollege = lazy(() => import('./pages/AboutCollege'));
 const Academics = lazy(() => import('./pages/Academics'));
 const DepartmentsPage = lazy(() => import('./pages/Departments'));
@@ -93,7 +92,6 @@ function HomePage() {
       <WelcomeSection />
       <HomeExtras />
       <Departments />
-      <FeedbackCarousel />
       <Recruiters />
       <ContactMap />
     </Suspense>

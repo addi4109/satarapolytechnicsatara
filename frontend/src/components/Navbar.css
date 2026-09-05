@@ -7,12 +7,11 @@
 
 /* ===== top strip ===== */
 .top-strip {
-  background: #7A263A; /* deep maroon - distinct from the navy nav below */
-  color: #f3dfe4;
+  background: linear-gradient(135deg, #1a2a4a 0%, #2d4060 50%, #1a2a4a 100%);
+  color: #d4dbe6;
   font-size: 12px;
   padding: 8px 0;
   letter-spacing: 0.3px;
-  border-bottom: 2px solid #c8963e;
 }
 
 .top-strip-inner {
