@@ -102,8 +102,8 @@
 }.logo-text {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
+  align-items: center;
+  text-align: center;
   max-width: 620px;
 }
 
