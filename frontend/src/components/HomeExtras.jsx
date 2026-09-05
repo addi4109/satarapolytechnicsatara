@@ -117,27 +117,6 @@ const FACILITIES = [
   { icon: Icon.globe, tone: 't5', title: 'Industrial Visits', text: 'Regular visits to industries for first-hand exposure to processes and practices.' },
 ];
 
-const EVENTS = [
-  {
-    title: 'Annual Gathering',
-    tag: 'Cultural',
-    tone: 'b1',
-    text: 'Music, dance, drama and fine arts events organised through the year, including the annual social gathering and youth festival competitions.',
-  },
-  {
-    title: 'Technical Events',
-    tag: 'Technical',
-    tone: 'b2',
-    text: 'Paper presentations, project exhibitions, coding contests, robo-races and workshops that sharpen innovation and problem-solving skills.',
-  },
-  {
-    title: 'Sports Events',
-    tag: 'Sports',
-    tone: 'b3',
-    text: 'Annual sports events with qualified coaches and well-maintained grounds, with participation at inter-collegiate, university and state level.',
-  },
-];
-
 // Fallback shown on the home page until the real principal entry is added
 // from Admin → Management. When present, live data replaces this entirely.
 const PRINCIPAL_FALLBACK = {
@@ -223,28 +202,7 @@ function HomeExtras() {
         </div>
       </section>
 
-      {/* ===== 4. EVENTS ===== */}
-      <section className="hs-section events-section">
-        <div className="hs-inner">
-          <SectionHead title="Student Activities" sub="Activities organised for students throughout the academic year." />
-          <div className="events-grid">
-            {EVENTS.map((ev) => (
-              <div className="event-card" key={ev.title}>
-                <div className={`event-banner ${ev.tone}`}>
-                  <h3 className="event-title">{ev.title}</h3>
-                  <span className="event-year">{ev.tag}</span>
-                </div>
-                <div className="event-body">
-                  <p className="event-text">{ev.text}</p>
-                  <a className="event-link" href="/activities">View activities →</a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== 5. PRINCIPAL'S MESSAGE ===== */}
+      {/* ===== 4. PRINCIPAL'S MESSAGE ===== */}
       <section className="hs-section principal-section">
         <div className="hs-inner">
           <SectionHead title="Principal's Message" />
@@ -275,20 +233,6 @@ function HomeExtras() {
         </div>
       </section>
 
-      {/* ===== 6. ADMISSIONS CALL-OUT ===== */}
-      <section className="cta-banner">
-        <div className="cta-inner">
-          <h2 className="cta-title">Admissions Open 2025-26</h2>
-          <p className="cta-text">
-            Admission to all diploma programmes is conducted through the Central Admission Process (CAP) as per
-            Directorate of Technical Education (DTE), Maharashtra rules.
-          </p>
-          <div className="cta-actions">
-            <a className="cta-btn primary" href="/admissions/apply">Apply Now</a>
-            <a className="cta-btn ghost" href="/admissions/overview">Admission Details</a>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

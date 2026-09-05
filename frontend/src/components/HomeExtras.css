@@ -164,86 +164,7 @@
 }
 
 /* ============================================================
-   4. EVENTS
-   ============================================================ */
-.events-section {
-  background: var(--sp-cream);
-}
-
-.events-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.event-card {
-  background: #fff;
-  border: 1px solid #e4e8ed;
-  border-radius: 6px;
-  overflow: hidden;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.event-card:hover {
-  border-color: #c8963e;
-  box-shadow: 0 8px 20px rgba(36, 51, 88, 0.08);
-}
-
-/* Each activity gets its own solid banner colour */
-.event-banner {
-  height: 74px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 18px;
-  color: #fff;
-}
-
-.event-banner.b1 { background: var(--sp-maroon); }
-.event-banner.b2 { background: var(--sp-teal); }
-.event-banner.b3 { background: var(--sp-gold-dark); }
-
-.event-title {
-  font-family: 'Georgia', serif;
-  font-size: 17px;
-  font-weight: 700;
-  margin: 0;
-}
-
-.event-year {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: #e0b560;
-  white-space: nowrap;
-}
-
-.event-body {
-  padding: 16px 18px 18px;
-}
-
-.event-text {
-  font-size: 13px;
-  color: #555;
-  line-height: 1.65;
-  margin: 0 0 10px;
-}
-
-.event-link {
-  font-size: 13px;
-  font-weight: 600;
-  color: #243358;
-  text-decoration: none;
-}
-
-.event-link:hover {
-  color: #c8963e;
-  text-decoration: underline;
-}
-
-/* ============================================================
-   5. PRINCIPAL'S MESSAGE
+   4. PRINCIPAL'S MESSAGE
    ============================================================ */
 .principal-section {
   background: #f5f7fa;
@@ -327,78 +248,10 @@
 }
 
 /* ============================================================
-   6. ADMISSIONS CALL-OUT
-   ============================================================ */
-.cta-banner {
-  background: var(--sp-navy);
-  border-top: 4px solid var(--sp-gold);
-  padding: 40px 20px;
-}
-
-.cta-inner {
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.cta-title {
-  font-family: 'Georgia', serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 0 8px;
-}
-
-.cta-text {
-  font-size: 14px;
-  color: #c5d4e3;
-  line-height: 1.7;
-  margin: 0 auto 20px;
-  max-width: 620px;
-}
-
-.cta-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.cta-btn {
-  display: inline-block;
-  padding: 10px 26px;
-  font-size: 13px;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-.cta-btn.primary {
-  background: #c8963e;
-  color: #fff;
-}
-
-.cta-btn.primary:hover {
-  background: #b07b1e;
-}
-
-.cta-btn.ghost {
-  background: transparent;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.cta-btn.ghost:hover {
-  background: rgba(255, 255, 255, 0.12);
-}
-
-/* ============================================================
    Responsive
    ============================================================ */
 @media (max-width: 980px) {
-  .why-grid,
-  .events-grid {
+  .why-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -426,8 +279,7 @@
   }
 
   .why-grid,
-  .fac-grid,
-  .events-grid {
+  .fac-grid {
     grid-template-columns: 1fr;
   }
 
@@ -448,12 +300,8 @@
 
   .principal-body {
     border-left: none;
-    border-top: 3px solid #c8963e;
+    border-top: 3px solid var(--sp-gold);
     border-radius: 0;
     padding: 16px 0 0;
-  }
-
-  .cta-title {
-    font-size: 20px;
   }
 }
