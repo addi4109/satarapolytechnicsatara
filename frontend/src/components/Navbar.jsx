@@ -237,21 +237,17 @@ function Navbar() {
       <div className="main-header">
         <div className="main-header-inner">
           <div className="header-row">
-            <div className="header-left">
-              <div className="logo-circle">
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10"
-                  alt="College Logo"
-                  className="logo-img"
-                />
-              </div>
-              <div className="logo-text">
-                <p className="society-name">Satara Education Society's</p>
-                <h1 className="college-name">Satara Polytechnic, Satara</h1>
-                <p className="affiliation-line">Approved by AICTE Delhi, DTE Maharashtra State, Affiliated to MSBTE, Mumbai</p>
-              </div>
+            <div className="logo-circle">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10"
+                alt="College Logo"
+                className="logo-img"
+              />
             </div>
-            <div className="header-right">
+            <div className="logo-text">
+              <p className="society-name">Satara Education Society's</p>
+              <h1 className="college-name">Satara Polytechnic, Satara</h1>
+              <p className="affiliation-line">Approved by AICTE Delhi, DTE Maharashtra State, Affiliated to MSBTE, Mumbai</p>
               <p className="address-line">At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra</p>
               <p className="motto">"The courageous never stop until they achieve their goal"</p>
             </div>
