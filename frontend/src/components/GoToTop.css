@@ -19,9 +19,14 @@
   transition: opacity 0.3s, visibility 0.3s, background 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
-.go-to-top.visible {
+.go-to-top.show {
   opacity: 1;
   visibility: visible;
+  transform: translateY(0);
+}
+
+.go-to-top:not(.show) {
+  transform: translateY(12px);
 }
 
 .go-to-top svg {
