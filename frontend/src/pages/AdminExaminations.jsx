@@ -605,12 +605,17 @@ function AdminExaminations() {
                 <div className="rank-editor-img-area">
                   <ImageUpload
                     value={h.image || ''}
-                    onChange={(url) => updateRow('rankholders', i, 'image', url)}
+                    onChange={(url) => {
+                      updateRow('rankholders', i, 'image', url);
+                      // Force re-render of this card to show image immediately
+                      setForm((prev) => ({ ...prev }));
+                    }}
                     label="Upload Photo"
-                    circle
                   />
                   {h.image && (
-                    <img src={h.image} alt={h.name} className="rank-editor-card-img" />
+                    <div style={{ marginTop: '8px', textAlign: 'center' }}>
+                      <a href={h.image} target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#243358' }}>View on Cloudinary →</a>
+                    </div>
                   )}
                 </div>
                 <div className="rank-editor-card-fields">
