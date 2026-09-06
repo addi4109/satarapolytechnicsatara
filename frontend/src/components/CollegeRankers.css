@@ -1,88 +1,137 @@
 /* ===== Section ===== */
 .rankers-section {
-  padding: 50px 0 50px;
   background: #ffffff;
-  overflow: visible;
+  padding: 56px 0 60px;
+  position: relative;
+}
+
+/* subtle accent line at very top */
+.rankers-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #c8963e 20%, #c8963e 80%, transparent);
+}
+
+/* ===== Inner ===== */
+.rankers-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
 /* ===== Header ===== */
 .rankers-header {
   text-align: center;
-  max-width: 600px;
-  margin: 0 auto 40px;
-  padding: 0 20px;
+  margin-bottom: 48px;
+  position: relative;
+}
+
+.rankers-header::after {
+  content: '';
+  display: block;
+  width: 56px;
+  height: 2px;
+  background: #c8963e;
+  margin: 18px auto 0;
+  border-radius: 1px;
 }
 
 .rankers-badge {
   display: inline-block;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
   color: #243358;
-  background: rgba(106, 27, 154, 0.08);
-  padding: 5px 14px;
+  background: rgba(36, 51, 88, 0.07);
+  padding: 5px 16px;
   border-radius: 20px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(36, 51, 88, 0.08);
 }
 
 .rankers-heading {
   font-family: 'Georgia', serif;
-  font-size: 30px;
-  color: #243358;
-  margin: 0 0 10px;
+  font-size: 34px;
+  color: #1a2a4a;
+  margin: 0 0 12px;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
 }
 
 .rankers-subheading {
-  font-size: 14px;
-  color: #6b7280;
+  font-size: 15px;
+  color: #6b7a94;
   margin: 0;
-  line-height: 1.6;
+  line-height: 1.7;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 400;
 }
 
 /* ===== Grid ===== */
 .rankers-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  gap: 0;
   max-width: 1140px;
   margin: 0 auto;
-  padding: 0 24px;
+}
+
+/* ===== Connector line between cards ===== */
+.rankers-grid::before {
+  content: '';
+  position: absolute;
+  top: 48px;
+  left: calc(25% + 20px);
+  right: calc(25% + 20px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e0d6c4 15%, #e0d6c4 85%, transparent);
+  z-index: 0;
 }
 
 /* ===== Card ===== */
 .ranker-card {
+  position: relative;
+  z-index: 1;
   background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 28px 20px 24px;
+  border: 1px solid #eaeef3;
+  border-radius: 14px;
+  padding: 32px 22px 26px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  text-align: center;
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
 }
 
 .ranker-card:hover {
-  box-shadow: 0 12px 32px rgba(106, 27, 154, 0.10);
-  transform: translateY(-3px);
+  box-shadow: 0 14px 40px rgba(36, 51, 88, 0.09);
+  transform: translateY(-4px);
+  border-color: #d5dbe3;
 }
 
-/* ===== Circle Image with purple ring ===== */
+/* ===== Image ===== */
 .ranker-img-wrap {
   position: relative;
-  width: 110px;
-  height: 110px;
+  width: 108px;
+  height: 108px;
   border-radius: 50%;
   flex-shrink: 0;
   background: #f3f4f6;
+  margin-bottom: 18px;
 }
 
 .ranker-img-ring {
   position: absolute;
-  inset: -5px;
+  inset: -4px;
   border-radius: 50%;
-  border: 3px solid #243358;
+  border: 2.5px solid #243358;
   z-index: 0;
 }
 
@@ -106,8 +155,8 @@
   align-items: center;
   justify-content: center;
   background: #f3f4f6;
-  color: #cbd5e1;
-  font-size: 36px;
+  color: #b0bcc8;
+  font-size: 34px;
 }
 
 /* ===== Card Content ===== */
@@ -116,44 +165,57 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 0 8px 0;
   width: 100%;
+}
+
+.ranker-rank-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #243358;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  margin-bottom: 6px;
+  background: rgba(36, 51, 88, 0.05);
+  padding: 3px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(36, 51, 88, 0.06);
 }
 
 .ranker-name {
   font-family: 'Georgia', serif;
   font-size: 19px;
   font-weight: 700;
-  color: #243358;
-  margin: 14px 0 4px;
-  line-height: 1.2;
+  color: #1a2a4a;
+  margin: 0 0 3px;
+  line-height: 1.25;
   text-align: center;
 }
 
 .ranker-department {
-  font-size: 13px;
-  color: #6b7280;
+  font-size: 12.5px;
+  color: #6b7a94;
   font-weight: 500;
-  margin-bottom: 0;
+  margin: 0 0 0;
   text-align: center;
+  line-height: 1.4;
 }
 
-/* Divider line */
+/* divider */
 .ranker-divider {
-  width: 60px;
-  height: 2px;
-  background: #243358;
-  margin: 14px 0 16px;
+  width: 50px;
+  height: 1.5px;
+  background: #c8963e;
+  margin: 14px 0 15px;
   border-radius: 1px;
+  opacity: 0.7;
 }
 
-/* ===== Rank Emblem (star + laurel leaves + number) ===== */
+/* ===== Rank emblem ===== */
 .ranker-rank-box {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .rank-number {
@@ -162,102 +224,109 @@
   align-items: center;
   justify-content: center;
   font-family: 'Georgia', serif;
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 700;
   line-height: 1;
   color: #243358;
-  background: rgba(106, 27, 154, 0.06);
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  width: 64px;
-  height: 64px;
+  background: rgba(36, 51, 88, 0.04);
+  border: 1.5px solid rgba(36, 51, 88, 0.10);
 }
 
 .rank-number .star {
   position: absolute;
-  top: -4px;
+  top: -3px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 14px;
-  color: #243358;
+  font-size: 13px;
+  color: #c8963e;
 }
 
+.rank-number::before,
+.rank-number::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid #243358;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.rank-number::before {
+  left: -20px;
+}
+
+.rank-number::after {
+  right: -20px;
+}
+
+/* rank color variants — subtle, not flashy */
 .rank-number.gold {
-  color: #243358;
-  background: rgba(212, 160, 23, 0.08);
+  color: #a5721c;
+  border-color: rgba(200, 150, 62, 0.35);
+}
+.rank-number.gold .star {
+  color: #c8963e;
+}
+.rank-number.gold::before,
+.rank-number.gold::after {
+  border-color: #c8963e;
 }
 
 .rank-number.silver {
-  color: #243358;
-  background: rgba(192, 192, 192, 0.08);
+  color: #6b7a94;
+  border-color: rgba(192, 192, 192, 0.4);
+}
+.rank-number.silver .star {
+  color: #a0aab8;
+}
+.rank-number.silver::before,
+.rank-number.silver::after {
+  border-color: #a0aab8;
 }
 
 .rank-number.bronze {
-  color: #243358;
-  background: rgba(160, 82, 45, 0.08);
+  color: #8b5a2b;
+  border-color: rgba(139, 90, 43, 0.4);
+}
+.rank-number.bronze .star {
+  color: #a5721c;
+}
+.rank-number.bronze::before,
+.rank-number.bronze::after {
+  border-color: #a5721c;
 }
 
 .rank-number.default {
-  color: #243358;
-  background: rgba(107, 114, 128, 0.08);
+  color: #5a6a82;
+  border-color: rgba(90, 106, 130, 0.25);
+}
+.rank-number.default .star {
+  color: #8a98a8;
 }
 
-.rank-label {
-  font-size: 11px;
-  font-weight: 700;
-  color: #243358;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-top: 10px;
-}
-
-/* ===== Empty / Skeleton ===== */
+/* ===== Empty state ===== */
 .rankers-empty {
   grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 48px 20px;
+  padding: 60px 20px;
   color: #9ca3af;
+  text-align: center;
 }
 
-.ranker-card-skeleton {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 28px 20px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.ranker-img-wrap-skeleton {
-  position: relative;
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  background: #e5e7eb;
-  margin-bottom: 18px;
-}
-
-.ranker-img-wrap-skeleton::after {
-  content: '';
-  position: absolute;
-  inset: -5px;
-  border-radius: 50%;
-  border: 3px solid #d0d5dd;
-}
-
-.ranker-line-skeleton {
-  height: 14px;
-  width: 60%;
-  background: #e5e7eb;
-  border-radius: 6px;
-  margin-bottom: 10px;
-}
-
-.ranker-line-skeleton.short {
-  width: 40%;
+.rankers-empty-text {
+  font-family: 'Georgia', serif;
+  font-size: 16px;
+  color: #9ca3af;
+  margin: 0;
+  font-style: italic;
 }
 
 /* ===== Responsive ===== */
@@ -266,81 +335,80 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 28px;
   }
+
+  .rankers-grid::before {
+    display: none;
+  }
 }
 
 @media (max-width: 680px) {
   .rankers-section {
-    padding: 40px 0;
+    padding: 44px 0;
   }
 
   .rankers-heading {
-    font-size: 24px;
+    font-size: 26px;
+  }
+
+  .rankers-subheading {
+    font-size: 14px;
   }
 
   .rankers-grid {
     grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 0 16px;
+    gap: 22px;
+  }
+
+  .ranker-card {
+    padding: 26px 18px 22px;
   }
 
   .ranker-img-wrap {
-    width: 100px;
-    height: 100px;
+    width: 98px;
+    height: 98px;
   }
 
   .ranker-name {
-    font-size: 18px;
-  }
-
-  .rank-number {
-    width: 56px;
-    height: 56px;
-    font-size: 28px;
-  }
-
-  .rank-number::before,
-  .rank-number::after {
-    font-size: 11px;
-    left: -24px;
-  }
-
-  .rank-number::after {
-    right: -24px;
+    font-size: 17px;
   }
 }
 
 @media (max-width: 420px) {
+  .rankers-inner {
+    padding: 0 14px;
+  }
+
+  .rankers-heading {
+    font-size: 22px;
+  }
+
   .ranker-img-wrap {
-    width: 85px;
-    height: 85px;
+    width: 86px;
+    height: 86px;
   }
 
   .ranker-name {
-    font-size: 16px;
+    font-size: 15.5px;
   }
 
   .ranker-department {
     font-size: 12px;
   }
 
-  .ranker-divider {
-    width: 45px;
-    margin: 12px 0 14px;
-  }
-
   .rank-number {
-    width: 48px;
-    height: 48px;
-    font-size: 24px;
+    width: 52px;
+    height: 52px;
+    font-size: 25px;
   }
 
   .rank-number::before,
   .rank-number::after {
-    font-size: 10px;
-    left: -20px;
+    width: 12px;
+    height: 12px;
+    left: -18px;
   }
 
   .rank-number::after {
-    right: -20px;
+    right: -18px;
   }
 }

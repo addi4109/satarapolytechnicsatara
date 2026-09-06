@@ -234,7 +234,7 @@ function Navbar() {
         </div>
       </div>
 
-      {/* white header: circular logo + college name + affiliation + address + motto */}
+      {/* college identity strip */}
       <div className="main-header">
         <div className="main-header-inner">
           <div className="header-row">
@@ -244,12 +244,13 @@ function Navbar() {
                 alt="College Logo"
                 className="logo-img"
               />
+              <div className="logo-ring"></div>
             </div>
-            <div className="logo-text">
+            <div className="brand-text">
               <p className="society-name">Satara Education Society's</p>
-              <h1 className="college-name">Satara Polytechnic, Satara</h1>
-              <p className="affiliation-line">Approved by AICTE Delhi, DTE Maharashtra State, Affiliated to MSBTE, Mumbai</p>
-              <p className="address-line">At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra</p>
+              <h1 className="college-name">Satara Polytechnic,<br />Satara</h1>
+              <p className="affiliation-line">Approved by AICTE Delhi &bull; DTE Maharashtra State &bull; Affiliated to MSBTE, Mumbai</p>
+              <p className="address-line">At Post: Songaon, Khindwadi, Near NH-4, Satara &mdash; 415002, Maharashtra</p>
               <p className="motto">"The courageous never stop until they achieve their goal"</p>
             </div>
           </div>

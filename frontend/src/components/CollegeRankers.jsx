@@ -56,73 +56,72 @@ function CollegeRankers() {
     if (r === 2) return 'silver';
     if (r === 3) return 'bronze';
     return 'default';
-  };
-
-  return (
+  };  return (
     <section className="rankers-section">
-      <div className="rankers-header">
-        <span className="rankers-badge">MERIT LIST</span>
-        <h2 className="rankers-heading">Our Toppers</h2>
-        <p className="rankers-subheading">
-          Celebrating academic excellence — students who brought pride to Satara Polytechnic
-        </p>
-      </div>
+      <div className="rankers-inner">
+        <div className="rankers-header">
+          <span className="rankers-badge">MERIT LIST</span>
+          <h2 className="rankers-heading">Our Toppers</h2>
+          <p className="rankers-subheading">
+            Celebrating academic excellence — students who brought pride to Satara Polytechnic
+          </p>
+        </div>
 
-      <div className="rankers-grid">
-        {loading ? (
-          Array.from({ length: 3 }).map((_, i) => (
-            <div className="ranker-card ranker-card-skeleton" key={i}>
-              <div className="ranker-img-wrap-skeleton" />
-              <div className="ranker-line-skeleton" />
-              <div className="ranker-line-skeleton short" />
+        <div className="rankers-grid">
+          {loading ? (
+            Array.from({ length: 3 }).map((_, i) => (
+              <div className="ranker-card ranker-card-skeleton" key={i}>
+                <div className="ranker-img-wrap-skeleton" />
+                <div className="ranker-line-skeleton" />
+                <div className="ranker-line-skeleton short" />
+              </div>
+            ))
+          ) : rankholders.length === 0 ? (
+            <div className="rankers-empty">
+              <p className="rankers-empty-text">No rank holders added yet.</p>
             </div>
-          ))
-        ) : rankholders.length === 0 ? (
-          <div className="rankers-empty">
-            <span style={{ fontSize: '48px' }}>🏆</span>
-            <p style={{ color: '#9ca3af', fontSize: '14px' }}>No rank holders added yet.</p>
-          </div>
-        ) : (
-          rankholders.map((holder) => (            <div className="ranker-card" key={holder.name + holder.rank}>
-              <div className="ranker-img-wrap">
-                <div className="ranker-img-ring"></div>
-                {holder.image ? (
-                  <img
-                    src={holder.image}
-                    alt={holder.name}
-                    className="ranker-img"
-                    crossOrigin="anonymous"
-                    decoding="async"
-                    onError={(e) => {
-                      e.target.replaceWith(
-                        <div className="ranker-img-placeholder">
-                          <span>👤</span>
-                        </div>
-                      );
-                    }}
-                  />
-                ) : (
-                  <div className="ranker-img-placeholder">
-                    <span>👤</span>
-                  </div>
-                )}
-              </div>                <div className="ranker-card-content">
-                  <h3 className="ranker-name">
-                    {holder.name}
-                  </h3>
+          ) : (
+            rankholders.map((holder) => (
+              <article className="ranker-card" key={holder.name + holder.rank}>
+                <div className="ranker-img-wrap">
+                  <div className="ranker-img-ring" />
+                  {holder.image ? (
+                    <img
+                      src={holder.image}
+                      alt={holder.name}
+                      className="ranker-img"
+                      crossOrigin="anonymous"
+                      decoding="async"
+                      onError={(e) => {
+                        e.target.replaceWith(
+                          <div className="ranker-img-placeholder">
+                            <span>👤</span>
+                          </div>
+                        );
+                      }}
+                    />
+                  ) : (
+                    <div className="ranker-img-placeholder">
+                      <span>👤</span>
+                    </div>
+                  )}
+                </div>
+                <div className="ranker-card-content">
+                  <span className="ranker-rank-label">Rank Holder</span>
+                  <h3 className="ranker-name">{holder.name}</h3>
                   <span className="ranker-department">{holder.department}</span>
-                  <div className="ranker-divider"></div>
+                  <div className="ranker-divider" />
                   <div className="ranker-rank-box">
                     <span className={`rank-number rank-number-${rankClass(holder.rank)}`}>
                       <span className="star">★</span>
                       {holder.rank}
                     </span>
-                    <span className="rank-label">RANK</span>
                   </div>
                 </div>
-            </div>
-          ))
-        )}
+              </article>
+            ))
+          )}
+        </div>
       </div>
     </section>
   );
