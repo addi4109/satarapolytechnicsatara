@@ -8,16 +8,19 @@ function CollegeRankers() {
   const [loading, setLoading] = useState(true);
   const fetchRef = useRef(0);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const autoScrollRef = useRef(null);
-
   const fetchData = useCallback(async () => {
     try {
       const res = await fetch(`${API_URL}/examinations`);
       const data = await res.json();
       const mapped = {};
       data.forEach((s) => { mapped[s.section] = s; });
-      setRankholders(mapped.rankholders?.rankholders || []);
+      // Accept both 'image' (admin) and 'photoUrl' (legacy model) fields
+      const raw = mapped.rankholders?.rankholders || [];
+      const normalised = raw.map((h) => ({
+        ...h,
+        image: h.image || h.photoUrl || '',
+      }));
+      setRankholders(normalised);
     } catch (err) {
       console.error('Failed to fetch rank holders:', err);
     } finally {
@@ -39,16 +42,6 @@ function CollegeRankers() {
     return () => window.removeEventListener('rankers-reload', handler);
   }, [fetchData]);
 
-  const getVisibleCards = () => {
-    const cards = [];
-    const count = Math.min(3, rankholders.length);
-    for (let i = 0; i < count; i++) {
-      const idx = (currentIndex + i) % rankholders.length;
-      cards.push({ ...rankholders[idx], _key: `${currentIndex}-${i}` });
-    }
-    return cards;
-  };
-
   const getMedalIcon = (rank) => {
     const r = parseInt(rank, 10);
     if (r === 1) return '🥇';
@@ -67,74 +60,56 @@ function CollegeRankers() {
         </p>
       </div>
 
-      <div className="rankers-carousel">
-        {rankholders.length > 1 && (
-          <button className="ranker-arrow ranker-arrow-l" onClick={goToPrev} aria-label="Previous">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
-          </button>
-        )}
-
-        <div className="rankers-track">
-          <div className="rankers-grid">
-            {getVisibleCards().map((holder) => (
-              <div className="ranker-card" key={holder._key}>
+      <div className="rankers-grid">
+        {loading ? (
+          Array.from({ length: 3 }).map((_, i) => (
+            <div className="ranker-card ranker-card-skeleton" key={i}>
+              <div className="ranker-img-wrap-skeleton" />
+              <div className="ranker-line-skeleton" />
+              <div className="ranker-line-skeleton short" />
+            </div>
+          ))
+        ) : rankholders.length === 0 ? (
+          <div className="rankers-empty">
+            <span style={{ fontSize: '48px' }}>🏆</span>
+            <p style={{ color: '#9ca3af', fontSize: '14px' }}>No rank holders added yet.</p>
+          </div>
+        ) : (
+          rankholders.map((holder) => (
+            <div className="ranker-card" key={holder.name + holder.rank}>
+              <div className="ranker-img-wrap">
                 {holder.image ? (
-                  <div className="ranker-img-wrap">
-                    <img 
-                      src={holder.image}
-                      alt={holder.name}
-                      className="ranker-img"
-                      crossOrigin="anonymous"
-                      decoding="async"
-                      onError={(e) => {
-                        console.log('Ranker image FAILED to load:', holder.image);
-                        e.target.parentElement.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f5f7fa;color:#bbb;font-size:32px;">🖼</div>';
-                      }}
-                      onLoad={() => console.log('Ranker image loaded OK')}
-                    />
-                  </div>
+                  <img
+                    src={holder.image}
+                    alt={holder.name}
+                    className="ranker-img"
+                    crossOrigin="anonymous"
+                    decoding="async"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.parentElement.classList.add('img-failed');
+                    }}
+                  />
                 ) : (
-                  <div className="ranker-img-wrap" style={{ background: '#f5f7fa' }}>
-                    <span style={{ fontSize: '48px', color: '#bbb' }}>🖼</span>
+                  <div className="ranker-img-placeholder">
+                    <span>👤</span>
                   </div>
                 )}
-                <div className="ranker-card-content">
-                  <h3 className="ranker-name">{holder.name}</h3>
-                  <span className="ranker-badge">{holder.department}</span>
-                  <div className="ranker-rank-row">
-                    <div className="ranker-rank-box">
-                      <span className="rank-number">{holder.rank}</span>
-                      <span className="rank-label">Rank</span>
-                    </div>
-                  </div>
-                  {holder.year && (
-                    <span className="ranker-year">{holder.year}</span>
-                  )}
+              </div>
+              <div className="ranker-card-content">
+                <h3 className="ranker-name">
+                  {holder.name}
+                </h3>
+                <span className="ranker-department">{holder.department}</span>
+                <div className="ranker-rank-box">
+                  <span className="rank-number">{getMedalIcon(holder.rank)} {holder.rank}</span>
+                  <span className="rank-label">Rank</span>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {rankholders.length > 1 && (
-          <button className="ranker-arrow ranker-arrow-r" onClick={goToNext} aria-label="Next">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
-          </button>
+            </div>
+          ))
         )}
       </div>
-
-      {rankholders.length > 1 && (
-        <div className="rankers-dots">
-          {Array.from({ length: maxIndex + 1 }).map((_, idx) => (
-            <button
-              key={idx}
-              className={`ranker-dot ${idx === currentIndex ? 'active' : ''}`}
-              onClick={() => { setCurrentIndex(idx); resetAutoScroll(); }}
-              aria-label={`Slide ${idx + 1}`}
-            />
-          ))}
-        </div>
-      )}
     </section>
   );
 }

@@ -1,15 +1,15 @@
 /* ===== Section ===== */
 .rankers-section {
   padding: 50px 0 44px;
-  background: #f4f6f9;
-  overflow: hidden;
+  background: #ffffff;
+  overflow: visible;
 }
 
 /* ===== Header ===== */
 .rankers-header {
   text-align: center;
   max-width: 600px;
-  margin: 0 auto 32px;
+  margin: 0 auto 36px;
   padding: 0 20px;
 }
 
@@ -41,86 +41,17 @@
   line-height: 1.6;
 }
 
-/* ===== Carousel ===== */
-.rankers-carousel {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+/* ===== Grid ===== */
+.rankers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
   max-width: 1140px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
-.rankers-track {
-  flex: 1;
-  overflow: hidden;
-  user-select: none;
-}
-
-.rankers-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  width: 100%;
-}
-
-/* ===== Arrow Buttons ===== */
-.ranker-arrow {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1.5px solid #d1d5db;
-  background: #fff;
-  color: #6b7280;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  flex-shrink: 0;
-}
-
-.ranker-arrow:hover {
-  border-color: #243358;
-  color: #243358;
-  box-shadow: 0 4px 12px rgba(36, 51, 88, 0.12);
-}
-
-.ranker-arrow:active {
-  transform: scale(0.93);
-}
-
-.ranker-arrow svg {
-  width: 18px;
-  height: 18px;
-}
-
-/* ===== Dots ===== */
-.rankers-dots {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 32px;
-}
-
-.ranker-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: none;
-  background: #d1d5db;
-  cursor: pointer;
-  transition: all 0.3s;
-  padding: 0;
-}
-
-.ranker-dot.active {
-  background: #243358;
-  width: 24px;
-  border-radius: 4px;
-}
-
-/* ===== Ranker Card ===== */
+/* ===== Card ===== */
 .ranker-card {
   background: #ffffff;
   border: 1px solid #e5e7eb;
@@ -128,20 +59,25 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: box-shadow 0.3s, transform 0.3s;
   align-items: center;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 .ranker-card:hover {
-  box-shadow: 0 12px 36px rgba(30, 45, 74, 0.08);
-  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(36, 51, 88, 0.10);
+  transform: translateY(-3px);
 }
 
+/* ===== Circle Image ===== */
 .ranker-img-wrap {
-  width: 100%;
-  height: 200px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
   overflow: hidden;
-  background: #f5f7fa;
+  margin-top: 12px;
+  margin-bottom: 14px;
+  background: #f3f4f6;
+  flex-shrink: 0;
 }
 
 .ranker-img {
@@ -151,13 +87,29 @@
   display: block;
 }
 
+.ranker-img-wrap.img-failed {
+  background: transparent;
+}
+
+.ranker-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  color: #cbd5e1;
+  font-size: 40px;
+}
+
+/* ===== Card Content ===== */
 .ranker-card-content {
-  padding: 16px 20px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
   text-align: center;
+  padding: 0 16px 20px;
+  gap: 6px;
 }
 
 .ranker-name {
@@ -169,60 +121,90 @@
   line-height: 1.3;
 }
 
-.ranker-badge {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 600;
-  color: #243358;
-  background: rgba(200, 150, 62, 0.1);
-  padding: 3px 10px;
-  border-radius: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.ranker-rank-row {
-  margin-top: 8px;
+.ranker-department {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+  margin-bottom: 4px;
 }
 
 .ranker-rank-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(135deg, #c8963e, #e6b84d);
+  background: #1e2d4a;
+  color: #ffffff;
   border-radius: 8px;
-  padding: 10px 20px;
+  padding: 10px 22px;
+  margin-top: 4px;
 }
 
 .rank-number {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 800;
-  color: #fff;
-  line-height: 1;
+  line-height: 1.2;
+  color: #ffffff;
 }
 
 .rank-label {
   font-size: 10px;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.75);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   margin-top: 2px;
 }
 
-.ranker-year {
-  font-size: 12px;
+/* ===== Empty / Skeleton ===== */
+.rankers-empty {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
   color: #9ca3af;
-  margin-top: 6px;
+}
+
+.ranker-card-skeleton {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16px 20px;
+}
+
+.ranker-img-wrap-skeleton {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  margin-top: 12px;
+  margin-bottom: 14px;
+}
+
+.ranker-line-skeleton {
+  height: 14px;
+  width: 80%;
+  background: #e5e7eb;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.ranker-line-skeleton.short {
+  width: 50%;
 }
 
 /* ===== Responsive ===== */
 @media (max-width: 1024px) {
   .rankers-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 680px) {
   .rankers-section {
     padding: 40px 0;
   }
@@ -231,41 +213,45 @@
     font-size: 24px;
   }
 
-  .rankers-carousel {
-    gap: 10px;
-    padding: 0 12px;
-  }
-
   .rankers-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 20px;
+    padding: 0 16px;
   }
 
-  .ranker-arrow {
-    width: 34px;
-    height: 34px;
-  }
-
-  .ranker-arrow svg {
-    width: 15px;
-    height: 15px;
-  }
-}
-
-@media (max-width: 480px) {
   .ranker-img-wrap {
-    height: 140px;
-  }
-
-  .ranker-card-content {
-    padding: 12px 16px 16px;
+    width: 100px;
+    height: 100px;
   }
 
   .ranker-name {
-    font-size: 16px;
+    font-size: 17px;
+  }
+
+  .ranker-rank-box {
+    padding: 8px 18px;
   }
 
   .rank-number {
     font-size: 18px;
+  }
+}
+
+@media (max-width: 420px) {
+  .ranker-img-wrap {
+    width: 80px;
+    height: 80px;
+  }
+
+  .ranker-card-content {
+    padding: 0 12px 16px;
+  }
+
+  .ranker-name {
+    font-size: 15px;
+  }
+
+  .ranker-department {
+    font-size: 12px;
   }
 }
