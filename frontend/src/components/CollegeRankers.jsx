@@ -78,9 +78,20 @@ function CollegeRankers() {
           <div className="rankers-grid">
             {getVisibleCards().map((holder) => (
               <div className="ranker-card" key={holder._key}>
-                {holder.image && (
+                {holder.image ? (
                   <div className="ranker-img-wrap">
-                    <img src={holder.image} alt={holder.name} className="ranker-img" />
+                    <img 
+                      src={holder.image}
+                      alt={holder.name}
+                      className="ranker-img"
+                      onError={(e) => {
+                        e.target.parentElement.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f5f7fa;color:#bbb;font-size:32px;">🖼</div>';
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div className="ranker-img-wrap" style={{ background: '#f5f7fa' }}>
+                    <span style={{ fontSize: '48px', color: '#bbb' }}>🖼</span>
                   </div>
                 )}
                 <div className="ranker-card-content">

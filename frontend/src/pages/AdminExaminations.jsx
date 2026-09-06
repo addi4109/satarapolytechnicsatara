@@ -618,12 +618,22 @@ function AdminExaminations() {
                     label="Upload Photo"
                   />
                   {h.image && (
-                    <img src={h.image} alt={h.name} style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '8px', marginTop: '8px', border: '1px solid #e4e8ed' }} />
+                    <img 
+                      src={h.image}
+                      alt={h.name}
+                      style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '8px', marginTop: '8px', border: '1px solid #e4e8ed' }}
+                      onError={(e) => { e.target.style.display = 'none'; }}
+                      onLoad={() => console.log('Ranker image loaded OK')}
+                    />
+                  )}
+                  {!h.image && (
+                    <div style={{ width: '100%', height: '120px', background: '#f5f7fa', borderRadius: '8px', border: '1px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '8px' }}>
+                      <span style={{ color: '#bbb', fontSize: '32px' }}>🖼</span>
+                    </div>
                   )}
                   <div style={{ marginTop: '6px', fontSize: '11px', color: '#888' }}>
                     {h.image ? `
-                      <span style={{ color: '#28a745' }}>✓ URL saved</span>
-                      <br />
+                      <span style={{ color: '#28a745' }}>✓ URL saved</span><br />
                       <span style={{ wordBreak: 'break-all', fontSize: '10px' }}>{h.image}</span>
                     ` : '<span style={{ color: #aaa }}>No image</span>'}
                   </div>
