@@ -149,11 +149,11 @@
 /* ===== Why Choose Us image ===== */
 .why-section {
   background: #f8f9fc;
-  padding: 40px 20px;
+  padding: 40px 20px 60px;
 }
 
 .why-inner {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
   text-align: center;
 }
@@ -170,15 +170,14 @@
   width: 50px;
   height: 3px;
   background: #c8963e;
-  margin: 0 auto 24px;
+  margin: 0 auto 30px;
   border-radius: 2px;
 }
 
 .why-image {
-  width: 600px;
-  max-width: 100%;
+  width: 100%;
   height: auto;
-  border-radius: 8px;
+  border-radius: 0;
   box-shadow: 0 4px 20px rgba(36, 51, 88, 0.10);
 }
 
