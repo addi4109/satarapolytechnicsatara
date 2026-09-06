@@ -4,7 +4,7 @@ import AdminAlert from '../components/AdminAlert';
 import AdminTabs from '../components/AdminTabs';
 import AdminLoading from '../components/AdminLoading';
 import PdfUpload from '../components/PdfUpload';
-import ImageUploadSupabase from '../components/ImageUploadSupabase';
+import ImageUpload from '../components/ImageUpload';
 import './Academics.css';
 import './Admin.css';
 
@@ -601,10 +601,11 @@ function AdminExaminations() {
               </div>
               <div className="rank-editor-card-body">
                 <div className="rank-editor-img-area">
-                  <ImageUploadSupabase
+                  <ImageUpload
                     value={h.image || ''}
                     onChange={(url) => updateRow('rankholders', i, 'image', url)}
                     label="Upload Photo"
+                    circle
                   />
                   {h.image && (
                     <img src={h.image} alt={h.name} className="rank-editor-card-img" />
