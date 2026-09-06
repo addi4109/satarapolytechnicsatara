@@ -623,8 +623,10 @@ function AdminExaminations() {
                       src={h.image}
                       alt={h.name}
                       style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '8px', marginTop: '8px', border: '1px solid #e4e8ed' }}
-                      onError={(e) => { e.target.style.display = 'none'; }}
-                      onLoad={() => console.log('Ranker image loaded OK')}
+                      crossOrigin="anonymous"
+                      decoding="async"
+                      onError={(e) => { console.log('Admin ranker image FAILED:', h.image); e.target.style.display = 'none'; }}
+                      onLoad={() => console.log('Admin ranker image loaded OK')}
                     />
                   )}
                   {!h.image && (

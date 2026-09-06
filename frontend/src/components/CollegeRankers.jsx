@@ -84,9 +84,13 @@ function CollegeRankers() {
                       src={holder.image}
                       alt={holder.name}
                       className="ranker-img"
+                      crossOrigin="anonymous"
+                      decoding="async"
                       onError={(e) => {
+                        console.log('Ranker image FAILED to load:', holder.image);
                         e.target.parentElement.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f5f7fa;color:#bbb;font-size:32px;">🖼</div>';
                       }}
+                      onLoad={() => console.log('Ranker image loaded OK')}
                     />
                   </div>
                 ) : (
