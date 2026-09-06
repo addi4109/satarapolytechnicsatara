@@ -55,6 +55,14 @@ const SECTIONS = [
     return '🏅';
   };
 
+  const rankClass = (rank) => {
+    const r = parseInt(rank, 10);
+    if (r === 1) return 'gold';
+    if (r === 2) return 'silver';
+    if (r === 3) return 'bronze';
+    return 'default';
+  };
+
 function AdminExaminations() {
   const [activeTab, setActiveTab] = useState('schedule');
   const [sections, setSections] = useState({});
@@ -403,8 +411,7 @@ function AdminExaminations() {
                     <h3 className="ranker-name">{h.name || 'Student Name'}</h3>
                     <span className="ranker-department">{h.department || 'Department'}</span>
                     <div className="ranker-rank-box">
-                      <span className="rank-number">{h.rank ? getMedalIcon(h.rank) + ' ' + h.rank : '—'}</span>
-                      <span className="rank-label">Rank</span>
+                      <span className={`rank-number rank-number-${rankClass(h.rank)}`}>{getMedalIcon(h.rank)}</span>
                     </div>
                   </div>
                 </div>
@@ -740,8 +747,7 @@ function AdminExaminations() {
                     <h3 className="ranker-name">{h.name || 'Student Name'}</h3>
                     <span className="ranker-department">{h.department || 'Department'}</span>
                     <div className="ranker-rank-box">
-                      <span className="rank-number">{h.rank ? getMedalIcon(h.rank) + ' ' + h.rank : '—'}</span>
-                      <span className="rank-label">Rank</span>
+                      <span className={`rank-number rank-number-${rankClass(h.rank)}`}>{getMedalIcon(h.rank)}</span>
                     </div>
                   </div>
                 </div>

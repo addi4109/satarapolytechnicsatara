@@ -50,6 +50,14 @@ function CollegeRankers() {
     return '🏅';
   };
 
+  const rankClass = (rank) => {
+    const r = parseInt(rank, 10);
+    if (r === 1) return 'gold';
+    if (r === 2) return 'silver';
+    if (r === 3) return 'bronze';
+    return 'default';
+  };
+
   return (
     <section className="rankers-section">
       <div className="rankers-header">
@@ -104,11 +112,10 @@ function CollegeRankers() {
                 <h3 className="ranker-name">
                   {holder.name}
                 </h3>
-                <span className="ranker-department">{holder.department}</span>
-                <div className="ranker-rank-box">
-                  <span className="rank-number">{getMedalIcon(holder.rank)} {holder.rank}</span>
-                  <span className="rank-label">Rank</span>
-                </div>
+                <span className="ranker-department">{holder.department}</span>                  <div className={`ranker-rank-box ranker-rank-${rankClass(holder.rank)}`}>
+                    <span className="rank-number">{getMedalIcon(holder.rank)}</span>
+                    <span className="rank-label">{holder.rank}</span>
+                  </div>
               </div>
             </div>
           ))

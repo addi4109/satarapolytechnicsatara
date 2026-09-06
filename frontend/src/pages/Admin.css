@@ -2282,20 +2282,30 @@
 }
 
 .rank-preview-public .rank-number {
-  font-size: 24px;
-  font-weight: 800;
-  line-height: 1.1;
-  color: #1e2d4a;
-  letter-spacing: -0.5px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.rank-preview-public .rank-number.gold {
+  color: #d4a017;
+}
+
+.rank-preview-public .rank-number.silver {
+  color: #c0c0c0;
+}
+
+.rank-preview-public .rank-number.bronze {
+  color: #a0522d;
+}
+
+.rank-preview-public .rank-number.default {
+  color: #6b7280;
 }
 
 .rank-preview-public .rank-label {
-  font-size: 11px;
-  color: #6b7280;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-top: 2px;
-  font-weight: 500;
+  display: none;
 }
 
 /* Image upload area (empty card) */
