@@ -248,7 +248,7 @@ function Navbar() {
             </div>
             <div className="brand-text">
               <p className="society-name">Satara Education Society's</p>
-              <h1 className="college-name">Satara Polytechnic,<br />Satara</h1>
+              <h1 className="college-name">Satara<br />Polytechnic, Satara</h1>
               <p className="affiliation-line">Approved by AICTE Delhi &bull; DTE Maharashtra State &bull; Affiliated to MSBTE, Mumbai</p>
               <p className="address-line">At Post: Songaon, Khindwadi, Near NH-4, Satara &mdash; 415002, Maharashtra</p>
               <p className="motto">"The courageous never stop until they achieve their goal"</p>
