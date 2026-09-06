@@ -220,26 +220,23 @@ function Navbar() {
 
   return (
     <header className="site-header">
-      {/* brand bar: dark navy with circular logo + college name + AICTE line */}
-      <div className="brand-bar">
-        <div className="brand-bar-inner">
-          <div className="brand-logo-circle">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10"
-              alt="College Logo"
-              className="brand-logo-img"
-            />
-          </div>
-          <div className="brand-text">
-            <h1 className="brand-college-name">Satara Polytechnic, Satara</h1>
-            <p className="brand-aicte-line">Est. 1985 &nbsp;|&nbsp; AICTE Approved</p>
-          </div>
-        </div>
-      </div>
-
-      {/* nav bar */}
       <nav className="main-nav">
         <div className="nav-inner">
+          {/* brand: circular logo + college name + AICTE, at the start of the nav */}
+          <a className="nav-brand" href="/">
+            <div className="brand-logo-circle">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10"
+                alt="College Logo"
+                className="brand-logo-img"
+              />
+            </div>
+            <div className="brand-text">
+              <span className="brand-college-name">Satara Polytechnic, Satara</span>
+              <span className="brand-aicte-line">Est. 1985 &nbsp;|&nbsp; AICTE Approved</span>
+            </div>
+          </a>
+
           {/* hamburger for mobile */}
           <button
             className={`hamburger ${mobileOpen ? 'is-active' : ''}`}
