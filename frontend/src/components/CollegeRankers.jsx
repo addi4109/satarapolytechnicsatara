@@ -6,6 +6,7 @@ import API_URL from '../lib/api';
 function CollegeRankers() {
   const [rankholders, setRankholders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [version, setVersion] = useState(0);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const autoScrollRef = useRef(null);
@@ -17,10 +18,11 @@ function CollegeRankers() {
         const mapped = {};
         data.forEach((s) => { mapped[s.section] = s; });
         setRankholders(mapped.rankholders?.rankholders || []);
+    setVersion((v) => v + 1);
       })
       .catch((err) => console.error('Failed to fetch rank holders:', err))
       .finally(() => setLoading(false));
-  }, []);
+  }, [version]);
 
   const maxIndex = Math.max(0, rankholders.length - 3);
 
@@ -55,9 +57,9 @@ function CollegeRankers() {
 
   if (rankholders.length === 0) return null;
 
-  // Reload data when admin saves
+  // Listen for reload event from admin panel
   useEffect(() => {
-    const handler = () => setKey((k) => k + 1);
+    const handler = () => setVersion((v) => v + 1);
     window.addEventListener('rankers-reload', handler);
     return () => window.removeEventListener('rankers-reload', handler);
   }, []);
