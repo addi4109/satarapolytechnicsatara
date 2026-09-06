@@ -125,10 +125,11 @@ function AdminExaminations() {
       });
     } else { setForm({ ...defaultForm }); }
     setView('preview'); resetInputs();
-  };
-
-  const handleSave = async () => {
-    setSaving(true); setMsg(null);
+  };  const handleSave = async () => {
+    setSaving(true);
+    setMsg(null);
+    // Debug: log rankholders before save
+    console.log('Saving rankholders:', JSON.stringify(form.rankholders, null, 2));
     try {
       const res = await fetch(`${API_URL}/examinations`, {
         method: 'POST',
