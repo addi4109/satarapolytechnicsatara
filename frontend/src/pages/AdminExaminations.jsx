@@ -352,30 +352,33 @@ function AdminExaminations() {
       <h2 className="content-heading">Rank Holders</h2>
       <div className="content-line"></div>
       {form.rankholders.length > 0 ? (
-        <div style={{ overflowX: 'auto' }}>
-          <table className="fee-table">
-            <thead><tr><th style={{ width: 50 }}>Sr.</th><th>Image</th><th>Name</th><th>Department</th><th>Semester</th><th>Rank</th><th>Marks</th><th>Year</th></tr></thead>
-            <tbody>
-              {form.rankholders.map((h, i) => (
-                <tr key={i}>
-                  <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
-                  <td style={{ textAlign: 'center' }}>
-                    {h.image ? (
-                      <img src={h.image} alt={h.name} style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #e4e8ed' }} />
-                    ) : (
-                      <span style={{ color: '#ccc', fontSize: '12px' }}>No image</span>
-                    )}
-                  </td>
-                  <td style={{ fontWeight: 500 }}>{h.name}</td>
-                  <td style={{ textAlign: 'center' }}>{h.department}</td>
-                  <td style={{ textAlign: 'center' }}>{h.semester}</td>
-                  <td style={{ textAlign: 'center', fontWeight: 700, color: '#c8963e' }}>{h.rank}</td>
-                  <td style={{ textAlign: 'center' }}>{h.marks}</td>
-                  <td style={{ textAlign: 'center' }}>{h.year}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="rank-preview-grid">
+          {form.rankholders.map((h, i) => (
+            <div className="rank-preview-card" key={i}>
+              <div className="rank-preview-img">
+                {h.image ? (
+                  <img src={h.image} alt={h.name} />
+                ) : (
+                  <div className="rank-preview-img-placeholder">
+                    <span style={{ fontSize: '32px' }}>👤</span>
+                  </div>
+                )}
+              </div>
+              <div className="rank-preview-info">
+                <h4 className="rank-preview-name">{h.name}</h4>
+                <span className="rank-preview-dept">{h.department}</span>
+                <div className="rank-preview-rank-row">
+                  <div className="rank-preview-rank-badge">
+                    <span className="rank-preview-rank-num">{h.rank}</span>
+                    <span className="rank-preview-rank-lbl">Rank</span>
+                  </div>
+                  <span className="rank-preview-marks">{h.marks}</span>
+                </div>
+                <span className="rank-preview-sem">Sem {h.semester} · {h.year}</span>
+              </div>
+              <button className="rank-preview-remove" onClick={() => removeRow('rankholders', i)}>×</button>
+            </div>
+          ))}
         </div>
       ) : <p style={{ color: '#aaa', fontStyle: 'italic' }}>No rank holders added yet.</p>}
     </div>
@@ -577,36 +580,70 @@ function AdminExaminations() {
 
   const renderRankHoldersEditor = () => (
     <div className="admission-edit-form">
-      <h4>Rank Holders Table</h4>
-      <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>Add student photos to display in the auto-sliding rankers carousel on the homepage.</p>
-      <div className="fee-table-wrap">
-        <table className="fee-table" style={{ minWidth: '820px' }}>
-          <thead><tr><th style={{ width: 50 }}>Sr.</th><th style={{ textAlign: 'left' }}>Photo</th><th style={{ textAlign: 'left' }}>Name</th><th style={{ textAlign: 'left' }}>Department</th><th style={{ width: 80 }}>Semester</th><th style={{ width: 60 }}>Rank</th><th style={{ width: 80 }}>Marks</th><th style={{ width: 80 }}>Year</th><th style={{ width: 50 }}></th></tr></thead>
-          <tbody>
-            {form.rankholders.map((h, i) => (
-              <tr key={i}>
-                <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
-                <td style={{ textAlign: 'center' }}>
+      <div className="rank-editor-header">
+        <h4>Rank Holders</h4>
+        <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Add student photos to display in the auto-sliding rankers carousel on the homepage.</p>
+      </div>
+      {form.rankholders.length === 0 ? (
+        <div className="rank-empty-state">
+          <div style={{ fontSize: '48px', marginBottom: '12px' }}>🏆</div>
+          <h4 style={{ color: '#243358', margin: '0 0 8px' }}>No Rank Holders Added Yet</h4>
+          <p style={{ fontSize: '14px', color: '#888', margin: 0, lineHeight: '1.5' }}>Click the button below to add the first rank holder. Each card will appear in the homepage carousel.</p>
+          <button className="btn btn-primary" onClick={() => addEmptyRow('rankholders', emptyRankHolder())}>+ Add First Rank Holder</button>
+        </div>
+      ) : (
+        <div className="rank-editor-cards">
+          {form.rankholders.map((h, i) => (
+            <div className="rank-editor-card" key={i}>
+              <div className="rank-editor-card-header">
+                <span className="rank-editor-card-num">#{i + 1}</span>
+                <button className="rank-editor-card-remove" onClick={() => removeRow('rankholders', i)} title="Remove">×</button>
+              </div>
+              <div className="rank-editor-card-body">
+                <div className="rank-editor-img-area">
                   <ImageUploadSupabase
-                    compact
                     value={h.image || ''}
                     onChange={(url) => updateRow('rankholders', i, 'image', url)}
                     label="Upload Photo"
                   />
-                </td>
-                <td><input type="text" value={h.name} onChange={(e) => updateRow('rankholders', i, 'name', e.target.value)} placeholder="Student Name" style={cellInput} /></td>
-                <td><input type="text" value={h.department} onChange={(e) => updateRow('rankholders', i, 'department', e.target.value)} placeholder="Department" style={cellInput} /></td>
-                <td><input type="text" value={h.semester} onChange={(e) => updateRow('rankholders', i, 'semester', e.target.value)} placeholder="e.g. VI" style={cellInput} /></td>
-                <td><input type="text" value={h.rank} onChange={(e) => updateRow('rankholders', i, 'rank', e.target.value)} placeholder="e.g. 1" style={cellInput} /></td>
-                <td><input type="text" value={h.marks} onChange={(e) => updateRow('rankholders', i, 'marks', e.target.value)} placeholder="e.g. 92.50%" style={cellInput} /></td>
-                <td><input type="text" value={h.year} onChange={(e) => updateRow('rankholders', i, 'year', e.target.value)} placeholder="e.g. 2025-26" style={cellInput} /></td>
-                <td style={{ textAlign: 'center' }}><button className="member-remove-btn" onClick={() => removeRow('rankholders', i)}>×</button></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <button className="btn btn-success btn-sm" style={{ marginTop: '12px' }} onClick={() => addEmptyRow('rankholders', emptyRankHolder())}>+ Add Rank Holder</button>
+                  {h.image && (
+                    <img src={h.image} alt={h.name} className="rank-editor-card-img" />
+                  )}
+                </div>
+                <div className="rank-editor-card-fields">
+                  <div className="rank-field">
+                    <label>Student Name</label>
+                    <input type="text" value={h.name} onChange={(e) => updateRow('rankholders', i, 'name', e.target.value)} placeholder="Student Name" className="rank-input" />
+                  </div>
+                  <div className="rank-field">
+                    <label>Department / Branch</label>
+                    <input type="text" value={h.department} onChange={(e) => updateRow('rankholders', i, 'department', e.target.value)} placeholder="e.g. Computer Science" className="rank-input" />
+                  </div>
+                  <div className="rank-field-row">
+                    <div className="rank-field">
+                      <label>Semester</label>
+                      <input type="text" value={h.semester} onChange={(e) => updateRow('rankholders', i, 'semester', e.target.value)} placeholder="e.g. VI" className="rank-input" />
+                    </div>
+                    <div className="rank-field">
+                      <label>Rank</label>
+                      <input type="text" value={h.rank} onChange={(e) => updateRow('rankholders', i, 'rank', e.target.value)} placeholder="e.g. 1" className="rank-input rank-input-rank" />
+                    </div>
+                    <div className="rank-field">
+                      <label>Marks</label>
+                      <input type="text" value={h.marks} onChange={(e) => updateRow('rankholders', i, 'marks', e.target.value)} placeholder="e.g. 92.50%" className="rank-input" />
+                    </div>
+                    <div className="rank-field">
+                      <label>Year</label>
+                      <input type="text" value={h.year} onChange={(e) => updateRow('rankholders', i, 'year', e.target.value)} placeholder="e.g. 2025-26" className="rank-input" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+          <button className="btn btn-success btn-sm" style={{ marginTop: '16px' }} onClick={() => addEmptyRow('rankholders', emptyRankHolder())}>+ Add Another Rank Holder</button>
+        </div>
+      )}
     </div>
   );
 
