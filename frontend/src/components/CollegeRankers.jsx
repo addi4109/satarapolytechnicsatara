@@ -70,7 +70,7 @@ function CollegeRankers() {
         <div className="rankers-grid">
           {loading ? (
             Array.from({ length: 3 }).map((_, i) => (
-              <div className="ranker-card ranker-card-skeleton" key={i}>
+              <div className="ranker-item ranker-card-skeleton" key={i}>
                 <div className="ranker-img-wrap-skeleton" />
                 <div className="ranker-line-skeleton" />
                 <div className="ranker-line-skeleton short" />
@@ -82,7 +82,7 @@ function CollegeRankers() {
             </div>
           ) : (
             rankholders.map((holder) => (
-              <article className="ranker-card" key={holder.name + holder.rank}>
+              <div className="ranker-item" key={holder.name + holder.rank}>
                 <div className="ranker-img-wrap">
                   <div className="ranker-img-ring" />
                   {holder.image ? (
@@ -110,7 +110,6 @@ function CollegeRankers() {
                   <span className="ranker-rank-label">Rank Holder</span>
                   <h3 className="ranker-name">{holder.name}</h3>
                   <span className="ranker-department">{holder.department}</span>
-                  <div className="ranker-divider" />
                   <div className="ranker-rank-box">
                     <span className={`rank-number rank-number-${rankClass(holder.rank)}`}>
                       <span className="star">★</span>
@@ -118,7 +117,7 @@ function CollegeRankers() {
                     </span>
                   </div>
                 </div>
-              </article>
+              </div>
             ))
           )}
         </div>
