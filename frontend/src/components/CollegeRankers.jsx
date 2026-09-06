@@ -6,6 +6,7 @@ import API_URL from '../lib/api';
 function CollegeRankers() {
   const [rankholders, setRankholders] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const autoScrollRef = useRef(null);
 
@@ -54,6 +55,13 @@ function CollegeRankers() {
 
   if (rankholders.length === 0) return null;
 
+  // Reload data when admin saves
+  useEffect(() => {
+    const handler = () => setKey((k) => k + 1);
+    window.addEventListener('rankers-reload', handler);
+    return () => window.removeEventListener('rankers-reload', handler);
+  }, []);
+
   const getVisibleCards = () => {
     const cards = [];
     const count = Math.min(3, rankholders.length);
@@ -83,7 +91,7 @@ function CollegeRankers() {
       </div>
 
       <div className="rankers-carousel">
-        {rankholders.length > 3 && (
+        {rankholders.length > 1 && (
           <button className="ranker-arrow ranker-arrow-l" onClick={goToPrev} aria-label="Previous">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
           </button>
@@ -116,14 +124,14 @@ function CollegeRankers() {
           </div>
         </div>
 
-        {rankholders.length > 3 && (
+        {rankholders.length > 1 && (
           <button className="ranker-arrow ranker-arrow-r" onClick={goToNext} aria-label="Next">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
           </button>
         )}
       </div>
 
-      {rankholders.length > 3 && (
+      {rankholders.length > 1 && (
         <div className="rankers-dots">
           {Array.from({ length: maxIndex + 1 }).map((_, idx) => (
             <button

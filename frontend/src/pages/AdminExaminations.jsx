@@ -140,6 +140,8 @@ function AdminExaminations() {
       setSections((prev) => ({ ...prev, [activeTab]: saved }));
       setMsg({ type: 'success', text: 'Saved!' });
       setView('preview');
+      // Notify rankers carousel to reload
+      window.dispatchEvent(new CustomEvent('rankers-reload'));
     } catch { setMsg({ type: 'error', text: 'Failed to save.' }); }
     finally { setSaving(false); }
   };
