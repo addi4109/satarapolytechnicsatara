@@ -220,23 +220,45 @@ function Navbar() {
 
   return (
     <header className="site-header">
-      <nav className="main-nav">
-        <div className="nav-inner">
-          {/* brand: circular logo + college name + AICTE, at the start of the nav */}
-          <a className="nav-brand" href="/">
-            <div className="brand-logo-circle">
+      {/* top strip: phone + email */}
+      <div className="top-strip">
+        <div className="top-strip-inner">
+          <a className="top-left" href="tel:+919423342843">
+            <svg className="top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +91-94233 42843
+          </a>
+          <a className="top-right" href="mailto:satarapolyinfo@gmail.com">
+            <svg className="top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            satarapolyinfo@gmail.com
+          </a>
+        </div>
+      </div>
+
+      {/* white header: circular logo + college name + affiliation + address + motto */}
+      <div className="main-header">
+        <div className="main-header-inner">
+          <div className="header-row">
+            <div className="logo-circle">
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10"
                 alt="College Logo"
-                className="brand-logo-img"
+                className="logo-img"
               />
             </div>
-            <div className="brand-text">
-              <span className="brand-college-name">Satara Polytechnic, Satara</span>
-              <span className="brand-aicte-line">Est. 1985 &nbsp;|&nbsp; AICTE Approved</span>
+            <div className="logo-text">
+              <p className="society-name">Satara Education Society's</p>
+              <h1 className="college-name">Satara Polytechnic, Satara</h1>
+              <p className="affiliation-line">Approved by AICTE Delhi, DTE Maharashtra State, Affiliated to MSBTE, Mumbai</p>
+              <p className="address-line">At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra</p>
+              <p className="motto">"The courageous never stop until they achieve their goal"</p>
             </div>
-          </a>
+          </div>
+        </div>
+      </div>
 
+      {/* nav bar */}
+      <nav className="main-nav">
+        <div className="nav-inner">
           {/* hamburger for mobile */}
           <button
             className={`hamburger ${mobileOpen ? 'is-active' : ''}`}
