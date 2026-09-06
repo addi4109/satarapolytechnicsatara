@@ -99,19 +99,12 @@ function CollegeRankers() {
                   </div>
                 )}
                 <div className="ranker-card-content">
-                  <div className="ranker-card-top">
-                    <span className="ranker-medal">{getMedalIcon(holder.rank)}</span>
-                    <span className="ranker-badge">{holder.department}</span>
-                  </div>
                   <h3 className="ranker-name">{holder.name}</h3>
+                  <span className="ranker-badge">{holder.department}</span>
                   <div className="ranker-rank-row">
                     <div className="ranker-rank-box">
                       <span className="rank-number">{holder.rank}</span>
                       <span className="rank-label">Rank</span>
-                    </div>
-                    <div className="ranker-marks-box">
-                      <span className="ranker-marks">{holder.marks}</span>
-                      <span className="ranker-sem">Sem {holder.semester}</span>
                     </div>
                   </div>
                   {holder.year && (

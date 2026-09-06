@@ -4,6 +4,7 @@ import AdminAlert from '../components/AdminAlert';
 import AdminTabs from '../components/AdminTabs';
 import AdminLoading from '../components/AdminLoading';
 import PdfUpload from '../components/PdfUpload';
+import ImageUploadSupabase from '../components/ImageUploadSupabase';
 import './Academics.css';
 import './Admin.css';
 
@@ -25,24 +26,26 @@ const SECTIONS = [
   { key: 'revaluation', label: 'Revaluation' },
   { key: 'notices', label: 'Exam Notices' },
   { key: 'rankholders', label: 'Rank Holders' },
-];
+];  const defaultForm = {
+    title: '',
+    content: '',
+    schedules: [],
+    rules: [],
+    ruleSubSections: [],
+    resultsData: [],
+    revaluationSteps: [],
+    revaluationFee: '',
+    revaluationDeadline: '',
+    revaluationPortalUrl: '',
+    noticesData: [],
+    resultPortalUrl: '',
+    rankholders: [],
+    active: true,
+  };
 
-const defaultForm = {
-  title: '',
-  content: '',
-  schedules: [],
-  rules: [],
-  ruleSubSections: [],
-  resultsData: [],
-  revaluationSteps: [],
-  revaluationFee: '',
-  revaluationDeadline: '',
-  revaluationPortalUrl: '',
-  noticesData: [],
-  resultPortalUrl: '',
-  rankholders: [],
-  active: true,
-};
+  const emptyRankHolder = () => ({
+    name: '', department: '', semester: '', rank: '', marks: '', year: '', image: '',
+  });
 
 function AdminExaminations() {
   const [activeTab, setActiveTab] = useState('schedule');
@@ -93,6 +96,7 @@ function AdminExaminations() {
         noticesData: existing.noticesData || [],
         resultPortalUrl: existing.resultPortalUrl || '',
         rankholders: existing.rankholders || [],
+
         active: existing.active !== false,
       });
     } else {
@@ -350,11 +354,18 @@ function AdminExaminations() {
       {form.rankholders.length > 0 ? (
         <div style={{ overflowX: 'auto' }}>
           <table className="fee-table">
-            <thead><tr><th style={{ width: 50 }}>Sr.</th><th>Name</th><th>Department</th><th>Semester</th><th>Rank</th><th>Marks</th><th>Year</th></tr></thead>
+            <thead><tr><th style={{ width: 50 }}>Sr.</th><th>Image</th><th>Name</th><th>Department</th><th>Semester</th><th>Rank</th><th>Marks</th><th>Year</th></tr></thead>
             <tbody>
               {form.rankholders.map((h, i) => (
                 <tr key={i}>
                   <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                  <td style={{ textAlign: 'center' }}>
+                    {h.image ? (
+                      <img src={h.image} alt={h.name} style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #e4e8ed' }} />
+                    ) : (
+                      <span style={{ color: '#ccc', fontSize: '12px' }}>No image</span>
+                    )}
+                  </td>
                   <td style={{ fontWeight: 500 }}>{h.name}</td>
                   <td style={{ textAlign: 'center' }}>{h.department}</td>
                   <td style={{ textAlign: 'center' }}>{h.semester}</td>
@@ -567,13 +578,22 @@ function AdminExaminations() {
   const renderRankHoldersEditor = () => (
     <div className="admission-edit-form">
       <h4>Rank Holders Table</h4>
+      <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>Add student photos to display in the auto-sliding rankers carousel on the homepage.</p>
       <div className="fee-table-wrap">
-        <table className="fee-table" style={{ minWidth: '720px' }}>
-          <thead><tr><th style={{ width: 50 }}>Sr.</th><th style={{ textAlign: 'left' }}>Name</th><th style={{ textAlign: 'left' }}>Department</th><th style={{ width: 90 }}>Semester</th><th style={{ width: 70 }}>Rank</th><th style={{ width: 90 }}>Marks</th><th style={{ width: 90 }}>Year</th><th style={{ width: 50 }}></th></tr></thead>
+        <table className="fee-table" style={{ minWidth: '820px' }}>
+          <thead><tr><th style={{ width: 50 }}>Sr.</th><th style={{ textAlign: 'left' }}>Photo</th><th style={{ textAlign: 'left' }}>Name</th><th style={{ textAlign: 'left' }}>Department</th><th style={{ width: 80 }}>Semester</th><th style={{ width: 60 }}>Rank</th><th style={{ width: 80 }}>Marks</th><th style={{ width: 80 }}>Year</th><th style={{ width: 50 }}></th></tr></thead>
           <tbody>
             {form.rankholders.map((h, i) => (
               <tr key={i}>
                 <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                <td style={{ textAlign: 'center' }}>
+                  <ImageUploadSupabase
+                    compact
+                    value={h.image || ''}
+                    onChange={(url) => updateRow('rankholders', i, 'image', url)}
+                    label="Upload Photo"
+                  />
+                </td>
                 <td><input type="text" value={h.name} onChange={(e) => updateRow('rankholders', i, 'name', e.target.value)} placeholder="Student Name" style={cellInput} /></td>
                 <td><input type="text" value={h.department} onChange={(e) => updateRow('rankholders', i, 'department', e.target.value)} placeholder="Department" style={cellInput} /></td>
                 <td><input type="text" value={h.semester} onChange={(e) => updateRow('rankholders', i, 'semester', e.target.value)} placeholder="e.g. VI" style={cellInput} /></td>
@@ -586,7 +606,7 @@ function AdminExaminations() {
           </tbody>
         </table>
       </div>
-      <button className="btn btn-success btn-sm" style={{ marginTop: '12px' }} onClick={() => addEmptyRow('rankholders', { name: '', department: '', semester: '', rank: '', marks: '', year: '' })}>+ Add Rank Holder</button>
+      <button className="btn btn-success btn-sm" style={{ marginTop: '12px' }} onClick={() => addEmptyRow('rankholders', emptyRankHolder())}>+ Add Rank Holder</button>
     </div>
   );
 
