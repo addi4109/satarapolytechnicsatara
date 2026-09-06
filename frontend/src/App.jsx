@@ -13,6 +13,7 @@ const NoticeTicker = lazy(() => import('./components/NoticeTicker'));
 const WelcomeSection = lazy(() => import('./components/WelcomeSection'));
 const Departments = lazy(() => import('./components/Departments'));
 const Recruiters = lazy(() => import('./components/Recruiters'));
+const CollegeRankers = lazy(() => import('./components/CollegeRankers'));
 const ContactMap = lazy(() => import('./components/ContactMap'));
 const AboutCollege = lazy(() => import('./pages/AboutCollege'));
 const Academics = lazy(() => import('./pages/Academics'));
@@ -91,6 +92,7 @@ function HomePage() {
       <WelcomeSection />
       <Departments />
       <Recruiters />
+      <CollegeRankers />
       <ContactMap />
     </Suspense>
   );
