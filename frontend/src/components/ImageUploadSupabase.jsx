@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 
-const BUCKET_NAME = 'ranker-images';
+const BUCKET_NAME = 'notices';
 
 function ImageUploadSupabase({ value, onChange, compact, label = 'Upload Image' }) {
   const [uploading, setUploading] = useState(false);
