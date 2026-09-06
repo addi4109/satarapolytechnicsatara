@@ -86,8 +86,12 @@ function CollegeRankers() {
                     crossOrigin="anonymous"
                     decoding="async"
                     onError={(e) => {
-                      e.target.style.display = 'none';
-                      e.target.parentElement.classList.add('img-failed');
+                      // Swap to placeholder on load failure so the card never goes blank.
+                      e.target.replaceWith(
+                        <div className="ranker-img-placeholder">
+                          <span>👤</span>
+                        </div>
+                      );
                     }}
                   />
                 ) : (

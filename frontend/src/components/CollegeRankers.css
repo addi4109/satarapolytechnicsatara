@@ -87,10 +87,6 @@
   display: block;
 }
 
-.ranker-img-wrap.img-failed {
-  background: transparent;
-}
-
 .ranker-img-placeholder {
   width: 100%;
   height: 100%;
