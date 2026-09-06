@@ -1,21 +1,8 @@
 /* ===== Section ===== */
 .rankers-section {
-  background: linear-gradient(135deg, #0f1a2e 0%, #1e2d4a 50%, #0f1a2e 100%);
   padding: 50px 0 44px;
+  background: #f4f6f9;
   overflow: hidden;
-  position: relative;
-}
-
-.rankers-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(ellipse at 20% 50%, rgba(200, 150, 62, 0.06) 0%, transparent 60%),
-              radial-gradient(ellipse at 80% 50%, rgba(200, 150, 62, 0.04) 0%, transparent 60%);
-  pointer-events: none;
 }
 
 /* ===== Header ===== */
@@ -24,8 +11,6 @@
   max-width: 600px;
   margin: 0 auto 32px;
   padding: 0 20px;
-  position: relative;
-  z-index: 1;
 }
 
 .rankers-badge {
@@ -33,8 +18,8 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 2px;
-  color: #c8963e;
-  background: rgba(200, 150, 62, 0.15);
+  color: #243358;
+  background: rgba(36, 51, 88, 0.08);
   padding: 5px 14px;
   border-radius: 20px;
   margin-bottom: 12px;
@@ -43,7 +28,7 @@
 .rankers-heading {
   font-family: 'Georgia', serif;
   font-size: 30px;
-  color: #ffffff;
+  color: #243358;
   margin: 0 0 10px;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -51,221 +36,264 @@
 
 .rankers-subheading {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.65);
+  color: #6b7280;
   margin: 0;
   line-height: 1.6;
 }
 
-/* ===== Marquee ===== */
-.marquee-wrapper {
-  width: 100%;
-  overflow: hidden;
-  padding: 0 20px;
-}
-
-.marquee-track {
+/* ===== Carousel ===== */
+.rankers-carousel {
   display: flex;
+  align-items: center;
   gap: 16px;
-  width: max-content;
-  animation: rankers-scroll 28s linear infinite;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-/* Pause on hover */
-.marquee-wrapper:hover .marquee-track {
-  animation-play-state: paused;
+.rankers-track {
+  flex: 1;
+  overflow: hidden;
+  user-select: none;
 }
 
-@keyframes rankers-scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+.rankers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+/* ===== Arrow Buttons ===== */
+.ranker-arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid #d1d5db;
+  background: #fff;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.ranker-arrow:hover {
+  border-color: #243358;
+  color: #243358;
+  box-shadow: 0 4px 12px rgba(36, 51, 88, 0.12);
+}
+
+.ranker-arrow:active {
+  transform: scale(0.93);
+}
+
+.ranker-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ===== Dots ===== */
+.rankers-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.ranker-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: #d1d5db;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0;
+}
+
+.ranker-dot.active {
+  background: #243358;
+  width: 24px;
+  border-radius: 4px;
 }
 
 /* ===== Ranker Card ===== */
 .ranker-card {
-  flex-shrink: 0;
-  width: 280px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   border-radius: 12px;
-  padding: 20px 20px 18px;
+  overflow: hidden;
   display: flex;
-  gap: 14px;
-  align-items: flex-start;
-  backdrop-filter: blur(4px);
-  transition: transform 0.2s, background 0.2s, border-color 0.2s;
+  flex-direction: column;
+  transition: box-shadow 0.3s, transform 0.3s;
 }
 
 .ranker-card:hover {
+  box-shadow: 0 12px 36px rgba(30, 45, 74, 0.08);
   transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(200, 150, 62, 0.5);
 }
 
-/* ===== Medal ===== */
-.ranker-medal {
-  font-size: 36px;
-  line-height: 1;
-  flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 50%;
-  border: 1.5px solid rgba(200, 150, 62, 0.3);
-}
-
-/* ===== Info ===== */
-.ranker-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.ranker-name {
-  font-family: 'Georgia', serif;
-  font-size: 16px;
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0 0 6px;
-  line-height: 1.3;
-  white-space: nowrap;
+.ranker-img-wrap {
+  width: 100%;
+  height: 160px;
   overflow: hidden;
-  text-overflow: ellipsis;
+  background: #f5f7fa;
 }
 
-.ranker-dept {
+.ranker-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ranker-card-content {
+  padding: 16px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ranker-card-top {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.ranker-medal {
+  font-size: 28px;
+  line-height: 1;
 }
 
 .ranker-badge {
   display: inline-block;
   font-size: 11px;
   font-weight: 600;
-  color: #c8963e;
-  background: rgba(200, 150, 62, 0.15);
-  padding: 2px 10px;
+  color: #243358;
+  background: rgba(200, 150, 62, 0.1);
+  padding: 3px 10px;
   border-radius: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.ranker-sem {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.45);
+.ranker-name {
+  font-family: 'Georgia', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e2d4a;
+  margin: 0;
+  line-height: 1.3;
 }
 
 .ranker-rank-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  margin-top: 4px;
 }
 
-.ranker-rank {
+.ranker-rank-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(135deg, rgba(200, 150, 62, 0.2), rgba(200, 150, 62, 0.08));
-  border: 1px solid rgba(200, 150, 62, 0.3);
+  background: linear-gradient(135deg, #c8963e, #e6b84d);
   border-radius: 8px;
-  padding: 6px 12px;
+  padding: 8px 16px;
 }
 
 .rank-number {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 800;
-  color: #c8963e;
+  color: #fff;
   line-height: 1;
 }
 
 .rank-label {
-  font-size: 9px;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.8);
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-top: 2px;
 }
 
+.ranker-marks-box {
+  text-align: right;
+}
+
 .ranker-marks {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
-  color: #ffffff;
+  color: #243358;
+}
+
+.ranker-sem {
+  font-size: 12px;
+  color: #6b7280;
+  display: block;
 }
 
 .ranker-year {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.4);
-  margin-left: auto;
+  color: #9ca3af;
+  margin-top: 4px;
+  text-align: center;
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  .rankers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
   .rankers-section {
-    padding: 36px 0 32px;
+    padding: 40px 0;
   }
 
   .rankers-heading {
     font-size: 24px;
   }
 
-  .ranker-card {
-    width: 240px;
-    padding: 16px 16px 14px;
-    gap: 12px;
+  .rankers-carousel {
+    gap: 10px;
+    padding: 0 12px;
   }
 
-  .ranker-medal {
-    font-size: 28px;
-    width: 40px;
-    height: 40px;
+  .rankers-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
-  .ranker-name {
-    font-size: 14px;
+  .ranker-arrow {
+    width: 34px;
+    height: 34px;
   }
 
-  .rank-number {
-    font-size: 17px;
+  .ranker-arrow svg {
+    width: 15px;
+    height: 15px;
   }
 }
 
-@media (max-width: 600px) {
-  .ranker-card {
-    width: 200px;
-    padding: 14px 14px 12px;
-    gap: 10px;
+@media (max-width: 480px) {
+  .ranker-img-wrap {
+    height: 140px;
   }
 
-  .ranker-medal {
-    font-size: 24px;
-    width: 36px;
-    height: 36px;
+  .ranker-card-content {
+    padding: 12px 16px 16px;
   }
 
   .ranker-name {
-    font-size: 13px;
-  }
-
-  .ranker-rank {
-    padding: 4px 8px;
+    font-size: 16px;
   }
 
   .rank-number {
-    font-size: 15px;
-  }
-
-  .ranker-marks {
-    font-size: 13px;
-  }
-
-  .ranker-year {
-    display: none;
+    font-size: 18px;
   }
 }
