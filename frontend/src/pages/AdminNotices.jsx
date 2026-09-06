@@ -159,11 +159,11 @@ function AdminNotices() {
                 minHeight: '180px', border: '2px dashed #b9c3d4', borderRadius: '10px', cursor: 'pointer',
                 background: '#fff', transition: 'all 0.25s ease', gap: '10px',
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#6A1B9A'; e.currentTarget.style.background = '#f8f9fa'; }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#243358'; e.currentTarget.style.background = '#f8f9fa'; }}
               onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#b9c3d4'; e.currentTarget.style.background = '#fff'; }}
             >
-              <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', color: '#6A1B9A', fontWeight: 300 }}>+</div>
-              <span style={{ fontSize: '14px', fontWeight: 600, color: '#6A1B9A' }}>Add Notice</span>
+              <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', color: '#243358', fontWeight: 300 }}>+</div>
+              <span style={{ fontSize: '14px', fontWeight: 600, color: '#243358' }}>Add Notice</span>
             </div>
 
             {/* Notice Cards */}
@@ -187,7 +187,7 @@ function AdminNotices() {
                 )}
 
                 {/* Title */}
-                <h4 style={{ margin: '0 0 4px', color: '#6A1B9A', fontSize: '15px', fontWeight: 700, paddingRight: '60px' }}>{notice.title}</h4>
+                <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '15px', fontWeight: 700, paddingRight: '60px' }}>{notice.title}</h4>
 
                 {/* Description */}
                 {notice.text && (
@@ -205,7 +205,7 @@ function AdminNotices() {
                     <a
                       href={notice.pdfUrl ? `${API_URL}/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl}
                       target="_blank"
-                      style={{ padding: '5px 12px', background: '#6A1B9A', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}
+                      style={{ padding: '5px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}
                     >View</a>
                   )}
                   {(notice.pdfUrl || notice.imageUrl) && (
@@ -229,7 +229,7 @@ function AdminNotices() {
                           URL.revokeObjectURL(url);
                         } catch { window.open(fileUrl, '_blank'); }
                       }}
-                      style={{ padding: '5px 12px', background: '#fff', color: '#6A1B9A', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #6A1B9A', textDecoration: 'none', cursor: 'pointer' }}
+                      style={{ padding: '5px 12px', background: '#fff', color: '#243358', fontSize: '11px', fontWeight: 600, borderRadius: '4px', border: '1px solid #243358', textDecoration: 'none', cursor: 'pointer' }}
                     >Download</a>
                   )}
                   <button
@@ -270,7 +270,7 @@ function AdminNotices() {
           }}>
             {/* Modal Header */}
             <div style={{ padding: '16px 20px', borderBottom: '1px solid #e4e8ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h3 style={{ margin: 0, color: '#6A1B9A', fontSize: '17px' }}>{editId ? 'Edit' : 'Add'} {activeTab === 'tinker' ? 'Tinker Notice' : 'Notice'}</h3>
+              <h3 style={{ margin: 0, color: '#243358', fontSize: '17px' }}>{editId ? 'Edit' : 'Add'} {activeTab === 'tinker' ? 'Tinker Notice' : 'Notice'}</h3>
               <button onClick={cancelForm} style={{ background: 'none', border: 'none', fontSize: '22px', cursor: 'pointer', color: '#999', lineHeight: 1 }}>×</button>
             </div>
 

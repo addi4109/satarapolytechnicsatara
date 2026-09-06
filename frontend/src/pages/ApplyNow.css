@@ -47,7 +47,7 @@
 .form-section-title {
   font-family: 'Georgia', serif;
   font-size: 16px;
-  color: #6A1B9A;
+  color: #243358;
   font-weight: 700;
   margin: 0 0 18px;
   padding-bottom: 8px;
@@ -78,7 +78,7 @@
 .form-label {
   font-size: 13px;
   font-weight: 600;
-  color: #6A1B9A;
+  color: #243358;
   margin-bottom: 6px;
 }
 
@@ -99,7 +99,7 @@
 
 .form-input:focus {
   outline: none;
-  border-color: #6A1B9A;
+  border-color: #243358;
   box-shadow: 0 0 0 2px rgba(26, 35, 64, 0.1);
   background: #fff;
 }
@@ -145,17 +145,17 @@ select.form-input {
 }
 
 .apply-btn.submit {
-  background: #6A1B9A;
+  background: #243358;
   color: #fff;
 }
 
 .apply-btn.submit:hover {
-  background: #6A1B9A;
+  background: #243358;
 }
 
 .apply-btn.reset {
   background: #fff;
-  color: #6A1B9A;
+  color: #243358;
   border: 1px solid #ddd;
 }
 
@@ -164,13 +164,13 @@ select.form-input {
 }
 
 .apply-btn.back {
-  background: #6A1B9A;
+  background: #243358;
   color: #fff;
   margin-top: 20px;
 }
 
 .apply-btn.back:hover {
-  background: #6A1B9A;
+  background: #243358;
 }
 
 .apply-success {
@@ -198,7 +198,7 @@ select.form-input {
 .apply-success h2 {
   font-family: 'Georgia', serif;
   font-size: 22px;
-  color: #6A1B9A;
+  color: #243358;
   margin: 0 0 10px;
 }
 
@@ -233,7 +233,7 @@ select.form-input {
 
 .success-label {
   font-weight: 600;
-  color: #6A1B9A;
+  color: #243358;
 }
 
 .success-value {
@@ -259,7 +259,7 @@ select.form-input {
 }
 
 .apply-contact-bar {
-  background: #6A1B9A;
+  background: #243358;
   border-radius: 8px;
   padding: 20px 32px;
   display: flex;

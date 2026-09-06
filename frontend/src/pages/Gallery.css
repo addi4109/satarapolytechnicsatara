@@ -7,7 +7,7 @@
 .gallery-main-heading {
   font-family: 'Georgia', serif;
   font-size: 28px;
-  color: #6A1B9A;
+  color: #243358;
   font-weight: 700;
   margin: 0;
 }
@@ -62,7 +62,7 @@
 .photo-placeholder {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #6A1B9A 0%, #344d6e 100%);
+  background: linear-gradient(135deg, #243358 0%, #344d6e 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -88,7 +88,7 @@
 .photo-title {
   font-family: 'Georgia', serif;
   font-size: 16px;
-  color: #6A1B9A;
+  color: #243358;
   margin: 0 0 4px;
 }
 
@@ -128,7 +128,7 @@
 .video-placeholder {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #6A1B9A 0%, #344d6e 100%);
+  background: linear-gradient(135deg, #243358 0%, #344d6e 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -164,7 +164,7 @@
 .video-title {
   font-family: 'Georgia', serif;
   font-size: 15px;
-  color: #6A1B9A;
+  color: #243358;
   margin: 0 0 6px;
 }
 
@@ -198,7 +198,7 @@
 
 .news-image-card:hover {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  border-color: #6A1B9A;
+  border-color: #243358;
   transform: translateY(-2px);
 }
 
@@ -239,7 +239,7 @@
 
 .news-card:hover {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  border-color: #6A1B9A;
+  border-color: #243358;
 }
 
 .news-meta {
@@ -265,7 +265,7 @@
 .news-title {
   font-family: 'Georgia', serif;
   font-size: 17px;
-  color: #6A1B9A;
+  color: #243358;
   margin: 0 0 8px;
   line-height: 1.4;
 }

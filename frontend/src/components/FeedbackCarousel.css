@@ -140,7 +140,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #6A1B9A, #3a4f7a);
+  background: linear-gradient(135deg, #243358, #3a4f7a);
   color: #fff;
   display: flex;
   align-items: center;
@@ -198,8 +198,8 @@
 }
 
 .fb-arrow:hover {
-  border-color: #6A1B9A;
-  color: #6A1B9A;
+  border-color: #243358;
+  color: #243358;
   box-shadow: 0 4px 12px rgba(36, 51, 88, 0.12);
 }
 
@@ -232,7 +232,7 @@
 }
 
 .fb-dot.active {
-  background: #6A1B9A;
+  background: #243358;
   width: 24px;
   border-radius: 4px;
 }

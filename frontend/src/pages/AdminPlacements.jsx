@@ -294,7 +294,7 @@ function AdminPlacements() {
               <>
                 <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-                  <h4 style={{ margin: 0, color: '#6A1B9A', fontSize: '15px' }}>Placement Officer</h4>
+                  <h4 style={{ margin: 0, color: '#243358', fontSize: '15px' }}>Placement Officer</h4>
                   <span style={{ fontSize: '12px', color: '#888' }}>Click the card to edit</span>
                 </div>
 
@@ -313,7 +313,7 @@ function AdminPlacements() {
                         </div>
                       ) : (
                         <div className="placement-officer-photo" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f5f7fa' }}>
-                          <span style={{ fontSize: '48px', fontWeight: 700, color: '#6A1B9A', fontFamily: 'Georgia, serif' }}>?</span>
+                          <span style={{ fontSize: '48px', fontWeight: 700, color: '#243358', fontFamily: 'Georgia, serif' }}>?</span>
                         </div>
                       )}
                       <h4 className="placement-officer-name">{form.officerName || 'Officer Name'}</h4>
@@ -343,7 +343,7 @@ function AdminPlacements() {
                         value={form.officerName}
                         onChange={(e) => handleChange('officerName', e.target.value)}
                         placeholder="Officer Name"
-                        style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '14px', fontWeight: 700, fontFamily: 'Georgia, serif', color: '#6A1B9A', textAlign: 'center', marginBottom: '6px', boxSizing: 'border-box' }}
+                        style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '14px', fontWeight: 700, fontFamily: 'Georgia, serif', color: '#243358', textAlign: 'center', marginBottom: '6px', boxSizing: 'border-box' }}
                       />
                       <p className="placement-officer-designation">Placement Officer</p>
                       <input
@@ -377,7 +377,7 @@ function AdminPlacements() {
             {activeTab === 'about' && (
               <>
                 <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#6A1B9A', fontSize: '15px' }}>Placement & Training Office Team</h4>
+                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Placement & Training Office Team</h4>
                 <div className="faculty-cards-grid">
                   {/* Existing team members as editable cards */}
                   {form.officeTeam.map((member, idx) => (
@@ -437,7 +437,7 @@ function AdminPlacements() {
                 {view === 'preview' ? (
                   /* Preview */
                   <>
-                    <h4 style={{ margin: '0 0 6px', color: '#6A1B9A', fontSize: '15px' }}>Process Steps</h4>
+                    <h4 style={{ margin: '0 0 6px', color: '#243358', fontSize: '15px' }}>Process Steps</h4>
                     <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Preview of how steps appear on the live website.</p>
                     <div className="process-steps" style={{ marginTop: '12px' }}>
                       {form.steps.map((step, i) => (
@@ -455,7 +455,7 @@ function AdminPlacements() {
                 ) : (
                   /* Edit mode */
                   <>
-                    <h4 style={{ margin: '0 0 6px', color: '#6A1B9A', fontSize: '15px' }}>Process Steps</h4>
+                    <h4 style={{ margin: '0 0 6px', color: '#243358', fontSize: '15px' }}>Process Steps</h4>
                     <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>Click a step to edit it.</p>
                     <div className="process-steps" style={{ marginTop: '12px' }}>
                       {form.steps.map((step, i) => (
@@ -493,7 +493,7 @@ function AdminPlacements() {
                 {view === 'preview' ? (
                   /* Preview */
                   <>
-                    <h4 style={{ margin: '0 0 12px', color: '#6A1B9A', fontSize: '15px' }}>Placement Records</h4>
+                    <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Placement Records</h4>
                     <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Preview of how records appear on the live website.</p>
 
                     {/* Record Table Preview */}
@@ -504,13 +504,13 @@ function AdminPlacements() {
                           <tbody>
                             {form.recordTable.map((rec, i) => (
                               <tr key={i}>
-                                <td style={{ textAlign: 'center', fontWeight: 600, color: '#6A1B9A' }}>{i + 1}</td>
+                                <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                                 <td className="fee-particular" style={{ fontWeight: 600 }}>{rec.year}</td>
                                 <td style={{ textAlign: 'center' }}>
                                   {rec.pdfUrl ? (
                                     <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
-                                      <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`} target="_blank" style={{ padding: '5px 14px', background: '#6A1B9A', color: '#fff', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}>View</a>
-                                      <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`} download style={{ padding: '5px 14px', background: '#fff', color: '#6A1B9A', border: '1px solid #6A1B9A', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}>Download</a>
+                                      <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`} target="_blank" style={{ padding: '5px 14px', background: '#243358', color: '#fff', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}>View</a>
+                                      <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`} download style={{ padding: '5px 14px', background: '#fff', color: '#243358', border: '1px solid #243358', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}>Download</a>
                                     </div>
                                   ) : <span style={{ color: '#ccc' }}>No PDF</span>}
                                 </td>
@@ -524,7 +524,7 @@ function AdminPlacements() {
                     {/* Record Images Preview */}
                     {form.recordImages.length > 0 && (
                       <div style={{ marginTop: '24px' }}>
-                        <h4 style={{ margin: '0 0 16px', color: '#6A1B9A', fontSize: '15px' }}>Record Gallery</h4>
+                        <h4 style={{ margin: '0 0 16px', color: '#243358', fontSize: '15px' }}>Record Gallery</h4>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px' }}>
                           {form.recordImages.map((img, i) => (
                             <div key={i} style={{ textAlign: 'center' }}>
@@ -533,7 +533,7 @@ function AdminPlacements() {
                                   <img src={img.imageUrl} alt={img.title || 'Record'} style={{ width: '100%', height: 'auto', display: 'block' }} />
                                 </div>
                               )}
-                              {img.title && <p style={{ fontFamily: 'Georgia, serif', fontSize: '16px', fontWeight: 700, color: '#6A1B9A', margin: 0 }}>{img.title}</p>}
+                              {img.title && <p style={{ fontFamily: 'Georgia, serif', fontSize: '16px', fontWeight: 700, color: '#243358', margin: 0 }}>{img.title}</p>}
                             </div>
                           ))}
                         </div>
@@ -545,10 +545,10 @@ function AdminPlacements() {
                 ) : (
                   /* Edit mode */
                   <>
-                    <h4 style={{ margin: '0 0 12px', color: '#6A1B9A', fontSize: '15px' }}>Record Table</h4>
+                    <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Record Table</h4>
                     {form.recordTable.map((row, i) => (
                       <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '10px', background: '#f8f9fb', border: '1px solid #e4e8ed', borderRadius: '6px', padding: '10px 12px' }}>
-                        <span style={{ fontSize: '13px', fontWeight: 600, color: '#6A1B9A', minWidth: '30px' }}>{i + 1}.</span>
+                        <span style={{ fontSize: '13px', fontWeight: 600, color: '#243358', minWidth: '30px' }}>{i + 1}.</span>
                         <input type="text" value={row.year} onChange={(e) => { const u = [...form.recordTable]; u[i] = { ...u[i], year: e.target.value }; handleChange('recordTable', u); }} placeholder="Year" style={{ width: '140px', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', boxSizing: 'border-box' }} />
                         <div style={{ flex: 1 }}><PdfUpload value={row.pdfUrl} onChange={(url) => { const u = [...form.recordTable]; u[i] = { ...u[i], pdfUrl: url }; handleChange('recordTable', u); }} compact /></div>
                         <button className="member-remove-btn" onClick={() => handleChange('recordTable', form.recordTable.filter((_, j) => j !== i))}>×</button>
@@ -557,7 +557,7 @@ function AdminPlacements() {
                     <button className="btn btn-success btn-sm" style={{ marginBottom: '20px' }} onClick={() => handleChange('recordTable', [...form.recordTable, { year: '', pdfUrl: '' }])}>+ Add Row</button>
 
                     <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                    <h4 style={{ margin: '0 0 12px', color: '#6A1B9A', fontSize: '15px' }}>Record Images</h4>
+                    <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Record Images</h4>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '14px' }}>
                       {form.recordImages.map((img, i) => (
                         <div key={i} style={{ background: '#f8f9fb', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '12px', position: 'relative' }}>
@@ -582,7 +582,7 @@ function AdminPlacements() {
             {activeTab === 'recruiters' && (
               <>
                 <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
-                <h4 style={{ margin: '0 0 12px', color: '#6A1B9A', fontSize: '15px' }}>Our Recruiters</h4>
+                <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Our Recruiters</h4>
                 <div className="faculty-cards-grid">
                   {/* Add new recruiter card first */}
                   <div className="faculty-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', borderStyle: 'dashed', minHeight: '180px' }} onClick={addRecruiter}>

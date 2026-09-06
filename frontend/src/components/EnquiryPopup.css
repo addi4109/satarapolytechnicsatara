@@ -72,7 +72,7 @@
 .enquiry-left {
   width: 360px;
   flex-shrink: 0;
-  background: linear-gradient(160deg, #1a2744 0%, #6A1B9A 40%, #2c3e6b 100%);
+  background: linear-gradient(160deg, #1a2744 0%, #243358 40%, #2c3e6b 100%);
   color: #fff;
   overflow: hidden;
   position: relative;
@@ -320,13 +320,13 @@
 .enquiry-input-wrap input:focus,
 .enquiry-input-wrap select:focus,
 .enquiry-input-wrap textarea:focus {
-  border-color: #6A1B9A;
+  border-color: #243358;
   background: #fff;
   box-shadow: 0 0 0 3px rgba(36, 51, 88, 0.08);
 }
 
 .enquiry-input-wrap:focus-within svg {
-  color: #6A1B9A;
+  color: #243358;
 }
 
 .enquiry-textarea-wrap {
@@ -360,7 +360,7 @@
   width: 100%;
   padding: 11px 0;
   margin-top: 2px;
-  background: linear-gradient(135deg, #6A1B9A 0%, #2c3e6b 100%);
+  background: linear-gradient(135deg, #243358 0%, #2c3e6b 100%);
   color: #fff;
   font-size: 15px;
   font-weight: 600;
@@ -373,7 +373,7 @@
 }
 
 .enquiry-submit:hover:not(:disabled) {
-  background: linear-gradient(135deg, #1a2542 0%, #6A1B9A 100%);
+  background: linear-gradient(135deg, #1a2542 0%, #243358 100%);
   transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(36, 51, 88, 0.4);
 }
@@ -531,7 +531,7 @@
 
 .enquiry-success-btn {
   padding: 10px 32px;
-  background: #6A1B9A;
+  background: #243358;
   color: #fff;
   font-size: 14px;
   font-weight: 600;

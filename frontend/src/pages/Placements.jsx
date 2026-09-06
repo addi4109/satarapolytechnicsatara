@@ -222,7 +222,7 @@ function Placements() {
                       <tbody>
                         {placementCell.members.map((member, i) => (
                           <tr key={i}>
-                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#6A1B9A' }}>{i + 1}</td>
+                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                             <td className="fee-particular" style={{ fontWeight: 500 }}>{member.name}</td>
                             <td style={{ textAlign: 'center' }}>{member.designation}</td>
                             <td style={{ textAlign: 'center' }}>{member.phone}</td>
@@ -232,7 +232,7 @@ function Placements() {
                     </table>
                   </div>
                   <p style={{ marginTop: '12px' }}>
-                    <a href={`/cells/${placementCell.slug}`} style={{ color: '#6A1B9A', fontWeight: 600, fontSize: '14px' }}>
+                    <a href={`/cells/${placementCell.slug}`} style={{ color: '#243358', fontWeight: 600, fontSize: '14px' }}>
                       View Full Details →
                     </a>
                   </p>
@@ -351,7 +351,7 @@ function Placements() {
                       <tbody>
                         {getSection('records').recordTable.map((rec, i) => (
                           <tr key={i}>
-                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#6A1B9A' }}>{i + 1}</td>
+                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                             <td className="fee-particular" style={{ fontWeight: 600 }}>{rec.year}</td>
                             <td style={{ textAlign: 'center' }}>
                               {rec.pdfUrl ? (
@@ -360,14 +360,14 @@ function Placements() {
                                     href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '5px 14px', background: '#6A1B9A', color: '#fff', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}
+                                    style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '5px 14px', background: '#243358', color: '#fff', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}
                                   >
                                     View
                                   </a>
                                   <a
                                     href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(rec.pdfUrl)}`}
                                     download
-                                    style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '5px 14px', background: '#fff', color: '#6A1B9A', border: '1px solid #6A1B9A', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}
+                                    style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '5px 14px', background: '#fff', color: '#243358', border: '1px solid #243358', borderRadius: '4px', fontSize: '12px', fontWeight: 600, textDecoration: 'none' }}
                                   >
                                     Download
                                   </a>
@@ -401,7 +401,7 @@ function Placements() {
                               </div>
                             )}
                         {img.title && (
-                          <p style={{ fontFamily: 'Georgia, serif', fontSize: '16px', fontWeight: 700, color: '#6A1B9A', margin: 0 }}>{img.title}</p>
+                          <p style={{ fontFamily: 'Georgia, serif', fontSize: '16px', fontWeight: 700, color: '#243358', margin: 0 }}>{img.title}</p>
                         )}
                       </div>
                     ))}
@@ -540,15 +540,15 @@ function Placements() {
 
               {/* Contact CTA */}
               <div style={{ marginTop: '36px', background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '28px', textAlign: 'center' }}>
-                <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#6A1B9A', margin: '0 0 8px' }}>Want to Recruit From Our Campus?</h3>
+                <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', margin: '0 0 8px' }}>Want to Recruit From Our Campus?</h3>
                 <p style={{ fontSize: '14px', color: '#666', margin: '0 0 16px', lineHeight: '1.6' }}>
                   Partner with Satara Polytechnic for your next campus recruitment drive. Our Training &amp; Placement Cell will coordinate the entire process.
                 </p>
                 <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <a href="tel:+919423342843" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#6A1B9A', color: '#fff', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
+                  <a href="tel:+919423342843" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#243358', color: '#fff', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
                     📞 +91-94233 42843
                   </a>
-                  <a href="mailto:satarapolyinfo@gmail.com" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#fff', color: '#6A1B9A', border: '1px solid #6A1B9A', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
+                  <a href="mailto:satarapolyinfo@gmail.com" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '10px 22px', background: '#fff', color: '#243358', border: '1px solid #243358', borderRadius: '6px', fontSize: '14px', fontWeight: 600, textDecoration: 'none' }}>
                     ✉ satarapolyinfo@gmail.com
                   </a>
                 </div>

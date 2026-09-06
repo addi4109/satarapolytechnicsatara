@@ -18,7 +18,7 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 2px;
-  color: #6A1B9A;
+  color: #243358;
   background: rgba(106, 27, 154, 0.08);
   padding: 5px 14px;
   border-radius: 20px;
@@ -28,7 +28,7 @@
 .rankers-heading {
   font-family: 'Georgia', serif;
   font-size: 30px;
-  color: #6A1B9A;
+  color: #243358;
   margin: 0 0 10px;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -82,7 +82,7 @@
   position: absolute;
   inset: -5px;
   border-radius: 50%;
-  border: 3px solid #6A1B9A;
+  border: 3px solid #243358;
   z-index: 0;
 }
 
@@ -124,7 +124,7 @@
   font-family: 'Georgia', serif;
   font-size: 19px;
   font-weight: 700;
-  color: #6A1B9A;
+  color: #243358;
   margin: 14px 0 4px;
   line-height: 1.2;
   text-align: center;
@@ -142,7 +142,7 @@
 .ranker-divider {
   width: 60px;
   height: 2px;
-  background: #6A1B9A;
+  background: #243358;
   margin: 14px 0 16px;
   border-radius: 1px;
 }
@@ -165,7 +165,7 @@
   font-size: 32px;
   font-weight: 700;
   line-height: 1;
-  color: #6A1B9A;
+  color: #243358;
   background: rgba(106, 27, 154, 0.06);
   border-radius: 50%;
   width: 64px;
@@ -178,33 +178,33 @@
   left: 50%;
   transform: translateX(-50%);
   font-size: 14px;
-  color: #6A1B9A;
+  color: #243358;
 }
 
 .rank-number.gold {
-  color: #6A1B9A;
+  color: #243358;
   background: rgba(212, 160, 23, 0.08);
 }
 
 .rank-number.silver {
-  color: #6A1B9A;
+  color: #243358;
   background: rgba(192, 192, 192, 0.08);
 }
 
 .rank-number.bronze {
-  color: #6A1B9A;
+  color: #243358;
   background: rgba(160, 82, 45, 0.08);
 }
 
 .rank-number.default {
-  color: #6A1B9A;
+  color: #243358;
   background: rgba(107, 114, 128, 0.08);
 }
 
 .rank-label {
   font-size: 11px;
   font-weight: 700;
-  color: #6A1B9A;
+  color: #243358;
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-top: 10px;

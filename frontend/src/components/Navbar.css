@@ -76,7 +76,7 @@
   height: 105px;
   border-radius: 50%;
   border: 2px solid transparent;
-  background-image: linear-gradient(#fff, #fff), linear-gradient(135deg, #4a1669, #6A1B9A);
+  background-image: linear-gradient(#fff, #fff), linear-gradient(135deg, #1e2d4d, #243358);
   background-origin: border-box;
   background-clip: padding-box, border-box;
   display: flex;
@@ -154,7 +154,7 @@
 
 /* ===== main nav ===== */
 .main-nav {
-  background: #4a1669;
+  background: #1e2d4d;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -309,7 +309,7 @@
 
 .dropdown-menu li a:hover {
   background: #f0f3f8;
-  color: #6A1B9A;
+  color: #243358;
   border-left-color: #c8963e;
   padding-left: 24px;
 }
@@ -319,7 +319,7 @@
   padding: 8px 18px 4px;
   font-size: 11px;
   font-weight: 700;
-  color: #6A1B9A;
+  color: #243358;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   border-top: 1px solid #eee;
@@ -382,7 +382,7 @@
   padding: 4px 18px 8px;
   font-size: 12px;
   font-weight: 700;
-  color: #6A1B9A;
+  color: #243358;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -406,7 +406,7 @@
 
 .dropdown-col-list li a:hover {
   background: #f0f3f8;
-  color: #6A1B9A;
+  color: #243358;
   border-left-color: #c8963e;
   padding-left: 24px;
 }
@@ -420,7 +420,7 @@
 .dropdown-section-title {
   padding: 4px 18px 2px;
   font-weight: 700;
-  color: #6A1B9A;
+  color: #243358;
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -490,7 +490,7 @@
     right: -300px;
     width: 280px;
     height: 100vh;
-    background: #4a1669;
+    background: #1e2d4d;
     flex-direction: column;
     justify-content: flex-start;
     overflow-y: scroll;

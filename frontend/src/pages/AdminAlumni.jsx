@@ -388,7 +388,7 @@ function AdminAlumni() {
                       <tbody>
                         {filtered.map((a, idx) => (
                           <tr key={a._id} onClick={() => { setSelectedAlumni(selectedAlumni?._id === a._id ? null : a); setEditing(false); setEditForm(null); }} style={{ cursor: 'pointer', background: selectedAlumni?._id === a._id ? '#f5f7fa' : 'transparent' }}>
-                            <td style={{ fontWeight: 600, color: '#6A1B9A' }}>{idx + 1}</td>
+                            <td style={{ fontWeight: 600, color: '#243358' }}>{idx + 1}</td>
                             <td style={{ fontWeight: 500 }}>{a.fullName || 'N/A'}</td>
                             <td>{a.phone || 'N/A'}</td>
                             <td>{a.email || 'N/A'}</td>
@@ -412,7 +412,7 @@ function AdminAlumni() {
                 {selectedAlumni && (
                   <div style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '24px', marginTop: '20px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid #e4e8ed' }}>
-                      <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#6A1B9A' }}>Alumni Details</h3>
+                      <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#243358' }}>Alumni Details</h3>
                       <div style={{ display: 'flex', gap: '8px' }}>
                         {!editing ? <button className="btn btn-primary btn-sm" onClick={startEditing}>Edit</button> : <>
                           <button className="btn btn-primary btn-sm" onClick={handleSaveAlumni} disabled={saving}>{saving ? 'Saving...' : 'Save'}</button>
@@ -468,7 +468,7 @@ function AdminAlumni() {
             {/* Live Preview Table */}
             <div className="admin-card" style={{ overflow: 'hidden', marginBottom: '20px' }}>
               <div style={{ padding: '16px 20px', borderBottom: '1px solid #e4e8ed', background: '#f9fafb' }}>
-                <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#6A1B9A', fontSize: '16px' }}>Live Preview — Public Entrepreneurs Table</h3>
+                <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#243358', fontSize: '16px' }}>Live Preview — Public Entrepreneurs Table</h3>
                 <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#888' }}>This is how the table appears on the public Alumni Entrepreneurs page.</p>
               </div>
               <div style={{ overflowX: 'auto' }}>
@@ -489,7 +489,7 @@ function AdminAlumni() {
                     <tbody>
                       {filteredEnt.map((e, i) => (
                         <tr key={e._id} style={{ background: selectedEnt?._id === e._id ? '#f5f7fa' : 'transparent' }}>
-                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#6A1B9A' }}>{i + 1}</td>
+                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                           <td style={{ fontWeight: 500 }}>{e.name}</td>
                           <td>{e.firm}</td>
                           <td>
@@ -510,7 +510,7 @@ function AdminAlumni() {
             {(entAdding || entEditing) && entForm && (
               <div style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '24px', marginTop: '20px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid #e4e8ed' }}>
-                  <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#6A1B9A' }}>{entAdding ? 'Add New Entrepreneur' : 'Edit Entrepreneur'}</h3>
+                  <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#243358' }}>{entAdding ? 'Add New Entrepreneur' : 'Edit Entrepreneur'}</h3>
                   <div style={{ display: 'flex', gap: '8px' }}>
                     <button className="btn btn-primary btn-sm" onClick={handleSaveEnt} disabled={entSaving}>{entSaving ? 'Saving...' : 'Save'}</button>
                     <button className="btn btn-secondary btn-sm" onClick={cancelEntForm}>Cancel</button>
@@ -539,7 +539,7 @@ function AdminAlumni() {
             {/* Live Preview Table */}
             <div className="admin-card" style={{ overflow: 'hidden', marginBottom: '20px' }}>
               <div style={{ padding: '16px 20px', borderBottom: '1px solid #e4e8ed', background: '#f9fafb' }}>
-                <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#6A1B9A', fontSize: '16px' }}>Live Preview — Public Alumni Association Table</h3>
+                <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#243358', fontSize: '16px' }}>Live Preview — Public Alumni Association Table</h3>
                 <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#888' }}>This is how the table appears on the public Alumni Association page.</p>
               </div>
               <div style={{ overflowX: 'auto' }}>
@@ -562,7 +562,7 @@ function AdminAlumni() {
                     <tbody>
                       {filteredAssoc.map((m, i) => (
                         <tr key={m._id} style={{ background: selectedAssoc?._id === m._id ? '#f5f7fa' : 'transparent' }}>
-                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#6A1B9A' }}>{i + 1}</td>
+                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                           <td style={{ fontWeight: 500 }}>{m.name}</td>
                           <td><span style={{ background: '#e3f2fd', color: '#1565c0', padding: '2px 8px', borderRadius: '10px', fontSize: '12px', fontWeight: 600 }}>{m.designation}</span></td>
                           <td style={{ fontSize: '13px', color: '#666' }}>{m.department || '—'}</td>
@@ -585,7 +585,7 @@ function AdminAlumni() {
             {(assocAdding || assocEditing) && assocForm && (
               <div style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '24px', marginTop: '20px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid #e4e8ed' }}>
-                  <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#6A1B9A' }}>{assocAdding ? 'Add New Member' : 'Edit Member'}</h3>
+                  <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#243358' }}>{assocAdding ? 'Add New Member' : 'Edit Member'}</h3>
                   <div style={{ display: 'flex', gap: '8px' }}>
                     <button className="btn btn-primary btn-sm" onClick={handleSaveAssoc} disabled={assocSaving}>{assocSaving ? 'Saving...' : 'Save'}</button>
                     <button className="btn btn-secondary btn-sm" onClick={cancelAssocForm}>Cancel</button>
@@ -624,7 +624,7 @@ function AdminAlumni() {
               /* ─── EDITOR ─── */
               <div style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '24px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid #e4e8ed' }}>
-                  <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#6A1B9A' }}>Edit Vision & Mission</h3>
+                  <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#243358' }}>Edit Vision & Mission</h3>
                   <div style={{ display: 'flex', gap: '8px' }}>
                     <button className="btn btn-primary btn-sm" onClick={handleSaveVm} disabled={vmSaving}>{vmSaving ? 'Saving...' : 'Save'}</button>
                     <button className="btn btn-secondary btn-sm" onClick={() => setVmEditing(false)}>Cancel</button>
@@ -652,7 +652,7 @@ function AdminAlumni() {
               <div>
                 <div className="admin-card" style={{ overflow: 'hidden', marginBottom: '20px' }}>
                   <div style={{ padding: '16px 20px', borderBottom: '1px solid #e4e8ed', background: '#f9fafb' }}>
-                    <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#6A1B9A', fontSize: '16px' }}>Live Preview — Alumni Vision & Mission</h3>
+                    <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#243358', fontSize: '16px' }}>Live Preview — Alumni Vision & Mission</h3>
                     <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#888' }}>This is how the content appears on the public Alumni Vision & Mission page.</p>
                   </div>
                   <div style={{ padding: '24px' }}>

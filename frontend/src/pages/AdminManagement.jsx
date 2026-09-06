@@ -392,7 +392,7 @@ function AdminManagement() {
                         </div>
                       ) : (
                         <div className="placement-officer-photo" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f5f7fa' }}>
-                          <span style={{ fontSize: '48px', fontWeight: 700, color: '#6A1B9A', fontFamily: 'Georgia, serif' }}>?</span>
+                          <span style={{ fontSize: '48px', fontWeight: 700, color: '#243358', fontFamily: 'Georgia, serif' }}>?</span>
                         </div>
                       )}
                       <h4 className="placement-officer-name">{form.name || currentRole?.label || 'Name'}</h4>
@@ -415,9 +415,9 @@ function AdminManagement() {
                         <ImageUpload value={form.photoUrl} onChange={(url) => handleChange('photoUrl', url)} label="" placeholder="Photo" />
                       </div>
                       <input type="text" value={form.name} onChange={(e) => handleChange('name', e.target.value)} placeholder="Full Name"
-                        style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '14px', fontWeight: 700, fontFamily: 'Georgia, serif', color: '#6A1B9A', textAlign: 'center', marginBottom: '6px', boxSizing: 'border-box' }} />
+                        style={{ width: '100%', padding: '7px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '14px', fontWeight: 700, fontFamily: 'Georgia, serif', color: '#243358', textAlign: 'center', marginBottom: '6px', boxSizing: 'border-box' }} />
                       <input type="text" value={form.title} onChange={(e) => handleChange('title', e.target.value)} placeholder="Title / Designation"
-                        style={{ width: '100%', padding: '5px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', textAlign: 'center', color: '#6A1B9A', fontWeight: 500, marginBottom: '6px', boxSizing: 'border-box' }} />
+                        style={{ width: '100%', padding: '5px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', textAlign: 'center', color: '#243358', fontWeight: 500, marginBottom: '6px', boxSizing: 'border-box' }} />
                       <input type="text" value={form.qualification} onChange={(e) => handleChange('qualification', e.target.value)} placeholder="Qualification"
                         style={{ width: '100%', padding: '5px 8px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '13px', textAlign: 'center', color: '#666', boxSizing: 'border-box' }} />
                     </div>

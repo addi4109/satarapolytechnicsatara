@@ -281,7 +281,7 @@ function AdminActivities() {
           ) : (
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <div onClick={() => { setEditingSubIdx(i); setEditingSubImgIdx(null); }} style={{ cursor: 'pointer', flex: 1 }}>
-                <h4 style={{ margin: '0 0 4px', color: '#6A1B9A', fontSize: '16px' }}>{sub.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled</em>}</h4>
+                <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '16px' }}>{sub.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled</em>}</h4>
                 {sub.description && <p style={{ margin: '0 0 8px', color: '#555', fontSize: '13px', lineHeight: '1.5' }}>{sub.description.length > 120 ? sub.description.substring(0, 120) + '...' : sub.description}</p>}
                 {sub.images && sub.images.length > 0 && (
                   <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>

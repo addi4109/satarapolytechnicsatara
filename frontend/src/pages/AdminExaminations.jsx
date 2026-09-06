@@ -215,7 +215,7 @@ function AdminExaminations() {
             <tbody>
               {form.schedules.map((s, i) => (
                 <tr key={i}>
-                  <td style={{ textAlign: 'center', fontWeight: 600, color: '#6A1B9A' }}>{i + 1}</td>
+                  <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                   <td style={{ fontWeight: 500 }}>{s.examName}</td>
                   <td style={{ textAlign: 'center' }}>{s.semester}</td>
                   <td style={{ textAlign: 'center' }}>{s.startDate}</td>
@@ -223,7 +223,7 @@ function AdminExaminations() {
                   <td style={{ textAlign: 'center' }}>
                     {s.pdfUrl ? (
                       <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
-                        <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(s.pdfUrl)}`} target="_blank" style={{ padding: '4px 12px', background: '#6A1B9A', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}>View</a>
+                        <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(s.pdfUrl)}`} target="_blank" style={{ padding: '4px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}>View</a>
                         <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(s.pdfUrl)}`} download style={{ padding: '4px 12px', background: '#7A263A', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}>Download</a>
                       </div>
                     ) : <span style={{ color: '#ccc' }}>—</span>}
@@ -244,10 +244,10 @@ function AdminExaminations() {
       {form.ruleSubSections && form.ruleSubSections.length > 0 ? (
         form.ruleSubSections.map((sub, ssIdx) => (
           <div key={ssIdx} style={{ marginBottom: '24px', padding: '16px', border: '1px solid #e4e8ed', borderRadius: '10px', background: '#fff' }}>
-            <h3 style={{ margin: '0 0 12px', color: '#6A1B9A', fontSize: '21px', borderBottom: '2px solid #c8963e', paddingBottom: '6px' }}>{sub.subTitle || 'Untitled'}</h3>
+            <h3 style={{ margin: '0 0 12px', color: '#243358', fontSize: '21px', borderBottom: '2px solid #c8963e', paddingBottom: '6px' }}>{sub.subTitle || 'Untitled'}</h3>
             {sub.rules && sub.rules.map((rule, rIdx) => (
               <div key={rIdx} style={{ marginBottom: '12px', padding: '14px 16px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px', marginLeft: '8px' }}>
-                <h4 style={{ margin: '0 0 6px', color: '#6A1B9A', fontSize: '18px' }}><span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {rIdx + 1}:</span>{rule.title}</h4>
+                <h4 style={{ margin: '0 0 6px', color: '#243358', fontSize: '18px' }}><span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {rIdx + 1}:</span>{rule.title}</h4>
                 {rule.description && <p style={{ margin: '0 0 6px', color: '#555', fontSize: '16px', lineHeight: '1.6' }}>{rule.description}</p>}
                 {rule.subPoints && rule.subPoints.length > 0 && (
                   <ul style={{ margin: '6px 0 0', paddingLeft: '20px' }}>
@@ -261,7 +261,7 @@ function AdminExaminations() {
       ) : form.rules && form.rules.length > 0 ? (
         form.rules.map((rule, i) => (
           <div key={i} style={{ marginBottom: '16px', padding: '16px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px' }}>
-            <h4 style={{ margin: '0 0 8px', color: '#6A1B9A', fontSize: '18px' }}><span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {i + 1}:</span>{rule.title}</h4>
+            <h4 style={{ margin: '0 0 8px', color: '#243358', fontSize: '18px' }}><span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {i + 1}:</span>{rule.title}</h4>
             {rule.description && <p style={{ margin: '0 0 6px', color: '#555', fontSize: '16px', lineHeight: '1.6' }}>{rule.description}</p>}
             {rule.subPoints && rule.subPoints.length > 0 && (
               <ul style={{ margin: '8px 0 0', paddingLeft: '20px' }}>
@@ -281,7 +281,7 @@ function AdminExaminations() {
       <p>Examination results declared by MSBTE, Mumbai can be checked by students through the official result portal.</p>
       {form.resultPortalUrl ? (
         <div style={{ marginTop: '24px', textAlign: 'center' }}>
-          <a href={form.resultPortalUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', background: 'linear-gradient(135deg, #6A1B9A 0%, #7a9fc5 100%)', color: '#fff', fontSize: '16px', fontWeight: 600, borderRadius: '50px', textDecoration: 'none', boxShadow: '0 4px 15px rgba(36, 51, 88, 0.3)' }}>
+          <a href={form.resultPortalUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', background: 'linear-gradient(135deg, #243358 0%, #7a9fc5 100%)', color: '#fff', fontSize: '16px', fontWeight: 600, borderRadius: '50px', textDecoration: 'none', boxShadow: '0 4px 15px rgba(36, 51, 88, 0.3)' }}>
             View Result Portal <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', background: 'rgba(255,255,255,0.2)', borderRadius: '50%' }}>→</span>
           </a>
         </div>
@@ -313,7 +313,7 @@ function AdminExaminations() {
             href={form.revaluationPortalUrl}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', background: 'linear-gradient(135deg, #6A1B9A 0%, #7a9fc5 100%)', color: '#fff', fontSize: '16px', fontWeight: 600, borderRadius: '50px', textDecoration: 'none', boxShadow: '0 4px 15px rgba(36, 51, 88, 0.3)' }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', background: 'linear-gradient(135deg, #243358 0%, #7a9fc5 100%)', color: '#fff', fontSize: '16px', fontWeight: 600, borderRadius: '50px', textDecoration: 'none', boxShadow: '0 4px 15px rgba(36, 51, 88, 0.3)' }}
           >
             Visit Portal <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', background: 'rgba(255,255,255,0.2)', borderRadius: '50%' }}>→</span>
           </a>
@@ -355,12 +355,12 @@ function AdminExaminations() {
             <tbody>
               {form.noticesData.map((n, i) => (
                 <tr key={i}>
-                  <td style={{ textAlign: 'center', fontWeight: 600, color: '#6A1B9A' }}>{i + 1}</td>
+                  <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                   <td style={{ fontWeight: 500 }}>{n.title}</td>
                   <td style={{ textAlign: 'center' }}>{n.date}</td>
                   <td>{n.description}</td>
                   <td style={{ textAlign: 'center' }}>
-                    {n.pdfUrl ? <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(n.pdfUrl)}`} target="_blank" style={{ padding: '4px 12px', background: '#6A1B9A', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}>View</a> : <span style={{ color: '#ccc' }}>—</span>}
+                    {n.pdfUrl ? <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(n.pdfUrl)}`} target="_blank" style={{ padding: '4px 12px', background: '#243358', color: '#fff', fontSize: '11px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none' }}>View</a> : <span style={{ color: '#ccc' }}>—</span>}
                   </td>
                 </tr>
               ))}
@@ -434,7 +434,7 @@ function AdminExaminations() {
       ) : (
         <div className="rank-empty-state">
           <div style={{ fontSize: '40px', marginBottom: '10px' }}>🏆</div>
-          <h4 style={{ color: '#6A1B9A', margin: '0 0 6px', fontSize: '16px' }}>No Rank Holders Added Yet</h4>
+          <h4 style={{ color: '#243358', margin: '0 0 6px', fontSize: '16px' }}>No Rank Holders Added Yet</h4>
           <p style={{ fontSize: '13px', color: '#888', margin: 0, lineHeight: '1.5' }}>Click <strong>+ Add Card</strong> below to create the first rank holder.</p>
         </div>
       )}
@@ -468,7 +468,7 @@ function AdminExaminations() {
           <tbody>
             {form.schedules.map((s, i) => (
               <tr key={i}>
-                <td style={{ textAlign: 'center', fontWeight: 600, color: '#6A1B9A' }}>{i + 1}</td>
+                <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                 <td><input type="text" value={s.examName} onChange={(e) => updateRow('schedules', i, 'examName', e.target.value)} placeholder="Exam Name" style={cellInput} /></td>
                 <td><input type="text" value={s.semester} onChange={(e) => updateRow('schedules', i, 'semester', e.target.value)} placeholder="Semester" style={cellInput} /></td>
                 <td><input type="text" value={s.startDate} onChange={(e) => updateRow('schedules', i, 'startDate', e.target.value)} placeholder="01/06/2026" style={cellInput} /></td>
@@ -496,7 +496,7 @@ function AdminExaminations() {
             </div>
           ) : (
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-              <h4 onClick={() => setEditingSubSectionIdx(ssIdx)} style={{ margin: 0, color: '#6A1B9A', fontSize: '20px', cursor: 'pointer', flex: 1 }}>
+              <h4 onClick={() => setEditingSubSectionIdx(ssIdx)} style={{ margin: 0, color: '#243358', fontSize: '20px', cursor: 'pointer', flex: 1 }}>
                 <span style={{ color: '#7A263A', marginRight: '8px' }}>§{ssIdx + 1}</span>
                 {subSection.subTitle || <em style={{ fontWeight: 400, color: '#aaa' }}>Untitled</em>}
               </h4>
@@ -519,14 +519,14 @@ function AdminExaminations() {
                         <button onClick={() => removeSubPointFromSubSectionRule(ssIdx, rIdx, spIdx)} style={{ background: 'none', border: 'none', color: '#c0392b', cursor: 'pointer', fontSize: '15px', fontWeight: 700, padding: '0 3px' }}>×</button>
                       </div>
                     ))}
-                    <button onClick={() => addSubPointToSubSectionRule(ssIdx, rIdx)} style={{ marginTop: '3px', background: 'none', border: '1px dashed #b9c3d4', borderRadius: '3px', padding: '3px 10px', cursor: 'pointer', color: '#6A1B9A', fontSize: '11px', fontWeight: 600 }}>+ Add Sub-Point</button>
+                    <button onClick={() => addSubPointToSubSectionRule(ssIdx, rIdx)} style={{ marginTop: '3px', background: 'none', border: '1px dashed #b9c3d4', borderRadius: '3px', padding: '3px 10px', cursor: 'pointer', color: '#243358', fontSize: '11px', fontWeight: 600 }}>+ Add Sub-Point</button>
                   </div>
                   <button className="btn btn-success btn-sm" onClick={() => setEditingSubSectionRuleIdx(null)}>Done</button>
                 </>
               ) : (
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div onClick={() => { setEditingSubSectionIdx(ssIdx); setEditingSubSectionRuleIdx(rIdx); }} style={{ cursor: 'pointer', flex: 1 }}>
-                    <h5 style={{ margin: '0 0 4px', color: '#6A1B9A', fontSize: '17px' }}><span style={{ color: '#7A263A', marginRight: '6px' }}>Rule {rIdx + 1}:</span>{rule.title || <em style={{ fontWeight: 400, color: '#aaa' }}>Untitled</em>}</h5>
+                    <h5 style={{ margin: '0 0 4px', color: '#243358', fontSize: '17px' }}><span style={{ color: '#7A263A', marginRight: '6px' }}>Rule {rIdx + 1}:</span>{rule.title || <em style={{ fontWeight: 400, color: '#aaa' }}>Untitled</em>}</h5>
                     {rule.description && <p style={{ margin: '0 0 4px', color: '#555', fontSize: '15px', lineHeight: '1.5' }}>{rule.description}</p>}
                     {rule.subPoints && rule.subPoints.length > 0 && <ul style={{ margin: '4px 0 0', paddingLeft: '18px' }}>{rule.subPoints.map((sp, spIdx) => <li key={spIdx} style={{ color: '#555', fontSize: '14px' }}>{sp}</li>)}</ul>}
                   </div>
@@ -554,7 +554,7 @@ function AdminExaminations() {
       </div>
       {form.resultPortalUrl && (
         <div style={{ marginTop: '12px', padding: '12px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '6px' }}>
-          <p style={{ margin: 0, fontSize: '13px', color: '#444' }}><strong>Current:</strong> <a href={form.resultPortalUrl} target="_blank" style={{ color: '#6A1B9A' }}>{form.resultPortalUrl}</a></p>
+          <p style={{ margin: 0, fontSize: '13px', color: '#444' }}><strong>Current:</strong> <a href={form.resultPortalUrl} target="_blank" style={{ color: '#243358' }}>{form.resultPortalUrl}</a></p>
         </div>
       )}
     </div>
@@ -597,13 +597,13 @@ function AdminExaminations() {
                       <button onClick={() => removeRevStepSubPoint(i, spIdx)} style={{ background: 'none', border: 'none', color: '#c0392b', cursor: 'pointer', fontSize: '16px', fontWeight: 700, padding: '0 4px' }}>×</button>
                     </div>
                   ))}
-                  <button onClick={() => addRevStepSubPoint(i)} style={{ marginTop: '4px', background: 'none', border: '1px dashed #b9c3d4', borderRadius: '4px', padding: '4px 12px', cursor: 'pointer', color: '#6A1B9A', fontSize: '12px', fontWeight: 600 }}>+ Add Sub-Point</button>
+                  <button onClick={() => addRevStepSubPoint(i)} style={{ marginTop: '4px', background: 'none', border: '1px dashed #b9c3d4', borderRadius: '4px', padding: '4px 12px', cursor: 'pointer', color: '#243358', fontSize: '12px', fontWeight: 600 }}>+ Add Sub-Point</button>
                 </div>
                 <button className="btn btn-success btn-sm" onClick={() => setEditingRevStepIdx(null)}>Done</button>
               </>
             ) : (
               <div onClick={() => setEditingRevStepIdx(i)} style={{ cursor: 'pointer' }}>
-                <h4 style={{ margin: '0 0 4px', color: '#6A1B9A', fontSize: '16px' }}>{step.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled</em>}</h4>
+                <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '16px' }}>{step.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled</em>}</h4>
                 {step.description && <p style={{ margin: '0 0 4px', color: '#555', fontSize: '14px', lineHeight: '1.5' }}>{step.description}</p>}
                 {step.subPoints && step.subPoints.length > 0 && <ul style={{ margin: '4px 0 0', paddingLeft: '18px' }}>{step.subPoints.map((sp, spIdx) => <li key={spIdx} style={{ color: '#555', fontSize: '13px' }}>{sp}</li>)}</ul>}
               </div>
@@ -625,7 +625,7 @@ function AdminExaminations() {
           <tbody>
             {form.noticesData.map((n, i) => (
               <tr key={i}>
-                <td style={{ textAlign: 'center', fontWeight: 600, color: '#6A1B9A' }}>{i + 1}</td>
+                <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
                 <td><input type="text" value={n.title} onChange={(e) => updateRow('noticesData', i, 'title', e.target.value)} placeholder="Notice Title" style={cellInput} /></td>
                 <td><input type="text" value={n.date} onChange={(e) => updateRow('noticesData', i, 'date', e.target.value)} placeholder="15/06/2026" style={cellInput} /></td>
                 <td><input type="text" value={n.description} onChange={(e) => updateRow('noticesData', i, 'description', e.target.value)} placeholder="Description" style={cellInput} /></td>

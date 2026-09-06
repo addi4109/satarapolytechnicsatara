@@ -7,7 +7,7 @@
 .cells-main-heading {
   font-family: 'Georgia', serif;
   font-size: 28px;
-  color: #6A1B9A;
+  color: #243358;
   font-weight: 700;
   margin: 0;
 }
@@ -51,18 +51,18 @@
 
 .cell-card-link:hover .cell-card {
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  border-color: #6A1B9A;
+  border-color: #243358;
 }
 
 .cell-card-heading {
   font-family: 'Georgia', serif;
   font-size: 17px;
-  color: #6A1B9A;
+  color: #243358;
   margin: 0 0 8px;
 }
 
 .cell-card-link:hover .cell-card-heading {
-  color: #6A1B9A;
+  color: #243358;
 }
 
 .cell-card-desc {
@@ -76,7 +76,7 @@
 .cell-card-arrow {
   font-size: 13px;
   font-weight: 600;
-  color: #6A1B9A;
+  color: #243358;
   opacity: 0.8;
   transition: opacity 0.2s;
 }
@@ -92,7 +92,7 @@
 }
 
 .cell-card-table thead th {
-  background: #6A1B9A;
+  background: #243358;
   color: #fff;
   padding: 10px 16px;
   text-align: left;
@@ -133,7 +133,7 @@
 }
 
 .cell-card-table thead th {
-  background: #6A1B9A;
+  background: #243358;
   color: #fff;
   padding: 12px 18px;
   text-align: left;
@@ -161,7 +161,7 @@
 .cell-card-table tbody td:first-child {
   text-align: center;
   font-weight: 600;
-  color: #6A1B9A;
+  color: #243358;
 }
 
 .cell-card-table tbody tr:nth-child(even) {

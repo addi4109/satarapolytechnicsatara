@@ -6,8 +6,8 @@
 
   Palette
   -------
-  --sp-navy        #6A1B9A  page sections, cards, headings  (purple swap)
-  --sp-navy-deep   #4a1669  navbar, footer, banner chrome  (deep purple)
+  --sp-navy        #243358  page sections, cards, headings
+  --sp-navy-deep   #1e2d4d  navbar, footer, banner chrome
   --sp-gold        #c8963e  accent rules, links, buttons
   --sp-gold-dark   #a5721c  gold text on light backgrounds
   --sp-maroon      #7A263A  secondary accent (staff, cultural)
@@ -20,9 +20,9 @@
 */
 
 :root {
-  --sp-navy: #6A1B9A;
-  --sp-navy-deep: #4a1669;
-  --sp-navy-light: #8e5fc0; /* lighter purple for hover/tints */
+  --sp-navy: #243358;
+  --sp-navy-deep: #1e2d4d;
+  --sp-navy-light: #4a7ab0; /* lighter purple for hover/tints */
   --sp-gold: #c8963e;
   --sp-gold-dark: #a5721c;
   --sp-maroon: #7a263a;

@@ -12,7 +12,7 @@
   text-align: center;
   font-family: 'Georgia', serif;
   font-size: 28px;
-  color: #6A1B9A;
+  color: #243358;
   font-weight: 700;
   margin: 0;
 }
@@ -63,7 +63,7 @@
 .dept-name {
   font-size: 18px;
   font-weight: 700;
-  color: #6A1B9A;
+  color: #243358;
   margin: 0 0 10px;
   font-family: 'Georgia', serif;
   transition: color 0.3s ease;
@@ -109,7 +109,7 @@
 }
 
 .dept-btn.primary {
-  background: #6A1B9A;
+  background: #243358;
   color: #fff;
 }
 
@@ -120,12 +120,12 @@
 
 .dept-btn.secondary {
   background: #fff;
-  color: #6A1B9A;
-  border: 1px solid #6A1B9A;
+  color: #243358;
+  border: 1px solid #243358;
 }
 
 .dept-btn.secondary:hover {
-  background: #6A1B9A;
+  background: #243358;
   color: #fff;
   transform: translateY(-1px);
 }
@@ -161,7 +161,7 @@
 .why-heading {
   font-family: 'Georgia', serif;
   font-size: 26px;
-  color: #6A1B9A;
+  color: #243358;
   font-weight: 700;
   margin: 0 0 10px;
 }
