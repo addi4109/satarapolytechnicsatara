@@ -606,20 +606,27 @@ function AdminExaminations() {
                   <ImageUpload
                     value={h.image || ''}
                     onChange={(url) => {
+                      console.log('Ranker image URL:', url);
                       updateRow('rankholders', i, 'image', url);
                       // Force immediate re-render
-                      setTimeout(() => setForm((prev) => ({ ...prev })), 0);
+                      setForm((prev) => {
+                        const r = [...prev.rankholders];
+                        r[i] = { ...r[i], image: url };
+                        return { ...prev, rankholders: r };
+                      });
                     }}
                     label="Upload Photo"
                   />
                   {h.image && (
                     <img src={h.image} alt={h.name} style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '8px', marginTop: '8px', border: '1px solid #e4e8ed' }} />
                   )}
-                  {h.image && (
-                    <div style={{ marginTop: '6px', textAlign: 'center' }}>
-                      <small style={{ color: '#888' }}>✓ Image saved</small>
-                    </div>
-                  )}
+                  <div style={{ marginTop: '6px', fontSize: '11px', color: '#888' }}>
+                    {h.image ? `
+                      <span style={{ color: '#28a745' }}>✓ URL saved</span>
+                      <br />
+                      <span style={{ wordBreak: 'break-all', fontSize: '10px' }}>{h.image}</span>
+                    ` : '<span style={{ color: #aaa }}>No image</span>'}
+                  </div>
                 </div>
                 <div className="rank-editor-card-fields">
                   <div className="rank-field">
