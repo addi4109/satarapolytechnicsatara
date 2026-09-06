@@ -6,63 +6,38 @@ import API_URL from '../lib/api';
 function CollegeRankers() {
   const [rankholders, setRankholders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [version, setVersion] = useState(0);
+  const fetchRef = useRef(0);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const autoScrollRef = useRef(null);
 
-  useEffect(() => {
-    fetch(`${API_URL}/examinations`)
-      .then((res) => res.json())
-      .then((data) => {
-        const mapped = {};
-        data.forEach((s) => { mapped[s.section] = s; });
-        setRankholders(mapped.rankholders?.rankholders || []);
-    setVersion((v) => v + 1);
-      })
-      .catch((err) => console.error('Failed to fetch rank holders:', err))
-      .finally(() => setLoading(false));
-  }, [version]);
-
-  const maxIndex = Math.max(0, rankholders.length - 3);
-
-  useEffect(() => {
-    if (rankholders.length <= 3) return;
-    autoScrollRef.current = setInterval(() => {
-      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
-    }, 3500);
-    return () => { if (autoScrollRef.current) clearInterval(autoScrollRef.current); };
-  }, [rankholders.length, maxIndex]);
-
-  const resetAutoScroll = useCallback(() => {
-    if (autoScrollRef.current) clearInterval(autoScrollRef.current);
-    if (rankholders.length > 3) {
-      autoScrollRef.current = setInterval(() => {
-        setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
-      }, 3500);
+  const fetchData = useCallback(async () => {
+    try {
+      const res = await fetch(`${API_URL}/examinations`);
+      const data = await res.json();
+      const mapped = {};
+      data.forEach((s) => { mapped[s.section] = s; });
+      setRankholders(mapped.rankholders?.rankholders || []);
+    } catch (err) {
+      console.error('Failed to fetch rank holders:', err);
+    } finally {
+      setLoading(false);
     }
-  }, [rankholders.length, maxIndex]);
+  }, []);
 
-  const goToPrev = () => {
-    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
-    resetAutoScroll();
-  };
-
-  const goToNext = () => {
-    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
-    resetAutoScroll();
-  };
-
-  if (loading) return null;
-
-  if (rankholders.length === 0) return null;
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   // Listen for reload event from admin panel
   useEffect(() => {
-    const handler = () => setVersion((v) => v + 1);
+    const handler = () => {
+      fetchRef.current += 1;
+      fetchData();
+    };
     window.addEventListener('rankers-reload', handler);
     return () => window.removeEventListener('rankers-reload', handler);
-  }, []);
+  }, [fetchData]);
 
   const getVisibleCards = () => {
     const cards = [];
