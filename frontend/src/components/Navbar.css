@@ -10,7 +10,7 @@
   background: linear-gradient(135deg, #1a2a4a 0%, #2d4060 50%, #1a2a4a 100%);
   color: #d4dbe6;
   font-size: 12px;
-  padding: 7px 0;
+  padding: 4px 0;
   letter-spacing: 0.3px;
 }
 
@@ -55,7 +55,7 @@
 .main-header {
   background: linear-gradient(180deg, #ffffff 0%, #f8f9fc 100%);
   border-bottom: 1px solid rgba(36, 51, 88, 0.08);
-  padding: 14px 0;
+  padding: 11px 0;
 }
 
 .main-header-inner {

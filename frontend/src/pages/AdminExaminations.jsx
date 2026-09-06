@@ -82,6 +82,11 @@ function AdminExaminations() {
   useEffect(() => {
     const existing = sections[activeTab];
     if (existing) {
+      // Normalise rankholder images: backend may store photoUrl, admin uses image.
+      const rankholders = (existing.rankholders || []).map((h) => ({
+        ...h,
+        image: h.image || h.photoUrl || '',
+      }));
       setForm({
         title: existing.title || '',
         content: existing.content || '',
@@ -95,7 +100,7 @@ function AdminExaminations() {
         revaluationPortalUrl: existing.revaluationPortalUrl || '',
         noticesData: existing.noticesData || [],
         resultPortalUrl: existing.resultPortalUrl || '',
-        rankholders: existing.rankholders || [],
+        rankholders,
 
         active: existing.active !== false,
       });

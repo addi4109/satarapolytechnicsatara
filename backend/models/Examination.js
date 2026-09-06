@@ -124,6 +124,7 @@ const ExaminationSchema = new mongoose.Schema({
       marks: String,
       year: String,
       photoUrl: String,
+      image: String,
     }],
     default: [],
   },
