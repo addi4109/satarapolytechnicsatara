@@ -125,12 +125,13 @@
 
 .college-name {
   font-family: 'Georgia', serif;
-  font-size: 26px;
+  font-size: 22px;
   color: #243358;
   font-weight: 700;
   line-height: 1.2;
   margin: 0 0 7px;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
 }
 
 .affiliation-line {
