@@ -83,9 +83,9 @@ function CollegeRankers() {
             <p style={{ color: '#9ca3af', fontSize: '14px' }}>No rank holders added yet.</p>
           </div>
         ) : (
-          rankholders.map((holder) => (
-            <div className="ranker-card" key={holder.name + holder.rank}>
+          rankholders.map((holder) => (            <div className="ranker-card" key={holder.name + holder.rank}>
               <div className="ranker-img-wrap">
+                <div className="ranker-img-ring"></div>
                 {holder.image ? (
                   <img
                     src={holder.image}
@@ -94,7 +94,6 @@ function CollegeRankers() {
                     crossOrigin="anonymous"
                     decoding="async"
                     onError={(e) => {
-                      // Swap to placeholder on load failure so the card never goes blank.
                       e.target.replaceWith(
                         <div className="ranker-img-placeholder">
                           <span>👤</span>
@@ -107,16 +106,20 @@ function CollegeRankers() {
                     <span>👤</span>
                   </div>
                 )}
-              </div>
-              <div className="ranker-card-content">
-                <h3 className="ranker-name">
-                  {holder.name}
-                </h3>
-                <span className="ranker-department">{holder.department}</span>                  <div className={`ranker-rank-box ranker-rank-${rankClass(holder.rank)}`}>
-                    <span className="rank-number">{getMedalIcon(holder.rank)}</span>
-                    <span className="rank-label">{holder.rank}</span>
+              </div>                <div className="ranker-card-content">
+                  <h3 className="ranker-name">
+                    {holder.name}
+                  </h3>
+                  <span className="ranker-department">{holder.department}</span>
+                  <div className="ranker-divider"></div>
+                  <div className="ranker-rank-box">
+                    <span className={`rank-number rank-number-${rankClass(holder.rank)}`}>
+                      <span className="star">★</span>
+                      {holder.rank}
+                    </span>
+                    <span className="rank-label">RANK</span>
                   </div>
-              </div>
+                </div>
             </div>
           ))
         )}
