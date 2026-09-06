@@ -47,6 +47,14 @@ const SECTIONS = [
     name: '', department: '', semester: '', rank: '', marks: '', year: '', image: '',
   });
 
+  const getMedalIcon = (rank) => {
+    const r = parseInt(rank, 10);
+    if (r === 1) return '🥇';
+    if (r === 2) return '🥈';
+    if (r === 3) return '🥉';
+    return '🏅';
+  };
+
 function AdminExaminations() {
   const [activeTab, setActiveTab] = useState('schedule');
   const [sections, setSections] = useState({});

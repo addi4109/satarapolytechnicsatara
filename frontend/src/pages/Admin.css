@@ -2278,26 +2278,38 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #1e2d4a;
-  color: #ffffff;
-  border-radius: 8px;
-  padding: 8px 18px;
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 .rank-preview-public .rank-number {
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 800;
-  line-height: 1.2;
-  color: #ffffff;
+  line-height: 1.1;
+  color: #1e2d4a;
+  letter-spacing: -0.5px;
 }
 
 .rank-preview-public .rank-label {
-  font-size: 9px;
-  color: rgba(255, 255, 255, 0.75);
+  font-size: 11px;
+  color: #6b7280;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  margin-top: 1px;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+/* Image upload area (empty card) */
+.rank-editor-card-image {
+  margin-bottom: 4px;
+}
+
+.rank-editor-card-image .image-upload-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
 }
 
 /* Edit area below the preview */
