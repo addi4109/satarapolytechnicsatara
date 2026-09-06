@@ -607,14 +607,17 @@ function AdminExaminations() {
                     value={h.image || ''}
                     onChange={(url) => {
                       updateRow('rankholders', i, 'image', url);
-                      // Force re-render of this card to show image immediately
-                      setForm((prev) => ({ ...prev }));
+                      // Force immediate re-render
+                      setTimeout(() => setForm((prev) => ({ ...prev })), 0);
                     }}
                     label="Upload Photo"
                   />
                   {h.image && (
-                    <div style={{ marginTop: '8px', textAlign: 'center' }}>
-                      <a href={h.image} target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#243358' }}>View on Cloudinary →</a>
+                    <img src={h.image} alt={h.name} style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '8px', marginTop: '8px', border: '1px solid #e4e8ed' }} />
+                  )}
+                  {h.image && (
+                    <div style={{ marginTop: '6px', textAlign: 'center' }}>
+                      <small style={{ color: '#888' }}>✓ Image saved</small>
                     </div>
                   )}
                 </div>
