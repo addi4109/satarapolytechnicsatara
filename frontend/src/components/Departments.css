@@ -42,7 +42,6 @@
 .dept-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 12px 28px rgba(36, 51, 88, 0.12);
-  border-color: #c8963e;
 }
 
 .dept-img-wrap {
@@ -66,11 +65,6 @@
   color: #243358;
   margin: 0 0 10px;
   font-family: 'Georgia', serif;
-  transition: color 0.3s ease;
-}
-
-.dept-card:hover .dept-name {
-  color: #c8963e;
 }
 
 .dept-desc {
