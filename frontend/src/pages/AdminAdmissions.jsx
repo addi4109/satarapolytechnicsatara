@@ -318,7 +318,7 @@ function AdminAdmissions() {
     if (!form.note || !form.note.trim()) return null;
     return (
       <div style={{ marginTop: '24px', padding: '16px 20px', background: '#fffbe6', borderLeft: '4px solid #c8963e', borderRadius: '0 6px 6px 0' }}>
-        <strong style={{ color: '#243358', fontSize: '13px' }}>📝 Note:</strong>
+        <strong style={{ color: '#6A1B9A', fontSize: '13px' }}>📝 Note:</strong>
         <p style={{ margin: '6px 0 0', color: '#555', fontSize: '13px', lineHeight: '1.7' }}>{form.note}</p>
       </div>
     );
@@ -403,7 +403,7 @@ function AdminAdmissions() {
                   <tbody>
                     {form.courseTable.map((c, i) => (
                       <tr key={i}>
-                        <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                        <td style={{ textAlign: 'center', fontWeight: 600, color: '#6A1B9A' }}>{i + 1}</td>
                         <td style={{ fontWeight: 500 }}>{c.name}</td>
                         <td>{c.duration}</td>
                         <td>{c.intake}</td>
@@ -496,7 +496,7 @@ function AdminAdmissions() {
             {form.feePdfUrl ? (
               <div style={{ padding: '16px', background: '#f8f9fa', borderRadius: '8px', border: '1px solid #e4e8ed' }}>
                 <p style={{ margin: 0, fontSize: '14px', color: '#444' }}>
-                  📄 <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(form.feePdfUrl)}`} target="_blank" style={{ color: '#243358', fontWeight: 600 }}>View Fee Structure PDF</a>
+                  📄 <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(form.feePdfUrl)}`} target="_blank" style={{ color: '#6A1B9A', fontWeight: 600 }}>View Fee Structure PDF</a>
                 </p>
               </div>
             ) : (
@@ -539,7 +539,7 @@ function AdminAdmissions() {
             {form.pdfUrl ? (
               <div style={{ padding: '16px', background: '#f8f9fa', borderRadius: '8px', border: '1px solid #e4e8ed' }}>
                 <p style={{ margin: 0, fontSize: '14px', color: '#444' }}>
-                  📄 <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(form.pdfUrl)}`} target="_blank" style={{ color: '#243358', fontWeight: 600 }}>View Brochure PDF</a>
+                  📄 <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(form.pdfUrl)}`} target="_blank" style={{ color: '#6A1B9A', fontWeight: 600 }}>View Brochure PDF</a>
                 </p>
               </div>
             ) : (
@@ -735,7 +735,7 @@ function AdminAdmissions() {
             {form.feePdfUrl && (
               <div style={{ marginTop: '12px', padding: '12px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '6px' }}>
                 <p style={{ margin: 0, fontSize: '13px', color: '#444' }}>
-                  📄 <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(form.feePdfUrl)}`} target="_blank" style={{ color: '#243358', fontWeight: 600 }}>View current PDF</a>
+                  📄 <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(form.feePdfUrl)}`} target="_blank" style={{ color: '#6A1B9A', fontWeight: 600 }}>View current PDF</a>
                 </p>
               </div>
             )}
@@ -800,7 +800,7 @@ function AdminAdmissions() {
             {form.pdfUrl && (
               <div style={{ marginTop: '12px', padding: '12px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '6px' }}>
                 <p style={{ margin: 0, fontSize: '13px', color: '#444' }}>
-                  <strong>Current:</strong> <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(form.pdfUrl)}`} target="_blank" style={{ color: '#243358' }}>{form.pdfUrl}</a>
+                  <strong>Current:</strong> <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(form.pdfUrl)}`} target="_blank" style={{ color: '#6A1B9A' }}>{form.pdfUrl}</a>
                 </p>
               </div>
             )}

@@ -29,13 +29,13 @@
 
 .academics-tab:hover {
   background: #e8ecf1;
-  color: #243358;
+  color: #6A1B9A;
 }
 
 .academics-tab.active {
-  background: #243358;
+  background: #6A1B9A;
   color: #fff;
-  border-color: #243358;
+  border-color: #6A1B9A;
 }
 
 .academics-content {
@@ -62,7 +62,7 @@
 }
 
 .courses-table th {
-  background: #243358;
+  background: #6A1B9A;
   color: #fff;
   font-weight: 600;
   padding: 11px 14px;
@@ -97,7 +97,7 @@
 .curr-title {
   font-family: 'Georgia', serif;
   font-size: 15px;
-  color: #243358;
+  color: #6A1B9A;
   margin: 0 0 8px;
 }
 
@@ -126,13 +126,13 @@
 .faculty-card h4 {
   font-size: 14px;
   font-weight: 700;
-  color: #243358;
+  color: #6A1B9A;
   margin: 0 0 6px;
 }
 
 .faculty-card p {
   font-size: 13px;
-  color: #243358;
+  color: #6A1B9A;
   font-weight: 600;
   margin: 0;
 }
@@ -203,11 +203,11 @@
 
 .sidebar-link:hover {
   background: #f5f7fa;
-  color: #243358;
+  color: #6A1B9A;
 }
 
 .sidebar-link.active {
-  background: #243358;
+  background: #6A1B9A;
   color: #fff;
 }
 
@@ -228,7 +228,7 @@
 .content-heading {
   font-family: 'Georgia', serif;
   font-size: 26px;
-  color: #243358;
+  color: #6A1B9A;
   font-weight: 700;
   margin: 0;
 }
@@ -277,7 +277,7 @@
 
 .info-label {
   font-weight: 700;
-  color: #243358;
+  color: #6A1B9A;
   min-width: 180px;
 }
 
@@ -304,7 +304,7 @@
   display: block;
   font-size: 22px;
   font-weight: 700;
-  color: #243358;
+  color: #6A1B9A;
   font-family: 'Georgia', serif;
 }
 
@@ -334,18 +334,18 @@
 }
 
 .cal-btn.view {
-  background: #243358;
+  background: #6A1B9A;
   color: #fff;
 }
 
 .cal-btn.view:hover {
-  background: #243358;
+  background: #6A1B9A;
 }
 
 .cal-btn.download {
   background: #fff;
-  color: #243358;
-  border: 1px solid #243358;
+  color: #6A1B9A;
+  border: 1px solid #6A1B9A;
 }
 
 .cal-btn.download:hover {
@@ -355,7 +355,7 @@
 .cell-heading {
   font-family: 'Georgia', serif;
   font-size: 18px;
-  color: #243358;
+  color: #6A1B9A;
   margin: 28px 0 8px;
   padding-bottom: 6px;
   border-bottom: 2px solid #c8963e;
@@ -373,7 +373,7 @@
 }
 
 .cell-table thead th {
-  background: #243358;
+  background: #6A1B9A;
   color: #fff;
   padding: 10px 14px;
   text-align: left;
@@ -398,7 +398,7 @@
 .content-sub-heading {
   font-family: 'Georgia', serif;
   font-size: 18px;
-  color: #243358;
+  color: #6A1B9A;
   font-weight: 700;
   margin: 24px 0 10px;
   padding-bottom: 6px;
@@ -429,7 +429,7 @@
   height: 40px;
   min-width: 40px;
   border-radius: 50%;
-  background: #243358;
+  background: #6A1B9A;
   color: #fff;
   font-size: 16px;
   font-weight: 700;
@@ -441,7 +441,7 @@
 .step-content h4 {
   font-family: 'Georgia', serif;
   font-size: 15px;
-  color: #243358;
+  color: #6A1B9A;
   margin: 0 0 4px;
 }
 
@@ -482,7 +482,7 @@
 .rev-step-card .step-content h4 {
   font-family: 'Georgia', serif;
   font-size: 17px;
-  color: #243358;
+  color: #6A1B9A;
   margin: 0 0 6px;
   font-weight: 700;
 }
@@ -547,7 +547,7 @@
 }
 
 .fee-table thead th {
-  background: #243358;
+  background: #6A1B9A;
   color: #fff;
   font-weight: 600;
   padding: 10px 12px;
@@ -582,7 +582,7 @@
   width: 50px;
   text-align: center;
   font-weight: 600;
-  color: #243358;
+  color: #6A1B9A;
 }
 
 .fee-year-cell {
@@ -614,7 +614,7 @@
 
 .fee-total {
   font-weight: 700 !important;
-  color: #243358 !important;
+  color: #6A1B9A !important;
   font-size: 14px;
 }
 
@@ -639,7 +639,7 @@
 }
 
 .scholarship-scheme strong {
-  color: #243358;
+  color: #6A1B9A;
 }
 
 .brochure-actions {
@@ -659,18 +659,18 @@
 }
 
 .brochure-btn.view {
-  background: #243358;
+  background: #6A1B9A;
   color: #fff;
 }
 
 .brochure-btn.view:hover {
-  background: #243358;
+  background: #6A1B9A;
 }
 
 .brochure-btn.download {
   background: #fff;
-  color: #243358;
-  border: 1px solid #243358;
+  color: #6A1B9A;
+  border: 1px solid #6A1B9A;
 }
 
 .brochure-btn.download:hover {
@@ -712,7 +712,7 @@
 .admission-highlight-card h4 {
   font-family: 'Georgia', serif;
   font-size: 15px;
-  color: #243358;
+  color: #6A1B9A;
   font-weight: 700;
   margin: 0 0 8px;
 }
@@ -763,7 +763,7 @@
 .quick-card-label {
   font-size: 14px;
   font-weight: 700;
-  color: #243358;
+  color: #6A1B9A;
   display: block;
   line-height: 1.3;
 }
@@ -812,7 +812,7 @@
 }
 
 .exam-btn-view {
-  background: #243358;
+  background: #6A1B9A;
   color: #fff;
 }
 
@@ -822,14 +822,14 @@
 
 .exam-btn-download {
   background: transparent;
-  color: #243358;
-  border: 1.5px solid #243358;
+  color: #6A1B9A;
+  border: 1.5px solid #6A1B9A;
   padding: 5px 10px;
   min-width: 32px;
 }
 
 .exam-btn-download:hover {
-  background: #243358;
+  background: #6A1B9A;
   color: #fff;
 }
 
@@ -936,7 +936,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #243358;
+  background: #6A1B9A;
   color: #fff;
   display: flex;
   align-items: center;
@@ -954,7 +954,7 @@
   margin: 0 0 6px;
   font-size: 15px;
   font-weight: 700;
-  color: #243358;
+  color: #6A1B9A;
 }
 
 .rule-desc {
@@ -1004,15 +1004,15 @@
 }
 
 .brochure-btn-view {
-  background: #243358;
+  background: #6A1B9A;
   color: #fff;
   border: none;
 }
 
 .brochure-btn-download {
   background: #fff;
-  color: #243358;
-  border: 2px solid #243358;
+  color: #6A1B9A;
+  border: 2px solid #6A1B9A;
 }
 
 @media (max-width: 768px) {

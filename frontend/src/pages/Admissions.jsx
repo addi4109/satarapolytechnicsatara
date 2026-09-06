@@ -121,7 +121,7 @@ function Admissions() {
     if (!section || !section.note || !section.note.trim()) return null;
     return (
       <div style={{ marginTop: '24px', padding: '16px 20px', background: '#fffbe6', borderLeft: '4px solid #c8963e', borderRadius: '0 6px 6px 0' }}>
-        <strong style={{ color: '#243358', fontSize: '13px' }}>📝 Note:</strong>
+        <strong style={{ color: '#6A1B9A', fontSize: '13px' }}>📝 Note:</strong>
         <p style={{ margin: '6px 0 0', color: '#555', fontSize: '13px', lineHeight: '1.7' }}>{section.note}</p>
       </div>
     );
@@ -363,7 +363,7 @@ function Admissions() {
                 <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '20px', borderRadius: '2px' }}></div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
                   <div style={{ background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '24px' }}>
-                    <h4 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', margin: '0 0 10px' }}>Central Admission Process (CAP)</h4>
+                    <h4 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#6A1B9A', margin: '0 0 10px' }}>Central Admission Process (CAP)</h4>
                     <p style={{ fontSize: '13.5px', color: '#555', lineHeight: '1.7', margin: 0 }}>
                       Admission through online CAP rounds conducted by DTE Maharashtra. Students must
                       register on the DTE portal, fill preference forms, and confirm admission at the
@@ -372,7 +372,7 @@ function Admissions() {
                     </p>
                   </div>
                   <div style={{ background: '#f5f7fa', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '24px' }}>
-                    <h4 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', margin: '0 0 10px' }}>Institute Level / Management</h4>
+                    <h4 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#6A1B9A', margin: '0 0 10px' }}>Institute Level / Management</h4>
                     <p style={{ fontSize: '13.5px', color: '#555', lineHeight: '1.7', margin: 0 }}>
                       Vacant seats after CAP rounds are filled under Institute Level / Management quota.
                       Interested candidates can contact the institute directly for availability and
@@ -880,10 +880,10 @@ function Admissions() {
                     <div style={{ marginTop: '24px', padding: '20px', background: '#f8f9fa', borderRadius: '10px', border: '1px solid #e4e8ed', textAlign: 'center' }}>
                       <p style={{ margin: '0 0 16px', fontSize: '15px', color: '#444', fontWeight: 600 }}>📄 Fee Structure</p>
                       <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                        <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(feePdfUrl)}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 24px', background: '#243358', color: '#fff', fontSize: '14px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none' }}>
+                        <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(feePdfUrl)}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 24px', background: '#6A1B9A', color: '#fff', fontSize: '14px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none' }}>
                           View PDF
                         </a>
-                        <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(feePdfUrl)}`} download style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 24px', background: '#fff', color: '#243358', fontSize: '14px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none', border: '1.5px solid #243358' }}>
+                        <a href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(feePdfUrl)}`} download style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 24px', background: '#fff', color: '#6A1B9A', fontSize: '14px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none', border: '1.5px solid #6A1B9A' }}>
                           Download PDF
                         </a>
                       </div>

@@ -64,7 +64,7 @@
 }
 
 .image-upload-dropzone:hover {
-  border-color: #243358;
+  border-color: #6A1B9A;
   background: #f0f4fa;
 }
 
@@ -75,7 +75,7 @@
 
 .image-upload-dropzone.uploading {
   pointer-events: none;
-  border-color: #243358;
+  border-color: #6A1B9A;
 }
 
 .upload-icon {
@@ -107,7 +107,7 @@
   width: 24px;
   height: 24px;
   border: 3px solid #e4e8ed;
-  border-top-color: #243358;
+  border-top-color: #6A1B9A;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -118,7 +118,7 @@
 
 .image-upload-progress span {
   font-size: 13px;
-  color: #243358;
+  color: #6A1B9A;
   font-weight: 600;
   font-family: 'Times New Roman', Times, serif;
 }
@@ -133,7 +133,7 @@
 
 .upload-progress-fill {
   height: 100%;
-  background: #243358;
+  background: #6A1B9A;
   border-radius: 3px;
   transition: width 0.3s ease;
 }

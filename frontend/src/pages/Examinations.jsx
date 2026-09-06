@@ -117,7 +117,7 @@ function Examinations() {
               align-items: center;
               gap: 10px;
               padding: 14px 36px;
-              background: linear-gradient(135deg, #243358 0%, #7a9fc5 100%);
+              background: linear-gradient(135deg, #6A1B9A 0%, #7a9fc5 100%);
               color: #fff;
               font-size: 16px;
               font-weight: 600;
@@ -176,7 +176,7 @@ function Examinations() {
                     <tbody>
                       {getSection('schedule').schedules.map((item, i) => (
                         <tr key={i}>
-                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#6A1B9A' }}>{i + 1}</td>
                           <td className="fee-particular" style={{ fontWeight: 500 }}>{item.examName}</td>
                           <td style={{ textAlign: 'center' }}>{item.semester}</td>
                           <td style={{ textAlign: 'center' }}>{item.startDate}</td>
@@ -251,12 +251,12 @@ function Examinations() {
                 <div style={{ marginTop: '20px' }}>
                   {getSection('rules').ruleSubSections.map((subSection, ssIdx) => (
                     <div key={ssIdx} className="exam-subsection-card" style={{ marginBottom: '24px', padding: '16px', border: '1px solid #e4e8ed', borderRadius: '10px', background: '#fff' }}>
-                      <h3 className="exam-subsection-title" style={{ margin: '0 0 12px', color: '#243358', fontSize: '21px', borderBottom: '2px solid #c8963e', paddingBottom: '6px' }}>
+                      <h3 className="exam-subsection-title" style={{ margin: '0 0 12px', color: '#6A1B9A', fontSize: '21px', borderBottom: '2px solid #c8963e', paddingBottom: '6px' }}>
                         {subSection.subTitle || 'Untitled Section'}
                       </h3>
                       {subSection.rules && subSection.rules.map((rule, rIdx) => (
                         <div key={rIdx} className="exam-rule-card" style={{ marginBottom: '12px', padding: '14px 16px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px', marginLeft: '8px' }}>
-                          <h4 style={{ margin: '0 0 6px', color: '#243358', fontSize: '18px' }}>
+                          <h4 style={{ margin: '0 0 6px', color: '#6A1B9A', fontSize: '18px' }}>
                             <span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {rIdx + 1}:</span>
                             {rule.title}
                           </h4>
@@ -282,7 +282,7 @@ function Examinations() {
                 <div style={{ marginTop: '20px' }}>
                   {getSection('rules').rules.map((rule, i) => (
                     <div key={i} className="exam-rule-card" style={{ marginBottom: '16px', padding: '16px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px' }}>
-                      <h4 style={{ margin: '0 0 8px', color: '#243358', fontSize: '18px' }}>
+                      <h4 style={{ margin: '0 0 8px', color: '#6A1B9A', fontSize: '18px' }}>
                         <span style={{ color: '#7A263A', marginRight: '8px' }}>Rule {i + 1}:</span>
                         {rule.title}
                       </h4>
@@ -425,7 +425,7 @@ function Examinations() {
                     <tbody>
                       {getSection('notices').noticesData.map((item, i) => (
                         <tr key={i}>
-                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#6A1B9A' }}>{i + 1}</td>
                           <td>
                             <div className="fee-particular" style={{ fontWeight: 500 }}>{item.title}</div>
                             {item.description && <div style={{ fontSize: '12px', color: '#888', marginTop: '4px' }}>{item.description}</div>}
@@ -489,7 +489,7 @@ function Examinations() {
                     <tbody>
                       {getSection('rankholders').rankholders.map((holder, i) => (
                         <tr key={i}>
-                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#6A1B9A' }}>{i + 1}</td>
                           <td className="fee-particular" style={{ fontWeight: 600 }}>{holder.name}</td>
                           <td style={{ textAlign: 'center' }}>{holder.department}</td>
                           <td style={{ textAlign: 'center' }}>{holder.semester}</td>
@@ -498,7 +498,7 @@ function Examinations() {
                               {holder.rank}
                             </span>
                           </td>
-                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{holder.marks}</td>
+                          <td style={{ textAlign: 'center', fontWeight: 600, color: '#6A1B9A' }}>{holder.marks}</td>
                           <td style={{ textAlign: 'center' }}>{holder.year}</td>
                         </tr>
                       ))}
@@ -508,7 +508,7 @@ function Examinations() {
               ) : (
                 <div style={{ marginTop: '32px', textAlign: 'center', padding: '48px 24px', background: '#f8f9fa', borderRadius: '10px', border: '1px dashed #d0d5dd' }}>
                   <div style={{ fontSize: '48px', marginBottom: '16px' }}>🏆</div>
-                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', margin: '0 0 8px' }}>Rank Holders Will Be Updated Soon</h3>
+                  <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#6A1B9A', margin: '0 0 8px' }}>Rank Holders Will Be Updated Soon</h3>
                   <p style={{ fontSize: '14px', color: '#888', margin: 0, lineHeight: '1.6' }}>
                     Our top rank holders will be featured here once the results are declared.
                     <br />Check back after the next examination cycle.

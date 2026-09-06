@@ -182,7 +182,7 @@ function AdminFeedbacks() {
                             selectedFeedback?.id === fb.id ? '#f5f7fa' : 'transparent',
                         }}
                       >
-                        <td style={{ fontWeight: 600, color: '#243358' }}>{idx + 1}</td>
+                        <td style={{ fontWeight: 600, color: '#6A1B9A' }}>{idx + 1}</td>
                         <td style={{ fontWeight: 500 }}>{fb.name || 'N/A'}</td>
                         <td>{fb.email || 'N/A'}</td>
                         <td>{fb.subject || 'N/A'}</td>
@@ -251,7 +251,7 @@ function AdminFeedbacks() {
                     borderBottom: '1px solid #e4e8ed',
                   }}
                 >
-                  <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#243358' }}>
+                  <h3 style={{ margin: 0, fontFamily: "'Georgia', serif", color: '#6A1B9A' }}>
                     Feedback Details
                   </h3>
                   <button

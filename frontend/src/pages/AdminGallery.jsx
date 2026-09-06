@@ -124,7 +124,7 @@ function AdminGallery() {
     <div className="admin-content-card" style={{ borderColor: '#c8963e', borderWidth: '2px' }}>
       <div className="admin-content-card-body">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-          <h4 style={{ margin: 0, color: '#243358', fontSize: '15px' }}>{editingId ? 'Edit' : 'Add New'} {getLabel()}</h4>
+          <h4 style={{ margin: 0, color: '#6A1B9A', fontSize: '15px' }}>{editingId ? 'Edit' : 'Add New'} {getLabel()}</h4>
           <button onClick={cancelForm} className="alert-dismiss-btn" style={{ fontSize: '18px', color: '#999' }}>×</button>
         </div>
         <form onSubmit={handleSave}>
@@ -271,8 +271,8 @@ function AdminGallery() {
                   minHeight: '200px', borderStyle: 'dashed', cursor: 'pointer',
                 }}
               >
-                <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', color: '#243358', fontWeight: 300 }}>+</div>
-                <span style={{ fontSize: '14px', fontWeight: 600, color: '#243358', marginTop: '10px' }}>Add {getLabel()}</span>
+                <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', color: '#6A1B9A', fontWeight: 300 }}>+</div>
+                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6A1B9A', marginTop: '10px' }}>Add {getLabel()}</span>
               </div>
             )}
 

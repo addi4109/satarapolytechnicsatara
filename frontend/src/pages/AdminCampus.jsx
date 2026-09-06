@@ -253,7 +253,7 @@ function AdminCampus() {
         {editingTableIdx === tableIdx ? (
           <input autoFocus type="text" value={table.title} onChange={(e) => updateTableTitle(tableIdx, e.target.value)} placeholder="Table title (e.g. Book Collection by Department)" style={{ flex: 1, padding: '6px 10px', border: '1px solid #ddd', borderRadius: '5px', fontSize: '14px', fontWeight: 600, marginRight: '10px' }} />
         ) : (
-          <h4 style={{ margin: 0, fontSize: '14px', color: '#243358', fontWeight: 700 }}>{table.title || 'Untitled Table'}</h4>
+          <h4 style={{ margin: 0, fontSize: '14px', color: '#6A1B9A', fontWeight: 700 }}>{table.title || 'Untitled Table'}</h4>
         )}
         <div style={{ display: 'flex', gap: '6px' }}>
           {editingTableIdx === tableIdx ? (
@@ -280,7 +280,7 @@ function AdminCampus() {
                 )}
               </div>
             ))}
-            <button onClick={() => addColumn(tableIdx)} style={{ width: '28px', height: '28px', borderRadius: '50%', border: '1px dashed #b9c3d4', background: '#fff', color: '#243358', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>+</button>
+            <button onClick={() => addColumn(tableIdx)} style={{ width: '28px', height: '28px', borderRadius: '50%', border: '1px dashed #b9c3d4', background: '#fff', color: '#6A1B9A', fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>+</button>
           </div>
 
           {/* Rows */}
@@ -293,7 +293,7 @@ function AdminCampus() {
             </div>
           ))}
 
-          <button onClick={() => addRow(tableIdx)} style={{ marginTop: '6px', padding: '4px 12px', border: '1px dashed #b9c3d4', borderRadius: '4px', background: '#fff', color: '#243358', fontSize: '12px', cursor: 'pointer', fontWeight: 600 }}>+ Add Row</button>
+          <button onClick={() => addRow(tableIdx)} style={{ marginTop: '6px', padding: '4px 12px', border: '1px dashed #b9c3d4', borderRadius: '4px', background: '#fff', color: '#6A1B9A', fontSize: '12px', cursor: 'pointer', fontWeight: 600 }}>+ Add Row</button>
         </div>
       ) : (
         <div style={{ overflowX: 'auto' }}>
@@ -301,7 +301,7 @@ function AdminCampus() {
             <thead>
               <tr>
                 {table.columns.map((col, ci) => (
-                  <th key={ci} style={{ padding: '10px 12px', textAlign: ci === 0 ? 'center' : 'left', background: '#243358', color: '#fff', fontWeight: 600, fontSize: '12px', whiteSpace: 'nowrap' }}>{col}</th>
+                  <th key={ci} style={{ padding: '10px 12px', textAlign: ci === 0 ? 'center' : 'left', background: '#6A1B9A', color: '#fff', fontWeight: 600, fontSize: '12px', whiteSpace: 'nowrap' }}>{col}</th>
                 ))}
               </tr>
             </thead>
@@ -309,7 +309,7 @@ function AdminCampus() {
               {table.rows.map((row, ri) => (
                 <tr key={ri}>
                   {row.map((cell, ci) => (
-                    <td key={ci} style={{ padding: '8px 12px', borderBottom: '1px solid #e4e8ed', textAlign: ci === 0 ? 'center' : 'left', fontWeight: ci === 0 ? 600 : 400, color: ci === 0 ? '#243358' : '#333' }}>{cell}</td>
+                    <td key={ci} style={{ padding: '8px 12px', borderBottom: '1px solid #e4e8ed', textAlign: ci === 0 ? 'center' : 'left', fontWeight: ci === 0 ? 600 : 400, color: ci === 0 ? '#6A1B9A' : '#333' }}>{cell}</td>
                   ))}
                 </tr>
               ))}
@@ -341,7 +341,7 @@ function AdminCampus() {
             <div style={{ marginTop: '24px' }}>
               {form.tables.map((table, ti) => (
                 <div key={ti} style={{ marginBottom: '24px' }}>
-                  {table.title && <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>{table.title}</h3>}
+                  {table.title && <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#6A1B9A', marginBottom: '12px' }}>{table.title}</h3>}
                   <div className="fee-table-wrap library-table">
                     <table className="fee-table">
                       <thead>
@@ -355,7 +355,7 @@ function AdminCampus() {
                         {table.rows.map((row, ri) => (
                           <tr key={ri}>
                             {row.map((cell, ci) => (
-                              <td key={ci} style={ci === 0 ? { width: 50, fontWeight: 600, color: '#243358' } : ci === 1 ? { fontWeight: 500 } : {}}>{cell}</td>
+                              <td key={ci} style={ci === 0 ? { width: 50, fontWeight: 600, color: '#6A1B9A' } : ci === 1 ? { fontWeight: 500 } : {}}>{cell}</td>
                             ))}
                           </tr>
                         ))}
@@ -382,7 +382,7 @@ function AdminCampus() {
           {/* Library Rules */}
           {form.rules.length > 0 && (
             <div style={{ marginTop: '24px' }}>
-              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>Library Rules</h3>
+              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#6A1B9A', marginBottom: '12px' }}>Library Rules</h3>
               <div className="rules-list">
                 {form.rules.map((rule, i) => (
                   <div className="rule-item" key={i}>
@@ -400,7 +400,7 @@ function AdminCampus() {
           {/* Library Images */}
           {form.images.length > 0 && (
             <div style={{ marginTop: '24px' }}>
-              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>Library Gallery</h3>
+              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#6A1B9A', marginBottom: '12px' }}>Library Gallery</h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
                 {form.images.map((img, i) => (
                   <div key={i} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '8px', overflow: 'hidden' }}>
@@ -447,7 +447,7 @@ function AdminCampus() {
             <div style={{ marginTop: '24px' }}>
               {form.tables.map((table, ti) => (
                 <div key={ti} style={{ marginBottom: '24px' }}>
-                  {table.title && <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>{table.title}</h3>}
+                  {table.title && <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#6A1B9A', marginBottom: '12px' }}>{table.title}</h3>}
                   <div className="fee-table-wrap">
                     <table className="fee-table">
                       <thead>
@@ -461,7 +461,7 @@ function AdminCampus() {
                         {table.rows.map((row, ri) => (
                           <tr key={ri}>
                             {row.map((cell, ci) => (
-                              <td key={ci} style={ci === 0 ? { textAlign: 'center', fontWeight: 600, color: '#243358' } : {}}>{cell}</td>
+                              <td key={ci} style={ci === 0 ? { textAlign: 'center', fontWeight: 600, color: '#6A1B9A' } : {}}>{cell}</td>
                             ))}
                           </tr>
                         ))}
@@ -487,7 +487,7 @@ function AdminCampus() {
           {/* Food Menu Preview (canteen only) */}
           {activeTab === 'canteen' && form.foodMenu.length > 0 && (
             <div style={{ marginTop: '24px' }}>
-              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '12px' }}>Food Menu</h3>
+              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#6A1B9A', marginBottom: '12px' }}>Food Menu</h3>
               <div className="fee-table-wrap">
                 <table className="fee-table">
                   <thead>
@@ -502,7 +502,7 @@ function AdminCampus() {
                   <tbody>
                     {form.foodMenu.map((item, i) => (
                       <tr key={i}>
-                        <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                        <td style={{ textAlign: 'center', fontWeight: 600, color: '#6A1B9A' }}>{i + 1}</td>
                         <td>{item.name}</td>
                         <td>{item.category}</td>
                         <td>{item.price}</td>
@@ -518,19 +518,19 @@ function AdminCampus() {
           {/* Bus Routes Preview */}
           {activeTab === 'bus-facility' && form.busRoutes.length > 0 && (
             <div style={{ marginTop: '24px' }}>
-              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', marginBottom: '14px' }}>Bus Routes</h3>
+              <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#6A1B9A', marginBottom: '14px' }}>Bus Routes</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {form.busRoutes.map((route, ri) => (
                   <div key={ri} style={{ background: '#fff', border: '1px solid #e4e8ed', borderRadius: '10px', padding: '16px 20px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-                      <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#243358', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }}>🚌</div>
-                      <h4 style={{ margin: 0, fontSize: '15px', fontWeight: 700, color: '#243358' }}>{route.routeName || `Route ${ri + 1}`}</h4>
+                      <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#6A1B9A', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px' }}>🚌</div>
+                      <h4 style={{ margin: 0, fontSize: '15px', fontWeight: 700, color: '#6A1B9A' }}>{route.routeName || `Route ${ri + 1}`}</h4>
                     </div>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
                       {route.stops.map((stop, si) => (
                         <React.Fragment key={si}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: '#f5f7fa', padding: '6px 12px', borderRadius: '6px', border: '1px solid #e4e8ed' }}>
-                            <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: si === 0 || si === route.stops.length - 1 ? '#c8963e' : '#243358', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700 }}>{si + 1}</div>
+                            <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: si === 0 || si === route.stops.length - 1 ? '#c8963e' : '#6A1B9A', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700 }}>{si + 1}</div>
                             <span style={{ fontSize: '13px', fontWeight: 500, color: '#333' }}>{stop}</span>
                           </div>
                           {si < route.stops.length - 1 && <span style={{ color: '#b9c3d4', fontSize: '16px' }}>→</span>}
@@ -633,7 +633,7 @@ function AdminCampus() {
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     {/* Table Header */}
-                    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1fr 1.5fr 40px', gap: '8px', padding: '8px 12px', background: '#243358', color: '#fff', borderRadius: '6px', fontSize: '12px', fontWeight: 700 }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1.5fr 1fr 1.5fr 40px', gap: '8px', padding: '8px 12px', background: '#6A1B9A', color: '#fff', borderRadius: '6px', fontSize: '12px', fontWeight: 700 }}>
                       <span>Item Name</span>
                       <span>Category</span>
                       <span>Price (₹)</span>
@@ -767,12 +767,12 @@ function AdminCampus() {
                         <label style={{ fontSize: '12px', fontWeight: 600, color: '#555', marginBottom: '6px', display: 'block' }}>Stops</label>
                         {route.stops.map((stop, si) => (
                           <div key={si} style={{ display: 'flex', gap: '6px', marginBottom: '6px', alignItems: 'center' }}>
-                            <span style={{ width: '20px', height: '20px', borderRadius: '50%', background: '#243358', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700, flexShrink: 0 }}>{si + 1}</span>
+                            <span style={{ width: '20px', height: '20px', borderRadius: '50%', background: '#6A1B9A', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: 700, flexShrink: 0 }}>{si + 1}</span>
                             <input type="text" value={stop} onChange={(e) => { const r = [...form.busRoutes]; const stops = [...r[ri].stops]; stops[si] = e.target.value; r[ri] = { ...r[ri], stops }; setForm({ ...form, busRoutes: r }); }} placeholder="Stop name" style={{ flex: 1, padding: '6px 10px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '12px', boxSizing: 'border-box' }} />
                             {route.stops.length > 1 && <button onClick={() => { const r = [...form.busRoutes]; const stops = r[ri].stops.filter((_, idx) => idx !== si); r[ri] = { ...r[ri], stops }; setForm({ ...form, busRoutes: r }); }} style={{ width: '22px', height: '22px', borderRadius: '50%', border: 'none', background: '#fdecea', color: '#d32f2f', fontSize: '11px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: 0 }}>×</button>}
                           </div>
                         ))}
-                        <button onClick={() => { const r = [...form.busRoutes]; r[ri] = { ...r[ri], stops: [...r[ri].stops, ''] }; setForm({ ...form, busRoutes: r }); }} style={{ marginTop: '4px', padding: '4px 10px', border: '1px dashed #b9c3d4', borderRadius: '4px', background: '#fff', color: '#243358', fontSize: '12px', cursor: 'pointer', fontWeight: 600 }}>+ Add Stop</button>
+                        <button onClick={() => { const r = [...form.busRoutes]; r[ri] = { ...r[ri], stops: [...r[ri].stops, ''] }; setForm({ ...form, busRoutes: r }); }} style={{ marginTop: '4px', padding: '4px 10px', border: '1px dashed #b9c3d4', borderRadius: '4px', background: '#fff', color: '#6A1B9A', fontSize: '12px', cursor: 'pointer', fontWeight: 600 }}>+ Add Stop</button>
                       </div>
                     ))}
                   </div>

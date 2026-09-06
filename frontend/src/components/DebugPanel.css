@@ -32,7 +32,7 @@
   align-items: center;
   padding: 14px 20px;
   border-bottom: 1px solid #e4e8ed;
-  background: #243358;
+  background: #6A1B9A;
   border-radius: 12px 12px 0 0;
 }
 
@@ -108,7 +108,7 @@
   margin: 0 0 2px;
   font-family: 'Georgia', serif;
   font-size: 14px;
-  color: #243358;
+  color: #6A1B9A;
   font-weight: 700;
 }
 
@@ -173,7 +173,7 @@
 .debug-env-key {
   font-family: 'Courier New', monospace;
   font-size: 11px;
-  color: #243358;
+  color: #6A1B9A;
   background: #f0f3f8;
   padding: 1px 6px;
   border-radius: 3px;

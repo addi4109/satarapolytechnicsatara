@@ -694,7 +694,7 @@ function AdminDepartmentForm() {
                 const labels = { peos: 'PEOs', pos: 'POs', psos: 'PSOs' };
                 return (
                   <div key={field} style={{ marginBottom: '24px' }}>
-                    <h4 style={{ margin: '0 0 10px', fontFamily: "'Georgia', serif", fontSize: '16px', color: '#243358', borderBottom: '2px solid #c8963e', paddingBottom: '6px' }}>{labels[field]}</h4>
+                    <h4 style={{ margin: '0 0 10px', fontFamily: "'Georgia', serif", fontSize: '16px', color: '#6A1B9A', borderBottom: '2px solid #c8963e', paddingBottom: '6px' }}>{labels[field]}</h4>
                     {form[field].length === 0 ? (
                       <div className="members-empty">No {labels[field]} added yet.</div>
                     ) : (
