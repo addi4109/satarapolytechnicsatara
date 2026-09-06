@@ -353,42 +353,68 @@ function AdminExaminations() {
         </div>
       ) : <p style={{ color: '#aaa', fontStyle: 'italic' }}>No notices added yet.</p>}
     </div>
-  );
-
-  const renderRankHoldersPreview = () => (
-    <div className="admission-preview-card">
-      <h2 className="content-heading">Rank Holders</h2>
-      <div className="content-line"></div>
+  );  const renderRankHoldersPreview = () => (
+    <div className="rank-editor-section">
+      <div className="rank-editor-section-header">
+        <h4>Rank Holders</h4>
+      </div>
       {form.rankholders.length > 0 ? (
-        <div className="rank-preview-grid">
+        <div className="rank-editor-grid">
           {form.rankholders.map((h, i) => (
-            <div className="rank-preview-card" key={i}>
-              <div className="rank-preview-img">
-                {h.image ? (
-                  <img src={h.image} alt={h.name} />
-                ) : (
-                  <div className="rank-preview-img-placeholder">
-                    <span style={{ fontSize: '32px' }}>👤</span>
-                  </div>
-                )}
+            <div className="rank-editor-card" key={i}>
+              <div className="rank-editor-card-head">
+                <span className="rank-editor-card-num">#{i + 1}</span>
+                <button className="rank-editor-card-remove" onClick={() => removeRow('rankholders', i)} title="Remove">×</button>
               </div>
-              <div className="rank-preview-info">
-                <h4 className="rank-preview-name">{h.name}</h4>
-                <span className="rank-preview-dept">{h.department}</span>
-                <div className="rank-preview-rank-row">
-                  <div className="rank-preview-rank-badge">
-                    <span className="rank-preview-rank-num">{h.rank}</span>
-                    <span className="rank-preview-rank-lbl">Rank</span>
+              <div className="rank-editor-card-body">
+                {/* Public card preview */}
+                <div className="rank-preview-public">
+                  <div className="ranker-img-wrap">
+                    {h.image ? (
+                      <img
+                        src={h.image}
+                        alt={h.name}
+                        className="ranker-img"
+                        crossOrigin="anonymous"
+                        decoding="async"
+                        onError={(e) => {
+                          e.target.replaceWith(
+                            <div className="ranker-img-placeholder">
+                              <span>👤</span>
+                            </div>
+                          );
+                        }}
+                      />
+                    ) : (
+                      <div className="ranker-img-placeholder">
+                        <span>👤</span>
+                      </div>
+                    )}
                   </div>
-                  <span className="rank-preview-marks">{h.marks}</span>
+                  <div className="ranker-card-content">
+                    <h3 className="ranker-name">{h.name || 'Student Name'}</h3>
+                    <span className="ranker-department">{h.department || 'Department'}</span>
+                    <div className="ranker-rank-box">
+                      <span className="rank-number">{h.rank ? getMedalIcon(h.rank) + ' ' + h.rank : '—'}</span>
+                      <span className="rank-label">Rank</span>
+                    </div>
+                  </div>
                 </div>
-                <span className="rank-preview-sem">Sem {h.semester} · {h.year}</span>
+                {/* Meta line */}
+                <div style={{ padding: '0 14px 12px', fontSize: '11.5px', color: '#9ca3af', textAlign: 'center' }}>
+                  {h.semester || h.year ? `Sem ${h.semester || '—'} · ${h.year || '—'}` : 'Semester and year shown on the homepage card'}
+                </div>
               </div>
-              <button className="rank-preview-remove" onClick={() => removeRow('rankholders', i)}>×</button>
             </div>
           ))}
         </div>
-      ) : <p style={{ color: '#aaa', fontStyle: 'italic' }}>No rank holders added yet.</p>}
+      ) : (
+        <div className="rank-empty-state">
+          <div style={{ fontSize: '40px', marginBottom: '10px' }}>🏆</div>
+          <h4 style={{ color: '#243358', margin: '0 0 6px', fontSize: '16px' }}>No Rank Holders Added Yet</h4>
+          <p style={{ fontSize: '13px', color: '#888', margin: 0, lineHeight: '1.5' }}>Click <strong>+ Add Card</strong> below to create the first rank holder.</p>
+        </div>
+      )}
     </div>
   );
 
@@ -587,64 +613,146 @@ function AdminExaminations() {
   );
 
   const renderRankHoldersEditor = () => (
-    <div className="admission-edit-form">
-      <div className="rank-editor-header">
+    <div className="rank-editor-section">
+      <div className="rank-editor-section-header">
         <h4>Rank Holders</h4>
-        <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Add student photos to display in the auto-sliding rankers carousel on the homepage.</p>
+        <p style={{ fontSize: '12.5px', color: '#888', margin: 0, lineHeight: '1.5' }}>
+          Each card you add appears on the public homepage. Upload a photo, then fill in the name, department, and rank.
+        </p>
       </div>
+
       {form.rankholders.length === 0 ? (
-        <div className="rank-empty-state">
-          <div style={{ fontSize: '48px', marginBottom: '12px' }}>🏆</div>
-          <h4 style={{ color: '#243358', margin: '0 0 8px' }}>No Rank Holders Added Yet</h4>
-          <p style={{ fontSize: '14px', color: '#888', margin: 0, lineHeight: '1.5' }}>Click the button below to add the first rank holder. Each card will appear in the homepage carousel.</p>
-          <button className="btn btn-primary" onClick={() => addEmptyRow('rankholders', emptyRankHolder())}>+ Add First Rank Holder</button>
+        <div className="rank-editor-grid">
+          {/* Single blank card */}
+          <div className="rank-editor-card rank-editor-card-empty" key="__empty__">
+            <div className="rank-editor-card-head">
+              <span className="rank-editor-card-empty-label">Empty Card</span>
+            </div>
+            <div className="rank-editor-card-body">
+              <div className="rank-editor-card-image">
+                <ImageUpload
+                  value=""
+                  onChange={(url) => {
+                    const r = [...form.rankholders];
+                    r[0] = { ...emptyRankHolder(), image: url };
+                    handleChange('rankholders', r);
+                  }}
+                  label="Upload Photo"
+                />
+              </div>
+              <div className="rank-editor-card-fields">
+                <div className="rank-field">
+                  <label>Student Name</label>
+                  <input type="text" value="" onChange={(e) => {
+                    const r = [...form.rankholders];
+                    r[0] = { ...r[0], name: e.target.value };
+                    handleChange('rankholders', r);
+                  }} placeholder="Student Name" className="rank-input" />
+                </div>
+                <div className="rank-field">
+                  <label>Department / Branch</label>
+                  <input type="text" value="" onChange={(e) => {
+                    const r = [...form.rankholders];
+                    r[0] = { ...r[0], department: e.target.value };
+                    handleChange('rankholders', r);
+                  }} placeholder="e.g. Computer Science" className="rank-input" />
+                </div>
+                <div className="rank-field-row">
+                  <div className="rank-field">
+                    <label>Semester</label>
+                    <input type="text" value="" onChange={(e) => {
+                      const r = [...form.rankholders];
+                      r[0] = { ...r[0], semester: e.target.value };
+                      handleChange('rankholders', r);
+                    }} placeholder="e.g. VI" className="rank-input" />
+                  </div>
+                  <div className="rank-field rank-field-rank">
+                    <label>Rank</label>
+                    <input type="text" value="" onChange={(e) => {
+                      const r = [...form.rankholders];
+                      r[0] = { ...r[0], rank: e.target.value };
+                      handleChange('rankholders', r);
+                    }} placeholder="e.g. 1" className="rank-input" />
+                  </div>
+                  <div className="rank-field">
+                    <label>Marks</label>
+                    <input type="text" value="" onChange={(e) => {
+                      const r = [...form.rankholders];
+                      r[0] = { ...r[0], marks: e.target.value };
+                      handleChange('rankholders', r);
+                    }} placeholder="e.g. 92.50%" className="rank-input" />
+                  </div>
+                  <div className="rank-field">
+                    <label>Year</label>
+                    <input type="text" value="" onChange={(e) => {
+                      const r = [...form.rankholders];
+                      r[0] = { ...r[0], year: e.target.value };
+                      handleChange('rankholders', r);
+                    }} placeholder="e.g. 2025-26" className="rank-input" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       ) : (
-        <div className="rank-editor-cards">
+        <div className="rank-editor-grid">
           {form.rankholders.map((h, i) => (
             <div className="rank-editor-card" key={i}>
-              <div className="rank-editor-card-header">
+              <div className="rank-editor-card-head">
                 <span className="rank-editor-card-num">#{i + 1}</span>
                 <button className="rank-editor-card-remove" onClick={() => removeRow('rankholders', i)} title="Remove">×</button>
               </div>
               <div className="rank-editor-card-body">
-                <div className="rank-editor-img-area">
+                {/* Card preview — same design as the public site */}
+                <div className="rank-preview-public">
+                  <div className="ranker-img-wrap">
+                    {h.image ? (
+                      <img
+                        src={h.image}
+                        alt={h.name}
+                        className="ranker-img"
+                        crossOrigin="anonymous"
+                        decoding="async"
+                        onError={(e) => {
+                          e.target.replaceWith(
+                            <div className="ranker-img-placeholder">
+                              <span>👤</span>
+                            </div>
+                          );
+                        }}
+                      />
+                    ) : (
+                      <div className="ranker-img-placeholder">
+                        <span>👤</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="ranker-card-content">
+                    <h3 className="ranker-name">{h.name || 'Student Name'}</h3>
+                    <span className="ranker-department">{h.department || 'Department'}</span>
+                    <div className="ranker-rank-box">
+                      <span className="rank-number">{h.rank ? getMedalIcon(h.rank) + ' ' + h.rank : '—'}</span>
+                      <span className="rank-label">Rank</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Edit fields */}
+                <div className="rank-editor-card-image-edit">
                   <ImageUpload
                     value={h.image || ''}
                     onChange={(url) => {
                       console.log('Ranker image URL:', url);
                       updateRow('rankholders', i, 'image', url);
-                      // Force immediate re-render
                       setForm((prev) => {
                         const r = [...prev.rankholders];
                         r[i] = { ...r[i], image: url };
                         return { ...prev, rankholders: r };
                       });
                     }}
-                    label="Upload Photo"
+                    label="Change Photo"
                   />
-                  {h.image && (
-                    <img 
-                      src={h.image}
-                      alt={h.name}
-                      style={{ width: '100%', height: '120px', objectFit: 'cover', borderRadius: '8px', marginTop: '8px', border: '1px solid #e4e8ed' }}
-                      crossOrigin="anonymous"
-                      decoding="async"
-                      onError={(e) => { console.log('Admin ranker image FAILED:', h.image); e.target.style.display = 'none'; }}
-                      onLoad={() => console.log('Admin ranker image loaded OK')}
-                    />
-                  )}
-                  {!h.image && (
-                    <div style={{ width: '100%', height: '120px', background: '#f5f7fa', borderRadius: '8px', border: '1px dashed #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '8px' }}>
-                      <span style={{ color: '#bbb', fontSize: '32px' }}>🖼</span>
-                    </div>
-                  )}
-                  <div style={{ marginTop: '6px', fontSize: '11px', color: '#888' }}>
-                    {h.image ? `
-                      <span style={{ color: '#28a745' }}>✓ URL saved</span><br />
-                      <span style={{ wordBreak: 'break-all', fontSize: '10px' }}>{h.image}</span>
-                    ` : '<span style={{ color: #aaa }}>No image</span>'}
-                  </div>
                 </div>
                 <div className="rank-editor-card-fields">
                   <div className="rank-field">
@@ -660,9 +768,9 @@ function AdminExaminations() {
                       <label>Semester</label>
                       <input type="text" value={h.semester} onChange={(e) => updateRow('rankholders', i, 'semester', e.target.value)} placeholder="e.g. VI" className="rank-input" />
                     </div>
-                    <div className="rank-field">
+                    <div className="rank-field rank-field-rank">
                       <label>Rank</label>
-                      <input type="text" value={h.rank} onChange={(e) => updateRow('rankholders', i, 'rank', e.target.value)} placeholder="e.g. 1" className="rank-input rank-input-rank" />
+                      <input type="text" value={h.rank} onChange={(e) => updateRow('rankholders', i, 'rank', e.target.value)} placeholder="e.g. 1" className="rank-input" />
                     </div>
                     <div className="rank-field">
                       <label>Marks</label>
@@ -677,9 +785,15 @@ function AdminExaminations() {
               </div>
             </div>
           ))}
-          <button className="btn btn-success btn-sm" style={{ marginTop: '16px' }} onClick={() => addEmptyRow('rankholders', emptyRankHolder())}>+ Add Another Rank Holder</button>
         </div>
       )}
+
+      {/* Add card button — always visible */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
+        <button className="btn btn-primary btn-add-card" onClick={() => addEmptyRow('rankholders', emptyRankHolder())}>
+          + Add Card
+        </button>
+      </div>
     </div>
   );
 
