@@ -230,12 +230,12 @@
 }
 
 .news-btn-readmore {
-  background: #2e7d32;
+  background: #243358;
   color: #fff;
 }
 
 .news-btn-readmore:hover {
-  background: #1b5e20;
+  background: #1a2a4a;
 }
 
 .news-btn-readmore:active {
@@ -243,12 +243,12 @@
 }
 
 .news-btn-article {
-  background: #c8963e;
+  background: #2e7d32;
   color: #fff;
 }
 
 .news-btn-article:hover {
-  background: #a5721c;
+  background: #1b5e20;
 }
 
 .news-btn-article:active {
