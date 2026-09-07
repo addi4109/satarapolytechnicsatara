@@ -165,7 +165,6 @@ function Navbar() {
     {
       label: 'NOTICES',
       link: '/notices',
-      isPill: true,
     },
     {
       label: 'ALUMNI',
