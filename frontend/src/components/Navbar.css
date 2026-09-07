@@ -66,11 +66,9 @@
 
 .header-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  text-align: center;
+  gap: 18px;
 }
 
 .logo-circle {
@@ -98,10 +96,10 @@
 }
 
 .brand-text {
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   line-height: 1.4;
 }
 
