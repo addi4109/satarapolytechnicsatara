@@ -124,6 +124,84 @@
   line-height: 1.4;
 }
 
+/* ===== college identity strip (left side of navbar) ===== */
+.site-header {
+  background: #fff;
+}
+
+.main-header {
+  background: #fff;
+  padding: 6px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.main-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* logo circle */
+.logo-circle {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* brand text */
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.3;
+}
+
+.society-name {
+  font-size: 11px;
+  color: #888;
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.college-name {
+  font-family: 'Georgia', serif;
+  font-size: 17px;
+  color: #1a1a2e;
+  font-weight: 700;
+  margin: 2px 0;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.affiliation-line {
+  font-size: 10.5px;
+  color: #666;
+  margin: 0;
+  line-height: 1.4;
+}
+
 /* ===== main nav - IITB style ===== */
 .main-nav {
   background: #fff;
@@ -131,7 +209,6 @@
   top: 0;
   z-index: 1000;
   border-bottom: 3px solid #c41e3a;
-  padding: 0;
 }
 
 .nav-inner {
@@ -140,16 +217,22 @@
   padding: 0 20px;
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 24px;
+}
+
+.nav-links-wrapper {
+  flex: 1;
+  min-width: 0;
 }
 
 .nav-list {
   list-style: none;
   display: flex;
   align-items: stretch;
-  justify-content: flex-end;
+  justify-content: flex-start;
   width: 100%;
   gap: 4px;
+  flex-wrap: wrap;
 }
 
 .nav-item {
@@ -159,12 +242,12 @@
 .nav-link {
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 0 12px;
-  height: 50px;
+  gap: 3px;
+  padding: 0 10px;
+  height: 44px;
   color: #333;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.3px;
   text-transform: uppercase;
@@ -179,11 +262,11 @@
 
 .nav-link:hover {
   color: #c41e3a;
-  background: rgba(196, 30, 58, 0.05);
+  background: rgba(196, 30, 58, 0.04);
 }
 
 .nav-link .arrow {
-  font-size: 10px;
+  font-size: 9px;
   opacity: 0.6;
   margin-left: 2px;
   transition: transform 0.2s ease;
@@ -193,12 +276,13 @@
   transform: rotate(180deg);
 }
 
-/* active/pill tab style */
+/* active/pill tab style - for NOTICES */
 .nav-link.pill {
   background: #1a3a6b;
   color: #fff;
-  border-radius: 20px;
-  padding: 0 16px;
+  border-radius: 18px;
+  padding: 0 14px;
+  font-weight: 600;
 }
 
 .nav-link.pill:hover {
@@ -431,11 +515,15 @@
 @media (max-width: 1024px) {
   .nav-link {
     padding: 0 8px;
-    font-size: 13px;
+    font-size: 12px;
   }
   
   .nav-link.pill {
-    padding: 0 12px;
+    padding: 0 10px;
+  }
+  
+  .nav-inner {
+    gap: 16px;
   }
 }
 
@@ -445,13 +533,59 @@
   }
 
   .top-strip {
-    font-size: 11px;
-    padding: 4px 0;
+    font-size: 10px;
+    padding: 3px 0;
   }
 
   .top-strip-inner {
-    padding: 0 12px;
-    gap: 12px;
+    padding: 0 10px;
+    gap: 10px;
+  }
+
+  .top-strip .top-left,
+  .top-strip .top-right {
+    font-size: 10px;
+  }
+
+  .main-header {
+    padding: 4px 0;
+  }
+
+  .main-header-inner {
+    padding: 0 10px;
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+  }
+
+  .header-row {
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .logo-circle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-text {
+    text-align: center;
+    align-items: center;
+  }
+
+  .college-name {
+    font-size: 15px;
+  }
+
+  .society-name {
+    text-align: center;
+    font-size: 10px;
+  }
+
+  .affiliation-line {
+    text-align: center;
+    font-size: 9.5px;
   }
 
   .nav-list {
@@ -466,7 +600,7 @@
     overflow-y: scroll;
     transition: right 0.3s ease;
     z-index: 1100;
-    padding: 60px 0 30px;
+    padding: 56px 0 20px;
     box-shadow: -10px 0 30px rgba(0,0,0,0.1);
     gap: 0;
   }
@@ -482,9 +616,15 @@
 
   .nav-link {
     width: 100%;
-    padding: 12px 16px;
-    font-size: 13px;
+    padding: 11px 14px;
+    font-size: 12px;
     justify-content: space-between;
+    border-radius: 0;
+  }
+
+  .nav-link.pill {
+    border-radius: 0;
+    justify-content: flex-start;
   }
 
   .dropdown-menu {
@@ -512,19 +652,19 @@
 
   .dropdown-menu li a {
     color: #444;
-    padding: 9px 16px 9px 28px;
+    padding: 8px 14px 8px 24px;
     border-left: none;
   }
 
   .dropdown-menu li a:hover {
     background: #f0f0f0;
     color: #1a1a2e;
-    padding-left: 32px;
+    padding-left: 28px;
   }
 
   .dropdown-header {
     color: #888;
-    padding: 7px 16px 3px;
+    padding: 6px 14px 3px;
   }
 
   .dropdown-multi {
@@ -550,7 +690,7 @@
 
   .dropdown-col {
     min-width: auto;
-    padding: 4px 0;
+    padding: 3px 0;
   }
 
   .dropdown-col + .dropdown-col {
@@ -560,19 +700,19 @@
 
   .dropdown-col-header {
     color: #888;
-    padding: 6px 16px 3px;
+    padding: 5px 14px 3px;
   }
 
   .dropdown-col-list li a {
     color: #444;
-    padding: 7px 16px 7px 28px;
+    padding: 6px 14px 6px 24px;
     border-left: none;
   }
 
   .dropdown-col-list li a:hover {
     background: #f0f0f0;
     color: #1a1a2e;
-    padding-left: 32px;
+    padding-left: 28px;
   }
 
   .dropdown-divider {
@@ -582,43 +722,19 @@
 
   .dropdown-section-title {
     color: #1a1a2e;
-    padding: 6px 16px 3px;
+    padding: 5px 14px 3px;
   }
 
   .search-box {
     display: none;
   }
-
-  .main-header {
-    padding: 6px 0;
+  
+  .nav-inner {
+    padding: 0 10px;
+    gap: 0;
   }
 
-  .main-header-inner {
-    padding: 0 12px;
-    flex-direction: column;
-    gap: 4px;
-    text-align: center;
-  }
-
-  .logo-circle {
-    width: 40px;
-    height: 40px;
-  }
-
-  .brand-text {
-    text-align: center;
-    align-items: center;
-  }
-
-  .college-name {
-    font-size: 16px;
-  }
-
-  .society-name {
-    text-align: center;
-  }
-
-  .affiliation-line {
-    text-align: center;
+  .nav-links-wrapper {
+    display: none;
   }
 }

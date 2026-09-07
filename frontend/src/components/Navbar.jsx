@@ -355,9 +355,10 @@ function Navbar() {
                     {item.label}
                     {item.children || item.type === 'multi-column' ? <span className="arrow">▾</span> : ''}
                   </a>
-                )}
-              </li>
-            ))}
+                )
+              }
+            </li>
+          ))}
           </ul>
           </div>
 
@@ -372,3 +373,4 @@ function Navbar() {
 }
 
 export default Navbar;
+
