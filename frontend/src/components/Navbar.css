@@ -201,7 +201,7 @@
   line-height: 1.4;
 }
 
-/* ===== main nav - IITB style with two rows ===== */
+/* ===== main nav - IITB style, single row with wrapping ===== */
 .main-nav {
   background: #fff;
   position: sticky;
@@ -214,38 +214,86 @@
 .nav-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 20px;
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.nav-main-row {
+/* College info on left */
+.header-row {
   display: flex;
   align-items: center;
-  gap: 3px;
-  flex-wrap: wrap;
-  flex: 1;
-  min-width: 0;
-  padding: 6px 0;
+  gap: 14px;
+  flex-shrink: 0;
 }
 
-.nav-secondary-row {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  padding: 4px 0 8px;
-  border-top: 1px solid #eee;
-  margin-top: 4px;
+.logo-circle {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logo-img {
   width: 100%;
-  justify-content: flex-start;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.3;
+}
+
+.society-name {
+  font-size: 11px;
+  color: #888;
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.college-name {
+  font-family: 'Georgia', serif;
+  font-size: 17px;
+  color: #1a1a2e;
+  font-weight: 700;
+  margin: 2px 0;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.affiliation-line {
+  font-size: 10.5px;
+  color: #666;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Nav links section - wraps to next line when needed */
+.nav-links-section {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 0;
 }
 
 .nav-list {
   list-style: none;
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
+  flex-wrap: wrap;
 }
 
 .nav-item {
@@ -256,8 +304,8 @@
   display: flex;
   align-items: center;
   gap: 3px;
-  padding: 0 10px;
-  height: 36px;
+  padding: 0 12px;
+  height: 40px;
   color: #1a1a2e;
   text-decoration: none;
   font-size: 13px;
@@ -296,8 +344,8 @@
   border-radius: 18px;
   padding: 0 14px;
   font-weight: 600;
-  height: 36px;
-  line-height: 36px;
+  height: 40px;
+  line-height: 40px;
 }
 
 .nav-link.pill:hover {
@@ -308,6 +356,34 @@
 .nav-link.pill .arrow {
   color: #fff;
   opacity: 0.8;
+}
+
+/* search icon - right side */
+.search-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fafafa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 8px;
+  padding: 3px;
+  flex-shrink: 0;
+}
+
+.search-box:hover {
+  border-color: #c41e3a;
+  background: #fff;
+}
+
+.search-icon {
+  width: 16px;
+  height: 16px;
+  color: #888;
 }
 
 /* ===== dropdown - clean style ===== */

@@ -220,7 +220,6 @@ function Navbar() {
   };
 
   const renderNavItem = (item, idx) => {
-    const hasChildren = item.children || item.type === 'multi-column';
     const isActive = openMenu === idx;
 
     if (item.type === 'multi-column') {
@@ -327,24 +326,7 @@ function Navbar() {
       </div>
 
       {/* college identity strip - LEFT SIDE */}
-      <div className="main-header">
-        <div className="main-header-inner">
-          <div className="header-row">
-            <div className="logo-circle">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10"
-                alt="College Logo"
-                className="logo-img"
-              />
-            </div>
-            <div className="brand-text">
-              <p className="society-name">Satara Education Society's</p>
-              <h1 className="college-name">Satara Polytechnic, Satara</h1>
-              <p className="affiliation-line">Approved by AICTE Delhi &bull; DTE Maharashtra State &bull; Affiliated to MSBTE, Mumbai</p>
-            </div>
-          </div>
-        </div>
-      </div>
+
 
       {/* nav bar - IITB style */}
       <nav className="main-nav">
@@ -363,22 +345,31 @@ function Navbar() {
             <span></span>
           </button>
 
-          {/* First row: HOME through NOTICES */}
-          <div className="nav-main-row">
-            <ul className={`nav-list ${mobileOpen ? 'mobile-open' : ''}`}>
-              {menuData.slice(0, 9).map((item, idx) => renderNavItem(item, idx))}
-            </ul>
-            {/* search icon */}
-            <div className="search-box">
-              <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          {/* College info - LEFT SIDE */}
+          <div className="header-row">
+            <div className="logo-circle">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10"
+                alt="College Logo"
+                className="logo-img"
+              />
+            </div>
+            <div className="brand-text">
+              <p className="society-name">Satara Education Society's</p>
+              <h1 className="college-name">Satara Polytechnic, Satara</h1>
+              <p className="affiliation-line">Approved by AICTE Delhi &bull; DTE Maharashtra State &bull; Affiliated to MSBTE, Mumbai</p>
             </div>
           </div>
 
-          {/* Second row: ALUMNI and CONTACT */}
-          <div className="nav-secondary-row">
-            <ul className="nav-list" style={{ margin: 0 }}>
-              {menuData.slice(9).map((item, idx) => renderNavItem(item, idx + 9))}
+          {/* Nav links - wraps to next line when needed */}
+          <div className="nav-links-section">
+            <ul className={`nav-list ${mobileOpen ? 'mobile-open' : ''}`}>
+              {menuData.map((item, idx) => renderNavItem(item, idx))}
             </ul>
+            {/* search icon - right side */}
+            <div className="search-box">
+              <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </div>
           </div>
         </div>
       </nav>
