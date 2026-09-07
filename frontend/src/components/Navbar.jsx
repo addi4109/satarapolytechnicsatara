@@ -21,6 +21,7 @@ function Navbar() {
       .catch((err) => console.error('Failed to fetch departments for navbar:', err));
   }, []);
 
+  // Build menu data on every render so it reacts to state changes
   const menuData = [
     {
       label: 'HOME',
