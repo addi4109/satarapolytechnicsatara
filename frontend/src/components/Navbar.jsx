@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import './Navbar.css';
 
-import API_URL from '../lib/api';
+const API_URL = '/api';
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(null);
@@ -9,7 +9,6 @@ function Navbar() {
   const [mobileExpanded, setMobileExpanded] = useState(null);
   const [dbCells, setDbCells] = useState([]);
   const [dbDepts, setDbDepts] = useState([]);
-  const [academicTabName, setAcademicTabName] = useState('Academic Calendar');
 
   useEffect(() => {
     fetch(`${API_URL}/cells`)
@@ -20,11 +19,6 @@ function Navbar() {
       .then((res) => res.json())
       .then((data) => setDbDepts(data))
       .catch((err) => console.error('Failed to fetch departments for navbar:', err));
-    fetch(`${API_URL}/settings/academic_calendar_tab_name`)
-      .then((res) => res.json())
-      .then((data) => { if (data.value) setAcademicTabName(data.value); })
-      .catch(() => {});
-
   }, []);
 
   const menuData = [
@@ -44,7 +38,6 @@ function Navbar() {
             { label: 'Mandatory Disclosure', link: '/about/disclosure' },
             { label: 'Vision & Mission', link: '/about/vision-mission' },
             { label: 'Affiliation & Approval', link: '/about/affiliation' },
-            { label: 'Institute Policy', link: '/about/policy' },
           ],
         },
         {
@@ -55,7 +48,6 @@ function Navbar() {
             { label: 'Secretary', link: '/about/secretary' },
             { label: 'Principal', link: '/about/principal' },
             { label: 'Governing Body', link: '/about/governing-body' },
-            { label: 'Local Governing Body', link: '/about/local-governing-body' },
           ],
         },
       ],
@@ -66,15 +58,10 @@ function Navbar() {
       columns: [
         {
           header: 'Departments',
-          items: [
-            ...dbDepts.filter((d) => !d.hideFromHome).map((d) => ({
-              label: d.name,
-              link: `/departments/${d.slug}`,
-            })),
-            { divider: true },
-            { label: academicTabName, isTitle: true },
-            { label: academicTabName, link: '/academics/calendar' },
-          ],
+          items: dbDepts.map((d) => ({
+            label: d.name,
+            link: `/departments/${d.slug}`,
+          })),
         },
         {
           header: 'Cell and Committees',
@@ -99,7 +86,7 @@ function Navbar() {
         { label: 'Fee Structure', link: '/admissions/fees' },
         { label: 'Scholarships', link: '/admissions/scholarships' },
         { label: 'College Brochure', link: '/admissions/brochure' },
-        { label: 'Admission Notice', link: '/notices/admission' },
+
         { label: 'Apply Now', link: '/admissions/apply' },
       ],
     },
@@ -128,7 +115,7 @@ function Navbar() {
     {
       label: 'PLACEMENTS',
       children: [
-        { label: 'About Placement Cell', link: '/placements/about' },
+        { label: 'About Placement Cell', link: '/cells/placement' },
         { label: 'Placement Process', link: '/placements/process' },
         { label: 'Placement Records', link: '/placements/records' },
         { label: 'Our Recruiters', link: '/placements/recruiters' },
@@ -140,7 +127,8 @@ function Navbar() {
         { label: 'Sports', link: '/activities/sports' },
         { label: 'Cultural', link: '/activities/cultural' },
         { label: 'Technical Events', link: '/activities/technical' },
-        { label: 'Academic Events & Activities', link: '/activities/academic-events' },
+        { label: 'Industrial Visits', link: '/activities/industrial-visits' },
+        { label: 'Competitions', link: '/activities/competitions' },
       ],
     },
     {
@@ -151,7 +139,6 @@ function Navbar() {
         { label: 'Results', link: '/examination/results' },
         { label: 'Revaluation', link: '/examination/revaluation' },
         { label: 'Exam Notices', link: '/examination/notices' },
-        { label: 'Rank Holders', link: '/examination/rankholders' },
       ],
     },
     {
@@ -167,16 +154,6 @@ function Navbar() {
       link: '/notices',
     },
     {
-      label: 'ALUMNI',
-      children: [
-        { label: 'About Alumni', link: '/alumni/about' },
-        { label: 'Alumni Vision & Mission', link: '/alumni/vision-mission' },
-        { label: 'Entrepreneurs', link: '/alumni/entrepreneurs' },
-        { label: 'Alumni Association', link: '/alumni/association' },
-        { label: 'Alumni Registration Form', link: '/alumni/registration' },
-      ],
-    },
-    {
       label: 'CONTACT',
       children: [
         { label: 'Contact Us', link: '/contact' },
@@ -189,92 +166,6 @@ function Navbar() {
     },
   ];
 
-  const renderNavItem = (item, idx, isMobile = false) => {
-    const isActive = isMobile ? mobileExpanded === idx : openMenu === idx;
-
-    if (item.type === 'multi-column') {
-      return (
-        <li
-          key={idx}
-          className={`nav-item has-dropdown ${isActive ? 'active' : ''}`}
-          onMouseEnter={!isMobile ? () => handleMouseEnter(idx) : undefined}
-          onMouseLeave={!isMobile ? handleMouseLeave : undefined}
-        >
-          <button
-            className="nav-link dropdown-toggle"
-            onClick={() => { if (isMobile) toggleMobile(idx); }}
-          >
-            {item.label}
-            <span className="arrow">▾</span>
-          </button>
-          <div className={`dropdown-multi ${isActive ? 'show' : ''}`}>
-            {item.columns.map((col, cIdx) => (
-              <div className={`dropdown-col ${col.header === 'Departments' ? 'dropdown-col-depts' : col.header === 'Cell and Committees' ? 'dropdown-col-cells' : ''}`} key={cIdx}>
-                <span className="dropdown-col-header">{col.header}</span>
-                <ul className="dropdown-col-list">
-                  {col.items.map((child, iIdx) => (
-                    child.divider ? (
-                      <li key={iIdx} className="dropdown-divider"></li>
-                    ) : child.isTitle ? (
-                      <li key={iIdx} className="dropdown-section-title">
-                        {child.label}
-                      </li>
-                    ) : (
-                      <li key={iIdx}>
-                        <a href={child.link} onClick={() => setMobileOpen(false)}>
-                          {child.label}
-                        </a>
-                      </li>
-                    )
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </li>
-      );
-    }
-
-    if (item.children) {
-      return (
-        <li
-          key={idx}
-          className={`nav-item has-dropdown ${isActive ? 'active' : ''}`}
-          onMouseEnter={!isMobile ? () => handleMouseEnter(idx) : undefined}
-          onMouseLeave={!isMobile ? handleMouseLeave : undefined}
-        >
-          <button
-            className="nav-link dropdown-toggle"
-            onClick={() => { if (isMobile) toggleMobile(idx); }}
-          >
-            {item.label}
-            <span className="arrow">▾</span>
-          </button>
-          <ul className={`dropdown-menu ${isActive ? 'show' : ''}`}>
-            {item.children.map((child, cIdx) => (
-              <li key={cIdx}>
-                <a href={child.link} onClick={() => setMobileOpen(false)}>
-                  {child.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </li>
-      );
-    }
-
-    return (
-      <li key={idx} className="nav-item">
-        <a
-          href={item.link}
-          className={`nav-link ${item.isPill ? 'pill' : ''}`}
-        >
-          {item.label}
-        </a>
-      </li>
-    );
-  };
-
   const handleMouseEnter = (index) => {
     setOpenMenu(index);
   };
@@ -285,22 +176,15 @@ function Navbar() {
 
   const toggleMobile = (index) => {
     setMobileExpanded(mobileExpanded === index ? null : index);
-    setOpenMenu(null);
   };
 
   return (
     <header className="site-header">
-      {/* top strip: phone + email */}
+      {/* top strip */}
       <div className="top-strip">
         <div className="top-strip-inner">
-          <a className="top-left" href="tel:+919423342843">
-            <svg className="top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            +91-94233 42843
-          </a>
-          <a className="top-right" href="mailto:satarapolyinfo@gmail.com">
-            <svg className="top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            satarapolyinfo@gmail.com
-          </a>
+          <span className="top-left">📞 +91-XXXXXXXXXX</span>
+          <span className="top-right">✉ info@college.ac.in</span>
         </div>
       </div>
 
@@ -368,23 +252,15 @@ function Navbar() {
                       }`}
                     >
                       {item.columns.map((col, cIdx) => (
-                        <div className={`dropdown-col ${col.header === 'Departments' ? 'dropdown-col-depts' : col.header === 'Cell and Committees' ? 'dropdown-col-cells' : ''}`} key={cIdx}>
+                        <div className="dropdown-col" key={cIdx}>
                           <span className="dropdown-col-header">{col.header}</span>
                           <ul className="dropdown-col-list">
                             {col.items.map((child, iIdx) => (
-                              child.divider ? (
-                                <li key={iIdx} className="dropdown-divider"></li>
-                              ) : child.isTitle ? (
-                                <li key={iIdx} className="dropdown-section-title">
+                              <li key={iIdx}>
+                                <a href={child.link} onClick={() => setMobileOpen(false)}>
                                   {child.label}
-                                </li>
-                              ) : (
-                                <li key={iIdx}>
-                                  <a href={child.link} onClick={() => setMobileOpen(false)}>
-                                    {child.label}
-                                  </a>
-                                </li>
-                              )
+                                </a>
+                              </li>
                             ))}
                           </ul>
                         </div>
@@ -423,12 +299,10 @@ function Navbar() {
                 ) : (
                   <a href={item.link} className="nav-link">
                     {item.label}
-                    {item.children || item.type === 'multi-column' ? <span className="arrow">▾</span> : ''}
                   </a>
-                )
-              }
-            </li>
-          ))}
+                )}
+              </li>
+            ))}
           </ul>
         </div>
       </nav>
