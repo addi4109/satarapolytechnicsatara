@@ -163,6 +163,7 @@ function Navbar() {
     {
       label: 'NOTICES',
       link: '/notices',
+      isPill: true,
     },
     {
       label: 'ALUMNI',
@@ -244,14 +245,11 @@ function Navbar() {
                 alt="College Logo"
                 className="logo-img"
               />
-              <div className="logo-ring"></div>
             </div>
             <div className="brand-text">
               <p className="society-name">Satara Education Society's</p>
               <h1 className="college-name">Satara Polytechnic, Satara</h1>
               <p className="affiliation-line">Approved by AICTE Delhi &bull; DTE Maharashtra State &bull; Affiliated to MSBTE, Mumbai</p>
-              <p className="address-line">At Post: Songaon, Khindwadi, Near NH-4, Satara &mdash; 415002, Maharashtra</p>
-              <p className="motto">"The courageous never stop until they achieve their goal"</p>
             </div>
           </div>
         </div>
@@ -274,6 +272,7 @@ function Navbar() {
             <span></span>
           </button>
 
+          <div className="nav-links-wrapper">
           <ul className={`nav-list ${mobileOpen ? 'mobile-open' : ''}`}>
             {menuData.map((item, idx) => (
               <li
@@ -352,13 +351,20 @@ function Navbar() {
                     </ul>
                   </>
                 ) : (
-                  <a href={item.link} className="nav-link">
+                  <a href={item.link} className={`nav-link ${item.isPill ? 'pill' : ''}`}>
                     {item.label}
+                    {item.children || item.type === 'multi-column' ? <span className="arrow">▾</span> : ''}
                   </a>
                 )}
               </li>
             ))}
           </ul>
+          </div>
+
+          {/* search icon */}
+          <div className="search-box">
+            <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
         </div>
       </nav>
     </header>
