@@ -133,7 +133,9 @@ function Navbar() {
         { label: 'Placement Records', link: '/placements/records' },
         { label: 'Our Recruiters', link: '/placements/recruiters' },
       ],
-    },        { label: 'ACTIVITIES',
+    },
+    {
+      label: 'ACTIVITIES',
       children: [
         { label: 'Sports', link: '/activities/sports' },
         { label: 'Cultural', link: '/activities/cultural' },
@@ -214,9 +216,98 @@ function Navbar() {
 
   const toggleMobile = (index) => {
     setMobileExpanded(mobileExpanded === index ? null : index);
-    // Clear hover state so a synthesized mouseenter on touch
-    // doesn't keep the dropdown open after tapping to close it.
     setOpenMenu(null);
+  };
+
+  const renderNavItem = (item, idx) => {
+    const hasChildren = item.children || item.type === 'multi-column';
+    const isActive = openMenu === idx;
+
+    if (item.type === 'multi-column') {
+      return (
+        <li
+          key={idx}
+          className={`nav-item has-dropdown ${isActive ? 'active' : ''}`}
+          onMouseEnter={() => handleMouseEnter(idx)}
+          onMouseLeave={handleMouseLeave}
+        >
+          <button
+            className="nav-link dropdown-toggle"
+            onClick={() => { if (mobileOpen) toggleMobile(idx); }}
+          >
+            {item.label}
+            <span className="arrow">▾</span>
+          </button>
+          <div
+            className={`dropdown-multi ${isActive ? 'show' : ''}`}
+          >
+            {item.columns.map((col, cIdx) => (
+              <div className={`dropdown-col ${col.header === 'Departments' ? 'dropdown-col-depts' : col.header === 'Cell and Committees' ? 'dropdown-col-cells' : ''}`} key={cIdx}>
+                <span className="dropdown-col-header">{col.header}</span>
+                <ul className="dropdown-col-list">
+                  {col.items.map((child, iIdx) => (
+                    child.divider ? (
+                      <li key={iIdx} className="dropdown-divider"></li>
+                    ) : child.isTitle ? (
+                      <li key={iIdx} className="dropdown-section-title">
+                        {child.label}
+                      </li>
+                    ) : (
+                      <li key={iIdx}>
+                        <a href={child.link} onClick={() => setMobileOpen(false)}>
+                          {child.label}
+                        </a>
+                      </li>
+                    )
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </li>
+      );
+    }
+
+    if (item.children) {
+      return (
+        <li
+          key={idx}
+          className={`nav-item has-dropdown ${isActive ? 'active' : ''}`}
+          onMouseEnter={() => handleMouseEnter(idx)}
+          onMouseLeave={handleMouseLeave}
+        >
+          <button
+            className="nav-link dropdown-toggle"
+            onClick={() => { if (mobileOpen) toggleMobile(idx); }}
+          >
+            {item.label}
+            <span className="arrow">▾</span>
+          </button>
+          <ul
+            className={`dropdown-menu ${isActive ? 'show' : ''}`}
+          >
+            {item.children.map((child, cIdx) => (
+              <li key={cIdx}>
+                <a href={child.link} onClick={() => setMobileOpen(false)}>
+                  {child.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </li>
+      );
+    }
+
+    return (
+      <li key={idx} className="nav-item">
+        <a
+          href={item.link}
+          className={`nav-link ${item.isPill ? 'pill' : ''}`}
+        >
+          {item.label}
+        </a>
+      </li>
+    );
   };
 
   return (
@@ -235,7 +326,7 @@ function Navbar() {
         </div>
       </div>
 
-      {/* college identity strip */}
+      {/* college identity strip - LEFT SIDE */}
       <div className="main-header">
         <div className="main-header-inner">
           <div className="header-row">
@@ -255,7 +346,7 @@ function Navbar() {
         </div>
       </div>
 
-      {/* nav bar */}
+      {/* nav bar - IITB style */}
       <nav className="main-nav">
         <div className="nav-inner">
           {/* hamburger for mobile */}
@@ -272,99 +363,22 @@ function Navbar() {
             <span></span>
           </button>
 
-          <div className="nav-links-wrapper">
-          <ul className={`nav-list ${mobileOpen ? 'mobile-open' : ''}`}>
-            {menuData.map((item, idx) => (
-              <li
-                key={idx}
-                className={`nav-item ${item.children ? 'has-dropdown' : ''} ${openMenu === idx ? 'active' : ''}`}
-                onMouseEnter={() => (item.children || item.type === 'multi-column') && handleMouseEnter(idx)}
-                onMouseLeave={handleMouseLeave}
-              >
-                {item.type === 'multi-column' ? (
-                  <>
-                    <button
-                      className="nav-link dropdown-toggle"
-                      onClick={() => {
-                        if (mobileOpen) toggleMobile(idx);
-                      }}
-                    >
-                      {item.label}
-                      <span className="arrow">▾</span>
-                    </button>
-                    <div
-                      className={`dropdown-multi ${
-                        openMenu === idx || (mobileOpen && mobileExpanded === idx) ? 'show' : ''
-                      }`}
-                    >
-                      {item.columns.map((col, cIdx) => (
-                        <div className={`dropdown-col ${col.header === 'Departments' ? 'dropdown-col-depts' : col.header === 'Cell and Committees' ? 'dropdown-col-cells' : ''}`} key={cIdx}>
-                          <span className="dropdown-col-header">{col.header}</span>
-                          <ul className="dropdown-col-list">
-                            {col.items.map((child, iIdx) => (
-                              child.divider ? (
-                                <li key={iIdx} className="dropdown-divider"></li>
-                              ) : child.isTitle ? (
-                                <li key={iIdx} className="dropdown-section-title">
-                                  {child.label}
-                                </li>
-                              ) : (
-                                <li key={iIdx}>
-                                  <a href={child.link} onClick={() => setMobileOpen(false)}>
-                                    {child.label}
-                                  </a>
-                                </li>
-                              )
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  </>
-                ) : item.children ? (
-                  <>
-                    <button
-                      className="nav-link dropdown-toggle"
-                      onClick={() => {
-                        if (mobileOpen) toggleMobile(idx);
-                      }}
-                    >
-                      {item.label}
-                      <span className="arrow">▾</span>
-                    </button>
-                    <ul
-                      className={`dropdown-menu ${
-                        openMenu === idx || (mobileOpen && mobileExpanded === idx) ? 'show' : ''
-                      }`}
-                    >
-                      {item.children.map((child, cIdx) => (
-                        <li key={cIdx}>
-                          {child.type === 'header' ? (
-                            <span className="dropdown-header">{child.label}</span>
-                          ) : (
-                            <a href={child.link} onClick={() => setMobileOpen(false)}>
-                              {child.label}
-                            </a>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                ) : (
-                  <a href={item.link} className={`nav-link ${item.isPill ? 'pill' : ''}`}>
-                    {item.label}
-                    {item.children || item.type === 'multi-column' ? <span className="arrow">▾</span> : ''}
-                  </a>
-                )
-              }
-            </li>
-          ))}
-          </ul>
+          {/* First row: HOME through NOTICES */}
+          <div className="nav-main-row">
+            <ul className={`nav-list ${mobileOpen ? 'mobile-open' : ''}`}>
+              {menuData.slice(0, 9).map((item, idx) => renderNavItem(item, idx))}
+            </ul>
+            {/* search icon */}
+            <div className="search-box">
+              <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </div>
           </div>
 
-          {/* search icon */}
-          <div className="search-box">
-            <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          {/* Second row: ALUMNI and CONTACT */}
+          <div className="nav-secondary-row">
+            <ul className="nav-list" style={{ margin: 0 }}>
+              {menuData.slice(9).map((item, idx) => renderNavItem(item, idx + 9))}
+            </ul>
           </div>
         </div>
       </nav>
@@ -373,4 +387,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
