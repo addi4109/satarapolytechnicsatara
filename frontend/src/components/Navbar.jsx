@@ -21,7 +21,8 @@ function Navbar() {
       .catch((err) => console.error('Failed to fetch departments for navbar:', err));
   }, []);
 
-  const menuData = [
+  // Build menu data dynamically from loaded data
+  const getMenuData = () => [
     {
       label: 'HOME',
       link: '/',
@@ -166,6 +167,8 @@ function Navbar() {
     },
   ];
 
+  const menuData = getMenuData();
+
   const handleMouseEnter = (index) => {
     setOpenMenu(index);
   };
@@ -255,7 +258,9 @@ function Navbar() {
                         <div className="dropdown-col" key={cIdx}>
                           <span className="dropdown-col-header">{col.header}</span>
                           <ul className="dropdown-col-list">
-                            {col.items.map((child, iIdx) => (
+                            {col.items.length === 0 ? (
+                              <li style={{ color: '#999', fontStyle: 'italic', padding: '4px 14px' }}>Loading...</li>
+                            ) : col.items.map((child, iIdx) => (
                               <li key={iIdx}>
                                 <a href={child.link} onClick={() => setMobileOpen(false)}>
                                   {child.label}
