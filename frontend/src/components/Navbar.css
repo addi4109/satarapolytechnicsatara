@@ -51,157 +51,11 @@
   opacity: 0.7;
 }
 
-/* ===== college identity strip ===== */
-.main-header {
-  background: #fff;
-  padding: 8px 0;
-}
-
-.main-header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-/* logo circle */
-.logo-circle {
-  position: relative;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.logo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* brand text - left aligned like IITB */
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  min-width: 0;
-  line-height: 1.3;
-}
-
-.society-name {
-  font-size: 11px;
-  color: #888;
-  margin: 0;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-}
-
-.college-name {
-  font-family: 'Georgia', serif;
-  font-size: 18px;
-  color: #1a1a2e;
-  font-weight: 700;
-  margin: 2px 0;
-  line-height: 1.2;
-}
-
-.affiliation-line {
-  font-size: 11px;
-  color: #666;
-  margin: 0;
-  line-height: 1.4;
-}
-
-/* ===== college identity strip (left side) ===== */
+/* ===== main nav - IITB style ===== */
 .site-header {
   background: #fff;
 }
 
-.main-header {
-  background: #fff;
-  padding: 6px 0;
-}
-
-.main-header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.header-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-/* logo circle */
-.logo-circle {
-  position: relative;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.logo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* brand text */
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  line-height: 1.3;
-}
-
-.society-name {
-  font-size: 11px;
-  color: #888;
-  margin: 0;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-}
-
-.college-name {
-  font-family: 'Georgia', serif;
-  font-size: 17px;
-  color: #1a1a2e;
-  font-weight: 700;
-  margin: 2px 0;
-  line-height: 1.2;
-  white-space: nowrap;
-}
-
-.affiliation-line {
-  font-size: 10.5px;
-  color: #666;
-  margin: 0;
-  line-height: 1.4;
-}
-
-/* ===== main nav - IITB style, single row with wrapping ===== */
 .main-nav {
   background: #fff;
   position: sticky;
@@ -217,25 +71,61 @@
   padding: 0 20px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 0;
 }
 
-/* College info on left */
-.header-row {
+/* Hamburger - left side */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1200;
+  margin-right: 12px;
+}
+
+.hamburger span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #333;
+  border-radius: 2px;
+  transition: transform 0.25s, opacity 0.25s;
+}
+
+.hamburger.is-active span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.hamburger.is-active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.is-active span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* ===== College info - LEFT SIDE, at the very start ===== */
+.college-info {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   flex-shrink: 0;
+  padding: 8px 0;
 }
 
 .logo-circle {
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   overflow: hidden;
   background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .logo-img {
@@ -253,7 +143,7 @@
 }
 
 .society-name {
-  font-size: 11px;
+  font-size: 10px;
   color: #888;
   margin: 0;
   font-weight: 500;
@@ -262,38 +152,40 @@
 
 .college-name {
   font-family: 'Georgia', serif;
-  font-size: 17px;
+  font-size: 15px;
   color: #1a1a2e;
   font-weight: 700;
-  margin: 2px 0;
+  margin: 1px 0;
   line-height: 1.2;
   white-space: nowrap;
 }
 
 .affiliation-line {
-  font-size: 10.5px;
+  font-size: 9.5px;
   color: #666;
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
-/* Nav links section - wraps to next line when needed */
+/* ===== Nav links section - wraps to next line when needed ===== */
 .nav-links-section {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 4px;
-  padding: 6px 0;
+  gap: 2px;
+  padding: 7px 0;
 }
 
 .nav-list {
   list-style: none;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-item {
@@ -304,8 +196,8 @@
   display: flex;
   align-items: center;
   gap: 3px;
-  padding: 0 12px;
-  height: 40px;
+  padding: 0 10px;
+  height: 38px;
   color: #1a1a2e;
   text-decoration: none;
   font-size: 13px;
@@ -342,10 +234,10 @@
   background: #1a3a6b;
   color: #fff;
   border-radius: 18px;
-  padding: 0 14px;
+  padding: 0 12px;
   font-weight: 600;
-  height: 40px;
-  line-height: 40px;
+  height: 38px;
+  line-height: 38px;
 }
 
 .nav-link.pill:hover {
@@ -358,21 +250,21 @@
   opacity: 0.8;
 }
 
-/* search icon - right side */
+/* ===== search icon - RIGHT SIDE ===== */
 .search-box {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border: 1px solid #ddd;
   border-radius: 4px;
   background: #fafafa;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-left: 8px;
   padding: 3px;
   flex-shrink: 0;
+  margin-left: 6px;
 }
 
 .search-box:hover {
@@ -381,8 +273,8 @@
 }
 
 .search-icon {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   color: #888;
 }
 
@@ -540,81 +432,40 @@
   list-style: none;
 }
 
-/* ===== search box ===== */
-.search-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background: #fafafa;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin-left: auto;
-  padding: 3px;
-}
-
-.search-box:hover {
-  border-color: #c41e3a;
-  background: #fff;
-}
-
-.search-icon {
-  width: 16px;
-  height: 16px;
-  color: #888;
-}
-
-/* ===== hamburger ===== */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  z-index: 1200;
-  margin-right: auto;
-}
-
-.hamburger span {
-  display: block;
-  width: 20px;
-  height: 2px;
-  background: #333;
-  border-radius: 2px;
-  transition: transform 0.25s, opacity 0.25s;
-}
-
-.hamburger.is-active span:nth-child(1) {
-  transform: translateY(6px) rotate(45deg);
-}
-
-.hamburger.is-active span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger.is-active span:nth-child(3) {
-  transform: translateY(-6px) rotate(-45deg);
-}
-
 /* ===== responsive ===== */
 @media (max-width: 1024px) {
   .nav-link {
-    padding: 0 8px;
+    padding: 0 7px;
     font-size: 12px;
+    height: 36px;
+    line-height: 36px;
   }
-  
+
   .nav-link.pill {
     padding: 0 10px;
+    height: 36px;
+    line-height: 36px;
   }
-  
-  .nav-inner {
-    gap: 16px;
+
+  .college-info {
+    gap: 8px;
+  }
+
+  .logo-circle {
+    width: 36px;
+    height: 36px;
+  }
+
+  .college-name {
+    font-size: 14px;
+  }
+
+  .affiliation-line {
+    font-size: 9px;
+  }
+
+  .society-name {
+    font-size: 9px;
   }
 }
 
@@ -638,45 +489,12 @@
     font-size: 10px;
   }
 
-  .main-header {
-    padding: 4px 0;
-  }
-
-  .main-header-inner {
+  .nav-inner {
     padding: 0 10px;
-    flex-direction: column;
-    gap: 4px;
-    text-align: center;
   }
 
-  .header-row {
-    flex-direction: column;
-    gap: 6px;
-    text-align: center;
-  }
-
-  .logo-circle {
-    width: 40px;
-    height: 40px;
-  }
-
-  .brand-text {
-    text-align: center;
-    align-items: center;
-  }
-
-  .college-name {
-    font-size: 15px;
-  }
-
-  .society-name {
-    text-align: center;
-    font-size: 10px;
-  }
-
-  .affiliation-line {
-    text-align: center;
-    font-size: 9.5px;
+  .nav-links-section {
+    display: none;
   }
 
   .nav-list {
@@ -692,7 +510,7 @@
     transition: right 0.3s ease;
     z-index: 1100;
     padding: 56px 0 20px;
-    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
     gap: 0;
   }
 
@@ -711,11 +529,17 @@
     font-size: 12px;
     justify-content: space-between;
     border-radius: 0;
+    background: none;
+    height: auto;
+    line-height: 1;
   }
 
   .nav-link.pill {
     border-radius: 0;
     justify-content: flex-start;
+    height: auto;
+    line-height: 1;
+    padding: 11px 14px;
   }
 
   .dropdown-menu {
@@ -732,6 +556,8 @@
     padding: 0;
     margin-top: 0;
     border-radius: 0;
+    left: 0;
+    transform: none;
   }
 
   .dropdown-menu.show {
@@ -772,6 +598,8 @@
     transition: max-height 0.3s ease;
     margin-top: 0;
     border-radius: 0;
+    left: 0;
+    transform: none;
   }
 
   .dropdown-multi.show {
@@ -819,13 +647,8 @@
   .search-box {
     display: none;
   }
-  
-  .nav-inner {
-    padding: 0 10px;
-    gap: 0;
-  }
 
-  .nav-links-wrapper {
+  .college-info {
     display: none;
   }
 }

@@ -345,8 +345,8 @@ function Navbar() {
             <span></span>
           </button>
 
-          {/* College info - LEFT SIDE */}
-          <div className="header-row">
+          {/* College info - LEFT SIDE, at the very start */}
+          <div className="college-info">
             <div className="logo-circle">
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10"
