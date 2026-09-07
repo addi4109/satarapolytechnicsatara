@@ -5,29 +5,28 @@
   box-sizing: border-box;
 }
 
-/* ===================================================
-   LAYOUT OVERVIEW
-   1. .top-strip       — contact info bar (navy)
-   2. .brand-bar       — logo + college name (navy, NOT sticky)
-   3. .main-nav        — sticky nav bar, full-width links only
-   =================================================== */
-
-/* ===== 1. Top strip ===== */
+/* ===== 1. Top strip (navy) ===== */
 .top-strip {
-  background: var(--sp-navy-deep, #1e2d4d);
+  background: #1e2d4d;
   color: rgba(255, 255, 255, 0.75);
   font-size: 12px;
   padding: 5px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .top-strip-inner {
-  max-width: 1300px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
   display: flex;
+  justify-content: flex-start;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
+}
+
+.top-strip span,
+.top-strip a {
+  white-space: nowrap;
 }
 
 .top-strip .top-left,
@@ -37,13 +36,12 @@
   gap: 6px;
   color: inherit;
   text-decoration: none;
-  white-space: nowrap;
   transition: color 0.2s ease;
 }
 
 .top-strip .top-left:hover,
 .top-strip .top-right:hover {
-  color: var(--sp-gold, #c8963e);
+  color: #c8963e;
 }
 
 .top-icon {
@@ -53,32 +51,33 @@
   opacity: 0.7;
 }
 
-/* ===== 2. Brand bar ===== */
+/* ===== 2. White header section ===== */
 .site-header {
-  background: var(--sp-navy-deep, #1e2d4d);
+  background: #fff;
 }
 
-.brand-bar {
-  background: var(--sp-navy-deep, #1e2d4d);
-  padding: 12px 0;
+.white-header {
+  background: #fff;
+  padding: 10px 0;
+  border-bottom: 1px solid #e8e8e8;
 }
 
-.brand-bar-inner {
-  max-width: 1300px;
+.white-header-inner {
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
 }
 
 .logo-circle {
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   overflow: hidden;
   background: #fff;
-  box-shadow: 0 0 0 3px rgba(200, 150, 62, 0.45);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
 }
 
@@ -92,12 +91,13 @@
 .brand-text {
   display: flex;
   flex-direction: column;
+  text-align: left;
   line-height: 1.3;
 }
 
 .society-name {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.6);
+  color: #888;
   margin: 0;
   font-weight: 500;
   letter-spacing: 0.5px;
@@ -105,40 +105,49 @@
 
 .college-name {
   font-family: 'Georgia', serif;
-  font-size: 22px;
-  color: #fff;
+  font-size: 20px;
+  color: #1a1a2e;
   font-weight: 700;
   margin: 3px 0 4px;
   line-height: 1.2;
+  white-space: nowrap;
 }
 
 .affiliation-line {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.55);
+  color: #666;
   margin: 0;
   line-height: 1.4;
 }
 
-/* ===== 3. Main nav — sticky, full-width ===== */
+.address-line {
+  font-size: 11px;
+  color: #888;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ===== 3. Main nav ===== */
 .main-nav {
-  background: var(--sp-navy, #243358);
+  background: #fff;
   position: sticky;
   top: 0;
   z-index: 1000;
-  border-bottom: 3px solid var(--sp-gold, #c8963e);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-bottom: 3px solid #c8963e;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  padding: 0;
 }
 
 .nav-inner {
-  max-width: 1300px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 20px;
   display: flex;
   align-items: center;
   gap: 0;
 }
 
-/* ===== Hamburger (mobile only) ===== */
+/* ===== Hamburger (mobile) ===== */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -147,47 +156,33 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px 10px 8px 0;
+  padding: 8px;
   z-index: 1200;
-  flex-shrink: 0;
+  margin-right: 12px;
 }
 
 .hamburger span {
   display: block;
   width: 22px;
   height: 2px;
-  background: #fff;
+  background: #333;
   border-radius: 2px;
   transition: transform 0.25s, opacity 0.25s;
 }
 
-.hamburger.is-active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger.is-active span:nth-child(2) { opacity: 0; }
-.hamburger.is-active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-/* Mobile brand — hidden on desktop */
-.mobile-brand {
-  display: none;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
+.hamburger.is-active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
 }
 
-.logo-circle-sm {
-  width: 30px;
-  height: 30px;
-  box-shadow: none;
+.hamburger.is-active span:nth-child(2) {
+  opacity: 0;
 }
 
-.mobile-college-name {
-  color: #fff;
-  font-size: 13px;
-  font-weight: 700;
-  font-family: 'Georgia', serif;
-  white-space: nowrap;
+.hamburger.is-active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ===== Desktop nav list ===== */
+/* ===== Nav list ===== */
 .nav-list {
   list-style: none;
   display: flex;
@@ -196,7 +191,7 @@
   margin: 0;
   padding: 0;
   flex: 1;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .nav-item {
@@ -207,63 +202,58 @@
   display: flex;
   align-items: center;
   gap: 3px;
-  padding: 0 10px;
-  height: 44px;
-  color: rgba(255, 255, 255, 0.88);
+  padding: 0 14px;
+  height: 50px;
+  color: #1a1a2e;
   text-decoration: none;
-  font-size: 11.5px;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.3px;
   text-transform: uppercase;
   white-space: nowrap;
   border: none;
   background: none;
   cursor: pointer;
   font-family: inherit;
-  transition: color 0.2s ease, background 0.2s ease, border-bottom-color 0.2s ease;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -3px; /* sit on the gold border */
+  transition: color 0.2s ease, background 0.2s ease;
+  position: relative;
 }
 
-.nav-link:hover,
-.nav-item.active > .nav-link {
-  color: var(--sp-gold, #c8963e);
-  background: rgba(255, 255, 255, 0.07);
-  border-bottom-color: var(--sp-gold, #c8963e);
+.nav-link:hover {
+  color: #c41e3a;
+  background: rgba(196, 30, 58, 0.04);
 }
 
 .nav-link .arrow {
-  font-size: 8px;
-  opacity: 0.55;
+  font-size: 9px;
+  opacity: 0.6;
   margin-left: 2px;
   transition: transform 0.2s ease;
 }
 
 .nav-item.active .arrow {
   transform: rotate(180deg);
-  opacity: 1;
 }
 
 /* NOTICES pill */
 .nav-link.pill {
-  background: var(--sp-gold, #c8963e);
+  background: #1a3a6b;
   color: #fff;
-  border-radius: 14px;
-  padding: 0 13px;
-  font-weight: 700;
-  height: 28px;
-  line-height: 28px;
-  align-self: center;
-  margin: 0 4px;
-  border-bottom: none;
-  box-shadow: 0 2px 6px rgba(200, 150, 62, 0.4);
-  font-size: 11px;
+  border-radius: 18px;
+  padding: 0 14px;
+  font-weight: 600;
+  height: 50px;
+  line-height: 50px;
 }
 
 .nav-link.pill:hover {
-  background: var(--sp-gold-dark, #a5721c);
+  background: #1a3a6b;
   color: #fff;
-  border-bottom: none;
+}
+
+.nav-link.pill .arrow {
+  color: #fff;
+  opacity: 0.8;
 }
 
 /* ===== Search icon ===== */
@@ -271,11 +261,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.07);
+  background: #fafafa;
   cursor: pointer;
   transition: all 0.2s ease;
   flex-shrink: 0;
@@ -283,35 +273,37 @@
 }
 
 .search-box:hover {
-  border-color: var(--sp-gold, #c8963e);
-  background: rgba(200, 150, 62, 0.12);
+  border-color: #c41e3a;
+  background: #fff;
 }
 
 .search-icon {
-  width: 13px;
-  height: 13px;
-  color: rgba(255, 255, 255, 0.7);
+  width: 16px;
+  height: 16px;
+  color: #888;
 }
 
-/* ===== Dropdown — single column ===== */
+/* ===== Dropdown - clean style ===== */
 .dropdown-menu {
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translateX(-50%) translateY(6px);
+  transform: translateX(-50%) translateY(8px);
   background: #fff;
-  min-width: 210px;
+  min-width: 200px;
   list-style: none;
   padding: 6px 0;
   border-radius: 6px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+  transition: opacity 0.2s ease,
+              transform 0.2s ease,
+              visibility 0s linear 0.2s;
   will-change: opacity, transform;
   z-index: 1100;
-  border: 1px solid #e4e8ed;
-  border-top: 3px solid var(--sp-gold, #c8963e);
+  border: 1px solid #e8e8e8;
+  border-top: 3px solid #c8963e;
   margin-top: 0;
 }
 
@@ -319,13 +311,14 @@
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.2s ease,
+              transform 0.2s ease;
 }
 
 .dropdown-menu li a {
   display: block;
-  padding: 7px 16px;
-  color: #333;
+  padding: 7px 14px;
+  color: #444;
   text-decoration: none;
   font-size: 13px;
   font-weight: 400;
@@ -334,10 +327,10 @@
 }
 
 .dropdown-menu li a:hover {
-  background: var(--sp-cream, #f7f4ec);
-  color: var(--sp-navy, #243358);
-  border-left-color: var(--sp-gold, #c8963e);
-  padding-left: 20px;
+  background: #f5f5f5;
+  color: #1a1a2e;
+  border-left-color: #c41e3a;
+  padding-left: 18px;
 }
 
 /* ===== Multi-column dropdown ===== */
@@ -345,18 +338,20 @@
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translateX(-50%) translateY(6px);
+  transform: translateX(-50%) translateY(8px);
   background: #fff;
   display: flex;
   border-radius: 6px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+  transition: opacity 0.2s ease,
+              transform 0.2s ease,
+              visibility 0s linear 0.2s;
   will-change: opacity, transform;
   z-index: 1100;
-  border: 1px solid #e4e8ed;
-  border-top: 3px solid var(--sp-gold, #c8963e);
+  border: 1px solid #e8e8e8;
+  border-top: 3px solid #c8963e;
   margin-top: 0;
 }
 
@@ -364,7 +359,8 @@
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.2s ease,
+              transform 0.2s ease;
 }
 
 .dropdown-col {
@@ -378,10 +374,10 @@
 
 .dropdown-col-header {
   display: block;
-  padding: 4px 16px 7px;
+  padding: 4px 14px 7px;
   font-size: 10px;
   font-weight: 700;
-  color: var(--sp-muted, #6b7a94);
+  color: #888;
   text-transform: uppercase;
   letter-spacing: 0.6px;
   border-bottom: 1px solid #f0f0f0;
@@ -396,8 +392,8 @@
 
 .dropdown-col-list li a {
   display: block;
-  padding: 6px 16px;
-  color: #333;
+  padding: 5px 14px;
+  color: #444;
   text-decoration: none;
   font-size: 12.5px;
   font-weight: 400;
@@ -406,10 +402,10 @@
 }
 
 .dropdown-col-list li a:hover {
-  background: var(--sp-cream, #f7f4ec);
-  color: var(--sp-navy, #243358);
-  border-left-color: var(--sp-gold, #c8963e);
-  padding-left: 20px;
+  background: #f5f5f5;
+  color: #1a1a2e;
+  border-left-color: #c41e3a;
+  padding-left: 18px;
 }
 
 .dropdown-divider {
@@ -419,77 +415,58 @@
 }
 
 .dropdown-section-title {
-  padding: 5px 16px 3px;
+  padding: 5px 14px 3px;
   font-weight: 700;
-  color: var(--sp-navy, #243358);
+  color: #1a1a2e;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   list-style: none;
 }
 
-/* ===== Responsive: 1200px — tighten spacing ===== */
-@media (max-width: 1200px) {
-  .nav-link {
-    padding: 0 8px;
-    font-size: 11px;
-  }
-}
-
+/* ===== Responsive ===== */
 @media (max-width: 1024px) {
   .nav-link {
-    padding: 0 6px;
-    font-size: 10.5px;
-    letter-spacing: 0.2px;
+    padding: 0 10px;
+    font-size: 12px;
   }
 
   .nav-link.pill {
     padding: 0 10px;
-    font-size: 10.5px;
-    margin: 0 2px;
+    font-size: 12px;
   }
 
-  .brand-bar {
-    padding: 10px 0;
+  .white-header-inner {
+    gap: 12px;
   }
 
   .logo-circle {
-    width: 52px;
-    height: 52px;
+    width: 48px;
+    height: 48px;
   }
 
   .college-name {
-    font-size: 19px;
+    font-size: 17px;
+  }
+
+  .affiliation-line {
+    font-size: 10px;
+  }
+
+  .society-name {
+    font-size: 10px;
+  }
+
+  .address-line {
+    font-size: 10px;
   }
 }
 
-/* ===== Responsive: 900px — mobile ===== */
 @media (max-width: 900px) {
-  /* Hide desktop brand bar */
-  .brand-bar {
-    display: none;
-  }
-
-  /* Show hamburger */
   .hamburger {
     display: flex;
   }
 
-  /* Show mobile brand in nav bar */
-  .mobile-brand {
-    display: flex;
-  }
-
-  /* Hide desktop nav list and search */
-  .nav-list {
-    display: none;
-  }
-
-  .search-box {
-    display: none;
-  }
-
-  /* Top strip compact */
   .top-strip {
     font-size: 10px;
     padding: 4px 0;
@@ -500,43 +477,77 @@
     gap: 12px;
   }
 
-  .nav-inner {
-    padding: 0 12px;
+  .top-strip .top-right {
+    display: none;
   }
 
-  /* Mobile slide-in menu */
-  .nav-list-mobile {
-    display: flex;
-    list-style: none;
+  .white-header {
+    padding: 8px 0;
+  }
+
+  .white-header-inner {
+    padding: 0 12px;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .logo-circle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-text {
+    text-align: center;
+    align-items: center;
+  }
+
+  .college-name {
+    font-size: 16px;
+  }
+
+  .society-name {
+    text-align: center;
+    font-size: 10px;
+  }
+
+  .affiliation-line {
+    text-align: center;
+    font-size: 10px;
+  }
+
+  .address-line {
+    text-align: center;
+    font-size: 10px;
+  }
+
+  .nav-list {
     position: fixed;
     top: 0;
     right: -100%;
-    width: min(300px, 85vw);
+    width: 100%;
     height: 100vh;
-    background: var(--sp-navy-deep, #1e2d4d);
+    background: #fff;
     flex-direction: column;
     justify-content: flex-start;
-    overflow-y: auto;
-    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: scroll;
+    transition: right 0.3s ease;
     z-index: 1100;
-    padding: 60px 0 24px;
-    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4);
+    padding: 56px 0 20px;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
     gap: 0;
-    margin: 0;
-    padding-top: 60px;
   }
 
-  .nav-list-mobile.mobile-open {
+  .nav-list.mobile-open {
     right: 0;
   }
 
-  /* Mobile nav items */
-  .nav-list-mobile .nav-item {
+  .nav-item {
     width: 100%;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid #eee;
   }
 
-  .nav-list-mobile .nav-link {
+  .nav-link {
     width: 100%;
     padding: 12px 16px;
     font-size: 12px;
@@ -545,45 +556,30 @@
     background: none;
     height: auto;
     line-height: 1.4;
-    color: rgba(255, 255, 255, 0.88);
     border-bottom: none;
     margin-bottom: 0;
   }
 
-  .nav-list-mobile .nav-link:hover,
-  .nav-list-mobile .nav-item.active > .nav-link {
-    background: rgba(255, 255, 255, 0.07);
-    color: var(--sp-gold, #c8963e);
-    border-bottom: none;
-  }
-
-  .nav-list-mobile .nav-link.pill {
+  .nav-link.pill {
     border-radius: 0;
     justify-content: flex-start;
     height: auto;
     line-height: 1.4;
     padding: 12px 16px;
-    margin: 0;
-    background: rgba(200, 150, 62, 0.2);
-    color: var(--sp-gold, #c8963e);
-    box-shadow: none;
-    border-bottom: none;
-    align-self: unset;
-    font-size: 12px;
+    background: rgba(26, 58, 107, 0.1);
+    color: #1a3a6b;
   }
 
-  .nav-list-mobile .nav-link.pill:hover {
-    background: rgba(200, 150, 62, 0.3);
-    border-bottom: none;
+  .nav-link.pill:hover {
+    background: rgba(26, 58, 107, 0.15);
+    color: #1a3a6b;
   }
 
-  /* Mobile dropdown */
-  .nav-list-mobile .dropdown-menu {
+  .dropdown-menu {
     position: static;
     box-shadow: none;
     border: none;
-    border-top: none;
-    background: rgba(0, 0, 0, 0.2);
+    background: #f9f9f9;
     max-height: 0;
     overflow: hidden;
     opacity: 1;
@@ -593,38 +589,38 @@
     padding: 0;
     margin-top: 0;
     border-radius: 0;
-    min-width: unset;
-    width: 100%;
+    left: 0;
+    transform: none;
+    border-top: none;
   }
 
-  .nav-list-mobile .dropdown-menu.show {
+  .dropdown-menu.show {
     max-height: 500px;
     overflow-y: auto;
     padding: 4px 0;
     transform: none;
   }
 
-  .nav-list-mobile .dropdown-menu li a {
-    color: rgba(255, 255, 255, 0.75);
+  .dropdown-menu li a {
+    color: #444;
     padding: 9px 16px 9px 28px;
     border-left: none;
     font-size: 12px;
   }
 
-  .nav-list-mobile .dropdown-menu li a:hover {
-    background: rgba(255, 255, 255, 0.07);
-    color: var(--sp-gold, #c8963e);
+  .dropdown-menu li a:hover {
+    background: #f0f0f0;
+    color: #1a1a2e;
     padding-left: 32px;
     border-left: none;
   }
 
-  .nav-list-mobile .dropdown-multi {
+  .dropdown-multi {
     position: static;
     flex-direction: column;
     box-shadow: none;
     border: none;
-    border-top: none;
-    background: rgba(0, 0, 0, 0.2);
+    background: #f9f9f9;
     max-height: 0;
     overflow: hidden;
     opacity: 1;
@@ -633,58 +629,66 @@
     transition: max-height 0.3s ease;
     margin-top: 0;
     border-radius: 0;
+    left: 0;
+    transform: none;
+    border-top: none;
     width: 100%;
   }
 
-  .nav-list-mobile .dropdown-multi.show {
-    max-height: 900px;
+  .dropdown-multi.show {
+    max-height: 800px;
     overflow-y: auto;
   }
 
-  .nav-list-mobile .dropdown-col {
+  .dropdown-col {
     min-width: auto;
     padding: 4px 0;
   }
 
-  .nav-list-mobile .dropdown-col + .dropdown-col {
+  .dropdown-col + .dropdown-col {
     border-left: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-top: 1px solid #eee;
   }
 
-  .nav-list-mobile .dropdown-col-header {
-    color: rgba(255, 255, 255, 0.45);
+  .dropdown-col-header {
+    color: #888;
     padding: 6px 16px 4px;
     border-bottom: none;
+    font-size: 10px;
   }
 
-  .nav-list-mobile .dropdown-col-list li a {
-    color: rgba(255, 255, 255, 0.75);
+  .dropdown-col-list li a {
+    color: #444;
     padding: 7px 16px 7px 28px;
     border-left: none;
     font-size: 12px;
   }
 
-  .nav-list-mobile .dropdown-col-list li a:hover {
-    background: rgba(255, 255, 255, 0.07);
-    color: var(--sp-gold, #c8963e);
+  .dropdown-col-list li a:hover {
+    background: #f0f0f0;
+    color: #1a1a2e;
     padding-left: 32px;
     border-left: none;
   }
 
-  .nav-list-mobile .dropdown-divider {
-    border-top-color: rgba(255, 255, 255, 0.07);
+  .dropdown-divider {
+    border-top-color: #eee;
     margin: 3px 0;
   }
 
-  .nav-list-mobile .dropdown-section-title {
-    color: rgba(255, 255, 255, 0.5);
+  .dropdown-section-title {
+    color: #1a1a2e;
     padding: 5px 16px 3px;
     font-size: 10.5px;
+  }
+
+  .search-box {
+    display: none;
   }
 }
 
 @media (max-width: 480px) {
-  .top-strip .top-right {
-    display: none;
+  .top-strip .top-left {
+    font-size: 10px;
   }
 }

@@ -321,9 +321,9 @@ function Navbar() {
         </div>
       </div>
 
-      {/* brand bar: logo + college name (NOT sticky) */}
-      <div className="brand-bar">
-        <div className="brand-bar-inner">
+      {/* white top section: logo + college name */}
+      <div className="white-header">
+        <div className="white-header-inner">
           <div className="logo-circle">
             <img
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10"
@@ -335,11 +335,12 @@ function Navbar() {
             <p className="society-name">Satara Education Society's</p>
             <h1 className="college-name">Satara Polytechnic, Satara</h1>
             <p className="affiliation-line">Approved by AICTE Delhi &bull; DTE Maharashtra State &bull; Affiliated to MSBTE, Mumbai</p>
+            <p className="address-line">At Post: Songaon, Khindwadi, Near NH-4, Satara &mdash; 415002, Maharashtra</p>
           </div>
         </div>
       </div>
 
-      {/* sticky nav bar — full width, no logo competing */}
+      {/* nav bar */}
       <nav className="main-nav">
         <div className="nav-inner">
           {/* hamburger for mobile */}
@@ -356,21 +357,92 @@ function Navbar() {
             <span></span>
           </button>
 
-          {/* mobile brand (only visible on small screens) */}
-          <div className="mobile-brand">
-            <div className="logo-circle logo-circle-sm">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10"
-                alt="College Logo"
-                className="logo-img"
-              />
-            </div>
-            <span className="mobile-college-name">Satara Polytechnic</span>
-          </div>
-
-          {/* desktop nav list */}
-          <ul className="nav-list">
-            {menuData.map((item, idx) => renderNavItem(item, idx))}
+          <ul className={`nav-list ${mobileOpen ? 'mobile-open' : ''}`}>
+            {menuData.map((item, idx) => (
+              <li
+                key={idx}
+                className={`nav-item ${item.children ? 'has-dropdown' : ''} ${openMenu === idx ? 'active' : ''}`}
+                onMouseEnter={() => (item.children || item.type === 'multi-column') && handleMouseEnter(idx)}
+                onMouseLeave={handleMouseLeave}
+              >
+                {item.type === 'multi-column' ? (
+                  <>
+                    <button
+                      className="nav-link dropdown-toggle"
+                      onClick={() => {
+                        if (mobileOpen) toggleMobile(idx);
+                      }}
+                    >
+                      {item.label}
+                      <span className="arrow">▾</span>
+                    </button>
+                    <div
+                      className={`dropdown-multi ${
+                        openMenu === idx || (mobileOpen && mobileExpanded === idx) ? 'show' : ''
+                      }`}
+                    >
+                      {item.columns.map((col, cIdx) => (
+                        <div className={`dropdown-col ${col.header === 'Departments' ? 'dropdown-col-depts' : col.header === 'Cell and Committees' ? 'dropdown-col-cells' : ''}`} key={cIdx}>
+                          <span className="dropdown-col-header">{col.header}</span>
+                          <ul className="dropdown-col-list">
+                            {col.items.map((child, iIdx) => (
+                              child.divider ? (
+                                <li key={iIdx} className="dropdown-divider"></li>
+                              ) : child.isTitle ? (
+                                <li key={iIdx} className="dropdown-section-title">
+                                  {child.label}
+                                </li>
+                              ) : (
+                                <li key={iIdx}>
+                                  <a href={child.link} onClick={() => setMobileOpen(false)}>
+                                    {child.label}
+                                  </a>
+                                </li>
+                              )
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                ) : item.children ? (
+                  <>
+                    <button
+                      className="nav-link dropdown-toggle"
+                      onClick={() => {
+                        if (mobileOpen) toggleMobile(idx);
+                      }}
+                    >
+                      {item.label}
+                      <span className="arrow">▾</span>
+                    </button>
+                    <ul
+                      className={`dropdown-menu ${
+                        openMenu === idx || (mobileOpen && mobileExpanded === idx) ? 'show' : ''
+                      }`}
+                    >
+                      {item.children.map((child, cIdx) => (
+                        <li key={cIdx}>
+                          {child.type === 'header' ? (
+                            <span className="dropdown-header">{child.label}</span>
+                          ) : (
+                            <a href={child.link} onClick={() => setMobileOpen(false)}>
+                              {child.label}
+                            </a>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <a href={item.link} className={`nav-link ${item.isPill ? 'pill' : ''}`}>
+                    {item.label}
+                    {item.children || item.type === 'multi-column' ? <span className="arrow">▾</span> : ''}
+                  </a>
+                )
+              }
+            </li>
+          ))}
           </ul>
 
           {/* search icon */}
@@ -378,11 +450,6 @@ function Navbar() {
             <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           </div>
         </div>
-
-        {/* Mobile slide-in nav */}
-        <ul className={`nav-list-mobile ${mobileOpen ? 'mobile-open' : ''}`}>
-          {menuData.map((item, idx) => renderNavItem(item, idx, true))}
-        </ul>
       </nav>
     </header>
   );
