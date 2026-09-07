@@ -9,20 +9,25 @@ function Navbar() {
   const [mobileExpanded, setMobileExpanded] = useState(null);
   const [dbCells, setDbCells] = useState([]);
   const [dbDepts, setDbDepts] = useState([]);
+  const [dataLoading, setDataLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API_URL}/cells`)
-      .then((res) => res.json())
-      .then((data) => setDbCells(data))
-      .catch((err) => console.error('Failed to fetch cells for navbar:', err));
-    fetch(`${API_URL}/departments`)
-      .then((res) => res.json())
-      .then((data) => setDbDepts(data))
-      .catch((err) => console.error('Failed to fetch departments for navbar:', err));
+    let mounted = true;
+    Promise.all([
+      fetch(`${API_URL}/cells`).then((r) => r.json()).catch(() => []),
+      fetch(`${API_URL}/departments`).then((r) => r.json()).catch(() => []),
+    ]).then(([cells, depts]) => {
+      if (mounted) {
+        setDbCells(cells);
+        setDbDepts(depts);
+        setDataLoading(false);
+      }
+    });
+    return () => { mounted = false; };
   }, []);
 
   // Build menu data dynamically from loaded data
-  const getMenuData = () => [
+  const menuData = dataLoading ? [] : [
     {
       label: 'HOME',
       link: '/',
@@ -167,8 +172,6 @@ function Navbar() {
     },
   ];
 
-  const menuData = getMenuData();
-
   const handleMouseEnter = (index) => {
     setOpenMenu(index);
   };
@@ -231,7 +234,7 @@ function Navbar() {
           </button>
 
           <ul className={`nav-list ${mobileOpen ? 'mobile-open' : ''}`}>
-            {menuData.map((item, idx) => (
+            {!dataLoading && menuData.map((item, idx) => (
               <li
                 key={idx}
                 className={`nav-item ${item.children ? 'has-dropdown' : ''} ${openMenu === idx ? 'active' : ''}`}
