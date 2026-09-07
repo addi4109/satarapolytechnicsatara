@@ -66,10 +66,9 @@
 
 .header-row {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 16px;
 }
 
 .logo-circle {
@@ -103,10 +102,10 @@
 }
 
 .brand-text {
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .society-name {
@@ -125,6 +124,7 @@
   line-height: 1.2;
   margin: 0 0 6px;
   letter-spacing: -0.5px;
+  white-space: nowrap;
 }
 
 .address-line {
