@@ -7,11 +7,11 @@
 
 /* ===== top strip (contact info) ===== */
 .top-strip {
-  background: #fff;
-  color: #666;
+  background: var(--sp-navy-deep, #1e2d4d);
+  color: rgba(255, 255, 255, 0.75);
   font-size: 12px;
   padding: 5px 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .top-strip-inner {
@@ -41,7 +41,7 @@
 
 .top-strip .top-left:hover,
 .top-strip .top-right:hover {
-  color: #1a1a2e;
+  color: var(--sp-gold, #c8963e);
 }
 
 .top-icon {
@@ -51,18 +51,20 @@
   opacity: 0.7;
 }
 
-/* ===== main nav - IITB style ===== */
+/* ===== site header wrapper ===== */
 .site-header {
-  background: #fff;
+  background: var(--sp-navy-deep, #1e2d4d);
 }
 
+/* ===== main nav ===== */
 .main-nav {
-  background: #fff;
+  background: var(--sp-navy-deep, #1e2d4d);
   position: sticky;
   top: 0;
   z-index: 1000;
-  border-bottom: 3px solid #c41e3a;
+  border-bottom: 3px solid var(--sp-gold, #c8963e);
   padding: 0;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 }
 
 .nav-inner {
@@ -74,12 +76,12 @@
   gap: 0;
 }
 
-/* Hamburger - left side */
+/* ===== Hamburger (mobile) ===== */
 .hamburger {
   display: none;
   flex-direction: column;
   justify-content: center;
-  gap: 4px;
+  gap: 5px;
   background: none;
   border: none;
   cursor: pointer;
@@ -90,15 +92,15 @@
 
 .hamburger span {
   display: block;
-  width: 20px;
+  width: 22px;
   height: 2px;
-  background: #333;
+  background: #fff;
   border-radius: 2px;
   transition: transform 0.25s, opacity 0.25s;
 }
 
 .hamburger.is-active span:nth-child(1) {
-  transform: translateY(6px) rotate(45deg);
+  transform: translateY(7px) rotate(45deg);
 }
 
 .hamburger.is-active span:nth-child(2) {
@@ -106,10 +108,10 @@
 }
 
 .hamburger.is-active span:nth-child(3) {
-  transform: translateY(-6px) rotate(-45deg);
+  transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ===== College info - LEFT SIDE, at the very start ===== */
+/* ===== College info — LEFT SIDE ===== */
 .college-info {
   display: flex;
   align-items: center;
@@ -120,12 +122,13 @@
 
 .logo-circle {
   position: relative;
-  width: 42px;
-  height: 42px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   overflow: hidden;
   background: #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 2px rgba(200, 150, 62, 0.5);
+  flex-shrink: 0;
 }
 
 .logo-img {
@@ -144,48 +147,50 @@
 
 .society-name {
   font-size: 10px;
-  color: #888;
+  color: rgba(255, 255, 255, 0.65);
   margin: 0;
   font-weight: 500;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.4px;
 }
 
 .college-name {
   font-family: 'Georgia', serif;
   font-size: 15px;
-  color: #1a1a2e;
+  color: #fff;
   font-weight: 700;
-  margin: 1px 0;
+  margin: 2px 0;
   line-height: 1.2;
   white-space: nowrap;
 }
 
 .affiliation-line {
   font-size: 9.5px;
-  color: #666;
+  color: rgba(255, 255, 255, 0.55);
   margin: 0;
   line-height: 1.3;
 }
 
-/* ===== Nav links section - wraps to next line when needed ===== */
+/* ===== Nav links section ===== */
 .nav-links-section {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 2px;
-  padding: 7px 0;
+  gap: 0;
+  padding: 6px 0 6px 12px;
+  justify-content: flex-end;
 }
 
 .nav-list {
   list-style: none;
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 0;
   flex-wrap: wrap;
   margin: 0;
   padding: 0;
+  justify-content: flex-end;
 }
 
 .nav-item {
@@ -196,13 +201,13 @@
   display: flex;
   align-items: center;
   gap: 3px;
-  padding: 0 10px;
-  height: 38px;
-  color: #1a1a2e;
+  padding: 0 9px;
+  height: 40px;
+  color: rgba(255, 255, 255, 0.88);
   text-decoration: none;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.4px;
   text-transform: uppercase;
   white-space: nowrap;
   border: none;
@@ -211,38 +216,47 @@
   font-family: inherit;
   transition: color 0.2s ease, background 0.2s ease;
   position: relative;
+  border-bottom: 2px solid transparent;
 }
 
-.nav-link:hover {
-  color: #c41e3a;
-  background: rgba(196, 30, 58, 0.04);
+.nav-link:hover,
+.nav-item.active > .nav-link {
+  color: var(--sp-gold, #c8963e);
+  background: rgba(255, 255, 255, 0.06);
+  border-bottom-color: var(--sp-gold, #c8963e);
 }
 
 .nav-link .arrow {
   font-size: 9px;
-  opacity: 0.6;
-  margin-left: 2px;
+  opacity: 0.55;
+  margin-left: 1px;
   transition: transform 0.2s ease;
 }
 
 .nav-item.active .arrow {
   transform: rotate(180deg);
+  opacity: 0.9;
 }
 
-/* active/pill tab style - for NOTICES */
+/* NOTICES pill */
 .nav-link.pill {
-  background: #1a3a6b;
+  background: var(--sp-gold, #c8963e);
   color: #fff;
   border-radius: 18px;
-  padding: 0 12px;
-  font-weight: 600;
-  height: 38px;
-  line-height: 38px;
+  padding: 0 14px;
+  font-weight: 700;
+  height: 32px;
+  line-height: 32px;
+  margin-left: 4px;
+  border-bottom: none;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 6px rgba(200, 150, 62, 0.35);
 }
 
 .nav-link.pill:hover {
-  background: #1a3a6b;
+  background: var(--sp-gold-dark, #a5721c);
   color: #fff;
+  border-bottom: none;
 }
 
 .nav-link.pill .arrow {
@@ -250,69 +264,67 @@
   opacity: 0.8;
 }
 
-/* ===== search icon - RIGHT SIDE ===== */
+/* ===== Search icon ===== */
 .search-box {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 32px;
   height: 32px;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 4px;
-  background: #fafafa;
+  background: rgba(255, 255, 255, 0.07);
   cursor: pointer;
   transition: all 0.2s ease;
   padding: 3px;
   flex-shrink: 0;
-  margin-left: 6px;
+  margin-left: 10px;
 }
 
 .search-box:hover {
-  border-color: #c41e3a;
-  background: #fff;
+  border-color: var(--sp-gold, #c8963e);
+  background: rgba(200, 150, 62, 0.12);
 }
 
 .search-icon {
   width: 14px;
   height: 14px;
-  color: #888;
+  color: rgba(255, 255, 255, 0.7);
 }
 
-/* ===== dropdown - clean style ===== */
+/* ===== Dropdown — single column ===== */
 .dropdown-menu {
   position: absolute;
   top: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(8px);
   background: #fff;
-  min-width: 200px;
+  min-width: 210px;
   list-style: none;
   padding: 6px 0;
   border-radius: 6px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s ease,
-              transform 0.2s ease,
-              visibility 0s linear 0.2s;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
   will-change: opacity, transform;
   z-index: 1100;
-  border: 1px solid #e8e8e8;
-  margin-top: 6px;
+  border: 1px solid #e4e8ed;
+  border-top: 3px solid var(--sp-gold, #c8963e);
+  margin-top: 3px;
 }
 
 .dropdown-menu.show {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);
-  transition: opacity 0.2s ease,
-              transform 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .dropdown-menu li a {
   display: block;
-  padding: 7px 14px;
-  color: #444;
+  padding: 7px 16px;
+  color: #333;
   text-decoration: none;
   font-size: 13px;
   font-weight: 400;
@@ -321,18 +333,18 @@
 }
 
 .dropdown-menu li a:hover {
-  background: #f5f5f5;
-  color: #1a1a2e;
-  border-left-color: #c41e3a;
-  padding-left: 18px;
+  background: var(--sp-cream, #f7f4ec);
+  color: var(--sp-navy, #243358);
+  border-left-color: var(--sp-gold, #c8963e);
+  padding-left: 20px;
 }
 
 .dropdown-header {
   display: block;
-  padding: 6px 14px 3px;
+  padding: 6px 16px 3px;
   font-size: 10px;
   font-weight: 700;
-  color: #888;
+  color: var(--sp-muted, #6b7a94);
   text-transform: uppercase;
   letter-spacing: 0.6px;
   border-top: 1px solid #eee;
@@ -344,7 +356,7 @@
   margin-top: 0;
 }
 
-/* ===== multi-column dropdown ===== */
+/* ===== Multi-column dropdown ===== */
 .dropdown-multi {
   position: absolute;
   top: 100%;
@@ -353,29 +365,27 @@
   background: #fff;
   display: flex;
   border-radius: 6px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.2s ease,
-              transform 0.2s ease,
-              visibility 0s linear 0.2s;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
   will-change: opacity, transform;
   z-index: 1100;
-  border: 1px solid #e8e8e8;
-  margin-top: 6px;
+  border: 1px solid #e4e8ed;
+  border-top: 3px solid var(--sp-gold, #c8963e);
+  margin-top: 3px;
 }
 
 .dropdown-multi.show {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);
-  transition: opacity 0.2s ease,
-              transform 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .dropdown-col {
-  min-width: 150px;
-  padding: 6px 0;
+  min-width: 160px;
+  padding: 8px 0;
 }
 
 .dropdown-col + .dropdown-col {
@@ -384,12 +394,14 @@
 
 .dropdown-col-header {
   display: block;
-  padding: 3px 14px 6px;
+  padding: 4px 16px 7px;
   font-size: 10px;
   font-weight: 700;
-  color: #888;
+  color: var(--sp-muted, #6b7a94);
   text-transform: uppercase;
   letter-spacing: 0.6px;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 2px;
 }
 
 .dropdown-col-list {
@@ -400,8 +412,8 @@
 
 .dropdown-col-list li a {
   display: block;
-  padding: 5px 14px;
-  color: #444;
+  padding: 6px 16px;
+  color: #333;
   text-decoration: none;
   font-size: 12.5px;
   font-weight: 400;
@@ -410,41 +422,40 @@
 }
 
 .dropdown-col-list li a:hover {
-  background: #f5f5f5;
-  color: #1a1a2e;
-  border-left-color: #c41e3a;
-  padding-left: 18px;
+  background: var(--sp-cream, #f7f4ec);
+  color: var(--sp-navy, #243358);
+  border-left-color: var(--sp-gold, #c8963e);
+  padding-left: 20px;
 }
 
 .dropdown-divider {
   border-top: 1px solid #eee;
-  margin: 4px 0;
+  margin: 5px 0;
   list-style: none;
 }
 
 .dropdown-section-title {
-  padding: 4px 14px 2px;
+  padding: 5px 16px 3px;
   font-weight: 700;
-  color: #1a1a2e;
-  font-size: 11.5px;
+  color: var(--sp-navy, #243358);
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.5px;
   list-style: none;
 }
 
-/* ===== responsive ===== */
+/* ===== Responsive — 1024px ===== */
 @media (max-width: 1024px) {
   .nav-link {
     padding: 0 7px;
-    font-size: 12px;
-    height: 36px;
-    line-height: 36px;
+    font-size: 11px;
+    height: 38px;
   }
 
   .nav-link.pill {
-    padding: 0 10px;
-    height: 36px;
-    line-height: 36px;
+    padding: 0 11px;
+    height: 30px;
+    line-height: 30px;
   }
 
   .college-info {
@@ -452,12 +463,12 @@
   }
 
   .logo-circle {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
   }
 
   .college-name {
-    font-size: 14px;
+    font-size: 13.5px;
   }
 
   .affiliation-line {
@@ -465,10 +476,11 @@
   }
 
   .society-name {
-    font-size: 9px;
+    font-size: 9.5px;
   }
 }
 
+/* ===== Responsive — 900px (mobile) ===== */
 @media (max-width: 900px) {
   .hamburger {
     display: flex;
@@ -476,77 +488,95 @@
 
   .top-strip {
     font-size: 10px;
-    padding: 3px 0;
+    padding: 4px 0;
   }
 
   .top-strip-inner {
-    padding: 0 10px;
-    gap: 10px;
-  }
-
-  .top-strip .top-left,
-  .top-strip .top-right {
-    font-size: 10px;
+    padding: 0 12px;
+    gap: 12px;
   }
 
   .nav-inner {
-    padding: 0 10px;
+    padding: 0 12px;
   }
 
   .nav-links-section {
     display: none;
   }
 
-  .nav-list {
+  /* Mobile slide-in menu — scoped to the nav-list directly inside main-nav */
+  .main-nav > .nav-list {
+    display: flex;
     position: fixed;
     top: 0;
     right: -100%;
-    width: 100%;
+    width: min(320px, 88vw);
     height: 100vh;
-    background: #fff;
+    background: var(--sp-navy-deep, #1e2d4d);
     flex-direction: column;
     justify-content: flex-start;
-    overflow-y: scroll;
-    transition: right 0.3s ease;
+    overflow-y: auto;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1100;
-    padding: 56px 0 20px;
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    padding: 64px 0 24px;
+    box-shadow: -6px 0 24px rgba(0, 0, 0, 0.35);
     gap: 0;
   }
 
-  .nav-list.mobile-open {
+  .main-nav > .nav-list.mobile-open {
     right: 0;
   }
 
   .nav-item {
     width: 100%;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .nav-link {
     width: 100%;
-    padding: 11px 14px;
+    padding: 12px 16px;
     font-size: 12px;
     justify-content: space-between;
     border-radius: 0;
     background: none;
     height: auto;
-    line-height: 1;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.88);
+    border-bottom: none;
+  }
+
+  .nav-link:hover,
+  .nav-item.active > .nav-link {
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--sp-gold, #c8963e);
+    border-bottom: none;
   }
 
   .nav-link.pill {
     border-radius: 0;
     justify-content: flex-start;
     height: auto;
-    line-height: 1;
-    padding: 11px 14px;
+    line-height: 1.4;
+    padding: 12px 16px;
+    margin-left: 0;
+    background: rgba(200, 150, 62, 0.18);
+    color: var(--sp-gold, #c8963e);
+    box-shadow: none;
+    border-bottom: none;
   }
 
+  .nav-link.pill:hover {
+    background: rgba(200, 150, 62, 0.28);
+    border-bottom: none;
+  }
+
+  /* Mobile dropdowns */
   .dropdown-menu {
     position: static;
     box-shadow: none;
     border: none;
-    background: #f9f9f9;
+    border-top: none;
+    background: rgba(0, 0, 0, 0.2);
     max-height: 0;
     overflow: hidden;
     opacity: 1;
@@ -556,8 +586,6 @@
     padding: 0;
     margin-top: 0;
     border-radius: 0;
-    left: 0;
-    transform: none;
   }
 
   .dropdown-menu.show {
@@ -568,20 +596,23 @@
   }
 
   .dropdown-menu li a {
-    color: #444;
-    padding: 8px 14px 8px 24px;
+    color: rgba(255, 255, 255, 0.75);
+    padding: 9px 16px 9px 28px;
     border-left: none;
+    font-size: 12px;
   }
 
   .dropdown-menu li a:hover {
-    background: #f0f0f0;
-    color: #1a1a2e;
-    padding-left: 28px;
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--sp-gold, #c8963e);
+    padding-left: 32px;
+    border-left: none;
   }
 
   .dropdown-header {
-    color: #888;
-    padding: 6px 14px 3px;
+    color: rgba(255, 255, 255, 0.45);
+    padding: 6px 16px 3px;
+    border-top: none;
   }
 
   .dropdown-multi {
@@ -589,7 +620,8 @@
     flex-direction: column;
     box-shadow: none;
     border: none;
-    background: #f9f9f9;
+    border-top: none;
+    background: rgba(0, 0, 0, 0.2);
     max-height: 0;
     overflow: hidden;
     opacity: 1;
@@ -598,57 +630,87 @@
     transition: max-height 0.3s ease;
     margin-top: 0;
     border-radius: 0;
-    left: 0;
-    transform: none;
   }
 
   .dropdown-multi.show {
-    max-height: 800px;
+    max-height: 900px;
     overflow-y: auto;
   }
 
   .dropdown-col {
     min-width: auto;
-    padding: 3px 0;
+    padding: 4px 0;
   }
 
   .dropdown-col + .dropdown-col {
     border-left: none;
-    border-top: 1px solid #eee;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
   }
 
   .dropdown-col-header {
-    color: #888;
-    padding: 5px 14px 3px;
+    color: rgba(255, 255, 255, 0.45);
+    padding: 6px 16px 4px;
+    border-bottom: none;
   }
 
   .dropdown-col-list li a {
-    color: #444;
-    padding: 6px 14px 6px 24px;
+    color: rgba(255, 255, 255, 0.75);
+    padding: 7px 16px 7px 28px;
     border-left: none;
+    font-size: 12px;
   }
 
   .dropdown-col-list li a:hover {
-    background: #f0f0f0;
-    color: #1a1a2e;
-    padding-left: 28px;
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--sp-gold, #c8963e);
+    padding-left: 32px;
+    border-left: none;
   }
 
   .dropdown-divider {
-    border-top-color: #eee;
+    border-top-color: rgba(255, 255, 255, 0.07);
     margin: 3px 0;
   }
 
   .dropdown-section-title {
-    color: #1a1a2e;
-    padding: 5px 14px 3px;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 5px 16px 3px;
+    font-size: 10.5px;
   }
 
   .search-box {
     display: none;
   }
 
+  /* Keep college info visible on mobile in nav bar */
   .college-info {
+    padding: 6px 0;
+  }
+
+  .logo-circle {
+    width: 34px;
+    height: 34px;
+  }
+
+  .college-name {
+    font-size: 13px;
+  }
+
+  .affiliation-line {
     display: none;
+  }
+
+  .society-name {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .top-strip .top-right {
+    display: none;
+  }
+
+  .college-name {
+    font-size: 12px;
   }
 }

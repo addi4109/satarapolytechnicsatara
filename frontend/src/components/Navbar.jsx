@@ -328,7 +328,7 @@ function Navbar() {
       {/* college identity strip - LEFT SIDE */}
 
 
-      {/* nav bar - IITB style */}
+      {/* nav bar */}
       <nav className="main-nav">
         <div className="nav-inner">
           {/* hamburger for mobile */}
@@ -345,7 +345,7 @@ function Navbar() {
             <span></span>
           </button>
 
-          {/* College info - LEFT SIDE, at the very start */}
+          {/* College info - always visible */}
           <div className="college-info">
             <div className="logo-circle">
               <img
@@ -361,17 +361,22 @@ function Navbar() {
             </div>
           </div>
 
-          {/* Nav links - wraps to next line when needed */}
+          {/* Desktop nav links */}
           <div className="nav-links-section">
-            <ul className={`nav-list ${mobileOpen ? 'mobile-open' : ''}`}>
+            <ul className="nav-list">
               {menuData.map((item, idx) => renderNavItem(item, idx))}
             </ul>
-            {/* search icon - right side */}
+            {/* search icon */}
             <div className="search-box">
               <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             </div>
           </div>
         </div>
+
+        {/* Mobile slide-in nav */}
+        <ul className={`nav-list ${mobileOpen ? 'mobile-open' : ''}`}>
+          {menuData.map((item, idx) => renderNavItem(item, idx))}
+        </ul>
       </nav>
     </header>
   );
