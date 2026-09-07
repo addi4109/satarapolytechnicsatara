@@ -219,27 +219,25 @@ function Navbar() {
     setOpenMenu(null);
   };
 
-  const renderNavItem = (item, idx) => {
-    const isActive = openMenu === idx;
+  const renderNavItem = (item, idx, isMobile = false) => {
+    const isActive = isMobile ? mobileExpanded === idx : openMenu === idx;
 
     if (item.type === 'multi-column') {
       return (
         <li
           key={idx}
           className={`nav-item has-dropdown ${isActive ? 'active' : ''}`}
-          onMouseEnter={() => handleMouseEnter(idx)}
-          onMouseLeave={handleMouseLeave}
+          onMouseEnter={!isMobile ? () => handleMouseEnter(idx) : undefined}
+          onMouseLeave={!isMobile ? handleMouseLeave : undefined}
         >
           <button
             className="nav-link dropdown-toggle"
-            onClick={() => { if (mobileOpen) toggleMobile(idx); }}
+            onClick={() => { if (isMobile) toggleMobile(idx); }}
           >
             {item.label}
             <span className="arrow">▾</span>
           </button>
-          <div
-            className={`dropdown-multi ${isActive ? 'show' : ''}`}
-          >
+          <div className={`dropdown-multi ${isActive ? 'show' : ''}`}>
             {item.columns.map((col, cIdx) => (
               <div className={`dropdown-col ${col.header === 'Departments' ? 'dropdown-col-depts' : col.header === 'Cell and Committees' ? 'dropdown-col-cells' : ''}`} key={cIdx}>
                 <span className="dropdown-col-header">{col.header}</span>
@@ -272,19 +270,17 @@ function Navbar() {
         <li
           key={idx}
           className={`nav-item has-dropdown ${isActive ? 'active' : ''}`}
-          onMouseEnter={() => handleMouseEnter(idx)}
-          onMouseLeave={handleMouseLeave}
+          onMouseEnter={!isMobile ? () => handleMouseEnter(idx) : undefined}
+          onMouseLeave={!isMobile ? handleMouseLeave : undefined}
         >
           <button
             className="nav-link dropdown-toggle"
-            onClick={() => { if (mobileOpen) toggleMobile(idx); }}
+            onClick={() => { if (isMobile) toggleMobile(idx); }}
           >
             {item.label}
             <span className="arrow">▾</span>
           </button>
-          <ul
-            className={`dropdown-menu ${isActive ? 'show' : ''}`}
-          >
+          <ul className={`dropdown-menu ${isActive ? 'show' : ''}`}>
             {item.children.map((child, cIdx) => (
               <li key={cIdx}>
                 <a href={child.link} onClick={() => setMobileOpen(false)}>
@@ -325,10 +321,25 @@ function Navbar() {
         </div>
       </div>
 
-      {/* college identity strip - LEFT SIDE */}
+      {/* brand bar: logo + college name (NOT sticky) */}
+      <div className="brand-bar">
+        <div className="brand-bar-inner">
+          <div className="logo-circle">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10"
+              alt="College Logo"
+              className="logo-img"
+            />
+          </div>
+          <div className="brand-text">
+            <p className="society-name">Satara Education Society's</p>
+            <h1 className="college-name">Satara Polytechnic, Satara</h1>
+            <p className="affiliation-line">Approved by AICTE Delhi &bull; DTE Maharashtra State &bull; Affiliated to MSBTE, Mumbai</p>
+          </div>
+        </div>
+      </div>
 
-
-      {/* nav bar */}
+      {/* sticky nav bar — full width, no logo competing */}
       <nav className="main-nav">
         <div className="nav-inner">
           {/* hamburger for mobile */}
@@ -345,37 +356,32 @@ function Navbar() {
             <span></span>
           </button>
 
-          {/* College info - always visible */}
-          <div className="college-info">
-            <div className="logo-circle">
+          {/* mobile brand (only visible on small screens) */}
+          <div className="mobile-brand">
+            <div className="logo-circle logo-circle-sm">
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10"
                 alt="College Logo"
                 className="logo-img"
               />
             </div>
-            <div className="brand-text">
-              <p className="society-name">Satara Education Society's</p>
-              <h1 className="college-name">Satara Polytechnic, Satara</h1>
-              <p className="affiliation-line">Approved by AICTE Delhi &bull; DTE Maharashtra State &bull; Affiliated to MSBTE, Mumbai</p>
-            </div>
+            <span className="mobile-college-name">Satara Polytechnic</span>
           </div>
 
-          {/* Desktop nav links */}
-          <div className="nav-links-section">
-            <ul className="nav-list">
-              {menuData.map((item, idx) => renderNavItem(item, idx))}
-            </ul>
-            {/* search icon */}
-            <div className="search-box">
-              <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-            </div>
+          {/* desktop nav list */}
+          <ul className="nav-list">
+            {menuData.map((item, idx) => renderNavItem(item, idx))}
+          </ul>
+
+          {/* search icon */}
+          <div className="search-box">
+            <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           </div>
         </div>
 
         {/* Mobile slide-in nav */}
-        <ul className={`nav-list ${mobileOpen ? 'mobile-open' : ''}`}>
-          {menuData.map((item, idx) => renderNavItem(item, idx))}
+        <ul className={`nav-list-mobile ${mobileOpen ? 'mobile-open' : ''}`}>
+          {menuData.map((item, idx) => renderNavItem(item, idx, true))}
         </ul>
       </nav>
     </header>

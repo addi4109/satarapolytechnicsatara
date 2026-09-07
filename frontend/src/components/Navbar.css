@@ -5,28 +5,29 @@
   box-sizing: border-box;
 }
 
-/* ===== top strip (contact info) ===== */
+/* ===================================================
+   LAYOUT OVERVIEW
+   1. .top-strip       — contact info bar (navy)
+   2. .brand-bar       — logo + college name (navy, NOT sticky)
+   3. .main-nav        — sticky nav bar, full-width links only
+   =================================================== */
+
+/* ===== 1. Top strip ===== */
 .top-strip {
   background: var(--sp-navy-deep, #1e2d4d);
   color: rgba(255, 255, 255, 0.75);
   font-size: 12px;
   padding: 5px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .top-strip-inner {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 0 24px;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
-  gap: 20px;
-}
-
-.top-strip span,
-.top-strip a {
-  white-space: nowrap;
+  gap: 24px;
 }
 
 .top-strip .top-left,
@@ -36,6 +37,7 @@
   gap: 6px;
   color: inherit;
   text-decoration: none;
+  white-space: nowrap;
   transition: color 0.2s ease;
 }
 
@@ -51,83 +53,32 @@
   opacity: 0.7;
 }
 
-/* ===== site header wrapper ===== */
+/* ===== 2. Brand bar ===== */
 .site-header {
   background: var(--sp-navy-deep, #1e2d4d);
 }
 
-/* ===== main nav ===== */
-.main-nav {
+.brand-bar {
   background: var(--sp-navy-deep, #1e2d4d);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  border-bottom: 3px solid var(--sp-gold, #c8963e);
-  padding: 0;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  padding: 12px 0;
 }
 
-.nav-inner {
-  max-width: 1200px;
+.brand-bar-inner {
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
   display: flex;
   align-items: center;
-  gap: 0;
-}
-
-/* ===== Hamburger (mobile) ===== */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  z-index: 1200;
-  margin-right: 12px;
-}
-
-.hamburger span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background: #fff;
-  border-radius: 2px;
-  transition: transform 0.25s, opacity 0.25s;
-}
-
-.hamburger.is-active span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-
-.hamburger.is-active span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger.is-active span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
-
-/* ===== College info â€” LEFT SIDE ===== */
-.college-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-  padding: 8px 0;
+  gap: 14px;
 }
 
 .logo-circle {
-  position: relative;
-  width: 46px;
-  height: 46px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   overflow: hidden;
   background: #fff;
-  box-shadow: 0 0 0 2px rgba(200, 150, 62, 0.5);
+  box-shadow: 0 0 0 3px rgba(200, 150, 62, 0.45);
   flex-shrink: 0;
 }
 
@@ -141,56 +92,111 @@
 .brand-text {
   display: flex;
   flex-direction: column;
-  text-align: left;
   line-height: 1.3;
 }
 
 .society-name {
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.65);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
   margin: 0;
   font-weight: 500;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.5px;
 }
 
 .college-name {
   font-family: 'Georgia', serif;
-  font-size: 15px;
+  font-size: 22px;
   color: #fff;
   font-weight: 700;
-  margin: 2px 0;
+  margin: 3px 0 4px;
   line-height: 1.2;
-  white-space: nowrap;
 }
 
 .affiliation-line {
-  font-size: 9.5px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.55);
   margin: 0;
-  line-height: 1.3;
+  line-height: 1.4;
 }
 
-/* ===== Nav links section ===== */
-.nav-links-section {
-  flex: 1;
-  min-width: 0;
+/* ===== 3. Main nav — sticky, full-width ===== */
+.main-nav {
+  background: var(--sp-navy, #243358);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 3px solid var(--sp-gold, #c8963e);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.nav-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 24px;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: 0;
-  padding: 6px 0 6px 12px;
-  justify-content: flex-end;
 }
 
+/* ===== Hamburger (mobile only) ===== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 10px 8px 0;
+  z-index: 1200;
+  flex-shrink: 0;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.25s, opacity 0.25s;
+}
+
+.hamburger.is-active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.is-active span:nth-child(2) { opacity: 0; }
+.hamburger.is-active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile brand — hidden on desktop */
+.mobile-brand {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.logo-circle-sm {
+  width: 30px;
+  height: 30px;
+  box-shadow: none;
+}
+
+.mobile-college-name {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Georgia', serif;
+  white-space: nowrap;
+}
+
+/* ===== Desktop nav list ===== */
 .nav-list {
   list-style: none;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 0;
-  flex-wrap: wrap;
   margin: 0;
   padding: 0;
-  justify-content: flex-end;
+  flex: 1;
+  justify-content: center;
 }
 
 .nav-item {
@@ -201,11 +207,11 @@
   display: flex;
   align-items: center;
   gap: 3px;
-  padding: 0 9px;
-  height: 40px;
+  padding: 0 10px;
+  height: 44px;
   color: rgba(255, 255, 255, 0.88);
   text-decoration: none;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
   letter-spacing: 0.4px;
   text-transform: uppercase;
@@ -214,43 +220,44 @@
   background: none;
   cursor: pointer;
   font-family: inherit;
-  transition: color 0.2s ease, background 0.2s ease;
-  position: relative;
-  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, background 0.2s ease, border-bottom-color 0.2s ease;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -3px; /* sit on the gold border */
 }
 
 .nav-link:hover,
 .nav-item.active > .nav-link {
   color: var(--sp-gold, #c8963e);
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.07);
   border-bottom-color: var(--sp-gold, #c8963e);
 }
 
 .nav-link .arrow {
-  font-size: 9px;
+  font-size: 8px;
   opacity: 0.55;
-  margin-left: 1px;
+  margin-left: 2px;
   transition: transform 0.2s ease;
 }
 
 .nav-item.active .arrow {
   transform: rotate(180deg);
-  opacity: 0.9;
+  opacity: 1;
 }
 
 /* NOTICES pill */
 .nav-link.pill {
   background: var(--sp-gold, #c8963e);
   color: #fff;
-  border-radius: 18px;
-  padding: 0 14px;
+  border-radius: 14px;
+  padding: 0 13px;
   font-weight: 700;
-  height: 32px;
-  line-height: 32px;
-  margin-left: 4px;
+  height: 28px;
+  line-height: 28px;
+  align-self: center;
+  margin: 0 4px;
   border-bottom: none;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 6px rgba(200, 150, 62, 0.35);
+  box-shadow: 0 2px 6px rgba(200, 150, 62, 0.4);
+  font-size: 11px;
 }
 
 .nav-link.pill:hover {
@@ -259,26 +266,20 @@
   border-bottom: none;
 }
 
-.nav-link.pill .arrow {
-  color: #fff;
-  opacity: 0.8;
-}
-
 /* ===== Search icon ===== */
 .search-box {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.07);
   cursor: pointer;
   transition: all 0.2s ease;
-  padding: 3px;
   flex-shrink: 0;
-  margin-left: 10px;
+  margin-left: 8px;
 }
 
 .search-box:hover {
@@ -287,23 +288,23 @@
 }
 
 .search-icon {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* ===== Dropdown â€” single column ===== */
+/* ===== Dropdown — single column ===== */
 .dropdown-menu {
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translateX(-50%) translateY(8px);
+  transform: translateX(-50%) translateY(6px);
   background: #fff;
   min-width: 210px;
   list-style: none;
   padding: 6px 0;
   border-radius: 6px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
@@ -311,7 +312,7 @@
   z-index: 1100;
   border: 1px solid #e4e8ed;
   border-top: 3px solid var(--sp-gold, #c8963e);
-  margin-top: 3px;
+  margin-top: 0;
 }
 
 .dropdown-menu.show {
@@ -339,33 +340,16 @@
   padding-left: 20px;
 }
 
-.dropdown-header {
-  display: block;
-  padding: 6px 16px 3px;
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--sp-muted, #6b7a94);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  border-top: 1px solid #eee;
-  margin-top: 4px;
-}
-
-.dropdown-header:first-child {
-  border-top: none;
-  margin-top: 0;
-}
-
 /* ===== Multi-column dropdown ===== */
 .dropdown-multi {
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translateX(-50%) translateY(8px);
+  transform: translateX(-50%) translateY(6px);
   background: #fff;
   display: flex;
   border-radius: 6px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
@@ -373,7 +357,7 @@
   z-index: 1100;
   border: 1px solid #e4e8ed;
   border-top: 3px solid var(--sp-gold, #c8963e);
-  margin-top: 3px;
+  margin-top: 0;
 }
 
 .dropdown-multi.show {
@@ -444,48 +428,68 @@
   list-style: none;
 }
 
-/* ===== Responsive â€” 1024px ===== */
-@media (max-width: 1024px) {
+/* ===== Responsive: 1200px — tighten spacing ===== */
+@media (max-width: 1200px) {
   .nav-link {
-    padding: 0 7px;
+    padding: 0 8px;
     font-size: 11px;
-    height: 38px;
-  }
-
-  .nav-link.pill {
-    padding: 0 11px;
-    height: 30px;
-    line-height: 30px;
-  }
-
-  .college-info {
-    gap: 8px;
-  }
-
-  .logo-circle {
-    width: 38px;
-    height: 38px;
-  }
-
-  .college-name {
-    font-size: 13.5px;
-  }
-
-  .affiliation-line {
-    font-size: 9px;
-  }
-
-  .society-name {
-    font-size: 9.5px;
   }
 }
 
-/* ===== Responsive â€” 900px (mobile) ===== */
+@media (max-width: 1024px) {
+  .nav-link {
+    padding: 0 6px;
+    font-size: 10.5px;
+    letter-spacing: 0.2px;
+  }
+
+  .nav-link.pill {
+    padding: 0 10px;
+    font-size: 10.5px;
+    margin: 0 2px;
+  }
+
+  .brand-bar {
+    padding: 10px 0;
+  }
+
+  .logo-circle {
+    width: 52px;
+    height: 52px;
+  }
+
+  .college-name {
+    font-size: 19px;
+  }
+}
+
+/* ===== Responsive: 900px — mobile ===== */
 @media (max-width: 900px) {
+  /* Hide desktop brand bar */
+  .brand-bar {
+    display: none;
+  }
+
+  /* Show hamburger */
   .hamburger {
     display: flex;
   }
 
+  /* Show mobile brand in nav bar */
+  .mobile-brand {
+    display: flex;
+  }
+
+  /* Hide desktop nav list and search */
+  .nav-list {
+    display: none;
+  }
+
+  .search-box {
+    display: none;
+  }
+
+  /* Top strip compact */
   .top-strip {
     font-size: 10px;
     padding: 4px 0;
@@ -500,17 +504,14 @@
     padding: 0 12px;
   }
 
-  .nav-links-section {
-    display: none;
-  }
-
-  /* Mobile slide-in menu â€” scoped to the nav-list directly inside main-nav */
-  .main-nav > .nav-list {
+  /* Mobile slide-in menu */
+  .nav-list-mobile {
     display: flex;
+    list-style: none;
     position: fixed;
     top: 0;
     right: -100%;
-    width: min(320px, 88vw);
+    width: min(300px, 85vw);
     height: 100vh;
     background: var(--sp-navy-deep, #1e2d4d);
     flex-direction: column;
@@ -518,21 +519,24 @@
     overflow-y: auto;
     transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1100;
-    padding: 64px 0 24px;
-    box-shadow: -6px 0 24px rgba(0, 0, 0, 0.35);
+    padding: 60px 0 24px;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4);
     gap: 0;
+    margin: 0;
+    padding-top: 60px;
   }
 
-  .main-nav > .nav-list.mobile-open {
+  .nav-list-mobile.mobile-open {
     right: 0;
   }
 
-  .nav-item {
+  /* Mobile nav items */
+  .nav-list-mobile .nav-item {
     width: 100%;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  .nav-link {
+  .nav-list-mobile .nav-link {
     width: 100%;
     padding: 12px 16px;
     font-size: 12px;
@@ -543,35 +547,38 @@
     line-height: 1.4;
     color: rgba(255, 255, 255, 0.88);
     border-bottom: none;
+    margin-bottom: 0;
   }
 
-  .nav-link:hover,
-  .nav-item.active > .nav-link {
+  .nav-list-mobile .nav-link:hover,
+  .nav-list-mobile .nav-item.active > .nav-link {
     background: rgba(255, 255, 255, 0.07);
     color: var(--sp-gold, #c8963e);
     border-bottom: none;
   }
 
-  .nav-link.pill {
+  .nav-list-mobile .nav-link.pill {
     border-radius: 0;
     justify-content: flex-start;
     height: auto;
     line-height: 1.4;
     padding: 12px 16px;
-    margin-left: 0;
-    background: rgba(200, 150, 62, 0.18);
+    margin: 0;
+    background: rgba(200, 150, 62, 0.2);
     color: var(--sp-gold, #c8963e);
     box-shadow: none;
     border-bottom: none;
+    align-self: unset;
+    font-size: 12px;
   }
 
-  .nav-link.pill:hover {
-    background: rgba(200, 150, 62, 0.28);
+  .nav-list-mobile .nav-link.pill:hover {
+    background: rgba(200, 150, 62, 0.3);
     border-bottom: none;
   }
 
-  /* Mobile dropdowns */
-  .dropdown-menu {
+  /* Mobile dropdown */
+  .nav-list-mobile .dropdown-menu {
     position: static;
     box-shadow: none;
     border: none;
@@ -586,36 +593,32 @@
     padding: 0;
     margin-top: 0;
     border-radius: 0;
+    min-width: unset;
+    width: 100%;
   }
 
-  .dropdown-menu.show {
+  .nav-list-mobile .dropdown-menu.show {
     max-height: 500px;
     overflow-y: auto;
-    transform: none;
     padding: 4px 0;
+    transform: none;
   }
 
-  .dropdown-menu li a {
+  .nav-list-mobile .dropdown-menu li a {
     color: rgba(255, 255, 255, 0.75);
     padding: 9px 16px 9px 28px;
     border-left: none;
     font-size: 12px;
   }
 
-  .dropdown-menu li a:hover {
+  .nav-list-mobile .dropdown-menu li a:hover {
     background: rgba(255, 255, 255, 0.07);
     color: var(--sp-gold, #c8963e);
     padding-left: 32px;
     border-left: none;
   }
 
-  .dropdown-header {
-    color: rgba(255, 255, 255, 0.45);
-    padding: 6px 16px 3px;
-    border-top: none;
-  }
-
-  .dropdown-multi {
+  .nav-list-mobile .dropdown-multi {
     position: static;
     flex-direction: column;
     box-shadow: none;
@@ -630,87 +633,58 @@
     transition: max-height 0.3s ease;
     margin-top: 0;
     border-radius: 0;
+    width: 100%;
   }
 
-  .dropdown-multi.show {
+  .nav-list-mobile .dropdown-multi.show {
     max-height: 900px;
     overflow-y: auto;
   }
 
-  .dropdown-col {
+  .nav-list-mobile .dropdown-col {
     min-width: auto;
     padding: 4px 0;
   }
 
-  .dropdown-col + .dropdown-col {
+  .nav-list-mobile .dropdown-col + .dropdown-col {
     border-left: none;
     border-top: 1px solid rgba(255, 255, 255, 0.07);
   }
 
-  .dropdown-col-header {
+  .nav-list-mobile .dropdown-col-header {
     color: rgba(255, 255, 255, 0.45);
     padding: 6px 16px 4px;
     border-bottom: none;
   }
 
-  .dropdown-col-list li a {
+  .nav-list-mobile .dropdown-col-list li a {
     color: rgba(255, 255, 255, 0.75);
     padding: 7px 16px 7px 28px;
     border-left: none;
     font-size: 12px;
   }
 
-  .dropdown-col-list li a:hover {
+  .nav-list-mobile .dropdown-col-list li a:hover {
     background: rgba(255, 255, 255, 0.07);
     color: var(--sp-gold, #c8963e);
     padding-left: 32px;
     border-left: none;
   }
 
-  .dropdown-divider {
+  .nav-list-mobile .dropdown-divider {
     border-top-color: rgba(255, 255, 255, 0.07);
     margin: 3px 0;
   }
 
-  .dropdown-section-title {
+  .nav-list-mobile .dropdown-section-title {
     color: rgba(255, 255, 255, 0.5);
     padding: 5px 16px 3px;
     font-size: 10.5px;
-  }
-
-  .search-box {
-    display: none;
-  }
-
-  /* Keep college info visible on mobile in nav bar */
-  .college-info {
-    padding: 6px 0;
-  }
-
-  .logo-circle {
-    width: 34px;
-    height: 34px;
-  }
-
-  .college-name {
-    font-size: 13px;
-  }
-
-  .affiliation-line {
-    display: none;
-  }
-
-  .society-name {
-    font-size: 9px;
   }
 }
 
 @media (max-width: 480px) {
   .top-strip .top-right {
     display: none;
-  }
-
-  .college-name {
-    font-size: 12px;
   }
 }
