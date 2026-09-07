@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './Navbar.css';
 
-const API_URL = '/api';
+import API_URL from '../lib/api';
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(null);
