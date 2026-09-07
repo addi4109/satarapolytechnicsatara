@@ -434,7 +434,7 @@ function Navbar() {
                     </ul>
                   </>
                 ) : (
-                  <a href={item.link} className={`nav-link ${item.isPill ? 'pill' : ''}`}>
+                  <a href={item.link} className="nav-link">
                     {item.label}
                     {item.children || item.type === 'multi-column' ? <span className="arrow">▾</span> : ''}
                   </a>
@@ -443,11 +443,6 @@ function Navbar() {
             </li>
           ))}
           </ul>
-
-          {/* search icon */}
-          <div className="search-box">
-            <svg className="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          </div>
         </div>
       </nav>
     </header>
