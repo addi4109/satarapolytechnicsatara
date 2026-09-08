@@ -44,11 +44,24 @@ function CellsPage() {
         <h2 className="cells-main-heading">Cell and Committees</h2>
         <div className="cells-main-line"></div>
         <p className="cells-intro">
-          Satara Polytechnic, Satara has established various cells and committees to
-          ensure the overall development of students, maintain discipline, and address
-          grievances. These cells work towards creating a safe, inclusive, and
-          supportive learning environment for all students.
+          Satara Polytechnic, Satara has established various cells and committees to ensure
+          the overall development of students, maintain discipline, and address grievances.
+          Each cell works under the guidance of experienced faculty members and focuses on a
+          specific area — such as anti-ragging, student welfare, quality assurance, sports,
+          cultural activities, and more. Together, these bodies create a safe, inclusive, and
+          supportive learning environment where every student can grow academically and personally.
         </p>
+
+        <div className="cells-contact-box">
+          <h3 className="cells-contact-heading">For Any Grievance or Query</h3>
+          <p className="cells-contact-text">
+            Students, parents, or any stakeholder can reach out to the concerned cell or
+            committee directly, or mail your grievance to:
+          </p>
+          <a className="cells-contact-mail" href="mailto:spsgrivance@gmail.com">
+            ✉ spsgrivance@gmail.com
+          </a>
+        </div>
 
         {loading ? (
           <SkeletonCards count={6} />
