@@ -73,6 +73,7 @@ function Navbar() {
         },
         {
           header: 'Cell and Committees',
+          wide: true,
           items: [
             { label: 'About Cells and Committees', link: '/cells' },
             ...dbCells.map((c) => ({
@@ -263,7 +264,7 @@ function Navbar() {
                       }`}
                     >
                       {item.columns.map((col, cIdx) => (
-                        <div className="dropdown-col" key={cIdx}>
+                        <div className={`dropdown-col ${col.wide ? 'dropdown-col-wide' : ''}`} key={cIdx}>
                           <span className="dropdown-col-header">{col.header}</span>
                           <ul className="dropdown-col-list">
                             {col.items.map((child, iIdx) => (
