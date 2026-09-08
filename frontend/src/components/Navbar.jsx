@@ -61,6 +61,7 @@ function Navbar() {
       columns: [
         {
           header: 'Departments',
+          wide: true,
           items: [
             ...dbDepts.map((d) => ({
               label: d.name,
