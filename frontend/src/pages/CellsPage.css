@@ -27,6 +27,10 @@
   margin-bottom: 30px;
 }
 
+.cells-table-wrap {
+  overflow-x: auto;
+}
+
 .cells-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

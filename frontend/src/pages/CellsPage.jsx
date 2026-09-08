@@ -57,16 +57,35 @@ function CellsPage() {
             No cells or committees available yet.
           </p>
         ) : (
-          <div className="cells-grid">
-            {cells.map((cell) => (
-              <a href={`/cells/${cell.slug}`} className="cell-card-link" key={cell._id}>
-                <div className="cell-card">
-                  <h3 className="cell-card-heading">{cell.name}</h3>
-                  <p className="cell-card-desc">{cell.description}</p>
-                  <span className="cell-card-arrow">View Details →</span>
-                </div>
-              </a>
-            ))}
+          <div className="cells-table-wrap">
+            <table className="cell-card-table">
+              <thead>
+                <tr>
+                  <th>Sr. No.</th>
+                  <th>Cell / Committee Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cells.map((cell, idx) => (
+                  <tr key={cell._id}>
+                    <td>{idx + 1}</td>
+                    <td>
+                      <a
+                        href={`/cells/${cell.slug}`}
+                        style={{ fontWeight: 600, color: '#243358', textDecoration: 'none' }}
+                      >
+                        {cell.name}
+                      </a>
+                      {cell.description && (
+                        <div style={{ fontSize: '12.5px', color: '#666', lineHeight: '1.6', marginTop: '4px' }}>
+                          {cell.description}
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
