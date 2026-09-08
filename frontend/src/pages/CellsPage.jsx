@@ -53,14 +53,17 @@ function CellsPage() {
         </p>
 
         <div className="cells-contact-box">
-          <h3 className="cells-contact-heading">For Any Grievance or Query</h3>
-          <p className="cells-contact-text">
-            Students, parents, or any stakeholder can reach out to the concerned cell or
-            committee directly, or mail your grievance to:
-          </p>
-          <a className="cells-contact-mail" href="mailto:spsgrivance@gmail.com">
-            ✉ spsgrivance@gmail.com
-          </a>
+          <div className="cells-contact-icon" aria-hidden="true">✉</div>
+          <div className="cells-contact-body">
+            <h3 className="cells-contact-heading">Grievance &amp; Query Support</h3>
+            <p className="cells-contact-text">
+              Students, parents, or any stakeholder can mail their grievance or query
+              directly to the cell / committee concerned, or write to us at:
+            </p>
+            <a className="cells-contact-mail" href="mailto:spsgrievance@gmail.com">
+              spsgrievance@gmail.com
+            </a>
+          </div>
         </div>
 
         {loading ? (
