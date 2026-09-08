@@ -39,6 +39,7 @@ function Navbar() {
             { label: 'Mandatory Disclosure', link: '/about/disclosure' },
             { label: 'Vision & Mission', link: '/about/vision-mission' },
             { label: 'Affiliation & Approval', link: '/about/affiliation' },
+            { label: 'Institute Policy', link: '/about/policy' },
           ],
         },
         {
@@ -49,6 +50,7 @@ function Navbar() {
             { label: 'Secretary', link: '/about/secretary' },
             { label: 'Principal', link: '/about/principal' },
             { label: 'Governing Body', link: '/about/governing-body' },
+            { label: 'Local Governing Body', link: '/about/local-governing-body' },
           ],
         },
       ],
