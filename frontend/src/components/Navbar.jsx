@@ -135,6 +135,16 @@ function Navbar() {
       ],
     },
     {
+      label: 'ALUMNI',
+      children: [
+        { label: 'About Alumni', link: '/alumni/about' },
+        { label: 'Alumni Vision & Mission', link: '/alumni/vision-mission' },
+        { label: 'Entrepreneurs', link: '/alumni/entrepreneurs' },
+        { label: 'Alumni Association', link: '/alumni/association' },
+        { label: 'Alumni Registration Form', link: '/alumni/registration' },
+      ],
+    },
+    {
       label: 'ACTIVITIES',
       children: [
         { label: 'Sports', link: '/activities/sports' },
