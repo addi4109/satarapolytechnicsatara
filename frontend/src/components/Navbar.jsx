@@ -61,10 +61,15 @@ function Navbar() {
       columns: [
         {
           header: 'Departments',
-          items: dbDepts.map((d) => ({
-            label: d.name,
-            link: `/departments/${d.slug}`,
-          })),
+          items: [
+            ...dbDepts.map((d) => ({
+              label: d.name,
+              link: `/departments/${d.slug}`,
+            })),
+            { divider: true },
+            { title: 'ACADEMIC CALENDAR' },
+            { label: 'Academic Calendar', link: '/academics/calendar' },
+          ],
         },
         {
           header: 'Cell and Committees',
@@ -263,9 +268,15 @@ function Navbar() {
                           <ul className="dropdown-col-list">
                             {col.items.map((child, iIdx) => (
                               <li key={iIdx}>
-                                <a href={child.link} onClick={() => setMobileOpen(false)}>
-                                  {child.label}
-                                </a>
+                                {child.divider ? (
+                                  <span className="dropdown-col-divider" />
+                                ) : child.title ? (
+                                  <span className="dropdown-col-title">{child.title}</span>
+                                ) : (
+                                  <a href={child.link} onClick={() => setMobileOpen(false)}>
+                                    {child.label}
+                                  </a>
+                                )}
                               </li>
                             ))}
                           </ul>
