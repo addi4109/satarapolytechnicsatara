@@ -1764,14 +1764,13 @@
 }
 
 .staff-card:hover {
-  box-shadow: 0 8px 28px rgba(0,0,0,0.1);
   transform: translateY(-4px);
 }
 
 .staff-card-photo {
-  width: 128px;
-  height: 128px;
-  border-radius: 50%;
+  width: 120px;
+  height: 150px;
+  border-radius: 8px;
   object-fit: cover;
   border: 3px solid #e4e8ed;
   margin: 0 auto 16px;
@@ -1780,9 +1779,9 @@
 }
 
 .staff-card-photo-placeholder {
-  width: 128px;
-  height: 128px;
-  border-radius: 50%;
+  width: 120px;
+  height: 150px;
+  border-radius: 8px;
   border: 3px dashed #ccc;
   display: flex;
   align-items: center;
