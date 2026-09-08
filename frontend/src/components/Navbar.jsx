@@ -61,7 +61,7 @@ function Navbar() {
       columns: [
         {
           header: 'Departments',
-          wide: true,
+          semiWide: true,
           items: [
             ...dbDepts.map((d) => ({
               label: d.name,
@@ -265,7 +265,10 @@ function Navbar() {
                       }`}
                     >
                       {item.columns.map((col, cIdx) => (
-                        <div className={`dropdown-col ${col.wide ? 'dropdown-col-wide' : ''}`} key={cIdx}>
+                        <div
+                          className={`dropdown-col ${col.wide ? 'dropdown-col-wide' : ''} ${col.semiWide ? 'dropdown-col-semi-wide' : ''}`}
+                          key={cIdx}
+                        >
                           <span className="dropdown-col-header">{col.header}</span>
                           <ul className="dropdown-col-list">
                             {col.items.map((child, iIdx) => (

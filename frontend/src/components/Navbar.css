@@ -272,6 +272,10 @@
   min-width: 300px;
 }
 
+.dropdown-col-semi-wide {
+  min-width: 260px;
+}
+
 .dropdown-col-header {
   display: block;
   padding: 4px 18px 8px;
