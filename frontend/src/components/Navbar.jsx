@@ -68,10 +68,13 @@ function Navbar() {
         },
         {
           header: 'Cell and Committees',
-          items: dbCells.map((c) => ({
-            label: c.name,
-            link: `/cells/${c.slug}`,
-          })),
+          items: [
+            { label: 'About Cells and Committees', link: '/cells' },
+            ...dbCells.map((c) => ({
+              label: c.name,
+              link: `/cells/${c.slug}`,
+            })),
+          ],
         },
       ],
     },
