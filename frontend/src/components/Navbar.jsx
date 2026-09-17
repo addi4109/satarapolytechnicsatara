@@ -198,6 +198,10 @@ function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // The fixed header is out of normal flow, so keep a CSS variable in sync
+  // with its rendered height; index.css uses it for body padding so content
+  // is never hidden underneath. Re-measure on resize and when tab rows wrap.  useEffect(() => {    const header = document.querySelector('.site-header');    if (!header) return undefined;    const root = document.documentElement;    const apply = () => {      root.style.setProperty('--sp-header-h', `${Math.ceil(header.getBoundingClientRect().height)}px`);    };    apply();    window.addEventListener('resize', apply);    const ro = new ResizeObserver(apply);    ro.observe(header);    return () => {      window.removeEventListener('resize', apply);      ro.disconnect();    };  }, []);
+
   // Close any open menu when the route changes.
   useEffect(() => {
     setMobileOpen(false);

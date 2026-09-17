@@ -1,12 +1,22 @@
 /* ===== Header wrapper =====
-   The whole header (identity block + tabs) sticks to the top of the
-   viewport for the entire page. Sticky must live here, on the outer
-   wrapper — on .main-header it would be constrained to its parent's
-   height and scroll away. */
+   Fixed to the top of the viewport for the entire page so the identity
+   block and tabs are always visible. Because fixed removes the header
+   from normal flow, body padding-top is driven by --sp-header-h, which
+   Navbar.jsx keeps in sync with the header's rendered height. */
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
+}
+
+body {
+  padding-top: var(--sp-header-h, 0px);
+}
+
+html {
+  scroll-padding-top: var(--sp-header-h, 0px);
 }
 
 /* Subtle depth once the page is scrolled */
@@ -132,17 +142,18 @@
 }
 
 .nav-inner {
-  padding: 0;
+  padding: 0 8px;
   display: flex;
   align-items: stretch;
 }
 
-/* Tabs laid out 6 per row (2 rows). */
+/* All tabs on a single line, evenly distributed. */
 .nav-list {
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(6, max-content);
-  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
   align-items: stretch;
   flex: 1;
   margin: 0;
@@ -157,11 +168,11 @@
   display: flex;
   align-items: center;
   gap: 3px;
-  padding: 0 11px;
-  height: 36px;
+  padding: 0 7px;
+  height: 38px;
   color: #e8e8e8;
   text-decoration: none;
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.3px;
   white-space: nowrap;
@@ -401,34 +412,61 @@
 
 /* ===== responsive ===== */
 @media (max-width: 1320px) {
-  /* Keep the 6-per-row grid fitting next to the identity block */
+  /* Tighter identity + tabs so all 12 still share one line */
   .college-name {
-    font-size: 18px;
+    font-size: 17px;
+  }
+
+  .society-name {
+    font-size: 10px;
+  }
+
+  .logo-circle {
+    width: 48px;
+    height: 48px;
   }
 
   .nav-link {
-    padding: 0 6px;
+    padding: 0 5px;
     font-size: 11px;
-    height: 34px;
+    letter-spacing: 0.1px;
+  }
+
+  .nav-inner {
+    padding: 0 5px;
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1150px) {
+  /* Tabs move to their own full-width line below the identity block —
+     still one single line, with room to breathe. */
   .main-header-inner {
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 0;
+    padding-top: 10px;
+    padding-bottom: 0;
   }
 
-  /* Tabs take the full width below the identity block */
   .main-nav {
     flex: 1 1 100%;
     margin-left: 0;
   }
 
-  .nav-list {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+  .nav-link {
+    padding: 0 12px;
+    font-size: 12px;
+    height: 40px;
+    letter-spacing: 0.3px;
+  }
+
+  .nav-inner {
+    padding: 0 6px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .main-header-inner {
+    gap: 12px;
   }
 
   /* hamburger sits inside the bar on small screens */
