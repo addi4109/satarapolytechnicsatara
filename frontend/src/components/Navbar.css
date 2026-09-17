@@ -264,11 +264,23 @@ html {
   margin-top: 0;
 }
 
-/* ===== multi-column dropdown ===== */
+/* Tabs near the right edge: open their dropdown to the left so it
+   never spills past the viewport. */
+.nav-item:nth-last-child(-n + 4) .dropdown-menu {
+  left: auto;
+  right: 0;
+}
+
+/* ===== multi-column dropdown =====
+   width: max-content is essential — as an absolutely positioned box its
+   shrink-to-fit width would otherwise be capped by the narrow tab item,
+   forcing the columns to wrap and stack vertically. */
 .dropdown-multi {
   position: absolute;
   top: 100%;
-  right: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(92vw, 640px);
   transform: translateY(-4px);
   background: #fff;
   display: flex;
@@ -529,6 +541,8 @@ html {
     border: none;
     background: rgba(0, 0, 0, 0.18);
     max-height: 0;
+    max-width: none;
+    width: auto;
     overflow: hidden;
     opacity: 1;
     visibility: visible;
