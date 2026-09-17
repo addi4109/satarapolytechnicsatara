@@ -16,7 +16,6 @@ const MENU = [
   {
     label: 'About',
     match: (p) => p.startsWith('/about'),
-    viewAll: { label: 'Explore About', link: '/about/institute' },
     columns: [
       {
         header: 'About',
@@ -45,7 +44,6 @@ const MENU = [
   {
     label: 'Academics',
     match: (p) => p.startsWith('/departments') || p.startsWith('/academics') || p.startsWith('/cells'),
-    viewAll: { label: 'Explore Academics', link: '/departments/computer' },
     columns: [
       {
         header: 'Departments',
@@ -79,7 +77,6 @@ const MENU = [
   {
     label: 'Campus',
     match: (p) => p.startsWith('/campus'),
-    viewAll: { label: 'Explore Campus', link: '/campus/library' },
     columns: [
       {
         header: 'Facility',
@@ -305,11 +302,6 @@ function Navbar() {
                 <ul className="dropdown-col-list">{renderDropdownItems(resolveColumnItems(col))}</ul>
               </div>
             ))}
-            {item.viewAll && (
-              <Link to={item.viewAll.link} className="dropdown-viewall" onClick={() => setMobileOpen(false)}>
-                {item.viewAll.label} →
-              </Link>
-            )}
           </div>
         </li>
       );
