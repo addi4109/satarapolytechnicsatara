@@ -156,6 +156,13 @@ function AppLayout() {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
 
+  // Scroll to top on every route change (skip admin, which manages its own layout).
+  useEffect(() => {
+    if (!isAdmin) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }, [location.pathname, isAdmin]);
+
   return (
     <>
       {!isAdmin && <Navbar />}

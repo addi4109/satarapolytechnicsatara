@@ -1,7 +1,7 @@
 /* ===== Section ===== */
 .latest-news-section {
-  background: #f5f7fa;
-  padding: 50px 0 60px;
+  background: var(--sp-page);
+  padding: 56px 0 60px;
 }
 
 .latest-news-inner {
@@ -21,10 +21,10 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 2px;
-  color: #243358;
-  background: rgba(36, 51, 88, 0.08);
+  color: var(--sp-gold-dark);
+  background: rgba(200, 150, 62, 0.12);
   padding: 5px 14px;
-  border-radius: 20px;
+  border-radius: 999px;
   margin-bottom: 12px;
 }
 
@@ -65,8 +65,8 @@
 /* ===== Card ===== */
 .news-card {
   background: #ffffff;
-  border: 1px solid #e4e8ed;
-  border-radius: 12px;
+  border: 1px solid var(--sp-line);
+  border-radius: var(--sp-radius);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -230,12 +230,12 @@
 }
 
 .news-btn-readmore {
-  background: #243358;
+  background: var(--sp-navy);
   color: #fff;
 }
 
 .news-btn-readmore:hover {
-  background: #1a2a4a;
+  background: var(--sp-gold);
 }
 
 .news-btn-readmore:active {
@@ -243,12 +243,14 @@
 }
 
 .news-btn-article {
-  background: #2e7d32;
-  color: #fff;
+  background: #fff;
+  color: var(--sp-navy);
+  border: 1px solid var(--sp-line);
 }
 
-.news-btn-article:hover {
-  background: #1b5e20;
+.news-btn-article:hover:not(:disabled) {
+  border-color: var(--sp-navy);
+  color: var(--sp-navy);
 }
 
 .news-btn-article:active {

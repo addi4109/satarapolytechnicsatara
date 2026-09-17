@@ -206,8 +206,10 @@
 }
 
 .sidebar-link.active {
-  background: #243358;
+  background: var(--sp-navy);
   color: #fff;
+  box-shadow: inset 3px 0 0 var(--sp-gold);
+  font-weight: 600;
 }
 
 .sidebar-link .arrow {
@@ -225,11 +227,12 @@
 }
 
 .content-heading {
-  font-family: 'Georgia', serif;
-  font-size: 26px;
-  color: #243358;
+  font-family: var(--sp-font-display);
+  font-size: clamp(22px, 2.4vw, 26px);
+  color: var(--sp-navy);
   font-weight: 700;
   margin: 0;
+  letter-spacing: 0.2px;
 }
 
 .content-line {

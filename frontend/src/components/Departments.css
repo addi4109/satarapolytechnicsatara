@@ -1,6 +1,6 @@
 .dept-section {
   background: #fff;
-  padding: 50px 20px;
+  padding: 56px 20px;
 }
 
 .dept-inner {
@@ -10,18 +10,18 @@
 
 .dept-heading {
   text-align: center;
-  font-family: 'Georgia', serif;
-  font-size: 28px;
-  color: #243358;
+  font-family: var(--sp-font-display);
+  font-size: clamp(23px, 2.4vw, 28px);
+  color: var(--sp-navy);
   font-weight: 700;
   margin: 0;
 }
 
 .dept-line {
-  width: 50px;
+  width: 48px;
   height: 3px;
-  background: #c8963e;
-  margin: 10px auto 36px;
+  background: var(--sp-gold);
+  margin: 12px auto 36px;
   border-radius: 2px;
 }
 
@@ -33,53 +33,69 @@
 
 .dept-card {
   background: #fff;
-  border: 1px solid #e4e8ed;
-  border-radius: 6px;
+  border: 1px solid var(--sp-line);
+  border-radius: var(--sp-radius);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 .dept-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(36, 51, 88, 0.12);
+  transform: translateY(-4px);
+  border-color: rgba(200, 150, 62, 0.55);
+  box-shadow: var(--sp-shadow-1);
 }
 
 .dept-img-wrap {
-  height: 200px;
+  height: 190px;
   overflow: hidden;
+  background: var(--sp-page);
 }
 
 .dept-img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.dept-card:hover .dept-img-wrap img {
+  transform: scale(1.04);
 }
 
 .dept-body {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .dept-name {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
-  color: #243358;
+  color: var(--sp-navy);
   margin: 0 0 10px;
-  font-family: 'Georgia', serif;
+  font-family: var(--sp-font-display);
 }
 
 .dept-desc {
   font-size: 13px;
-  color: #555;
-  line-height: 1.6;
+  color: var(--sp-ink);
+  line-height: 1.65;
   margin: 0 0 14px;
+  flex: 1;
 }
 
 .dept-meta {
   display: flex;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 6px 16px;
   font-size: 12px;
-  color: #777;
+  color: var(--sp-muted);
   margin-bottom: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--sp-line-soft);
 }
 
 .dept-meta span {
@@ -99,29 +115,28 @@
   font-weight: 600;
   text-decoration: none;
   border-radius: 4px;
-  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .dept-btn.primary {
-  background: #243358;
+  background: var(--sp-navy);
   color: #fff;
 }
 
 .dept-btn.primary:hover {
-  background: #4a7ab0;
-  transform: translateY(-1px);
+  background: var(--sp-gold);
 }
 
 .dept-btn.secondary {
-  background: #2e7d32;
-  color: #fff;
-  border: 1px solid #2e7d32;
+  background: #fff;
+  color: var(--sp-navy);
+  border: 1px solid var(--sp-line);
 }
 
 .dept-btn.secondary:hover {
-  background: #1b5e20;
+  border-color: var(--sp-navy);
+  background: var(--sp-navy);
   color: #fff;
-  transform: translateY(-1px);
 }
 
 @media (max-width: 900px) {
@@ -143,7 +158,7 @@
 /* ===== Why Choose Us image ===== */
 .why-section {
   background: #ffffff;
-  padding: 40px 20px 60px;
+  padding: 44px 20px 60px;
 }
 
 .why-inner {
@@ -153,33 +168,27 @@
 }
 
 .why-heading {
-  font-family: 'Georgia', serif;
-  font-size: 26px;
-  color: #243358;
+  font-family: var(--sp-font-display);
+  font-size: clamp(22px, 2.2vw, 26px);
+  color: var(--sp-navy);
   font-weight: 700;
   margin: 0 0 10px;
 }
 
 .why-line {
-  width: 50px;
+  width: 48px;
   height: 3px;
-  background: #c8963e;
+  background: var(--sp-gold);
   margin: 0 auto 30px;
   border-radius: 2px;
 }
 
 .why-image {
   width: 700px;
-  height: 600px;
+  max-width: 100%;
+  height: auto;
   object-fit: contain;
   background: #ffffff;
-}
-
-.why-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
 }
 
 @media (max-width: 900px) {

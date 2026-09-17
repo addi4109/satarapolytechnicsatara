@@ -49,8 +49,6 @@ function Notices() {
         }
       />
 
-
-
       <div className="notices-page-wrap">
         <div className="notices-table-wrap">
           {loading ? (
@@ -63,36 +61,48 @@ function Notices() {
             <table className="notices-table">
               <thead>
                 <tr>
-                  <th style={{ width: '60px' }}>Sr. No.</th>
-                  <th style={{ textAlign: 'left' }}>Title</th>
-                  <th style={{ width: '120px' }}>Date</th>
-                  <th style={{ width: '120px', textAlign: 'center' }}>Actions</th>
+                  <th className="col-sr">Sr. No.</th>
+                  <th className="col-title">Title</th>
+                  <th className="col-date">Date</th>
+                  <th className="col-actions">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {notices.map((notice, index) => (
                   <tr key={notice._id}>
-                    <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{index + 1}</td>
+                    <td className="cell-sr">{index + 1}</td>
                     <td>
                       <div className="notice-title-cell">{notice.title}</div>
-                      {notice.text && <div style={{ fontSize: '12px', color: '#888', marginTop: '2px' }}>{notice.text.substring(0, 80)}{notice.text.length > 80 ? '...' : ''}</div>}
+                      {notice.text && (
+                        <div className="notice-excerpt">
+                          {notice.text.substring(0, 80)}
+                          {notice.text.length > 80 ? '...' : ''}
+                        </div>
+                      )}
                     </td>
-                    <td style={{ fontSize: '13px', color: '#666' }}>{new Date(notice.createdAt).toLocaleDateString('en-IN')}</td>
-                    <td style={{ textAlign: 'center' }}>
-                      <div style={{ display: 'flex', gap: '6px', justifyContent: 'center' }}>
+                    <td className="cell-date">
+                      {new Date(notice.createdAt).toLocaleDateString('en-IN')}
+                    </td>
+                    <td className="cell-actions">
+                      <div className="notice-actions">
                         {(notice.pdfUrl || notice.imageUrl) && (
                           <a
+                            className="notice-btn notice-view-btn"
                             href={notice.pdfUrl ? `${API_URL}/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl}
                             target="_blank"
-                            style={{ padding: '5px 14px', background: '#243358', color: '#fff', fontSize: '12px', fontWeight: 600, borderRadius: '4px', textDecoration: 'none', cursor: 'pointer' }}
-                          >View</a>
+                            rel="noopener noreferrer"
+                          >
+                            View
+                          </a>
                         )}
                         {(notice.pdfUrl || notice.imageUrl) && (
                           <a
+                            className="notice-btn notice-download-btn"
                             href={notice.pdfUrl ? `${API_URL}/pdf-proxy?url=${encodeURIComponent(notice.pdfUrl)}` : notice.imageUrl}
                             download
-                            style={{ padding: '5px 14px', background: '#fff', color: '#243358', fontSize: '12px', fontWeight: 600, borderRadius: '4px', border: '1px solid #243358', textDecoration: 'none', cursor: 'pointer' }}
-                          >Download</a>
+                          >
+                            Download
+                          </a>
                         )}
                       </div>
                     </td>
