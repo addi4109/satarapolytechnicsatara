@@ -71,7 +71,7 @@
   gap: 18px;
 }
 
-/* Identity: logo -> society -> college name -> address -> affiliation -> motto */
+/* Identity: logo -> society -> college name */
 .logo-area {
   display: flex;
   align-items: center;
@@ -82,10 +82,10 @@
 }
 
 .logo-circle {
-  width: 72px;
-  height: 72px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  border: 3px solid var(--sp-navy);
+  border: 2px solid var(--sp-navy);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -120,28 +120,6 @@
   font-weight: 700;
   line-height: 1.2;
   margin: 0 0 3px;
-}
-
-.address-line {
-  font-size: 11px;
-  color: var(--sp-ink);
-  margin: 0 0 1px;
-  line-height: 1.4;
-}
-
-.affiliation-line {
-  font-size: 10.5px;
-  color: var(--sp-muted);
-  margin: 0 0 3px;
-  line-height: 1.4;
-}
-
-.motto {
-  font-size: 11.5px;
-  color: var(--sp-gold-dark);
-  font-weight: 600;
-  font-style: italic;
-  margin: 0;
 }
 
 /* ===== tabs, in front of the identity block ===== */
@@ -428,11 +406,6 @@
     font-size: 18px;
   }
 
-  .address-line,
-  .affiliation-line {
-    font-size: 10px;
-  }
-
   .nav-link {
     padding: 0 6px;
     font-size: 11px;
@@ -596,25 +569,16 @@
   }
 
   .logo-circle {
-    width: 58px;
-    height: 58px;
+    width: 46px;
+    height: 46px;
   }
 
   .college-name {
-    font-size: 17px;
+    font-size: 16px;
   }
 
   .society-name {
-    font-size: 10px;
-  }
-
-  .address-line,
-  .affiliation-line {
-    display: none;
-  }
-
-  .motto {
-    font-size: 11px;
+    font-size: 9.5px;
   }
 }
 

@@ -378,16 +378,13 @@ function Navbar() {
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10"
                 alt="College Logo"
                 className="logo-img"
-                width="72"
-                height="72"
+                width="56"
+                height="56"
               />
             </div>
             <div className="logo-text">
               <p className="society-name">Satara Education Society's</p>
               <h1 className="college-name">Satara Polytechnic, Satara</h1>
-              <p className="address-line">At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra</p>
-              <p className="affiliation-line">Approved by AICTE Delhi, DTE Maharashtra State, Affiliated to MSBTE, Mumbai</p>
-              <p className="motto">"Jai Jagat, Jai Bharat"</p>
             </div>
           </Link>
 
