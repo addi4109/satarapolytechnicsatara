@@ -410,9 +410,6 @@ function Navbar() {
               </button>
               <ul className={`nav-list ${mobileOpen ? 'mobile-open' : ''}`}>
                 {MENU.map((item, idx) => renderMenuItem(item, idx))}
-                <li className="nav-cta-item">
-                  <Link to="/admissions/apply" className="header-cta btn-gold">Apply Now</Link>
-                </li>
               </ul>
               {/* Backdrop lives inside the nav's stacking context so the drawer,
                   hamburger and close button all sit above it. */}
