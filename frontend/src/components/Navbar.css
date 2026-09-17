@@ -13,7 +13,7 @@
 }
 
 .top-strip-inner {
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0 20px;
   display: flex;
@@ -46,34 +46,38 @@
   text-underline-offset: 3px;
 }
 
-/* ===== main header ===== */
+/* ===== single-bar header: identity block + tabs in front =====
+   Sticks below the top strip; compacts itself while scrolling. */
 .main-header {
   background: #fff;
   border-bottom: 1px solid var(--sp-line);
-  padding: 16px 0;
+  position: sticky;
+  top: 0;
+  z-index: 900;
 }
 
 .main-header-inner {
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 12px 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  gap: 18px;
 }
 
+/* Identity: logo -> society -> college name -> address -> affiliation -> motto */
 .logo-area {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 14px;
   text-decoration: none;
   min-width: 0;
+  flex-shrink: 0;
 }
 
 .logo-circle {
-  width: 92px;
-  height: 92px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   border: 3px solid var(--sp-navy);
   display: flex;
@@ -82,6 +86,7 @@
   flex-shrink: 0;
   overflow: hidden;
   background: #f4f6f9;
+  transition: width 0.25s ease, height 0.25s ease;
 }
 
 .logo-img {
@@ -91,73 +96,88 @@
 }
 
 .logo-text {
-  flex: 1;
   min-width: 0;
 }
 
 .society-name {
-  font-size: 13px;
+  font-size: 11.5px;
   color: var(--sp-muted);
-  margin: 0 0 2px;
-  font-weight: 500;
-  letter-spacing: 0.3px;
+  margin: 0 0 1px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
 }
 
 .college-name {
   font-family: var(--sp-font-display);
-  font-size: clamp(20px, 2.4vw, 29px);
+  font-size: 21px;
   color: var(--sp-navy);
   font-weight: 700;
   line-height: 1.2;
-  margin: 0 0 5px;
+  margin: 0 0 3px;
 }
 
 .address-line {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--sp-ink);
-  margin: 0 0 2px;
-  line-height: 1.45;
+  margin: 0 0 1px;
+  line-height: 1.4;
+  max-height: 2em;
+  overflow: hidden;
+  transition: max-height 0.25s ease, opacity 0.2s ease, margin 0.25s ease;
 }
 
 .affiliation-line {
-  font-size: 11.5px;
+  font-size: 10.5px;
   color: var(--sp-muted);
-  margin: 0 0 6px;
-  line-height: 1.45;
+  margin: 0 0 3px;
+  line-height: 1.4;
+  max-height: 2em;
+  overflow: hidden;
+  transition: max-height 0.25s ease, opacity 0.2s ease, margin 0.25s ease;
+}
+
+/* Compact mode once the page is scrolled: secondary lines collapse,
+   logo and title shrink so the sticky bar stays slim. */
+.site-header.is-scrolled .address-line,
+.site-header.is-scrolled .affiliation-line {
+  max-height: 0;
+  opacity: 0;
+  margin: 0;
+}
+
+.site-header.is-scrolled .logo-circle {
+  width: 54px;
+  height: 54px;
+}
+
+.site-header.is-scrolled .main-header-inner {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.site-header.is-scrolled .college-name {
+  font-size: 19px;
 }
 
 .motto {
-  font-size: 13px;
+  font-size: 11.5px;
   color: var(--sp-gold-dark);
   font-weight: 600;
   font-style: italic;
   margin: 0;
 }
 
-/* ===== header actions: CTA + hamburger ===== */
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
-}
-
-.header-cta {
-  white-space: nowrap;
-}
-
-/* ===== main nav ===== */
+/* ===== tabs, in front of the identity block ===== */
 .main-nav {
   background: var(--sp-navy);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  border-radius: var(--sp-radius);
+  flex: 1;
+  min-width: 0;
+  margin-left: auto;
 }
 
 .nav-inner {
-  max-width: 1200px;
-  margin: 0 auto;
   padding: 0;
   display: flex;
   align-items: stretch;
@@ -166,9 +186,10 @@
 .nav-list {
   list-style: none;
   display: flex;
+  flex-wrap: wrap;
   align-items: stretch;
-  justify-content: center;
-  width: 100%;
+  justify-content: flex-end;
+  flex: 1;
   margin: 0;
   padding: 0;
 }
@@ -181,11 +202,11 @@
   display: flex;
   align-items: center;
   gap: 3px;
-  padding: 0 13px;
-  height: 46px;
+  padding: 0 11px;
+  height: 42px;
   color: #e8e8e8;
   text-decoration: none;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 600;
   letter-spacing: 0.3px;
   white-space: nowrap;
@@ -218,6 +239,19 @@
 
 .nav-item.active .arrow {
   transform: rotate(180deg);
+}
+
+/* Apply Now CTA inside the tab list */
+.nav-cta-item {
+  display: flex;
+  align-items: center;
+  padding: 0 6px 0 10px;
+}
+
+.header-cta {
+  white-space: nowrap;
+  padding: 8px 16px;
+  font-size: 12.5px;
 }
 
 /* ===== dropdown (single column) ===== */
@@ -281,8 +315,8 @@
 .dropdown-multi {
   position: absolute;
   top: 100%;
-  left: 50%;
-  transform: translate(-50%, -4px);
+  right: 0;
+  transform: translateY(-4px);
   background: #fff;
   display: flex;
   flex-wrap: wrap;
@@ -299,7 +333,7 @@
 .dropdown-multi.show {
   opacity: 1;
   visibility: visible;
-  transform: translate(-50%, 0);
+  transform: translateY(0);
 }
 
 .dropdown-col {
@@ -321,7 +355,7 @@
 
 .dropdown-col-header {
   display: block;
-  padding: 2px 18px 10px;
+  padding: 2px 4px 10px;
   font-size: 12px;
   font-weight: 700;
   color: var(--sp-navy);
@@ -329,8 +363,6 @@
   letter-spacing: 0.6px;
   border-bottom: 1px solid var(--sp-line-soft);
   margin: 0 14px 6px;
-  padding-left: 4px;
-  padding-right: 4px;
 }
 
 .dropdown-col-list {
@@ -426,30 +458,47 @@
 }
 
 /* ===== responsive ===== */
-@media (max-width: 1180px) {
+@media (max-width: 1240px) {
   .nav-link {
-    padding: 0 9px;
-    font-size: 12px;
+    padding: 0 8px;
+    font-size: 11.5px;
+  }
+
+  .nav-cta-item {
+    padding: 0 4px 0 6px;
+  }
+
+  .header-cta {
+    padding: 7px 12px;
+    font-size: 11.5px;
   }
 }
 
 @media (max-width: 1024px) {
-  .top-strip {
-    display: none;
+  .main-header-inner {
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
-  .header-cta {
-    display: none;
+  /* Tabs take the full width below the identity block */
+  .main-nav {
+    flex: 1 1 100%;
+    margin-left: 0;
+  }
+
+  .nav-list {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+
+  /* hamburger sits inside the bar on small screens */
+  .nav-inner {
+    justify-content: space-between;
+    padding: 0 6px;
   }
 
   .hamburger {
     display: flex;
-  }
-
-  /* hamburger sits inside the sticky bar on small screens */
-  .nav-inner {
-    justify-content: space-between;
-    padding: 0 6px;
   }
 
   /* Drawer */
@@ -492,6 +541,17 @@
     box-shadow: none;
     color: #fff;
     background: rgba(255, 255, 255, 0.05);
+  }
+
+  .nav-cta-item {
+    padding: 14px 22px 0;
+  }
+
+  .header-cta {
+    width: 100%;
+    text-align: center;
+    padding: 11px 16px;
+    font-size: 13.5px;
   }
 
   .dropdown-menu,
@@ -564,21 +624,32 @@
     color: #9db2d8;
     padding: 6px 22px 2px 34px;
   }
-
 }
 
 @media (max-width: 640px) {
+  .top-strip {
+    display: none;
+  }
+
   .main-header-inner {
-    padding: 0 16px;
+    padding: 10px 16px;
   }
 
   .logo-area {
-    gap: 14px;
+    gap: 12px;
   }
 
   .logo-circle {
-    width: 64px;
-    height: 64px;
+    width: 58px;
+    height: 58px;
+  }
+
+  .college-name {
+    font-size: 17px;
+  }
+
+  .society-name {
+    font-size: 10px;
   }
 
   .address-line,
@@ -586,27 +657,18 @@
     display: none;
   }
 
-  .college-name {
-    font-size: 19px;
-    margin-bottom: 2px;
-  }
-
-  .society-name {
-    font-size: 11px;
-  }
-
   .motto {
-    font-size: 12px;
+    font-size: 11px;
   }
 }
 
 @media (max-width: 400px) {
   .logo-circle {
-    width: 54px;
-    height: 54px;
+    width: 50px;
+    height: 50px;
   }
 
   .college-name {
-    font-size: 17px;
+    font-size: 15.5px;
   }
 }

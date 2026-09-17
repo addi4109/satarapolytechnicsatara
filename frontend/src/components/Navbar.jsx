@@ -369,7 +369,7 @@ function Navbar() {
         </div>
       </div>
 
-      {/* main header with logo */}
+      {/* single-bar header: identity block on the left, tabs in front */}
       <div className="main-header">
         <div className="main-header-inner">
           <Link to="/" className="logo-area" aria-label="Satara Polytechnic, Satara — Home">
@@ -378,8 +378,8 @@ function Navbar() {
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10"
                 alt="College Logo"
                 className="logo-img"
-                width="110"
-                height="110"
+                width="72"
+                height="72"
               />
             </div>
             <div className="logo-text">
@@ -390,38 +390,37 @@ function Navbar() {
               <p className="motto">"Jai Jagat, Jai Bharat"</p>
             </div>
           </Link>
-          <div className="header-actions">
-            <Link to="/admissions/apply" className="header-cta btn-gold">Apply Now</Link>
-          </div>
+
+          <nav className="main-nav" aria-label="Primary">
+            <div className="nav-inner">
+              {/* hamburger lives in the sticky bar so it stays reachable while scrolled */}
+              <button
+                type="button"
+                className={`hamburger ${mobileOpen ? 'is-active' : ''}`}
+                onClick={() => {
+                  setMobileOpen(!mobileOpen);
+                  setMobileExpanded(null);
+                }}
+                aria-label="Toggle menu"
+                aria-expanded={mobileOpen}
+              >
+                <span></span>
+                <span></span>
+                <span></span>
+              </button>
+              <ul className={`nav-list ${mobileOpen ? 'mobile-open' : ''}`}>
+                {MENU.map((item, idx) => renderMenuItem(item, idx))}
+                <li className="nav-cta-item">
+                  <Link to="/admissions/apply" className="header-cta btn-gold">Apply Now</Link>
+                </li>
+              </ul>
+              {/* Backdrop lives inside the nav's stacking context so the drawer,
+                  hamburger and close button all sit above it. */}
+              {mobileOpen && <div className="nav-backdrop" onClick={() => setMobileOpen(false)} aria-hidden="true" />}
+            </div>
+          </nav>
         </div>
       </div>
-
-      {/* nav bar */}
-      <nav className="main-nav" aria-label="Primary">
-        <div className="nav-inner">
-          {/* hamburger lives in the sticky bar so it stays reachable while scrolled */}
-          <button
-            type="button"
-            className={`hamburger ${mobileOpen ? 'is-active' : ''}`}
-            onClick={() => {
-              setMobileOpen(!mobileOpen);
-              setMobileExpanded(null);
-            }}
-            aria-label="Toggle menu"
-            aria-expanded={mobileOpen}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-          <ul className={`nav-list ${mobileOpen ? 'mobile-open' : ''}`}>
-            {MENU.map((item, idx) => renderMenuItem(item, idx))}
-          </ul>
-          {/* Backdrop lives inside the nav's stacking context so the drawer,
-              hamburger and close button all sit above it. */}
-          {mobileOpen && <div className="nav-backdrop" onClick={() => setMobileOpen(false)} aria-hidden="true" />}
-        </div>
-      </nav>
     </header>
   );
 }
