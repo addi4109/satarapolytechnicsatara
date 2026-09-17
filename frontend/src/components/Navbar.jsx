@@ -16,6 +16,7 @@ const MENU = [
   {
     label: 'About',
     match: (p) => p.startsWith('/about'),
+    viewAll: { label: 'Explore About', link: '/about/institute' },
     columns: [
       {
         header: 'About',
@@ -44,6 +45,7 @@ const MENU = [
   {
     label: 'Academics',
     match: (p) => p.startsWith('/departments') || p.startsWith('/academics') || p.startsWith('/cells'),
+    viewAll: { label: 'Explore Academics', link: '/departments/computer' },
     columns: [
       {
         header: 'Departments',
@@ -77,6 +79,7 @@ const MENU = [
   {
     label: 'Campus',
     match: (p) => p.startsWith('/campus'),
+    viewAll: { label: 'Explore Campus', link: '/campus/library' },
     columns: [
       {
         header: 'Facility',
@@ -166,22 +169,6 @@ const MENU = [
     ],
   },
 ];
-
-// Landing page for each multi-column section ("View all" shortcut).
-const SECTION_INDEX = {
-  Home: '/',
-  About: '/about/institute',
-  Academics: '/departments/computer',
-  Admissions: '/admissions/overview',
-  Campus: '/campus/library',
-  Placements: '/placements/process',
-  Alumni: '/alumni/about',
-  Activities: '/activities/sports',
-  Examination: '/examination/schedule',
-  Gallery: '/gallery/photos',
-  Notices: '/notices',
-  Contact: '/contact',
-};
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(null);
@@ -318,9 +305,11 @@ function Navbar() {
                 <ul className="dropdown-col-list">{renderDropdownItems(resolveColumnItems(col))}</ul>
               </div>
             ))}
-            <Link to={SECTION_INDEX[item.label] || '/'} className="dropdown-viewall" onClick={() => setMobileOpen(false)}>
-              View all {item.label} →
-            </Link>
+            {item.viewAll && (
+              <Link to={item.viewAll.link} className="dropdown-viewall" onClick={() => setMobileOpen(false)}>
+                {item.viewAll.label} →
+              </Link>
+            )}
           </div>
         </li>
       );
