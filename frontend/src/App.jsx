@@ -12,52 +12,48 @@ import EnquiryPopup from './components/EnquiryPopup';
 // A tab opened before the deploy still runs the old JS, which requests assets
 // that no longer exist and fails with "Unable to preload CSS" or "Failed to
 // fetch dynamically imported module". Reloading once fetches the new
-// index.html, whose script references the current hashed files. The flag in
-// sessionStorage prevents an infinite reload loop if the retry also fails.
-const CHUNK_RELOAD_KEY = 'chunk-reload-attempted';
+// index.html, whose script references the current hashed files.
+//
+// Reload-loop safety: only *fetch/preload* failures trigger a reload (never
+// bare TypeErrors from module evaluation), and a time-window lock allows at
+// most one recovery reload per 30s. The lock is intentionally NOT cleared on
+// successful imports — clearing it lets a persistently failing chunk alternate
+// with a succeeding one and reload the page forever.
+const CHUNK_RELOAD_KEY = 'chunk-reload-attempted-at';
+const CHUNK_RELOAD_LOCK_MS = 30000;
 
-function hasReloadedForChunkError() {
+const STALE_CHUNK_PATTERN =
+  /Unable to preload|Failed to fetch dynamically imported module|error loading dynamically imported module|Importing a module script failed/i;
+
+function hasRecentChunkReload() {
   try {
-    return sessionStorage.getItem(CHUNK_RELOAD_KEY) === '1';
+    const at = Number(sessionStorage.getItem(CHUNK_RELOAD_KEY));
+    return Number.isFinite(at) && Date.now() - at < CHUNK_RELOAD_LOCK_MS;
   } catch {
     // Storage unavailable: assume we already tried to avoid reload loops.
     return true;
   }
 }
 
-function markReloadedForChunkError() {
+function markChunkReload() {
   try {
-    sessionStorage.setItem(CHUNK_RELOAD_KEY, '1');
+    sessionStorage.setItem(CHUNK_RELOAD_KEY, String(Date.now()));
   } catch {
-    // Ignore: worst case is one extra reload.
+    // Ignore storage failures.
   }
 }
 
 function lazyWithRetry(factory) {
   return lazy(() =>
-    factory().then(
-      (module) => {
-        try {
-          sessionStorage.removeItem(CHUNK_RELOAD_KEY);
-        } catch {
-          // Ignore storage failures.
-        }
-        return module;
-      },
-      (error) => {
-        const message = error?.message ?? '';
-        const isStaleChunk =
-          error instanceof TypeError ||
-          /Unable to preload|Failed to fetch dynamically imported module|error loading dynamically imported module|Importing a module script failed/i.test(
-            message,
-          );
-        if (isStaleChunk && !hasReloadedForChunkError()) {
-          markReloadedForChunkError();
-          window.location.reload();
-        }
-        throw error;
-      },
-    ),
+    factory().catch((error) => {
+      const message = error?.message ?? '';
+      const isStaleChunk = STALE_CHUNK_PATTERN.test(message);
+      if (isStaleChunk && !hasRecentChunkReload()) {
+        markChunkReload();
+        window.location.reload();
+      }
+      throw error;
+    }),
   );
 }
 
