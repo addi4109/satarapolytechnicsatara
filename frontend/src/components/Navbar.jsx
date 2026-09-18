@@ -27,6 +27,8 @@ const MENU = [
           { label: 'Vision & Mission', link: '/about/vision-mission' },
           { label: 'Affiliation & Approval', link: '/about/affiliation' },
           { label: 'Institute Policy', link: '/about/policy' },
+          { label: 'Organisational Chart', link: '/about/organisational-chart' },
+          { label: 'Code of Conduct', link: '/about/code-of-conduct' },
         ],
       },
       {

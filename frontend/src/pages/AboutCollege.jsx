@@ -21,6 +21,8 @@ const routeMap = {
   'policy': 'policy',
   'governing-body': 'governing-body',
   'local-governing-body': 'local-governing-body',
+  'organisational-chart': 'organisational-chart',
+  'code-of-conduct': 'code-of-conduct',
 };
 
 const sidebarLinks = [
@@ -36,9 +38,120 @@ const sidebarLinks = [
   { id: 'principal', label: 'Principal' },
   { id: 'governing-body', label: 'Governing Body' },
   { id: 'local-governing-body', label: 'Local Governing Body' },
+  { id: 'organisational-chart', label: 'Organisational Chart' },
+  { id: 'code-of-conduct', label: 'Code of Conduct' },
 ];
 
 import API_URL from '../lib/api';
+
+// Organisational chart — top-down levels of the institute hierarchy.
+const ORG_CHART_LEVELS = [
+  {
+    label: 'Society',
+    nodes: [
+      { title: 'Satara Education Society, Satara', subtitle: 'Parent Managing Body', featured: true },
+    ],
+  },
+  {
+    label: 'Governance',
+    nodes: [
+      { title: 'Chairman', subtitle: 'Satara Education Society' },
+      { title: 'Governing Body', subtitle: 'Policy & Strategic Direction' },
+    ],
+  },
+  {
+    label: 'Institute Head',
+    nodes: [
+      { title: 'Principal', subtitle: 'Head of the Institute', featured: true },
+    ],
+  },
+  {
+    label: 'Administration & Cells',
+    nodes: [
+      { title: 'Vice Principal', subtitle: 'Academic Coordination' },
+      { title: 'Office Superintendent', subtitle: 'Office & Accounts' },
+      { title: 'Examination Cell', subtitle: 'MSBTE Coordination' },
+      { title: 'Training & Placement Cell', subtitle: 'Placements & Industry Liaison' },
+    ],
+  },
+  {
+    label: 'Departments',
+    nodes: [
+      { title: 'Computer Engg.', subtitle: 'Department' },
+      { title: 'Electronics & Telecom', subtitle: 'Department' },
+      { title: 'Mechanical Engg.', subtitle: 'Department' },
+      { title: 'Electrical Engg.', subtitle: 'Department' },
+      { title: 'Chemical Engg.', subtitle: 'Department' },
+      { title: 'Automobile Engg.', subtitle: 'Department' },
+    ],
+  },
+  {
+    label: 'Staff',
+    nodes: [
+      { title: 'Teaching Staff', subtitle: 'Lecturers' },
+      { title: 'Non-Teaching Staff', subtitle: 'Lab Assistants' },
+      { title: 'Support Staff', subtitle: 'Office & Maintenance' },
+    ],
+  },
+];
+
+// Code of conduct — intro and sections.
+const CONDUCT_INTRO =
+  'Satara Polytechnic, Satara is committed to maintaining the highest standards of professional ethics, discipline and mutual respect. The Code of Conduct given below applies to every member of the institute — students, faculty members and support staff — and is intended to create a safe, inclusive and academically productive environment.';
+
+const CONDUCT_SECTIONS = [
+  {
+    title: 'For Students',
+    items: [
+      'Attend all lectures, practicals and examinations regularly; a minimum of 75% attendance is expected as per MSBTE norms.',
+      'Wear the prescribed identity card on campus and decent, respectful attire in the institute premises.',
+      'Maintain discipline in classrooms, laboratories, library and canteen; use institute property with care.',
+      'Use mobile phones responsibly and only where permitted; they must be switched off in classrooms and examination halls.',
+      'Refrain from any act of ragging, violence, substance abuse or harassment in any form — such acts invite strict disciplinary and legal action.',
+      'Submit original work; any form of copying or malpractice in examinations is punishable as per MSBTE and institute rules.',
+      'Treat fellow students, faculty and staff with courtesy irrespective of caste, religion, gender or background.',
+    ],
+  },
+  {
+    title: 'For Faculty Members',
+    items: [
+      'Be punctual and complete the prescribed syllabus within the academic schedule with quality teaching-learning practice.',
+      'Prepare lesson plans, notes and assessments regularly and provide timely feedback to students.',
+      'Maintain respectful, unbiased behaviour towards every student and colleague.',
+      'Keep academic and personal records of students confidential and use them only for official purposes.',
+      'Avoid any kind of discrimination, favouritism or victimisation of students.',
+      'Participate in departmental, institute-level activities and faculty development programmes for continuous improvement.',
+    ],
+  },
+  {
+    title: 'For Non-Teaching & Administrative Staff',
+    items: [
+      'Discharge duties diligently, courteously and within the working hours of the institute.',
+      'Handle student documents, fees and records accurately and maintain confidentiality.',
+      'Keep the office, laboratories and campus clean, safe and well organised.',
+      'Extend timely support to students and visitors and escalate genuine grievances to the competent authority.',
+      'Refrain from any act of negligence that may affect the functioning of the institute.',
+    ],
+  },
+  {
+    title: 'Anti-Ragging & Grievance Redressal',
+    items: [
+      'Ragging in any form is strictly prohibited as per UGC/AICTE regulations and the Maharashtra Prohibition of Ragging Act, 1999.',
+      'Complaints can be reported to the Anti-Ragging Committee / Grievance Redressal Committee through the complaint boxes or the office.',
+      'All complaints are investigated confidentially and suitable action is taken within a reasonable time.',
+      'Retaliation against any complainant or witness is treated as a serious offence.',
+    ],
+  },
+  {
+    title: 'General Conduct on Campus',
+    items: [
+      'Preserve the cleanliness of the campus; use dustbins and avoid defacing walls and property.',
+      'Park vehicles only at designated places and follow campus safety rules.',
+      'Any visitor on campus must report at the office and obtain permission before meeting students or staff.',
+      'Matters not covered in this code will be decided by the Principal, whose decision shall be final and binding.',
+    ],
+  },
+];
 
 function AboutCollege() {
   const { page } = useParams();
@@ -207,7 +320,9 @@ function AboutCollege() {
     active === 'secretary' ? "Secretary's Message" :
     active === 'principal' ? "Principal's Message" :
     active === 'governing-body' ? 'Governing Body' :
-    active === 'local-governing-body' ? 'Local Governing Body' : 'About College';
+    active === 'local-governing-body' ? 'Local Governing Body' :
+    active === 'organisational-chart' ? 'Organisational Chart' :
+    active === 'code-of-conduct' ? 'Code of Conduct' : 'About College';
 
   return (
     <>
@@ -252,11 +367,11 @@ function AboutCollege() {
 
           {/* Mobile top bar tabs */}
           <div className="about-mobile-tabs">
-            {['society', 'institute', 'disclosure', 'vision', 'affiliation', 'policy'].includes(active) && (
+            {['society', 'institute', 'disclosure', 'vision', 'affiliation', 'policy', 'organisational-chart', 'code-of-conduct'].includes(active) && (
               <>
                 <h4 className="about-mobile-group-heading">About</h4>
                 <ul className="about-mobile-tabs-list">
-                  {sidebarLinks.filter((l) => ['society', 'institute', 'disclosure', 'vision', 'affiliation', 'policy'].includes(l.id)).map((link) => (
+                  {sidebarLinks.filter((l) => ['society', 'institute', 'disclosure', 'vision', 'affiliation', 'policy', 'organisational-chart', 'code-of-conduct'].includes(l.id)).map((link) => (
                     <li key={link.id}>
                       <button
                         className={`about-mobile-tab ${active === link.id ? 'active' : ''}`}
@@ -482,6 +597,57 @@ function AboutCollege() {
                   ))}
                 </div>
               )}
+            </>
+          )}
+          {/* Organisational Chart */}
+          {active === 'organisational-chart' && (
+            <>
+              <h2 className="content-heading">Organisational Chart</h2>
+              <div className="content-line"></div>
+              <p>
+                The organisational structure of Satara Polytechnic, Satara defines the reporting
+                relationships and responsibilities at every level — from the management society to
+                the teaching and support staff — ensuring smooth and efficient functioning of the institute.
+              </p>
+              <div className="org-chart">
+                {ORG_CHART_LEVELS.map((level, i) => (
+                  <div className="org-level" key={i}>
+                    <span className="org-level-label">{level.label}</span>
+                    <div className="org-level-nodes">
+                      {level.nodes.map((node, j) => (
+                        <div className={`org-node ${node.featured ? 'org-node-featured' : ''}`} key={j}>
+                          <span className="org-node-title">{node.title}</span>
+                          <span className="org-node-sub">{node.subtitle}</span>
+                        </div>
+                      ))}
+                    </div>
+                    {i < ORG_CHART_LEVELS.length - 1 && (
+                      <span className="org-connector" aria-hidden="true" />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Code of Conduct */}
+          {active === 'code-of-conduct' && (
+            <>
+              <h2 className="content-heading">Code of Conduct</h2>
+              <div className="content-line"></div>
+              <p>{CONDUCT_INTRO}</p>
+              <div className="coc-grid">
+                {CONDUCT_SECTIONS.map((section, i) => (
+                  <div className="coc-card" key={i}>
+                    <h3 className="coc-card-title">{section.title}</h3>
+                    <ul className="coc-list">
+                      {section.items.map((item, j) => (
+                        <li key={j}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
             </>
           )}
         </main>
