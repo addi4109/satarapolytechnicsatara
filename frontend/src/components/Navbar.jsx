@@ -119,7 +119,7 @@ const MENU = [
   },
   {
     label: 'Student Life',
-    match: (p) => p.startsWith('/activities') || p.startsWith('/alumni'),
+    match: (p) => p.startsWith('/activities') || p.startsWith('/alumni') || p.startsWith('/examination'),
     columns: [
       {
         header: 'Activities',
@@ -132,6 +132,16 @@ const MENU = [
         ],
       },
       {
+        header: 'Examination',
+        items: [
+          { label: 'Exam Schedule', link: '/examination/schedule' },
+          { label: 'Exam Rules', link: '/examination/rules' },
+          { label: 'Results', link: '/examination/results' },
+          { label: 'Revaluation', link: '/examination/revaluation' },
+          { label: 'Exam Notices', link: '/examination/notices' },
+        ],
+      },
+      {
         header: 'Alumni',
         items: [
           { label: 'About Alumni', link: '/alumni/about' },
@@ -141,17 +151,6 @@ const MENU = [
           { label: 'Alumni Registration Form', link: '/alumni/registration' },
         ],
       },
-    ],
-  },
-  {
-    label: 'Examination',
-    match: (p) => p.startsWith('/examination'),
-    children: [
-      { label: 'Exam Schedule', link: '/examination/schedule' },
-      { label: 'Exam Rules', link: '/examination/rules' },
-      { label: 'Results', link: '/examination/results' },
-      { label: 'Revaluation', link: '/examination/revaluation' },
-      { label: 'Exam Notices', link: '/examination/notices' },
     ],
   },
   {
@@ -294,7 +293,7 @@ function Navbar() {
             {item.label}
             <span className="arrow" aria-hidden="true">▾</span>
           </button>
-          <div className={`dropdown-multi ${item.stack ? 'dropdown-stacked' : ''} ${openMenu === idx || (mobileOpen && mobileExpanded === idx) ? 'show' : ''}`}>
+          <div className={`dropdown-multi ${item.stack ? 'dropdown-stacked' : ''} ${item.columns.length >= 3 ? 'dropdown-cols-3' : ''} ${openMenu === idx || (mobileOpen && mobileExpanded === idx) ? 'show' : ''}`}>
             {item.columns.map((col, cIdx) => (
               <div
                 className={`dropdown-col ${col.wide ? 'dropdown-col-wide' : ''} ${col.semiWide ? 'dropdown-col-semi-wide' : ''} ${col.key ? `dropdown-col-${col.key}` : ''}`}
