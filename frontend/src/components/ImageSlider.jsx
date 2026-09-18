@@ -3,8 +3,16 @@ import './ImageSlider.css';
 
 import API_URL from '../lib/api';
 
+// Static first slide: paints instantly on page load so the hero is never
+// blank while the DB-managed slides are being fetched in the background.
+const PLACEHOLDER_SLIDE = {
+  _id: '_static-first',
+  image: 'https://res.cloudinary.com/yjiggwb7/image/upload/v1787713184/c6x3cfx3tcbhkd8mgtbe.png',
+  alt: 'Satara Polytechnic, Satara',
+};
+
 function ImageSlider() {
-  const [slides, setSlides] = useState([]);
+  const [slides, setSlides] = useState([PLACEHOLDER_SLIDE]);
   const [current, setCurrent] = useState(0);
   const timerRef = useRef(null);
   const dragRef = useRef({ startX: 0, dragging: false });
@@ -13,7 +21,8 @@ function ImageSlider() {
     fetch(`${API_URL}/slides`)
       .then((res) => res.json())
       .then((data) => {
-        if (data && data.length > 0) setSlides(data);
+        // Keep the static image first; fetched slides load in behind it.
+        if (data && data.length > 0) setSlides([PLACEHOLDER_SLIDE, ...data]);
       })
       .catch((err) => console.error('Failed to fetch slides:', err));
   }, []);
@@ -116,8 +125,9 @@ function ImageSlider() {
                 {slide.image ? (
                   <img
                     src={slide.image}
-                    alt={slide.title || `Slide ${idx + 1}`}
+                    alt={slide.title || slide.alt || `Slide ${idx + 1}`}
                     draggable={false}
+                    loading={idx === 0 ? 'eager' : 'lazy'}
                   />
                 ) : (
                   <div
