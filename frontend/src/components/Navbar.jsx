@@ -112,25 +112,29 @@ const MENU = [
     ],
   },
   {
-    label: 'Alumni',
-    match: (p) => p.startsWith('/alumni'),
-    children: [
-      { label: 'About Alumni', link: '/alumni/about' },
-      { label: 'Alumni Vision & Mission', link: '/alumni/vision-mission' },
-      { label: 'Entrepreneurs', link: '/alumni/entrepreneurs' },
-      { label: 'Alumni Association', link: '/alumni/association' },
-      { label: 'Alumni Registration Form', link: '/alumni/registration' },
-    ],
-  },
-  {
-    label: 'Activities',
-    match: (p) => p.startsWith('/activities'),
-    children: [
-      { label: 'Sports', link: '/activities/sports' },
-      { label: 'Cultural', link: '/activities/cultural' },
-      { label: 'Technical Events', link: '/activities/technical' },
-      { label: 'Industrial Visits', link: '/activities/industrial-visits' },
-      { label: 'Competitions', link: '/activities/competitions' },
+    label: 'Student Life',
+    match: (p) => p.startsWith('/activities') || p.startsWith('/alumni'),
+    columns: [
+      {
+        header: 'Activities',
+        items: [
+          { label: 'Sports', link: '/activities/sports' },
+          { label: 'Cultural', link: '/activities/cultural' },
+          { label: 'Technical Events', link: '/activities/technical' },
+          { label: 'Industrial Visits', link: '/activities/industrial-visits' },
+          { label: 'Competitions', link: '/activities/competitions' },
+        ],
+      },
+      {
+        header: 'Alumni',
+        items: [
+          { label: 'About Alumni', link: '/alumni/about' },
+          { label: 'Alumni Vision & Mission', link: '/alumni/vision-mission' },
+          { label: 'Entrepreneurs', link: '/alumni/entrepreneurs' },
+          { label: 'Alumni Association', link: '/alumni/association' },
+          { label: 'Alumni Registration Form', link: '/alumni/registration' },
+        ],
+      },
     ],
   },
   {
