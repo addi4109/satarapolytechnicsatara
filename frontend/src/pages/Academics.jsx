@@ -104,6 +104,65 @@ function Academics() {
                 results above the MSBTE state average. Special coaching and remedial
                 classes are arranged for students who need additional support.
               </p>
+
+              <div className="academics-section-grid">
+                <button
+                  type="button"
+                  className="academics-section-card"
+                  onClick={() => setActive('faculty')}
+                >
+                  <span className="section-card-icon">🏛️</span>
+                  <span className="section-card-body">
+                    <span className="section-card-title">Departments</span>
+                    <span className="section-card-desc">
+                      Six engineering departments with dedicated faculty, well-equipped
+                      labs and experienced heads of department.
+                    </span>
+                  </span>
+                  <span className="section-card-arrow">→</span>
+                </button>
+                <button
+                  type="button"
+                  className="academics-section-card"
+                  onClick={() => setActive('cells')}
+                >
+                  <span className="section-card-icon">🤝</span>
+                  <span className="section-card-body">
+                    <span className="section-card-title">Cells and Committees</span>
+                    <span className="section-card-desc">
+                      Cells for placements, anti-ragging, grievances, women welfare,
+                      NSS, SC/ST and IQAC.
+                    </span>
+                  </span>
+                  <span className="section-card-arrow">→</span>
+                </button>
+              </div>
+
+              <div className="academics-calendar-section">
+                <h3 className="content-sub-heading">Academic Calendar</h3>
+                <p>
+                  The academic calendar for A.Y. {getAcademicYear()} as prescribed by
+                  MSBTE, Mumbai. All dates are subject to change as per board
+                  notifications.
+                </p>
+                <div className="calendar-btns">
+                  <a
+                    href={calendarPdf}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="cal-btn view"
+                  >
+                    View Calendar
+                  </a>
+                  <a
+                    href={calendarPdf}
+                    download={`MSBTE_Academic_Calendar_${getAcademicYear()}.pdf`}
+                    className="cal-btn download"
+                  >
+                    Download PDF
+                  </a>
+                </div>
+              </div>
             </>
           )}
 

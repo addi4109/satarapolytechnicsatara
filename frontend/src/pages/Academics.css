@@ -49,6 +49,89 @@
   margin: 0 0 14px;
 }
 
+/* ===== Academics Overview Section Cards ===== */
+.academics-section-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.academics-section-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 20px 22px;
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.academics-section-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(36, 51, 88, 0.12);
+  border-color: #c8963e;
+}
+
+.section-card-icon {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.section-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.section-card-title {
+  display: block;
+  font-family: 'Georgia', serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #243358;
+  margin-bottom: 4px;
+}
+
+.section-card-desc {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.section-card-arrow {
+  font-size: 18px;
+  color: #c8963e;
+  font-weight: 700;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.25s, transform 0.25s;
+}
+
+.academics-section-card:hover .section-card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ===== Academics Overview - Academic Calendar strip ===== */
+.academics-calendar-section {
+  margin-top: 26px;
+  background: #f5f7fa;
+  border: 1px solid #e4e8ed;
+  border-left: 4px solid #c8963e;
+  border-radius: 8px;
+  padding: 20px 22px;
+}
+
+.academics-calendar-section .content-sub-heading {
+  margin-top: 0;
+}
+
 /* ===== Course Table ===== */
 .courses-table-wrap {
   overflow-x: auto;
@@ -875,6 +958,27 @@
   .curriculum-grid,
   .faculty-grid {
     grid-template-columns: 1fr;
+  }
+
+  .academics-section-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .academics-section-card {
+    padding: 16px 18px;
+  }
+
+  .section-card-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .academics-calendar-section {
+    padding: 16px 18px;
+  }
+
+  .academics-calendar-section .calendar-btns {
+    flex-wrap: wrap;
   }
 
   .overview-stats {
