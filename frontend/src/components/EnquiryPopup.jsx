@@ -33,6 +33,13 @@ function EnquiryPopup({ onClose }) {
     return () => clearTimeout(t);
   }, []);
 
+  // Flag the popup on <body> so page animations (e.g. hero welcome text)
+  // can wait to start until the popup is closed.
+  useEffect(() => {
+    document.body.classList.add('enquiry-open');
+    return () => document.body.classList.remove('enquiry-open');
+  }, []);
+
   const handleClose = () => {
     setVisible(false);
     setTimeout(onClose, 350);

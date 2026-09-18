@@ -167,6 +167,13 @@
   animation-delay: 2.2s;
 }
 
+/* Hold the welcome animation (letters + delays) while the admission
+   enquiry popup is open; it starts the moment the popup closes. */
+body.enquiry-open .letter-reveal,
+body.enquiry-open .slider-subtitle-reveal {
+  animation-play-state: paused !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .letter-reveal {
     animation: none;
