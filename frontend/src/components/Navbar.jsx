@@ -106,7 +106,7 @@ const MENU = [
     label: 'Placements',
     match: (p) => p.startsWith('/placements'),
     children: [
-      { label: 'About Placement Cell', link: '/cells/placement' },
+      { label: 'About Placement Cell', link: '/placements/about' },
       { label: 'Placement Process', link: '/placements/process' },
       { label: 'Placement Records', link: '/placements/records' },
       { label: 'Our Recruiters', link: '/placements/recruiters' },

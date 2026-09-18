@@ -162,45 +162,8 @@
 
 .cell-card-table {
   width: 100%;
-  border-collapse: collapse;
-  font-size: 13.5px;
-}
-
-.cell-card-table thead th {
-  background: #243358;
-  color: #fff;
-  padding: 10px 16px;
-  text-align: left;
-  font-weight: 600;
-  font-size: 13px;
-}
-
-.cell-card-table thead th:first-child {
-  border-radius: 4px 0 0 0;
-}
-
-.cell-card-table thead th:last-child {
-  border-radius: 0 4px 0 0;
-}
-
-.cell-card-table tbody td {
-  padding: 10px 16px;
-  border-bottom: 1px solid #f0f0f0;
-  color: #444;
-}
-
-.cell-card-table tbody tr:nth-child(even) {
-  background: #f9fafc;
-}
-
-.cell-card-table tbody tr:hover {
-  background: #f0f4fa;
-}
-
-
-.cell-card-table {
-  width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 14px;
   border: 1px solid #e4e8ed;
   border-radius: 8px;
