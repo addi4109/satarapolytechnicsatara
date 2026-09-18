@@ -308,6 +308,18 @@ function AboutCollege() {
   const getVision = () => about.vision || {};
   const getAffiliation = () => about.affiliation || {};
   const getPolicy = () => about.policy || {};
+  // Admin-managed sections: fall back to the built-in defaults when empty.
+  const getOrgLevels = () => {
+    const db = about['organisational-chart'];
+    if (db && Array.isArray(db.orgLevels) && db.orgLevels.length > 0) return db.orgLevels;
+    return ORG_CHART_LEVELS;
+  };
+  const getConductSections = () => {
+    const db = about['code-of-conduct'];
+    const sections = db && Array.isArray(db.conductSections) ? db.conductSections.filter((s) => s && s.title && (s.items || []).length > 0) : [];
+    if (sections.length > 0) return sections;
+    return CONDUCT_SECTIONS;
+  };
 
   const seoTitle = active === 'society' ? 'Satara Education Society' :
     active === 'institute' ? 'Institute Overview' :
@@ -610,7 +622,7 @@ function AboutCollege() {
                 the teaching and support staff — ensuring smooth and efficient functioning of the institute.
               </p>
               <div className="org-chart">
-                {ORG_CHART_LEVELS.map((level, i) => (
+                {getOrgLevels().map((level, i) => (
                   <div className="org-level" key={i}>
                     <span className="org-level-label">{level.label}</span>
                     <div className="org-level-nodes">
@@ -621,7 +633,7 @@ function AboutCollege() {
                         </div>
                       ))}
                     </div>
-                    {i < ORG_CHART_LEVELS.length - 1 && (
+                    {i < getOrgLevels().length - 1 && (
                       <span className="org-connector" aria-hidden="true" />
                     )}
                   </div>
@@ -635,9 +647,9 @@ function AboutCollege() {
             <>
               <h2 className="content-heading">Code of Conduct</h2>
               <div className="content-line"></div>
-              <p>{CONDUCT_INTRO}</p>
+              <p>{about['code-of-conduct']?.content || CONDUCT_INTRO}</p>
               <div className="coc-grid">
-                {CONDUCT_SECTIONS.map((section, i) => (
+                {getConductSections().map((section, i) => (
                   <div className="coc-card" key={i}>
                     <h3 className="coc-card-title">{section.title}</h3>
                     <ul className="coc-list">

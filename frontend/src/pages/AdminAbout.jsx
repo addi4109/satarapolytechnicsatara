@@ -16,6 +16,8 @@ const SECTIONS = [
   { key: 'vision', label: 'Vision & Mission' },
   { key: 'affiliation', label: 'Affiliation & Approval' },
   { key: 'policy', label: 'Institute Policy' },
+  { key: 'organisational-chart', label: 'Org Chart' },
+  { key: 'code-of-conduct', label: 'Code of Conduct' },
 ];
 
 const defaultSection = {
@@ -25,6 +27,8 @@ const defaultSection = {
   achievements: [],
   infoRows: [],
   stats: [],
+  orgLevels: [],
+  conductSections: [],
   active: true,
 };
 
@@ -44,6 +48,9 @@ function AdminAbout() {
   const [editingInfoIdx, setEditingInfoIdx] = useState(null);
   const [newMissionItem, setNewMissionItem] = useState('');
   const [newAchievementItem, setNewAchievementItem] = useState('');
+  // Tracks which conduct card the inline "Add rule" input belongs to.
+  const [newConductItem, setNewConductItem] = useState(null);
+  const [newConductItemText, setNewConductItemText] = useState('');
 
   useEffect(() => {
     fetchSections();
@@ -70,6 +77,8 @@ function AdminAbout() {
     setMsg(null);
     setNewMissionItem('');
     setNewAchievementItem('');
+    setNewConductItem(null);
+    setNewConductItemText('');
   }, [activeTab]);
 
   const currentData = sections[activeTab] || {};
@@ -82,6 +91,8 @@ function AdminAbout() {
       achievements: currentData.achievements || [],
       infoRows: currentData.infoRows || [],
       stats: currentData.stats || [],
+      orgLevels: currentData.orgLevels || [],
+      conductSections: currentData.conductSections || [],
       active: currentData.active !== false,
     });
     setEditing(true);
@@ -166,6 +177,71 @@ function AdminAbout() {
   const removeStat = (i) => {
     handleChange('stats', editForm.stats.filter((_, idx) => idx !== i));
     setEditingStatIdx(null);
+  };
+
+  // Org chart helpers
+  const addOrgLevel = () => {
+    handleChange('orgLevels', [...editForm.orgLevels, { label: '', nodes: [] }]);
+  };
+  const removeOrgLevel = (i) => {
+    handleChange('orgLevels', editForm.orgLevels.filter((_, idx) => idx !== i));
+  };
+  const moveOrgLevel = (i, dir) => {
+    const levels = [...editForm.orgLevels];
+    const j = i + dir;
+    if (j < 0 || j >= levels.length) return;
+    [levels[i], levels[j]] = [levels[j], levels[i]];
+    handleChange('orgLevels', levels);
+  };
+  const addOrgNode = (i) => {
+    const levels = [...editForm.orgLevels];
+    levels[i] = { ...levels[i], nodes: [...(levels[i].nodes || []), { title: '', subtitle: '', featured: false }] };
+    handleChange('orgLevels', levels);
+  };
+  const updateOrgNode = (i, j, field, val) => {
+    const levels = editForm.orgLevels.map((level, li) => (
+      li === i ? { ...level, nodes: level.nodes.map((node, ni) => (ni === j ? { ...node, [field]: val } : node)) } : level
+    ));
+    handleChange('orgLevels', levels);
+  };
+  const removeOrgNode = (i, j) => {
+    const levels = editForm.orgLevels.map((level, li) => (
+      li === i ? { ...level, nodes: level.nodes.filter((_, ni) => ni !== j) } : level
+    ));
+    handleChange('orgLevels', levels);
+  };
+
+  // Code of conduct helpers
+  const addConductSection = () => {
+    handleChange('conductSections', [...editForm.conductSections, { title: '', items: [] }]);
+  };
+  const updateConductSection = (i, field, val) => {
+    const sections = editForm.conductSections.map((s, si) => (si === i ? { ...s, [field]: val } : s));
+    handleChange('conductSections', sections);
+  };
+  const removeConductSection = (i) => {
+    handleChange('conductSections', editForm.conductSections.filter((_, si) => si !== i));
+  };
+  const moveConductSection = (i, dir) => {
+    const sections = [...editForm.conductSections];
+    const j = i + dir;
+    if (j < 0 || j >= sections.length) return;
+    [sections[i], sections[j]] = [sections[j], sections[i]];
+    handleChange('conductSections', sections);
+  };
+  const addConductItem = (i) => {
+    if (!newConductItemText.trim() || newConductItem !== i) return;
+    const sections = editForm.conductSections.map((s, si) => (
+      si === i ? { ...s, items: [...(s.items || []), newConductItemText.trim()] } : s
+    ));
+    handleChange('conductSections', sections);
+    setNewConductItemText('');
+  };
+  const removeConductItem = (i, j) => {
+    const sections = editForm.conductSections.map((s, si) => (
+      si === i ? { ...s, items: (s.items || []).filter((_, ij) => ij !== j) } : s
+    ));
+    handleChange('conductSections', sections);
   };
 
   // Mission helpers
@@ -309,6 +385,62 @@ function AdminAbout() {
           </PreviewCard>
         );
 
+      case 'organisational-chart':
+        return (
+          <PreviewCard>
+            <h2 className="content-heading">Organisational Chart</h2>
+            <div className="content-line"></div>
+            {(currentData.orgLevels || []).length === 0 ? (
+              <p style={{ color: '#aaa', fontStyle: 'italic' }}>
+                No org chart added yet. The site shows built-in default levels until you add content. Click to add.
+              </p>
+            ) : (
+              <div className="org-chart">
+                {currentData.orgLevels.map((level, i) => (
+                  <div className="org-level" key={i}>
+                    <span className="org-level-label">{level.label}</span>
+                    <div className="org-level-nodes">
+                      {(level.nodes || []).map((node, j) => (
+                        <div className={`org-node ${node.featured ? 'org-node-featured' : ''}`} key={j}>
+                          <span className="org-node-title">{node.title}</span>
+                          <span className="org-node-sub">{node.subtitle}</span>
+                        </div>
+                      ))}
+                    </div>
+                    {i < currentData.orgLevels.length - 1 && <span className="org-connector" aria-hidden="true" />}
+                  </div>
+                ))}
+              </div>
+
+            )}
+          </PreviewCard>
+        );
+
+      case 'code-of-conduct':
+        return (
+          <PreviewCard>
+            <h2 className="content-heading">Code of Conduct</h2>
+            <div className="content-line"></div>
+            <ContentPreview text={currentData.content} />
+            {(currentData.conductSections || []).length === 0 ? (
+              <p style={{ color: '#aaa', fontStyle: 'italic' }}>
+                No rules added yet. The site shows built-in default rules until you add content. Click to add.
+              </p>
+            ) : (
+              <div className="coc-grid">
+                {currentData.conductSections.map((section, i) => (
+                  <div className="coc-card" key={i}>
+                    <h3 className="coc-card-title">{section.title}</h3>
+                    <ul className="coc-list">
+                      {(section.items || []).map((item, j) => <li key={j}>{item}</li>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            )}
+          </PreviewCard>
+        );
+
       default:
         return null;
     }
@@ -445,6 +577,92 @@ function AdminAbout() {
               <textarea value={editForm.content} onChange={(e) => handleChange('content', e.target.value)} rows={10} placeholder="Write institute policy details here..." />
             </div>
             {renderInfoRowsEditor()}
+          </div>
+        );
+
+      case 'organisational-chart':
+        return (
+          <div className="about-edit-form">
+            <p style={{ color: '#777', fontSize: '13px', marginBottom: '16px' }}>
+              Add chart levels top-down (e.g. Society → Governing Body → Principal → …). Each level contains one or more boxes shown side by side. Tick “Featured” for the main box of a level (wider, highlighted).
+            </p>
+            <div className="form-group">
+              <label>Chart Levels</label>
+              {editForm.orgLevels.length === 0 && (
+                <p style={{ color: '#aaa', fontStyle: 'italic', margin: '0 0 10px' }}>No levels yet.</p>
+              )}
+              {editForm.orgLevels.map((level, i) => (
+                <div key={i} className="about-mission-item" style={{ display: 'block', alignItems: 'stretch', gap: 0 }}>
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <strong style={{ flex: 1, fontSize: '13px', color: '#333' }}>{level.label || `Level ${i + 1}`}</strong>
+                    <button className="btn btn-secondary btn-sm" onClick={() => moveOrgLevel(i, -1)} disabled={i === 0}>↑</button>
+                    <button className="btn btn-secondary btn-sm" onClick={() => moveOrgLevel(i, 1)} disabled={i === editForm.orgLevels.length - 1}>↓</button>
+                    <button className="btn btn-danger btn-sm" onClick={() => removeOrgLevel(i)}>Remove</button>
+                  </div>
+                  {(level.nodes || []).length === 0 ? (
+                    <p style={{ color: '#aaa', fontStyle: 'italic', fontSize: '12px', margin: '6px 0 0' }}>No boxes in this level.</p>
+                  ) : (
+                    <div style={{ marginTop: '8px' }}>
+                      {level.nodes.map((node, j) => (
+                        <div key={j} style={{ display: 'flex', gap: '6px', marginBottom: '6px', flexWrap: 'wrap', alignItems: 'center' }}>
+                          <input type="text" value={node.title} onChange={(e) => updateOrgNode(i, j, 'title', e.target.value)} placeholder="Box title" style={{ flex: '2 1 140px', padding: '6px 8px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px' }} />
+                          <input type="text" value={node.subtitle} onChange={(e) => updateOrgNode(i, j, 'subtitle', e.target.value)} placeholder="Small text (optional)" style={{ flex: '2 1 140px', padding: '6px 8px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px' }} />
+                          <label style={{ fontSize: '12px', color: '#555', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <input type="checkbox" checked={!!node.featured} onChange={(e) => updateOrgNode(i, j, 'featured', e.target.checked)} /> Featured
+                          </label>
+                          <button className="btn btn-danger btn-sm" onClick={() => removeOrgNode(i, j)}>×</button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <button className="btn btn-primary btn-sm" style={{ marginTop: '8px' }} onClick={() => addOrgNode(i)}>+ Add Box</button>
+                </div>
+              ))}
+              <button className="btn btn-primary" style={{ marginTop: '10px' }} onClick={addOrgLevel}>+ Add Level</button>
+            </div>
+          </div>
+        );
+
+      case 'code-of-conduct':
+        return (
+          <div className="about-edit-form">
+            <div className="form-group">
+              <label>Intro Paragraph (optional)</label>
+              <textarea value={editForm.content} onChange={(e) => handleChange('content', e.target.value)} rows={4} placeholder="Shown above the rules. Leave empty to keep the built-in intro." />
+            </div>
+            <div className="form-group">
+              <label>Rule Cards</label>
+              {editForm.conductSections.length === 0 && (
+                <p style={{ color: '#aaa', fontStyle: 'italic', margin: '0 0 10px' }}>No cards yet.</p>
+              )}
+              {editForm.conductSections.map((section, i) => (
+                <div key={i} className="about-mission-item" style={{ display: 'block', alignItems: 'stretch', gap: 0 }}>
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <input type="text" value={section.title} onChange={(e) => updateConductSection(i, 'title', e.target.value)} placeholder="Card title (e.g. For Students)" style={{ flex: 1, padding: '6px 8px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', fontWeight: 600 }} />
+                    <button className="btn btn-danger btn-sm" onClick={() => removeConductSection(i)}>Remove</button>
+                  </div>
+                  {(section.items || []).length > 0 && (
+                    <div style={{ marginTop: '8px' }}>
+                      {section.items.map((item, j) => (
+                        <div key={j} className="about-mission-item" style={{ marginBottom: '6px' }}>
+                          <span style={{ flex: 1, fontSize: '12.5px' }}>{item}</span>
+                          <button onClick={() => removeConductItem(i, j)}>×</button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+                    <input type="text" value={newConductItem === i ? newConductItemText : ''} onChange={(e) => { setNewConductItem(i); setNewConductItemText(e.target.value); }} onKeyDown={(e) => e.key === 'Enter' && addConductItem(i)} placeholder="Add rule..." style={{ flex: 1, padding: '6px 8px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '12.5px' }} />
+                    <button className="btn btn-primary btn-sm" onClick={() => addConductItem(i)}>Add</button>
+                  </div>
+                  <div style={{ display: 'flex', gap: '6px', marginTop: '8px' }}>
+                    <button className="btn btn-secondary btn-sm" onClick={() => moveConductSection(i, -1)} disabled={i === 0}>↑</button>
+                    <button className="btn btn-secondary btn-sm" onClick={() => moveConductSection(i, 1)} disabled={i === editForm.conductSections.length - 1}>↓</button>
+                  </div>
+                </div>
+              ))}
+              <button className="btn btn-primary" style={{ marginTop: '10px' }} onClick={addConductSection}>+ Add Rule Card</button>
+            </div>
           </div>
         );
 
