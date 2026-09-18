@@ -40,6 +40,14 @@ const deptTimetableSchema = new mongoose.Schema({
   url: { type: String, default: '' },
 });
 
+const rankerSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  percentage: { type: String, default: '' },
+  year: { type: String, required: true, enum: ['1st Year', '2nd Year', '3rd Year'] },
+  image: { type: String, default: '' },
+  achievement: { type: String, default: '' },
+});
+
 const departmentSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
@@ -65,6 +73,7 @@ const departmentSchema = new mongoose.Schema(
     deptNotices: [deptNoticeSchema],
     deptEvents: [deptEventSchema],
     deptTimetable: [deptTimetableSchema],
+    rankers: [rankerSchema],
     order: { type: Number, default: 0 },
     hideFromHome: { type: Boolean, default: false },
   },

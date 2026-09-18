@@ -8,7 +8,7 @@ import './Gallery.css';
 
 import API_URL from '../lib/api';
 const years = ['1st Year', '2nd Year', '3rd Year'];
-const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe'];
+const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe', 'rankers'];
 
 function DepartmentsPage() {
   const { deptId } = useParams();
@@ -63,6 +63,7 @@ function DepartmentsPage() {
   const dept = departments.find((d) => d.slug === activeSlug) || departments[0];
 
   const [obeTab, setObTab] = useState('peos');
+  const [rankerYear, setRankerYear] = useState('1st Year');
 
   const sidebarItems = [
     { id: 'about', label: 'About' },
@@ -72,6 +73,7 @@ function DepartmentsPage() {
     { id: 'infrastructure', label: 'Infrastructure' },
     { id: 'curriculum', label: 'Curriculum / Syllabus' },
     { id: 'obe', label: 'Outcome Based Education' },
+    { id: 'rankers', label: 'Rankers' },
 
   ];
 
@@ -430,6 +432,71 @@ function DepartmentsPage() {
 
                 </div>
               </div>
+            )}
+
+            {activeTab === 'rankers' && (
+              <>
+                <h2 className="content-heading">Rankers</h2>
+                <div className="content-line"></div>
+                <p>
+                  Top performers of the {dept.name} department, recognised for their
+                  academic excellence in MSBTE examinations.
+                </p>
+
+                <div className="obe-tabs">
+                  {['1st Year', '2nd Year', '3rd Year'].map((y) => (
+                    <button
+                      key={y}
+                      className={`obe-tab ${rankerYear === y ? 'active' : ''}`}
+                      onClick={() => setRankerYear(y)}
+                    >
+                      {y}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="obe-content">
+                  {(() => {
+                    const yearRankers = (dept.rankers || []).filter((r) => r.year === rankerYear);
+                    if (yearRankers.length === 0) {
+                      return (
+                        <p style={{ color: '#888', fontStyle: 'italic' }}>
+                          No rankers listed for {rankerYear} yet.
+                        </p>
+                      );
+                    }
+                    return (
+                      <div className="rankers-grid">
+                        {yearRankers.map((r, i) => (
+                          <div className="ranker-card" key={i}>
+                            <div className="ranker-photo">
+                              {r.image ? (
+                                <img src={r.image} alt={r.name} loading="lazy" />
+                              ) : (
+                                <span className="ranker-photo-initial">
+                                  {r.name?.trim()?.charAt(0)?.toUpperCase() || '?'}
+                                </span>
+                              )}
+                            </div>
+                            <div className="ranker-body">
+                              <h4 className="ranker-name">{r.name}</h4>
+                              {r.percentage && (
+                                <p className="ranker-percentage">
+                                  <span className="ranker-pct-value">{r.percentage}</span>
+                                  <span className="ranker-pct-label">Score</span>
+                                </p>
+                              )}
+                              {r.achievement && (
+                                <p className="ranker-achievement">{r.achievement}</p>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })()}
+                </div>
+              </>
             )}
 
             {activeTab === 'hod' && (
