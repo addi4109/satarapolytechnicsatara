@@ -127,11 +127,6 @@ function AboutCollege() {
 
     return (
       <div className="leader-profile">
-        <h3 className="leader-profile-name">{entry.name}</h3>
-        <p className="leader-profile-designation">{entry.title || title}</p>
-        {entry.qualification && (
-          <p className="leader-profile-qual">{entry.qualification}</p>
-        )}
         <div className="leader-profile-photo">
           {entry.photoUrl ? (
             <img src={entry.photoUrl} alt={entry.name} />
@@ -141,6 +136,11 @@ function AboutCollege() {
             </div>
           )}
         </div>
+        <h3 className="leader-profile-name">{entry.name}</h3>
+        <p className="leader-profile-designation">{entry.title || title}</p>
+        {entry.qualification && (
+          <p className="leader-profile-qual">{entry.qualification}</p>
+        )}
         <div className="leader-profile-msg">
           {entry.message ? (
             entry.message.split('\n').filter(p => p.trim()).map((para, i) => (
