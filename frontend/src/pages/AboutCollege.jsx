@@ -154,6 +154,32 @@ function AboutCollege() {
     );
   };
 
+  // Helper: render a single leadership photo card (name, role, description).
+  const renderLeaderCard = (role) => {
+    const entry = management[role];
+    if (!entry || !entry.active) return null;
+    return (
+      <div key={role} className="leader-card">
+        <div className="leader-card-img-wrap">
+          {entry.photoUrl ? (
+            <img className="leader-card-img" src={entry.photoUrl} alt={entry.name} />
+          ) : (
+            <div className="leader-card-img-placeholder">
+              <span>{entry.name ? entry.name.charAt(0) : '?'}</span>
+            </div>
+          )}
+        </div>
+        <div className="leader-card-body">
+          <h3 className="leader-card-name">{entry.name}</h3>
+          <p className="leader-card-title">{entry.title || role.charAt(0).toUpperCase() + role.slice(1)}</p>
+          {(entry.shortDesc || entry.qualification) && (
+            <p className="leader-card-desc">{entry.shortDesc || entry.qualification}</p>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   if (loading) {
     return (
       <>
@@ -289,51 +315,8 @@ function AboutCollege() {
                 <div className="leadership-section">
                   <h2 className="leadership-heading">Our Leadership</h2>
                   <div className="leadership-line"></div>
-                  {/* Row 1: 3 main leaders */}
-                  <div className="leadership-grid leadership-grid-3">
-                    {['founder', 'chairman', 'principal'].map((role) => {
-                      const entry = management[role];
-                      if (!entry || !entry.active) return null;
-                      return (
-                        <div key={role} className="leader-card">
-                          <div className="leader-card-img-wrap">
-                            {entry.photoUrl ? (
-                              <img className="leader-card-img" src={entry.photoUrl} alt={entry.name} />
-                            ) : (
-                              <div className="leader-card-img-placeholder">No Photo</div>
-                            )}
-                          </div>
-                          <div className="leader-card-body">
-                            <h3 className="leader-card-name">{entry.name}</h3>
-                            <p className="leader-card-title">{entry.title || role.charAt(0).toUpperCase() + role.slice(1)}</p>
-                            <p className="leader-card-desc">{entry.shortDesc || entry.qualification || ''}</p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  {/* Row 2: Secretary + others centered */}
-                  <div className="leadership-grid leadership-grid-4">
-                    {['secretary'].map((role) => {
-                      const entry = management[role];
-                      if (!entry || !entry.active) return null;
-                      return (
-                        <div key={role} className="leader-card">
-                          <div className="leader-card-img-wrap">
-                            {entry.photoUrl ? (
-                              <img className="leader-card-img" src={entry.photoUrl} alt={entry.name} />
-                            ) : (
-                              <div className="leader-card-img-placeholder">No Photo</div>
-                            )}
-                          </div>
-                          <div className="leader-card-body">
-                            <h3 className="leader-card-name">{entry.name}</h3>
-                            <p className="leader-card-title">{entry.title || role.charAt(0).toUpperCase() + role.slice(1)}</p>
-                            <p className="leader-card-desc">{entry.shortDesc || entry.qualification || ''}</p>
-                          </div>
-                        </div>
-                      );
-                    })}
+                  <div className="leadership-grid">
+                    {['founder', 'chairman', 'principal', 'secretary'].map((role) => renderLeaderCard(role))}
                   </div>
                 </div>
               )}
