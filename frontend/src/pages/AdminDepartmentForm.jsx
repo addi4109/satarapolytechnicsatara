@@ -582,6 +582,8 @@ function AdminDepartmentForm() {
                       <button type="button" className="faculty-card-remove" onClick={() => removeRanker(idx)} title="Remove">✕</button>
                       <div className="faculty-card-img">
                         <ImageUpload value={r.image} onChange={(url) => updateRanker(idx, 'image', url)} label="" placeholder="Photo" circle />
+                      </div>
+                      <div className="faculty-card-fields">
                         <select
                           className="ranker-year-select"
                           value={r.year}
@@ -592,8 +594,6 @@ function AdminDepartmentForm() {
                             <option key={y} value={y}>{y}</option>
                           ))}
                         </select>
-                      </div>
-                      <div className="faculty-card-fields">
                         <input type="text" placeholder="Student Name" value={r.name} onChange={(e) => updateRanker(idx, 'name', e.target.value)} />
                         <input type="text" placeholder="Percentage (e.g. 92.5%)" value={r.percentage} onChange={(e) => updateRanker(idx, 'percentage', e.target.value)} />
                         <input type="text" placeholder="Achievement (optional)" value={r.achievement} onChange={(e) => updateRanker(idx, 'achievement', e.target.value)} />
