@@ -503,25 +503,23 @@ function DepartmentsPage() {
               <>
                 <h2 className="content-heading">HOD Desk</h2>
                 <div className="content-line"></div>
-                <div className="officer-card">
-                  <div className="officer-left">
+                <div className="leader-profile">
+                  <div className="leader-profile-photo">
                     {dept.hodImage ? (
-                      <div className="officer-photo">
-                        <img src={dept.hodImage} alt={dept.hod} />
-                      </div>
+                      <img src={dept.hodImage} alt={dept.hod} />
                     ) : (
-                      <div className="officer-photo officer-photo-placeholder">
+                      <div className="leader-profile-photo-placeholder">
                         <span>{dept.hod?.split(' ').pop()?.charAt(0) || '?'}</span>
                       </div>
                     )}
-                    <h4 className="officer-name">{dept.hod}</h4>
-                    <p className="officer-designation">Head of Department</p>
-                    {dept.hodQual && (
-                      <p className="officer-qual">{dept.hodQual}</p>
-                    )}
                   </div>
-                  <div className="officer-msg">
-                    <p className="message-quote">
+                  <h3 className="leader-profile-name">{dept.hod}</h3>
+                  <p className="leader-profile-designation">Head of Department</p>
+                  {dept.hodQual && (
+                    <p className="leader-profile-qual">{dept.hodQual}</p>
+                  )}
+                  <div className="leader-profile-msg">
+                    <p>
                       "Welcome to the Department of {dept.name}. We are committed to
                       providing quality education and practical training to our students."
                     </p>
