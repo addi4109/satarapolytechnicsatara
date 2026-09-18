@@ -126,20 +126,22 @@ function AboutCollege() {
     }
 
     return (
-      <div className="officer-card">
-        <div className="officer-left">
-          {entry.photoUrl && (
-            <div className="officer-photo">
-              <img src={entry.photoUrl} alt={entry.name} />
+      <div className="leader-profile">
+        <h3 className="leader-profile-name">{entry.name}</h3>
+        <p className="leader-profile-designation">{entry.title || title}</p>
+        {entry.qualification && (
+          <p className="leader-profile-qual">{entry.qualification}</p>
+        )}
+        <div className="leader-profile-photo">
+          {entry.photoUrl ? (
+            <img src={entry.photoUrl} alt={entry.name} />
+          ) : (
+            <div className="leader-profile-photo-placeholder">
+              <span>{entry.name ? entry.name.charAt(0) : '?'}</span>
             </div>
           )}
-          <h4 className="officer-name">{entry.name}</h4>
-          <p className="officer-designation">{entry.title || title}</p>
-          {entry.qualification && (
-            <p className="officer-qual">{entry.qualification}</p>
-          )}
         </div>
-        <div className="officer-msg">
+        <div className="leader-profile-msg">
           {entry.message ? (
             entry.message.split('\n').filter(p => p.trim()).map((para, i) => (
               <p key={i}>{para}</p>
