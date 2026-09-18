@@ -48,7 +48,6 @@ const MENU = [
     columns: [
       {
         header: 'Departments',
-        semiWide: true,
         key: 'departments',
       },
       {
