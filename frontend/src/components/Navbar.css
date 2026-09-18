@@ -52,7 +52,7 @@
 /* ===== single-bar header: identity block + tabs in front ===== */
 .main-header {
   background: #fff;
-  border-bottom: 1px solid var(--sp-line);
+  border-bottom: 2px solid var(--sp-navy);
 }
 
 .main-header-inner {
