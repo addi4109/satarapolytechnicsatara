@@ -80,29 +80,6 @@ const MENU = [
     ],
   },
   {
-    label: 'Campus',
-    match: (p) => p.startsWith('/campus'),
-    stack: true,
-    columns: [
-      {
-        header: 'Facility',
-        items: [
-          { label: 'Library', link: '/campus/library' },
-          { label: 'Bus Facility', link: '/campus/bus-facility' },
-          { label: 'Canteen', link: '/campus/canteen' },
-        ],
-      },
-      {
-        header: 'Office',
-        items: [
-          { label: "Registrar's Desk", link: '/campus/registrar' },
-          { label: 'Office Staff', link: '/campus/office-staff' },
-          { label: 'Non Teaching Staff', link: '/campus/non-teaching-staff' },
-        ],
-      },
-    ],
-  },
-  {
     label: 'Placements',
     match: (p) => p.startsWith('/placements'),
     children: [
@@ -113,9 +90,9 @@ const MENU = [
     ],
   },
   {
-    label: 'Student Section',
+    label: 'Student Life',
     stack: true,
-    match: (p) => p.startsWith('/activities') || p.startsWith('/alumni') || p.startsWith('/examination'),
+    match: (p) => p.startsWith('/activities') || p.startsWith('/alumni') || p.startsWith('/examination') || p.startsWith('/campus') || p.startsWith('/gallery'),
     columns: [
       {
         header: 'Activities',
@@ -125,6 +102,25 @@ const MENU = [
           { label: 'Technical Events', link: '/activities/technical' },
           { label: 'Industrial Visits', link: '/activities/industrial-visits' },
           { label: 'Competitions', link: '/activities/competitions' },
+        ],
+      },
+      {
+        header: 'Campus',
+        items: [
+          { label: 'Library', link: '/campus/library' },
+          { label: 'Bus Facility', link: '/campus/bus-facility' },
+          { label: 'Canteen', link: '/campus/canteen' },
+          { label: "Registrar's Desk", link: '/campus/registrar' },
+          { label: 'Office Staff', link: '/campus/office-staff' },
+          { label: 'Non Teaching Staff', link: '/campus/non-teaching-staff' },
+        ],
+      },
+      {
+        header: 'Gallery',
+        items: [
+          { label: 'Photo Gallery', link: '/gallery/photos' },
+          { label: 'Video Gallery', link: '/gallery/videos' },
+          { label: 'Media News', link: '/gallery/media' },
         ],
       },
       {
@@ -148,15 +144,6 @@ const MENU = [
           { label: 'Alumni Registration Form', link: '/alumni/registration' },
         ],
       },
-    ],
-  },
-  {
-    label: 'Gallery',
-    match: (p) => p.startsWith('/gallery'),
-    children: [
-      { label: 'Photo Gallery', link: '/gallery/photos' },
-      { label: 'Video Gallery', link: '/gallery/videos' },
-      { label: 'Media News', link: '/gallery/media' },
     ],
   },
   {
