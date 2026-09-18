@@ -33,6 +33,7 @@ import alumniRouter from './routes/alumni.js';
 import entrepreneursRouter from './routes/entrepreneurs.js';
 import alumniAssociationRouter from './routes/alumni-association.js';
 import alumniVisionRouter from './routes/alumni-vision.js';
+import visitsRouter from './routes/visits.js';
 
 // Use Google DNS to resolve MongoDB Atlas SRV records
 dns.setServers(['8.8.8.8', '8.8.4.4']);
@@ -101,6 +102,9 @@ app.use(securityHeaders);
 
 // Auth routes (login — registered before admin auth middleware)
 app.use('/api/auth', authRouter);
+
+// Public visit counter — incremented by the site footer on each new session.
+app.use('/api/visits', visitsRouter);
 
 // Admin auth middleware — protects all write (POST/PUT/DELETE) operations
 app.use('/api', requireAdmin);

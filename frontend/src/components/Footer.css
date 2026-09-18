@@ -49,6 +49,38 @@
   max-width: 340px;
 }
 
+/* Total visitors chip, shown under the footer description */
+.visitor-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  margin-bottom: 6px;
+}
+
+.visitor-icon {
+  display: inline-flex;
+  color: var(--sp-gold);
+}
+
+.visitor-count {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.3px;
+}
+
+.visitor-label {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #a8bde0;
+}
+
 .footer-social {
   display: flex;
   gap: 8px;
@@ -243,6 +275,10 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+
+  .visitor-chip {
+    margin-bottom: 0;
   }
 
   /* Hide the Departments column on mobile to keep the footer short */
