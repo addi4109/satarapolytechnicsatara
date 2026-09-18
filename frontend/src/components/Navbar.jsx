@@ -16,6 +16,7 @@ const MENU = [
   {
     label: 'About',
     match: (p) => p.startsWith('/about'),
+    stack: true,
     columns: [
       {
         header: 'About',
@@ -56,6 +57,11 @@ const MENU = [
         key: 'cells',
       },
     ],
+    footer: {
+      label: 'Academic Calendar',
+      desc: 'MSBTE A.Y. dates, exams and holidays',
+      link: '/academics/calendar',
+    },
   },
   {
     label: 'Admissions',
@@ -77,6 +83,7 @@ const MENU = [
   {
     label: 'Campus',
     match: (p) => p.startsWith('/campus'),
+    stack: true,
     columns: [
       {
         header: 'Facility',
@@ -223,7 +230,7 @@ function Navbar() {
     if (col.key === 'departments') {
       const deptItems = dbDepts.map((d) => ({ label: d.name, link: `/departments/${d.slug}` }));
       return deptItems.length > 0
-        ? [...deptItems, { divider: true }, { title: 'Academic Calendar' }, { label: 'Academic Calendar', link: '/academics/calendar' }]
+        ? deptItems
         : [
             { label: 'Computer Engineering', link: '/departments/computer' },
             { label: 'Electronics & Telecom', link: '/departments/etc' },
@@ -231,9 +238,6 @@ function Navbar() {
             { label: 'Electrical Engineering', link: '/departments/electrical' },
             { label: 'Chemical Engineering', link: '/departments/chemical' },
             { label: 'Automobile Engineering', link: '/departments/auto' },
-            { divider: true },
-            { title: 'Academic Calendar' },
-            { label: 'Academic Calendar', link: '/academics/calendar' },
           ];
     }
     if (col.key === 'cells') {
@@ -282,7 +286,7 @@ function Navbar() {
             {item.label}
             <span className="arrow" aria-hidden="true">▾</span>
           </button>
-          <div className={`dropdown-multi ${openMenu === idx || (mobileOpen && mobileExpanded === idx) ? 'show' : ''}`}>
+          <div className={`dropdown-multi ${item.stack ? 'dropdown-stacked' : ''} ${openMenu === idx || (mobileOpen && mobileExpanded === idx) ? 'show' : ''}`}>
             {item.columns.map((col, cIdx) => (
               <div
                 className={`dropdown-col ${col.wide ? 'dropdown-col-wide' : ''} ${col.semiWide ? 'dropdown-col-semi-wide' : ''}`}
@@ -292,6 +296,18 @@ function Navbar() {
                 <ul className="dropdown-col-list">{renderDropdownItems(resolveColumnItems(col))}</ul>
               </div>
             ))}
+            {item.footer && (
+              <div className="dropdown-footer">
+                <Link to={item.footer.link} onClick={() => setMobileOpen(false)}>
+                  <span className="footer-icon" aria-hidden="true">📅</span>
+                  <span className="footer-text">
+                    <span className="footer-title">{item.footer.label}</span>
+                    {item.footer.desc && <span className="footer-desc">{item.footer.desc}</span>}
+                  </span>
+                  <span className="footer-arrow" aria-hidden="true">→</span>
+                </Link>
+              </div>
+            )}
           </div>
         </li>
       );

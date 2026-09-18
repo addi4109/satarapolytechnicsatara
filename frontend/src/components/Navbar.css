@@ -255,19 +255,19 @@
 }
 
 /* ===== multi-column dropdown =====
-   width: max-content is essential — as an absolutely positioned box its
-   shrink-to-fit width would otherwise be capped by the narrow tab item,
-   forcing the columns to wrap and stack vertically. */
+   A deterministic 2-column grid: the columns always sit side by side and
+   can never wrap or stack, regardless of content width. Long names just
+   wrap onto a second line inside their column. */
 .dropdown-multi {
   position: absolute;
   top: 100%;
   left: 0;
   width: max-content;
-  max-width: min(92vw, 640px);
+  max-width: min(92vw, 720px);
   transform: translateY(-4px);
   background: #fff;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
   align-items: stretch;
   border: 1px solid var(--sp-line);
   border-radius: var(--sp-radius);
@@ -350,6 +350,66 @@
   color: var(--sp-gold-dark);
   text-transform: uppercase;
   letter-spacing: 0.6px;
+}
+
+/* Full-width strip under the columns (e.g. Academic Calendar) */
+.dropdown-footer {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--sp-line-soft);
+  background: #f8fafd;
+  border-radius: 0 0 calc(var(--sp-radius) - 1px) calc(var(--sp-radius) - 1px);
+}
+
+/* Stacked variant: columns fill the panel top-to-bottom (About, Campus) */
+.dropdown-multi.dropdown-stacked {
+  grid-template-columns: 1fr;
+}
+
+.dropdown-stacked .dropdown-footer {
+  border-radius: 0;
+}
+
+.dropdown-footer a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 18px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.dropdown-footer a:hover {
+  background: #eef2f8;
+}
+
+.dropdown-footer .footer-icon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.dropdown-footer .footer-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-footer .footer-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sp-navy);
+}
+
+.dropdown-footer .footer-desc {
+  font-size: 11.5px;
+  color: var(--sp-muted);
+  margin-top: 1px;
+}
+
+.dropdown-footer .footer-arrow {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--sp-gold-dark);
 }
 
 /* ===== hamburger ===== */
@@ -555,7 +615,7 @@
   }
 
   .dropdown-multi {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
   .dropdown-col {
@@ -587,6 +647,33 @@
   .dropdown-col-title {
     color: #9db2d8;
     padding: 6px 22px 2px 34px;
+  }
+
+  .dropdown-footer {
+    background: transparent;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0;
+  }
+
+  .dropdown-footer a {
+    padding: 10px 22px 10px 34px;
+  }
+
+  .dropdown-footer a:hover {
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  .dropdown-footer .footer-title {
+    color: #dfe6f0;
+    font-size: 13.5px;
+  }
+
+  .dropdown-footer .footer-desc {
+    color: #9db2d8;
+  }
+
+  .dropdown-footer .footer-arrow {
+    color: #9db2d8;
   }
 }
 
