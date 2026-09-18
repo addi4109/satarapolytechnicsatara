@@ -136,6 +136,7 @@ const MENU = [
           { label: 'Academic Calendar', link: '/academics/calendar' },
           { label: 'Exam Schedule', link: '/examination/schedule' },
           { label: 'Exam Rules', link: '/examination/rules' },
+          { label: 'Exam Form', link: '/examination/examform' },
           { label: 'Results', link: '/examination/results' },
           { label: 'Revaluation', link: '/examination/revaluation' },
           { label: 'Exam Notices', link: '/examination/notices' },

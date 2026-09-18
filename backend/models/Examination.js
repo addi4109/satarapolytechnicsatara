@@ -4,7 +4,7 @@ const ExaminationSchema = new mongoose.Schema({
   section: {
     type: String,
     required: true,
-    enum: ['schedule', 'rules', 'results', 'revaluation', 'notices', 'rankholders'],
+    enum: ['schedule', 'rules', 'results', 'revaluation', 'notices', 'rankholders', 'examform'],
     unique: true,
   },
   title: {
@@ -103,6 +103,36 @@ const ExaminationSchema = new mongoose.Schema({
     type: String,
     default: '',
     trim: true,
+  },
+  // For exam form section: link to the online exam form portal
+  examFormPortalUrl: {
+    type: String,
+    default: '',
+    trim: true,
+  },
+  // For exam form section: steps to fill the exam form
+  examFormSteps: {
+    type: [{
+      title: String,
+      description: String,
+      subPoints: {
+        type: [String],
+        default: [],
+      },
+    }],
+    default: [],
+  },
+  // For exam form section: important rules/instructions while filling the form
+  examFormRules: {
+    type: [{
+      title: String,
+      description: String,
+      subPoints: {
+        type: [String],
+        default: [],
+      },
+    }],
+    default: [],
   },
   // For notices section: array of notice items
   noticesData: {

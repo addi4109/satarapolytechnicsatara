@@ -32,6 +32,7 @@ router.post('/', async (req, res) => {
       schedules, rules, ruleSubSections, resultsData,
       revaluationSteps, revaluationFee, revaluationDeadline, revaluationPortalUrl,
       noticesData, resultPortalUrl, rankholders, active,
+      examFormPortalUrl, examFormSteps, examFormRules,
     } = req.body;
 
     if (!section) {
@@ -45,6 +46,7 @@ router.post('/', async (req, res) => {
         schedules, rules, ruleSubSections, resultsData,
         revaluationSteps, revaluationFee, revaluationDeadline, revaluationPortalUrl,
         noticesData, resultPortalUrl, rankholders, active,
+        examFormPortalUrl, examFormSteps, examFormRules,
       },
       { new: true, upsert: true }
     );

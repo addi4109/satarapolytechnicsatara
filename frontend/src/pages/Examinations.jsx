@@ -15,11 +15,13 @@ const routeMap = {
   revaluation: 'revaluation',
   notices: 'notices',
   rankholders: 'rankholders',
+  examform: 'examform',
 };
 
 const sidebarLinks = [
   { id: 'schedule', label: 'Exam Schedule' },
   { id: 'rules', label: 'Exam Rules' },
+  { id: 'examform', label: 'Exam Form' },
   { id: 'results', label: 'Results' },
   { id: 'revaluation', label: 'Revaluation' },
   { id: 'notices', label: 'Exam Notices' },
@@ -336,6 +338,88 @@ function Examinations() {
           )}
 
           {/* Revaluation */}
+          {/* Exam Form */}
+          {active === 'examform' && (
+            <>
+              <h2 className="content-heading">Exam Form</h2>
+              <div className="content-line"></div>
+              <p>
+                The Examination Form is mandatory for every student appearing for the
+                MSBTE semester examinations. Students must fill and submit the online
+                exam form within the announced window, along with the prescribed
+                examination fee. Forms submitted after the deadline are accepted only
+                with a late fee, as per MSBTE norms.
+              </p>
+              <p>
+                Before filling the form, keep your enrollment number, seat number,
+                previous semester marksheet and fee payment details ready. Verify all
+                personal and subject details carefully — incorrect entries may lead to
+                rejection of the form. For any assistance, contact the college
+                examination cell.
+              </p>
+
+              {getSection('examform').examFormPortalUrl ? (
+                <div style={{ marginTop: '24px', textAlign: 'center' }}>
+                  <a
+                    href={getSection('examform').examFormPortalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="result-portal-btn"
+                  >
+                    <span>Fill Exam Form Online</span>
+                    <span className="btn-arrow">→</span>
+                  </a>
+                </div>
+              ) : (
+                <div style={{ marginTop: '24px', textAlign: 'center' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', background: '#f0f2f5', borderRadius: '50px', color: '#aaa', fontSize: '16px', fontWeight: 600 }}>
+                    <span>Fill Exam Form Online</span>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', background: 'rgba(0,0,0,0.05)', borderRadius: '50%', fontSize: '14px' }}>→</span>
+                  </div>
+                  <p style={{ marginTop: '12px', fontSize: '13px', color: '#888' }}>Exam form portal link will be available soon.</p>
+                </div>
+              )}
+
+              {getSection('examform').examFormSteps && getSection('examform').examFormSteps.length > 0 && (
+                <div style={{ marginTop: '32px' }}>
+                  <h3 className="content-sub-heading">Steps to Fill Exam Form</h3>
+                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '16px', borderRadius: '2px' }}></div>
+                  {getSection('examform').examFormSteps.map((step, i) => (
+                    <div className="rev-step-card" key={i}>
+                      <div className="step-number">{i + 1}</div>
+                      <div className="step-content">
+                        <h4>{step.title}</h4>
+                        {step.description && <p>{step.description}</p>}
+                        {step.subPoints && step.subPoints.length > 0 && (
+                          <ul>
+                            {step.subPoints.map((sp, spIdx) => (
+                              <li key={spIdx}>{sp}</li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {getSection('examform').examFormRules && getSection('examform').examFormRules.length > 0 && (
+                <div style={{ marginTop: '32px' }}>
+                  <h3 className="content-sub-heading">Rules &amp; Instructions</h3>
+                  <div style={{ width: '35px', height: '2px', background: '#c8963e', marginBottom: '16px', borderRadius: '2px' }}></div>
+                  <div className="info-table">
+                    {getSection('examform').examFormRules.map((rule, i) => (
+                      <div className="info-row" key={i}>
+                        <span className="info-label">{rule.title}</span>
+                        <span className="info-value">{rule.description}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+
           {active === 'revaluation' && (
             <>
               <h2 className="content-heading">Revaluation</h2>

@@ -22,6 +22,7 @@ const cellInput = {
 const SECTIONS = [
   { key: 'schedule', label: 'Exam Schedule' },
   { key: 'rules', label: 'Exam Rules' },
+  { key: 'examform', label: 'Exam Form' },
   { key: 'results', label: 'Results' },
   { key: 'revaluation', label: 'Revaluation' },
   { key: 'notices', label: 'Exam Notices' },
@@ -40,6 +41,9 @@ const SECTIONS = [
     noticesData: [],
     resultPortalUrl: '',
     rankholders: [],
+    examFormPortalUrl: '',
+    examFormSteps: [],
+    examFormRules: [],
     active: true,
   };
 
@@ -98,6 +102,9 @@ function AdminExaminations() {
         revaluationPortalUrl: existing.revaluationPortalUrl || '',
         noticesData: existing.noticesData || [],
         resultPortalUrl: existing.resultPortalUrl || '',
+        examFormPortalUrl: existing.examFormPortalUrl || '',
+        examFormSteps: existing.examFormSteps || [],
+        examFormRules: existing.examFormRules || [],
         active: existing.active !== false,
       });
     } else {
@@ -122,7 +129,7 @@ function AdminExaminations() {
     const existing = sections[activeTab];
     if (existing) {
       setForm({
-        title: existing.title || '', content: existing.content || '', schedules: existing.schedules || [], rules: existing.rules || [], ruleSubSections: existing.ruleSubSections || [], resultsData: existing.resultsData || [], revaluationSteps: existing.revaluationSteps || [],        revaluationFee: existing.revaluationFee || '', revaluationDeadline: existing.revaluationDeadline || '', revaluationPortalUrl: existing.revaluationPortalUrl || '', noticesData: existing.noticesData || [], resultPortalUrl: existing.resultPortalUrl || '', active: existing.active !== false,
+        title: existing.title || '', content: existing.content || '', schedules: existing.schedules || [], rules: existing.rules || [], ruleSubSections: existing.ruleSubSections || [], resultsData: existing.resultsData || [], revaluationSteps: existing.revaluationSteps || [],        revaluationFee: existing.revaluationFee || '', revaluationDeadline: existing.revaluationDeadline || '', revaluationPortalUrl: existing.revaluationPortalUrl || '', noticesData: existing.noticesData || [], resultPortalUrl: existing.resultPortalUrl || '', examFormPortalUrl: existing.examFormPortalUrl || '', examFormSteps: existing.examFormSteps || [], examFormRules: existing.examFormRules || '', active: existing.active !== false,
       });
     } else { setForm({ ...defaultForm }); }
     setView('preview'); resetInputs();
@@ -167,6 +174,13 @@ function AdminExaminations() {
   const updateRevStepSubPoint = (stepIdx, spIdx, val) => { const r = [...form.revaluationSteps]; const sp = [...r[stepIdx].subPoints]; sp[spIdx] = val; r[stepIdx] = { ...r[stepIdx], subPoints: sp }; handleChange('revaluationSteps', r); };
   const removeRevStepSubPoint = (stepIdx, spIdx) => { const r = [...form.revaluationSteps]; r[stepIdx] = { ...r[stepIdx], subPoints: r[stepIdx].subPoints.filter((_, i) => i !== spIdx) }; handleChange('revaluationSteps', r); };
   const addRevStepSubPoint = (stepIdx) => { const r = [...form.revaluationSteps]; r[stepIdx] = { ...r[stepIdx], subPoints: [...(r[stepIdx].subPoints || []), ''] }; handleChange('revaluationSteps', r); };
+
+  // Exam Form helpers
+  const [editingExamFormStepIdx, setEditingExamFormStepIdx] = useState(null);
+  const addEmptyExamFormStep = () => { addEmptyRow('examFormSteps', { title: '', description: '', subPoints: [] }); setEditingExamFormStepIdx(form.examFormSteps.length); };
+  const updateExamFormStepSubPoint = (stepIdx, spIdx, val) => { const r = [...form.examFormSteps]; const sp = [...r[stepIdx].subPoints]; sp[spIdx] = val; r[stepIdx] = { ...r[stepIdx], subPoints: sp }; handleChange('examFormSteps', r); };
+  const removeExamFormStepSubPoint = (stepIdx, spIdx) => { const r = [...form.examFormSteps]; r[stepIdx] = { ...r[stepIdx], subPoints: r[stepIdx].subPoints.filter((_, i) => i !== spIdx) }; handleChange('examFormSteps', r); };
+  const addExamFormStepSubPoint = (stepIdx) => { const r = [...form.examFormSteps]; r[stepIdx] = { ...r[stepIdx], subPoints: [...(r[stepIdx].subPoints || []), ''] }; handleChange('examFormSteps', r); };
 
   // Sub-section helpers
   const addEmptySubSection = () => { const s = [...(form.ruleSubSections || []), { subTitle: '', rules: [] }]; handleChange('ruleSubSections', s); setEditingSubSectionIdx(s.length - 1); };
@@ -351,10 +365,63 @@ function AdminExaminations() {
     </div>
   );
 
+  const renderExamFormPreview = () => (
+    <div className="admission-preview-card">
+      <h2 className="content-heading">Exam Form</h2>
+      <div className="content-line"></div>
+      <p>Students must fill and submit the online exam form within the announced window along with the prescribed examination fee.</p>
+      {form.examFormPortalUrl ? (
+        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+          <a href={form.examFormPortalUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', background: 'linear-gradient(135deg, #243358 0%, #7a9fc5 100%)', color: '#fff', fontSize: '16px', fontWeight: 600, borderRadius: '50px', textDecoration: 'none', boxShadow: '0 4px 15px rgba(36, 51, 88, 0.3)' }}>
+            Fill Exam Form Online <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', background: 'rgba(255,255,255,0.2)', borderRadius: '50%' }}>→</span>
+          </a>
+        </div>
+      ) : (
+        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 36px', background: '#f0f2f5', borderRadius: '50px', color: '#aaa', fontSize: '16px', fontWeight: 600 }}>
+            Fill Exam Form Online <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', background: 'rgba(0,0,0,0.05)', borderRadius: '50%' }}>→</span>
+          </div>
+          <p style={{ marginTop: '12px', fontSize: '13px', color: '#888' }}>Exam form portal link will be available soon.</p>
+        </div>
+      )}
+
+      {form.examFormSteps.length > 0 && (
+        <div style={{ marginTop: '20px' }}>
+          <h4 style={{ margin: '0 0 10px', color: '#243358' }}>Steps to Fill Exam Form</h4>
+          {form.examFormSteps.map((step, i) => (
+            <div key={i} style={{ display: 'flex', gap: '14px', marginBottom: '12px', padding: '14px', background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px' }}>
+              <div className="step-number">{i + 1}</div>
+              <div className="step-content">
+                <h4>{step.title}</h4>
+                {step.description && <p>{step.description}</p>}
+                {step.subPoints && step.subPoints.length > 0 && <ul>{step.subPoints.map((sp, j) => <li key={j}>{sp}</li>)}</ul>}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {form.examFormRules.length > 0 && (
+        <div style={{ marginTop: '20px' }}>
+          <h4 style={{ margin: '0 0 10px', color: '#243358' }}>Rules &amp; Instructions</h4>
+          <div className="info-table">
+            {form.examFormRules.map((rule, i) => (
+              <div className="info-row" key={i}>
+                <span className="info-label">{rule.title}</span>
+                <span className="info-value">{rule.description}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
   const renderPreview = () => {
     switch (activeTab) {
       case 'schedule': return renderSchedulePreview();
       case 'rules': return renderRulesPreview();
+      case 'examform': return renderExamFormPreview();
       case 'results': return renderResultsPreview();
       case 'revaluation': return renderRevaluationPreview();
       case 'notices': return renderNoticesPreview();
@@ -544,10 +611,76 @@ function AdminExaminations() {
     </div>
   );
 
+  const renderExamFormEditor = () => (
+    <div className="admission-edit-form">
+      <div className="form-group" style={{ marginBottom: '20px' }}>
+        <label>Exam Form Portal Link</label>
+        <input type="text" value={form.examFormPortalUrl} onChange={(e) => handleChange('examFormPortalUrl', e.target.value)} placeholder="https://msbte.org.in/portal/..." style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', boxSizing: 'border-box' }} />
+        {form.examFormPortalUrl && (
+          <p style={{ margin: '8px 0 0', fontSize: '12px' }}><a href={form.examFormPortalUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#243358' }}>Test link →</a></p>
+        )}
+      </div>
+
+      <h4>Steps to Fill Exam Form</h4>
+      {form.examFormSteps.map((step, i) => (
+        <div key={i} style={{ position: 'relative', marginBottom: '12px', padding: '14px', background: '#f8f9fa', border: editingExamFormStepIdx === i ? '2px solid #c8963e' : '1px solid #e4e8ed', borderRadius: '8px', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+          <div className="step-number">{i + 1}</div>
+          <div style={{ flex: 1 }}>
+            {editingExamFormStepIdx === i ? (
+              <>
+                <input autoFocus type="text" value={step.title} onChange={(e) => updateRow('examFormSteps', i, 'title', e.target.value)} placeholder="Step title" style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '14px', marginBottom: '6px', boxSizing: 'border-box' }} />
+                <textarea value={step.description} onChange={(e) => updateRow('examFormSteps', i, 'description', e.target.value)} placeholder="Description" rows={2} style={{ width: '100%', padding: '7px 10px', border: '1px solid #c8963e', borderRadius: '5px', fontSize: '13px', resize: 'vertical', marginBottom: '8px', boxSizing: 'border-box' }} />
+                <div style={{ marginBottom: '10px' }}>
+                  <label style={{ fontSize: '12px', fontWeight: 600, color: '#555', marginBottom: '6px', display: 'block' }}>Sub-Points</label>
+                  {(step.subPoints || []).map((sp, spIdx) => (
+                    <div key={spIdx} style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                      <span style={{ color: '#7A263A', fontWeight: 700 }}>•</span>
+                      <input type="text" value={sp} onChange={(e) => updateExamFormStepSubPoint(i, spIdx, e.target.value)} style={{ flex: 1, padding: '5px 8px', border: '1px solid #c8963e', borderRadius: '4px', fontSize: '12.5px', boxSizing: 'border-box' }} />
+                      <button onClick={() => removeExamFormStepSubPoint(i, spIdx)} style={{ background: 'none', border: 'none', color: '#c0392b', cursor: 'pointer', fontSize: '16px', fontWeight: 700, padding: '0 4px' }}>×</button>
+                    </div>
+                  ))}
+                  <button onClick={() => addExamFormStepSubPoint(i)} style={{ marginTop: '4px', background: 'none', border: '1px dashed #b9c3d4', borderRadius: '4px', padding: '4px 12px', cursor: 'pointer', color: '#243358', fontSize: '12px', fontWeight: 600 }}>+ Add Sub-Point</button>
+                </div>
+                <button className="btn btn-success btn-sm" onClick={() => setEditingExamFormStepIdx(null)}>Done</button>
+              </>
+            ) : (
+              <div onClick={() => setEditingExamFormStepIdx(i)} style={{ cursor: 'pointer' }}>
+                <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '16px' }}>{step.title || <em style={{ color: '#aaa', fontWeight: 400 }}>Untitled</em>}</h4>
+                {step.description && <p style={{ margin: '0 0 4px', color: '#555', fontSize: '14px', lineHeight: '1.5' }}>{step.description}</p>}
+                {step.subPoints && step.subPoints.length > 0 && <ul style={{ margin: '4px 0 0', paddingLeft: '18px' }}>{step.subPoints.map((sp, spIdx) => <li key={spIdx} style={{ color: '#555', fontSize: '13px' }}>{sp}</li>)}</ul>}
+              </div>
+            )}
+          </div>
+          <button className="member-remove-btn" onClick={() => removeRow('examFormSteps', i)} style={{ position: 'absolute', top: '10px', right: '10px' }}>×</button>
+        </div>
+      ))}
+      <button className="btn btn-success btn-sm" style={{ marginTop: '8px' }} onClick={addEmptyExamFormStep}>+ Add Step</button>
+
+      <h4 style={{ marginTop: '24px' }}>Rules &amp; Instructions</h4>
+      <div className="fee-table-wrap">
+        <table className="fee-table" style={{ minWidth: '560px' }}>
+          <thead><tr><th style={{ width: 50 }}>Sr.</th><th style={{ textAlign: 'left' }}>Rule Title</th><th style={{ textAlign: 'left' }}>Description</th><th style={{ width: 50 }}></th></tr></thead>
+          <tbody>
+            {form.examFormRules.map((rule, i) => (
+              <tr key={i}>
+                <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                <td><input type="text" value={rule.title} onChange={(e) => updateRow('examFormRules', i, 'title', e.target.value)} placeholder="e.g. Eligibility" style={cellInput} /></td>
+                <td><input type="text" value={rule.description} onChange={(e) => updateRow('examFormRules', i, 'description', e.target.value)} placeholder="Rule details" style={cellInput} /></td>
+                <td style={{ textAlign: 'center' }}><button className="member-remove-btn" onClick={() => removeRow('examFormRules', i)}>×</button></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <button className="btn btn-success btn-sm" style={{ marginTop: '12px' }} onClick={() => addEmptyRow('examFormRules', { title: '', description: '' })}>+ Add Rule</button>
+    </div>
+  );
+
   const renderEditor = () => {
     switch (activeTab) {
       case 'schedule': return renderScheduleEditor();
       case 'rules': return renderRulesEditor();
+      case 'examform': return renderExamFormEditor();
       case 'results': return renderResultsEditor();
       case 'revaluation': return renderRevaluationEditor();
       case 'notices': return renderNoticesEditor();
