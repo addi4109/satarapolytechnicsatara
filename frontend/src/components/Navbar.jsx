@@ -53,7 +53,7 @@ const MENU = [
     ],
   },
   {
-    label: 'Academics',
+    label: 'Committees',
     match: (p) => p.startsWith('/academics') || p.startsWith('/cells'),
     columns: [
       {
