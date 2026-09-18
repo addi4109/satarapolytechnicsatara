@@ -13,10 +13,18 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET single cell by slug
+// Escape regex special characters in user input
+const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+// GET single cell by slug (falls back to a case-insensitive name match so
+// short links like /cells/placement resolve to e.g. "Training and Placement Cell")
 router.get('/:slug', async (req, res) => {
   try {
-    const cell = await Cell.findOne({ slug: req.params.slug });
+    let cell = await Cell.findOne({ slug: req.params.slug });
+    if (!cell) {
+      cell = await Cell.findOne({ name: new RegExp(escapeRegex(req.params.slug), 'i') })
+        .sort({ order: 1, createdAt: 1 });
+    }
     if (!cell) return res.status(404).json({ error: 'Cell not found' });
     res.json(cell);
   } catch (err) {
