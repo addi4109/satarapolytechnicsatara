@@ -128,6 +128,20 @@
 }
 
 /* ===== Letter-by-letter reveal (first slide welcome text) ===== */
+/* Centered variant for the static welcome slide */
+.slider-content-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(20, 28, 48, 0.35);
+}
+
+.slider-content-centered .slider-content-inner {
+  max-width: 90%;
+  text-align: center;
+}
+
 .letter-reveal {
   display: inline-block;
   opacity: 0;

@@ -113,7 +113,7 @@ const MENU = [
     ],
   },
   {
-    label: 'Student Life',
+    label: 'Student Section',
     stack: true,
     match: (p) => p.startsWith('/activities') || p.startsWith('/alumni') || p.startsWith('/examination'),
     columns: [

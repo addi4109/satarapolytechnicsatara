@@ -167,7 +167,7 @@ function ImageSlider() {
               </a>
 
               {(slide.title || slide.subtitle) && (
-                <div className="slider-content">
+                <div className={`slider-content ${slide.animatedTitle ? 'slider-content-centered' : ''}`}>
                   <div className="slider-content-inner">
                     {slide.tag && <span className="slider-tag">{slide.tag}</span>}
                     {slide.title && (
