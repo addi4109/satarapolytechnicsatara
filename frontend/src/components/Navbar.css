@@ -1,33 +1,42 @@
-/* ===== Header wrapper =====
-   Scrolls normally with the page — the top strip and tabs are NOT sticky.
-   Kept position: relative + z-index so the mobile drawer backdrop stays
-   inside this header's stacking context and above page content. */
+/* =====================================================================
+   Navbar — sticky white bar, hover mega-menus, mobile drawer
+   ===================================================================== */
+
+/* ===== Header wrapper ===== */
 .site-header {
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 1000;
+  background: #fff;
 }
 
-/* ===== top strip ===== */
+/* Subtle elevation once the page scrolls */
+.site-header.is-scrolled {
+  box-shadow: 0 4px 20px rgba(20, 28, 48, 0.08);
+}
+
+/* ===== Top contact strip — collapses away on scroll ===== */
 .top-strip {
-  background: var(--sp-navy-deep);
-  color: #c5cad4;
-  font-size: 12px;
-  padding: 6px 0;
+  max-height: 40px;
+  overflow: hidden;
+  background: var(--sp-navy-deep, #1a2340);
+  transition: max-height 0.25s ease;
+}
+
+.site-header.is-scrolled .top-strip {
+  max-height: 0;
 }
 
 .top-strip-inner {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 7px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-}
-
-.top-strip span {
-  white-space: nowrap;
-  min-width: 0;
+  font-size: 12px;
+  color: #c5cad4;
 }
 
 .top-strip .top-left,
@@ -35,6 +44,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
 }
 
 .top-strip-link {
@@ -49,36 +59,37 @@
   text-underline-offset: 3px;
 }
 
-/* ===== single-bar header: identity block + tabs in front ===== */
-.main-header {
+/* ===== Main bar ===== */
+.nav-bar {
   background: #fff;
-  border-bottom: 1px solid var(--sp-line);
+  border-bottom: 1px solid var(--sp-line, #e4e8ed);
 }
 
-.main-header-inner {
+.nav-bar-inner {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 12px 20px;
+  padding: 10px 20px;
   display: flex;
   align-items: center;
   gap: 18px;
+  min-height: 66px;
 }
 
-/* Identity: logo -> society -> college name */
+/* Identity */
 .logo-area {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 13px;
   text-decoration: none;
   min-width: 0;
   flex-shrink: 0;
 }
 
 .logo-circle {
-  width: 56px;
-  height: 56px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
-  border: 2px solid var(--sp-navy);
+  border: 2px solid var(--sp-navy, #243358);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -98,290 +109,262 @@
 }
 
 .society-name {
-  font-size: 11.5px;
-  color: var(--sp-muted);
+  font-size: 10.5px;
+  color: var(--sp-muted, #8a93a6);
   margin: 0 0 1px;
   font-weight: 600;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
 }
 
 .college-name {
-  font-family: var(--sp-font-display);
-  font-size: 21px;
-  color: var(--sp-navy);
+  font-family: var(--sp-font-display, Georgia, serif);
+  font-size: 20px;
+  color: var(--sp-navy, #243358);
   font-weight: 700;
-  line-height: 1.2;
-  margin: 0 0 3px;
+  line-height: 1.15;
+  margin: 0;
 }
 
-/* ===== tabs, in front of the identity block ===== */
-.main-nav {
-  background: #fff;
-  border-radius: var(--sp-radius);
+/* ===== Desktop tabs ===== */
+.desktop-nav {
   flex: 1;
   min-width: 0;
   margin-left: auto;
 }
 
-.nav-inner {
-  padding: 0 8px;
-  display: flex;
-  align-items: stretch;
-}
-
-/* All tabs on a single line, evenly distributed. */
-.nav-list {
+.nav-tabs {
   list-style: none;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: stretch;
-  flex: 1;
   margin: 0;
   padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  justify-content: flex-end;
 }
 
-.nav-item {
+.nav-tab {
   position: relative;
 }
 
-.nav-link {
+.nav-tab-link {
   display: flex;
   align-items: center;
-  gap: 3px;
-  padding: 0 7px;
-  height: 38px;
-  color: var(--sp-navy);
-  text-decoration: none;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  white-space: nowrap;
-  border: none;
+  gap: 5px;
+  padding: 0 11px;
+  height: 42px;
   background: none;
+  border: none;
   cursor: pointer;
   font-family: inherit;
-  transition: background 0.15s, color 0.15s;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: var(--sp-navy, #243358);
+  text-decoration: none;
+  white-space: nowrap;
+  position: relative;
+  transition: color 0.15s;
 }
 
-.nav-link:hover {
-  background: #f0f3f8;
-  color: var(--sp-navy);
+/* Active state: gold underline; hover: soft tint */
+.nav-tab-link::after {
+  content: '';
+  position: absolute;
+  left: 11px;
+  right: 11px;
+  bottom: 4px;
+  height: 2.5px;
+  border-radius: 2px;
+  background: var(--sp-gold, #c8963e);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
 }
 
-/* Open dropdown or active section */
-.nav-item.active .nav-link,
-.nav-item.current .nav-link {
-  color: var(--sp-navy);
-  background: #eef2f8;
-  box-shadow: inset 0 -3px 0 var(--sp-gold);
+.nav-tab:hover .nav-tab-link,
+.nav-tab.is-open .nav-tab-link,
+.nav-tab.is-active .nav-tab-link {
+  color: var(--sp-navy, #243358);
 }
 
-.nav-link .arrow {
-  font-size: 9px;
-  opacity: 0.6;
-  margin-left: 2px;
-  transition: transform 0.2s;
+.nav-tab:hover .nav-tab-link::after,
+.nav-tab.is-open .nav-tab-link::after,
+.nav-tab.is-active .nav-tab-link::after {
+  transform: scaleX(1);
 }
 
-.nav-item.active .arrow {
+.nav-tab.is-active .nav-tab-link {
+  font-weight: 700;
+}
+
+/* Chevron */
+.chevron {
+  display: inline-flex;
+  align-items: center;
+  opacity: 0.55;
+  transition: transform 0.2s ease;
+}
+
+.nav-tab.is-open .chevron {
   transform: rotate(180deg);
 }
 
-/* ===== dropdown (single column) ===== */
-.dropdown-menu {
+/* ===== Dropdown / mega-menu panels ===== */
+.dd {
   position: absolute;
   top: 100%;
   left: 0;
   background: #fff;
-  min-width: 220px;
-  list-style: none;
-  margin: 0;
-  padding: 8px 0;
-  border: 1px solid var(--sp-line);
-  border-radius: var(--sp-radius);
-  box-shadow: var(--sp-shadow-2);
+  border: 1px solid var(--sp-line, #e4e8ed);
+  border-radius: 10px;
+  box-shadow: 0 14px 40px rgba(20, 28, 48, 0.13);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-4px);
-  transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+  transform: translateY(6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
   z-index: 1100;
 }
 
-.dropdown-menu.show {
+.dd.show {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 
-.dropdown-menu li a {
-  display: block;
-  padding: 8px 18px;
-  color: #3a3f4a;
-  text-decoration: none;
-  font-size: 13.5px;
-  transition: background 0.1s, color 0.1s;
+/* Tab-level hover intent bridging: keep the panel open between the tab
+   and the panel below it. */
+.nav-tab.has-panel::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 8px;
 }
 
-.dropdown-menu li a:hover {
-  background: #f0f3f8;
-  color: var(--sp-navy);
+/* Panel widths by size — not every menu is the same huge width */
+.dd-sm {
+  min-width: 230px;
 }
 
-.dropdown-header {
-  display: block;
-  padding: 8px 18px 4px;
-  font-size: 11.5px;
-  font-weight: 700;
-  color: var(--sp-navy);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-top: 1px solid var(--sp-line-soft);
-  margin-top: 4px;
+.dd-wide {
+  min-width: 260px;
 }
 
-.dropdown-header:first-child {
-  border-top: none;
-  margin-top: 0;
+.dd-md {
+  width: 560px;
 }
 
-/* Tabs near the right edge: open their dropdown to the left so it
-   never spills past the viewport. */
-.nav-item:nth-last-child(-n + 4) .dropdown-menu {
+.dd-lg {
+  width: 700px;
+  max-width: min(94vw, 760px);
+}
+
+.dd.align-right {
   left: auto;
   right: 0;
 }
 
-/* ===== multi-column dropdown =====
-   A deterministic 2-column grid: the columns always sit side by side and
-   can never wrap or stack, regardless of content width. Long names just
-   wrap onto a second line inside their column. */
-.dropdown-multi {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: max-content;
-  max-width: min(92vw, 720px);
-  transform: translateY(-4px);
-  background: #fff;
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  align-items: stretch;
-  border: 1px solid var(--sp-line);
-  border-radius: var(--sp-radius);
-  box-shadow: var(--sp-shadow-2);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
-  z-index: 1100;
-}
-
-.dropdown-multi.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.dropdown-col {
-  min-width: 230px;
-  padding: 14px 0;
-}
-
-.dropdown-col + .dropdown-col {
-  border-left: 1px solid var(--sp-line-soft);
-}
-
-/* Departments column: slim so Cells & Committees gets the room */
-.dropdown-col.dropdown-col-departments {
-  min-width: 0;
-  width: 200px;
-}
-
-.dropdown-col-departments .dropdown-col-list li a {
-  padding: 6px 18px;
-  font-size: 13px;
-}
-
-/* Cells & Committees column: wider to show full cell names */
-.dropdown-col.dropdown-col-cells {
-  min-width: 320px;
-}
-
-.dropdown-col-semi-wide {
-  min-width: 260px;
-}
-
-.dropdown-col-header {
-  display: block;
-  padding: 2px 4px 10px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--sp-navy);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  border-bottom: 1px solid var(--sp-line-soft);
-  margin: 0 14px 6px;
-}
-
-.dropdown-col-list {
+/* Single-column dropdown */
+.dd > li {
   list-style: none;
-  padding: 0;
-  margin: 0;
-  max-height: 380px;
-  overflow-y: auto;
 }
 
-.dropdown-col-list li a {
-  display: block;
-  padding: 6px 18px;
+.dd li {
+  list-style: none;
+}
+
+.dd li a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 18px;
+  font-size: 13.5px;
   color: #3a3f4a;
   text-decoration: none;
-  font-size: 13.5px;
-  transition: background 0.1s, color 0.1s;
+  transition: background 0.12s, color 0.12s;
 }
 
-.dropdown-col-list li a:hover {
-  background: #f0f3f8;
-  color: var(--sp-navy);
+.dd li a:hover {
+  background: #f4f7fb;
+  color: var(--sp-navy, #243358);
 }
 
-.dropdown-col-divider {
+.dd-item-chevron {
+  font-size: 13px;
+  color: #b6bfd0;
+  opacity: 0;
+  transform: translateX(-3px);
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.dd li a:hover .dd-item-chevron {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--sp-gold, #c8963e);
+}
+
+/* Mega menu columns */
+.dd-mega {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 6px 0;
+}
+
+.dd-col {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 0;
+}
+
+.dd-col + .dd-col {
+  border-left: 1px solid var(--sp-line-soft, #eef1f6);
+}
+
+.dd-col-header {
   display: block;
-  height: 1px;
-  background: var(--sp-line);
-  margin: 8px 18px;
-}
-
-.dropdown-col-title {
-  display: block;
-  padding: 6px 18px 2px;
-  font-size: 11.5px;
+  margin: 0 18px 8px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--sp-line-soft, #eef1f6);
+  font-size: 11px;
   font-weight: 700;
-  color: var(--sp-gold-dark);
+  letter-spacing: 0.7px;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
+  color: var(--sp-gold-dark, #a87b2a);
 }
 
-/* Full-width strip under the columns (e.g. Academic Calendar) */
-.dropdown-footer {
-  grid-column: 1 / -1;
-  border-top: 1px solid var(--sp-line-soft);
+.dd-col-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dd-col-list li a {
+  padding: 7.5px 18px;
+  font-size: 13.5px;
+  justify-content: flex-start;
+}
+
+.dd-col-list li a .dd-item-chevron {
+  margin-left: auto;
+}
+
+/* Departments Quick Access links point at ?tab= anchors */
+.dd-col-list li a[href*='tab='] {
+  color: #4a5568;
+}
+
+/* Calendar footer strip inside the Academics mega menu */
+.dd-footer {
+  flex-basis: 100%;
+  border-top: 1px solid var(--sp-line-soft, #eef1f6);
   background: #f8fafd;
-  border-radius: 0 0 calc(var(--sp-radius) - 1px) calc(var(--sp-radius) - 1px);
+  border-radius: 0 0 10px 10px;
 }
 
-/* Stacked variant: columns fill the panel top-to-bottom (About, Campus) */
-.dropdown-multi.dropdown-stacked {
-  grid-template-columns: 1fr;
-}
-
-.dropdown-stacked .dropdown-footer {
-  border-radius: 0;
-}
-
-.dropdown-footer a {
+.dd-footer a {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -390,64 +373,112 @@
   transition: background 0.15s;
 }
 
-.dropdown-footer a:hover {
+.dd-footer a:hover {
   background: #eef2f8;
 }
 
-.dropdown-footer .footer-icon {
+.dd-footer-icon {
   font-size: 17px;
   line-height: 1;
 }
 
-.dropdown-footer .footer-text {
+.dd-footer-text {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
 }
 
-.dropdown-footer .footer-title {
+.dd-footer-title {
   font-size: 13px;
   font-weight: 700;
-  color: var(--sp-navy);
+  color: var(--sp-navy, #243358);
 }
 
-.dropdown-footer .footer-desc {
+.dd-footer-desc {
   font-size: 11.5px;
-  color: var(--sp-muted);
+  color: var(--sp-muted, #8a93a6);
   margin-top: 1px;
 }
 
-.dropdown-footer .footer-arrow {
+.dd-footer-arrow {
   font-size: 15px;
   font-weight: 700;
-  color: var(--sp-gold-dark);
+  color: var(--sp-gold-dark, #a87b2a);
 }
 
-/* ===== hamburger ===== */
+/* Grouped items inside the More dropdown */
+.dd-group {
+  border-top: 1px solid var(--sp-line-soft, #eef1f6);
+  margin-top: 4px;
+  padding-top: 4px;
+}
+
+.dd-group-header {
+  display: block;
+  padding: 6px 18px 2px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: var(--sp-gold-dark, #a87b2a);
+}
+
+.dd-group-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Apply Now button ===== */
+.nav-apply {
+  margin-left: 10px;
+}
+
+.apply-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 20px;
+  background: var(--sp-navy, #243358);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  border-radius: 7px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+.apply-btn:hover {
+  background: var(--sp-navy-deep, #1a2340);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(36, 51, 88, 0.28);
+}
+
+/* ===== Hamburger ===== */
 .hamburger {
   display: none;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 5px;
   background: none;
   border: none;
   cursor: pointer;
   padding: 10px;
-  z-index: 1200;
+  margin-left: auto;
+  z-index: 1300;
 }
 
 .hamburger span {
   display: block;
   width: 24px;
   height: 2.5px;
-  background: var(--sp-navy);
+  background: var(--sp-navy, #243358);
   border-radius: 2px;
   transition: transform 0.25s, opacity 0.25s;
-}
-
-.hamburger.is-active span {
-  background: var(--sp-navy);
 }
 
 .hamburger.is-active span:nth-child(1) {
@@ -462,30 +493,143 @@
   transform: translateY(-7.5px) rotate(-45deg);
 }
 
-/* ===== mobile backdrop ===== */
+/* ===== Mobile drawer ===== */
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: -340px;
+  width: min(340px, 90vw);
+  height: 100vh;
+  height: 100dvh;
+  background: #fff;
+  z-index: 1200;
+  transition: right 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -12px 0 32px rgba(20, 28, 48, 0.18);
+  visibility: hidden;
+}
+
+.mobile-drawer.open {
+  right: 0;
+  visibility: visible;
+}
+
+.m-list {
+  list-style: none;
+  margin: 0;
+  padding: 76px 0 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.m-header {
+  padding: 16px 24px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--sp-gold-dark, #a87b2a);
+  border-bottom: 1px solid var(--sp-line-soft, #eef1f6);
+}
+
+.m-list > li {
+  border-bottom: 1px solid #f1f4f8;
+}
+
+.m-list > li.is-active > .m-link {
+  color: var(--sp-navy, #243358);
+  font-weight: 700;
+  box-shadow: inset 3px 0 0 var(--sp-gold, #c8963e);
+}
+
+.m-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 13px 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #37415a;
+  text-decoration: none;
+  text-align: left;
+}
+
+.m-link:hover {
+  background: #f7f9fc;
+}
+
+.m-plus {
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--sp-gold-dark, #a87b2a);
+  line-height: 1;
+}
+
+.m-sub {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: #f8fafd;
+}
+
+.m-sub.open {
+  max-height: 1200px;
+}
+
+.m-sub li a {
+  display: block;
+  padding: 10px 24px 10px 36px;
+  font-size: 13.5px;
+  color: #4a5568;
+  text-decoration: none;
+}
+
+.m-sub li a:hover {
+  background: #eef2f8;
+  color: var(--sp-navy, #243358);
+}
+
+.m-apply-wrap {
+  padding: 14px 20px 18px;
+  border-top: 1px solid var(--sp-line-soft, #eef1f6);
+  background: #fff;
+}
+
+.apply-btn.m-apply {
+  width: 100%;
+  padding: 13px;
+  font-size: 14px;
+}
+
+/* Backdrop */
 .nav-backdrop {
-  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 28, 48, 0.5);
+  z-index: 1150;
 }
 
-@media (max-width: 1024px) {
-  .nav-backdrop {
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: rgba(20, 28, 48, 0.5);
-    z-index: -1;
-  }
-}
+/* =====================================================================
+   Responsive
+   ===================================================================== */
 
-/* ===== responsive ===== */
-@media (max-width: 1320px) {
-  /* Tighter identity + tabs so all 12 still share one line */
+/* Narrow desktop: identity shrinks a touch */
+@media (max-width: 1500px) {
   .college-name {
-    font-size: 17px;
+    font-size: 18px;
   }
 
   .society-name {
-    font-size: 10px;
+    font-size: 9.5px;
   }
 
   .logo-circle {
@@ -493,227 +637,29 @@
     height: 48px;
   }
 
-  .nav-link {
-    padding: 0 5px;
-    font-size: 11px;
-    letter-spacing: 0.1px;
-  }
-
-  .nav-inner {
-    padding: 0 5px;
+  .nav-tab-link {
+    padding: 0 9px;
+    font-size: 12.5px;
   }
 }
 
-@media (max-width: 1150px) {
-  /* Tabs move to their own full-width line below the identity block —
-     still one single line, with room to breathe. */
-  .main-header-inner {
-    flex-wrap: wrap;
-    gap: 0;
-    padding-top: 10px;
-    padding-bottom: 0;
-  }
-
-  .main-nav {
-    flex: 1 1 100%;
-    margin-left: 0;
-  }
-
-  .nav-link {
-    padding: 0 12px;
-    font-size: 12px;
-    height: 40px;
-    letter-spacing: 0.3px;
-  }
-
-  .nav-inner {
-    padding: 0 6px;
-  }
-}
-
+/* Mobile: tabs hidden, drawer takes over */
 @media (max-width: 1024px) {
-  .main-header-inner {
-    gap: 12px;
-  }
-
-  /* Hamburger joins the identity row: logo -> name -> ☰.
-     .main-nav stays rendered (the off-canvas drawer lives inside it) but
-     is taken out of flow so it adds no phantom row below the identity
-     block. The fixed-position drawer escapes the 1px clip because no
-     ancestor between it and the viewport applies a transform. */
-  .hamburger {
-    display: flex;
-    order: 2;
-    margin-left: auto;
-    flex-shrink: 0;
-    z-index: 1250;
-  }
-
-  .main-nav {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    flex: 0 0 auto;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    overflow: hidden;
-  }
-
-  /* Drawer */
-  .nav-list {
-    position: fixed;
-    top: 0;
-    right: -320px;
-    width: min(320px, 88vw);
-    height: 100vh;
-    height: 100dvh;
-    background: var(--sp-navy-deep);
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    overflow-y: auto;
-    transition: right 0.3s ease;
-    z-index: 1100;
-    padding: 20px 0 32px;
-  }
-
-  .nav-list.mobile-open {
-    right: 0;
-    box-shadow: -12px 0 32px rgba(20, 28, 48, 0.25);
-  }
-
-  .nav-item {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-  }
-
-  .nav-link {
-    width: 100%;
-    padding: 13px 22px;
-    font-size: 13.5px;
-    justify-content: space-between;
-    color: #dfe6f0;
-  }
-
-  .nav-item.active .nav-link,
-  .nav-item.current .nav-link {
-    box-shadow: none;
-    color: #fff;
-    background: rgba(255, 255, 255, 0.05);
-  }
-
-  .dropdown-menu,
-  .dropdown-multi {
-    position: static;
-    transform: none;
-    box-shadow: none;
-    border: none;
-    background: rgba(0, 0, 0, 0.18);
-    max-height: 0;
-    max-width: none;
-    width: auto;
-    overflow: hidden;
-    opacity: 1;
-    visibility: visible;
-    transition: max-height 0.3s ease;
-    padding: 0;
-    display: block;
-  }
-
-  .dropdown-menu.show,
-  .dropdown-multi.show {
-    max-height: 900px;
-    transform: none;
-    padding: 4px 0;
-  }
-
-  .dropdown-menu li a,
-  .dropdown-col-list li a {
-    color: #c9d3e4;
-    padding: 8px 22px 8px 34px;
-    font-size: 13.5px;
-  }
-
-  .dropdown-menu li a:hover,
-  .dropdown-col-list li a:hover {
-    background: rgba(255, 255, 255, 0.07);
-    color: #fff;
-  }
-
-  .dropdown-multi {
-    grid-template-columns: 1fr;
-  }
-
-  .dropdown-col {
-    min-width: auto;
-    padding: 6px 0;
-  }
-
-  .dropdown-col + .dropdown-col {
-    border-left: none;
-  }
-
-  .dropdown-col-header {
-    color: #9db2d8;
-    padding: 8px 22px 4px;
-    margin: 0;
-    border-bottom: none;
-  }
-
-  .dropdown-col-list {
-    max-height: none;
-    overflow: visible;
-  }
-
-  .dropdown-col-divider {
-    background: rgba(255, 255, 255, 0.15);
-    margin: 8px 22px;
-  }
-
-  .dropdown-col-title {
-    color: #9db2d8;
-    padding: 6px 22px 2px 34px;
-  }
-
-  .dropdown-footer {
-    background: transparent;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 0;
-  }
-
-  .dropdown-footer a {
-    padding: 10px 22px 10px 34px;
-  }
-
-  .dropdown-footer a:hover {
-    background: rgba(255, 255, 255, 0.07);
-  }
-
-  .dropdown-footer .footer-title {
-    color: #dfe6f0;
-    font-size: 13.5px;
-  }
-
-  .dropdown-footer .footer-desc {
-    color: #9db2d8;
-  }
-
-  .dropdown-footer .footer-arrow {
-    color: #9db2d8;
-  }
-}
-
-@media (max-width: 640px) {
-  .top-strip {
+  .desktop-nav {
     display: none;
   }
 
-  .main-header-inner {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-bar-inner {
     padding: 10px 16px;
+    min-height: 62px;
   }
 
   .logo-area {
-    gap: 12px;
+    gap: 11px;
   }
 
   .logo-circle {
@@ -722,21 +668,81 @@
   }
 
   .college-name {
-    font-size: 16px;
+    font-size: 16.5px;
   }
 
   .society-name {
-    font-size: 9.5px;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 640px) {
+  .top-strip {
+    display: none;
+  }
+
+  .nav-bar-inner {
+    padding: 8px 14px;
+  }
+
+  .college-name {
+    font-size: 15.5px;
+  }
+
+  .m-list {
+    padding-top: 66px;
   }
 }
 
 @media (max-width: 400px) {
   .logo-circle {
-    width: 50px;
-    height: 50px;
+    width: 42px;
+    height: 42px;
   }
 
   .college-name {
-    font-size: 15.5px;
+    font-size: 14.5px;
+  }
+}
+
+/* Mid-width desktop: center wide mega panels under their tab so they
+   can't overflow either viewport edge */
+@media (max-width: 1280px) {
+  .dd-md,
+  .dd-lg {
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, 6px);
+  }
+
+  .dd.show.dd-md,
+  .dd.show.dd-lg {
+    transform: translate(-50%, 0);
+  }
+
+  .dd-lg {
+    width: min(680px, calc(100vw - 32px));
+  }
+
+  .dd-md {
+    width: min(560px, calc(100vw - 32px));
+  }
+}
+
+/* Squeeze the tab row just before the mobile drawer takes over */
+@media (max-width: 1200px) {
+  .nav-tab-link {
+    padding: 0 7px;
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+
+  .college-name {
+    font-size: 17px;
+  }
+
+  .nav-tab-link::after {
+    left: 7px;
+    right: 7px;
   }
 }
