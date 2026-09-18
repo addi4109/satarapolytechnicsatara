@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useState, useEffect, useMemo } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 import API_URL from '../lib/api';
@@ -179,7 +179,10 @@ function Navbar() {
   const [mobileExpanded, setMobileExpanded] = useState(null);
   const [dbCells, setDbCells] = useState([]);
   const [dbDepts, setDbDepts] = useState([]);
+  const [query, setQuery] = useState('');
+  const [showResults, setShowResults] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Real contact details (previously placeholder numbers).
   const PHONE = '+91-94233 42843';
@@ -244,6 +247,16 @@ function Navbar() {
     };
   }, [openMenu]);
 
+  // Top-bar search results close on outside click.
+  useEffect(() => {
+    if (!showResults) return undefined;
+    const onClick = (e) => {
+      if (!e.target.closest('.top-search-wrap')) setShowResults(false);
+    };
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, [showResults]);
+
   const toggleMobile = (index) => setMobileExpanded(mobileExpanded === index ? null : index);
 
   // Resolve the dynamic column items (departments / cells from the database).
@@ -268,6 +281,45 @@ function Navbar() {
         : [{ label: 'About Cells and Committees', link: '/cells' }];
     }
     return col.items || [];
+  };
+
+  // Flatten the full menu (plus DB-driven departments & cells) into a
+  // searchable index of { label, link, section } entries.
+  const searchIndex = useMemo(() => {
+    const seen = new Set();
+    const entries = [];
+    const push = (label, link, section) => {
+      if (!label || !link || seen.has(link)) return;
+      seen.add(link);
+      entries.push({ label, link, section });
+    };
+    MENU.forEach((item) => {
+      push(item.label, item.link);
+      (item.children || []).forEach((c) => push(c.label, c.link, item.label));
+      (item.columns || []).forEach((col) => {
+        resolveColumnItems(col).forEach((c) => push(c.label, c.link, col.header));
+      });
+    });
+    return entries;
+  }, [dbCells, dbDepts]);
+
+  const searchResults = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    return searchIndex
+      .filter((e) => e.label.toLowerCase().includes(q) || (e.section || '').toLowerCase().includes(q))
+      .slice(0, 8);
+  }, [searchIndex, query]);
+
+  const handleSearchSelect = (link) => {
+    setShowResults(false);
+    setQuery('');
+    navigate(link);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchResults.length > 0) handleSearchSelect(searchResults[0].link);
   };
 
   const renderDropdownItems = (items) =>
@@ -388,6 +440,40 @@ function Navbar() {
               <span aria-hidden="true">📞</span> {PHONE}
             </a>
           </span>
+          <form className="top-search-wrap" role="search" onSubmit={handleSearchSubmit}>
+            <input
+              type="search"
+              className="top-search-input"
+              placeholder="Search pages…"
+              aria-label="Search site"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setShowResults(true);
+              }}
+              onFocus={() => setShowResults(true)}
+              onKeyDown={(e) => e.key === 'Escape' && setShowResults(false)}
+            />
+            <button type="submit" className="top-search-btn" aria-label="Search">
+              <span aria-hidden="true">🔍</span>
+            </button>
+            {showResults && query.trim() && (
+              <ul className="top-search-results">
+                {searchResults.length === 0 ? (
+                  <li className="top-search-empty">No matching pages found</li>
+                ) : (
+                  searchResults.map((r) => (
+                    <li key={r.link}>
+                      <button type="button" onClick={() => handleSearchSelect(r.link)}>
+                        <span className="result-label">{r.label}</span>
+                        {r.section && <span className="result-section">{r.section}</span>}
+                      </button>
+                    </li>
+                  ))
+                )}
+              </ul>
+            )}
+          </form>
           <span className="top-right">
             <a href={`mailto:${EMAIL}`} className="top-strip-link">
               <span aria-hidden="true">✉</span> {EMAIL}
@@ -434,6 +520,43 @@ function Navbar() {
           <nav className="main-nav" aria-label="Primary">
             <div className="nav-inner">
               <ul className={`nav-list ${mobileOpen ? 'mobile-open' : ''}`}>
+                {mobileOpen && (
+                  <li className="mobile-search-item">
+                    <form className="top-search-wrap mobile-search" role="search" onSubmit={handleSearchSubmit}>
+                      <input
+                        type="search"
+                        className="top-search-input"
+                        placeholder="Search pages…"
+                        aria-label="Search site"
+                        value={query}
+                        onChange={(e) => {
+                          setQuery(e.target.value);
+                          setShowResults(true);
+                        }}
+                        onKeyDown={(e) => e.key === 'Escape' && setShowResults(false)}
+                      />
+                      <button type="submit" className="top-search-btn" aria-label="Search">
+                        <span aria-hidden="true">🔍</span>
+                      </button>
+                      {showResults && query.trim() && (
+                        <ul className="top-search-results">
+                          {searchResults.length === 0 ? (
+                            <li className="top-search-empty">No matching pages found</li>
+                          ) : (
+                            searchResults.map((r) => (
+                              <li key={r.link}>
+                                <button type="button" onClick={() => handleSearchSelect(r.link)}>
+                                  <span className="result-label">{r.label}</span>
+                                  {r.section && <span className="result-section">{r.section}</span>}
+                                </button>
+                              </li>
+                            ))
+                          )}
+                        </ul>
+                      )}
+                    </form>
+                  </li>
+                )}
                 {MENU.map((item, idx) => renderMenuItem(item, idx))}
               </ul>
             </div>
