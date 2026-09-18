@@ -158,23 +158,25 @@ function Placements() {
               <div className="content-line"></div>
               {renderContent(getSection('about').content || STATIC_CONTENT.placements.about)}
 
-              {/* Placement Officer */}
+              {/* Placement Officer — same single-box layout as HOD Desk */}
               {(getSection('about').officerName || getSection('about').officerPhoto) && (
-                <div className="placement-officer-card">
-                  <div className="placement-officer-left">
-                    {getSection('about').officerPhoto && (
-                      <div className="placement-officer-photo">
-                        <img src={getSection('about').officerPhoto} alt={getSection('about').officerName} />
+                <div className="leader-profile">
+                  <div className="leader-profile-photo">
+                    {getSection('about').officerPhoto ? (
+                      <img src={getSection('about').officerPhoto} alt={getSection('about').officerName} />
+                    ) : (
+                      <div className="leader-profile-photo-placeholder">
+                        <span>{getSection('about').officerName?.split(' ')?.pop()?.charAt(0) || '?'}</span>
                       </div>
                     )}
-                    <h4 className="placement-officer-name">{getSection('about').officerName}</h4>
-                    <p className="placement-officer-designation">Placement Officer</p>
-                    {getSection('about').officerQual && (
-                      <p className="placement-officer-qual">{getSection('about').officerQual}</p>
-                    )}
                   </div>
+                  <h3 className="leader-profile-name">{getSection('about').officerName}</h3>
+                  <p className="leader-profile-designation">Placement Officer</p>
+                  {getSection('about').officerQual && (
+                    <p className="leader-profile-qual">{getSection('about').officerQual}</p>
+                  )}
                   {getSection('about').officerMsg && (
-                    <div className="placement-officer-msg">
+                    <div className="leader-profile-msg">
                       <p style={{ whiteSpace: 'pre-line' }}>{getSection('about').officerMsg}</p>
                     </div>
                   )}
