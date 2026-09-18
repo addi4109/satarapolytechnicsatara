@@ -92,7 +92,7 @@ const MENU = [
   {
     label: 'Student Life',
     stack: true,
-    match: (p) => p.startsWith('/activities') || p.startsWith('/alumni') || p.startsWith('/examination') || p.startsWith('/campus') || p.startsWith('/gallery'),
+    match: (p) => p.startsWith('/activities') || p.startsWith('/campus') || p.startsWith('/gallery'),
     columns: [
       {
         header: 'Activities',
@@ -123,6 +123,13 @@ const MENU = [
           { label: 'Media News', link: '/gallery/media' },
         ],
       },
+    ],
+  },
+  {
+    label: 'Student Section',
+    stack: true,
+    match: (p) => p.startsWith('/alumni') || p.startsWith('/examination'),
+    columns: [
       {
         header: 'Examination',
         items: [
