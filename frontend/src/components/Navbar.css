@@ -374,17 +374,6 @@
 }
 
 /* Stacked variant: columns fill the panel top-to-bottom (About, Campus) */
-/* Student Life dropdown: three columns (Activities / Examination / Alumni) */
-.dropdown-multi.dropdown-cols-3 {
-  max-width: min(94vw, 900px);
-  grid-template-columns: repeat(3, auto);
-}
-
-.dropdown-multi.dropdown-cols-3 .dropdown-col {
-  min-width: 0;
-  width: 220px;
-}
-
 .dropdown-multi.dropdown-stacked {
   grid-template-columns: 1fr;
 }
@@ -652,8 +641,7 @@
     color: #fff;
   }
 
-  .dropdown-multi,
-  .dropdown-multi.dropdown-cols-3 {
+  .dropdown-multi {
     grid-template-columns: 1fr;
   }
 

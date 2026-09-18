@@ -119,6 +119,7 @@ const MENU = [
   },
   {
     label: 'Student Life',
+    stack: true,
     match: (p) => p.startsWith('/activities') || p.startsWith('/alumni') || p.startsWith('/examination'),
     columns: [
       {
@@ -293,7 +294,7 @@ function Navbar() {
             {item.label}
             <span className="arrow" aria-hidden="true">▾</span>
           </button>
-          <div className={`dropdown-multi ${item.stack ? 'dropdown-stacked' : ''} ${item.columns.length >= 3 ? 'dropdown-cols-3' : ''} ${openMenu === idx || (mobileOpen && mobileExpanded === idx) ? 'show' : ''}`}>
+          <div className={`dropdown-multi ${item.stack ? 'dropdown-stacked' : ''} ${openMenu === idx || (mobileOpen && mobileExpanded === idx) ? 'show' : ''}`}>
             {item.columns.map((col, cIdx) => (
               <div
                 className={`dropdown-col ${col.wide ? 'dropdown-col-wide' : ''} ${col.semiWide ? 'dropdown-col-semi-wide' : ''} ${col.key ? `dropdown-col-${col.key}` : ''}`}
