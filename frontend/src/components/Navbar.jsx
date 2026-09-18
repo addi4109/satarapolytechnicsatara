@@ -190,15 +190,37 @@ function Navbar() {
   const PHONE = '+91-94233 42843';
   const EMAIL = 'satarapolyinfo@gmail.com';
 
+  // Fetch cells & departments for the dropdowns. Uses exponential backoff
+  // because a cold-started backend (Render free tier) can take ~1 min to
+  // answer the first request; without retry the dropdowns fall back to
+  // static links for the whole session.
   useEffect(() => {
-    fetch(`${API_URL}/cells`)
-      .then((res) => res.json())
-      .then((data) => setDbCells(data))
-      .catch((err) => console.error('Failed to fetch cells for navbar:', err));
-    fetch(`${API_URL}/departments`)
-      .then((res) => res.json())
-      .then((data) => setDbDepts(data))
-      .catch((err) => console.error('Failed to fetch departments for navbar:', err));
+    let cancelled = false;
+
+    const fetchWithRetry = (url, apply, label, attempt = 0) => {
+      fetch(url)
+        .then((res) => {
+          if (!res.ok) throw new Error(`${label} ${res.status}`);
+          return res.json();
+        })
+        .then((data) => {
+          if (!cancelled && Array.isArray(data)) apply(data);
+        })
+        .catch((err) => {
+          if (attempt < 5 && !cancelled) {
+            setTimeout(() => fetchWithRetry(url, apply, label, attempt + 1), 2500 * 2 ** attempt);
+          } else {
+            console.error(`Failed to fetch ${label} for navbar:`, err);
+          }
+        });
+    };
+
+    fetchWithRetry(`${API_URL}/cells`, setDbCells, 'cells');
+    fetchWithRetry(`${API_URL}/departments`, setDbDepts, 'departments');
+
+    return () => {
+      cancelled = true;
+    };
   }, []);  // Close any open menu when the route changes.
   useEffect(() => {
     setMobileOpen(false);

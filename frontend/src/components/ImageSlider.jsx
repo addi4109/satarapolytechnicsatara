@@ -9,7 +9,25 @@ const PLACEHOLDER_SLIDE = {
   _id: '_static-first',
   image: 'https://res.cloudinary.com/yjiggwb7/image/upload/v1787713184/c6x3cfx3tcbhkd8mgtbe.png',
   alt: 'Satara Polytechnic, Satara',
+  title: 'Welcome to Satara Education Society\u2019s',
+  subtitle: 'Satara Polytechnic, Satara',
+  animatedTitle: true,
 };
+
+// Split text into per-letter spans for the staggered reveal animation.
+const LetterReveal = ({ text }) => (
+  <>
+    {text.split('').map((ch, i) => (
+      <span
+        key={i}
+        className="letter-reveal"
+        style={{ animationDelay: `${0.3 + i * 0.035}s` }}
+      >
+        {ch === ' ' ? '\u00A0' : ch}
+      </span>
+    ))}
+  </>
+);
 
 function ImageSlider() {
   const [slides, setSlides] = useState([PLACEHOLDER_SLIDE]);
@@ -153,10 +171,18 @@ function ImageSlider() {
                   <div className="slider-content-inner">
                     {slide.tag && <span className="slider-tag">{slide.tag}</span>}
                     {slide.title && (
-                      <h2 className="slider-title">{slide.title}</h2>
+                      <h2 className="slider-title">
+                        {slide.animatedTitle && idx === current ? (
+                          <LetterReveal text={slide.title} />
+                        ) : (
+                          slide.title
+                        )}
+                      </h2>
                     )}
                     {slide.subtitle && (
-                      <p className="slider-subtitle">{slide.subtitle}</p>
+                      <p className={`slider-subtitle ${slide.animatedTitle ? 'slider-subtitle-reveal' : ''}`}>
+                        {slide.subtitle}
+                      </p>
                     )}
                   </div>
                 </div>
