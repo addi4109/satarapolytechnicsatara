@@ -293,8 +293,15 @@
   border-left: 1px solid var(--sp-line-soft);
 }
 
-.dropdown-col-wide {
-  min-width: 300px;
+/* Cells & Committees column: slim so Departments gets the room */
+.dropdown-col.dropdown-col-cells {
+  min-width: 0;
+  width: 210px;
+}
+
+.dropdown-col-cells .dropdown-col-list li a {
+  padding: 6px 18px;
+  font-size: 13px;
 }
 
 .dropdown-col-semi-wide {
@@ -524,14 +531,28 @@
     gap: 12px;
   }
 
-  /* hamburger sits inside the bar on small screens */
-  .nav-inner {
-    justify-content: space-between;
-    padding: 0 6px;
-  }
-
+  /* Hamburger joins the identity row: logo -> name -> ☰.
+     .main-nav stays rendered (the off-canvas drawer lives inside it) but
+     is taken out of flow so it adds no phantom row below the identity
+     block. The fixed-position drawer escapes the 1px clip because no
+     ancestor between it and the viewport applies a transform. */
   .hamburger {
     display: flex;
+    order: 2;
+    margin-left: auto;
+    flex-shrink: 0;
+    z-index: 1250;
+  }
+
+  .main-nav {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
   }
 
   /* Drawer */

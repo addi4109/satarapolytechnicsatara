@@ -53,7 +53,6 @@ const MENU = [
       },
       {
         header: 'Cells & Committees',
-        wide: true,
         key: 'cells',
       },
     ],
@@ -289,7 +288,7 @@ function Navbar() {
           <div className={`dropdown-multi ${item.stack ? 'dropdown-stacked' : ''} ${openMenu === idx || (mobileOpen && mobileExpanded === idx) ? 'show' : ''}`}>
             {item.columns.map((col, cIdx) => (
               <div
-                className={`dropdown-col ${col.wide ? 'dropdown-col-wide' : ''} ${col.semiWide ? 'dropdown-col-semi-wide' : ''}`}
+                className={`dropdown-col ${col.wide ? 'dropdown-col-wide' : ''} ${col.semiWide ? 'dropdown-col-semi-wide' : ''} ${col.key ? `dropdown-col-${col.key}` : ''}`}
                 key={cIdx}
               >
                 <span className="dropdown-col-header">{col.header}</span>
@@ -394,31 +393,33 @@ function Navbar() {
             </div>
           </Link>
 
+          {/* Hamburger joins the identity row on mobile: logo -> name -> ☰ */}
+          <button
+            type="button"
+            className={`hamburger ${mobileOpen ? 'is-active' : ''}`}
+            onClick={() => {
+              setMobileOpen(!mobileOpen);
+              setMobileExpanded(null);
+            }}
+            aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
           <nav className="main-nav" aria-label="Primary">
             <div className="nav-inner">
-              {/* hamburger lives in the sticky bar so it stays reachable while scrolled */}
-              <button
-                type="button"
-                className={`hamburger ${mobileOpen ? 'is-active' : ''}`}
-                onClick={() => {
-                  setMobileOpen(!mobileOpen);
-                  setMobileExpanded(null);
-                }}
-                aria-label="Toggle menu"
-                aria-expanded={mobileOpen}
-              >
-                <span></span>
-                <span></span>
-                <span></span>
-              </button>
               <ul className={`nav-list ${mobileOpen ? 'mobile-open' : ''}`}>
                 {MENU.map((item, idx) => renderMenuItem(item, idx))}
               </ul>
-              {/* Backdrop lives inside the nav's stacking context so the drawer,
-                  hamburger and close button all sit above it. */}
-              {mobileOpen && <div className="nav-backdrop" onClick={() => setMobileOpen(false)} aria-hidden="true" />}
             </div>
           </nav>
+
+          {/* Backdrop is a direct child of the header (outside .main-nav, which
+              is display:none on mobile) so the dim layer still renders. */}
+          {mobileOpen && <div className="nav-backdrop" onClick={() => setMobileOpen(false)} aria-hidden="true" />}
         </div>
       </div>
     </header>
