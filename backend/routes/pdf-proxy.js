@@ -91,9 +91,17 @@ router.get('/', async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.send(buffer);
   } catch (err) {
-    console.error('File proxy error:', err?.message || err);
+    // Surface the real cause (DNS failure, timeout, reset) instead of a
+    // generic message so storage problems are diagnosable from the response.
+    const cause =
+      err?.cause?.code || err?.code || (err?.name === 'TimeoutError' ? 'ETIMEDOUT' : '');
+    console.error('File proxy error:', cause || '', err?.message || err);
     if (!res.headersSent) {
-      res.status(500).json({ error: 'Failed to proxy file' });
+      const isDns = ['ENOTFOUND', 'EAI_AGAIN'].includes(cause);
+      res.status(isDns ? 502 : 500).json({
+        error: 'Failed to proxy file',
+        reason: cause || err?.message || 'unknown',
+      });
     }
   }
 });
