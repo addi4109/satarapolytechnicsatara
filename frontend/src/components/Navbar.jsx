@@ -43,13 +43,19 @@ const MENU = [
     ],
   },
   {
-    label: 'Academics',
-    match: (p) => p.startsWith('/departments') || p.startsWith('/academics') || p.startsWith('/cells'),
+    label: 'Departments',
+    match: (p) => p.startsWith('/departments'),
     columns: [
       {
         header: 'Departments',
         key: 'departments',
       },
+    ],
+  },
+  {
+    label: 'Academics',
+    match: (p) => p.startsWith('/academics') || p.startsWith('/cells'),
+    columns: [
       {
         header: 'Cells & Committees',
         key: 'cells',

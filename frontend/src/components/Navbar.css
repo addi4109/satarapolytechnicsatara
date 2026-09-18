@@ -293,20 +293,21 @@
   border-left: 1px solid var(--sp-line-soft);
 }
 
-/* Departments column: slim so Cells & Committees gets the room */
+/* Departments dropdown: standalone tab now, give it presence */
 .dropdown-col.dropdown-col-departments {
   min-width: 0;
-  width: 200px;
+  width: 270px;
 }
 
 .dropdown-col-departments .dropdown-col-list li a {
-  padding: 6px 18px;
-  font-size: 13px;
+  padding: 7px 18px;
+  font-size: 13.5px;
 }
 
 /* Cells & Committees column: wider to show full cell names */
 .dropdown-col.dropdown-col-cells {
-  min-width: 320px;
+  min-width: 0;
+  width: 300px;
 }
 
 .dropdown-col-semi-wide {
