@@ -1,27 +1,10 @@
 /* ===== Header wrapper =====
-   Fixed to the top of the viewport for the entire page so the identity
-   block and tabs are always visible. Because fixed removes the header
-   from normal flow, body padding-top is driven by --sp-header-h, which
-   Navbar.jsx keeps in sync with the header's rendered height. */
+   Scrolls normally with the page — the top strip and tabs are NOT sticky.
+   Kept position: relative + z-index so the mobile drawer backdrop stays
+   inside this header's stacking context and above page content. */
 .site-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   z-index: 1000;
-}
-
-body {
-  padding-top: var(--sp-header-h, 0px);
-}
-
-html {
-  scroll-padding-top: var(--sp-header-h, 0px);
-}
-
-/* Subtle depth once the page is scrolled */
-.site-header.is-scrolled {
-  box-shadow: 0 2px 12px rgba(20, 28, 48, 0.1);
 }
 
 /* ===== top strip ===== */
@@ -134,7 +117,7 @@ html {
 
 /* ===== tabs, in front of the identity block ===== */
 .main-nav {
-  background: var(--sp-navy);
+  background: #fff;
   border-radius: var(--sp-radius);
   flex: 1;
   min-width: 0;
@@ -170,7 +153,7 @@ html {
   gap: 3px;
   padding: 0 7px;
   height: 38px;
-  color: #e8e8e8;
+  color: var(--sp-navy);
   text-decoration: none;
   font-size: 12px;
   font-weight: 600;
@@ -184,15 +167,15 @@ html {
 }
 
 .nav-link:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  background: #f0f3f8;
+  color: var(--sp-navy);
 }
 
 /* Open dropdown or active section */
 .nav-item.active .nav-link,
 .nav-item.current .nav-link {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.06);
+  color: var(--sp-navy);
+  background: #eef2f8;
   box-shadow: inset 0 -3px 0 var(--sp-gold);
 }
 
@@ -386,13 +369,13 @@ html {
   display: block;
   width: 24px;
   height: 2.5px;
-  background: #e8e8e8;
+  background: var(--sp-navy);
   border-radius: 2px;
   transition: transform 0.25s, opacity 0.25s;
 }
 
 .hamburger.is-active span {
-  background: #fff;
+  background: var(--sp-navy);
 }
 
 .hamburger.is-active span:nth-child(1) {
