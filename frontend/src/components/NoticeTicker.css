@@ -5,10 +5,12 @@
   overflow: hidden;
   padding: 0;
   height: 40px;
+  border-bottom: 2px solid #c8963e;
 }
 
 .ticker-label {
   color: #fff;
+  background: #7a263a;
   font-size: 12.5px;
   font-weight: 700;
   padding: 0 18px;
@@ -57,10 +59,14 @@
 }
 
 .ticker-item {
-  color: #dfe4ec;
+  color: #fff;
+  background: var(--sp-navy);
   font-size: 13.5px;
   white-space: nowrap;
   padding: 0 28px;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
   position: relative;
 }
 

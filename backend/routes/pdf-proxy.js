@@ -31,6 +31,29 @@ function getExtFromUrl(url) {
   }
 }
 
+// Supabase occasionally drops connections (ECONNRESET / socket hang up),
+// which surfaced to users as "Failed to proxy file". Retry transient failures.
+async function fetchWithRetry(url, attempts = 3) {
+  let lastErr;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      const response = await fetch(url, {
+        redirect: 'follow',
+        signal: AbortSignal.timeout(30000),
+      });
+      // Don't retry client errors (404 etc.) — they will keep failing.
+      if (response.ok || response.status < 500) {
+        return response;
+      }
+      lastErr = new Error(`Upstream responded with ${response.status}`);
+    } catch (err) {
+      lastErr = err;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 400 * (i + 1)));
+  }
+  throw lastErr || new Error('Failed to fetch file');
+}
+
 router.get('/', async (req, res) => {
   try {
     const { url } = req.query;
@@ -43,41 +66,32 @@ router.get('/', async (req, res) => {
       return res.status(403).json({ error: 'Only Supabase URLs are allowed' });
     }
 
-    const response = await fetch(url);
+    const response = await fetchWithRetry(url);
 
     if (!response.ok) {
-      return res.status(response.status).json({ error: `Failed to fetch file: ${response.status}` });
+      return res
+        .status(response.status)
+        .json({ error: `Failed to fetch file: ${response.status}` });
     }
 
     const ext = getExtFromUrl(url);
-    const contentType = contentTypes[ext] || response.headers.get('content-type') || 'application/octet-stream';
+    const contentType =
+      contentTypes[ext] || response.headers.get('content-type') || 'application/octet-stream';
 
-    // Forward Content-Length so the browser PDF viewer can scroll properly
-    const contentLength = response.headers.get('content-length');
+    // Buffer the whole file instead of streaming. The previous implementation
+    // used response.body.getReader() and forwarded Supabase's Content-Length,
+    // which intermittently broke on the Node runtime (mismatched/undelivered
+    // body -> "Failed to proxy file" and broken PDF viewer). Files served here
+    // are small, so buffering is safe and far more reliable.
+    const buffer = Buffer.from(await response.arrayBuffer());
 
-    // Set proper headers
     res.setHeader('Content-Type', contentType);
-    if (contentLength) {
-      res.setHeader('Content-Length', contentLength);
-    }
+    res.setHeader('Content-Length', buffer.length);
     res.setHeader('Cache-Control', 'public, max-age=86400');
     res.setHeader('Access-Control-Allow-Origin', '*');
-
-    // Stream the response instead of buffering
-    const reader = response.body.getReader();
-    const pump = async () => {
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) {
-          res.end();
-          break;
-        }
-        res.write(value);
-      }
-    };
-    await pump();
+    res.send(buffer);
   } catch (err) {
-    console.error('File proxy error:', err);
+    console.error('File proxy error:', err?.message || err);
     if (!res.headersSent) {
       res.status(500).json({ error: 'Failed to proxy file' });
     }
