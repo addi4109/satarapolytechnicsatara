@@ -61,11 +61,6 @@ const MENU = [
         key: 'cells',
       },
     ],
-    footer: {
-      label: 'Academic Calendar',
-      desc: 'MSBTE A.Y. dates, exams and holidays',
-      link: '/academics/calendar',
-    },
   },
   {
     label: 'Admissions',
@@ -135,6 +130,7 @@ const MENU = [
       {
         header: 'Examination',
         items: [
+          { label: 'Academic Calendar', link: '/academics/calendar' },
           { label: 'Exam Schedule', link: '/examination/schedule' },
           { label: 'Exam Rules', link: '/examination/rules' },
           { label: 'Results', link: '/examination/results' },
