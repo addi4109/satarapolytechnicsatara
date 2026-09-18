@@ -9,7 +9,7 @@
 .slider-container {
   position: relative;
   width: 100%;
-  height: 580px;
+  height: 570px;
   overflow: hidden;
   cursor: default;
 }
@@ -117,16 +117,6 @@
   transition: opacity 0.7s ease 0.32s, transform 0.7s ease 0.32s;
 }
 
-/* Large display style — only for the static welcome slide's subtitle */
-.slider-subtitle-reveal {
-  font-family: var(--sp-font-display);
-  font-size: clamp(24px, 3.2vw, 40px);
-  color: #fff;
-  font-weight: 700;
-  line-height: 1.25;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
-}
-
 .slider-slide.active .slider-title {
   opacity: 1;
   transform: translateY(0);
@@ -137,64 +127,10 @@
   transform: translateY(0);
 }
 
-/* ===== Letter-by-letter reveal (first slide welcome text) ===== */
-/* Centered variant for the static welcome slide */
-.slider-content-centered {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  background: rgba(20, 28, 48, 0.35);
-}
-
-.slider-content-centered .slider-content-inner {
-  max-width: 90%;
-  text-align: center;
-}
-
-.letter-reveal {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(14px);
-  animation: letterReveal 0.45s ease forwards;
-}
-
-@keyframes letterReveal {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Subtitle appears after the letters finish spelling out */
-.slider-subtitle-reveal {
-  opacity: 0;
-  transform: translateY(12px);
-}
-
-.slider-slide.active .slider-subtitle-reveal {
-  animation: letterReveal 0.6s ease forwards;
-  animation-delay: 2.2s;
-}
-
-/* Hold the welcome animation (letters + delays) while the admission
-   enquiry popup is open; it starts the moment the popup closes. */
-body.enquiry-open .letter-reveal,
-body.enquiry-open .slider-subtitle-reveal {
-  animation-play-state: paused !important;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .letter-reveal {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
-
-  .slider-slide.active .slider-subtitle-reveal {
-    animation: none;
-    opacity: 1;
-    transform: none;
+  .slider-title,
+  .slider-subtitle {
+    transition: none;
   }
 }
 
@@ -300,7 +236,7 @@ body.enquiry-open .slider-subtitle-reveal {
 /* ===== Responsive ===== */
 @media (max-width: 900px) {
   .slider-container {
-    height: 440px;
+    height: 430px;
   }
 
   .slider-content {
@@ -308,10 +244,6 @@ body.enquiry-open .slider-subtitle-reveal {
   }
 
   .slider-title {
-    font-size: 26px;
-  }
-
-  .slider-subtitle-reveal {
     font-size: 26px;
   }
 
@@ -331,7 +263,7 @@ body.enquiry-open .slider-subtitle-reveal {
 
 @media (max-width: 680px) {
   .slider-container {
-    height: 280px;
+    height: 270px;
   }
 
   .slider-content {
@@ -351,11 +283,6 @@ body.enquiry-open .slider-subtitle-reveal {
   .slider-title {
     font-size: 20px;
     margin-bottom: 6px;
-  }
-
-  .slider-subtitle-reveal {
-    font-size: 20px;
-    line-height: 1.4;
   }
 
   .slider-arrow {
