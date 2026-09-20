@@ -24,7 +24,6 @@ const MENU = [
           { label: 'Satara Education Society', link: '/about/society' },
           { label: 'Institute', link: '/about/institute' },
           { label: 'Mandatory Disclosure', link: '/about/disclosure' },
-          { label: 'Vision & Mission', link: '/about/vision-mission' },
           { label: 'Affiliation & Approval', link: '/about/affiliation' },
           { label: 'Institute Policy', link: '/about/policy' },
           { label: 'Organisational Chart', link: '/about/organisational-chart' },

@@ -7,7 +7,7 @@ import { STATIC_CONTENT } from '../data/staticContent';
 import './AboutCollege.css';
 
 const routeMap = {
-  'college': 'overview',
+  'college': 'institute',
   'overview': 'institute',
   'institute': 'institute',
   'vision-mission': 'vision',
@@ -29,7 +29,6 @@ const sidebarLinks = [
   { id: 'society', label: 'Satara Education Society' },
   { id: 'institute', label: 'Institute' },
   { id: 'disclosure', label: 'Mandatory Disclosure' },
-  { id: 'vision', label: 'Vision & Mission' },
   { id: 'affiliation', label: 'Affiliation & Approval' },
   { id: 'policy', label: 'Institute Policy' },
   { id: 'founder', label: 'Founder' },
@@ -153,6 +152,26 @@ const CONDUCT_SECTIONS = [
   },
 ];
 
+// Core values shown on the Institute overview.
+const CORE_VALUES = [
+  { name: 'Integrity & Ethics', desc: 'We uphold honesty, transparency and strong moral principles in every aspect of institute life.' },
+  { name: 'Academic Excellence', desc: 'We strive for the highest standards in teaching, learning and student outcomes.' },
+  { name: 'Discipline & Respect', desc: 'We nurture a disciplined, inclusive campus where every individual is treated with dignity.' },
+  { name: 'Innovation', desc: 'We encourage creativity, curiosity and practical problem-solving among students and faculty.' },
+  { name: 'Industry Readiness', desc: 'We align skills with industry needs through hands-on training, internships and placements.' },
+  { name: 'Social Responsibility', desc: 'We instil awareness of community, environment and nation-building responsibilities.' },
+];
+
+// Fallback list of diploma programmes when the departments API has no data.
+const FALLBACK_PROGRAMS = [
+  { name: 'Computer Engineering' },
+  { name: 'Electronics & Telecommunication Engineering' },
+  { name: 'Mechanical Engineering' },
+  { name: 'Electrical Engineering' },
+  { name: 'Chemical Engineering' },
+  { name: 'Automobile Engineering' },
+];
+
 function AboutCollege() {
   const { page } = useParams();
   const [active, setActive] = useState('overview');
@@ -160,6 +179,7 @@ function AboutCollege() {
   const [about, setAbout] = useState({});
   const [gbMembers, setGbMembers] = useState([]);
   const [lgbMembers, setLgbMembers] = useState([]);
+  const [programs, setPrograms] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -174,8 +194,9 @@ function AboutCollege() {
       fetch(`${API_URL}/about`).then((r) => r.json()),
       fetch(`${API_URL}/governing-body`).then((r) => r.json()),
       fetch(`${API_URL}/local-governing-body`).then((r) => r.json()),
+      fetch(`${API_URL}/departments`).then((r) => r.json()),
     ])
-      .then(([mgmtData, aboutData, gbData, lgbData]) => {
+      .then(([mgmtData, aboutData, gbData, lgbData, deptData]) => {
         const mgmtMapped = {};
         mgmtData.forEach((entry) => { mgmtMapped[entry.role] = entry; });
         setManagement(mgmtMapped);
@@ -186,6 +207,7 @@ function AboutCollege() {
 
         setGbMembers(gbData);
         setLgbMembers(lgbData);
+        setPrograms(Array.isArray(deptData) ? deptData.filter((d) => !d.hideFromHome) : []);
       })
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -308,6 +330,10 @@ function AboutCollege() {
   const getVision = () => about.vision || {};
   const getAffiliation = () => about.affiliation || {};
   const getPolicy = () => about.policy || {};
+  const getPrograms = () => {
+    if (Array.isArray(programs) && programs.length > 0) return programs;
+    return FALLBACK_PROGRAMS;
+  };
   // Admin-managed sections: fall back to the built-in defaults when empty.
   const getOrgLevels = () => {
     const db = about['organisational-chart'];
@@ -379,11 +405,11 @@ function AboutCollege() {
 
           {/* Mobile top bar tabs */}
           <div className="about-mobile-tabs">
-            {['society', 'institute', 'disclosure', 'vision', 'affiliation', 'policy', 'organisational-chart', 'code-of-conduct'].includes(active) && (
+            {['society', 'institute', 'disclosure', 'affiliation', 'policy', 'organisational-chart', 'code-of-conduct'].includes(active) && (
               <>
                 <h4 className="about-mobile-group-heading">About</h4>
                 <ul className="about-mobile-tabs-list">
-                  {sidebarLinks.filter((l) => ['society', 'institute', 'disclosure', 'vision', 'affiliation', 'policy', 'organisational-chart', 'code-of-conduct'].includes(l.id)).map((link) => (
+                  {sidebarLinks.filter((l) => ['society', 'institute', 'disclosure', 'affiliation', 'policy', 'organisational-chart', 'code-of-conduct'].includes(l.id)).map((link) => (
                     <li key={link.id}>
                       <button
                         className={`about-mobile-tab ${active === link.id ? 'active' : ''}`}
@@ -432,9 +458,79 @@ function AboutCollege() {
           {/* Institute */}
           {active === 'institute' && (
             <>
-              <h2 className="content-heading">{getInstitute().title || 'Institute Overview'}</h2>
-              <div className="content-line"></div>
-              {renderContent(getInstitute().content || STATIC_CONTENT.about.institute)}
+              {/* Box 1: Campus image + About description */}
+              <div className="about-box">
+                <h2 className="about-box-title">{getInstitute().title || 'Institute Overview'}</h2>
+                <div className="about-box-line"></div>
+                <div className="about-intro">
+                  <div className="about-intro-img">
+                    <img
+                      src="https://res.cloudinary.com/yjiggwb7/image/upload/v1787713256/mpj9o4ecbtz6t90t68vx.png"
+                      alt="Satara Polytechnic, Satara Campus"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="about-intro-text">
+                    {renderContent(getInstitute().content || STATIC_CONTENT.about.institute)}
+                  </div>
+                </div>
+              </div>
+
+              {/* Box 2: Core Values */}
+              <div className="about-box">
+                <h2 className="about-box-title">Core Values</h2>
+                <div className="about-box-line"></div>
+                <div className="values-grid">
+                  {CORE_VALUES.map((value, i) => (
+                    <div className="value-item" key={i}>
+                      <h3 className="value-name">{value.name}</h3>
+                      <p className="value-desc">{value.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Box 3: Programs / Courses Offered */}
+              <div className="about-box">
+                <h2 className="about-box-title">Programs / Courses Offered</h2>
+                <div className="about-box-line"></div>
+                <div className="programs-grid">
+                  {getPrograms().map((program, i) => (
+                    <div className="program-item" key={program.slug || i}>
+                      <h3 className="program-name">{program.name}</h3>
+                      <p className="program-meta">
+                        3-Year Diploma Programme
+                        {program.intake ? ` · Intake: ${program.intake}` : ''}
+                      </p>
+                      {program.slug && (
+                        <a className="program-link" href={`/departments/${program.slug}`}>
+                          Learn More →
+                        </a>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Box 4: Vision & Mission */}
+              <div className="about-box">
+                <h2 className="about-box-title">{getVision().title || 'Vision & Mission'}</h2>
+                <div className="about-box-line"></div>
+                <div className="about-intro-text">
+                  {renderContent(getVision().content || STATIC_CONTENT.about.vision)}
+                </div>
+                {getVision().mission && getVision().mission.length > 0 && (
+                  <div className="vm-block about-vm-block">
+                    <h3 className="vm-title">Mission</h3>
+                    <ul className="vm-list">
+                      {getVision().mission.map((item, i) => (
+                        <li key={i}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
               {renderStats(getInstitute().stats)}
 
               {/* Leadership Photo Cards */}
