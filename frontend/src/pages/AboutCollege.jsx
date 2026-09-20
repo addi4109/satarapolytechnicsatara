@@ -494,21 +494,37 @@ function AboutCollege() {
               <div className="about-box">
                 <h2 className="about-box-title">Programs / Courses Offered</h2>
                 <div className="about-box-line"></div>
-                <div className="programs-grid">
-                  {getPrograms().map((program, i) => (
-                    <div className="program-item" key={program.slug || i}>
-                      <h3 className="program-name">{program.name}</h3>
-                      <p className="program-meta">
-                        3-Year Diploma Programme
-                        {program.intake ? ` · Intake: ${program.intake}` : ''}
-                      </p>
-                      {program.slug && (
-                        <a className="program-link" href={`/departments/${program.slug}`}>
-                          Learn More →
-                        </a>
-                      )}
-                    </div>
-                  ))}
+                <div className="programs-table-wrap">
+                  <table className="programs-table">
+                    <thead>
+                      <tr>
+                        <th className="num-col">Sr. No.</th>
+                        <th>Program / Course</th>
+                        <th>Duration</th>
+                        <th>Intake</th>
+                        <th>Details</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {getPrograms().map((program, i) => (
+                        <tr key={program.slug || i}>
+                          <td className="num-col">{i + 1}</td>
+                          <td className="program-cell">{program.name}</td>
+                          <td>3 Years</td>
+                          <td>{program.intake ?? '—'}</td>
+                          <td>
+                            {program.slug ? (
+                              <a className="program-link" href={`/departments/${program.slug}`}>
+                                Learn More →
+                              </a>
+                            ) : (
+                              '—'
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
 
