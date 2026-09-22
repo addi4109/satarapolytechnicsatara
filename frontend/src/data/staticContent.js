@@ -16,7 +16,7 @@ export const STATIC_CONTENT = {
 
   about: {
     society:
-      'Satara Polytechnic is managed by Satara Education Society, established with the vision of spreading quality technical education in the region. The society is committed to nurturing disciplined, skilled and socially responsible engineers.',
+      'Satara Education Society is an educational organization based in Satara, Maharashtra, with a long-standing commitment to providing quality education and developing skilled, responsible and capable students.\n\nEstablished in 1935, the Society has contributed to the educational development of the region through institutions offering school, higher secondary, technical and professional education.\n\nThrough its educational institutions, the Society aims to provide students with opportunities for academic growth, practical learning, skill development and overall development.',
     institute:
       'Established in 2009-10, Satara Polytechnic is an AICTE approved and DTE affiliated institute offering three-year diploma programmes in engineering and technology. The campus provides modern laboratories, experienced faculty and excellent placement support.',
     disclosure:

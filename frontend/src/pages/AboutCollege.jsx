@@ -449,9 +449,71 @@ function AboutCollege() {
           {/* Society */}
           {active === 'society' && (
             <>
-              <h2 className="content-heading">{getSociety().title || 'Satara Education Society'}</h2>
-              <div className="content-line"></div>
-              {renderContent(getSociety().content || STATIC_CONTENT.about.society)}
+              {/* Box 1: About the Society */}
+              <div className="about-box">
+                <h2 className="about-box-title">About the Society</h2>
+                <div className="about-box-line"></div>
+                <div className="about-intro-text">
+                  {renderContent(getSociety().content || STATIC_CONTENT.about.society)}
+                </div>
+              </div>
+
+              {/* Box 2: At a Glance */}
+              <div className="about-box">
+                <h2 className="about-box-title">At a Glance</h2>
+                <div className="about-box-line"></div>
+                <div className="info-table">
+                  <div className="info-row"><span className="info-label">Established</span><span className="info-value">1935</span></div>
+                  <div className="info-row"><span className="info-label">Location</span><span className="info-value">Satara, Maharashtra</span></div>
+                  <div className="info-row"><span className="info-label">Sector</span><span className="info-value">Education</span></div>
+                  <div className="info-row"><span className="info-label">Areas</span><span className="info-value">School, Junior College, Technical & Professional Education</span></div>
+                </div>
+              </div>
+
+              {/* Box 3: Educational Institutions */}
+              <div className="about-box">
+                <h2 className="about-box-title">Educational Institutions</h2>
+                <div className="about-box-line"></div>
+                <p className="society-lead">The Society's educational activities include institutions in areas such as:</p>
+                <ul className="vm-list">
+                  <li>School Education</li>
+                  <li>Junior College Education</li>
+                  <li>Diploma / Technical Education</li>
+                  <li>Pharmacy Education</li>
+                </ul>
+                <p className="society-lead" style={{ marginTop: '12px' }}>
+                  <strong>Satara Polytechnic, Satara</strong> is one of the technical education institutions associated with the Society.
+                </p>
+              </div>
+
+              {/* Box 4: Our Commitment */}
+              <div className="about-box">
+                <h2 className="about-box-title">Our Commitment</h2>
+                <div className="about-box-line"></div>
+                <div className="about-intro-text">
+                  <p>
+                    The Society strives to create an educational environment that encourages knowledge, discipline, practical skills, innovation and responsible citizenship. Its institutions work towards preparing students for higher education, employment, entrepreneurship and meaningful contribution to society.
+                  </p>
+                </div>
+              </div>
+
+              {/* Box 5: Vision & Mission */}
+              <div className="about-box">
+                <h2 className="about-box-title">Vision &amp; Mission</h2>
+                <div className="about-box-line"></div>
+                <div className="vm-block about-vm-block">
+                  <h3 className="vm-title">Vision</h3>
+                  <p className="society-lead">
+                    To promote quality education and develop knowledgeable, skilled and responsible individuals who can contribute positively to society.
+                  </p>
+                </div>
+                <div className="vm-block about-vm-block">
+                  <h3 className="vm-title">Mission</h3>
+                  <p className="society-lead">
+                    To provide accessible and value-based education, encourage practical learning and skill development, and create opportunities for students to achieve their academic and professional goals.
+                  </p>
+                </div>
+              </div>
             </>
           )}
 

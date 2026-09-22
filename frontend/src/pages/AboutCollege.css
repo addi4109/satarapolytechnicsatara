@@ -140,6 +140,14 @@
   margin-bottom: 6px;
 }
 
+/* Society page — lead paragraph inside bordered boxes */
+.society-lead {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.7;
+  margin: 0;
+}
+
 .timeline {
   margin-top: 24px;
 }
