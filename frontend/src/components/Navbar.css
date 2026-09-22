@@ -435,47 +435,46 @@
 }
 
 .top-search-input {
-  height: 24px;
-  width: 170px;
-  padding: 0 8px;
-  font-size: 12px;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  height: 26px;
+  width: 180px;
+  padding: 0 10px;
+  font-size: 12.5px;
+  color: #1d2536;
+  background: #fff;
+  border: 1px solid #fff;
   border-right: none;
-  border-radius: 12px 0 0 12px;
+  border-radius: 3px 0 0 3px;
   outline: none;
   font-family: inherit;
-  transition: background 0.15s, border-color 0.15s, width 0.2s;
+  transition: box-shadow 0.15s, border-color 0.15s;
 }
 
 .top-search-input::placeholder {
-  color: #aab4c5;
+  color: #8a94a6;
 }
 
 .top-search-input:focus {
-  width: 220px;
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.45);
+  border-color: var(--sp-gold-dark);
+  box-shadow: 0 0 0 2px rgba(200, 150, 62, 0.25);
 }
 
 .top-search-btn {
-  height: 24px;
-  width: 26px;
+  height: 26px;
+  width: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
   color: #fff;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 0 12px 12px 0;
+  background: var(--sp-gold-dark, #a87e2f);
+  border: 1px solid var(--sp-gold-dark, #a87e2f);
+  border-radius: 0 3px 3px 0;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s, border-color 0.15s;
 }
 
 .top-search-btn:hover {
-  background: rgba(255, 255, 255, 0.22);
+  background: var(--sp-gold, #c8963e);
+  border-color: var(--sp-gold, #c8963e);
 }
 
 /* Results dropdown (absolute, so it doesn't shift the strip) */
@@ -835,22 +834,23 @@
     width: 100%;
     height: 36px;
     font-size: 13px;
-    color: #fff;
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px 0 0 8px;
+    color: #1d2536;
+    background: #fff;
+    border: 1px solid #fff;
+    border-right: none;
+    border-radius: 3px 0 0 3px;
   }
 
   .mobile-search .top-search-input::placeholder {
-    color: #9db2d8;
+    color: #8a94a6;
   }
 
   .mobile-search .top-search-btn {
     height: 36px;
     width: 40px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 0 8px 8px 0;
+    background: var(--sp-gold-dark, #a87e2f);
+    border: 1px solid var(--sp-gold-dark, #a87e2f);
+    border-radius: 0 3px 3px 0;
   }
 
   .mobile-search .top-search-results {
