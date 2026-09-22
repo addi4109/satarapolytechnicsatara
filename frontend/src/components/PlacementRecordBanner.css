@@ -1,6 +1,6 @@
 .pr-banner-section {
   background: var(--sp-page, #fff);
-  padding: 44px 20px 40px;
+  padding: 44px 5px 40px;
   text-align: center;
 }
 
@@ -23,16 +23,18 @@
 
 .pr-banner-link {
   display: block;
-  max-width: 920px;
+  width: 100%;
   margin: 0 auto;
-  border-radius: var(--sp-radius, 10px);
+  background: #fff;
+  padding: 12px;
+  border: 1px solid var(--sp-line, #e4e8ed);
+  border-radius: var(--sp-radius, 8px);
   overflow: hidden;
   text-decoration: none;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: box-shadow 0.2s;
 }
 
 .pr-banner-link:hover {
-  transform: translateY(-3px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
 }
 
@@ -40,8 +42,7 @@
   width: 100%;
   height: auto;
   display: block;
-  border: 1px solid var(--sp-line, #e4e8ed);
-  border-radius: var(--sp-radius, 10px);
+  border-radius: 4px;
   background: #fff;
 }
 
@@ -54,7 +55,7 @@
   justify-content: center;
   gap: 6px;
   border: 2px dashed var(--sp-line, #e4e8ed);
-  border-radius: var(--sp-radius, 10px);
+  border-radius: 4px;
   background: var(--sp-page, #f5f7fa);
   padding: 24px;
 }
