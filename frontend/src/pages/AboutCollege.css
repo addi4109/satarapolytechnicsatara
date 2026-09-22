@@ -444,13 +444,6 @@
   object-fit: cover;
   object-position: center top;
   display: block;
-  filter: grayscale(30%);
-  transition: filter 0.35s ease, transform 0.35s ease;
-}
-
-.leader-card:hover .leader-card-img {
-  filter: grayscale(0%);
-  transform: scale(1.05);
 }
 
 .leader-card-img-placeholder {
