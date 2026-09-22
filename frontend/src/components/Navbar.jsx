@@ -99,7 +99,7 @@ const MENU = [
     ],
   },
   {
-    label: 'Facilities',
+    label: 'Life@SPS',
     stack: true,
     match: (p) => p.startsWith('/activities') || p.startsWith('/campus') || p.startsWith('/gallery'),
     columns: [
