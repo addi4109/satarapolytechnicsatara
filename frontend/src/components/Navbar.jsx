@@ -119,6 +119,8 @@ const MENU = [
           { label: 'Library', link: '/campus/library' },
           { label: 'Bus Facility', link: '/campus/bus-facility' },
           { label: 'Canteen', link: '/campus/canteen' },
+          { label: 'Equal Opportunity Center', link: '/campus/equal-opportunity-center' },
+          { label: 'Center of Excellence', link: '/campus/center-of-excellence' },
         ],
       },
       {

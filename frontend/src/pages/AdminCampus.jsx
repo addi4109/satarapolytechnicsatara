@@ -16,6 +16,8 @@ const SECTIONS = [
   { key: 'library', label: 'Library' },
   { key: 'bus-facility', label: 'Bus Facility' },
   { key: 'canteen', label: 'Canteen' },
+  { key: 'equal-opportunity-center', label: 'Equal Opportunity Center' },
+  { key: 'center-of-excellence', label: 'Center of Excellence' },
   { key: 'registrar', label: "Registrar's Desk" },
   { key: 'office-staff', label: 'Office Staff' },
   { key: 'non-teaching-staff', label: 'Non Teaching Staff' },

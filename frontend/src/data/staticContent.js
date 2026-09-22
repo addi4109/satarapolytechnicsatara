@@ -57,6 +57,10 @@ export const STATIC_CONTENT = {
       'The institute operates buses on major routes across Satara city and nearby villages, providing safe and timely transportation facility for students and staff.',
     canteen:
       'A clean and hygienic canteen serves nutritious breakfast, meals and snacks at reasonable rates during college hours for students and staff.',
+    'equal-opportunity-center':
+      'The Equal Opportunity Center works to create an inclusive campus environment where every student gets equal access to education, facilities and opportunities irrespective of caste, creed, religion, gender or economic background. The center provides guidance and support to students from SC, ST, VJ/NT, OBC, SBC, minority and differently-abled categories, and addresses grievances related to discrimination or harassment promptly and sensitively.',
+    'center-of-excellence':
+      'The Center of Excellence is established to provide advanced training facilities and industry-aligned learning beyond the regular curriculum. It houses modern laboratories and equipment, and offers hands-on training in emerging technologies, skill development programmes and certification courses conducted in collaboration with industry experts.',
     registrar:
       'The office handles all administrative matters including admissions, certificates, examinations coordination and student services during working hours.',
     'office-staff':

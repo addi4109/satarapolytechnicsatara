@@ -13,6 +13,8 @@ const routeMap = {
   library: 'library',
   'bus-facility': 'bus-facility',
   canteen: 'canteen',
+  'equal-opportunity-center': 'equal-opportunity-center',
+  'center-of-excellence': 'center-of-excellence',
   registrar: 'registrar',
   'office-staff': 'office-staff',
   'non-teaching-staff': 'non-teaching-staff',
@@ -22,6 +24,8 @@ const sidebarLinks = [
   { id: 'library', label: 'Library' },
   { id: 'bus-facility', label: 'Bus Facility' },
   { id: 'canteen', label: 'Canteen' },
+  { id: 'equal-opportunity-center', label: 'Equal Opportunity Center' },
+  { id: 'center-of-excellence', label: 'Center of Excellence' },
   { id: 'registrar', label: "Registrar's Desk" },
   { id: 'office-staff', label: 'Office Staff' },
   { id: 'non-teaching-staff', label: 'Non Teaching Staff' },
@@ -336,6 +340,28 @@ function Campus() {
 
               {renderTables(getSection('canteen').tables)}
               {renderInfoRows(getSection('canteen').infoRows)}
+            </>
+          )}
+
+          {/* Equal Opportunity Center */}
+          {active === 'equal-opportunity-center' && (
+            <>
+              <h2 className="content-heading">{getSection('equal-opportunity-center').title || 'Equal Opportunity Center'}</h2>
+              <div className="content-line"></div>
+              {renderContent(getSection('equal-opportunity-center').content || STATIC_CONTENT.campus['equal-opportunity-center'])}
+              {renderTables(getSection('equal-opportunity-center').tables)}
+              {renderInfoRows(getSection('equal-opportunity-center').infoRows)}
+            </>
+          )}
+
+          {/* Center of Excellence */}
+          {active === 'center-of-excellence' && (
+            <>
+              <h2 className="content-heading">{getSection('center-of-excellence').title || 'Center of Excellence'}</h2>
+              <div className="content-line"></div>
+              {renderContent(getSection('center-of-excellence').content || STATIC_CONTENT.campus['center-of-excellence'])}
+              {renderTables(getSection('center-of-excellence').tables)}
+              {renderInfoRows(getSection('center-of-excellence').infoRows)}
             </>
           )}
 
