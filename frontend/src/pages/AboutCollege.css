@@ -824,35 +824,12 @@
 /* ===== Code of Conduct ===== */
 .coc-grid {
   display: flex;
+  flex-direction: column;
   gap: 18px;
   margin-top: 8px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-  scroll-snap-type: x proximity;
-}
-
-/* Slim horizontal scrollbar for the card row */
-.coc-grid::-webkit-scrollbar {
-  height: 8px;
-}
-
-.coc-grid::-webkit-scrollbar-track {
-  background: #f1f4f8;
-  border-radius: 4px;
-}
-
-.coc-grid::-webkit-scrollbar-thumb {
-  background: #c9d2df;
-  border-radius: 4px;
-}
-
-.coc-grid::-webkit-scrollbar-thumb:hover {
-  background: #aeb9c9;
 }
 
 .coc-card {
-  flex: 0 0 320px;
-  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   background: #fff;
@@ -896,10 +873,9 @@
 
 @media (max-width: 768px) {
   .coc-card {
-    flex-basis: 82vw;
+    padding: 18px 14px;
   }
 }
-
 /* ===== Institute Overview Boxes ===== */
 .about-box {
   background: #fff;
