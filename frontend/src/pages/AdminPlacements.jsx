@@ -23,6 +23,7 @@ const defaultSection = {
   records: [],
   recordTable: [],
   recordImages: [],
+  recordBanner: '',
   recruiters: [],
   officerName: '',
   officerPhoto: '',
@@ -83,6 +84,7 @@ function AdminPlacements() {
         records: existing.records || [],
         recordTable: existing.recordTable || [],
         recordImages: existing.recordImages || [],
+        recordBanner: existing.recordBanner || '',
         recruiters: existing.recruiters || [],
         officerName: existing.officerName || '',
         officerPhoto: existing.officerPhoto || '',
@@ -118,7 +120,7 @@ function AdminPlacements() {
     const existing = sections[activeTab];
     if (existing) {
       setForm({
-        title: existing.title || '', content: existing.content || '', steps: existing.steps || [], records: existing.records || [], recordTable: existing.recordTable || [], recordImages: existing.recordImages || [], recruiters: existing.recruiters || [], officerName: existing.officerName || '', officerPhoto: existing.officerPhoto || '', officerQual: existing.officerQual || '', officerMsg: existing.officerMsg || '', officeTeam: existing.officeTeam || [], active: existing.active !== false,
+        title: existing.title || '', content: existing.content || '', steps: existing.steps || [], records: existing.records || [], recordTable: existing.recordTable || [], recordImages: existing.recordImages || [], recordBanner: existing.recordBanner || '', recruiters: existing.recruiters || [], officerName: existing.officerName || '', officerPhoto: existing.officerPhoto || '', officerQual: existing.officerQual || '', officerMsg: existing.officerMsg || '', officeTeam: existing.officeTeam || [], active: existing.active !== false,
       });
     } else { setForm({ ...defaultSection }); }
     setView('preview'); resetInputs();
@@ -496,6 +498,14 @@ function AdminPlacements() {
                     <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Placement Records</h4>
                     <p style={{ fontSize: '12px', color: '#888', margin: '0 0 16px' }}>Preview of how records appear on the live website.</p>
 
+                    {/* Record Banner Preview */}
+                    {form.recordBanner && (
+                      <div style={{ marginBottom: '24px' }}>
+                        <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Latest Record Banner</h4>
+                        <img src={form.recordBanner} alt="Latest placement record banner" style={{ width: '100%', maxWidth: '720px', borderRadius: '8px', border: '1px solid #e4e8ed', display: 'block' }} />
+                      </div>
+                    )}
+
                     {/* Record Table Preview */}
                     {form.recordTable.length > 0 && (
                       <div className="fee-table-wrap" style={{ marginBottom: '24px' }}>
@@ -545,6 +555,18 @@ function AdminPlacements() {
                 ) : (
                   /* Edit mode */
                   <>
+                    <h4 style={{ margin: '0 0 6px', color: '#243358', fontSize: '15px' }}>Latest Record Banner</h4>
+                    <p style={{ fontSize: '12px', color: '#888', margin: '0 0 12px' }}>Banner/poster of the latest year's placement record. Shown on the Home page and at the top of Placement Records.</p>
+                    <div style={{ maxWidth: '440px', marginBottom: '24px' }}>
+                      <ImageUpload
+                        value={form.recordBanner}
+                        onChange={(url) => handleChange('recordBanner', url)}
+                        label=""
+                        placeholder="Upload banner / poster"
+                      />
+                    </div>
+
+                    <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #e4e8ed' }} />
                     <h4 style={{ margin: '0 0 12px', color: '#243358', fontSize: '15px' }}>Record Table</h4>
                     {form.recordTable.map((row, i) => (
                       <div key={i} style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '10px', background: '#f8f9fb', border: '1px solid #e4e8ed', borderRadius: '6px', padding: '10px 12px' }}>
@@ -644,6 +666,7 @@ function AdminPlacements() {
                       records: sections[activeTab].records || [],
                       recordTable: sections[activeTab].recordTable || [],
                       recordImages: sections[activeTab].recordImages || [],
+                      recordBanner: sections[activeTab].recordBanner || '',
                       recruiters: sections[activeTab].recruiters || [],
                       officerName: sections[activeTab].officerName || '',
                       officerPhoto: sections[activeTab].officerPhoto || '',

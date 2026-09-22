@@ -329,6 +329,24 @@ function Placements() {
             <>
               <h2 className="content-heading">Placement Records</h2>
               <div className="content-line"></div>
+
+              {/* Latest Record Banner (uploaded via Admin) */}
+              <div
+                className="placement-record-banner"
+                style={{ cursor: getSection('records').recordBanner ? 'pointer' : 'default' }}
+                onClick={() => getSection('records').recordBanner && setLightbox({ url: getSection('records').recordBanner, caption: 'Latest Placement Record' })}
+              >
+                {getSection('records').recordBanner ? (
+                  <img src={getSection('records').recordBanner} alt="Latest Placement Record" />
+                ) : (
+                  <div className="placement-record-banner-inner">
+                    <span className="placement-record-banner-icon">🏆</span>
+                    <p className="placement-record-banner-title">Latest Placement Record</p>
+                    <span className="placement-record-banner-hint">Banner will be updated soon</span>
+                  </div>
+                )}
+              </div>
+
               <p>
                 Satara Polytechnic, Satara has a strong track record of successful campus
                 placements. Our Training & Placement Cell regularly organizes recruitment drives

@@ -32,6 +32,10 @@ const PlacementSchema = new mongoose.Schema({
     type: [{ imageUrl: String, title: String }],
     default: [],
   },
+  recordBanner: {
+    type: String,
+    default: '',
+  },
   recruiters: {
     type: [{ name: String, logoUrl: String }],
     default: [],
