@@ -15,9 +15,6 @@ const routeMap = {
   canteen: 'canteen',
   'equal-opportunity-center': 'equal-opportunity-center',
   'center-of-excellence': 'center-of-excellence',
-  registrar: 'registrar',
-  'office-staff': 'office-staff',
-  'non-teaching-staff': 'non-teaching-staff',
 };
 
 const sidebarLinks = [
@@ -26,9 +23,6 @@ const sidebarLinks = [
   { id: 'canteen', label: 'Canteen' },
   { id: 'equal-opportunity-center', label: 'Equal Opportunity Center' },
   { id: 'center-of-excellence', label: 'Center of Excellence' },
-  { id: 'registrar', label: "Registrar's Desk" },
-  { id: 'office-staff', label: 'Office Staff' },
-  { id: 'non-teaching-staff', label: 'Non Teaching Staff' },
 ];
 
 function Campus() {
