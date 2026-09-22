@@ -31,6 +31,14 @@ const MENU = [
         ],
       },
       {
+        header: 'Administration',
+        items: [
+          { label: "Registrar's Desk", link: '/campus/registrar' },
+          { label: 'Office Staff', link: '/campus/office-staff' },
+          { label: 'Non Teaching Staff', link: '/campus/non-teaching-staff' },
+        ],
+      },
+      {
         header: 'Management',
         items: [
           { label: 'Founder', link: '/about/founder' },
@@ -91,7 +99,7 @@ const MENU = [
     ],
   },
   {
-    label: 'Student Life',
+    label: 'Facilities',
     stack: true,
     match: (p) => p.startsWith('/activities') || p.startsWith('/campus') || p.startsWith('/gallery'),
     columns: [
@@ -106,14 +114,11 @@ const MENU = [
         ],
       },
       {
-        header: 'Campus',
+        header: 'Facilities',
         items: [
           { label: 'Library', link: '/campus/library' },
           { label: 'Bus Facility', link: '/campus/bus-facility' },
           { label: 'Canteen', link: '/campus/canteen' },
-          { label: "Registrar's Desk", link: '/campus/registrar' },
-          { label: 'Office Staff', link: '/campus/office-staff' },
-          { label: 'Non Teaching Staff', link: '/campus/non-teaching-staff' },
         ],
       },
       {
