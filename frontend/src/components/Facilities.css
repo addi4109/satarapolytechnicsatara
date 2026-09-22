@@ -59,8 +59,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
-  line-height: 1;
+  color: var(--sp-navy, #243358);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.facility-icon svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.facility-card:hover .facility-icon {
+  background: #fdf6ea;
+  border-color: var(--sp-gold, #c8963e);
+  color: var(--sp-gold-dark, #a5721c);
 }
 
 .facility-name {
