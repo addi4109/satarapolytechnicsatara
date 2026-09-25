@@ -5,6 +5,7 @@ import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './AboutCollege.css';
+import './Gallery.css'; /* lightbox styles for the org chart zoom view */
 
 const routeMap = {
   'college': 'institute',
