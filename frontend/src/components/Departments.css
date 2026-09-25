@@ -1,6 +1,8 @@
 .dept-section {
   background: #fff;
-  padding: 56px 20px;
+  /* No bottom padding: the Why Choose section is the last child, and the
+     gap to the next section comes from that section's own top padding. */
+  padding: 56px 20px 0;
 }
 
 .dept-inner {
@@ -158,7 +160,8 @@
 /* ===== Why Choose Us image ===== */
 .why-section {
   background: #ffffff;
-  padding: 44px 20px 60px;
+  /* No bottom padding: the Campus Facilities section supplies the gap. */
+  padding: 44px 20px 0;
 }
 
 .why-inner {
@@ -200,7 +203,7 @@
 
 @media (max-width: 600px) {
   .why-section {
-    padding: 24px 12px;
+    padding: 24px 12px 0;
   }
 
   .why-heading {
