@@ -662,6 +662,20 @@
 @media (max-width: 1024px) {
   .main-header-inner {
     gap: 12px;
+    /* One row only: logo → name → ☰. The drawer nav is position:absolute
+       here, so nothing needs to wrap to a second line. */
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .logo-area {
+    min-width: 0; /* let the name shrink instead of pushing ☰ to a new line */
+  }
+
+  .college-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   /* Hamburger joins the identity row: logo -> name -> ☰.
@@ -677,6 +691,7 @@
     margin-left: 4px;
     margin-right: auto;
     flex-shrink: 0;
+    align-self: center;
     z-index: 1250;
   }
 

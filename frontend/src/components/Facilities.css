@@ -282,6 +282,8 @@ a.facility-node {
   .facilities-flow {
     grid-template-columns: repeat(3, 1fr);
     gap: 14px;
+    /* Stretch every card in a row to the same height. */
+    align-items: stretch;
   }
 
   .flow-drop {
@@ -293,6 +295,8 @@ a.facility-node {
     border-radius: 14px;
     padding: 14px 10px;
     gap: 6px;
+    height: 100%;
+    box-sizing: border-box;
   }
 
   /* Tooltips become static descriptions inside the card */
