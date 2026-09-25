@@ -98,12 +98,12 @@ function PlacementRecordBanner() {
   if (status !== 'ready') return null;
 
   return (
-    <section className="pr-banner-section" data-reveal="fade">
-      <h2 className="pr-banner-heading" data-reveal="down">Latest Placement Record</h2>
-      <div className="pr-banner-line" data-reveal="down" data-reveal-delay="100"></div>
+    <section className="pr-banner-section">
+      <h2 className="pr-banner-heading">Latest Placement Record</h2>
+      <div className="pr-banner-line"></div>
 
       <div className="pr-banner-row">
-        <div className="pr-banner-side pr-banner-side-left" data-reveal="left">
+        <div className="pr-banner-side pr-banner-side-left">
           {SIDE_CARDS.left.map((c) => (
             <SideCard key={c.title} {...c} />
           ))}
@@ -121,7 +121,7 @@ function PlacementRecordBanner() {
           )}
         </Link>
 
-        <div className="pr-banner-side pr-banner-side-right" data-reveal="right">
+        <div className="pr-banner-side pr-banner-side-right">
           {SIDE_CARDS.right.map((c) => (
             <SideCard key={c.title} {...c} />
           ))}

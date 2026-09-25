@@ -20,7 +20,7 @@ function NoticeTicker() {
   ));
 
   return (
-    <div className="ticker-section" data-reveal="down">
+    <div className="ticker-section">
       <span className="ticker-label">Notice</span>
       <div className="ticker-wrap">
         <div className="ticker-scroll">
