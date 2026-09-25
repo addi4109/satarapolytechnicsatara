@@ -62,7 +62,6 @@ function DepartmentsPage() {
   const activeSlug = deptId || (departments.length > 0 ? departments[0].slug : '');
   const dept = departments.find((d) => d.slug === activeSlug) || departments[0];
 
-  const [obeTab, setObTab] = useState('peos');
   const [rankerYear, setRankerYear] = useState('1st Year');
 
   const sidebarItems = [
@@ -353,83 +352,61 @@ function DepartmentsPage() {
                   framework to ensure that students achieve the desired learning outcomes.
                 </p>
 
-                {/* Horizontal sub-tabs */}
-                <div className="obe-tabs">
-                  {['peos', 'pos', 'psos'].map((tab) => (
-                    <button
-                      key={tab}
-                      className={`obe-tab ${obeTab === tab ? 'active' : ''}`}
-                      onClick={() => setObTab(tab)}
-                    >
-                      {tab === 'peos' && 'PEOs'}
-                      {tab === 'pos' && 'POs'}
-                      {tab === 'psos' && 'PSOs'}
-                    </button>
-                  ))}
-                </div>
+                {/* All three OBE groups at a glance — one plain card each. */}
+                <div className="obe-all-grid">
+                  <div className="obe-plain-card">
+                    <h3 className="obe-sub-heading">Program Educational Objectives (PEOs)</h3>
+                    {dept.peos && dept.peos.length > 0 ? (
+                      <ul className="obe-list">
+                        {dept.peos.map((peo, i) => (
+                          <li key={i} className="obe-list-item">
+                            <div>
+                              {peo.title && <strong>{peo.title}</strong>}
+                              {peo.description && <p>{peo.description}</p>}
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p style={{ color: '#888', fontStyle: 'italic' }}>PEOs not added yet.</p>
+                    )}
+                  </div>
 
-                <div className="obe-content">
-                  {obeTab === 'peos' && (
-                    <div className="obe-sub-card">
-                      <h3 className="obe-sub-heading">Program Educational Objectives (PEOs)</h3>
-                      <p className="obe-desc">PEOs are broad statements that describe the career and professional achievements that the program is preparing graduates to achieve.</p>
-                      {dept.peos && dept.peos.length > 0 ? (
-                        <ul className="obe-list">
-                          {dept.peos.map((peo, i) => (
-                            <li key={i} className="obe-list-item">
-                              <div>
-                                {peo.title && <strong>{peo.title}</strong>}
-                                {peo.description && <p>{peo.description}</p>}
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p style={{ color: '#888', fontStyle: 'italic' }}>PEOs not added yet.</p>
-                      )}
-                    </div>
-                  )}
-                  {obeTab === 'pos' && (
-                    <div className="obe-sub-card">
-                      <h3 className="obe-sub-heading">Program Outcomes (POs)</h3>
-                      <p className="obe-desc">POs are measurable outcomes that students are expected to achieve by the time of graduation.</p>
-                      {dept.pos && dept.pos.length > 0 ? (
-                        <ul className="obe-list">
-                          {dept.pos.map((po, i) => (
-                            <li key={i} className="obe-list-item">
-                              <div>
-                                {po.title && <strong>{po.title}</strong>}
-                                {po.description && <p>{po.description}</p>}
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p style={{ color: '#888', fontStyle: 'italic' }}>POs not added yet.</p>
-                      )}
-                    </div>
-                  )}
-                  {obeTab === 'psos' && (
-                    <div className="obe-sub-card">
-                      <h3 className="obe-sub-heading">Program Specific Outcomes (PSOs)</h3>
-                      <p className="obe-desc">PSOs are outcomes that differentiate the program from other programs and reflect the discipline-specific competencies.</p>
-                      {dept.psos && dept.psos.length > 0 ? (
-                        <ul className="obe-list">
-                          {dept.psos.map((pso, i) => (
-                            <li key={i} className="obe-list-item">
-                              <div>
-                                {pso.title && <strong>{pso.title}</strong>}
-                                {pso.description && <p>{pso.description}</p>}
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p style={{ color: '#888', fontStyle: 'italic' }}>PSOs not added yet.</p>
-                      )}
-                    </div>
-                  )}
+                  <div className="obe-plain-card">
+                    <h3 className="obe-sub-heading">Program Outcomes (POs)</h3>
+                    {dept.pos && dept.pos.length > 0 ? (
+                      <ul className="obe-list">
+                        {dept.pos.map((po, i) => (
+                          <li key={i} className="obe-list-item">
+                            <div>
+                              {po.title && <strong>{po.title}</strong>}
+                              {po.description && <p>{po.description}</p>}
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p style={{ color: '#888', fontStyle: 'italic' }}>POs not added yet.</p>
+                    )}
+                  </div>
 
+                  <div className="obe-plain-card">
+                    <h3 className="obe-sub-heading">Program Specific Outcomes (PSOs)</h3>
+                    {dept.psos && dept.psos.length > 0 ? (
+                      <ul className="obe-list">
+                        {dept.psos.map((pso, i) => (
+                          <li key={i} className="obe-list-item">
+                            <div>
+                              {pso.title && <strong>{pso.title}</strong>}
+                              {pso.description && <p>{pso.description}</p>}
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p style={{ color: '#888', fontStyle: 'italic' }}>PSOs not added yet.</p>
+                    )}
+                  </div>
                 </div>
               </div>
             )}
