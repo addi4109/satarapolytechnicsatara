@@ -135,6 +135,20 @@ const FACILITIES = [
   },
 ];
 
+/* Satellite positions on the chart ellipse (percent of the chart box).
+   Evenly spaced starting at the top, going clockwise. */
+const POSITIONS = [
+  { x: 50, y: 9 },
+  { x: 76.5, y: 18.5 },
+  { x: 90, y: 43 },
+  { x: 84, y: 70 },
+  { x: 62, y: 85.5 },
+  { x: 38, y: 85.5 },
+  { x: 16, y: 70 },
+  { x: 10, y: 43 },
+  { x: 23.5, y: 18.5 },
+];
+
 function Facilities() {
   return (
     <section className="facilities-section" data-reveal="fade">
@@ -142,19 +156,47 @@ function Facilities() {
         <h2 className="facilities-heading" data-reveal="down">Campus Facilities</h2>
         <div className="facilities-line" data-reveal="down" data-reveal-delay="100"></div>
 
-        <div className="facilities-grid">
-          {FACILITIES.map((f) => (
-            <div className={`facility-card tone-${f.tone}`} key={f.title} data-reveal-child>
-              <div className="facility-icon">{f.icon}</div>
-              <h3 className="facility-name">{f.title}</h3>
-              <p className="facility-desc">{f.desc}</p>
-              {f.link && (
-                <a href={f.link} className="facility-link">
-                  View Details <span aria-hidden="true">→</span>
+        <div className="facilities-chart" data-reveal="fade">
+          {/* Spokes connecting the hub to each facility circle */}
+          <svg className="facilities-chart-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            {POSITIONS.map((p, i) => (
+              <line key={i} x1="50" y1="50" x2={p.x} y2={p.y} vectorEffect="non-scaling-stroke" />
+            ))}
+          </svg>
+
+          {/* Hub circle */}
+          <div className="facilities-center" data-reveal="zoom">
+            <span className="facilities-center-sub">Explore Our</span>
+            <span className="facilities-center-text">Campus Facilities</span>
+          </div>
+
+          {/* Facility circles arranged around the hub */}
+          <div className="facilities-ring">
+            {FACILITIES.map((f, i) => {
+              const pos = POSITIONS[i];
+              const tipAlign = pos.x < 25 ? 'tip-right-align' : pos.x > 75 ? 'tip-left-align' : '';
+              const nodeClass = `facility-node tone-${f.tone} pos-${i + 1}`;
+              const nodeBody = (
+                <>
+                  <span className="facility-node-icon">{f.icon}</span>
+                  <span className="facility-node-name">{f.title}</span>
+                  <span className={`facility-node-tip ${tipAlign}`}>
+                    {f.desc}
+                    {f.link && <span className="facility-node-more">Click to view details →</span>}
+                  </span>
+                </>
+              );
+              return f.link ? (
+                <a key={f.title} href={f.link} className={nodeClass} data-reveal-child aria-label={f.title}>
+                  {nodeBody}
                 </a>
-              )}
-            </div>
-          ))}
+              ) : (
+                <div key={f.title} className={nodeClass} data-reveal-child>
+                  {nodeBody}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

@@ -1,6 +1,6 @@
 .facilities-section {
   background: #fff;
-  padding: 28px 20px 48px;
+  padding: 28px 20px 56px;
 }
 
 .facilities-inner {
@@ -25,239 +25,313 @@
   border-radius: 2px;
 }
 
-.facilities-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+/* ============================================================
+   Radial "attribute chart": hub circle in the centre with the
+   section title, 9 facility circles around it, spokes connecting.
+   ============================================================ */
+.facilities-chart {
+  position: relative;
+  width: min(880px, 100%);
+  aspect-ratio: 10 / 9;
+  margin: 0 auto;
 }
 
-.facility-card {
-  position: relative;
-  overflow: hidden;
+/* Spokes: an SVG underlay sized to the chart box. */
+.facilities-chart-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.facilities-chart-lines line {
+  stroke: #d5dcea;
+  stroke-width: 1.5;
+}
+
+/* Hub circle */
+.facilities-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #3a548c 0%, var(--sp-navy, #243358) 58%, #1c2a49 100%);
+  color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  background: #fff;
-  border: 1px solid var(--sp-line, #e4e8ed);
-  border-radius: var(--sp-radius, 10px);
-  padding: 26px 22px 22px;
+  justify-content: center;
+  gap: 4px;
   text-align: center;
-  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  padding: 8px;
+  box-shadow: 0 10px 30px rgba(36, 51, 88, 0.35);
+  z-index: 2;
 }
 
-/* Slim colour strip along the top edge of every card. */
-.facility-card::before {
-  content: '';
+.facilities-center-sub {
+  font-size: clamp(9px, 1.1vw, 12px);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #d9c48d;
+}
+
+.facilities-center-text {
+  font-family: var(--sp-font-display, 'Georgia', serif);
+  font-size: clamp(13px, 2vw, 21px);
+  font-weight: 700;
+  line-height: 1.25;
+  padding: 0 4px;
+}
+
+/* Facility circles */
+.facilities-ring {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--tone-bar, #c8963e);
+  inset: 0;
+  z-index: 3;
 }
 
-.facility-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  border-color: var(--sp-gold, #c8963e);
-}
-
-.facility-icon {
-  width: 54px;
-  height: 54px;
+.facility-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 17%;
+  aspect-ratio: 1;
   border-radius: 50%;
-  background: var(--sp-page, #f5f7fa);
-  border: 1px solid var(--sp-line, #e4e8ed);
+  background: var(--tone-bg, #fdf8ee);
+  border: 1.5px solid var(--tone-bar, #d9a441);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--sp-navy, #243358);
-  transition: background 0.2s, border-color 0.2s;
-}
-
-.facility-icon svg {
-  width: 24px;
-  height: 24px;
-  display: block;
-}
-
-.facility-card:hover .facility-icon {
-  background: #fdf6ea;
-  border-color: var(--sp-gold, #c8963e);
-  color: var(--sp-gold-dark, #a5721c);
-}
-
-.facility-name {
-  font-family: var(--sp-font-display, 'Georgia', serif);
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--sp-navy, #243358);
-  margin: 0;
-}
-
-.facility-desc {
-  font-size: 13px;
-  color: #5a6478;
-  line-height: 1.6;
-  margin: 0;
-}
-
-.facility-link {
-  margin-top: auto;
-  padding-top: 4px;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--sp-gold-dark, #a5721c);
+  gap: 4px;
+  text-align: center;
+  padding: 6px;
   text-decoration: none;
+  cursor: default;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.facility-link:hover {
-  text-decoration: underline;
+a.facility-node {
+  cursor: pointer;
 }
 
-@media (max-width: 900px) {
-  .facilities-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.facility-node:hover {
+  transform: translate(-50%, -50%) scale(1.06);
+  z-index: 5;
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--tone-bar, #d9a441) 30%, rgba(0, 0, 0, 0.1));
 }
 
-@media (max-width: 600px) {
-  .facilities-grid {
-    grid-template-columns: 1fr;
-  }
+.facility-node-icon {
+  display: flex;
+  color: var(--tone-icon-color, #a5721c);
+}
+
+.facility-node-icon svg {
+  width: clamp(16px, 2.6vw, 24px);
+  height: clamp(16px, 2.6vw, 24px);
+}
+
+.facility-node-name {
+  font-family: var(--sp-font-display, 'Georgia', serif);
+  font-size: clamp(9px, 1.35vw, 12.5px);
+  font-weight: 700;
+  color: var(--tone-title, #7a5a10);
+  line-height: 1.2;
+}
+
+/* Hover tooltip with the description */
+.facility-node-tip {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 230px;
+  background: #fff;
+  border: 1px solid var(--tone-bar, #d9a441);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  padding: 12px 14px;
+  font-size: 12.5px;
+  color: #5a6478;
+  line-height: 1.55;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.facility-node-tip::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 7px solid transparent;
+  border-bottom-color: var(--tone-bar, #d9a441);
+}
+
+/* Edge circles: flip the tooltip inward so it never clips off-chart */
+.facility-node-tip.tip-right-align {
+  left: auto;
+  right: -10px;
+  transform: none;
+}
+
+.facility-node-tip.tip-right-align::before {
+  left: auto;
+  right: 18px;
+  transform: none;
+}
+
+.facility-node-tip.tip-left-align {
+  left: -10px;
+  transform: none;
+}
+
+.facility-node-tip.tip-left-align::before {
+  left: 18px;
+  transform: none;
+}
+
+.facility-node:hover .facility-node-tip,
+.facility-node:focus-visible .facility-node-tip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(2px);
+}
+
+.facility-node:hover .facility-node-tip.tip-right-align,
+.facility-node:focus-visible .facility-node-tip.tip-right-align {
+  transform: translateY(2px);
+}
+
+.facility-node:hover .facility-node-tip.tip-left-align,
+.facility-node:focus-visible .facility-node-tip.tip-left-align {
+  transform: translateY(2px);
+}
+
+.facility-node-more {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--tone-icon-color, #a5721c);
+}
+
+/* Bottom-row circles: tooltip above instead of below */
+.facility-node.pos-5 .facility-node-tip,
+.facility-node.pos-6 .facility-node-tip,
+.facility-node.pos-7 .facility-node-tip {
+  top: auto;
+  bottom: calc(100% + 10px);
+}
+
+.facility-node.pos-5 .facility-node-tip::before,
+.facility-node.pos-6 .facility-node-tip::before,
+.facility-node.pos-7 .facility-node-tip::before {
+  bottom: auto;
+  top: 100%;
+  border-bottom-color: transparent;
+  border-top-color: var(--tone-bar, #d9a441);
 }
 
 /* ============================================================
-   Per-card colour tones — soft, hand-picked pastels so the grid
-   feels lively but still human and formal, not neon.
+   Per-card colour tones (kept from the previous design).
    ============================================================ */
-.tone-amber {
-  --tone-bg: #fdf8ee;
-  --tone-bar: #d9a441;
-  --tone-icon-bg: #f7ecd4;
-  --tone-icon-color: #a5721c;
-  --tone-title: #7a5a10;
+.tone-amber  { --tone-bg: #fdf8ee; --tone-bar: #d9a441; --tone-icon-color: #a5721c; --tone-title: #7a5a10; }
+.tone-blue   { --tone-bg: #eff4fb; --tone-bar: #4a7ab0; --tone-icon-color: #2c5f96; --tone-title: #2c5f96; }
+.tone-orange { --tone-bg: #fdf3ec; --tone-bar: #d97e3f; --tone-icon-color: #b05a1a; --tone-title: #b05a1a; }
+.tone-teal   { --tone-bg: #edf6f4; --tone-bar: #2f9d8a; --tone-icon-color: #1d7a69; --tone-title: #1d7a69; }
+.tone-maroon { --tone-bg: #fbf0f2; --tone-bar: #b0556b; --tone-icon-color: #8f3a50; --tone-title: #8f3a50; }
+.tone-violet { --tone-bg: #f5f1fb; --tone-bar: #8b72c9; --tone-icon-color: #6a4fa3; --tone-title: #6a4fa3; }
+.tone-green  { --tone-bg: #eff7ee; --tone-bar: #5da357; --tone-icon-color: #3f7d3a; --tone-title: #3f7d3a; }
+.tone-navy   { --tone-bg: #eff2f8; --tone-bar: #44598c; --tone-icon-color: #33487a; --tone-title: #33487a; }
+.tone-sky    { --tone-bg: #edf6fa; --tone-bar: #4a9db8; --tone-icon-color: #2f7e99; --tone-title: #2f7e99; }
+
+/* Node positions on the chart ellipse */
+.pos-1 { left: 50%;   top: 9%; }
+.pos-2 { left: 76.5%; top: 18.5%; }
+.pos-3 { left: 90%;   top: 43%; }
+.pos-4 { left: 84%;   top: 70%; }
+.pos-5 { left: 62%;   top: 85.5%; }
+.pos-6 { left: 38%;   top: 85.5%; }
+.pos-7 { left: 16%;   top: 70%; }
+.pos-8 { left: 10%;   top: 43%; }
+.pos-9 { left: 23.5%; top: 18.5%; }
+
+/* ============================================================
+   Responsive: below 900px the chart becomes a vertical layout —
+   hub on top, circles in a 3-per-row grid below (kept circular).
+   ============================================================ */
+@media (max-width: 900px) {
+  .facilities-chart {
+    width: 100%;
+    aspect-ratio: auto;
+  }
+
+  .facilities-chart-lines {
+    display: none;
+  }
+
+  .facilities-center {
+    position: static;
+    transform: none;
+    width: 210px;
+    height: 210px;
+    margin: 0 auto 26px;
+  }
+
+  .facilities-ring {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    justify-items: center;
+  }
+
+  .facility-node {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 170px;
+  }
+
+  .facility-node:hover {
+    transform: scale(1.04);
+  }
+
+  /* Tooltips become static descriptions inside the node card */
+  .facility-node-tip,
+  .facility-node-tip.tip-right-align,
+  .facility-node-tip.tip-left-align {
+    position: static;
+    transform: none;
+    opacity: 1;
+    visibility: visible;
+    width: 100%;
+    margin-top: 4px;
+    padding: 0 2px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    font-size: 11px;
+  }
+
+  .facility-node-tip::before {
+    display: none;
+  }
+
+  .facility-node-more {
+    display: none;
+  }
 }
 
-.tone-blue {
-  --tone-bg: #eff4fb;
-  --tone-bar: #4a7ab0;
-  --tone-icon-bg: #dbe7f5;
-  --tone-icon-color: #2c5f96;
-  --tone-title: #2c5f96;
-}
-
-.tone-orange {
-  --tone-bg: #fdf3ec;
-  --tone-bar: #d97e3f;
-  --tone-icon-bg: #f8e3d3;
-  --tone-icon-color: #b05a1a;
-  --tone-title: #b05a1a;
-}
-
-.tone-teal {
-  --tone-bg: #edf6f4;
-  --tone-bar: #2f9d8a;
-  --tone-icon-bg: #d7ece7;
-  --tone-icon-color: #1d7a69;
-  --tone-title: #1d7a69;
-}
-
-.tone-maroon {
-  --tone-bg: #fbf0f2;
-  --tone-bar: #b0556b;
-  --tone-icon-bg: #f3dbe0;
-  --tone-icon-color: #8f3a50;
-  --tone-title: #8f3a50;
-}
-
-.tone-violet {
-  --tone-bg: #f5f1fb;
-  --tone-bar: #8b72c9;
-  --tone-icon-bg: #e7dff4;
-  --tone-icon-color: #6a4fa3;
-  --tone-title: #6a4fa3;
-}
-
-.tone-green {
-  --tone-bg: #eff7ee;
-  --tone-bar: #5da357;
-  --tone-icon-bg: #dcecd9;
-  --tone-icon-color: #3f7d3a;
-  --tone-title: #3f7d3a;
-}
-
-.tone-navy {
-  --tone-bg: #eff2f8;
-  --tone-bar: #44598c;
-  --tone-icon-bg: #dde3f0;
-  --tone-icon-color: #33487a;
-  --tone-title: #33487a;
-}
-
-.tone-sky {
-  --tone-bg: #edf6fa;
-  --tone-bar: #4a9db8;
-  --tone-icon-bg: #d8ecf3;
-  --tone-icon-color: #2f7e99;
-  --tone-title: #2f7e99;
-}
-
-/* Apply the tone variables to the card parts. Structure unchanged. */
-.facility-card.tone-amber,
-.facility-card.tone-blue,
-.facility-card.tone-orange,
-.facility-card.tone-teal,
-.facility-card.tone-maroon,
-.facility-card.tone-violet,
-.facility-card.tone-green,
-.facility-card.tone-navy,
-.facility-card.tone-sky {
-  background: var(--tone-bg);
-  border-color: color-mix(in srgb, var(--tone-bar) 26%, #e4e8ed);
-}
-
-.facility-card.tone-amber .facility-icon,
-.facility-card.tone-blue .facility-icon,
-.facility-card.tone-orange .facility-icon,
-.facility-card.tone-teal .facility-icon,
-.facility-card.tone-maroon .facility-icon,
-.facility-card.tone-violet .facility-icon,
-.facility-card.tone-green .facility-icon,
-.facility-card.tone-navy .facility-icon,
-.facility-card.tone-sky .facility-icon {
-  background: #fff;
-  border-color: color-mix(in srgb, var(--tone-bar) 35%, #e4e8ed);
-  color: var(--tone-icon-color);
-}
-
-.facility-card.tone-amber .facility-name,
-.facility-card.tone-blue .facility-name,
-.facility-card.tone-orange .facility-name,
-.facility-card.tone-teal .facility-name,
-.facility-card.tone-maroon .facility-name,
-.facility-card.tone-violet .facility-name,
-.facility-card.tone-green .facility-name,
-.facility-card.tone-navy .facility-name,
-.facility-card.tone-sky .facility-name {
-  color: var(--tone-title);
-}
-
-.facility-card.tone-amber:hover,
-.facility-card.tone-blue:hover,
-.facility-card.tone-orange:hover,
-.facility-card.tone-teal:hover,
-.facility-card.tone-maroon:hover,
-.facility-card.tone-violet:hover,
-.facility-card.tone-green:hover,
-.facility-card.tone-navy:hover,
-.facility-card.tone-sky:hover {
-  border-color: var(--tone-bar);
-  box-shadow: 0 6px 18px color-mix(in srgb, var(--tone-bar) 20%, rgba(0, 0, 0, 0.06));
-}
-
-/* Keep the standard hover icon highlight for non-toned fallback. */
-.facility-card:hover .facility-icon {
-  background: #fff;
+@media (max-width: 480px) {
+  .facilities-ring {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
