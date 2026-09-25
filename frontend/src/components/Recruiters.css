@@ -1,6 +1,6 @@
 .recruiters-section {
   background: var(--sp-page);
-  padding: 44px 0 40px;
+  padding: 44px 20px 40px;
   overflow: hidden;
 }
 
@@ -21,8 +21,12 @@
   border-radius: 2px;
 }
 
+/* Match the content width of the other home sections (Departments etc.):
+   the marquee starts/ends inside the same 1200px area, with page-margin
+   space on both sides instead of touching the screen edges. */
 .marquee-wrapper {
-  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   overflow: hidden;
 }
 
