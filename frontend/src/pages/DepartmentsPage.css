@@ -670,13 +670,12 @@
   padding: 20px 24px;
 }
 
-/* All three OBE groups side by side — plain bordered cards. */
+/* All three OBE groups stacked one below another — plain bordered cards. */
 .obe-all-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 18px;
   margin-top: 20px;
-  align-items: start;
 }
 
 .obe-plain-card {
@@ -690,11 +689,7 @@
   margin-top: 0;
 }
 
-@media (max-width: 1024px) {
-  .obe-all-grid {
-    grid-template-columns: 1fr;
-  }
-}
+
 
 .obe-tabs {
   display: flex;
