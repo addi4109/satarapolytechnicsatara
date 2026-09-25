@@ -75,7 +75,6 @@ const DepartmentsPage = lazyWithRetry(() => import('./pages/Departments'));
 const CellsPage = lazyWithRetry(() => import('./pages/CellsPage'));
 const CellDetail = lazyWithRetry(() => import('./pages/CellDetail'));
 const PhotoGallery = lazyWithRetry(() => import('./pages/PhotoGallery'));
-const PlacementGallery = lazyWithRetry(() => import('./pages/PlacementGallery'));
 const VideoGallery = lazyWithRetry(() => import('./pages/VideoGallery'));
 const MediaNews = lazyWithRetry(() => import('./pages/MediaNews'));
 const Admissions = lazyWithRetry(() => import('./pages/Admissions'));
@@ -207,7 +206,6 @@ function AppLayout() {
           <Route path="/activities" element={<Activities />} />
           <Route path="/activities/:page" element={<Activities />} />
           <Route path="/gallery/photos" element={<PhotoGallery />} />
-          <Route path="/placements/gallery" element={<PlacementGallery />} />
           <Route path="/gallery/videos" element={<VideoGallery />} />
           <Route path="/gallery/media" element={<MediaNews />} />
           <Route path="/academics/:page" element={<Academics />} />

@@ -13,6 +13,7 @@ const routeMap = {
   process: 'process',
   records: 'records',
   recruiters: 'recruiters',
+  gallery: 'gallery',
 };
 
 const sidebarLinks = [
@@ -20,6 +21,7 @@ const sidebarLinks = [
   { id: 'process', label: 'Placement Process' },
   { id: 'records', label: 'Placement Records' },
   { id: 'recruiters', label: 'Our Recruiters' },
+  { id: 'gallery', label: 'Placement Gallery' },
 ];
 
 function Placements() {
@@ -27,6 +29,7 @@ function Placements() {
   const [active, setActive] = useState('about');
   const [sections, setSections] = useState({});
   const [placementCell, setPlacementCell] = useState(null);
+  const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lightbox, setLightbox] = useState(null);
 
@@ -54,10 +57,12 @@ function Placements() {
     Promise.all([
       fetch(`${API_URL}/placements-admin`).then((r) => r.json()),
       fetch(`${API_URL}/cells`).then((r) => r.json()),
+      fetch(`${API_URL}/placement-gallery`).then((r) => r.json()),
     ])
-      .then(([placementData, cellsData]) => {
+      .then(([placementData, cellsData, galleryData]) => {
         const mapped = {};
         placementData.forEach((s) => { mapped[s.section] = s; });
+        setGallery(Array.isArray(galleryData) ? galleryData : []);
         setSections(mapped);
 
         // Find placement cell from cells
@@ -575,6 +580,43 @@ function Placements() {
               </div>
             </>
           )}
+          {/* Placement Gallery */}
+          {active === 'gallery' && (
+            <>
+              <h2 className="content-heading">Placement Gallery</h2>
+              <div className="content-line"></div>
+              <p>
+                Glimpses of our placement journey — recruitment drives, company visits,
+                selection moments and training sessions that shape our students' careers.
+              </p>
+              {gallery.length === 0 ? (
+                <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>No photos available yet.</p>
+              ) : (
+                <div className="placements-gallery-grid">
+                  {gallery.map((photo) => (
+                    <div
+                      className="placements-gallery-card"
+                      key={photo._id}
+                      onClick={() => photo.image && setLightbox({ url: photo.image, caption: photo.title, desc: photo.description })}
+                      style={{ cursor: photo.image ? 'pointer' : 'default' }}
+                    >
+                      <div className="placements-gallery-thumb">
+                        {photo.image ? (
+                          <img src={photo.image} alt={photo.title} loading="lazy" />
+                        ) : (
+                          <span className="placements-gallery-placeholder">📷</span>
+                        )}
+                      </div>
+                      <div className="placements-gallery-info">
+                        <h4 className="placements-gallery-title">{photo.title}</h4>
+                        {photo.description && <p className="placements-gallery-desc">{photo.description}</p>}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
         </main>
       </div>
 
@@ -584,9 +626,10 @@ function Placements() {
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
             <button className="lightbox-close" onClick={closeLightbox}>✕</button>
             <img src={lightbox.url} alt={lightbox.caption || 'Image'} className="lightbox-img" />
-            {lightbox.caption && (
+            {(lightbox.caption || lightbox.desc) && (
               <div className="lightbox-info">
-                <h3>{lightbox.caption}</h3>
+                {lightbox.caption && <h3>{lightbox.caption}</h3>}
+                {lightbox.desc && <p>{lightbox.desc}</p>}
               </div>
             )}
           </div>
