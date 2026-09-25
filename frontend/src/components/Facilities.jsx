@@ -135,20 +135,6 @@ const FACILITIES = [
   },
 ];
 
-/* Satellite positions on the chart ellipse (percent of the chart box).
-   Evenly spaced starting at the top, going clockwise. */
-const POSITIONS = [
-  { x: 50, y: 10 },
-  { x: 76.5, y: 18.5 },
-  { x: 90, y: 43 },
-  { x: 84, y: 70 },
-  { x: 62, y: 85.5 },
-  { x: 38, y: 85.5 },
-  { x: 16, y: 70 },
-  { x: 10, y: 43 },
-  { x: 23.5, y: 18.5 },
-];
-
 function Facilities() {
   return (
     <section className="facilities-section" data-reveal="fade">
@@ -156,26 +142,23 @@ function Facilities() {
         <h2 className="facilities-heading" data-reveal="down">Campus Facilities</h2>
         <div className="facilities-line" data-reveal="down" data-reveal-delay="100"></div>
 
+        {/* Flow chart: hub → stem → rail → drops → facility circles */}
         <div className="facilities-chart" data-reveal="fade">
-          {/* Spokes connecting the hub to each facility circle */}
-          <svg className="facilities-chart-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            {POSITIONS.map((p, i) => (
-              <line key={i} x1="50" y1="50" x2={p.x} y2={p.y} vectorEffect="non-scaling-stroke" />
-            ))}
-          </svg>
-
-          {/* Hub circle */}
           <div className="facilities-center" data-reveal="zoom">
             <span className="facilities-center-sub">Explore Our</span>
             <span className="facilities-center-text">Campus Facilities</span>
           </div>
 
-          {/* Facility circles arranged around the hub */}
-          <div className="facilities-ring">
+          <div className="facilities-connector" aria-hidden="true">
+            <span className="connector-stem" />
+            <span className="connector-rail" />
+          </div>
+
+          <div className="facilities-flow">
             {FACILITIES.map((f, i) => {
-              const pos = POSITIONS[i];
-              const tipAlign = pos.x < 25 ? 'tip-right-align' : pos.x > 75 ? 'tip-left-align' : '';
-              const nodeClass = `facility-node tone-${f.tone} pos-${i + 1}`;
+              const tipAlign =
+                i <= 1 ? 'tip-start' : i >= FACILITIES.length - 2 ? 'tip-end' : '';
+              const nodeClass = `facility-node tone-${f.tone}`;
               const nodeBody = (
                 <>
                   <span className="facility-node-icon">{f.icon}</span>
@@ -186,13 +169,18 @@ function Facilities() {
                   </span>
                 </>
               );
-              return f.link ? (
-                <a key={f.title} href={f.link} className={nodeClass} data-reveal-child aria-label={f.title}>
-                  {nodeBody}
-                </a>
-              ) : (
-                <div key={f.title} className={nodeClass} data-reveal-child>
-                  {nodeBody}
+              return (
+                <div className="facilities-flow-col" key={f.title}>
+                  <span className="flow-drop" aria-hidden="true" />
+                  {f.link ? (
+                    <a href={f.link} className={nodeClass} data-reveal-child aria-label={f.title}>
+                      {nodeBody}
+                    </a>
+                  ) : (
+                    <div className={nodeClass} data-reveal-child>
+                      {nodeBody}
+                    </div>
+                  )}
                 </div>
               );
             })}
