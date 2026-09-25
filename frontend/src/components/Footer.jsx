@@ -5,6 +5,24 @@ import API_URL from '../lib/api';
 
 function Footer() {
   const [visits, setVisits] = useState(null);
+  const [importantLinks, setImportantLinks] = useState([]);
+
+  // Admin-managed important links (Contact tab "Important Links").
+  // Empty/missing section simply means the column is not shown.
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`${API_URL}/contact/links`)
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error('no links'))))
+      .then((data) => {
+        if (!cancelled) {
+          setImportantLinks((data.importantLinks || []).filter((l) => l.label && l.url));
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -48,7 +66,7 @@ function Footer() {
       <div className="footer-accent"></div>
 
       <div className="footer-main">
-        <div className="footer-inner">
+        <div className={`footer-inner${importantLinks.length > 0 ? ' footer-inner-has-links' : ''}`}>
           <div className="footer-brand">
             <h2 className="footer-logo">SPS</h2>
             <p className="footer-tagline">Satara Polytechnic, Satara</p>
@@ -95,6 +113,26 @@ function Footer() {
               <li><a href="/departments/auto">Automobile Engineering</a></li>
             </ul>
           </div>
+
+          {importantLinks.length > 0 && (
+            <div className="footer-links-group footer-links-important">
+              <h4 className="footer-heading">Important Links</h4>
+              <ul className="footer-list">
+                {importantLinks.map((link) => {
+                  const isExternal = /^https?:\/\//i.test(link.url);
+                  return isExternal ? (
+                    <li key={link._id || link.url}>
+                      <a href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a>
+                    </li>
+                  ) : (
+                    <li key={link._id || link.url}>
+                      <a href={link.url}>{link.label}</a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
 
           <div className="footer-links-group">
             <h4 className="footer-heading">Reach Us</h4>

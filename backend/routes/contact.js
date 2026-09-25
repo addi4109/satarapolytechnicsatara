@@ -26,7 +26,7 @@ router.get('/:section', async (req, res) => {
 // POST /api/contact — create or update a section
 router.post('/', async (req, res) => {
   try {
-    const { section, officeContacts, phone, email, address, officeHours, mapEmbedUrl, enquiryFields, feedbackFields, departmentDetails, active } = req.body;
+    const { section, officeContacts, phone, email, address, officeHours, mapEmbedUrl, enquiryFields, feedbackFields, departmentDetails, importantLinks, active } = req.body;
     if (!section) return res.status(400).json({ error: 'section is required' });
 
     const update = {};
@@ -39,6 +39,7 @@ router.post('/', async (req, res) => {
     if (enquiryFields !== undefined) update.enquiryFields = enquiryFields;
     if (feedbackFields !== undefined) update.feedbackFields = feedbackFields;
     if (departmentDetails !== undefined) update.departmentDetails = departmentDetails;
+    if (importantLinks !== undefined) update.importantLinks = importantLinks;
     if (active !== undefined) update.active = active;
 
     const data = await Contact.findOneAndUpdate(

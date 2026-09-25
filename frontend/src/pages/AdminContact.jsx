@@ -8,6 +8,7 @@ import API_URL from '../lib/api';
 
 const defaultOfficeRow = { designation: '', name: '', phone: '', email: '' };
 const defaultDeptRow = { name: '', hod: '', phone: '', email: '', address: '', description: '' };
+const defaultLinkRow = { label: '', url: '' };
 
 function AdminContact() {
   const [activeTab, setActiveTab] = useState('general');
@@ -31,6 +32,9 @@ function AdminContact() {
   // Department details
   const [departmentDetails, setDepartmentDetails] = useState([]);
 
+  // Important footer links
+  const [importantLinks, setImportantLinks] = useState([]);
+
   useEffect(() => {
     fetchSections();
   }, []);
@@ -53,6 +57,8 @@ function AdminContact() {
       setOfficeContacts(office.officeContacts && office.officeContacts.length > 0 ? office.officeContacts : [{ ...defaultOfficeRow }]);
       const deptSection = mapped['departments'] || {};
       setDepartmentDetails(deptSection.departmentDetails && deptSection.departmentDetails.length > 0 ? deptSection.departmentDetails : []);
+      const linksSection = mapped['links'] || {};
+      setImportantLinks(linksSection.importantLinks && linksSection.importantLinks.length > 0 ? linksSection.importantLinks : []);
     } catch (err) {
       console.error('Failed to fetch contact:', err);
     } finally {
@@ -76,6 +82,29 @@ function AdminContact() {
       const saved = await res.json();
       setSections((prev) => ({ ...prev, office: saved }));
       setMsg({ type: 'success', text: 'Contact settings saved!' });
+    } catch (err) {
+      setMsg({ type: 'error', text: 'Failed to save.' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleSaveLinks = async () => {
+    setSaving(true);
+    setMsg(null);
+    try {
+      const res = await fetch(`${API_URL}/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          section: 'links',
+          importantLinks: importantLinks.filter((l) => l.label.trim() && l.url.trim()),
+        }),
+      });
+      if (!res.ok) throw new Error('Failed to save');
+      const saved = await res.json();
+      setSections((prev) => ({ ...prev, links: saved }));
+      setMsg({ type: 'success', text: 'Important links saved!' });
     } catch (err) {
       setMsg({ type: 'error', text: 'Failed to save.' });
     } finally {
@@ -137,6 +166,22 @@ function AdminContact() {
     setDepartmentDetails(departmentDetails.filter((_, i) => i !== index));
   };
 
+  // Important links helpers
+  const addLinkRow = () => {
+    setImportantLinks([...importantLinks, { ...defaultLinkRow }]);
+  };
+
+  const updateLinkRow = (index, field, value) => {
+    const updated = importantLinks.map((row, i) =>
+      i === index ? { ...row, [field]: value } : row
+    );
+    setImportantLinks(updated);
+  };
+
+  const removeLinkRow = (index) => {
+    setImportantLinks(importantLinks.filter((_, i) => i !== index));
+  };
+
   const inputStyle = {
     width: '100%',
     padding: '8px 10px',
@@ -180,6 +225,7 @@ function AdminContact() {
             { key: 'general', label: 'General Info' },
             { key: 'office', label: 'Office Contacts' },
             { key: 'departments', label: 'Department Details' },
+            { key: 'links', label: 'Important Links' },
           ]}
           activeTab={activeTab}
           onChange={setActiveTab}
@@ -307,6 +353,49 @@ function AdminContact() {
                     <div className="form-group">
                       <label style={labelStyle}>Description</label>
                       <input type="text" value={dept.description} onChange={(e) => updateDeptRow(i, 'description', e.target.value)} style={inputStyle} placeholder="Short description" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Important Links */}
+        {activeTab === 'links' && (
+          <div className="admin-card">
+            <div className="admin-card-header">
+              <h3>Important Links (shown in the footer)</h3>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button className="btn btn-success btn-sm" onClick={addLinkRow}>+ Add Link</button>
+                <button className="btn btn-primary btn-sm" onClick={handleSaveLinks} disabled={saving}>
+                  {saving ? 'Saving...' : 'Save'}
+                </button>
+              </div>
+            </div>
+            <div className="admin-card-body">
+              <p style={{ margin: '0 0 14px', fontSize: '12.5px', color: '#666' }}>
+                These links appear in the footer under "Important Links". Rows with an empty label or URL are skipped on save. Use full URLs for external sites (e.g. https://www.msbte.org.in) or paths for pages on this site (e.g. /admissions/overview).
+              </p>
+              {importantLinks.length === 0 && (
+                <p style={{ textAlign: 'center', color: '#999', padding: '20px' }}>No links added yet. Click "+ Add Link" to add one.</p>
+              )}
+              {importantLinks.map((row, i) => (
+                <div key={i} style={{ background: '#f8f9fa', border: '1px solid #e4e8ed', borderRadius: '8px', padding: '16px', marginBottom: '12px', position: 'relative' }}>
+                  <button
+                    className="member-remove-btn"
+                    title="Remove link"
+                    onClick={() => removeLinkRow(i)}
+                    style={{ position: 'absolute', top: '10px', right: '10px' }}
+                  >×</button>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '12px' }}>
+                    <div className="form-group">
+                      <label style={labelStyle}>Link Text *</label>
+                      <input type="text" value={row.label} onChange={(e) => updateLinkRow(i, 'label', e.target.value)} style={inputStyle} placeholder="e.g. MSBTE Official Website" />
+                    </div>
+                    <div className="form-group">
+                      <label style={labelStyle}>URL *</label>
+                      <input type="text" value={row.url} onChange={(e) => updateLinkRow(i, 'url', e.target.value)} style={inputStyle} placeholder="https://www.msbte.org.in or /admissions/overview" />
                     </div>
                   </div>
                 </div>

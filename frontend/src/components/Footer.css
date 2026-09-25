@@ -247,6 +247,13 @@
   }
 }
 
+/* Five-column layout when admin has added Important Links. */
+@media (min-width: 1025px) {
+  .footer-inner-has-links {
+    grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr;
+  }
+}
+
 @media (max-width: 768px) {
   /* Compact footer for mobile only — desktop unchanged */
   .footer-main {
@@ -281,9 +288,14 @@
     margin-bottom: 0;
   }
 
-  /* Hide the Departments column on mobile to keep the footer short */
+  /* Hide the Departments column on mobile to keep the footer short,
+     but keep the admin-managed Important Links visible. */
   .footer-links-group + .footer-links-group {
     display: none;
+  }
+
+  .footer-links-important {
+    display: block !important;
   }
 
   .footer-heading {

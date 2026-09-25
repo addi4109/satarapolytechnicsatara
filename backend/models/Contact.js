@@ -4,7 +4,7 @@ const ContactSchema = new mongoose.Schema({
   section: {
     type: String,
     required: true,
-    enum: ['office', 'enquiry', 'feedback', 'departments'],
+    enum: ['office', 'enquiry', 'feedback', 'departments', 'links'],
     unique: true,
   },
   officeContacts: {
@@ -47,6 +47,13 @@ const ContactSchema = new mongoose.Schema({
       email: String,
       address: String,
       description: String,
+    }],
+    default: [],
+  },
+  importantLinks: {
+    type: [{
+      label: String,
+      url: String,
     }],
     default: [],
   },
