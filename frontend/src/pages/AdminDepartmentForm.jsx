@@ -31,6 +31,8 @@ const emptyForm = {
   psos: [],
   rankers: [],
   achievements: [],
+  library: { description: '', books: [], titles: [] },
+  deptTimetable: [],
 
   order: 0,
 };
@@ -84,6 +86,12 @@ function AdminDepartmentForm() {
           psos: dept.psos || [],
           rankers: dept.rankers || [],
           achievements: dept.achievements || [],
+          library: {
+            description: dept.library?.description || '',
+            books: dept.library?.books || [],
+            titles: dept.library?.titles || [],
+          },
+          deptTimetable: dept.deptTimetable || [],
 
           order: dept.order || 0,
         });
@@ -151,6 +159,64 @@ function AdminDepartmentForm() {
   };
   const removeRanker = (idx) => {
     setForm((prev) => ({ ...prev, rankers: prev.rankers.filter((_, i) => i !== idx) }));
+  };
+
+  // Department library management
+  const updateLibrary = (field, val) => {
+    setForm((prev) => ({ ...prev, library: { ...prev.library, [field]: val } }));
+  };
+  const addLibBook = () => {
+    setForm((prev) => ({
+      ...prev,
+      library: { ...prev.library, books: [...prev.library.books, { particulars: '', count: '' }] },
+    }));
+  };
+  const updateLibBook = (idx, field, val) => {
+    setForm((prev) => {
+      const books = [...prev.library.books];
+      books[idx] = { ...books[idx], [field]: val };
+      return { ...prev, library: { ...prev.library, books } };
+    });
+  };
+  const removeLibBook = (idx) => {
+    setForm((prev) => ({
+      ...prev,
+      library: { ...prev.library, books: prev.library.books.filter((_, i) => i !== idx) },
+    }));
+  };
+  const addLibTitle = () => {
+    setForm((prev) => ({
+      ...prev,
+      library: { ...prev.library, titles: [...prev.library.titles, { name: '', author: '' }] },
+    }));
+  };
+  const updateLibTitle = (idx, field, val) => {
+    setForm((prev) => {
+      const titles = [...prev.library.titles];
+      titles[idx] = { ...titles[idx], [field]: val };
+      return { ...prev, library: { ...prev.library, titles } };
+    });
+  };
+  const removeLibTitle = (idx) => {
+    setForm((prev) => ({
+      ...prev,
+      library: { ...prev.library, titles: prev.library.titles.filter((_, i) => i !== idx) },
+    }));
+  };
+
+  // Timetable management
+  const addTimetable = () => {
+    setForm((prev) => ({ ...prev, deptTimetable: [...prev.deptTimetable, { year: '1st Year', title: '', url: '' }] }));
+  };
+  const updateTimetable = (idx, field, val) => {
+    setForm((prev) => {
+      const tt = [...prev.deptTimetable];
+      tt[idx] = { ...tt[idx], [field]: val };
+      return { ...prev, deptTimetable: tt };
+    });
+  };
+  const removeTimetable = (idx) => {
+    setForm((prev) => ({ ...prev, deptTimetable: prev.deptTimetable.filter((_, i) => i !== idx) }));
   };
 
   // Achievements management
@@ -279,6 +345,8 @@ function AdminDepartmentForm() {
             { key: 'obe', label: 'OBE' },
             { key: 'rankers', label: 'Rankers' },
             { key: 'achievements', label: 'Achievements' },
+            { key: 'library', label: 'Library' },
+            { key: 'timetable', label: 'Time Table' },
           ]}
           activeTab={activeTab}
           onChange={(tab) => { setActiveTab(tab); if (tab === 'basic') setEditingBasic(false); if (tab === 'obe') setObEditing(false); if (tab === 'hod') setHodEditing(false); }}
@@ -666,6 +734,111 @@ function AdminDepartmentForm() {
                           value={a.order ?? 0}
                           onChange={(e) => updateAchievement(idx, 'order', Number(e.target.value))}
                         />
+                      </div>
+                    </div>
+                  ))
+                }
+                </div>
+              )}
+            </div>
+          </div>
+          )}
+
+          {/* Department Library */}
+          {activeTab === 'library' && (
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
+              <div>
+                <h3>Department Library</h3>
+                <p>Book summary counts and titles list</p>
+              </div>
+            </div>
+            <div className="dept-form-card-body">
+              <div className="form-group">
+                <label style={{ fontSize: '12px', fontWeight: 600 }}>Description</label>
+                <textarea
+                  rows={3}
+                  value={form.library.description}
+                  onChange={(e) => updateLibrary('description', e.target.value)}
+                  placeholder="Short intro about the department library..."
+                  style={{ width: '100%', padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px', fontFamily: 'inherit' }}
+                />
+              </div>
+
+              <div className="form-group">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <label style={{ fontSize: '12px', fontWeight: 600 }}>Books Summary (Particulars + Count)</label>
+                  <button type="button" className="btn btn-success btn-sm" onClick={addLibBook}>+ Add Row</button>
+                </div>
+                {form.library.books.length === 0 && (
+                  <p style={{ color: '#aaa', fontStyle: 'italic', fontSize: '12px' }}>No rows yet.</p>
+                )}
+                {form.library.books.map((b, idx) => (
+                  <div key={idx} style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+                    <input type="text" placeholder="Particulars (e.g. Reference Books)" value={b.particulars} onChange={(e) => updateLibBook(idx, 'particulars', e.target.value)} style={{ flex: 2, padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px' }} />
+                    <input type="text" placeholder="Count (e.g. 250)" value={b.count} onChange={(e) => updateLibBook(idx, 'count', e.target.value)} style={{ flex: 1, padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px' }} />
+                    <button type="button" className="btn btn-danger btn-sm" onClick={() => removeLibBook(idx)}>×</button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="form-group">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <label style={{ fontSize: '12px', fontWeight: 600 }}>Titles List (Name + Author)</label>
+                  <button type="button" className="btn btn-success btn-sm" onClick={addLibTitle}>+ Add Title</button>
+                </div>
+                {form.library.titles.length === 0 && (
+                  <p style={{ color: '#aaa', fontStyle: 'italic', fontSize: '12px' }}>No titles yet.</p>
+                )}
+                {form.library.titles.map((t, idx) => (
+                  <div key={idx} style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+                    <input type="text" placeholder="Book Title" value={t.name} onChange={(e) => updateLibTitle(idx, 'name', e.target.value)} style={{ flex: 2, padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px' }} />
+                    <input type="text" placeholder="Author (optional)" value={t.author} onChange={(e) => updateLibTitle(idx, 'author', e.target.value)} style={{ flex: 1, padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px' }} />
+                    <button type="button" className="btn btn-danger btn-sm" onClick={() => removeLibTitle(idx)}>×</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          )}
+
+          {/* Time Table */}
+          {activeTab === 'timetable' && (
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <div>
+                <h3>Time Table</h3>
+                <p>Class-wise timetable PDFs</p>
+              </div>
+              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addTimetable}>+ Add Timetable</button>
+            </div>
+            <div className="dept-form-card-body">
+              {form.deptTimetable.length === 0 ? (
+                <div className="members-empty">No timetables added yet. Click "+ Add Timetable" to add one.</div>
+              ) : (
+                <div className="faculty-cards-grid">
+                  {form.deptTimetable.map((t, idx) => (
+                    <div key={idx} className="faculty-card">
+                      <button type="button" className="faculty-card-remove" onClick={() => removeTimetable(idx)} title="Remove">✕</button>
+                      <div className="faculty-card-fields">
+                        <select
+                          className="ranker-year-select"
+                          value={t.year}
+                          onChange={(e) => updateTimetable(idx, 'year', e.target.value)}
+                          title="Academic year"
+                        >
+                          {years.map((y) => (
+                            <option key={y} value={y}>{y}</option>
+                          ))}
+                        </select>
+                        <input type="text" placeholder="Title (e.g. 2nd Semester Timetable)" value={t.title} onChange={(e) => updateTimetable(idx, 'title', e.target.value)} />
+                        <PdfUpload value={t.url} onChange={(url) => updateTimetable(idx, 'url', url)} label="Timetable PDF" />
                       </div>
                     </div>
                   ))

@@ -8,7 +8,7 @@ import './Gallery.css';
 
 import API_URL from '../lib/api';
 const years = ['1st Year', '2nd Year', '3rd Year'];
-const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe', 'rankers', 'achievements'];
+const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe', 'rankers', 'achievements', 'library', 'timetable'];
 
 function DepartmentsPage() {
   const { deptId } = useParams();
@@ -74,6 +74,8 @@ function DepartmentsPage() {
     { id: 'obe', label: 'Outcome Based Education' },
     { id: 'rankers', label: 'Rankers' },
     { id: 'achievements', label: 'Achievements' },
+    { id: 'library', label: 'Department Library' },
+    { id: 'timetable', label: 'Time Table' },
   ];
 
   if (loading) {
@@ -531,6 +533,132 @@ function DepartmentsPage() {
                       ))}
                   </div>
                 )}
+              </>
+            )}
+
+            {activeTab === 'library' && (
+              <>
+                <h2 className="content-heading">Department Library</h2>
+                <div className="content-line"></div>
+                {dept.library?.description ? (
+                  <p>{dept.library.description}</p>
+                ) : (
+                  <p>
+                    The {dept.name} department maintains its own library with
+                    reference books, question-paper sets and study material for
+                    quick access by students and faculty.
+                  </p>
+                )}
+
+                {(() => {
+                  const books = dept.library?.books || [];
+                  const titles = dept.library?.titles || [];
+                  if (books.length === 0 && titles.length === 0) {
+                    return (
+                      <p style={{ color: '#888', fontStyle: 'italic' }}>
+                        No library details added yet. Admin can add them from the Admin Panel.
+                      </p>
+                    );
+                  }
+                  return (
+                    <>
+                      {books.length > 0 && (
+                        <div className="infra-table-wrap">
+                          <table className="infra-table">
+                            <thead>
+                              <tr>
+                                <th className="infra-sr-col">Sr.No</th>
+                                <th>Particulars</th>
+                                <th className="infra-count-col">Total Count</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {books.map((b, i) => (
+                                <tr key={i}>
+                                  <td className="infra-sr-col">{i + 1}</td>
+                                  <td>{b.particulars}</td>
+                                  <td className="infra-count-col">{b.count || '—'}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+
+                      {titles.length > 0 && (
+                        <div className="infra-table-wrap" style={{ marginTop: '20px' }}>
+                          <table className="infra-table">
+                            <thead>
+                              <tr>
+                                <th className="infra-sr-col">Sr.No</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {titles.map((t, i) => (
+                                <tr key={i}>
+                                  <td className="infra-sr-col">{i + 1}</td>
+                                  <td>{t.name}</td>
+                                  <td>{t.author || '—'}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
+              </>
+            )}
+
+            {activeTab === 'timetable' && (
+              <>
+                <h2 className="content-heading">Time Table</h2>
+                <div className="content-line"></div>
+                <p>Class-wise academic time tables for the {dept.name} department.</p>
+
+                {(() => {
+                  const tt = dept.deptTimetable || [];
+                  if (tt.length === 0) {
+                    return (
+                      <p style={{ color: '#888', fontStyle: 'italic' }}>
+                        No time tables added yet. Admin can add them from the Admin Panel.
+                      </p>
+                    );
+                  }
+                  return (
+                    <div className="infra-table-wrap">
+                      <table className="infra-table">
+                        <thead>
+                          <tr>
+                            <th className="infra-sr-col">Sr.No</th>
+                            <th>Class / Year</th>
+                            <th>Title</th>
+                            <th className="infra-count-col">Download</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {tt.map((t, i) => (
+                            <tr key={i}>
+                              <td className="infra-sr-col">{i + 1}</td>
+                              <td>{t.year}</td>
+                              <td>{t.title}</td>
+                              <td className="infra-count-col">
+                                {t.url ? (
+                                  <a href={t.url} className="curr-btn curr-view" target="_blank" rel="noreferrer">View / Download</a>
+                                ) : (
+                                  <span style={{ color: '#ccc' }}>—</span>
+                                )}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  );
+                })()}
               </>
             )}
 

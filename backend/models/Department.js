@@ -49,6 +49,18 @@ const rankerSchema = new mongoose.Schema({
   achievement: { type: String, default: '' },
 });
 
+// Department library book categories (summary table on the Library tab)
+const libBookSchema = new mongoose.Schema({
+  particulars: { type: String, required: true },
+  count: { type: String, default: '' },
+});
+
+// Department library titles list (name + optional author)
+const libTitleSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  author: { type: String, default: '' },
+});
+
 const achievementSchema = new mongoose.Schema({
   title: { type: String, required: true },
   image: { type: String, default: '' },
@@ -83,6 +95,11 @@ const departmentSchema = new mongoose.Schema(
     deptTimetable: [deptTimetableSchema],
     rankers: [rankerSchema],
     achievements: [achievementSchema],
+    library: {
+      description: { type: String, default: '' },
+      books: [libBookSchema],
+      titles: [libTitleSchema],
+    },
     order: { type: Number, default: 0 },
     hideFromHome: { type: Boolean, default: false },
   },
