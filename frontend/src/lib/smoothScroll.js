@@ -61,11 +61,11 @@ export function initSmoothScroll() {
   if (prefersReducedMotion()) return; // keep native scroll, no momentum
 
   lenis = new Lenis({
-    // ~0.95s glide — snappier while keeping the momentum feel.
-    duration: 0.95,
+    // ~0.75s glide — quick and responsive, momentum still visible.
+    duration: 0.75,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true, // animate mouse-wheel scrolling
-    wheelMultiplier: 1.1, // slightly more distance per wheel notch
+    wheelMultiplier: 1.2, // more distance per wheel notch
     syncTouch: false, // leave touch/trackpad-native scrolling alone
     touchMultiplier: 1.5,
     // Never hijack wheel events aimed at overlay panels (enquiry form,
