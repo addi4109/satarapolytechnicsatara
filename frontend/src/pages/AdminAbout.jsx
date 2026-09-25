@@ -27,6 +27,7 @@ const defaultSection = {
   achievements: [],
   infoRows: [],
   stats: [],
+  image: '',
   orgLevels: [],
   conductSections: [],
   active: true,
@@ -91,6 +92,7 @@ function AdminAbout() {
       achievements: currentData.achievements || [],
       infoRows: currentData.infoRows || [],
       stats: currentData.stats || [],
+      image: currentData.image || '',
       orgLevels: currentData.orgLevels || [],
       conductSections: currentData.conductSections || [],
       active: currentData.active !== false,
@@ -179,37 +181,7 @@ function AdminAbout() {
     setEditingStatIdx(null);
   };
 
-  // Org chart helpers
-  const addOrgLevel = () => {
-    handleChange('orgLevels', [...editForm.orgLevels, { label: '', nodes: [] }]);
-  };
-  const removeOrgLevel = (i) => {
-    handleChange('orgLevels', editForm.orgLevels.filter((_, idx) => idx !== i));
-  };
-  const moveOrgLevel = (i, dir) => {
-    const levels = [...editForm.orgLevels];
-    const j = i + dir;
-    if (j < 0 || j >= levels.length) return;
-    [levels[i], levels[j]] = [levels[j], levels[i]];
-    handleChange('orgLevels', levels);
-  };
-  const addOrgNode = (i) => {
-    const levels = [...editForm.orgLevels];
-    levels[i] = { ...levels[i], nodes: [...(levels[i].nodes || []), { title: '', subtitle: '', featured: false }] };
-    handleChange('orgLevels', levels);
-  };
-  const updateOrgNode = (i, j, field, val) => {
-    const levels = editForm.orgLevels.map((level, li) => (
-      li === i ? { ...level, nodes: level.nodes.map((node, ni) => (ni === j ? { ...node, [field]: val } : node)) } : level
-    ));
-    handleChange('orgLevels', levels);
-  };
-  const removeOrgNode = (i, j) => {
-    const levels = editForm.orgLevels.map((level, li) => (
-      li === i ? { ...level, nodes: level.nodes.filter((_, ni) => ni !== j) } : level
-    ));
-    handleChange('orgLevels', levels);
-  };
+  // Org chart: managed as a single image now; legacy block helpers removed.
 
   // Code of conduct helpers
   const addConductSection = () => {
@@ -390,28 +362,14 @@ function AdminAbout() {
           <PreviewCard>
             <h2 className="content-heading">Organisational Chart</h2>
             <div className="content-line"></div>
-            {(currentData.orgLevels || []).length === 0 ? (
-              <p style={{ color: '#aaa', fontStyle: 'italic' }}>
-                No org chart added yet. The site shows built-in default levels until you add content. Click to add.
-              </p>
-            ) : (
-              <div className="org-chart">
-                {currentData.orgLevels.map((level, i) => (
-                  <div className="org-level" key={i}>
-                    <span className="org-level-label">{level.label}</span>
-                    <div className="org-level-nodes">
-                      {(level.nodes || []).map((node, j) => (
-                        <div className={`org-node ${node.featured ? 'org-node-featured' : ''}`} key={j}>
-                          <span className="org-node-title">{node.title}</span>
-                          <span className="org-node-sub">{node.subtitle}</span>
-                        </div>
-                      ))}
-                    </div>
-                    {i < currentData.orgLevels.length - 1 && <span className="org-connector" aria-hidden="true" />}
-                  </div>
-                ))}
+            {currentData.image ? (
+              <div className="org-chart-image">
+                <img src={currentData.image} alt="Organisational Chart preview" style={{ cursor: 'default' }} />
               </div>
-
+            ) : (
+              <p style={{ color: '#aaa', fontStyle: 'italic' }}>
+                No chart image uploaded yet. The site shows a built-in placeholder structure until you upload one. Click to add.
+              </p>
             )}
           </PreviewCard>
         );
@@ -584,42 +542,23 @@ function AdminAbout() {
         return (
           <div className="about-edit-form">
             <p style={{ color: '#777', fontSize: '13px', marginBottom: '16px' }}>
-              Add chart levels top-down (e.g. Society → Governing Body → Principal → …). Each level contains one or more boxes shown side by side. Tick “Featured” for the main box of a level (wider, highlighted).
+              Upload the organisational chart as a single image (a clear photo or export of the chart).
+              It replaces the old block-by-block chart everywhere on the site.
             </p>
             <div className="form-group">
-              <label>Chart Levels</label>
-              {editForm.orgLevels.length === 0 && (
-                <p style={{ color: '#aaa', fontStyle: 'italic', margin: '0 0 10px' }}>No levels yet.</p>
-              )}
-              {editForm.orgLevels.map((level, i) => (
-                <div key={i} className="about-mission-item" style={{ display: 'block', alignItems: 'stretch', gap: 0 }}>
-                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                    <strong style={{ flex: 1, fontSize: '13px', color: '#333' }}>{level.label || `Level ${i + 1}`}</strong>
-                    <button className="btn btn-secondary btn-sm" onClick={() => moveOrgLevel(i, -1)} disabled={i === 0}>↑</button>
-                    <button className="btn btn-secondary btn-sm" onClick={() => moveOrgLevel(i, 1)} disabled={i === editForm.orgLevels.length - 1}>↓</button>
-                    <button className="btn btn-danger btn-sm" onClick={() => removeOrgLevel(i)}>Remove</button>
-                  </div>
-                  {(level.nodes || []).length === 0 ? (
-                    <p style={{ color: '#aaa', fontStyle: 'italic', fontSize: '12px', margin: '6px 0 0' }}>No boxes in this level.</p>
-                  ) : (
-                    <div style={{ marginTop: '8px' }}>
-                      {level.nodes.map((node, j) => (
-                        <div key={j} style={{ display: 'flex', gap: '6px', marginBottom: '6px', flexWrap: 'wrap', alignItems: 'center' }}>
-                          <input type="text" value={node.title} onChange={(e) => updateOrgNode(i, j, 'title', e.target.value)} placeholder="Box title" style={{ flex: '2 1 140px', padding: '6px 8px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px' }} />
-                          <input type="text" value={node.subtitle} onChange={(e) => updateOrgNode(i, j, 'subtitle', e.target.value)} placeholder="Small text (optional)" style={{ flex: '2 1 140px', padding: '6px 8px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px' }} />
-                          <label style={{ fontSize: '12px', color: '#555', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                            <input type="checkbox" checked={!!node.featured} onChange={(e) => updateOrgNode(i, j, 'featured', e.target.checked)} /> Featured
-                          </label>
-                          <button className="btn btn-danger btn-sm" onClick={() => removeOrgNode(i, j)}>×</button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  <button className="btn btn-primary btn-sm" style={{ marginTop: '8px' }} onClick={() => addOrgNode(i)}>+ Add Box</button>
-                </div>
-              ))}
-              <button className="btn btn-primary" style={{ marginTop: '10px' }} onClick={addOrgLevel}>+ Add Level</button>
+              <ImageUpload
+                value={editForm.image || ''}
+                onChange={(url) => handleChange('image', url)}
+                placeholder="Upload organisational chart image..."
+              />
             </div>
+            {editForm.image && (
+              <img
+                src={editForm.image}
+                alt="Organisational chart preview"
+                style={{ maxWidth: '100%', maxHeight: '320px', objectFit: 'contain', borderRadius: '8px', border: '1px solid #e4e8ed', padding: '6px', background: '#fff' }}
+              />
+            )}
           </div>
         );
 

@@ -27,15 +27,32 @@ router.get('/:section', async (req, res) => {
 // Create or update section
 router.post('/', async (req, res) => {
   try {
-    const { section, title, content, mission, achievements, infoRows, stats, orgLevels, conductSections, active } = req.body;
+    const {
+      section, title, content, mission, achievements, infoRows, stats,
+      image, orgLevels, conductSections, active,
+    } = req.body;
 
     if (!section) {
       return res.status(400).json({ error: 'Section is required' });
     }
 
+    // Only overwrite fields the client actually sent, so unspecified
+    // arrays/fields keep their stored values.
+    const update = {};
+    if (title !== undefined) update.title = title;
+    if (content !== undefined) update.content = content;
+    if (mission !== undefined) update.mission = mission;
+    if (achievements !== undefined) update.achievements = achievements;
+    if (infoRows !== undefined) update.infoRows = infoRows;
+    if (stats !== undefined) update.stats = stats;
+    if (image !== undefined) update.image = image;
+    if (orgLevels !== undefined) update.orgLevels = orgLevels;
+    if (conductSections !== undefined) update.conductSections = conductSections;
+    if (active !== undefined) update.active = active;
+
     const entry = await About.findOneAndUpdate(
       { section },
-      { section, title, content, mission, achievements, infoRows, stats, orgLevels, conductSections, active },
+      { $set: update },
       { new: true, upsert: true }
     );
 

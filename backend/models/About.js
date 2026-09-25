@@ -32,7 +32,14 @@ const AboutSchema = new mongoose.Schema({
     type: [{ num: String, label: String }],
     default: [],
   },
-  // Organisational chart levels: [{ label, nodes: [{ title, subtitle, featured }] }]
+  // Organisational chart image (uploaded via Admin > About > Org Chart).
+  // The chart is managed as a single image instead of structural blocks.
+  image: {
+    type: String,
+    default: '',
+  },
+  // Legacy block-based org chart data (kept for backward compatibility;
+  // no longer rendered). Prefer the `image` field.
   orgLevels: {
     type: [{
       label: String,

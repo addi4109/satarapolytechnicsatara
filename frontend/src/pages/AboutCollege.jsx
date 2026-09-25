@@ -181,6 +181,19 @@ function AboutCollege() {
   const [lgbMembers, setLgbMembers] = useState([]);
   const [programs, setPrograms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [lightbox, setLightbox] = useState(null);
+
+  // Lightbox: Escape closes; body scroll locks while open.
+  useEffect(() => {
+    if (!lightbox) return undefined;
+    const handleKey = (e) => { if (e.key === 'Escape') setLightbox(null); };
+    document.addEventListener('keydown', handleKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
+    };
+  }, [lightbox]);
 
   useEffect(() => {
     if (page && routeMap[page]) {
@@ -335,11 +348,9 @@ function AboutCollege() {
     return FALLBACK_PROGRAMS;
   };
   // Admin-managed sections: fall back to the built-in defaults when empty.
-  const getOrgLevels = () => {
-    const db = about['organisational-chart'];
-    if (db && Array.isArray(db.orgLevels) && db.orgLevels.length > 0) return db.orgLevels;
-    return ORG_CHART_LEVELS;
-  };
+  // Org chart: single admin-uploaded image; the legacy block levels are used
+  // only until the image is uploaded (and are otherwise retired).
+  const getOrgChart = () => about['organisational-chart'] || {};
   const getConductSections = () => {
     const db = about['code-of-conduct'];
     const sections = db && Array.isArray(db.conductSections) ? db.conductSections.filter((s) => s && s.title && (s.items || []).length > 0) : [];
@@ -795,24 +806,35 @@ function AboutCollege() {
                 relationships and responsibilities at every level — from the management society to
                 the teaching and support staff — ensuring smooth and efficient functioning of the institute.
               </p>
-              <div className="org-chart">
-                {getOrgLevels().map((level, i) => (
-                  <div className="org-level" key={i}>
-                    <span className="org-level-label">{level.label}</span>
-                    <div className="org-level-nodes">
-                      {level.nodes.map((node, j) => (
-                        <div className={`org-node ${node.featured ? 'org-node-featured' : ''}`} key={j}>
-                          <span className="org-node-title">{node.title}</span>
-                          <span className="org-node-sub">{node.subtitle}</span>
-                        </div>
-                      ))}
+              {getOrgChart().image ? (
+                <div className="org-chart-image">
+                  <img
+                    src={getOrgChart().image}
+                    alt="Organisational Chart of Satara Polytechnic, Satara"
+                    onClick={() => setLightbox(getOrgChart())}
+                  />
+                </div>
+              ) : (
+                /* Legacy fallback: shown only until the admin uploads a chart image. */
+                <div className="org-chart">
+                  {ORG_CHART_LEVELS.map((level, i) => (
+                    <div className="org-level" key={i}>
+                      <span className="org-level-label">{level.label}</span>
+                      <div className="org-level-nodes">
+                        {level.nodes.map((node, j) => (
+                          <div className={`org-node ${node.featured ? 'org-node-featured' : ''}`} key={j}>
+                            <span className="org-node-title">{node.title}</span>
+                            <span className="org-node-sub">{node.subtitle}</span>
+                          </div>
+                        ))}
+                      </div>
+                      {i < ORG_CHART_LEVELS.length - 1 && (
+                        <span className="org-connector" aria-hidden="true" />
+                      )}
                     </div>
-                    {i < getOrgLevels().length - 1 && (
-                      <span className="org-connector" aria-hidden="true" />
-                    )}
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </>
           )}
 
@@ -838,6 +860,19 @@ function AboutCollege() {
           )}
         </main>
       </div>
+
+      {/* Lightbox for the org chart image */}
+      {lightbox && lightbox.image && (
+        <div className="lightbox-overlay" onClick={() => setLightbox(null)}>
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <button className="lightbox-close" onClick={() => setLightbox(null)}>✕</button>
+            <img src={lightbox.image} alt="Organisational Chart" className="lightbox-img" />
+            <div className="lightbox-info">
+              <h3>Organisational Chart</h3>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
