@@ -16,7 +16,8 @@ const routeMap = {
   'admission-enquiry': 'enquiry',
   'departments': 'departments',
   'office': 'office',
-  'location': 'location',
+  // 'location' was merged into the Contact Us tab; old URLs land there.
+  'location': 'contact',
   'feedback': 'feedback',
 };
 
@@ -25,7 +26,6 @@ const sidebarLinks = [
   { id: 'enquiry', label: 'Admission Enquiry' },
   { id: 'departments', label: 'Department Contacts' },
   { id: 'office', label: 'Office Contacts' },
-  { id: 'location', label: 'Location' },
   { id: 'feedback', label: 'Feedback' },
 ];
 
@@ -86,7 +86,6 @@ function Contact() {
   const seoTitle = active === 'enquiry' ? 'Admission Enquiry' :
     active === 'departments' ? 'Department Contacts' :
     active === 'office' ? 'Office Contacts' :
-    active === 'location' ? 'Location' :
     active === 'feedback' ? 'Feedback' : 'Contact Us';
 
   if (loading) {
@@ -179,6 +178,41 @@ function Contact() {
                   </div>
                   <h4>Office Hours</h4>
                   <p>{(getContact('office').officeHours || 'Monday – Saturday, 10:30 AM – 5:00 PM').replace(', ', ' \u2013 ')}</p>
+                </div>
+              </div>
+
+              {/* Location map — part of Contact Us */}
+              <h2 className="content-heading" style={{ marginTop: '40px' }}>Our Location</h2>
+              <div className="content-line"></div>
+              <p>Find us on the map. We are located near NH-4, Khindwadi, Satara.</p>
+
+              <div className="contact-map-wrap">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3823.2!2d74.0094!3d17.6530!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2399e87a8a1e3%3A0xaae19259100b0879!2sSatara%20Polytechnic%2C%20Satara!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                  width="100%"
+                  height="400"
+                  style={{ border: 0, borderRadius: '8px' }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="College Location"
+                ></iframe>
+              </div>
+
+              <div className="contact-location-info">
+                <div className="contact-loc-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <div>
+                    <strong>Address</strong>
+                    <p>{getContact('office').address || 'At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra'}</p>
+                  </div>
+                </div>
+                <div className="contact-loc-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <div>
+                    <strong>Office Hours</strong>
+                    <p>{getContact('office').officeHours || 'Monday – Saturday, 10:30 AM – 5:00 PM'}</p>
+                  </div>
                 </div>
               </div>
             </>
@@ -280,45 +314,6 @@ function Contact() {
                   </div>
                 );
               })()}
-            </>
-          )}
-
-          {/* Location */}
-          {active === 'location' && (
-            <>
-              <h2 className="content-heading">Our Location</h2>
-              <div className="content-line"></div>
-              <p>Find us on the map. We are located near NH-4, Khindwadi, Satara.</p>
-
-              <div className="contact-map-wrap">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3823.2!2d74.0094!3d17.6530!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2399e87a8a1e3%3A0xaae19259100b0879!2sSatara%20Polytechnic%2C%20Satara!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
-                  width="100%"
-                  height="400"
-                  style={{ border: 0, borderRadius: '8px' }}
-                  allowFullScreen=""
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="College Location"
-                ></iframe>
-              </div>
-
-              <div className="contact-location-info">
-                <div className="contact-loc-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  <div>
-                    <strong>Address</strong>
-                    <p>{getContact('office').address || 'At Post: Songaon, Khindwadi, Near NH-4, Satara - 415002, Maharashtra'}</p>
-                  </div>
-                </div>
-                <div className="contact-loc-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  <div>
-                    <strong>Office Hours</strong>
-                    <p>{getContact('office').officeHours || 'Monday – Saturday, 10:30 AM – 5:00 PM'}</p>
-                  </div>
-                </div>
-              </div>
             </>
           )}
 

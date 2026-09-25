@@ -176,7 +176,6 @@ const MENU = [
       { label: 'Admission Enquiry', link: '/contact/admission-enquiry' },
       { label: 'Department Contacts', link: '/contact/departments' },
       { label: 'Office Contacts', link: '/contact/office' },
-      { label: 'Location', link: '/contact/location' },
       { label: 'Feedback', link: '/contact/feedback' },
     ],
   },
