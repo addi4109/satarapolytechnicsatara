@@ -79,50 +79,59 @@ const FACILITIES = [
     title: 'Library',
     desc: '15,000+ books, journals, e-resources and a digital library with an automated barcode issuing system.',
     link: '/campus/library',
+    tone: 'amber',
   },
   {
     icon: Icons.bus,
     title: 'Bus Facility',
     desc: 'Safe and convenient bus transport connecting Satara and nearby towns for students and staff.',
     link: '/campus/bus-facility',
+    tone: 'blue',
   },
   {
     icon: Icons.canteen,
     title: 'Canteen',
     desc: 'Hygienic, nutritious food and snacks served at affordable prices throughout the college day.',
     link: '/campus/canteen',
+    tone: 'orange',
   },
   {
     icon: Icons.equal,
     title: 'Equal Opportunity Center',
     desc: 'Support, scholarships and mentoring so every student gets an equal chance to succeed.',
     link: '/campus/equal-opportunity-center',
+    tone: 'teal',
   },
   {
     icon: Icons.excellence,
     title: 'Center of Excellence',
     desc: 'Advanced labs and industry-aligned training that go beyond the regular diploma curriculum.',
     link: '/campus/center-of-excellence',
+    tone: 'maroon',
   },
   {
     icon: Icons.lab,
     title: 'Modern Laboratories',
     desc: 'Well-equipped departmental labs with modern instruments for hands-on practical learning.',
+    tone: 'violet',
   },
   {
     icon: Icons.sports,
     title: 'Sports & Playground',
     desc: 'Outdoor and indoor sports facilities that build fitness, teamwork and sportsmanship.',
+    tone: 'green',
   },
   {
     icon: Icons.seminar,
     title: 'Seminar Hall',
     desc: 'Spacious halls for guest lectures, seminars, workshops and cultural activities.',
+    tone: 'navy',
   },
   {
     icon: Icons.wifi,
     title: 'Wi-Fi Campus',
     desc: 'High-speed internet connectivity available across the campus for students and faculty.',
+    tone: 'sky',
   },
 ];
 
@@ -135,7 +144,7 @@ function Facilities() {
 
         <div className="facilities-grid">
           {FACILITIES.map((f) => (
-            <div className="facility-card" key={f.title} data-reveal-child>
+            <div className={`facility-card tone-${f.tone}`} key={f.title} data-reveal-child>
               <div className="facility-icon">{f.icon}</div>
               <h3 className="facility-name">{f.title}</h3>
               <p className="facility-desc">{f.desc}</p>

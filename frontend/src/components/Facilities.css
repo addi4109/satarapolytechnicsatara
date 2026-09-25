@@ -32,6 +32,8 @@
 }
 
 .facility-card {
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,6 +44,17 @@
   padding: 26px 22px 22px;
   text-align: center;
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+/* Slim colour strip along the top edge of every card. */
+.facility-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--tone-bar, #c8963e);
 }
 
 .facility-card:hover {
@@ -113,4 +126,138 @@
   .facilities-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ============================================================
+   Per-card colour tones — soft, hand-picked pastels so the grid
+   feels lively but still human and formal, not neon.
+   ============================================================ */
+.tone-amber {
+  --tone-bg: #fdf8ee;
+  --tone-bar: #d9a441;
+  --tone-icon-bg: #f7ecd4;
+  --tone-icon-color: #a5721c;
+  --tone-title: #7a5a10;
+}
+
+.tone-blue {
+  --tone-bg: #eff4fb;
+  --tone-bar: #4a7ab0;
+  --tone-icon-bg: #dbe7f5;
+  --tone-icon-color: #2c5f96;
+  --tone-title: #2c5f96;
+}
+
+.tone-orange {
+  --tone-bg: #fdf3ec;
+  --tone-bar: #d97e3f;
+  --tone-icon-bg: #f8e3d3;
+  --tone-icon-color: #b05a1a;
+  --tone-title: #b05a1a;
+}
+
+.tone-teal {
+  --tone-bg: #edf6f4;
+  --tone-bar: #2f9d8a;
+  --tone-icon-bg: #d7ece7;
+  --tone-icon-color: #1d7a69;
+  --tone-title: #1d7a69;
+}
+
+.tone-maroon {
+  --tone-bg: #fbf0f2;
+  --tone-bar: #b0556b;
+  --tone-icon-bg: #f3dbe0;
+  --tone-icon-color: #8f3a50;
+  --tone-title: #8f3a50;
+}
+
+.tone-violet {
+  --tone-bg: #f5f1fb;
+  --tone-bar: #8b72c9;
+  --tone-icon-bg: #e7dff4;
+  --tone-icon-color: #6a4fa3;
+  --tone-title: #6a4fa3;
+}
+
+.tone-green {
+  --tone-bg: #eff7ee;
+  --tone-bar: #5da357;
+  --tone-icon-bg: #dcecd9;
+  --tone-icon-color: #3f7d3a;
+  --tone-title: #3f7d3a;
+}
+
+.tone-navy {
+  --tone-bg: #eff2f8;
+  --tone-bar: #44598c;
+  --tone-icon-bg: #dde3f0;
+  --tone-icon-color: #33487a;
+  --tone-title: #33487a;
+}
+
+.tone-sky {
+  --tone-bg: #edf6fa;
+  --tone-bar: #4a9db8;
+  --tone-icon-bg: #d8ecf3;
+  --tone-icon-color: #2f7e99;
+  --tone-title: #2f7e99;
+}
+
+/* Apply the tone variables to the card parts. Structure unchanged. */
+.facility-card.tone-amber,
+.facility-card.tone-blue,
+.facility-card.tone-orange,
+.facility-card.tone-teal,
+.facility-card.tone-maroon,
+.facility-card.tone-violet,
+.facility-card.tone-green,
+.facility-card.tone-navy,
+.facility-card.tone-sky {
+  background: var(--tone-bg);
+  border-color: color-mix(in srgb, var(--tone-bar) 26%, #e4e8ed);
+}
+
+.facility-card.tone-amber .facility-icon,
+.facility-card.tone-blue .facility-icon,
+.facility-card.tone-orange .facility-icon,
+.facility-card.tone-teal .facility-icon,
+.facility-card.tone-maroon .facility-icon,
+.facility-card.tone-violet .facility-icon,
+.facility-card.tone-green .facility-icon,
+.facility-card.tone-navy .facility-icon,
+.facility-card.tone-sky .facility-icon {
+  background: #fff;
+  border-color: color-mix(in srgb, var(--tone-bar) 35%, #e4e8ed);
+  color: var(--tone-icon-color);
+}
+
+.facility-card.tone-amber .facility-name,
+.facility-card.tone-blue .facility-name,
+.facility-card.tone-orange .facility-name,
+.facility-card.tone-teal .facility-name,
+.facility-card.tone-maroon .facility-name,
+.facility-card.tone-violet .facility-name,
+.facility-card.tone-green .facility-name,
+.facility-card.tone-navy .facility-name,
+.facility-card.tone-sky .facility-name {
+  color: var(--tone-title);
+}
+
+.facility-card.tone-amber:hover,
+.facility-card.tone-blue:hover,
+.facility-card.tone-orange:hover,
+.facility-card.tone-teal:hover,
+.facility-card.tone-maroon:hover,
+.facility-card.tone-violet:hover,
+.facility-card.tone-green:hover,
+.facility-card.tone-navy:hover,
+.facility-card.tone-sky:hover {
+  border-color: var(--tone-bar);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--tone-bar) 20%, rgba(0, 0, 0, 0.06));
+}
+
+/* Keep the standard hover icon highlight for non-toned fallback. */
+.facility-card:hover .facility-icon {
+  background: #fff;
 }
