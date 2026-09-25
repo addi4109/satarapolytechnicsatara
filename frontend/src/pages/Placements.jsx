@@ -5,6 +5,7 @@ import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './Placements.css';
+import './Gallery.css'; /* lightbox styles (records/gallery zoom views) */
 
 import API_URL from '../lib/api';
 
