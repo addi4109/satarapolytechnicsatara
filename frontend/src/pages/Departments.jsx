@@ -8,7 +8,7 @@ import './Gallery.css';
 
 import API_URL from '../lib/api';
 const years = ['1st Year', '2nd Year', '3rd Year'];
-const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe', 'rankers'];
+const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe', 'rankers', 'achievements'];
 
 function DepartmentsPage() {
   const { deptId } = useParams();
@@ -74,7 +74,7 @@ function DepartmentsPage() {
     { id: 'curriculum', label: 'Curriculum / Syllabus' },
     { id: 'obe', label: 'Outcome Based Education' },
     { id: 'rankers', label: 'Rankers' },
-
+    { id: 'achievements', label: 'Achievements' },
   ];
 
   if (loading) {
@@ -490,6 +490,48 @@ function DepartmentsPage() {
               </>
             )}
 
+            {activeTab === 'achievements' && (
+              <>
+                <h2 className="content-heading">Achievements</h2>
+                <div className="content-line"></div>
+                <p>
+                  Milestones, awards and proud moments of the {dept.name} department —
+                  from student wins to faculty accomplishments and industry recognitions.
+                </p>
+
+                {(dept.achievements || []).length === 0 ? (
+                  <p style={{ color: '#888', fontStyle: 'italic' }}>
+                    No achievements added yet. Admin can add them from the Admin Panel.
+                  </p>
+                ) : (
+                  <div className="achievements-grid">
+                    {[...dept.achievements]
+                      .sort((a, b) => (a.order || 0) - (b.order || 0))
+                      .map((item, i) => (
+                        <div
+                          className="achievement-card"
+                          key={i}
+                          onClick={() => item.image && setLightbox(item)}
+                          style={{ cursor: item.image ? 'pointer' : 'default' }}
+                        >
+                          <div className="achievement-thumb">
+                            {item.image ? (
+                              <img src={item.image} alt={item.title} loading="lazy" />
+                            ) : (
+                              <span className="achievement-placeholder">🏆</span>
+                            )}
+                          </div>
+                          <div className="achievement-info">
+                            <h4 className="achievement-title">{item.title}</h4>
+                            {item.description && <p className="achievement-desc">{item.description}</p>}
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </>
+            )}
+
             {activeTab === 'hod' && (
               <>
                 <h2 className="content-heading">HOD Desk</h2>
@@ -561,9 +603,10 @@ function DepartmentsPage() {
         <div className="lightbox-overlay" onClick={closeLightbox}>
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
             <button className="lightbox-close" onClick={closeLightbox}>✕</button>
-            <img src={lightbox.image} alt={lightbox.name} className="lightbox-img" />
+            <img src={lightbox.image} alt={lightbox.title || lightbox.name} className="lightbox-img" />
             <div className="lightbox-info">
-              <h3>{lightbox.name}</h3>
+              <h3>{lightbox.title || lightbox.name}</h3>
+              {lightbox.description && <p>{lightbox.description}</p>}
             </div>
           </div>
         </div>

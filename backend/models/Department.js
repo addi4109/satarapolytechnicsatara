@@ -48,6 +48,13 @@ const rankerSchema = new mongoose.Schema({
   achievement: { type: String, default: '' },
 });
 
+const achievementSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  image: { type: String, default: '' },
+  description: { type: String, default: '' },
+  order: { type: Number, default: 0 },
+});
+
 const departmentSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
@@ -74,6 +81,7 @@ const departmentSchema = new mongoose.Schema(
     deptEvents: [deptEventSchema],
     deptTimetable: [deptTimetableSchema],
     rankers: [rankerSchema],
+    achievements: [achievementSchema],
     order: { type: Number, default: 0 },
     hideFromHome: { type: Boolean, default: false },
   },

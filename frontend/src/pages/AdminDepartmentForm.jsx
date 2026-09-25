@@ -30,6 +30,7 @@ const emptyForm = {
   pos: [],
   psos: [],
   rankers: [],
+  achievements: [],
 
   order: 0,
 };
@@ -82,6 +83,7 @@ function AdminDepartmentForm() {
           pos: dept.pos || [],
           psos: dept.psos || [],
           rankers: dept.rankers || [],
+          achievements: dept.achievements || [],
 
           order: dept.order || 0,
         });
@@ -149,6 +151,21 @@ function AdminDepartmentForm() {
   };
   const removeRanker = (idx) => {
     setForm((prev) => ({ ...prev, rankers: prev.rankers.filter((_, i) => i !== idx) }));
+  };
+
+  // Achievements management
+  const addAchievement = () => {
+    setForm((prev) => ({ ...prev, achievements: [...prev.achievements, { title: '', image: '', description: '', order: 0 }] }));
+  };
+  const updateAchievement = (idx, field, val) => {
+    setForm((prev) => {
+      const a = [...prev.achievements];
+      a[idx] = { ...a[idx], [field]: val };
+      return { ...prev, achievements: a };
+    });
+  };
+  const removeAchievement = (idx) => {
+    setForm((prev) => ({ ...prev, achievements: prev.achievements.filter((_, i) => i !== idx) }));
   };
 
   // Curriculum management
@@ -261,6 +278,7 @@ function AdminDepartmentForm() {
             { key: 'curriculum', label: 'Curriculum' },
             { key: 'obe', label: 'OBE' },
             { key: 'rankers', label: 'Rankers' },
+            { key: 'achievements', label: 'Achievements' },
           ]}
           activeTab={activeTab}
           onChange={(tab) => { setActiveTab(tab); if (tab === 'basic') setEditingBasic(false); if (tab === 'obe') setObEditing(false); if (tab === 'hod') setHodEditing(false); }}
@@ -601,6 +619,56 @@ function AdminDepartmentForm() {
                     </div>
                   ))
                   }
+                </div>
+              )}
+            </div>
+          </div>
+          )}
+
+          {/* Achievements */}
+          {activeTab === 'achievements' && (
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="7"/><path d="M8.21 13.89 7 23l5-3 5 3-1.21-9.12"/></svg>
+              </div>
+              <div>
+                <h3>Achievements</h3>
+                <p>Cards with image, title and description — shown in the department sidebar tab</p>
+              </div>
+              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addAchievement}>+ Add Achievement</button>
+            </div>
+            <div className="dept-form-card-body">
+              {form.achievements.length === 0 ? (
+                <div className="members-empty">No achievements added yet. Click "+ Add Achievement" to add one.</div>
+              ) : (
+                <div className="faculty-cards-grid">
+                  {form.achievements.map((a, idx) => (
+                    <div key={idx} className="faculty-card">
+                      <button type="button" className="faculty-card-remove" onClick={() => removeAchievement(idx)} title="Remove">✕</button>
+                      <div className="faculty-card-img">
+                        <ImageUpload value={a.image} onChange={(url) => updateAchievement(idx, 'image', url)} label="" placeholder="Image" />
+                      </div>
+                      <div className="faculty-card-fields">
+                        <input type="text" placeholder="Title *" value={a.title} onChange={(e) => updateAchievement(idx, 'title', e.target.value)} />
+                        <textarea
+                          placeholder="Description"
+                          rows={3}
+                          value={a.description}
+                          onChange={(e) => updateAchievement(idx, 'description', e.target.value)}
+                          style={{ resize: 'vertical' }}
+                        />
+                        <input
+                          type="number"
+                          placeholder="Order (0 = first)"
+                          min={0}
+                          value={a.order ?? 0}
+                          onChange={(e) => updateAchievement(idx, 'order', Number(e.target.value))}
+                        />
+                      </div>
+                    </div>
+                  ))
+                }
                 </div>
               )}
             </div>

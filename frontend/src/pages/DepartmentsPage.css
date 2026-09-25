@@ -872,6 +872,69 @@
   }
 }
 
+/* ===== Achievements tab ===== */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.achievement-card {
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.achievement-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.achievement-thumb {
+  width: 100%;
+  height: 170px;
+  overflow: hidden;
+  background: #f5f7fa;
+}
+
+.achievement-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.achievement-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  opacity: 0.5;
+}
+
+.achievement-info {
+  padding: 12px 14px;
+}
+
+.achievement-title {
+  font-family: 'Georgia', serif;
+  font-size: 14.5px;
+  color: #243358;
+  margin: 0 0 4px;
+}
+
+.achievement-desc {
+  font-size: 12.5px;
+  color: #666;
+  line-height: 1.55;
+  margin: 0;
+}
+
 /* ===== Department Notices ===== */
 .dept-notices-table-wrap {
   overflow-x: auto;
