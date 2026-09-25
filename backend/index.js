@@ -35,6 +35,7 @@ import entrepreneursRouter from './routes/entrepreneurs.js';
 import alumniAssociationRouter from './routes/alumni-association.js';
 import alumniVisionRouter from './routes/alumni-vision.js';
 import visitsRouter from './routes/visits.js';
+import Setting from './models/Setting.js';
 
 // Use Google DNS to resolve MongoDB Atlas SRV records
 dns.setServers(['8.8.8.8', '8.8.4.4']);
@@ -109,6 +110,23 @@ app.use('/api/visits', visitsRouter);
 
 // Admin auth middleware — protects all write (POST/PUT/DELETE) operations
 app.use('/api', requireAdmin);
+
+// Content-change tracker — records the timestamp of the last successful admin
+// write so the site footer can show a "Last updated on" stamp. Mounted after
+// requireAdmin, so public endpoints (/api/auth, /api/visits) never trigger it
+// and rejected (4xx) writes don't either.
+app.use('/api', (req, res, next) => {
+  if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) return next();
+  res.on('finish', () => {
+    if (res.statusCode >= 400) return; // only successful changes count
+    Setting.findOneAndUpdate(
+      { key: 'lastContentUpdate' },
+      { value: new Date().toISOString() },
+      { upsert: true }
+    ).catch((err) => console.error('lastContentUpdate write failed:', err.message));
+  });
+  next();
+});
 
 // API routes
 app.use('/api/cells', cellsRouter);

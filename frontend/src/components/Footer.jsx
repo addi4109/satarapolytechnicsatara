@@ -4,7 +4,7 @@ import { getCopyrightYear } from '../lib/siteConfig';
 import API_URL from '../lib/api';
 
 function Footer() {
-  const [visits, setVisits] = useState(null);
+  const [lastUpdated, setLastUpdated] = useState(null);
   const [importantLinks, setImportantLinks] = useState([]);
 
   // Admin-managed important links (Contact tab "Important Links").
@@ -27,39 +27,19 @@ function Footer() {
   useEffect(() => {
     let cancelled = false;
 
-    // Record one visit per browser session (16h expiry), then show the total.
-    // If tracking fails, still try to render the current total read-only.
-    const trackVisit = async () => {
-      try {
-        const SESSION_MS = 16 * 60 * 60 * 1000;
-        const last = Number(localStorage.getItem('sps_visit_at') || 0);
-        const isNewSession = !last || Date.now() - last > SESSION_MS;
-
-        const url = `${API_URL}/visits`;
-        const res = await fetch(url, isNewSession ? { method: 'POST' } : {});
-        if (!res.ok) throw new Error(`visits API ${res.status}`);
-        const data = await res.json();
-
-        // Only consume the session after the increment actually succeeded,
-        // so a failed POST is retried on the next render.
-        if (isNewSession) {
-          localStorage.setItem('sps_visit_at', String(Date.now()));
-        }
-        if (!cancelled && typeof data.total === 'number') {
-          setVisits(data.total);
-        }
-      } catch {
-        // Counter is non-critical — leave `visits` null and hide the chip.
-      }
-    };
-
-    trackVisit();
+    // Show when the site content was last changed via the admin panel.
+    // The backend stamps `lastContentUpdate` on every successful admin write.
+    // Non-critical: on failure the stamp is simply hidden.
+    fetch(`${API_URL}/settings`)
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error('no settings'))))
+      .then((data) => {
+        if (!cancelled && data.lastContentUpdate) setLastUpdated(data.lastContentUpdate);
+      })
+      .catch(() => {});
     return () => {
       cancelled = true;
     };
   }, []);
-
-  const formatCount = (n) => new Intl.NumberFormat('en-IN').format(n);
 
   return (
     <footer className="site-footer">
@@ -74,16 +54,18 @@ function Footer() {
               Shaping future engineers since 1983. A legacy of academic
               excellence, strong placements, and holistic development.
             </p>
-            {visits !== null && (
-              <div className="visitor-chip" role="status" aria-label="Total visitors">
+            {lastUpdated && (
+              <div className="visitor-chip last-updated-chip" role="status" aria-label="Site content last updated">
                 <span className="visitor-icon" aria-hidden="true">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                    <circle cx="12" cy="12" r="3" />
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
                   </svg>
                 </span>
-                <span className="visitor-count">{formatCount(visits)}</span>
-                <span className="visitor-label">Visitors</span>
+                <span className="visitor-label">Last updated on</span>
+                <span className="visitor-count">
+                  {new Date(lastUpdated).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
+                </span>
               </div>
             )}
 

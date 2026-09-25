@@ -41,13 +41,6 @@ const deptTimetableSchema = new mongoose.Schema({
   url: { type: String, default: '' },
 });
 
-const rankerSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  percentage: { type: String, default: '' },
-  year: { type: String, required: true, enum: ['1st Year', '2nd Year', '3rd Year'] },
-  image: { type: String, default: '' },
-  achievement: { type: String, default: '' },
-});
 
 // Department library book categories (summary table on the Library tab)
 const libBookSchema = new mongoose.Schema({
@@ -93,7 +86,9 @@ const departmentSchema = new mongoose.Schema(
     deptNotices: [deptNoticeSchema],
     deptEvents: [deptEventSchema],
     deptTimetable: [deptTimetableSchema],
-    rankers: [rankerSchema],
+    // Rankers tab: a single banner image managed from the admin panel
+    // (replaces the old per-year rankers table).
+    rankersBannerImage: { type: String, default: '' },
     achievements: [achievementSchema],
     library: {
       description: { type: String, default: '' },

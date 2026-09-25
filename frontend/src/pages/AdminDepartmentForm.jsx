@@ -29,7 +29,7 @@ const emptyForm = {
   peos: [],
   pos: [],
   psos: [],
-  rankers: [],
+  rankersBannerImage: '',
   achievements: [],
   library: { description: '', books: [], titles: [] },
   deptTimetable: [],
@@ -84,7 +84,7 @@ function AdminDepartmentForm() {
           peos: dept.peos || [],
           pos: dept.pos || [],
           psos: dept.psos || [],
-          rankers: dept.rankers || [],
+          rankersBannerImage: dept.rankersBannerImage || '',
           achievements: dept.achievements || [],
           library: {
             description: dept.library?.description || '',
@@ -146,20 +146,6 @@ function AdminDepartmentForm() {
     setForm((prev) => ({ ...prev, labs: prev.labs.filter((_, i) => i !== idx) }));
   };
 
-  // Rankers management
-  const addRanker = () => {
-    setForm((prev) => ({ ...prev, rankers: [...prev.rankers, { name: '', percentage: '', year: '1st Year', image: '', achievement: '' }] }));
-  };
-  const updateRanker = (idx, field, val) => {
-    setForm((prev) => {
-      const r = [...prev.rankers];
-      r[idx] = { ...r[idx], [field]: val };
-      return { ...prev, rankers: r };
-    });
-  };
-  const removeRanker = (idx) => {
-    setForm((prev) => ({ ...prev, rankers: prev.rankers.filter((_, i) => i !== idx) }));
-  };
 
   // Department library management
   const updateLibrary = (field, val) => {
@@ -654,42 +640,20 @@ function AdminDepartmentForm() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v6a5 5 0 0 1-10 0V4z"/><path d="M17 5h3a1 1 0 0 1 1 1c0 2.5-2 4-4 4"/><path d="M7 5H4a1 1 0 0 0-1 1c0 2.5 2 4 4 4"/></svg>
               </div>
               <div>
-                <h3>Rankers</h3>
-                <p>Top performers by academic year</p>
+                <h3>Rankers Banner</h3>
+                <p>Upload a single banner image (poster/table of rankers) shown on the department Rankers tab</p>
               </div>
-              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addRanker}>+ Add Ranker</button>
             </div>
             <div className="dept-form-card-body">
-              {form.rankers.length === 0 ? (
-                <div className="members-empty">No rankers added yet. Click "+ Add Ranker" to add one.</div>
-              ) : (
-                <div className="faculty-cards-grid">
-                  {form.rankers.map((r, idx) => (
-                    <div key={idx} className="faculty-card">
-                      <button type="button" className="faculty-card-remove" onClick={() => removeRanker(idx)} title="Remove">✕</button>
-                      <div className="faculty-card-img">
-                        <ImageUpload value={r.image} onChange={(url) => updateRanker(idx, 'image', url)} label="" placeholder="Photo" circle />
-                      </div>
-                      <div className="faculty-card-fields">
-                        <select
-                          className="ranker-year-select"
-                          value={r.year}
-                          onChange={(e) => updateRanker(idx, 'year', e.target.value)}
-                          title="Academic year"
-                        >
-                          {years.map((y) => (
-                            <option key={y} value={y}>{y}</option>
-                          ))}
-                        </select>
-                        <input type="text" placeholder="Student Name" value={r.name} onChange={(e) => updateRanker(idx, 'name', e.target.value)} />
-                        <input type="text" placeholder="Percentage (e.g. 92.5%)" value={r.percentage} onChange={(e) => updateRanker(idx, 'percentage', e.target.value)} />
-                        <input type="text" placeholder="Achievement (optional)" value={r.achievement} onChange={(e) => updateRanker(idx, 'achievement', e.target.value)} />
-                      </div>
-                    </div>
-                  ))
-                  }
-                </div>
-              )}
+              <ImageUpload
+                value={form.rankersBannerImage}
+                onChange={(url) => handleChange({ target: { name: 'rankersBannerImage', value: url } })}
+                label="Banner Image"
+                placeholder="Choose a banner image..."
+              />
+              <p style={{ margin: '8px 0 0', fontSize: '12.5px', color: '#777' }}>
+                Tip: a wide image works best. It replaces the old rankers table and year tabs.
+              </p>
             </div>
           </div>
           )}

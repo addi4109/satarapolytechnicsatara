@@ -49,7 +49,7 @@
   max-width: 340px;
 }
 
-/* Total visitors chip, shown under the footer description */
+/* "Last updated on" chip, shown under the footer description */
 .visitor-chip {
   display: inline-flex;
   align-items: center;

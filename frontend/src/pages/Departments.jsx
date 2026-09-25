@@ -62,8 +62,6 @@ function DepartmentsPage() {
   const activeSlug = deptId || (departments.length > 0 ? departments[0].slug : '');
   const dept = departments.find((d) => d.slug === activeSlug) || departments[0];
 
-  const [rankerYear, setRankerYear] = useState('1st Year');
-
   const sidebarItems = [
     { id: 'about', label: 'About' },
     { id: 'vision', label: 'Vision & Mission' },
@@ -447,50 +445,19 @@ function DepartmentsPage() {
                   academic excellence in MSBTE examinations.
                 </p>
 
-                <div className="obe-tabs">
-                  {['1st Year', '2nd Year', '3rd Year'].map((y) => (
-                    <button
-                      key={y}
-                      className={`obe-tab ${rankerYear === y ? 'active' : ''}`}
-                      onClick={() => setRankerYear(y)}
-                    >
-                      {y}
-                    </button>
-                  ))}
-                </div>
-
-                <div className="obe-content">
-                  {(() => {
-                    const yearRankers = (dept.rankers || []).filter((r) => r.year === rankerYear);
-                    if (yearRankers.length === 0) {
-                      return (
-                        <p style={{ color: '#888', fontStyle: 'italic' }}>
-                          No rankers listed for {rankerYear} yet.
-                        </p>
-                      );
-                    }
-                    return (
-                      <table className="rankers-table">
-                        <thead>
-                          <tr>
-                            <th className="rank-col">Rank</th>
-                            <th>Name</th>
-                            <th className="pct-col">Percentage</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {yearRankers.map((r, i) => (
-                            <tr key={i}>
-                              <td className="rank-col">{i + 1}</td>
-                              <td>{r.name}</td>
-                              <td className="pct-col">{r.percentage || '—'}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    );
-                  })()}
-                </div>
+                {dept.rankersBannerImage ? (
+                  <div className="rankers-banner">
+                    <img src={dept.rankersBannerImage} alt={`${dept.name} department rankers`} loading="lazy" />
+                  </div>
+                ) : (
+                  <div style={{ marginTop: '32px', textAlign: 'center', padding: '48px 24px', background: '#f8f9fa', borderRadius: '10px', border: '1px dashed #d0d5dd' }}>
+                    <div style={{ fontSize: '48px', marginBottom: '16px' }}>🏆</div>
+                    <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', margin: '0 0 8px' }}>Rankers Will Be Updated Soon</h3>
+                    <p style={{ fontSize: '14px', color: '#888', margin: 0, lineHeight: '1.6' }}>
+                      Our department toppers will be featured here shortly.
+                    </p>
+                  </div>
+                )}
               </>
             )}
 
