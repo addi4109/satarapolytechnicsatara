@@ -132,6 +132,7 @@ const FACILITIES = [
     title: 'Wi-Fi Campus',
     desc: 'High-speed internet connectivity available across the campus for students and faculty.',
     tone: 'sky',
+    hideOnMobile: true,
   },
 ];
 
@@ -155,10 +156,11 @@ function Facilities() {
           </div>
 
           <div className="facilities-flow">
-            {FACILITIES.map((f, i) => {
+            {FACILITIES.filter((f) => !f.hideOnMobile).map((f, i) => {
+              const visible = FACILITIES.filter((x) => !x.hideOnMobile);
               const tipAlign =
-                i <= 1 ? 'tip-start' : i >= FACILITIES.length - 2 ? 'tip-end' : '';
-              const nodeClass = `facility-node tone-${f.tone}`;
+                i <= 1 ? 'tip-start' : i >= visible.length - 2 ? 'tip-end' : '';
+              const nodeClass = `facility-node tone-${f.tone}${f.hideOnMobile ? ' facility-node-hide-mobile' : ''}`;
               const nodeBody = (
                 <>
                   <span className="facility-node-icon">{f.icon}</span>
