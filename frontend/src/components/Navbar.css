@@ -858,13 +858,20 @@
 @media (max-width: 640px) {
   .mobile-search-item {
     display: block;
-    padding: 0 22px 12px;
+    /* Wide right padding keeps the search pill clear of the ✕ close
+       button, which sits above the drawer in the top-right corner. */
+    padding: 6px 74px 12px 22px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   }
 
   .mobile-search {
     width: 100%;
     margin: 0;
+  }
+
+  .mobile-search .top-search-input {
+    width: 100%;
+    min-width: 0;
   }
 
   .mobile-search .top-search-input {
