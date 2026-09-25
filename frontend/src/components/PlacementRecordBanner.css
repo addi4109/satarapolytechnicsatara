@@ -28,7 +28,8 @@
   display: grid;
   grid-template-columns: 1fr minmax(0, 2.6fr) 1fr;
   gap: 20px;
-  align-items: center;
+  /* Side columns stretch to the full row height, which the poster sets. */
+  align-items: stretch;
 }
 
 .pr-banner-side {
@@ -38,6 +39,12 @@
 }
 
 .pr-side-card {
+  /* Fill the column equally so both cards together match the image height. */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background: #fff;
   border: 1px solid var(--sp-line, #e4e8ed);
   border-radius: var(--sp-radius, 8px);
@@ -173,10 +180,6 @@
 
   .pr-banner-link {
     order: 0;
-  }
-
-  .pr-side-card {
-    flex: 1;
   }
 }
 
