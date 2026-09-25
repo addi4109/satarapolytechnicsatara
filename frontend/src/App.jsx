@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import GoToTop from './components/GoToTop';
 import EnquiryPopup from './components/EnquiryPopup';
 import { initScrollReveal, startScrollRevealWatcher } from './lib/scrollReveal';
+import { initSmoothScroll, destroySmoothScroll, scrollToTopImmediate } from './lib/smoothScroll';
 
 // Deploy-safe lazy loader.
 //
@@ -157,10 +158,17 @@ function AppLayout() {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
 
+  // Inertial (Lenis) scrolling on public pages; admin keeps native scroll.
+  useEffect(() => {
+    if (isAdmin) return undefined;
+    initSmoothScroll();
+    return () => destroySmoothScroll();
+  }, [isAdmin]);
+
   // Scroll to top on every route change (skip admin, which manages its own layout).
   useEffect(() => {
     if (!isAdmin) {
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      scrollToTopImmediate();
     }
   }, [location.pathname, isAdmin]);
 

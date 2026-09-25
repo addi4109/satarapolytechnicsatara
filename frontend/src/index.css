@@ -2,6 +2,23 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Lenis inertial scrolling — required minimal styles.
+   Only active while the smooth-scroll module is running; native
+   scrolling is untouched for admin pages and reduced-motion users. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+  overflow-clip-margin: 1px;
+}
+
 body {
   margin: 0;
   font-family: 'Public Sans', -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
