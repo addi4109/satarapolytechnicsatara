@@ -52,6 +52,13 @@ const AboutSchema = new mongoose.Schema({
     type: [{ title: String, items: [String] }],
     default: [],
   },
+  // Optional PDF (e.g. policy document) shown as a "View" button on the
+  // public page. Used by the Institute Policy and Code of Conduct sections.
+  pdfUrl: {
+    type: String,
+    default: '',
+    trim: true,
+  },
   active: {
     type: Boolean,
     default: true,

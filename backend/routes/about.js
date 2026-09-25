@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
   try {
     const {
       section, title, content, mission, achievements, infoRows, stats,
-      image, orgLevels, conductSections, active,
+      image, orgLevels, conductSections, pdfUrl, active,
     } = req.body;
 
     if (!section) {
@@ -48,6 +48,7 @@ router.post('/', async (req, res) => {
     if (image !== undefined) update.image = image;
     if (orgLevels !== undefined) update.orgLevels = orgLevels;
     if (conductSections !== undefined) update.conductSections = conductSections;
+    if (pdfUrl !== undefined) update.pdfUrl = pdfUrl;
     if (active !== undefined) update.active = active;
 
     const entry = await About.findOneAndUpdate(

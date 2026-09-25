@@ -4,6 +4,7 @@ import AdminAlert from '../components/AdminAlert';
 import AdminTabs from '../components/AdminTabs';
 import AdminLoading from '../components/AdminLoading';
 import ImageUpload from '../components/ImageUpload';
+import PdfUpload from '../components/PdfUpload';
 import './Admin.css';
 import './AboutCollege.css';
 
@@ -30,8 +31,25 @@ const defaultSection = {
   image: '',
   orgLevels: [],
   conductSections: [],
+  pdfUrl: '',
   active: true,
 };
+
+function PdfPreview({ url }) {
+  if (!url) return null;
+  return (
+    <div style={{ marginTop: '16px' }}>
+      <a
+        href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(url)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '9px 22px', background: '#243358', color: '#fff', fontSize: '13px', fontWeight: 600, borderRadius: '6px', textDecoration: 'none' }}
+      >
+        📄 View PDF
+      </a>
+    </div>
+  );
+}
 
 function AdminAbout() {
   const [activeTab, setActiveTab] = useState('society');
@@ -95,6 +113,7 @@ function AdminAbout() {
       image: currentData.image || '',
       orgLevels: currentData.orgLevels || [],
       conductSections: currentData.conductSections || [],
+      pdfUrl: currentData.pdfUrl || '',
       active: currentData.active !== false,
     });
     setEditing(true);
@@ -354,6 +373,7 @@ function AdminAbout() {
             <div className="content-line"></div>
             <ContentPreview text={currentData.content} />
             <InfoTablePreview rows={currentData.infoRows} />
+            <PdfPreview url={currentData.pdfUrl} />
           </PreviewCard>
         );
 
@@ -380,6 +400,7 @@ function AdminAbout() {
             <h2 className="content-heading">Code of Conduct</h2>
             <div className="content-line"></div>
             <ContentPreview text={currentData.content} />
+            <PdfPreview url={currentData.pdfUrl} />
             {(currentData.conductSections || []).length === 0 ? (
               <p style={{ color: '#aaa', fontStyle: 'italic' }}>
                 No rules added yet. The site shows built-in default rules until you add content. Click to add.
@@ -535,6 +556,10 @@ function AdminAbout() {
               <textarea value={editForm.content} onChange={(e) => handleChange('content', e.target.value)} rows={10} placeholder="Write institute policy details here..." />
             </div>
             {renderInfoRowsEditor()}
+            <div className="form-group">
+              <label>Policy PDF (optional — shows a "View" button on the site)</label>
+              <PdfUpload value={editForm.pdfUrl || ''} onChange={(url) => handleChange('pdfUrl', url)} label="Policy PDF" />
+            </div>
           </div>
         );
 
@@ -568,6 +593,10 @@ function AdminAbout() {
             <div className="form-group">
               <label>Intro Paragraph (optional)</label>
               <textarea value={editForm.content} onChange={(e) => handleChange('content', e.target.value)} rows={4} placeholder="Shown above the rules. Leave empty to keep the built-in intro." />
+            </div>
+            <div className="form-group">
+              <label>Conduct PDF (optional — shows a "View" button on the site)</label>
+              <PdfUpload value={editForm.pdfUrl || ''} onChange={(url) => handleChange('pdfUrl', url)} label="Code of Conduct PDF" />
             </div>
             <div className="form-group">
               <label>Rule Cards</label>

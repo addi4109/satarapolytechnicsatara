@@ -1073,7 +1073,28 @@
     height: 220px;
   }
 
-  .values-grid {
-    grid-template-columns: 1fr;
-  }
+.policy-pdf-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Standalone styles (AboutCollege.css) so the button doesn't depend on
+   Academics.css being loaded for this lazy-loaded page chunk. */
+.policy-pdf-actions .exam-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 6px;
+  background: #243358;
+  color: #fff;
+  transition: background 0.15s;
+}
+
+.policy-pdf-actions .exam-btn:hover {
+  background: #2a3f6a;
 }

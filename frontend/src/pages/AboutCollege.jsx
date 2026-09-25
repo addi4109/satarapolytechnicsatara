@@ -682,8 +682,23 @@ function AboutCollege() {
             <>
               <h2 className="content-heading">{getPolicy().title || 'Institute Policy'}</h2>
               <div className="content-line"></div>
-              {renderContent(getPolicy().content || 'Institute policy details will be updated soon. Please check back later.')}
-              {renderInfoRows(getPolicy().infoRows)}
+              {getPolicy().pdfUrl ? (
+                <div className="policy-pdf-actions">
+                  <a
+                    href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(getPolicy().pdfUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="exam-btn exam-btn-view"
+                  >
+                    📄 View Policy PDF
+                  </a>
+                </div>
+              ) : (
+                <>
+                  {renderContent(getPolicy().content || 'Institute policy details will be updated soon. Please check back later.')}
+                  {renderInfoRows(getPolicy().infoRows)}
+                </>
+              )}
             </>
           )}
 
@@ -844,19 +859,34 @@ function AboutCollege() {
             <>
               <h2 className="content-heading">Code of Conduct</h2>
               <div className="content-line"></div>
-              <p>{about['code-of-conduct']?.content || CONDUCT_INTRO}</p>
-              <div className="coc-grid">
-                {getConductSections().map((section, i) => (
-                  <div className="coc-card" key={i}>
-                    <h3 className="coc-card-title">{section.title}</h3>
-                    <ul className="coc-list">
-                      {section.items.map((item, j) => (
-                        <li key={j}>{item}</li>
-                      ))}
-                    </ul>
+              {about['code-of-conduct']?.pdfUrl ? (
+                <div className="policy-pdf-actions">
+                  <a
+                    href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(about['code-of-conduct'].pdfUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="exam-btn exam-btn-view"
+                  >
+                    📄 View Code of Conduct PDF
+                  </a>
+                </div>
+              ) : (
+                <>
+                  <p>{about['code-of-conduct']?.content || CONDUCT_INTRO}</p>
+                  <div className="coc-grid">
+                    {getConductSections().map((section, i) => (
+                      <div className="coc-card" key={i}>
+                        <h3 className="coc-card-title">{section.title}</h3>
+                        <ul className="coc-list">
+                          {section.items.map((item, j) => (
+                            <li key={j}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </>
+              )}
             </>
           )}
         </main>
