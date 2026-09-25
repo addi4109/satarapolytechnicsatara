@@ -49,14 +49,16 @@
   stroke-width: 1.5;
 }
 
-/* Hub circle */
+/* Hub circle — centred with negative margins (NOT transforms, which the
+   scroll-reveal system overwrites with `transform: none`). */
 .facilities-center {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
-  width: 25%;
+  width: 26%;
   aspect-ratio: 1;
+  margin-left: -13%;
+  margin-top: -13%;
   border-radius: 50%;
   background: radial-gradient(circle at 32% 28%, #3a548c 0%, var(--sp-navy, #243358) 58%, #1c2a49 100%);
   color: #fff;
@@ -93,11 +95,14 @@
   z-index: 3;
 }
 
+/* Facility circles — same negative-margin centering. Diameter is 17% of
+   the chart width, so a -8.5% margin on both axes centres them exactly. */
 .facility-node {
   position: absolute;
-  transform: translate(-50%, -50%);
   width: 17%;
   aspect-ratio: 1;
+  margin-left: -8.5%;
+  margin-top: -8.5%;
   border-radius: 50%;
   background: var(--tone-bg, #fdf8ee);
   border: 1.5px solid var(--tone-bar, #d9a441);
@@ -118,7 +123,7 @@ a.facility-node {
 }
 
 .facility-node:hover {
-  transform: translate(-50%, -50%) scale(1.06);
+  transform: scale(1.06);
   z-index: 5;
   box-shadow: 0 8px 24px color-mix(in srgb, var(--tone-bar, #d9a441) 30%, rgba(0, 0, 0, 0.1));
 }
@@ -253,7 +258,7 @@ a.facility-node {
 .tone-sky    { --tone-bg: #edf6fa; --tone-bar: #4a9db8; --tone-icon-color: #2f7e99; --tone-title: #2f7e99; }
 
 /* Node positions on the chart ellipse */
-.pos-1 { left: 50%;   top: 9%; }
+.pos-1 { left: 50%;   top: 10%; }
 .pos-2 { left: 76.5%; top: 18.5%; }
 .pos-3 { left: 90%;   top: 43%; }
 .pos-4 { left: 84%;   top: 70%; }
@@ -279,7 +284,6 @@ a.facility-node {
 
   .facilities-center {
     position: static;
-    transform: none;
     width: 210px;
     height: 210px;
     margin: 0 auto 26px;
@@ -295,9 +299,9 @@ a.facility-node {
 
   .facility-node {
     position: static;
-    transform: none;
     width: 100%;
     max-width: 170px;
+    margin: 0;
   }
 
   .facility-node:hover {

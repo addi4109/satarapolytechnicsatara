@@ -138,7 +138,7 @@ const FACILITIES = [
 /* Satellite positions on the chart ellipse (percent of the chart box).
    Evenly spaced starting at the top, going clockwise. */
 const POSITIONS = [
-  { x: 50, y: 9 },
+  { x: 50, y: 10 },
   { x: 76.5, y: 18.5 },
   { x: 90, y: 43 },
   { x: 84, y: 70 },
