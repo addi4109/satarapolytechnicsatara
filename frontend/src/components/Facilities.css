@@ -30,6 +30,8 @@
    rail, and a vertical drop into each facility circle below.
    ============================================================ */
 .facilities-chart {
+  position: relative;
+  z-index: 2; /* keep hover tooltips above any following section */
   width: min(1080px, 100%);
   margin: 0 auto;
 }
@@ -167,10 +169,11 @@ a.facility-node {
   line-height: 1.2;
 }
 
-/* Hover tooltip with the description */
+/* Hover tooltip with the description — opens UPWARD so it stays inside
+   the section and can never be painted over by the section below. */
 .facility-node-tip {
   position: absolute;
-  top: calc(100% + 10px);
+  bottom: calc(100% + 10px);
   left: 50%;
   transform: translateX(-50%);
   width: 220px;
@@ -197,11 +200,11 @@ a.facility-node {
 .facility-node-tip::before {
   content: '';
   position: absolute;
-  bottom: 100%;
+  top: 100%;
   left: 50%;
   transform: translateX(-50%);
   border: 7px solid transparent;
-  border-bottom-color: var(--tone-bar, #d9a441);
+  border-top-color: var(--tone-bar, #d9a441);
 }
 
 /* Edge circles: flip the tooltip inward so it never clips */
@@ -231,6 +234,14 @@ a.facility-node {
 .facility-node:focus-visible .facility-node-tip {
   opacity: 1;
   visibility: visible;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+.facility-node:hover .facility-node-tip.tip-start,
+.facility-node:hover .facility-node-tip.tip-end,
+.facility-node:focus-visible .facility-node-tip.tip-start,
+.facility-node:focus-visible .facility-node-tip.tip-end {
+  transform: translateY(-2px);
 }
 
 .facility-node-more {
