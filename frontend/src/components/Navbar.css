@@ -672,7 +672,10 @@
   .hamburger {
     display: flex;
     order: 2;
-    margin-left: auto;
+    /* Sit right after the college name (logo → name → ☰) instead of
+       being pushed to the far edge; remaining space stays empty. */
+    margin-left: 4px;
+    margin-right: auto;
     flex-shrink: 0;
     z-index: 1250;
   }
