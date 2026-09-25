@@ -19,6 +19,7 @@ import managementRouter from './routes/management.js';
 import aboutRouter from './routes/about.js';
 import admissionsAdminRouter from './routes/admissions.js';
 import placementsAdminRouter from './routes/placements-admin.js';
+import placementGalleryRouter from './routes/placement-gallery.js';
 import examinationsRouter from './routes/examinations.js';
 import governingBodyRouter from './routes/governing-body.js';
 import localGoverningBodyRouter from './routes/local-governing-body.js';
@@ -80,7 +81,7 @@ app.use(express.json({ limit: '5mb' }));
 const API_RESOURCE_PATHS = new Set([
   'slides', 'notices', 'departments', 'cells', 'recruiters', 'photos', 'videos',
   'news', 'about', 'contact', 'campus', 'activities', 'examinations',
-  'placements', 'placements-admin', 'admissions-admin', 'management',
+  'placements', 'placements-admin', 'placement-gallery', 'admissions-admin', 'management',
   'governing-body', 'local-governing-body', 'alumni', 'alumni-association',
   'alumni-vision', 'entrepreneurs', 'settings', 'auth', 'pdf-proxy', 'rules',
 ]);
@@ -124,6 +125,7 @@ app.use('/api/management', managementRouter);
 app.use('/api/about', aboutRouter);
 app.use('/api/admissions-admin', admissionsAdminRouter);
 app.use('/api/placements-admin', placementsAdminRouter);
+app.use('/api/placement-gallery', placementGalleryRouter);
 app.use('/api/examinations', examinationsRouter);
 app.use('/api/governing-body', governingBodyRouter);
 app.use('/api/local-governing-body', localGoverningBodyRouter);

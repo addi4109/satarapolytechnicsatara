@@ -10,6 +10,7 @@ import './Admin.css';
 import API_URL from '../lib/api';
 
 const emptyPhoto = { title: '', image: '', description: '', order: 0 };
+const emptyPlacementPhoto = { title: '', image: '', description: '', order: 0 };
 const emptyVideo = { title: '', videoUrl: '', thumbnail: '', description: '', order: 0 };
 const emptyNews = { title: '', date: '', source: '', summary: '', image: '', order: 0 };
 const emptySlide = { image: '', title: '', subtitle: '', link: '', order: 0 };
@@ -17,6 +18,7 @@ const emptySlide = { image: '', title: '', subtitle: '', link: '', order: 0 };
 function AdminGallery() {
   const [tab, setTab] = useState('photos');
   const [photos, setPhotos] = useState([]);
+  const [placementPhotos, setPlacementPhotos] = useState([]);
   const [videos, setVideos] = useState([]);
   const [news, setNews] = useState([]);
   const [slides, setSlides] = useState([]);
@@ -33,13 +35,15 @@ function AdminGallery() {
 
   const fetchAll = async () => {
     try {
-      const [p, v, n, s] = await Promise.all([
+      const [p, v, n, s, pg] = await Promise.all([
         fetch(`${API_URL}/photos`).then((r) => r.json()),
         fetch(`${API_URL}/videos`).then((r) => r.json()),
         fetch(`${API_URL}/news`).then((r) => r.json()),
         fetch(`${API_URL}/slides`).then((r) => r.json()),
+        fetch(`${API_URL}/placement-gallery`).then((r) => r.json()),
       ]);
       setPhotos(p); setVideos(v); setNews(n); setSlides(s);
+      setPlacementPhotos(Array.isArray(pg) ? pg : []);
     } catch {
       setMessage({ type: 'error', text: 'Failed to load data' });
     } finally { setLoading(false); }
@@ -47,6 +51,7 @@ function AdminGallery() {
 
   const getEmpty = () => {
     if (tab === 'photos') return { ...emptyPhoto };
+    if (tab === 'placement-gallery') return { ...emptyPlacementPhoto };
     if (tab === 'videos') return { ...emptyVideo };
     if (tab === 'news') return { ...emptyNews };
     return { ...emptySlide };
@@ -54,6 +59,7 @@ function AdminGallery() {
 
   const getEndpoint = () => {
     if (tab === 'photos') return 'photos';
+    if (tab === 'placement-gallery') return 'placement-gallery';
     if (tab === 'videos') return 'videos';
     if (tab === 'news') return 'news';
     return 'slides';
@@ -61,6 +67,7 @@ function AdminGallery() {
 
   const getLabel = () => {
     if (tab === 'photos') return 'Photo';
+    if (tab === 'placement-gallery') return 'Photo';
     if (tab === 'videos') return 'Video';
     if (tab === 'news') return 'News';
     return 'Slide';
@@ -129,7 +136,7 @@ function AdminGallery() {
         </div>
         <form onSubmit={handleSave}>
           {/* Photo fields */}
-          {tab === 'photos' && <>
+          {(tab === 'photos' || tab === 'placement-gallery') && <>
             <div className="form-group">
               <label style={{ fontSize: '12px', fontWeight: 600 }}>Title *</label>
               <input type="text" value={form.title || ''} onChange={(e) => setForm({ ...form, title: e.target.value })} placeholder="Photo title" required />
@@ -245,6 +252,9 @@ function AdminGallery() {
           <button className={`gallery-tab ${tab === 'photos' ? 'active' : ''}`} onClick={() => switchTab('photos')}>
             Photo Gallery <span className="gallery-tab-count">{photos.length}</span>
           </button>
+          <button className={`gallery-tab ${tab === 'placement-gallery' ? 'active' : ''}`} onClick={() => switchTab('placement-gallery')}>
+            Placement Gallery <span className="gallery-tab-count">{placementPhotos.length}</span>
+          </button>
           <button className={`gallery-tab ${tab === 'videos' ? 'active' : ''}`} onClick={() => switchTab('videos')}>
             Video Gallery <span className="gallery-tab-count">{videos.length}</span>
           </button>
@@ -281,6 +291,25 @@ function AdminGallery() {
 
             {/* ===== PHOTOS ===== */}
             {tab === 'photos' && photos.map((p) => (
+              isEditing(p._id) ? (
+                <div key={p._id}>{renderFormCard()}</div>
+              ) : (
+                <AdminContentCard
+                  key={p._id}
+                  image={p.image}
+                  imageAlt={p.title}
+                  title={p.title}
+                  description={p.description ? p.description.substring(0, 60) + (p.description.length > 60 ? '...' : '') : undefined}
+                  onEdit={() => startEdit(p)}
+                  onDelete={() => handleDelete(p._id)}
+                  deleteConfirm={deleteConfirm === p._id}
+                  onCancelDelete={() => setDeleteConfirm(null)}
+                />
+              )
+            ))}
+
+            {/* ===== PLACEMENT GALLERY ===== */}
+            {tab === 'placement-gallery' && placementPhotos.map((p) => (
               isEditing(p._id) ? (
                 <div key={p._id}>{renderFormCard()}</div>
               ) : (

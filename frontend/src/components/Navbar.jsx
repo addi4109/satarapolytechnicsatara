@@ -96,6 +96,7 @@ const MENU = [
       { label: 'Placement Process', link: '/placements/process' },
       { label: 'Placement Records', link: '/placements/records' },
       { label: 'Our Recruiters', link: '/placements/recruiters' },
+      { label: 'Placement Gallery', link: '/placements/gallery' },
     ],
   },
   {
