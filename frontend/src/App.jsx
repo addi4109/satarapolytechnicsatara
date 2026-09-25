@@ -145,8 +145,8 @@ function HomePage() {
       <ImageSlider />
       <NoticeTicker />
       <WelcomeSection />
-      <Departments />
       <Facilities />
+      <Departments />
       <PlacementRecordBanner />
       <Recruiters />
       <LatestNews />
