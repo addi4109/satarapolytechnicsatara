@@ -28,6 +28,15 @@ body {
   color: #555;
 }
 
+/* Off-screen fixed elements (closed mobile drawer, oversized overlays)
+   must never widen the document. `clip` avoids creating a scroll
+   container; `hidden` is the fallback for older browsers. */
+html,
+body {
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
 #root {
   min-height: 100vh;
 }

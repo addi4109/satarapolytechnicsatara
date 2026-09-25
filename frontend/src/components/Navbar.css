@@ -688,11 +688,13 @@
     overflow: hidden;
   }
 
-  /* Drawer */
+  /* Drawer — slides with a transform so the closed state never creates
+     off-screen layout boxes (a negative `right` used to widen the page
+     on mobile and cause horizontal scrolling). */
   .nav-list {
     position: fixed;
     top: 0;
-    right: -320px;
+    right: 0;
     width: min(320px, 88vw);
     height: 100vh;
     height: 100dvh;
@@ -701,13 +703,16 @@
     align-items: stretch;
     justify-content: flex-start;
     overflow-y: auto;
-    transition: right 0.3s ease;
+    transform: translateX(110%);
+    visibility: hidden;
+    transition: transform 0.3s ease, visibility 0.3s ease;
     z-index: 1100;
     padding: 20px 0 32px;
   }
 
   .nav-list.mobile-open {
-    right: 0;
+    transform: translateX(0);
+    visibility: visible;
     box-shadow: -12px 0 32px rgba(20, 28, 48, 0.25);
   }
 
@@ -717,6 +722,7 @@
 
   .nav-link {
     width: 100%;
+    box-sizing: border-box; /* width:100% must include the 22px side paddings */
     padding: 13px 22px;
     font-size: 13.5px;
     justify-content: space-between;
