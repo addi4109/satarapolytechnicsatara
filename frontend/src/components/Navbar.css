@@ -426,55 +426,69 @@
 }
 
 /* ===== top-bar search ===== */
+/* One white pill on the navy strip: input + round navy button inside. */
 .top-search-wrap {
   position: relative;
   display: flex;
   align-items: center;
   margin-left: auto;
   gap: 0;
+  background: #fff;
+  border-radius: 999px;
+  padding: 2px 2px 2px 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+  transition: box-shadow 0.15s;
+}
+
+.top-search-wrap:focus-within {
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.18),
+    0 0 0 2px rgba(200, 150, 62, 0.45);
 }
 
 .top-search-input {
   height: 26px;
-  width: 180px;
-  padding: 0 10px;
+  width: 170px;
+  padding: 0 6px 0 10px;
   font-size: 12.5px;
   color: #1d2536;
-  background: #fff;
-  border: 1px solid #fff;
-  border-right: none;
-  border-radius: 3px 0 0 3px;
+  background: transparent;
+  border: none;
+  border-radius: 999px 0 0 999px;
   outline: none;
   font-family: inherit;
-  transition: box-shadow 0.15s, border-color 0.15s;
 }
 
 .top-search-input::placeholder {
   color: #8a94a6;
 }
 
-.top-search-input:focus {
-  border-color: var(--sp-gold-dark);
-  box-shadow: 0 0 0 2px rgba(200, 150, 62, 0.25);
-}
-
 .top-search-btn {
-  height: 26px;
-  width: 30px;
+  height: 24px;
+  width: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
   color: #fff;
-  background: var(--sp-gold-dark, #a87e2f);
-  border: 1px solid var(--sp-gold-dark, #a87e2f);
-  border-radius: 0 3px 3px 0;
+  background: var(--sp-navy, #243358);
+  border: none;
+  border-radius: 50%;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
+  transition: background 0.15s, transform 0.15s;
 }
 
 .top-search-btn:hover {
   background: var(--sp-gold, #c8963e);
-  border-color: var(--sp-gold, #c8963e);
+}
+
+.top-search-btn:active {
+  transform: scale(0.92);
+}
+
+.top-search-btn svg {
+  width: 13px;
+  height: 13px;
 }
 
 /* Results dropdown (absolute, so it doesn't shift the strip) */
