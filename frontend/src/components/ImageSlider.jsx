@@ -150,9 +150,8 @@ function ImageSlider() {
                 )}
               </a>
 
-              {(slide.title || slide.subtitle) && (
-                <div className="slider-content">
-                  <div className="slider-content-inner">
+              {(slide.title || slide.subtitle) && (                  <div className="slider-content">
+                  <div className="slider-content-inner" data-reveal="down">
                     {slide.tag && <span className="slider-tag">{slide.tag}</span>}
                     {slide.title && <h2 className="slider-title">{slide.title}</h2>}
                     {slide.subtitle && <p className="slider-subtitle">{slide.subtitle}</p>}

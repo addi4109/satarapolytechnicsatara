@@ -18,9 +18,9 @@ function Recruiters() {
   const items = recruiters.concat(recruiters);
 
   return (
-    <section className="recruiters-section">
-      <h2 className="recruiters-heading">Our Top Recruiters</h2>
-      <div className="recruiters-line"></div>
+    <section className="recruiters-section" data-reveal="fade">
+      <h2 className="recruiters-heading" data-reveal="down">Our Top Recruiters</h2>
+      <div className="recruiters-line" data-reveal="down" data-reveal-delay="100"></div>
 
       <div className="marquee-wrapper">
         <div className="marquee-track">

@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import GoToTop from './components/GoToTop';
 import EnquiryPopup from './components/EnquiryPopup';
+import { initScrollReveal, startScrollRevealWatcher } from './lib/scrollReveal';
 
 // Deploy-safe lazy loader.
 //
@@ -162,6 +163,13 @@ function AppLayout() {
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
   }, [location.pathname, isAdmin]);
+
+  // Global scroll-reveal engine: animates [data-reveal] elements into view.
+  // Idempotent; the watcher picks up lazily-mounted pages automatically.
+  useEffect(() => {
+    initScrollReveal();
+    startScrollRevealWatcher();
+  }, []);
 
   return (
     <>

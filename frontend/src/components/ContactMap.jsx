@@ -5,7 +5,7 @@ function ContactMap() {
   return (
     <section className="contact-section">
       <div className="contact-inner">
-        <div className="contact-left">
+        <div className="contact-left" data-reveal="left">
           <h2 className="contact-name">Satara Polytechnic Satara</h2>
           <p className="contact-society">Satara Education Society's</p>
           <p className="contact-desc">
@@ -25,7 +25,7 @@ function ContactMap() {
             <p className="contact-detail">{OFFICE_HOURS}</p>
           </div>
         </div>
-        <div className="contact-right">
+        <div className="contact-right" data-reveal="right">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3801.94073621475!2d74.0093987!3d17.6529606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2399e87a8a1e3%3A0xaae19259100b0879!2sSatara%20Polytechnic!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
             width="100%"

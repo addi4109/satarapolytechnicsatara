@@ -6,7 +6,7 @@ import API_URL from '../lib/api';
 function WhyChooseUs() {
   return (
     <section className="why-section">
-      <div className="why-inner">
+      <div className="why-inner" data-reveal="fade">
         <h2 className="why-heading">Why Choose Satara Polytechnic, Satara?</h2>
         <div className="why-line"></div>
         <img
@@ -38,14 +38,14 @@ function Departments() {
   if (departments.length === 0) return null;
 
   return (
-    <section className="dept-section">
+    <section className="dept-section" data-reveal="fade">
       <div className="dept-inner">
-        <h2 className="dept-heading">Our Departments</h2>
-        <div className="dept-line"></div>
+        <h2 className="dept-heading" data-reveal="down">Our Departments</h2>
+        <div className="dept-line" data-reveal="down" data-reveal-delay="100"></div>
 
         <div className="dept-grid">
           {departments.map((dept, idx) => (
-            <div className="dept-card" key={dept.slug || idx}>
+            <div className="dept-card" key={dept.slug || idx} data-reveal-child>
               <div className="dept-img-wrap">
                 <img src={dept.image} alt={dept.name} />
               </div>

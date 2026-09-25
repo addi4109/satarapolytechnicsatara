@@ -28,7 +28,7 @@ function LatestNews() {
   const closeLightbox = () => setLightbox(null);
 
   return (
-    <section className="latest-news-section">
+    <section className="latest-news-section" data-reveal="fade">
       <div className="latest-news-inner">
         <div className="latest-news-header">
           <span className="latest-news-badge">LATEST</span>
@@ -60,6 +60,7 @@ function LatestNews() {
               <article
                 className={`news-card ${expanded === item._id ? 'news-card-expanded' : ''}`}
                 key={item._id}
+                data-reveal-child
               >
                 {/* Image */}
                 <div className="news-card-img">

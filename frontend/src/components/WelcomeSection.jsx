@@ -4,13 +4,13 @@ function WelcomeSection() {
   return (
     <section className="welcome-section">
       <div className="welcome-inner">
-        <div className="welcome-image">
+        <div className="welcome-image" data-reveal="left">
           <img
             src="https://www.satarapolytechnicsatara.com/assets/std1-DtQ9UsRF.png"
             alt="Students studying together"
           />
         </div>
-        <div className="welcome-content">
+        <div className="welcome-content" data-reveal="right">
           <h2 className="welcome-heading">The Cradle of Achievers</h2>
           <div className="welcome-line"></div>
           <p className="welcome-text">

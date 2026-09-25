@@ -25,9 +25,9 @@ function PlacementRecordBanner() {
   if (status !== 'ready') return null;
 
   return (
-    <section className="pr-banner-section">
-      <h2 className="pr-banner-heading">Latest Placement Record</h2>
-      <div className="pr-banner-line"></div>
+    <section className="pr-banner-section" data-reveal="fade">
+      <h2 className="pr-banner-heading" data-reveal="down">Latest Placement Record</h2>
+      <div className="pr-banner-line" data-reveal="down" data-reveal-delay="100"></div>
 
       <Link to="/placements/records" className="pr-banner-link" title="View Placement Records">
         {banner ? (

@@ -128,14 +128,14 @@ const FACILITIES = [
 
 function Facilities() {
   return (
-    <section className="facilities-section">
+    <section className="facilities-section" data-reveal="fade">
       <div className="facilities-inner">
-        <h2 className="facilities-heading">Campus Facilities</h2>
-        <div className="facilities-line"></div>
+        <h2 className="facilities-heading" data-reveal="down">Campus Facilities</h2>
+        <div className="facilities-line" data-reveal="down" data-reveal-delay="100"></div>
 
         <div className="facilities-grid">
           {FACILITIES.map((f) => (
-            <div className="facility-card" key={f.title}>
+            <div className="facility-card" key={f.title} data-reveal-child>
               <div className="facility-icon">{f.icon}</div>
               <h3 className="facility-name">{f.title}</h3>
               <p className="facility-desc">{f.desc}</p>
