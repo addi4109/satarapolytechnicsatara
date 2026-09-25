@@ -125,7 +125,7 @@ function AdminDepartmentForm() {
 
   // Labs management
   const addLab = () => {
-    setForm((prev) => ({ ...prev, labs: [...prev.labs, { name: '', image: '' }] }));
+    setForm((prev) => ({ ...prev, labs: [...prev.labs, { name: '', image: '', count: '' }] }));
   };
   const updateLab = (idx, field, val) => {
     setForm((prev) => {
@@ -569,6 +569,7 @@ function AdminDepartmentForm() {
                         <ImageUpload value={l.image} onChange={(url) => updateLab(idx, 'image', url)} label="" placeholder="Photo" />
                       </div>
                       <input type="text" placeholder="Item Name (e.g. CAD Lab)" value={l.name} onChange={(e) => updateLab(idx, 'name', e.target.value)} className="lab-item-input" />
+                      <input type="text" placeholder="Total Count (e.g. 25 PCs)" value={l.count || ''} onChange={(e) => updateLab(idx, 'count', e.target.value)} className="lab-item-input" />
                     </div>
                   ))}
                 </div>

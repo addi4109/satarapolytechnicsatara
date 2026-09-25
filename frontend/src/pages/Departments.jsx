@@ -257,8 +257,32 @@ function DepartmentsPage() {
                 </p>
                 {(() => {
                   const items = [...(dept.labs || []), ...(dept.infrastructure || [])];
+                  const withCounts = items.filter((item) => item.count);
                   return items.length > 0 ? (
-                    <div className="labs-grid">
+                    <>
+                      {withCounts.length > 0 && (
+                        <div className="infra-table-wrap">
+                          <table className="infra-table">
+                            <thead>
+                              <tr>
+                                <th className="infra-sr-col">Sr.No</th>
+                                <th>Particulars</th>
+                                <th className="infra-count-col">Total Count</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {withCounts.map((item, i) => (
+                                <tr key={i}>
+                                  <td className="infra-sr-col">{i + 1}</td>
+                                  <td>{item.name}</td>
+                                  <td className="infra-count-col">{item.count}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                      <div className="labs-grid">
                       {items.map((item, i) => (
                         <div className="lab-img-card" key={i} style={{ cursor: item.image ? 'pointer' : 'default' }} onClick={() => item.image && setLightbox(item)}>
                           {item.image && (
@@ -269,7 +293,8 @@ function DepartmentsPage() {
                           <h4 className="lab-img-name">{item.name}</h4>
                         </div>
                       ))}
-                    </div>
+                      </div>
+                    </>
                   ) : (
                     <p style={{ color: '#888', fontStyle: 'italic' }}>No infrastructure items added yet.</p>
                   );

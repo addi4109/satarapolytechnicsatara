@@ -13,6 +13,7 @@ const facultySchema = new mongoose.Schema({
 const labSchema = new mongoose.Schema({
   name: { type: String, required: true },
   image: { type: String, default: '' },
+  count: { type: String, default: '' },
 });
 
 const curriculumSchema = new mongoose.Schema({

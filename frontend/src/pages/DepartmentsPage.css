@@ -893,6 +893,63 @@
   }
 }
 
+/* ===== Infrastructure summary table ===== */
+.infra-table-wrap {
+  overflow-x: auto;
+  margin-top: 16px;
+  border: 1px solid #e4e8ed;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.infra-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.infra-table thead th {
+  background: #243358;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 11px 16px;
+}
+
+.infra-table tbody td {
+  padding: 10px 16px;
+  border-top: 1px solid #eef1f5;
+  color: #444;
+}
+
+.infra-table tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+.infra-table tbody tr:hover {
+  background: #fdf6ea;
+}
+
+.infra-table .infra-sr-col {
+  width: 70px;
+  text-align: center;
+  font-weight: 700;
+  color: #c8963e;
+}
+
+.infra-table thead th.infra-sr-col {
+  color: #fff;
+}
+
+.infra-table .infra-count-col {
+  width: 120px;
+  font-weight: 700;
+  color: #243358;
+}
+
 /* ===== Achievements tab ===== */
 .achievements-grid {
   display: grid;
