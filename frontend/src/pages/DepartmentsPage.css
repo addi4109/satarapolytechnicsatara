@@ -707,91 +707,65 @@
 }
 
 /* ===== Rankers ===== */
-.rankers-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: 18px;
+.rankers-table {
+  width: 100%;
   margin-top: 16px;
-}
-
-.ranker-card {
+  border-collapse: collapse;
   background: #fff;
   border: 1px solid #e4e8ed;
-  border-radius: 12px;
-  padding: 20px 16px 16px;
-  text-align: center;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-}
-
-.ranker-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 26px rgba(36, 51, 88, 0.13);
-  border-color: #c8963e;
-}
-
-.ranker-photo {
-  width: 92px;
-  height: 92px;
-  margin: 0 auto 12px;
-  border-radius: 50%;
+  border-radius: 10px;
   overflow: hidden;
-  border: 3px solid #f0e6d2;
-  background: #f0f3f8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 14px;
 }
 
-.ranker-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.ranker-photo-initial {
-  font-family: 'Georgia', serif;
-  font-size: 32px;
+.rankers-table thead th {
+  background: #243358;
+  color: #fff;
+  font-size: 12px;
   font-weight: 700;
-  color: #243358;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 12px 16px;
 }
 
-.ranker-name {
-  font-size: 14.5px;
-  font-weight: 700;
-  color: #243358;
-  margin: 0 0 8px;
-  line-height: 1.35;
+.rankers-table tbody td {
+  padding: 11px 16px;
+  border-top: 1px solid #eef1f5;
+  color: #444;
 }
 
-.ranker-percentage {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 6px;
-  margin: 0 0 6px;
+.rankers-table tbody tr:nth-child(even) {
+  background: #f8fafc;
 }
 
-.ranker-pct-value {
+.rankers-table tbody tr:hover {
+  background: #fdf6ea;
+}
+
+.rankers-table .rank-col {
+  width: 80px;
+}
+
+.rankers-table td.rank-col {
   font-family: 'Georgia', serif;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 700;
   color: #c8963e;
-  line-height: 1;
 }
 
-.ranker-pct-label {
-  font-size: 10.5px;
+.rankers-table td.rank-col:first-child {
+  color: #243358;
+}
+
+.rankers-table .pct-col {
+  width: 130px;
   font-weight: 700;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  color: #8a93a6;
+  color: #243358;
 }
 
-.ranker-achievement {
-  font-size: 12.5px;
-  color: #666;
-  line-height: 1.55;
-  margin: 0;
+.rankers-table tbody td.name-col {
+  color: #333;
 }
 
 /* Admin editor: year dropdown inside ranker card fields */
@@ -884,24 +858,17 @@
     padding: 12px 14px;
   }
 
-  .rankers-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+  .rankers-table {
+    font-size: 13px;
   }
 
-  .ranker-photo {
-    width: 76px;
-    height: 76px;
+  .rankers-table thead th,
+  .rankers-table tbody td {
+    padding: 9px 12px;
   }
 
-  .ranker-pct-value {
-    font-size: 19px;
-  }
-}
-
-@media (max-width: 420px) {
-  .rankers-grid {
-    grid-template-columns: 1fr;
+  .rankers-table .pct-col {
+    width: 90px;
   }
 }
 
