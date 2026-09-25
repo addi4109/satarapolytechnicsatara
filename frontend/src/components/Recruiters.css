@@ -1,6 +1,6 @@
 .recruiters-section {
   background: var(--sp-page);
-  padding: 44px 20px 40px;
+  padding: 44px 0 40px;
   overflow: hidden;
 }
 
@@ -21,13 +21,13 @@
   border-radius: 2px;
 }
 
-/* Match the content width of the other home sections (Departments etc.):
-   the marquee starts/ends inside the same 1200px area, with page-margin
-   space on both sides instead of touching the screen edges. */
+/* Full-width marquee: logos dissolve into the background at both edges
+   via an alpha mask, instead of being hard-cut or boxed in a container. */
 .marquee-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 140px, #000 calc(100% - 140px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 140px, #000 calc(100% - 140px), transparent 100%);
 }
 
 .marquee-track {
@@ -74,5 +74,10 @@
   .recruiter-card {
     width: 150px;
     height: 78px;
+  }
+
+  .marquee-wrapper {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 60px, #000 calc(100% - 60px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 60px, #000 calc(100% - 60px), transparent 100%);
   }
 }
