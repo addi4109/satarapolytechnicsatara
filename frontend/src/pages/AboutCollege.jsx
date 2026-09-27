@@ -32,14 +32,14 @@ const sidebarLinks = [
   { id: 'disclosure', label: 'Mandatory Disclosure' },
   { id: 'affiliation', label: 'Affiliation & Approval' },
   { id: 'policy', label: 'Institute Policy' },
+  { id: 'organisational-chart', label: 'Organisational Chart' },
+  { id: 'code-of-conduct', label: 'Code of Conduct' },
   { id: 'founder', label: 'Founder' },
   { id: 'chairman', label: 'Chairman' },
   { id: 'secretary', label: 'Secretary' },
   { id: 'principal', label: 'Principal' },
   { id: 'governing-body', label: 'Governing Body' },
   { id: 'local-governing-body', label: 'Local Governing Body' },
-  { id: 'organisational-chart', label: 'Organisational Chart' },
-  { id: 'code-of-conduct', label: 'Code of Conduct' },
 ];
 
 import API_URL from '../lib/api';
