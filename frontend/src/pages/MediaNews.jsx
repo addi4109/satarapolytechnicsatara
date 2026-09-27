@@ -13,6 +13,7 @@ function MediaNews() {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lightbox, setLightbox] = useState(null);
+  const [expandedId, setExpandedId] = useState(null);
 
   const closeLightbox = useCallback(() => setLightbox(null), []);
 
@@ -86,7 +87,7 @@ function MediaNews() {
           <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>No news available yet.</p>
         ) : (
           <>
-            {/* News WITH image - 3 per row grid cards */}
+            {/* News WITH image - 2 per row grid cards */}
             {newsItems.filter(item => item.image).length > 0 && (
               <div className="news-image-grid">
                 {newsItems.filter(item => item.image).map((item) => (
@@ -100,7 +101,13 @@ function MediaNews() {
                         {item.source && <span className="news-source">{item.source}</span>}
                       </div>
                       <h3 className="news-title">{item.title}</h3>
-                      <p className="news-summary">{item.summary}</p>
+                      <p className={`news-summary ${expandedId === item._id ? 'expanded' : ''}`}>{item.summary}</p>
+                      <button
+                        className="news-read-toggle"
+                        onClick={() => setExpandedId(expandedId === item._id ? null : item._id)}
+                      >
+                        {expandedId === item._id ? 'Read Less' : 'Read More'}
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -117,7 +124,13 @@ function MediaNews() {
                       {item.source && <span className="news-source">{item.source}</span>}
                     </div>
                     <h3 className="news-title">{item.title}</h3>
-                    <p className="news-summary">{item.summary}</p>
+                    <p className={`news-summary ${expandedId === item._id ? 'expanded' : ''}`}>{item.summary}</p>
+                    <button
+                      className="news-read-toggle"
+                      onClick={() => setExpandedId(expandedId === item._id ? null : item._id)}
+                    >
+                      {expandedId === item._id ? 'Read Less' : 'Read More'}
+                    </button>
                   </div>
                 ))}
               </div>
