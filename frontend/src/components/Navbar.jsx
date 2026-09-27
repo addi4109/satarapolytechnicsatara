@@ -33,9 +33,9 @@ const MENU = [
       {
         header: 'Administration',
         items: [
-          { label: "Registrar's Desk", link: '/campus/registrar' },
-          { label: 'Office Staff', link: '/campus/office-staff' },
-          { label: 'Non Teaching Staff', link: '/campus/non-teaching-staff' },
+          { label: "Registrar's Desk", link: '/about/registrar' },
+          { label: 'Office Staff', link: '/about/office-staff' },
+          { label: 'Non Teaching Staff', link: '/about/non-teaching-staff' },
         ],
       },
       {

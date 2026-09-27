@@ -31,23 +31,30 @@ const routeMap = {
 };
 
 const sidebarLinks = [
-  { id: 'society', label: 'Satara Education Society' },
-  { id: 'institute', label: 'Institute' },
-  { id: 'disclosure', label: 'Mandatory Disclosure' },
-  { id: 'affiliation', label: 'Affiliation & Approval' },
-  { id: 'policy', label: 'Institute Policy' },
-  { id: 'organisational-chart', label: 'Organisational Chart' },
-  { id: 'code-of-conduct', label: 'Code of Conduct' },
-  { id: 'registrar', label: "Registrar's Desk" },
-  { id: 'office-staff', label: 'Office Staff' },
-  { id: 'non-teaching-staff', label: 'Non Teaching Staff' },
-  { id: 'founder', label: 'Founder' },
-  { id: 'chairman', label: 'Chairman' },
-  { id: 'secretary', label: 'Secretary' },
-  { id: 'principal', label: 'Principal' },
-  { id: 'governing-body', label: 'Governing Body' },
-  { id: 'local-governing-body', label: 'Local Governing Body' },
+  { id: 'society', label: 'Satara Education Society', group: 'About' },
+  { id: 'institute', label: 'Institute', group: 'About' },
+  { id: 'disclosure', label: 'Mandatory Disclosure', group: 'About' },
+  { id: 'affiliation', label: 'Affiliation & Approval', group: 'About' },
+  { id: 'policy', label: 'Institute Policy', group: 'About' },
+  { id: 'organisational-chart', label: 'Organisational Chart', group: 'About' },
+  { id: 'code-of-conduct', label: 'Code of Conduct', group: 'About' },
+  { id: 'registrar', label: "Registrar's Desk", group: 'Administration' },
+  { id: 'office-staff', label: 'Office Staff', group: 'Administration' },
+  { id: 'non-teaching-staff', label: 'Non Teaching Staff', group: 'Administration' },
+  { id: 'founder', label: 'Founder', group: 'Management' },
+  { id: 'chairman', label: 'Chairman', group: 'Management' },
+  { id: 'secretary', label: 'Secretary', group: 'Management' },
+  { id: 'principal', label: 'Principal', group: 'Management' },
+  { id: 'governing-body', label: 'Governing Body', group: 'Management' },
+  { id: 'local-governing-body', label: 'Local Governing Body', group: 'Management' },
 ];
+
+// Grouped sidebar sections (About / Administration / Management), in order.
+const SIDEBAR_GROUPS = sidebarLinks.reduce((acc, link) => {
+  if (!acc[link.group]) acc[link.group] = [];
+  acc[link.group].push(link);
+  return acc;
+}, {});
 
 import API_URL from '../lib/api';
 
@@ -191,6 +198,12 @@ function AboutCollege() {
   const [campusSections, setCampusSections] = useState({});
   const [loading, setLoading] = useState(true);
   const [lightbox, setLightbox] = useState(null);
+
+  // Switch sidebar tab and keep the URL in sync (e.g. /about/registrar).
+  const switchTab = (id) => {
+    setActive(id);
+    window.history.replaceState(null, '', `/about/${id}`);
+  };
 
   // Lightbox: Escape closes; body scroll locks while open.
   useEffect(() => {
@@ -474,20 +487,24 @@ function AboutCollege() {
 
       <div className="about-layout">
         <aside className="about-sidebar">
-          <h3 className="sidebar-heading">About</h3>
-          <ul className="sidebar-list">
-            {sidebarLinks.map((link) => (
-              <li key={link.id}>
-                <button
-                  className={`sidebar-link ${active === link.id ? 'active' : ''}`}
-                  onClick={() => setActive(link.id)}
-                >
-                  <span className="arrow">→</span>
-                  {link.label}
-                </button>
-              </li>
-            ))}
-          </ul>
+          {Object.entries(SIDEBAR_GROUPS).map(([groupName, links]) => (
+            <div className="sidebar-group" key={groupName}>
+              <h3 className="sidebar-heading">{groupName}</h3>
+              <ul className="sidebar-list">
+                {links.map((link) => (
+                  <li key={link.id}>
+                    <button
+                      className={`sidebar-link ${active === link.id ? 'active' : ''}`}
+                      onClick={() => switchTab(link.id)}
+                    >
+                      <span className="arrow">→</span>
+                      {link.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+        ))}
 
           {/* Mobile top bar tabs */}
           <div className="about-mobile-tabs">

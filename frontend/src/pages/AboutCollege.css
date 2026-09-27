@@ -21,6 +21,10 @@
   border-radius: 4px 4px 0 0;
 }
 
+.sidebar-group {
+  margin-bottom: 18px;
+}
+
 .sidebar-list {
   list-style: none;
   padding: 0;
