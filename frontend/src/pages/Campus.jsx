@@ -15,9 +15,15 @@ const routeMap = {
   canteen: 'canteen',
   'equal-opportunity-center': 'equal-opportunity-center',
   'center-of-excellence': 'center-of-excellence',
+  registrar: 'registrar',
+  'office-staff': 'office-staff',
+  'non-teaching-staff': 'non-teaching-staff',
 };
 
 const sidebarLinks = [
+  { id: 'registrar', label: "Registrar's Desk" },
+  { id: 'office-staff', label: 'Office Staff' },
+  { id: 'non-teaching-staff', label: 'Non Teaching Staff' },
   { id: 'library', label: 'Library' },
   { id: 'bus-facility', label: 'Bus Facility' },
   { id: 'canteen', label: 'Canteen' },
