@@ -104,15 +104,16 @@
 
 .cells-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   row-gap: 32px;
-  align-items: start;
+  grid-auto-rows: 1fr;
 }
 
 .cell-card-link {
   text-decoration: none;
   color: inherit;
+  height: 100%;
 }
 
 .cell-card {
