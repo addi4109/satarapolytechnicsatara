@@ -1,0 +1,181 @@
+/* ============================================================
+   SHARED UI PRIMITIVES — buttons & tables used site-wide
+   ------------------------------------------------------------
+   One file to keep every button and table visually consistent.
+
+   NEW CODE: use .sps-btn (with --primary / --outline / --gold)
+   and .sps-table inside .sps-table-wrap.
+
+   LEGACY ALIASES: existing class names (.exam-btn, .fee-table,
+   .programs-table, ...) are mapped here with slightly higher
+   specificity (element-qualified) so this file stays the single
+   source of truth even though page CSS loads after it.
+   ============================================================ */
+
+/* ---------- Buttons: base ---------- */
+.sps-btn,
+a.exam-btn,
+button.exam-btn,
+button.news-btn,
+a.brochure-btn,
+button.brochure-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.1s;
+}
+
+.sps-btn:active,
+a.exam-btn:active,
+button.exam-btn:active,
+button.news-btn:active,
+a.brochure-btn:active,
+button.brochure-btn:active {
+  transform: scale(0.98);
+}
+
+.sps-btn:disabled,
+button.news-btn:disabled,
+button.exam-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ---------- Buttons: filled (primary) ---------- */
+.sps-btn--primary,
+button.exam-btn.exam-btn-download,
+a.exam-btn.exam-btn-download {
+  background: var(--sp-navy, #243358);
+  color: #fff;
+  border-color: var(--sp-navy, #243358);
+}
+
+.sps-btn--primary:hover,
+button.exam-btn.exam-btn-download:hover,
+a.exam-btn.exam-btn-download:hover {
+  background: var(--sp-gold, #c8963e);
+  border-color: var(--sp-gold, #c8963e);
+  color: #243358;
+}
+
+/* ---------- Buttons: outline ---------- */
+.sps-btn--outline,
+button.exam-btn.exam-btn-view,
+a.exam-btn.exam-btn-view {
+  background: #fff;
+  color: var(--sp-navy, #243358);
+  border-color: var(--sp-navy, #243358);
+}
+
+.sps-btn--outline:hover,
+button.exam-btn.exam-btn-view:hover,
+a.exam-btn.exam-btn-view:hover {
+  background: var(--sp-navy, #243358);
+  color: #fff;
+}
+
+/* ---------- Buttons: gold ---------- */
+.sps-btn--gold {
+  background: var(--sp-gold, #c8963e);
+  border-color: var(--sp-gold, #c8963e);
+  color: #243358;
+}
+
+.sps-btn--gold:hover {
+  background: var(--sp-navy, #243358);
+  border-color: var(--sp-navy, #243358);
+  color: #fff;
+}
+
+/* ---------- Tables: base ---------- */
+.sps-table-wrap,
+.fee-table-wrap {
+  overflow-x: auto;
+  border-radius: 8px;
+}
+
+.sps-table,
+table.fee-table,
+table.programs-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  font-size: 13.5px;
+}
+
+.sps-table thead th,
+table.fee-table thead th,
+table.programs-table thead th {
+  background: var(--sp-navy, #243358);
+  color: #fff;
+  text-align: left;
+  padding: 11px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sps-table tbody td,
+table.fee-table tbody td,
+table.programs-table tbody td {
+  padding: 11px 14px;
+  border-bottom: 1px solid #eef1f5;
+  color: #555;
+}
+
+.sps-table tbody tr:last-child td,
+table.fee-table tbody tr:last-child td,
+table.programs-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Zebra stripes + hover */
+.sps-table tbody tr:nth-child(even),
+table.fee-table tbody tr:nth-child(even),
+table.programs-table tbody tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+.sps-table tbody tr:hover,
+table.fee-table tbody tr:hover,
+table.programs-table tbody tr:hover {
+  background: #faf4ea;
+}
+
+/* Leading number/label column */
+.sps-table .num-col,
+.sps-table tbody td:first-child.num-col {
+  width: 60px;
+}
+
+@media (max-width: 680px) {
+  .sps-table,
+  table.fee-table,
+  table.programs-table {
+    font-size: 12px;
+  }
+
+  .sps-table thead th,
+  table.fee-table thead th,
+  table.programs-table thead th,
+  .sps-table tbody td,
+  table.fee-table tbody td,
+  table.programs-table tbody td {
+    padding: 8px 10px;
+  }
+}
