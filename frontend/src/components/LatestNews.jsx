@@ -84,22 +84,17 @@ function LatestNews() {
 
         <h3 className="news-card-title">{item.title}</h3>
 
-        {/* Summary — collapsed by default */}
+        {/* Summary — clamped when collapsed, full when expanded */}
         <div className="news-card-summary-wrap">
-          <p className="news-card-summary">{item.summary}</p>
+          <p className={`news-card-summary ${expanded === item._id ? 'expanded' : ''}`}>
+            {item.summary}
+          </p>
         </div>
 
-        {/* Expandable extra content (shows when expanded) */}
-        {expanded === item._id && (
-          <div className="news-card-extra">
-            <p className="news-card-extra-text">
-              {item.summary || 'No further details available.'}
-            </p>
-            {item.image && (
-              <div className="news-card-full-img">
-                <img src={item.image} alt={item.title} />
-              </div>
-            )}
+        {/* Expanded shows the article image below the full text */}
+        {expanded === item._id && item.image && (
+          <div className="news-card-full-img">
+            <img src={item.image} alt={item.title} />
           </div>
         )}
 
@@ -109,7 +104,7 @@ function LatestNews() {
             className="news-btn news-btn-readmore"
             onClick={() => toggleExpand(item._id)}
           >
-            {expanded === item._id ? 'Show Less' : 'Read More'}
+            {expanded === item._id ? 'Read Less' : 'Read More'}
           </button>
           <button
             className="news-btn news-btn-article"
@@ -147,7 +142,7 @@ function LatestNews() {
 
         {loading ? (
           <div className="latest-news-grid">
-            {Array.from({ length: 3 }).map((_, i) => (
+            {Array.from({ length: 2 }).map((_, i) => (
               <div className="news-card-skeleton" key={i}>
                 <div className="news-card-skel-img" />
                 <div className="news-card-skel-line short" />

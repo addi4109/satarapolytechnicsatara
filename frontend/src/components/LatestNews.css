@@ -58,7 +58,7 @@
 /* ===== Grid ===== */
 .latest-news-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
 }
 
@@ -176,6 +176,13 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Full description when the card is expanded via "Read More" */
+.news-card-summary.expanded {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
 }
 
 /* ===== Expanded extra content ===== */
