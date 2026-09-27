@@ -71,7 +71,6 @@ function Footer() {
               <li><a href="/departments/computer">Departments</a></li>
               <li><a href="/placements/cell">Placements</a></li>
               <li><a href="/examination/results">Results</a></li>
-              <li><a href="/examination/rankholders">Rank Holders</a></li>
               <li><a href="/gallery/photos">Gallery</a></li>
             </ul>
           </div>
