@@ -6,6 +6,7 @@ import SEO, { breadcrumbSchema } from '../components/SEO';
 import { STATIC_CONTENT } from '../data/staticContent';
 import './AboutCollege.css';
 import './Gallery.css'; /* lightbox styles for the org chart zoom view */
+import './DepartmentsPage.css'; /* staff card styles for Office/Non-Teaching Staff */
 
 const routeMap = {
   'college': 'institute',
@@ -24,6 +25,9 @@ const routeMap = {
   'local-governing-body': 'local-governing-body',
   'organisational-chart': 'organisational-chart',
   'code-of-conduct': 'code-of-conduct',
+  registrar: 'registrar',
+  'office-staff': 'office-staff',
+  'non-teaching-staff': 'non-teaching-staff',
 };
 
 const sidebarLinks = [
@@ -34,6 +38,9 @@ const sidebarLinks = [
   { id: 'policy', label: 'Institute Policy' },
   { id: 'organisational-chart', label: 'Organisational Chart' },
   { id: 'code-of-conduct', label: 'Code of Conduct' },
+  { id: 'registrar', label: "Registrar's Desk" },
+  { id: 'office-staff', label: 'Office Staff' },
+  { id: 'non-teaching-staff', label: 'Non Teaching Staff' },
   { id: 'founder', label: 'Founder' },
   { id: 'chairman', label: 'Chairman' },
   { id: 'secretary', label: 'Secretary' },
@@ -181,6 +188,7 @@ function AboutCollege() {
   const [gbMembers, setGbMembers] = useState([]);
   const [lgbMembers, setLgbMembers] = useState([]);
   const [programs, setPrograms] = useState([]);
+  const [campusSections, setCampusSections] = useState({});
   const [loading, setLoading] = useState(true);
   const [lightbox, setLightbox] = useState(null);
 
@@ -209,8 +217,9 @@ function AboutCollege() {
       fetch(`${API_URL}/governing-body`).then((r) => r.json()),
       fetch(`${API_URL}/local-governing-body`).then((r) => r.json()),
       fetch(`${API_URL}/departments`).then((r) => r.json()),
+      fetch(`${API_URL}/campus`).then((r) => r.json()),
     ])
-      .then(([mgmtData, aboutData, gbData, lgbData, deptData]) => {
+      .then(([mgmtData, aboutData, gbData, lgbData, deptData, campusData]) => {
         const mgmtMapped = {};
         mgmtData.forEach((entry) => { mgmtMapped[entry.role] = entry; });
         setManagement(mgmtMapped);
@@ -222,6 +231,10 @@ function AboutCollege() {
         setGbMembers(gbData);
         setLgbMembers(lgbData);
         setPrograms(Array.isArray(deptData) ? deptData.filter((d) => !d.hideFromHome) : []);
+
+        const campusMapped = {};
+        (Array.isArray(campusData) ? campusData : []).forEach((s) => { campusMapped[s.section] = s; });
+        setCampusSections(campusMapped);
       })
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -244,6 +257,64 @@ function AboutCollege() {
           <div className="info-row" key={i}>
             <span className="info-label">{row.label}</span>
             <span className="info-value">{row.value}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  // Helper: render admin-managed tables (campus sections)
+  const renderCampusTables = (tables) => {
+    if (!tables || tables.length === 0) return null;
+    return (
+      <div className="programs-table-wrap">
+        {tables.map((table, ti) => (
+          <div key={ti} style={{ marginBottom: '20px' }}>
+            {table.title && <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '17px', color: '#243358', margin: '0 0 10px' }}>{table.title}</h3>}
+            <table className="programs-table">
+              <thead>
+                <tr>
+                  {(table.columns || []).map((col, ci) => (
+                    <th key={ci} style={ci === 0 ? { width: 60 } : {}}>{col}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {(table.rows || []).map((row, ri) => (
+                  <tr key={ri}>
+                    {row.map((cell, ci) => (
+                      <td key={ci} style={ci === 0 ? { fontWeight: 600, color: '#243358' } : {}}>{cell}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  // Helper: render staff member cards (reuses department faculty card styles)
+  const renderStaffCards = (members) => {
+    if (!members || members.length === 0) return null;
+    return (
+      <div className="faculty-grid" style={{ marginTop: '24px' }}>
+        {members.map((member, i) => (
+          <div className="faculty-card-new" key={i}>
+            <div className="fcard-photo">
+              {member.photoUrl ? (
+                <img src={member.photoUrl} alt={member.name} />
+              ) : (
+                <span>{member.name?.split(' ')?.pop()?.charAt(0) || '?'}</span>
+              )}
+            </div>
+            <h4 className="fcard-name">{member.name}</h4>
+            <p className="fcard-designation">{member.designation}</p>
+            <div className="fcard-details">
+              {member.phone && <span><strong>Phone:</strong> {member.phone}</span>}
+              {member.email && <span><strong>Email:</strong> {member.email}</span>}
+            </div>
           </div>
         ))}
       </div>
@@ -372,7 +443,10 @@ function AboutCollege() {
     active === 'governing-body' ? 'Governing Body' :
     active === 'local-governing-body' ? 'Local Governing Body' :
     active === 'organisational-chart' ? 'Organisational Chart' :
-    active === 'code-of-conduct' ? 'Code of Conduct' : 'About College';
+    active === 'code-of-conduct' ? 'Code of Conduct' :
+    active === 'registrar' ? "Registrar's Desk" :
+    active === 'office-staff' ? 'Office Staff' :
+    active === 'non-teaching-staff' ? 'Non Teaching Staff' : 'About College';
 
   return (
     <>
@@ -422,6 +496,25 @@ function AboutCollege() {
                 <h4 className="about-mobile-group-heading">About</h4>
                 <ul className="about-mobile-tabs-list">
                   {sidebarLinks.filter((l) => ['society', 'institute', 'disclosure', 'affiliation', 'policy', 'organisational-chart', 'code-of-conduct'].includes(l.id)).map((link) => (
+                    <li key={link.id}>
+                      <button
+                        className={`about-mobile-tab ${active === link.id ? 'active' : ''}`}
+                        onClick={() => setActive(link.id)}
+                      >
+                        <span className="arrow">→</span>
+                        {link.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+
+            {['registrar', 'office-staff', 'non-teaching-staff'].includes(active) && (
+              <>
+                <h4 className="about-mobile-group-heading">Administration</h4>
+                <ul className="about-mobile-tabs-list">
+                  {sidebarLinks.filter((l) => ['registrar', 'office-staff', 'non-teaching-staff'].includes(l.id)).map((link) => (
                     <li key={link.id}>
                       <button
                         className={`about-mobile-tab ${active === link.id ? 'active' : ''}`}
@@ -887,6 +980,37 @@ function AboutCollege() {
                   </div>
                 </>
               )}
+            </>
+          )}
+
+          {/* Registrar's Desk */}
+          {active === 'registrar' && (
+            <>
+              <h2 className="content-heading">{campusSections['registrar']?.title || "Registrar's Desk"}</h2>
+              <div className="content-line"></div>
+              {renderContent(campusSections['registrar']?.content || STATIC_CONTENT.campus.registrar)}
+              {renderCampusTables(campusSections['registrar']?.tables)}
+              {renderInfoRows(campusSections['registrar']?.infoRows)}
+            </>
+          )}
+
+          {/* Office Staff */}
+          {active === 'office-staff' && (
+            <>
+              <h2 className="content-heading">{campusSections['office-staff']?.title || 'Office Staff'}</h2>
+              <div className="content-line"></div>
+              {renderContent(campusSections['office-staff']?.content || STATIC_CONTENT.campus['office-staff'])}
+              {renderStaffCards(campusSections['office-staff']?.staffMembers)}
+            </>
+          )}
+
+          {/* Non Teaching Staff */}
+          {active === 'non-teaching-staff' && (
+            <>
+              <h2 className="content-heading">{campusSections['non-teaching-staff']?.title || 'Non Teaching Staff'}</h2>
+              <div className="content-line"></div>
+              {renderContent(campusSections['non-teaching-staff']?.content || STATIC_CONTENT.campus['non-teaching-staff'])}
+              {renderStaffCards(campusSections['non-teaching-staff']?.staffMembers)}
             </>
           )}
         </main>
