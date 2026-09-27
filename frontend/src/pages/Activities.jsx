@@ -13,6 +13,8 @@ const routeMap = {
   cultural: 'cultural',
   technical: 'technical',
   'academic-events': 'academic-events',
+  'industrial-visits': 'industrial-visits',
+  competitions: 'competitions',
 };
 
 const sidebarLinks = [
@@ -20,6 +22,8 @@ const sidebarLinks = [
   { id: 'cultural', label: 'Cultural' },
   { id: 'technical', label: 'Technical Events' },
   { id: 'academic-events', label: 'Academic Events & Activities' },
+  { id: 'industrial-visits', label: 'Industrial Visits' },
+  { id: 'competitions', label: 'Competitions' },
 ];
 
 const staticContent = {
@@ -38,6 +42,14 @@ const staticContent = {
   'academic-events': {
     title: 'Academic Events & Activities',
     description: 'Academic events and activities including seminars, workshops, guest lectures, and technical talks are organised to supplement classroom teaching and provide exposure to industry trends and emerging technologies. These events bridge the gap between academic learning and industry requirements.',
+  },
+  'industrial-visits': {
+    title: 'Industrial Visits',
+    description: 'Industrial visits are organised regularly to give students first-hand exposure to real working environments in manufacturing plants, power stations, process industries and software companies. These visits help students connect classroom concepts with industry practice and understand modern production processes, quality standards and workplace culture.',
+  },
+  competitions: {
+    title: 'Competitions',
+    description: 'Students of the institute participate enthusiastically in various inter-collegiate, state and national level competitions including technical paper presentations, project competitions, coding contests, robo-races, debates and sports championships. Their achievements at events such as Avishkar and MSBTE competitions bring laurels to the institute and build confidence and competitive spirit.',
   },
 };
 

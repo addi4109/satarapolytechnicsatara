@@ -15,6 +15,8 @@ const SECTIONS = [
   { key: 'cultural', label: 'Cultural' },
   { key: 'technical', label: 'Technical Events' },
   { key: 'academic-events', label: 'Academic Events' },
+  { key: 'industrial-visits', label: 'Industrial Visits' },
+  { key: 'competitions', label: 'Competitions' },
 ];
 
 const defaultForm = {
