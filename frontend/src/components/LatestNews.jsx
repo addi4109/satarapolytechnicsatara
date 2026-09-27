@@ -142,7 +142,7 @@ function LatestNews() {
 
         {loading ? (
           <div className="latest-news-grid">
-            {Array.from({ length: 2 }).map((_, i) => (
+            {Array.from({ length: 3 }).map((_, i) => (
               <div className="news-card-skeleton" key={i}>
                 <div className="news-card-skel-img" />
                 <div className="news-card-skel-line short" />
