@@ -32,7 +32,7 @@
    ============================================================ */
 .facilities-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 
@@ -101,24 +101,13 @@ a.facility-card {
 .tone-orange { --tone-bg: #fdf3ec; --tone-bar: #d97e3f; --tone-icon-color: #b05a1a; --tone-title: #b05a1a; }
 .tone-teal   { --tone-bg: #edf6f4; --tone-bar: #2f9d8a; --tone-icon-color: #1d7a69; --tone-title: #1d7a69; }
 .tone-maroon { --tone-bg: #fbf0f2; --tone-bar: #b0556b; --tone-icon-color: #8f3a50; --tone-title: #8f3a50; }
-.tone-violet { --tone-bg: #f5f1fb; --tone-bar: #8b72c9; --tone-icon-color: #6a4fa3; --tone-title: #6a4fa3; }
-.tone-green  { --tone-bg: #eff7ee; --tone-bar: #5da357; --tone-icon-color: #3f7d3a; --tone-title: #3f7d3a; }
-.tone-navy   { --tone-bg: #eff2f8; --tone-bar: #44598c; --tone-icon-color: #33487a; --tone-title: #33487a; }
 .tone-sky    { --tone-bg: #edf6fa; --tone-bar: #4a9db8; --tone-icon-color: #2f7e99; --tone-title: #2f7e99; }
 
 /* ============================================================
-   Responsive: 3 columns on tablets, 2 on phones. Wi-Fi Campus
-   stays filtered out on mobile so both layouts stay even.
+   Responsive: 2 columns on phones — 6 cards stay even.
    ============================================================ */
 @media (max-width: 900px) {
   .facilities-grid {
-    grid-template-columns: repeat(3, 1fr);
     gap: 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  .facilities-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 }

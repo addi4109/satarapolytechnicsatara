@@ -39,30 +39,6 @@ const Icons = {
       <path d="M8.21 13.89 7 23l5-3 5 3-1.21-9.12" />
     </svg>
   ),
-  lab: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M10 2v7.5a2 2 0 0 1-.21.9L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45L14.21 10.4a2 2 0 0 1-.21-.9V2" />
-      <path d="M8.5 2h7" />
-      <path d="M7 16h10" />
-    </svg>
-  ),
-  sports: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-      <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-      <path d="M4 22h16" />
-      <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
-      <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
-      <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
-    </svg>
-  ),
-  seminar: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M2 3h20" />
-      <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3" />
-      <path d="m7 21 5-5 5 5" />
-    </svg>
-  ),
   wifi: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M5 12.55a11 11 0 0 1 14.08 0" />
@@ -110,29 +86,10 @@ const FACILITIES = [
     tone: 'maroon',
   },
   {
-    icon: Icons.lab,
-    title: 'Modern Laboratories',
-    desc: 'Well-equipped departmental labs with modern instruments for hands-on practical learning.',
-    tone: 'violet',
-  },
-  {
-    icon: Icons.sports,
-    title: 'Sports & Playground',
-    desc: 'Outdoor and indoor sports facilities that build fitness, teamwork and sportsmanship.',
-    tone: 'green',
-  },
-  {
-    icon: Icons.seminar,
-    title: 'Seminar Hall',
-    desc: 'Spacious halls for guest lectures, seminars, workshops and cultural activities.',
-    tone: 'navy',
-  },
-  {
     icon: Icons.wifi,
     title: 'Wi-Fi Campus',
     desc: 'High-speed internet connectivity available across the campus for students and faculty.',
     tone: 'sky',
-    hideOnMobile: true,
   },
 ];
 
@@ -145,7 +102,7 @@ function Facilities() {
 
         {/* Simple cards: icon, title, description — one per facility */}
         <div className="facilities-grid">
-          {FACILITIES.filter((f) => !f.hideOnMobile).map((f) => {
+          {FACILITIES.map((f) => {
             const body = (
               <>
                 <span className="facility-icon">{f.icon}</span>
