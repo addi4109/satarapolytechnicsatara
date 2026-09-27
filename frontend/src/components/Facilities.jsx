@@ -143,50 +143,27 @@ function Facilities() {
         <h2 className="facilities-heading" data-reveal="down">Campus Facilities</h2>
         <div className="facilities-line" data-reveal="down" data-reveal-delay="100"></div>
 
-        {/* Flow chart: hub → stem → rail → drops → facility circles */}
-        <div className="facilities-chart" data-reveal="fade">
-          <div className="facilities-center" data-reveal="zoom">
-            <span className="facilities-center-sub">Explore Our</span>
-            <span className="facilities-center-text">Campus Facilities</span>
-          </div>
-
-          <div className="facilities-connector" aria-hidden="true">
-            <span className="connector-stem" />
-            <span className="connector-rail" />
-          </div>
-
-          <div className="facilities-flow">
-            {FACILITIES.filter((f) => !f.hideOnMobile).map((f, i) => {
-              const visible = FACILITIES.filter((x) => !x.hideOnMobile);
-              const tipAlign =
-                i <= 1 ? 'tip-start' : i >= visible.length - 2 ? 'tip-end' : '';
-              const nodeClass = `facility-node tone-${f.tone}${f.hideOnMobile ? ' facility-node-hide-mobile' : ''}`;
-              const nodeBody = (
-                <>
-                  <span className="facility-node-icon">{f.icon}</span>
-                  <span className="facility-node-name">{f.title}</span>
-                  <span className={`facility-node-tip ${tipAlign}`}>
-                    {f.desc}
-                    {f.link && <span className="facility-node-more">Click to view details →</span>}
-                  </span>
-                </>
-              );
-              return (
-                <div className="facilities-flow-col" key={f.title}>
-                  <span className="flow-drop" aria-hidden="true" />
-                  {f.link ? (
-                    <a href={f.link} className={nodeClass} data-reveal-child aria-label={f.title}>
-                      {nodeBody}
-                    </a>
-                  ) : (
-                    <div className={nodeClass} data-reveal-child>
-                      {nodeBody}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+        {/* Simple cards: icon, title, description — one per facility */}
+        <div className="facilities-grid">
+          {FACILITIES.filter((f) => !f.hideOnMobile).map((f) => {
+            const body = (
+              <>
+                <span className="facility-icon">{f.icon}</span>
+                <h3 className="facility-title">{f.title}</h3>
+                <p className="facility-desc">{f.desc}</p>
+                {f.link && <span className="facility-more">View details →</span>}
+              </>
+            );
+            return f.link ? (
+              <a href={f.link} className={`facility-card tone-${f.tone}`} key={f.title} data-reveal-child aria-label={f.title}>
+                {body}
+              </a>
+            ) : (
+              <div className={`facility-card tone-${f.tone}`} key={f.title} data-reveal-child>
+                {body}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
