@@ -3,6 +3,8 @@ import { SkeletonPage } from "../components/Skeleton";
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
+import PageSidebar from '../components/PageSidebar';
+import { LIFE_SIDEBAR_GROUPS } from '../components/lifeSidebar';
 import './Academics.css';
 import './Gallery.css';
 
@@ -95,6 +97,12 @@ function Activities() {
   const getSection = (key) => sections[key] || {};
   const staticInfo = staticContent[active] || {};
 
+  // Keep the URL in sync when switching activity sections.
+  const switchTab = (id) => {
+    setActive(id);
+    window.history.replaceState(null, '', `/activities/${id}`);
+  };
+
   if (loading) {
     return (
       <>
@@ -128,25 +136,23 @@ function Activities() {
         }
       />
 
-      <div className="about-layout">
-        <aside className="about-sidebar">
-          <h3 className="sidebar-heading">Activities</h3>
-          <ul className="sidebar-list">
-            {sidebarLinks.map((link) => (
-              <li key={link.id}>
-                <button
-                  className={`sidebar-link ${active === link.id ? 'active' : ''}`}
-                  onClick={() => setActive(link.id)}
-                >
-                  <span className="arrow">→</span>
-                  {link.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </aside>
+      <div className="life-layout">
+        <PageSidebar groups={LIFE_SIDEBAR_GROUPS} activePath={`/activities/${active}`} />
 
-        <main className="about-content">
+        <main className="life-main">
+          {/* Mobile in-page quick tabs (same-page section switching) */}
+          <div className="life-mobile-tabs">
+            {sidebarLinks.map((link) => (
+              <button
+                key={link.id}
+                className={`sidebar-link ${active === link.id ? 'active' : ''}`}
+                onClick={() => switchTab(link.id)}
+              >
+                <span className="arrow">→</span>
+                {link.label}
+              </button>
+            ))}
+          </div>
           {/* Section with static heading + sub-sections from admin */}
           <h2 className="content-heading">{staticInfo.title}</h2>
           <div className="content-line"></div>

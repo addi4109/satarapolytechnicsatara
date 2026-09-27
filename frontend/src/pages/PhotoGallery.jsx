@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { SkeletonCards } from "../components/Skeleton";
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
+import PageSidebar from '../components/PageSidebar';
+import { LIFE_SIDEBAR_GROUPS } from '../components/lifeSidebar';
 import './Gallery.css';
 
 import API_URL from '../lib/api';
@@ -59,7 +61,10 @@ function PhotoGallery() {
         }
       />
 
-      <div className="gallery-page-wrap">
+      <div className="life-layout">
+        <PageSidebar groups={LIFE_SIDEBAR_GROUPS} activePath="/gallery/photos" />
+
+        <main className="life-main">
         <h2 className="gallery-main-heading">Photo Gallery</h2>
         <div className="gallery-main-line"></div>
         <p className="gallery-intro">
@@ -90,6 +95,7 @@ function PhotoGallery() {
             ))}
           </div>
         )}
+        </main>
       </div>
 
       {/* Lightbox */}

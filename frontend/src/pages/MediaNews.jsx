@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { SkeletonCards } from "../components/Skeleton";
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
+import PageSidebar from '../components/PageSidebar';
+import { LIFE_SIDEBAR_GROUPS } from '../components/lifeSidebar';
 import './Gallery.css';
 
 import API_URL from '../lib/api';
@@ -65,7 +67,11 @@ function MediaNews() {
         }
       />
 
-      <div className="gallery-page-wrap">
+      <div className="life-layout">
+        <PageSidebar groups={LIFE_SIDEBAR_GROUPS} activePath="/gallery/media" />
+
+        <main className="life-main">
+        <div className="gallery-page-wrap">
         {/* News Section */}
         <h2 className="gallery-main-heading">Latest News</h2>
         <div className="gallery-main-line"></div>
@@ -144,6 +150,8 @@ function MediaNews() {
             </div>
           </div>
         )}
+        </div>
+        </main>
       </div>
 
       {/* Lightbox */}

@@ -1,0 +1,154 @@
+/* Shared Life@SPS sidebar (Activities / Facilities / Gallery groups).
+   Style values intentionally mirror the existing .sidebar-* rules in
+   Academics.css / AboutCollege.css so every sidebar looks identical. */
+
+.life-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.life-layout .about-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+}
+
+.life-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.sidebar-group {
+  margin-bottom: 18px;
+}
+
+.sidebar-group:last-child {
+  margin-bottom: 0;
+}
+
+.sidebar-heading {
+  background: var(--sp-navy, #243358);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 12px 16px;
+  margin: 0;
+  border-radius: 4px 4px 0 0;
+}
+
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #e4e8ed;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  overflow: hidden;
+}
+
+.sidebar-list li {
+  border-bottom: 1px solid #f0f0f0;
+  margin: 0;
+}
+
+.sidebar-list li:last-child {
+  border-bottom: none;
+}
+
+.sidebar-list a.sidebar-link {
+  text-decoration: none;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px 16px;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: #444;
+  text-align: left;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sidebar-link:hover {
+  background: #f5f7fa;
+  color: #243358;
+}
+
+.sidebar-link.active {
+  background: var(--sp-navy, #243358);
+  color: #fff;
+  box-shadow: inset 3px 0 0 var(--sp-gold, #c8963e);
+  font-weight: 600;
+}
+
+.sidebar-link .arrow {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+.sidebar-link.active .arrow {
+  opacity: 1;
+}
+
+/* Mobile in-page quick tabs: horizontal scroll chips for switching
+   sections within the same page (Activities / Campus). */
+.life-mobile-tabs {
+  display: none;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+  margin-bottom: 18px;
+}
+
+.life-mobile-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.life-mobile-tabs .sidebar-link {
+  width: auto;
+  flex: 0 0 auto;
+  border: 1px solid #e4e8ed;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.life-mobile-tabs .sidebar-link.active {
+  box-shadow: none;
+  border-color: var(--sp-navy, #243358);
+}
+
+@media (max-width: 768px) {
+  .life-mobile-tabs {
+    display: flex;
+  }
+  .life-layout {
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px 16px 40px;
+  }
+
+  .life-layout .about-sidebar {
+    width: 100%;
+  }
+
+  /* Other pages hide .about-sidebar contents on mobile for their own
+     mobile tab bars — the Life@SPS sidebar must stay visible. */
+  .life-layout .about-sidebar .sidebar-heading,
+  .life-layout .about-sidebar .sidebar-list {
+    display: block !important;
+  }
+}

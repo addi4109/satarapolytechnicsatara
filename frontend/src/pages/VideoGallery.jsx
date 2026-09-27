@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { SkeletonCards } from "../components/Skeleton";
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
+import PageSidebar from '../components/PageSidebar';
+import { LIFE_SIDEBAR_GROUPS } from '../components/lifeSidebar';
 import './Gallery.css';
 
 import API_URL from '../lib/api';
@@ -55,7 +57,10 @@ function VideoGallery() {
         }
       />
 
-      <div className="gallery-page-wrap">
+      <div className="life-layout">
+        <PageSidebar groups={LIFE_SIDEBAR_GROUPS} activePath="/gallery/videos" />
+
+        <main className="life-main">
         <h2 className="gallery-main-heading">Video Gallery</h2>
         <div className="gallery-main-line"></div>
         <p className="gallery-intro">
@@ -111,6 +116,7 @@ function VideoGallery() {
             ))}
           </div>
         )}
+        </main>
       </div>
     </>
   );
