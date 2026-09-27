@@ -1,0 +1,8 @@
+.footer-logo-img {
+  display: block;
+  height: 72px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  margin: 0 0 4px;
+}

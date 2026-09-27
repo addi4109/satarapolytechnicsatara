@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Footer.css';
+import './FooterLogo.css';
 import { getCopyrightYear } from '../lib/siteConfig';
 import API_URL from '../lib/api';
 
@@ -48,7 +49,11 @@ function Footer() {
       <div className="footer-main">
         <div className={`footer-inner${importantLinks.length > 0 ? ' footer-inner-has-links' : ''}`}>
           <div className="footer-brand">
-            <h2 className="footer-logo">SPS</h2>
+            <img
+              className="footer-logo-img"
+              src="/footer-logo.jpg"
+              alt="Satara Polytechnic, Satara"
+            />
             <p className="footer-tagline">Satara Polytechnic, Satara</p>
             <p className="footer-desc">
               Shaping future engineers since 1983. A legacy of academic
