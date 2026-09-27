@@ -106,8 +106,6 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-  max-width: 960px;
-  margin: 0 auto;
 }
 
 .cell-card-link {
@@ -119,11 +117,13 @@
   background: #fff;
   border: 1px solid #e4e8ed;
   border-radius: 8px;
-  padding: 24px 24px 20px;
+  padding: 16px 20px 14px;
   transition: box-shadow 0.2s, border-color 0.2s;
   height: 100%;
   display: flex;
   flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .cell-card-link:hover .cell-card {
@@ -133,9 +133,9 @@
 
 .cell-card-heading {
   font-family: 'Georgia', serif;
-  font-size: 17px;
+  font-size: 16px;
   color: #243358;
-  margin: 0 0 8px;
+  margin: 0 0 6px;
 }
 
 .cell-card-link:hover .cell-card-heading {
@@ -145,8 +145,8 @@
 .cell-card-desc {
   font-size: 13.5px;
   color: #666;
-  line-height: 1.7;
-  margin: 0 0 14px;
+  line-height: 1.55;
+  margin: 0 0 8px;
   flex: 1;
 }
 
@@ -240,7 +240,7 @@
   }
 
   .cell-card {
-    padding: 20px 18px;
+    padding: 14px 16px 12px;
   }
 
   .cell-card-table {
