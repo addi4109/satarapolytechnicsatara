@@ -77,16 +77,14 @@ function PhotoGallery() {
               <div className="photo-card" key={photo._id} onClick={() => photo.image && setLightbox(photo)} style={{ cursor: photo.image ? 'pointer' : 'default' }}>
                 <div className="photo-thumb">
                   {photo.image ? (
-                    <img src={photo.image} alt={photo.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={photo.image} alt={photo.title} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   ) : (
-                    <div className="photo-placeholder">
-                      <span className="photo-placeholder-icon">📷</span>
-                      <span className="photo-placeholder-text">{photo.title}</span>
-                    </div>
+                    <span className="photo-placeholder">📷</span>
                   )}
                 </div>
                 <div className="photo-info">
                   <h4 className="photo-title">{photo.title}</h4>
+                  {photo.description && <p className="photo-desc">{photo.description}</p>}
                 </div>
               </div>
             ))}
