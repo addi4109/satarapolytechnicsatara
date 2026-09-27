@@ -55,18 +55,10 @@ function Footer() {
               excellence, strong placements, and holistic development.
             </p>
             {lastUpdated && (
-              <div className="visitor-chip last-updated-chip" role="status" aria-label="Site content last updated">
-                <span className="visitor-icon" aria-hidden="true">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                </span>
-                <span className="visitor-label">Last updated on</span>
-                <span className="visitor-count">
-                  {new Date(lastUpdated).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
-                </span>
-              </div>
+              <p className="last-updated-text">
+                Last updated on{' '}
+                {new Date(lastUpdated).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
+              </p>
             )}
 
           </div>
@@ -145,7 +137,7 @@ function Footer() {
         <div className="footer-bottom-inner">
           <p>© {getCopyrightYear()} Satara Polytechnic, Satara. All rights reserved.</p>
           <a href="/admin/login" className="footer-admin-link">Admin</a>
-          <span className="built-by">Built by Aditya Sawant</span>
+          <span className="built-by">Built and managed by Aditya Sawant</span>
         </div>
       </div>
     </footer>

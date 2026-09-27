@@ -49,7 +49,12 @@
   max-width: 340px;
 }
 
-/* "Last updated on" chip, shown under the footer description */
+/* "Last updated on" simple text, shown under the footer description */
+.last-updated-text {
+  font-size: 11.5px;
+  color: #a8bde0;
+  margin: 0 0 6px;
+}
 .visitor-chip {
   display: inline-flex;
   align-items: center;
@@ -284,7 +289,7 @@
     overflow: hidden;
   }
 
-  .visitor-chip {
+  .last-updated-text {
     margin-bottom: 0;
   }
 
