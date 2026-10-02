@@ -272,7 +272,7 @@ function DepartmentsPage() {
                               <tr>
                                 <th className="infra-sr-col">Sr.No</th>
                                 <th>Particulars</th>
-                                <th className="infra-count-col">Number</th>
+                                <th className="infra-count-col">Equipment Count</th>
                                 <th className="infra-loc-col">Location</th>
                               </tr>
                             </thead>

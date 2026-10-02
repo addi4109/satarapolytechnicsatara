@@ -1005,6 +1005,14 @@
   color: #fff;
 }
 
+/* Column-color rules above win on specificity, so force header text
+   back to white on the navy header row */
+.infra-table thead th.infra-count-col,
+.infra-table thead th.infra-loc-col,
+.infra-table thead th.infra-duration-col {
+  color: #fff;
+}
+
 .infra-table .infra-count-col {
   width: 120px;
   font-weight: 700;
