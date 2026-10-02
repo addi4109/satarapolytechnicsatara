@@ -89,6 +89,7 @@ const departmentSchema = new mongoose.Schema(
     // Rankers tab: a single banner image managed from the admin panel
     // (replaces the old per-year rankers table).
     rankersBannerImage: { type: String, default: '' },
+    rankersYear: { type: String, default: '' },
     achievements: [achievementSchema],
     library: {
       description: { type: String, default: '' },

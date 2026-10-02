@@ -8,6 +8,10 @@ import './Gallery.css';
 
 import API_URL from '../lib/api';
 const years = ['1st Year', '2nd Year', '3rd Year'];
+// Fallback academic year label (April–March) when the admin hasn't set one
+const now = new Date();
+const ayStart = now.getMonth() >= 3 ? now.getFullYear() : now.getFullYear() - 1;
+const fallbackRankersYear = `${ayStart}-${ayStart + 1}`;
 const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe', 'rankers', 'achievements', 'library', 'timetable'];
 
 function DepartmentsPage() {
@@ -446,8 +450,25 @@ function DepartmentsPage() {
                 </p>
 
                 {dept.rankersBannerImage ? (
-                  <div className="rankers-banner">
-                    <img src={dept.rankersBannerImage} alt={`${dept.name} department rankers`} loading="lazy" />
+                  <div className="rankers-year-card">
+                    <span className="rankers-year-icon">🏆</span>
+                    <div className="rankers-year-info">
+                      <span className="rankers-year-label">Academic Year</span>
+                      <strong className="rankers-year-value">{dept.rankersYear || fallbackRankersYear}</strong>
+                    </div>
+                    <button
+                      type="button"
+                      className="rankers-view-btn"
+                      onClick={() =>
+                        setLightbox({
+                          image: dept.rankersBannerImage,
+                          title: `${dept.name} Rankers`,
+                          description: `Academic Year ${dept.rankersYear || fallbackRankersYear}`,
+                        })
+                      }
+                    >
+                      View
+                    </button>
                   </div>
                 ) : (
                   <div style={{ marginTop: '32px', textAlign: 'center', padding: '48px 24px', background: '#f8f9fa', borderRadius: '10px', border: '1px dashed #d0d5dd' }}>

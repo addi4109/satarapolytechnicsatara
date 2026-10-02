@@ -30,6 +30,7 @@ const emptyForm = {
   pos: [],
   psos: [],
   rankersBannerImage: '',
+  rankersYear: '',
   achievements: [],
   library: { description: '', books: [], titles: [] },
   deptTimetable: [],
@@ -85,6 +86,7 @@ function AdminDepartmentForm() {
           pos: dept.pos || [],
           psos: dept.psos || [],
           rankersBannerImage: dept.rankersBannerImage || '',
+          rankersYear: dept.rankersYear || '',
           achievements: dept.achievements || [],
           library: {
             description: dept.library?.description || '',
@@ -641,7 +643,7 @@ function AdminDepartmentForm() {
               </div>
               <div>
                 <h3>Rankers Banner</h3>
-                <p>Upload a single banner image (poster/table of rankers) shown on the department Rankers tab</p>
+                <p>Upload the rankers banner image and set the academic year shown on the department Rankers tab</p>
               </div>
             </div>
             <div className="dept-form-card-body">
@@ -651,8 +653,18 @@ function AdminDepartmentForm() {
                 label="Banner Image"
                 placeholder="Choose a banner image..."
               />
+              <div className="form-group" style={{ margin: '14px 0 0' }}>
+                <label style={{ fontSize: '12px', fontWeight: 600 }}>Academic Year</label>
+                <input
+                  type="text"
+                  name="rankersYear"
+                  value={form.rankersYear}
+                  onChange={handleChange}
+                  placeholder="e.g. 2023-2024"
+                />
+              </div>
               <p style={{ margin: '8px 0 0', fontSize: '12.5px', color: '#777' }}>
-                Tip: a wide image works best. It replaces the old rankers table and year tabs.
+                Tip: a wide image works best. The Rankers tab shows a small card with this year and a View button that opens the image.
               </p>
             </div>
           </div>

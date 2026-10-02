@@ -807,20 +807,65 @@
   padding: 20px 0;
 }
 
-/* Rankers tab: admin-uploaded banner image (replaces the old rankers table) */
-.rankers-banner {
+/* Rankers tab: small year card with a View button (replaces the full-width banner) */
+.rankers-year-card {
   margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 380px;
+  padding: 16px 18px;
+  background: #fff;
   border: 1px solid var(--sp-line, #e4e8ed);
   border-radius: 10px;
-  overflow: hidden;
-  background: #fff;
   box-shadow: 0 2px 10px rgba(20, 28, 48, 0.06);
 }
 
-.rankers-banner img {
-  display: block;
-  width: 100%;
-  height: auto;
+.rankers-year-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.rankers-year-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+
+.rankers-year-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #8a93a5;
+}
+
+.rankers-year-value {
+  font-family: 'Georgia', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #243358;
+}
+
+.rankers-view-btn {
+  border: none;
+  cursor: pointer;
+  background: #243358;
+  color: #fff;
+  padding: 9px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  font-family: inherit;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.rankers-view-btn:hover {
+  background: #c8963e;
+  transform: translateY(-1px);
 }
 
 .obe-sub-heading {
