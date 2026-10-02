@@ -32,6 +32,7 @@ const emptyForm = {
   rankersBannerImage: '',
   rankersYear: '',
   achievements: [],
+  mous: [],
   library: { description: '', books: [], titles: [] },
   deptTimetable: [],
 
@@ -92,6 +93,7 @@ function AdminDepartmentForm() {
           rankersBannerImage: dept.rankersBannerImage || '',
           rankersYear: dept.rankersYear || '',
           achievements: dept.achievements || [],
+          mous: dept.mous || [],
           library: {
             description: dept.library?.description || '',
             books: dept.library?.books || [],
@@ -226,6 +228,21 @@ function AdminDepartmentForm() {
     setForm((prev) => ({ ...prev, achievements: prev.achievements.filter((_, i) => i !== idx) }));
   };
 
+  // MOUs management
+  const addMou = () => {
+    setForm((prev) => ({ ...prev, mous: [...prev.mous, { company: '', duration: '' }] }));
+  };
+  const updateMou = (idx, field, val) => {
+    setForm((prev) => {
+      const m = [...prev.mous];
+      m[idx] = { ...m[idx], [field]: val };
+      return { ...prev, mous: m };
+    });
+  };
+  const removeMou = (idx) => {
+    setForm((prev) => ({ ...prev, mous: prev.mous.filter((_, i) => i !== idx) }));
+  };
+
   // Curriculum management
   const curriculumEndRef = useRef(null);
   const addSubject = () => {
@@ -337,6 +354,7 @@ function AdminDepartmentForm() {
             { key: 'obe', label: 'OBE' },
             { key: 'rankers', label: 'Rankers' },
             { key: 'achievements', label: 'Achievements' },
+            { key: 'mous', label: 'MOUs' },
             { key: 'library', label: 'Library' },
             { key: 'timetable', label: 'Time Table' },
           ]}
@@ -720,6 +738,35 @@ function AdminDepartmentForm() {
                   ))
                 }
                 </div>
+              )}
+            </div>
+          </div>
+          )}
+
+          {/* MOUs */}
+          {activeTab === 'mous' && (
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </div>
+              <div>
+                <h3>MOUs</h3>
+                <p>Company collaborations shown as a Sr.No / Company / Duration table on the department MOUs tab</p>
+              </div>
+              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addMou}>+ Add MOU</button>
+            </div>
+            <div className="dept-form-card-body">
+              {form.mous.length === 0 ? (
+                <div className="members-empty">No MOUs added yet. Click "+ Add MOU" to add one.</div>
+              ) : (
+                form.mous.map((m, idx) => (
+                  <div key={idx} style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+                    <input type="text" placeholder="Company Name *" value={m.company || ''} onChange={(e) => updateMou(idx, 'company', e.target.value)} style={{ flex: 2, padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px' }} />
+                    <input type="text" placeholder="Duration (e.g. 2023-2025)" value={m.duration || ''} onChange={(e) => updateMou(idx, 'duration', e.target.value)} style={{ flex: 1, padding: '8px 10px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '13px' }} />
+                    <button type="button" className="btn btn-danger btn-sm" onClick={() => removeMou(idx)}>×</button>
+                  </div>
+                ))
               )}
             </div>
           </div>

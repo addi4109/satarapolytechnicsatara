@@ -62,6 +62,12 @@ const achievementSchema = new mongoose.Schema({
   order: { type: Number, default: 0 },
 });
 
+// MOU (Memorandum of Understanding) row shown on the department MOUs tab
+const mouSchema = new mongoose.Schema({
+  company: { type: String, required: true },
+  duration: { type: String, default: '' },
+});
+
 const departmentSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
@@ -92,6 +98,7 @@ const departmentSchema = new mongoose.Schema(
     rankersBannerImage: { type: String, default: '' },
     rankersYear: { type: String, default: '' },
     achievements: [achievementSchema],
+    mous: [mouSchema],
     library: {
       description: { type: String, default: '' },
       books: [libBookSchema],

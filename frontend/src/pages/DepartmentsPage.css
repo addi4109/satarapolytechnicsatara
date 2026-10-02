@@ -1016,6 +1016,12 @@
   color: #666;
 }
 
+.infra-table .infra-duration-col {
+  width: 160px;
+  font-weight: 600;
+  color: #243358;
+}
+
 /* ===== Achievements tab ===== */
 .achievements-grid {
   display: grid;

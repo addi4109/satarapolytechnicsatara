@@ -12,7 +12,7 @@ const years = ['1st Year', '2nd Year', '3rd Year'];
 const now = new Date();
 const ayStart = now.getMonth() >= 3 ? now.getFullYear() : now.getFullYear() - 1;
 const fallbackRankersYear = `${ayStart}-${ayStart + 1}`;
-const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe', 'rankers', 'achievements', 'library', 'timetable'];
+const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe', 'rankers', 'achievements', 'mous', 'library', 'timetable'];
 
 function DepartmentsPage() {
   const { deptId } = useParams();
@@ -76,6 +76,7 @@ function DepartmentsPage() {
     { id: 'obe', label: 'Outcome Based Education' },
     { id: 'rankers', label: 'Rankers' },
     { id: 'achievements', label: 'Achievements' },
+    { id: 'mous', label: 'MOUs' },
     { id: 'library', label: 'Department Library' },
     { id: 'timetable', label: 'Time Table' },
   ];
@@ -521,6 +522,45 @@ function DepartmentsPage() {
                           </div>
                         </div>
                       ))}
+                  </div>
+                )}
+              </>
+            )}
+
+            {activeTab === 'mous' && (
+              <>
+                <h2 className="content-heading">MOUs</h2>
+                <div className="content-line"></div>
+                <p>
+                  Memorandums of Understanding (MOUs) of the {dept.name} department
+                  with industries and institutes for training, placement and
+                  research collaboration.
+                </p>
+
+                {(dept.mous || []).length === 0 ? (
+                  <p style={{ color: '#888', fontStyle: 'italic' }}>
+                    No MOUs added yet. Admin can add them from the Admin Panel.
+                  </p>
+                ) : (
+                  <div className="infra-table-wrap">
+                    <table className="infra-table">
+                      <thead>
+                        <tr>
+                          <th className="infra-sr-col">Sr.No.</th>
+                          <th>Company</th>
+                          <th className="infra-duration-col">Duration</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {dept.mous.map((m, i) => (
+                          <tr key={i}>
+                            <td className="infra-sr-col">{i + 1}</td>
+                            <td>{m.company}</td>
+                            <td className="infra-duration-col">{m.duration || '—'}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 )}
               </>
