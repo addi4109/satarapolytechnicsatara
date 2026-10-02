@@ -12,7 +12,7 @@
   background: var(--sp-navy-deep);
   color: #c5cad4;
   font-size: 12px;
-  padding: 6px 0;
+  padding: 4px 0;
 }
 
 .top-strip-inner {
@@ -445,7 +445,7 @@
 }
 
 .top-search-input {
-  height: 26px;
+  height: 24px;
   width: 170px;
   padding: 0 6px 0 10px;
   font-size: 12.5px;
@@ -462,8 +462,8 @@
 }
 
 .top-search-btn {
-  height: 24px;
-  width: 24px;
+  height: 22px;
+  width: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
