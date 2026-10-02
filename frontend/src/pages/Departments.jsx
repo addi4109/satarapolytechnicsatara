@@ -262,7 +262,7 @@ function DepartmentsPage() {
                 </p>
                 {(() => {
                   const items = [...(dept.labs || []), ...(dept.infrastructure || [])];
-                  const withDetails = items.filter((item) => item.number || item.location);
+                  const withDetails = items.filter((item) => item.location);
                   return items.length > 0 ? (
                     <>
                       {withDetails.length > 0 && (
@@ -272,7 +272,6 @@ function DepartmentsPage() {
                               <tr>
                                 <th className="infra-sr-col">Sr.No</th>
                                 <th>Particulars</th>
-                                <th className="infra-count-col">Equipment Count</th>
                                 <th className="infra-loc-col">Location</th>
                               </tr>
                             </thead>
@@ -281,7 +280,6 @@ function DepartmentsPage() {
                                 <tr key={i}>
                                   <td className="infra-sr-col">{i + 1}</td>
                                   <td>{item.name}</td>
-                                  <td className="infra-count-col">{item.number || '—'}</td>
                                   <td className="infra-loc-col">{item.location || '—'}</td>
                                 </tr>
                               ))}
