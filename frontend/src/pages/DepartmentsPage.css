@@ -1011,6 +1011,11 @@
   color: #243358;
 }
 
+.infra-table .infra-loc-col {
+  width: 200px;
+  color: #666;
+}
+
 /* ===== Achievements tab ===== */
 .achievements-grid {
   display: grid;

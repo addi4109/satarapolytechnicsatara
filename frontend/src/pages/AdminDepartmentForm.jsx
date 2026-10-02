@@ -79,7 +79,11 @@ function AdminDepartmentForm() {
           hodQual: dept.hodQual || '',
           hodMsg: dept.hodMsg || '',
           faculty: dept.faculty || [],
-          labs: [...(dept.labs || []), ...(dept.infrastructure || [])],
+          labs: [...(dept.labs || []), ...(dept.infrastructure || [])].map((l) => ({
+            ...l,
+            number: l.number || l.count || '',
+            location: l.location || '',
+          })),
           infrastructure: [],
           curriculum: dept.curriculum || [],
           peos: dept.peos || [],
@@ -135,7 +139,7 @@ function AdminDepartmentForm() {
 
   // Labs management
   const addLab = () => {
-    setForm((prev) => ({ ...prev, labs: [...prev.labs, { name: '', image: '', count: '' }] }));
+    setForm((prev) => ({ ...prev, labs: [...prev.labs, { name: '', image: '', number: '', location: '' }] }));
   };
   const updateLab = (idx, field, val) => {
     setForm((prev) => {
@@ -625,7 +629,8 @@ function AdminDepartmentForm() {
                         <ImageUpload value={l.image} onChange={(url) => updateLab(idx, 'image', url)} label="" placeholder="Photo" />
                       </div>
                       <input type="text" placeholder="Item Name (e.g. CAD Lab)" value={l.name} onChange={(e) => updateLab(idx, 'name', e.target.value)} className="lab-item-input" />
-                      <input type="text" placeholder="Total Count (e.g. 25 PCs)" value={l.count || ''} onChange={(e) => updateLab(idx, 'count', e.target.value)} className="lab-item-input" />
+                      <input type="text" placeholder="Number (e.g. 25)" value={l.number || ''} onChange={(e) => updateLab(idx, 'number', e.target.value)} className="lab-item-input" style={{ marginTop: '8px' }} />
+                      <input type="text" placeholder="Location (e.g. Block A, 2nd Floor)" value={l.location || ''} onChange={(e) => updateLab(idx, 'location', e.target.value)} className="lab-item-input" style={{ marginTop: '8px' }} />
                     </div>
                   ))}
                 </div>

@@ -261,25 +261,27 @@ function DepartmentsPage() {
                 </p>
                 {(() => {
                   const items = [...(dept.labs || []), ...(dept.infrastructure || [])];
-                  const withCounts = items.filter((item) => item.count);
+                  const withDetails = items.filter((item) => item.number || item.location);
                   return items.length > 0 ? (
                     <>
-                      {withCounts.length > 0 && (
+                      {withDetails.length > 0 && (
                         <div className="infra-table-wrap">
                           <table className="infra-table">
                             <thead>
                               <tr>
                                 <th className="infra-sr-col">Sr.No</th>
                                 <th>Particulars</th>
-                                <th className="infra-count-col">Total Count</th>
+                                <th className="infra-count-col">Number</th>
+                                <th className="infra-loc-col">Location</th>
                               </tr>
                             </thead>
                             <tbody>
-                              {withCounts.map((item, i) => (
+                              {withDetails.map((item, i) => (
                                 <tr key={i}>
                                   <td className="infra-sr-col">{i + 1}</td>
                                   <td>{item.name}</td>
-                                  <td className="infra-count-col">{item.count}</td>
+                                  <td className="infra-count-col">{item.number || '—'}</td>
+                                  <td className="infra-loc-col">{item.location || '—'}</td>
                                 </tr>
                               ))}
                             </tbody>
