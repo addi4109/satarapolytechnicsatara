@@ -4,8 +4,9 @@
    ============================================================ */
 .facilities-section {
   background: linear-gradient(180deg, #f6f9fd 0%, #eef3fa 100%);
-  /* No bottom padding: the section below (Our Departments) supplies the gap. */
-  padding: 48px 20px 0;
+  /* Bottom padding lets the tinted band breathe past the last row of cards;
+     Our Departments supplies a smaller gap on top of it. */
+  padding: 48px 20px 56px;
 }
 
 .facilities-inner {
@@ -175,7 +176,7 @@
 
 @media (max-width: 600px) {
   .facilities-section {
-    padding: 32px 14px 0;
+    padding: 32px 14px 40px;
   }
 
   .facilities-grid {

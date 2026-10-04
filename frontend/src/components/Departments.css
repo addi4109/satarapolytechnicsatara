@@ -1,8 +1,10 @@
 .dept-section {
   background: #fff;
   /* No bottom padding: the Why Choose section is the last child, and the
-     gap to the next section comes from that section's own top padding. */
-  padding: 56px 20px 0;
+     gap to the next section comes from that section's own top padding.
+     Top padding stays small — the Campus Facilities band above it already
+     carries 56px of bottom space. */
+  padding: 24px 20px 0;
 }
 
 .dept-inner {
