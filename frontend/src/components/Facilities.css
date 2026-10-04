@@ -1,7 +1,11 @@
+/* ============================================================
+   Campus Facilities — eyebrow + heading + 3x2 card grid.
+   Each card: photo on top, circular icon + title, description.
+   ============================================================ */
 .facilities-section {
-  background: #fff;
+  background: linear-gradient(180deg, #f6f9fd 0%, #eef3fa 100%);
   /* No bottom padding: the section below (Our Departments) supplies the gap. */
-  padding: 28px 20px 0;
+  padding: 48px 20px 0;
 }
 
 .facilities-inner {
@@ -9,9 +13,180 @@
   margin: 0 auto;
 }
 
-.facilities-image {
-  display: block;
+/* ----- Eyebrow: — CAMPUS FACILITIES — ----- */
+.facilities-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--sp-muted);
+}
+
+.facilities-eyebrow-rule {
+  width: 42px;
+  height: 1px;
+  background: #b9c3d2;
+}
+
+.facilities-heading {
+  text-align: center;
+  font-family: var(--sp-font-display);
+  font-size: clamp(26px, 3vw, 36px);
+  color: var(--sp-navy);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  margin: 0;
+}
+
+.facilities-sub {
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--sp-ink);
+  max-width: 640px;
+  margin: 14px auto 36px;
+}
+
+/* ----- Grid ----- */
+.facilities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.facilities-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--sp-line);
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.facilities-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(200, 150, 62, 0.55);
+  box-shadow: var(--sp-shadow-2);
+}
+
+/* ----- Photo area (placeholder tint until the image is added) ----- */
+.facilities-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, #e9eff8 0%, #dfe7f3 100%);
+  overflow: hidden;
+}
+
+.facilities-media img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto;
-  border-radius: 12px;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.facilities-card:hover .facilities-media img {
+  transform: scale(1.05);
+}
+
+/* Faint icon shown until the photo exists (or if it fails to load). */
+.facilities-watermark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(36, 51, 88, 0.18);
+}
+
+.facilities-watermark svg {
+  width: 72px;
+  height: 72px;
+}
+
+/* ----- Card text ----- */
+.facilities-body {
+  padding: 18px 20px 22px;
+}
+
+.facilities-card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.facilities-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--tone-bg, #eef2fa);
+  color: var(--tone-icon, var(--sp-navy));
+}
+
+.facilities-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.facilities-card-title {
+  font-family: var(--sp-font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--sp-navy);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.facilities-card-desc {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #5a6478;
+  margin: 0;
+}
+
+/* ----- Icon circle tones ----- */
+.facilities-icon.tone-blue   { --tone-bg: #e7edfb; --tone-icon: #2c55b8; }
+.facilities-icon.tone-amber  { --tone-bg: #fdf3d3; --tone-icon: #1f2d4d; }
+.facilities-icon.tone-green  { --tone-bg: #e3f3e5; --tone-icon: #2f9e44; }
+.facilities-icon.tone-purple { --tone-bg: #efe8fb; --tone-icon: #7048c9; }
+.facilities-icon.tone-teal   { --tone-bg: #dcf2f4; --tone-icon: #0f766e; }
+.facilities-icon.tone-indigo { --tone-bg: #e6ecfb; --tone-icon: #3355c8; }
+
+/* ----- Responsive ----- */
+@media (max-width: 900px) {
+  .facilities-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .facilities-section {
+    padding: 32px 14px 0;
+  }
+
+  .facilities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .facilities-heading {
+    font-size: 24px;
+  }
+
+  .facilities-sub-break {
+    display: none;
+  }
 }
