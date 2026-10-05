@@ -384,9 +384,13 @@
   margin: 0;
 }
 
-/* ===== Mobile carousel (hidden on desktop) ===== */
+/* ===== Carousel (3 in a line on desktop, responsive) ===== */
 .news-carousel {
-  display: none;
+  display: block;
+  position: relative;
+}
+
+.news-carousel-viewport {
   position: relative;
 }
 
@@ -397,11 +401,13 @@
 
 .news-carousel-track {
   display: flex;
+  gap: 24px; /* keep in sync with GAP_PX in LatestNews.jsx */
   transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.3, 1);
+  will-change: transform;
 }
 
 .news-carousel-slide {
-  flex: 0 0 100%;
+  flex: 0 0 auto;
   min-width: 0;
   display: flex;
 }
@@ -414,8 +420,8 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: none;
   background: rgba(36, 51, 88, 0.82);
@@ -430,8 +436,8 @@
 }
 
 .news-carousel-arrow svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   fill: currentColor;
 }
 
@@ -444,11 +450,11 @@
 }
 
 .news-carousel-arrow.prev {
-  left: -6px;
+  left: -20px;
 }
 
 .news-carousel-arrow.next {
-  right: -6px;
+  right: -20px;
 }
 
 .news-carousel-dots {
@@ -491,13 +497,18 @@
     font-size: 24px;
   }
 
-  /* Mobile: carousel instead of stacked grid */
-  .latest-news-grid {
-    display: none;
+  /* Mobile: one card at a time, arrows sit just inside the edges */
+  .news-carousel-arrow {
+    width: 34px;
+    height: 34px;
   }
 
-  .news-carousel {
-    display: block;
+  .news-carousel-arrow.prev {
+    left: -6px;
+  }
+
+  .news-carousel-arrow.next {
+    right: -6px;
   }
 
   .news-card-img {

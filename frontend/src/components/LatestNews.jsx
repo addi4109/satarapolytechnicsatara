@@ -4,6 +4,7 @@ import './LatestNews.css';
 import API_URL from '../lib/api';
 
 const AUTO_SWIPE_MS = 4500;
+const GAP_PX = 24;
 
 function LatestNews() {
   const [news, setNews] = useState([]);
@@ -11,7 +12,7 @@ function LatestNews() {
   const [expanded, setExpanded] = useState(null);   // _id of expanded card
   const [lightbox, setLightbox] = useState(null);   // news item to show full image
 
-  // Mobile carousel state
+  // Carousel state
   const [slide, setSlide] = useState(0);
   const [paused, setPaused] = useState(false);
   const touchRef = useRef({ x: 0, y: 0 });
@@ -26,21 +27,47 @@ function LatestNews() {
   }, []);
 
   const count = news.length;
-  const goNext = useCallback(() => setSlide((s) => (s + 1) % count), [count]);
-  const goPrev = useCallback(() => setSlide((s) => (s - 1 + count) % count), [count]);
 
-  // Auto-advance the mobile carousel; pauses on hover/touch and while the
-  // lightbox is open or a card is expanded.
+  // Cards visible at once: 3 on desktop (one line), 2 on tablet, 1 on mobile.
+  const [perView, setPerView] = useState(() => {
+    if (typeof window === 'undefined') return 3;
+    const w = window.innerWidth;
+    return w <= 680 ? 1 : w <= 1024 ? 2 : 3;
+  });
+
   useEffect(() => {
-    if (count < 2 || paused || lightbox || expanded) return undefined;
+    const calc = () => {
+      const w = window.innerWidth;
+      setPerView(w <= 680 ? 1 : w <= 1024 ? 2 : 3);
+    };
+    calc();
+    window.addEventListener('resize', calc);
+    return () => window.removeEventListener('resize', calc);
+  }, []);
+
+  // Highest reachable index (last page shows the final `perView` cards).
+  const maxIndex = Math.max(0, count - perView);
+  const hasCarousel = count > perView;
+
+  // Clamp the index if the news list or the viewport shrinks.
+  const index = Math.min(slide, maxIndex);
+
+  const goNext = useCallback(
+    () => setSlide((s) => (s >= maxIndex ? 0 : s + 1)),
+    [maxIndex]
+  );
+  const goPrev = useCallback(
+    () => setSlide((s) => (s <= 0 ? maxIndex : s - 1)),
+    [maxIndex]
+  );
+
+  // Auto-scroll the carousel after a short delay; pauses while the cursor is
+  // over it and while the lightbox is open or a card is expanded.
+  useEffect(() => {
+    if (!hasCarousel || paused || lightbox || expanded) return undefined;
     const t = setInterval(goNext, AUTO_SWIPE_MS);
     return () => clearInterval(t);
-  }, [count, paused, lightbox, expanded, goNext]);
-
-  // Wrap index if the news list shrinks.
-  useEffect(() => {
-    if (slide >= count) setSlide(0);
-  }, [count, slide]);
+  }, [hasCarousel, paused, lightbox, expanded, goNext]);
 
   const onTouchStart = (e) => {
     touchRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
@@ -60,7 +87,6 @@ function LatestNews() {
   const renderCard = (item) => (
     <article
       className={`news-card ${expanded === item._id ? 'news-card-expanded' : ''}`}
-      key={item._id}
     >
       {/* Image */}
       <div className="news-card-img">
@@ -156,53 +182,59 @@ function LatestNews() {
             <p>No news added yet.</p>
           </div>
         ) : (
-          <>
-            {/* Desktop / tablet: static grid (unchanged) */}
-            <div className="latest-news-grid">
-              {news.map((item) => renderCard(item, false))}
-            </div>
-
-            {/* Mobile: auto-swiping carousel with arrows + dots */}
-            <div
-              className="news-carousel"
-              onTouchStart={onTouchStart}
-              onTouchMove={onTouchMove}
-              onMouseEnter={() => setPaused(true)}
-              onMouseLeave={() => setPaused(false)}
-            >
-              <button className="news-carousel-arrow prev" onClick={goPrev} aria-label="Previous news">
-                <svg viewBox="0 0 24 24"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" /></svg>
-              </button>
+          <div
+            className="news-carousel"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+          >
+            <div className="news-carousel-viewport">
+              {hasCarousel && (
+                <button className="news-carousel-arrow prev" onClick={goPrev} aria-label="Previous news">
+                  <svg viewBox="0 0 24 24"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" /></svg>
+                </button>
+              )}
 
               <div className="news-carousel-track-wrap">
                 <div
                   className="news-carousel-track"
-                  style={{ transform: `translateX(-${slide * 100}%)` }}
+                  style={{
+                    transform: `translateX(calc(${index === 0 ? 0 : -index} * (100% + ${GAP_PX}px) / ${perView}))`,
+                  }}
                 >
                   {news.map((item) => (
-                    <div className="news-carousel-slide" key={item._id}>
-                      {renderCard(item, true)}
+                    <div
+                      className="news-carousel-slide"
+                      key={item._id}
+                      style={{ width: `calc((100% - ${(perView - 1) * GAP_PX}px) / ${perView})` }}
+                    >
+                      {renderCard(item)}
                     </div>
                   ))}
                 </div>
               </div>
 
-              <button className="news-carousel-arrow next" onClick={goNext} aria-label="Next news">
-                <svg viewBox="0 0 24 24"><path d="M8.59 16.59 10 18l6-6-6-6-1.41 1.41L13.17 12z" /></svg>
-              </button>
+              {hasCarousel && (
+                <button className="news-carousel-arrow next" onClick={goNext} aria-label="Next news">
+                  <svg viewBox="0 0 24 24"><path d="M8.59 16.59 10 18l6-6-6-6-1.41 1.41L13.17 12z" /></svg>
+                </button>
+              )}
+            </div>
 
+            {hasCarousel && (
               <div className="news-carousel-dots">
-                {news.map((item, i) => (
+                {Array.from({ length: maxIndex + 1 }).map((_, i) => (
                   <button
-                    key={item._id}
-                    className={`news-carousel-dot ${i === slide ? 'active' : ''}`}
+                    key={i}
+                    className={`news-carousel-dot ${i === index ? 'active' : ''}`}
                     onClick={() => setSlide(i)}
                     aria-label={`Go to news ${i + 1}`}
                   />
                 ))}
               </div>
-            </div>
-          </>
+            )}
+          </div>
         )}
       </div>
 
