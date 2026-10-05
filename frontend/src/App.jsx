@@ -87,6 +87,7 @@ const Activities = lazyWithRetry(() => import('./pages/Activities'));
 const Notices = lazyWithRetry(() => import('./pages/Notices'));
 const AdmissionNotices = lazyWithRetry(() => import('./pages/AdmissionNotices'));
 const Alumni = lazyWithRetry(() => import('./pages/Alumni'));
+const GrievanceRedressal = lazyWithRetry(() => import('./pages/GrievanceRedressal'));
 const AdminLogin = lazyWithRetry(() => import('./pages/AdminLogin'));
 const AdminDashboard = lazyWithRetry(() => import('./pages/AdminDashboard'));
 const AdminCells = lazyWithRetry(() => import('./pages/AdminCells'));
@@ -195,6 +196,7 @@ function AppLayout() {
           <Route path="/alumni" element={<Alumni />} />
           <Route path="/alumni/:page" element={<Alumni />} />
           <Route path="/notices/:category" element={<Notices />} />
+          <Route path="/student/grievance-redressal" element={<GrievanceRedressal />} />
           <Route path="/placements" element={<Placements />} />
           <Route path="/placements/:page" element={<Placements />} />
           <Route path="/examination" element={<Examinations />} />

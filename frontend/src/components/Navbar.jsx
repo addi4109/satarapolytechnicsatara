@@ -137,7 +137,7 @@ const MENU = [
   {
     label: 'Student Section',
     stack: true,
-    match: (p) => p.startsWith('/alumni') || p.startsWith('/examination'),
+    match: (p) => p.startsWith('/alumni') || p.startsWith('/examination') || p.startsWith('/student'),
     columns: [
       {
         header: 'Examination',
@@ -159,6 +159,12 @@ const MENU = [
           { label: 'Entrepreneurs', link: '/alumni/entrepreneurs' },
           { label: 'Alumni Association', link: '/alumni/association' },
           { label: 'Alumni Registration Form', link: '/alumni/registration' },
+        ],
+      },
+      {
+        header: 'Student Welfare',
+        items: [
+          { label: 'Grievance Redressal', link: '/student/grievance-redressal' },
         ],
       },
     ],

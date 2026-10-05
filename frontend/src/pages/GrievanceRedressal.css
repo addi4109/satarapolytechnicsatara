@@ -1,0 +1,269 @@
+/* ===== Grievance Redressal page =====
+   Layout, sidebar, headings, form controls and tables come from
+   Academics.css / Contact.css; only page-specific blocks are defined here. */
+
+.gr-chips {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin: 20px 0 4px;
+}
+
+.gr-chip {
+  background: #f5f7fa;
+  border: 1px solid #e4e8ed;
+  border-radius: 8px;
+  padding: 13px 14px;
+}
+
+.gr-chip-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #7a869a;
+  margin-bottom: 6px;
+}
+
+.gr-chip-value {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #243358;
+  word-break: break-word;
+}
+
+.gr-chip-value a {
+  color: #243358;
+  text-decoration: none;
+}
+
+.gr-chip-value a:hover {
+  color: var(--sp-gold, #c8963e);
+}
+
+/* ===== Grievance categories ===== */
+.gr-types {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.gr-type {
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  border-left: 3px solid #c8963e;
+  border-radius: 6px;
+  padding: 13px 15px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.gr-type:hover {
+  box-shadow: 0 6px 18px rgba(36, 51, 88, 0.08);
+  transform: translateY(-2px);
+}
+
+.gr-type h4 {
+  font-family: 'Georgia', serif;
+  font-size: 14.5px;
+  color: #243358;
+  margin: 0 0 5px;
+}
+
+.gr-type p {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ===== Redressal process steps ===== */
+.gr-steps {
+  list-style: none;
+  counter-reset: gr-step;
+  padding: 0;
+  margin: 0 0 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gr-step {
+  position: relative;
+  counter-increment: gr-step;
+  padding: 14px 16px 14px 62px;
+  background: #f7f9fc;
+  border: 1px solid #e4e8ed;
+  border-radius: 8px;
+}
+
+.gr-step::before {
+  content: counter(gr-step);
+  position: absolute;
+  left: 16px;
+  top: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--sp-navy, #243358);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gr-step h4 {
+  font-family: 'Georgia', serif;
+  font-size: 15px;
+  color: #243358;
+  margin: 0 0 4px;
+}
+
+.gr-step p {
+  font-size: 13.5px;
+  color: #555;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ===== Committee ===== */
+.gr-table-wrap {
+  overflow-x: auto;
+}
+
+.gr-fallback {
+  font-size: 13.5px;
+  color: #555;
+}
+
+.gr-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 4px 0 6px;
+}
+
+.gr-link {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 1px solid var(--sp-line, #e4e8ed);
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #243358;
+  text-decoration: none;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+
+.gr-link:hover {
+  background: var(--sp-navy, #243358);
+  border-color: var(--sp-navy, #243358);
+  color: #fff;
+}
+
+/* ===== Form ===== */
+.gr-form {
+  background: #f9fafc;
+  border: 1px solid #e4e8ed;
+  border-radius: 10px;
+  padding: 22px;
+  margin-top: 6px;
+}
+
+.gr-edit-btn {
+  margin-top: 12px;
+  padding: 10px 22px;
+  background: transparent;
+  border: 1px solid var(--sp-line, #e4e8ed);
+  border-radius: 6px;
+  color: #243358;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gr-edit-btn:hover {
+  background: var(--sp-navy, #243358);
+  border-color: var(--sp-navy, #243358);
+  color: #fff;
+}
+
+/* ===== Alternative channels ===== */
+.gr-channels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.gr-channel {
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  border-radius: 8px;
+  padding: 14px 15px;
+}
+
+.gr-channel h4 {
+  font-family: 'Georgia', serif;
+  font-size: 14.5px;
+  color: #243358;
+  margin: 0 0 6px;
+}
+
+.gr-channel p {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.gr-channel-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #243358;
+  text-decoration: none;
+}
+
+.gr-channel-link:hover {
+  color: var(--sp-gold, #c8963e);
+}
+
+.gr-confidential {
+  margin-top: 22px;
+  padding: 12px 15px;
+  background: rgba(200, 150, 62, 0.1);
+  border-left: 3px solid #c8963e;
+  border-radius: 0 6px 6px 0;
+  font-size: 13px;
+  color: #555;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .gr-chips {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gr-types {
+    grid-template-columns: 1fr;
+  }
+
+  .gr-channels {
+    grid-template-columns: 1fr;
+  }
+
+  .gr-form {
+    padding: 16px;
+  }
+
+  .gr-step {
+    padding: 14px 14px 14px 56px;
+  }
+}
