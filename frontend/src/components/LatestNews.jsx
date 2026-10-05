@@ -6,11 +6,26 @@ import API_URL from '../lib/api';
 const AUTO_SWIPE_MS = 4500;
 const GAP_PX = 24;
 
+// Article image zoom limits (lightbox)
+const MIN_ZOOM = 1;
+const MAX_ZOOM = 5;
+const ZOOM_STEP = 1.5;
+const CLICK_ZOOM = 2;
+const clampZoom = (z) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, z));
+
 function LatestNews() {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(null);   // _id of expanded card
   const [lightbox, setLightbox] = useState(null);   // news item to show full image
+
+  // Zoom state for the lightbox article image
+  const [zoom, setZoom] = useState(MIN_ZOOM);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [dragging, setDragging] = useState(false);
+  const imgRef = useRef(null);
+  const dragRef = useRef(null);
+  const movedRef = useRef(false);
 
   // Carousel state
   const [slide, setSlide] = useState(0);
@@ -149,10 +164,91 @@ function LatestNews() {
   };
 
   const openArticle = (item) => {
-    if (item.image) setLightbox(item);
+    if (item.image) {
+      setZoom(MIN_ZOOM);
+      setPan({ x: 0, y: 0 });
+      setLightbox(item);
+    }
   };
 
-  const closeLightbox = () => setLightbox(null);
+  const closeLightbox = () => {
+    setLightbox(null);
+    setZoom(MIN_ZOOM);
+    setPan({ x: 0, y: 0 });
+  };
+
+  const resetZoom = () => {
+    setZoom(MIN_ZOOM);
+    setPan({ x: 0, y: 0 });
+  };
+
+  // Zoom by a factor, keeping the point under (clientX, clientY) still.
+  const zoomAt = useCallback(
+    (nextZoom, clientX, clientY) => {
+      const img = imgRef.current;
+      if (!img) return;
+      const z = clampZoom(nextZoom);
+      if (z === zoom) return;
+      const rect = img.getBoundingClientRect();
+      // Centre of the image in its untransformed position on screen.
+      const ux = rect.left + rect.width / 2 - pan.x;
+      const uy = rect.top + rect.height / 2 - pan.y;
+      const dx = clientX - ux;
+      const dy = clientY - uy;
+      setPan({ x: pan.x + (zoom - z) * dx, y: pan.y + (zoom - z) * dy });
+      setZoom(z);
+    },
+    [zoom, pan]
+  );
+
+  // Mouse wheel zooms the article image at the pointer position.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!lightbox || !img) return undefined;
+    const onWheel = (e) => {
+      e.preventDefault();
+      zoomAt(zoom * (e.deltaY < 0 ? 1.15 : 1 / 1.15), e.clientX, e.clientY);
+    };
+    img.addEventListener('wheel', onWheel, { passive: false });
+    return () => img.removeEventListener('wheel', onWheel);
+  }, [lightbox, zoom, zoomAt]);
+
+  // Click the article image: zoom in, click again (or drag-less click) to reset.
+  const onImageClick = (e) => {
+    if (movedRef.current) {
+      movedRef.current = false;
+      return;
+    }
+    if (zoom > MIN_ZOOM) resetZoom();
+    else zoomAt(CLICK_ZOOM, e.clientX, e.clientY);
+  };
+
+  // Drag to pan while zoomed in.
+  const onImagePointerDown = (e) => {
+    movedRef.current = false;
+    if (zoom <= MIN_ZOOM) return;
+    e.currentTarget.setPointerCapture(e.pointerId);
+    dragRef.current = { x: e.clientX, y: e.clientY, px: pan.x, py: pan.y };
+    setDragging(true);
+  };
+
+  const onImagePointerMove = (e) => {
+    const d = dragRef.current;
+    if (!d) return;
+    const dx = e.clientX - d.x;
+    const dy = e.clientY - d.y;
+    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) movedRef.current = true;
+    setPan({ x: d.px + dx, y: d.py + dy });
+  };
+
+  const onImagePointerUp = (e) => {
+    if (!dragRef.current) return;
+    dragRef.current = null;
+    setDragging(false);
+    if (e.currentTarget.hasPointerCapture?.(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+  };
 
   return (
     <section className="latest-news-section" data-reveal="fade">
@@ -251,11 +347,50 @@ function LatestNews() {
             >
               ✕
             </button>
-            <img
-              src={lightbox.image}
-              alt={lightbox.title}
-              className="news-lightbox-img"
-            />
+            <div className={`news-lightbox-img-wrap ${zoom > MIN_ZOOM ? 'zoomed' : ''}`}>
+              <img
+                ref={imgRef}
+                src={lightbox.image}
+                alt={lightbox.title}
+                className={`news-lightbox-img ${dragging ? 'dragging' : ''}`}
+                style={{ transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})` }}
+                onClick={onImageClick}
+                onPointerDown={onImagePointerDown}
+                onPointerMove={onImagePointerMove}
+                onPointerUp={onImagePointerUp}
+                onPointerCancel={onImagePointerUp}
+                draggable={false}
+              />
+
+              <div className="news-lightbox-zoom-controls">
+                <button
+                  className="news-lightbox-zoom-btn"
+                  onClick={() => setZoom((z) => clampZoom(z * ZOOM_STEP))}
+                  aria-label="Zoom in"
+                >
+                  +
+                </button>
+                <button
+                  className="news-lightbox-zoom-btn"
+                  onClick={() => setZoom((z) => clampZoom(z / ZOOM_STEP))}
+                  aria-label="Zoom out"
+                >
+                  −
+                </button>
+                <button
+                  className="news-lightbox-zoom-btn reset"
+                  onClick={resetZoom}
+                  disabled={zoom === MIN_ZOOM}
+                  aria-label="Reset zoom"
+                >
+                  {Math.round(zoom * 100)}%
+                </button>
+              </div>
+
+              <span className="news-lightbox-zoom-hint">
+                {zoom > MIN_ZOOM ? 'Drag to pan · click image to reset' : 'Click image or use + to zoom'}
+              </span>
+            </div>
             <div className="news-lightbox-info">
               <div className="news-lightbox-meta">
                 <span className="news-card-date">{lightbox.date}</span>
