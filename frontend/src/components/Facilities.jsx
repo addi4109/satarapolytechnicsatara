@@ -59,7 +59,7 @@ const FACILITIES = [
     icon: Icons.library,
     title: 'Library',
     desc: '15,000+ books, journals, e-resources and a digital library with an automated barcode issuing system.',
-    image: '/facilities/library.jpg',
+    image: '/facilities/library.png',
     link: '/campus/library',
     tone: 'blue',
   },
