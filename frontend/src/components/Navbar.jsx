@@ -445,9 +445,10 @@ function Navbar() {
   };
 
   return (
-    <header className="site-header">
-      {/* top strip */}
-      <div className="top-strip">
+    <>
+      {/* Top strip — position: sticky pins it to the top of the viewport
+          while the nav bar below scrolls away with the page. */}
+      <div className={`top-strip ${mobileOpen ? 'drawer-open' : ''}`}>
         <div className="top-strip-inner">
           <span className="top-left">
             <a href={`tel:${PHONE.replace(/[^+\d]/g, '')}`} className="top-strip-link">
@@ -499,8 +500,9 @@ function Navbar() {
         </div>
       </div>
 
-      {/* single-bar header: identity block on the left, tabs in front */}
-      <div className="main-header">
+      {/* single-bar header: identity block on the left, tabs in front.
+          It scrolls with the page — only the strip above stays pinned. */}
+      <header className="site-header main-header">
         <div className="main-header-inner">
           <Link to="/" className="logo-area" aria-label="Satara Polytechnic, Satara — Home">
             <div className="logo-circle">
@@ -583,8 +585,8 @@ function Navbar() {
               is display:none on mobile) so the dim layer still renders. */}
           {mobileOpen && <div className="nav-backdrop" onClick={() => setMobileOpen(false)} aria-hidden="true" />}
         </div>
-      </div>
-    </header>
+      </header>
+    </>
   );
 }
 
