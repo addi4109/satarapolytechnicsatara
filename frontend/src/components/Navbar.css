@@ -1,20 +1,18 @@
 /* ===== Header (white nav bar) =====
-   Scrolls normally with the page — only the top strip above it is sticky.
-   Kept position: relative + z-index so the mobile drawer backdrop stays
-   inside this header's stacking context and above page content. */
+   Sticky: pins to the top of the viewport once the top strip above has
+   scrolled away, so the tabs stay reachable. z-index keeps it above page
+   content and holds the mobile drawer backdrop inside this header's
+   stacking context. */
 .site-header {
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 1000;
 }
 
 /* ===== top strip =====
-   Pinned to the top of the viewport for the whole scroll while the nav
-   bar underneath scrolls away. z-index sits above the header (1000) so
-   the tabs pass beneath it, but below the site overlays (9999+). */
+   Stays at its fixed place at the top of the page and scrolls away with
+   it — only the nav bar below is sticky. */
 .top-strip {
-  position: sticky;
-  top: 0;
-  z-index: 1300;
   background: var(--sp-navy-deep);
   color: #c5cad4;
   font-size: 12px;
@@ -41,13 +39,6 @@
   display: flex;
   align-items: center;
   gap: 6px;
-}
-
-/* The pinned strip would otherwise float over the mobile drawer's first
-   links (the drawer lives in the header's stacking context, below this
-   strip), so step aside while the drawer is open. */
-.top-strip.drawer-open {
-  visibility: hidden;
 }
 
 .top-strip-link {

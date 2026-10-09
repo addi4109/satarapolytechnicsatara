@@ -446,9 +446,9 @@ function Navbar() {
 
   return (
     <>
-      {/* Top strip — position: sticky pins it to the top of the viewport
-          while the nav bar below scrolls away with the page. */}
-      <div className={`top-strip ${mobileOpen ? 'drawer-open' : ''}`}>
+      {/* Top strip — at its fixed place at the top of the page, scrolls
+          away with it. */}
+      <div className="top-strip">
         <div className="top-strip-inner">
           <span className="top-left">
             <a href={`tel:${PHONE.replace(/[^+\d]/g, '')}`} className="top-strip-link">
@@ -501,7 +501,7 @@ function Navbar() {
       </div>
 
       {/* single-bar header: identity block on the left, tabs in front.
-          It scrolls with the page — only the strip above stays pinned. */}
+          Sticky — pins below the viewport top once the strip scrolls off. */}
       <header className="site-header main-header">
         <div className="main-header-inner">
           <Link to="/" className="logo-area" aria-label="Satara Polytechnic, Satara — Home">
