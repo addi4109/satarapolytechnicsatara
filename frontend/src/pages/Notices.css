@@ -151,6 +151,54 @@
   pointer-events: none;
 }
 
+/* .notices-doc-table-wrap: the Notices table mirrors the Exam Schedule table
+   (.fee-table + .exam-btn) so colour, size and buttons match exactly. The
+   table and button base styles come from shared.css (always loaded); these
+   are the few extra rules that live in Academics.css for the exam table,
+   repeated here because this page chunk does not load Academics.css. */
+.notices-doc-table-wrap {
+  margin: 14px 0 28px;
+}
+
+.notices-doc-table-wrap .fee-table {
+  min-width: 700px;
+}
+
+.notices-doc-table-wrap .fee-particular {
+  text-align: left !important;
+  font-weight: 500;
+  color: #444;
+}
+
+.notices-doc-table-wrap .exam-action-btns {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.notices-doc-table-wrap .exam-download-text {
+  display: inline;
+}
+
+.notices-doc-table-wrap .exam-download-icon {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .notices-doc-table-wrap .fee-table {
+    min-width: 0;
+  }
+
+  .notices-doc-table-wrap .exam-download-text {
+    display: none;
+  }
+
+  .notices-doc-table-wrap .exam-download-icon {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
 .notices-loading {
   text-align: center;
   padding: 40px;
