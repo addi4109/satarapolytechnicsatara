@@ -67,6 +67,12 @@ const mouSchema = new mongoose.Schema({
   duration: { type: String, default: '' },
 });
 
+// Rankers tab: one image per academic year (one row in the Rankers table)
+const rankerSchema = new mongoose.Schema({
+  year: { type: String, required: true },
+  image: { type: String, default: '' },
+});
+
 const departmentSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
@@ -92,8 +98,9 @@ const departmentSchema = new mongoose.Schema(
     deptNotices: [deptNoticeSchema],
     deptEvents: [deptEventSchema],
     deptTimetable: [deptTimetableSchema],
-    // Rankers tab: a single banner image managed from the admin panel
-    // (replaces the old per-year rankers table).
+    // Rankers tab: one image per academic year. The legacy single-banner
+    // fields are kept so departments saved before this still render.
+    rankers: [rankerSchema],
     rankersBannerImage: { type: String, default: '' },
     rankersYear: { type: String, default: '' },
     achievements: [achievementSchema],

@@ -29,8 +29,7 @@ const emptyForm = {
   peos: [],
   pos: [],
   psos: [],
-  rankersBannerImage: '',
-  rankersYear: '',
+  rankers: [],
   achievements: [],
   mous: [],
   library: { description: '', books: [], titles: [] },
@@ -89,8 +88,11 @@ function AdminDepartmentForm() {
           peos: dept.peos || [],
           pos: dept.pos || [],
           psos: dept.psos || [],
-          rankersBannerImage: dept.rankersBannerImage || '',
-          rankersYear: dept.rankersYear || '',
+          rankers: (dept.rankers && dept.rankers.length > 0)
+            ? dept.rankers
+            : dept.rankersBannerImage
+              ? [{ year: dept.rankersYear || '', image: dept.rankersBannerImage }]
+              : [],
           achievements: dept.achievements || [],
           mous: dept.mous || [],
           library: {
@@ -212,6 +214,21 @@ function AdminDepartmentForm() {
     setForm((prev) => ({ ...prev, deptTimetable: prev.deptTimetable.filter((_, i) => i !== idx) }));
   };
 
+  // Rankers management (one image per academic year)
+  const addRanker = () => {
+    setForm((prev) => ({ ...prev, rankers: [...prev.rankers, { year: '', image: '' }] }));
+  };
+  const updateRanker = (idx, field, val) => {
+    setForm((prev) => {
+      const rankers = [...prev.rankers];
+      rankers[idx] = { ...rankers[idx], [field]: val };
+      return { ...prev, rankers };
+    });
+  };
+  const removeRanker = (idx) => {
+    setForm((prev) => ({ ...prev, rankers: prev.rankers.filter((_, i) => i !== idx) }));
+  };
+
   // Achievements management
   const addAchievement = () => {
     setForm((prev) => ({ ...prev, achievements: [...prev.achievements, { title: '', image: '', description: '', order: 0 }] }));
@@ -301,6 +318,7 @@ function AdminDepartmentForm() {
 
         faculty: form.faculty.filter((f) => f.name.trim()),
         labs: form.labs.filter((l) => l.name.trim()),
+        rankers: form.rankers.filter((r) => r.image.trim()),
         infrastructure: [],
       };
 
@@ -663,29 +681,39 @@ function AdminDepartmentForm() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v6a5 5 0 0 1-10 0V4z"/><path d="M17 5h3a1 1 0 0 1 1 1c0 2.5-2 4-4 4"/><path d="M7 5H4a1 1 0 0 0-1 1c0 2.5 2 4 4 4"/></svg>
               </div>
               <div>
-                <h3>Rankers Banner</h3>
-                <p>Upload the rankers banner image and set the academic year shown on the department Rankers tab</p>
+                <h3>Rankers</h3>
+                <p>Add one rankers image per academic year — each shows as a row on the department Rankers tab</p>
               </div>
+              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addRanker}>+ Add Ranker</button>
             </div>
             <div className="dept-form-card-body">
-              <ImageUpload
-                value={form.rankersBannerImage}
-                onChange={(url) => handleChange({ target: { name: 'rankersBannerImage', value: url } })}
-                label="Banner Image"
-                placeholder="Choose a banner image..."
-              />
-              <div className="form-group" style={{ margin: '14px 0 0' }}>
-                <label style={{ fontSize: '12px', fontWeight: 600 }}>Academic Year</label>
-                <input
-                  type="text"
-                  name="rankersYear"
-                  value={form.rankersYear}
-                  onChange={handleChange}
-                  placeholder="e.g. 2023-2024"
-                />
-              </div>
-              <p style={{ margin: '8px 0 0', fontSize: '12.5px', color: '#777' }}>
-                Tip: a wide image works best. The Rankers tab shows a small card with this year and a View button that opens the image.
+              {form.rankers.length === 0 ? (
+                <div className="members-empty">No rankers added yet. Click "+ Add Ranker" to add one.</div>
+              ) : (
+                <div className="faculty-cards-grid">
+                  {form.rankers.map((r, idx) => (
+                    <div key={idx} className="faculty-card">
+                      <button type="button" className="faculty-card-remove" onClick={() => removeRanker(idx)} title="Remove">✕</button>
+                      <div className="faculty-card-fields">
+                        <input
+                          type="text"
+                          placeholder="Academic Year (e.g. 2023-2024)"
+                          value={r.year}
+                          onChange={(e) => updateRanker(idx, 'year', e.target.value)}
+                        />
+                        <ImageUpload
+                          value={r.image}
+                          onChange={(url) => updateRanker(idx, 'image', url)}
+                          label="Rankers Image"
+                          placeholder="Choose an image..."
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <p style={{ margin: '12px 0 0', fontSize: '12.5px', color: '#777' }}>
+                Tip: a wide image works best. Each entry appears as a row with its academic year and a View button that opens the image.
               </p>
             </div>
           </div>

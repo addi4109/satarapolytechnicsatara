@@ -506,49 +506,50 @@
   }
 }
 
-/* Curriculum / Syllabus table mirrors the Exam Schedule table (.fee-table +
-   .exam-btn) so colour, size and buttons match exactly. The table and button
-   base styles come from shared.css (always loaded); these are the few extra
-   rules that live in Academics.css for the exam table, repeated here because
-   this lazy-loaded page chunk does not load Academics.css. */
-.curriculum-table-wrap {
+/* .dept-doc-table-wrap: department tables that mirror the Exam Schedule table
+   (.fee-table + .exam-btn) so colour, size and buttons match exactly — used by
+   Curriculum / Syllabus and Rankers. The table and button base styles come
+   from shared.css (always loaded); these are the few extra rules that live in
+   Academics.css for the exam table, repeated here because this lazy-loaded
+   page chunk does not load Academics.css. */
+.dept-doc-table-wrap {
   margin: 14px 0 10px;
 }
 
-.curriculum-table-wrap .fee-table {
+.dept-doc-table-wrap .fee-table {
   min-width: 700px;
 }
 
-.curriculum-table-wrap .fee-particular {
+.dept-doc-table-wrap .fee-particular {
   text-align: left !important;
   font-weight: 500;
   color: #444;
 }
 
-.curriculum-table-wrap .exam-action-btns {
+.dept-doc-table-wrap .exam-action-btns {
   display: flex;
   gap: 6px;
   justify-content: center;
 }
 
-.curriculum-table-wrap .exam-download-text {
+.dept-doc-table-wrap .exam-download-text {
   display: inline;
 }
 
-.curriculum-table-wrap .exam-download-icon {
+.dept-doc-table-wrap .exam-download-icon {
   display: none;
 }
 
 @media (max-width: 768px) {
-  .curriculum-table-wrap .fee-table {
+  .dept-doc-table-wrap .fee-table {
     min-width: 0;
   }
 
-  .curriculum-table-wrap .exam-download-text {
+  .dept-doc-table-wrap .exam-download-text {
     display: none;
   }
 
-  .curriculum-table-wrap .exam-download-icon {
+  .dept-doc-table-wrap .exam-download-icon {
     display: inline-flex;
     align-items: center;
   }

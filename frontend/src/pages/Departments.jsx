@@ -340,7 +340,7 @@ function DepartmentsPage() {
                         {semesters.map(({ sem, subjects }) => (
                           <div key={sem} style={{ marginBottom: '16px' }}>
                             <h4 style={{ fontSize: '14px', color: '#7A263A', margin: '0 0 8px', fontWeight: 600 }}>Semester {sem}</h4>
-                            <div className="fee-table-wrap curriculum-table-wrap">
+                            <div className="fee-table-wrap dept-doc-table-wrap">
                               <table className="fee-table">
                                 <thead>
                                   <tr>
@@ -472,36 +472,61 @@ function DepartmentsPage() {
                   academic excellence in MSBTE examinations.
                 </p>
 
-                {dept.rankersBannerImage ? (
-                  <div className="rankers-year-card">
-                    <span className="rankers-year-icon">🏆</span>
-                    <div className="rankers-year-info">
-                      <span className="rankers-year-label">Academic Year</span>
-                      <strong className="rankers-year-value">{dept.rankersYear || fallbackRankersYear}</strong>
+                {(() => {
+                  const rankerRows = (dept.rankers && dept.rankers.length > 0)
+                    ? dept.rankers
+                    : dept.rankersBannerImage
+                      ? [{ year: dept.rankersYear || '', image: dept.rankersBannerImage }]
+                      : [];
+                  return rankerRows.length > 0 ? (
+                    <div className="fee-table-wrap dept-doc-table-wrap" style={{ marginTop: '20px' }}>
+                      <table className="fee-table">
+                        <thead>
+                          <tr>
+                            <th style={{ width: 50 }}>Sr. No.</th>
+                            <th>Academic Year</th>
+                            <th style={{ width: 120, textAlign: 'center' }}>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {rankerRows.map((ranker, i) => (
+                            <tr key={i}>
+                              <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                              <td className="fee-particular" style={{ fontWeight: 500 }}>{ranker.year || fallbackRankersYear}</td>
+                              <td style={{ textAlign: 'center' }}>
+                                {ranker.image ? (
+                                  <div className="exam-action-btns">
+                                    <button
+                                      type="button"
+                                      className="exam-btn exam-btn-view"
+                                      onClick={() =>
+                                        setLightbox({
+                                          image: ranker.image,
+                                          title: `${dept.name} Rankers`,
+                                          description: `Academic Year ${ranker.year || fallbackRankersYear}`,
+                                        })
+                                      }
+                                    >View</button>
+                                  </div>
+                                ) : (
+                                  <span style={{ color: '#ccc', fontSize: '12px' }}>—</span>
+                                )}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
-                    <button
-                      type="button"
-                      className="rankers-view-btn"
-                      onClick={() =>
-                        setLightbox({
-                          image: dept.rankersBannerImage,
-                          title: `${dept.name} Rankers`,
-                          description: `Academic Year ${dept.rankersYear || fallbackRankersYear}`,
-                        })
-                      }
-                    >
-                      View
-                    </button>
-                  </div>
-                ) : (
-                  <div style={{ marginTop: '32px', textAlign: 'center', padding: '48px 24px', background: '#f8f9fa', borderRadius: '10px', border: '1px dashed #d0d5dd' }}>
-                    <div style={{ fontSize: '48px', marginBottom: '16px' }}>🏆</div>
-                    <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', margin: '0 0 8px' }}>Rankers Will Be Updated Soon</h3>
-                    <p style={{ fontSize: '14px', color: '#888', margin: 0, lineHeight: '1.6' }}>
-                      Our department toppers will be featured here shortly.
-                    </p>
-                  </div>
-                )}
+                  ) : (
+                    <div style={{ marginTop: '32px', textAlign: 'center', padding: '48px 24px', background: '#f8f9fa', borderRadius: '10px', border: '1px dashed #d0d5dd' }}>
+                      <div style={{ fontSize: '48px', marginBottom: '16px' }}>🏆</div>
+                      <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '18px', color: '#243358', margin: '0 0 8px' }}>Rankers Will Be Updated Soon</h3>
+                      <p style={{ fontSize: '14px', color: '#888', margin: 0, lineHeight: '1.6' }}>
+                        Our department toppers will be featured here shortly.
+                      </p>
+                    </div>
+                  );
+                })()}
               </>
             )}
 
