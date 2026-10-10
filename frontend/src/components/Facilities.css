@@ -1,6 +1,7 @@
 /* ============================================================
-   Campus Facilities — eyebrow + heading + 3x2 card grid.
-   Each card: photo on top, circular icon + title, description.
+   Campus Facilities — eyebrow + heading + 3x2 grid of small boxes.
+   Each box: circular icon on top (centred), title below it and the
+   description underneath.
    ============================================================ */
 .facilities-section {
   background: linear-gradient(180deg, #f6f9fd 0%, #eef3fa 100%);
@@ -77,52 +78,13 @@
   box-shadow: var(--sp-shadow-2);
 }
 
-/* ----- Photo area (placeholder tint until the image is added) ----- */
-.facilities-media {
-  position: relative;
-  aspect-ratio: 16 / 9;
-  background: linear-gradient(135deg, #e9eff8 0%, #dfe7f3 100%);
-  overflow: hidden;
-}
-
-.facilities-media img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.facilities-card:hover .facilities-media img {
-  transform: scale(1.05);
-}
-
-/* Faint icon shown until the photo exists (or if it fails to load). */
-.facilities-watermark {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(36, 51, 88, 0.18);
-}
-
-.facilities-watermark svg {
-  width: 72px;
-  height: 72px;
-}
-
-/* ----- Card text ----- */
+/* ----- Photo-free box: centred icon, title, description ----- */
 .facilities-body {
-  padding: 18px 20px 22px;
-}
-
-.facilities-card-head {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
+  text-align: center;
+  padding: 26px 20px 28px;
 }
 
 .facilities-icon {
@@ -130,16 +92,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 62px;
+  height: 62px;
   border-radius: 50%;
   background: var(--tone-bg, #eef2fa);
   color: var(--tone-icon, var(--sp-navy));
+  margin-bottom: 14px;
 }
 
 .facilities-icon svg {
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
 }
 
 .facilities-card-title {
@@ -148,7 +111,7 @@
   font-weight: 700;
   color: var(--sp-navy);
   line-height: 1.3;
-  margin: 0;
+  margin: 0 0 8px;
 }
 
 .facilities-card-desc {

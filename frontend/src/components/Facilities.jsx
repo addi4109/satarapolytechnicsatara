@@ -50,16 +50,14 @@ const Icons = {
 };
 
 /*
-  Each card shows a photo on top. Drop the file into frontend/public/ and
-  set its path below — until then the card falls back to a tinted
-  placeholder with the facility's icon, so nothing looks broken.
+  Each card is a small box: a circular icon on top, the title below it and
+  the description underneath — no photos.
 */
 const FACILITIES = [
   {
     icon: Icons.library,
     title: 'Library',
     desc: '15,000+ books, journals, e-resources and a digital library with an automated barcode issuing system.',
-    image: '/facilities/library.png',
     link: '/campus/library',
     tone: 'blue',
   },
@@ -67,7 +65,6 @@ const FACILITIES = [
     icon: Icons.bus,
     title: 'Bus Facility',
     desc: 'Safe and convenient bus transport connecting Satara and nearby towns for students and staff.',
-    image: '/facilities/bus.png',
     link: '/campus/bus-facility',
     tone: 'amber',
   },
@@ -75,7 +72,6 @@ const FACILITIES = [
     icon: Icons.canteen,
     title: 'Canteen',
     desc: 'Hygienic, nutritious food and snacks served at affordable prices throughout the college day.',
-    image: '/facilities/canteen.jpg',
     link: '/campus/canteen',
     tone: 'green',
   },
@@ -83,7 +79,6 @@ const FACILITIES = [
     icon: Icons.equal,
     title: 'Equal Opportunity Center',
     desc: 'Support, scholarships and mentoring so every student gets an equal chance to succeed.',
-    image: '/facilities/equal-opportunity.png',
     link: '/campus/equal-opportunity-center',
     tone: 'purple',
   },
@@ -91,7 +86,6 @@ const FACILITIES = [
     icon: Icons.excellence,
     title: 'Center of Excellence',
     desc: 'Advanced labs and industry-aligned training that go beyond the regular diploma curriculum.',
-    image: '/facilities/center-of-excellence.png',
     link: '/campus/center-of-excellence',
     tone: 'teal',
   },
@@ -99,16 +93,10 @@ const FACILITIES = [
     icon: Icons.wifi,
     title: 'Wi-Fi Campus',
     desc: 'High-speed internet connectivity available across the campus for students and faculty.',
-    image: '/facilities/wifi-campus.png',
     link: '',
     tone: 'indigo',
   },
 ];
-
-/* Hide a photo that hasn't been uploaded yet — the tinted placeholder stays. */
-function hideMissingImage(event) {
-  event.currentTarget.style.display = 'none';
-}
 
 function Facilities() {
   return (
@@ -130,21 +118,11 @@ function Facilities() {
         <div className="facilities-grid">
           {FACILITIES.map((f) => {
             const body = (
-              <>
-                <div className="facilities-media">
-                  <span className="facilities-watermark" aria-hidden="true">{f.icon}</span>
-                  {f.image && (
-                    <img src={f.image} alt={f.title} loading="lazy" onError={hideMissingImage} />
-                  )}
-                </div>
-                <div className="facilities-body">
-                  <div className="facilities-card-head">
-                    <span className={`facilities-icon tone-${f.tone}`}>{f.icon}</span>
-                    <h3 className="facilities-card-title">{f.title}</h3>
-                  </div>
-                  <p className="facilities-card-desc">{f.desc}</p>
-                </div>
-              </>
+              <div className="facilities-body">
+                <span className={`facilities-icon tone-${f.tone}`}>{f.icon}</span>
+                <h3 className="facilities-card-title">{f.title}</h3>
+                <p className="facilities-card-desc">{f.desc}</p>
+              </div>
             );
             return f.link ? (
               <a href={f.link} className="facilities-card" key={f.title} data-reveal-child aria-label={f.title}>
