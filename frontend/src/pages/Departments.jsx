@@ -704,27 +704,45 @@ function DepartmentsPage() {
                     );
                   }
                   return (
-                    <div className="infra-table-wrap">
-                      <table className="infra-table">
+                    <div className="fee-table-wrap dept-doc-table-wrap" style={{ marginTop: '20px' }}>
+                      <table className="fee-table">
                         <thead>
                           <tr>
-                            <th className="infra-sr-col">Sr.No</th>
-                            <th>Class / Year</th>
+                            <th style={{ width: 50 }}>Sr. No.</th>
                             <th>Title</th>
-                            <th className="infra-count-col">Download</th>
+                            <th style={{ width: 110, textAlign: 'center' }}>Year</th>
+                            <th style={{ width: 120, textAlign: 'center' }}>Action</th>
                           </tr>
                         </thead>
                         <tbody>
                           {tt.map((t, i) => (
                             <tr key={i}>
-                              <td className="infra-sr-col">{i + 1}</td>
-                              <td>{t.year}</td>
-                              <td>{t.title}</td>
-                              <td className="infra-count-col">
+                              <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                              <td className="fee-particular" style={{ fontWeight: 500 }}>{t.title}</td>
+                              <td style={{ textAlign: 'center' }}>{t.year}</td>
+                              <td style={{ textAlign: 'center' }}>
                                 {t.url ? (
-                                  <a href={t.url} className="curr-btn curr-view" target="_blank" rel="noreferrer">View / Download</a>
+                                  <div className="exam-action-btns">
+                                    <a
+                                      href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(t.url)}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="exam-btn exam-btn-view"
+                                    >View</a>
+                                    <a
+                                      href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(t.url)}`}
+                                      download
+                                      className="exam-btn exam-btn-download"
+                                      title="Download"
+                                    >
+                                      <span className="exam-download-text">Download</span>
+                                      <span className="exam-download-icon">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                      </span>
+                                    </a>
+                                  </div>
                                 ) : (
-                                  <span style={{ color: '#ccc' }}>—</span>
+                                  <span style={{ color: '#ccc', fontSize: '12px' }}>—</span>
                                 )}
                               </td>
                             </tr>
