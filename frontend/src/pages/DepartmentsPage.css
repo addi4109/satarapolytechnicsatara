@@ -512,7 +512,7 @@
    rules that live in Academics.css for the exam table, repeated here because
    this lazy-loaded page chunk does not load Academics.css. */
 .curriculum-table-wrap {
-  margin: 14px 0 28px;
+  margin: 14px 0 10px;
 }
 
 .curriculum-table-wrap .fee-table {

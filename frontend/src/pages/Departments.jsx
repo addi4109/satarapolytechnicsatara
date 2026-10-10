@@ -66,18 +66,20 @@ function DepartmentsPage() {
   const activeSlug = deptId || (departments.length > 0 ? departments[0].slug : '');
   const dept = departments.find((d) => d.slug === activeSlug) || departments[0];
 
-  // Flat year -> semester -> subject order for the Curriculum / Syllabus table
-  const curriculumRows = [];
-  years.forEach((year) => {
-    const yearSubjects = (dept?.curriculum || []).filter((c) => c.year === year);
-    [...new Set(yearSubjects.map((c) => c.semester))]
-      .sort((a, b) => a - b)
-      .forEach((sem) => {
-        yearSubjects
-          .filter((c) => c.semester === sem)
-          .forEach((sub) => curriculumRows.push({ ...sub, year, semester: sem }));
-      });
-  });
+  // Year -> semester -> subject grouping for the Curriculum / Syllabus tables
+  const curriculumYears = years
+    .map((year) => {
+      const yearSubjects = (dept?.curriculum || []).filter((c) => c.year === year);
+      if (yearSubjects.length === 0) return null;
+      const semesters = [...new Set(yearSubjects.map((c) => c.semester))]
+        .sort((a, b) => a - b)
+        .map((sem) => ({
+          sem,
+          subjects: yearSubjects.filter((c) => c.semester === sem),
+        }));
+      return { year, semesters };
+    })
+    .filter(Boolean);
 
   const sidebarItems = [
     { id: 'about', label: 'About' },
@@ -330,54 +332,62 @@ function DepartmentsPage() {
                   for each semester below.
                 </p>
 
-                {curriculumRows.length > 0 ? (
-                  <div className="fee-table-wrap curriculum-table-wrap" style={{ marginTop: '20px' }}>
-                    <table className="fee-table">
-                      <thead>
-                        <tr>
-                          <th style={{ width: 50 }}>Sr. No.</th>
-                          <th>Subject</th>
-                          <th style={{ width: 110, textAlign: 'center' }}>Year</th>
-                          <th style={{ width: 110, textAlign: 'center' }}>Semester</th>
-                          <th style={{ width: 120, textAlign: 'center' }}>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {curriculumRows.map((sub, i) => (
-                          <tr key={i}>
-                            <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
-                            <td className="fee-particular" style={{ fontWeight: 500 }}>{sub.name}</td>
-                            <td style={{ textAlign: 'center' }}>{sub.year}</td>
-                            <td style={{ textAlign: 'center' }}>{sub.semester}</td>
-                            <td style={{ textAlign: 'center' }}>
-                              {sub.url ? (
-                                <div className="exam-action-btns">
-                                  <a
-                                    href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(sub.url)}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="exam-btn exam-btn-view"
-                                  >View</a>
-                                  <a
-                                    href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(sub.url)}`}
-                                    download
-                                    className="exam-btn exam-btn-download"
-                                    title="Download"
-                                  >
-                                    <span className="exam-download-text">Download</span>
-                                    <span className="exam-download-icon">
-                                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                    </span>
-                                  </a>
-                                </div>
-                              ) : (
-                                <span style={{ color: '#ccc', fontSize: '12px' }}>—</span>
-                              )}
-                            </td>
-                          </tr>
+                {curriculumYears.length > 0 ? (
+                  <div className="curriculum-wrapper">
+                    {curriculumYears.map(({ year, semesters }) => (
+                      <div key={year} style={{ marginBottom: '24px' }}>
+                        <h3 className="curriculum-year">{year}</h3>
+                        {semesters.map(({ sem, subjects }) => (
+                          <div key={sem} style={{ marginBottom: '16px' }}>
+                            <h4 style={{ fontSize: '14px', color: '#7A263A', margin: '0 0 8px', fontWeight: 600 }}>Semester {sem}</h4>
+                            <div className="fee-table-wrap curriculum-table-wrap">
+                              <table className="fee-table">
+                                <thead>
+                                  <tr>
+                                    <th style={{ width: 50 }}>Sr. No.</th>
+                                    <th>Subject</th>
+                                    <th style={{ width: 120, textAlign: 'center' }}>Action</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {subjects.map((sub, sIdx) => (
+                                    <tr key={sIdx}>
+                                      <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{sIdx + 1}</td>
+                                      <td className="fee-particular" style={{ fontWeight: 500 }}>{sub.name}</td>
+                                      <td style={{ textAlign: 'center' }}>
+                                        {sub.url ? (
+                                          <div className="exam-action-btns">
+                                            <a
+                                              href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(sub.url)}`}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              className="exam-btn exam-btn-view"
+                                            >View</a>
+                                            <a
+                                              href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(sub.url)}`}
+                                              download
+                                              className="exam-btn exam-btn-download"
+                                              title="Download"
+                                            >
+                                              <span className="exam-download-text">Download</span>
+                                              <span className="exam-download-icon">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                              </span>
+                                            </a>
+                                          </div>
+                                        ) : (
+                                          <span style={{ color: '#ccc', fontSize: '12px' }}>—</span>
+                                        )}
+                                      </td>
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
                         ))}
-                      </tbody>
-                    </table>
+                      </div>
+                    ))}
                   </div>
                 ) : (
                   <p style={{ color: '#888', fontStyle: 'italic' }}>Curriculum details not available yet.</p>
