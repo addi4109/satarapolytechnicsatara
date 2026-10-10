@@ -719,23 +719,17 @@
   padding: 20px 24px;
 }
 
-/* All three OBE groups stacked one below another — plain bordered cards. */
+/* All three OBE groups stacked directly inside the main card — no inner
+   sub-cards, just a heading and list per group. */
 .obe-all-grid {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 22px;
   margin-top: 20px;
 }
 
-.obe-plain-card {
-  background: #fff;
-  border: 1px solid #e4e8ed;
-  border-radius: 8px;
-  padding: 20px 20px;
-}
-
-.obe-plain-card .obe-sub-heading {
-  margin-top: 0;
+.obe-group .obe-sub-heading {
+  margin: 0 0 10px;
 }
 
 

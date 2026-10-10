@@ -404,9 +404,9 @@ function DepartmentsPage() {
                   framework to ensure that students achieve the desired learning outcomes.
                 </p>
 
-                {/* All three OBE groups at a glance — one plain card each. */}
+                {/* All three OBE groups at a glance — heading + list, no inner cards. */}
                 <div className="obe-all-grid">
-                  <div className="obe-plain-card">
+                  <div className="obe-group">
                     <h3 className="obe-sub-heading">Program Educational Objectives (PEOs)</h3>
                     {dept.peos && dept.peos.length > 0 ? (
                       <ul className="obe-list">
@@ -424,7 +424,7 @@ function DepartmentsPage() {
                     )}
                   </div>
 
-                  <div className="obe-plain-card">
+                  <div className="obe-group">
                     <h3 className="obe-sub-heading">Program Outcomes (POs)</h3>
                     {dept.pos && dept.pos.length > 0 ? (
                       <ul className="obe-list">
@@ -442,7 +442,7 @@ function DepartmentsPage() {
                     )}
                   </div>
 
-                  <div className="obe-plain-card">
+                  <div className="obe-group">
                     <h3 className="obe-sub-heading">Program Specific Outcomes (PSOs)</h3>
                     {dept.psos && dept.psos.length > 0 ? (
                       <ul className="obe-list">
