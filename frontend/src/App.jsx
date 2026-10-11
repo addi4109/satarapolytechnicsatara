@@ -234,7 +234,6 @@ function AppLayout() {
           <Route path="/admin/enquiries" element={<AdminEnquiries />} />
           <Route path="/admin/feedbacks" element={<AdminFeedbacks />} />
           <Route path="/admin/alumni" element={<AdminAlumni />} />
-          <Route path="/admin/alumni/:tab" element={<AdminAlumni />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </Suspense>
