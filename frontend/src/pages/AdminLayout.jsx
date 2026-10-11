@@ -61,7 +61,10 @@ function AdminLayout({ children }) {
     { to: '/admin/contact', label: 'Contact' },
     { to: '/admin/enquiries', label: 'Enquiries' },
     { to: '/admin/feedbacks', label: 'Feedbacks' },
-    { to: '/admin/alumni', label: 'Alumni' },
+    { to: '/admin/alumni/registrations', label: 'Registrations' },
+    { to: '/admin/alumni/entrepreneurs', label: 'Entrepreneurs' },
+    { to: '/admin/alumni/association', label: 'Alumni Association' },
+    { to: '/admin/alumni/vision-mission', label: 'Vision & Mission' },
   ];
 
   const handleLogout = () => {

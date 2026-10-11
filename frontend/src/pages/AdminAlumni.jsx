@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getAdminApiKey } from '../lib/adminApi';
 import AdminLayout from './AdminLayout';
 import AdminAlert from '../components/AdminAlert';
@@ -7,9 +7,28 @@ import './Admin.css';
 
 import API_URL from '../lib/api';
 
+// Each alumni section has its own admin route so it can appear as a separate
+// entry in the admin sidebar (e.g. /admin/alumni/entrepreneurs).
+const ALUMNI_TABS = ['registrations', 'entrepreneurs', 'association', 'vision-mission'];
+const TAB_LABELS = {
+  registrations: 'Registrations',
+  entrepreneurs: 'Entrepreneurs',
+  association: 'Alumni Association',
+  'vision-mission': 'Vision & Mission',
+};
+
 function AdminAlumni() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('registrations');
+  const { tab } = useParams();
+  const activeTab = ALUMNI_TABS.includes(tab) ? tab : 'registrations';
+
+  // Keep the URL canonical: /admin/alumni and unknown tabs redirect to the
+  // Registrations section so the sidebar highlight always matches.
+  useEffect(() => {
+    if (tab !== activeTab) {
+      navigate(`/admin/alumni/${activeTab}`, { replace: true });
+    }
+  }, [tab, activeTab, navigate]);
 
   // ─── Registrations state ───
   const [alumni, setAlumni] = useState([]);
@@ -333,15 +352,15 @@ function AdminAlumni() {
     <AdminLayout>
       {/* ─── TOPBAR ─── */}
       <div className="admin-topbar">
-        <h1>Alumni Management</h1>
+        <h1>{TAB_LABELS[activeTab]}</h1>
       </div>
 
       <div className="admin-content" style={{ paddingTop: '0' }}>
         <div className="about-admin-tabs">
-          <button className={`about-admin-tab ${activeTab === 'registrations' ? 'active' : ''}`} onClick={() => setActiveTab('registrations')}>Registrations</button>
-          <button className={`about-admin-tab ${activeTab === 'entrepreneurs' ? 'active' : ''}`} onClick={() => setActiveTab('entrepreneurs')}>Entrepreneurs</button>
-          <button className={`about-admin-tab ${activeTab === 'association' ? 'active' : ''}`} onClick={() => setActiveTab('association')}>Alumni Association</button>
-          <button className={`about-admin-tab ${activeTab === 'vision-mission' ? 'active' : ''}`} onClick={() => setActiveTab('vision-mission')}>Vision & Mission</button>
+          <button className={`about-admin-tab ${activeTab === 'registrations' ? 'active' : ''}`} onClick={() => navigate('/admin/alumni/registrations')}>Registrations</button>
+          <button className={`about-admin-tab ${activeTab === 'entrepreneurs' ? 'active' : ''}`} onClick={() => navigate('/admin/alumni/entrepreneurs')}>Entrepreneurs</button>
+          <button className={`about-admin-tab ${activeTab === 'association' ? 'active' : ''}`} onClick={() => navigate('/admin/alumni/association')}>Alumni Association</button>
+          <button className={`about-admin-tab ${activeTab === 'vision-mission' ? 'active' : ''}`} onClick={() => navigate('/admin/alumni/vision-mission')}>Vision & Mission</button>
         </div>
 
         {/* ═══════════════════════════════════════════ */}
