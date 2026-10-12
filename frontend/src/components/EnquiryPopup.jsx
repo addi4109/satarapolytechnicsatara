@@ -90,7 +90,8 @@ function EnquiryPopup({ onClose }) {
         setPartialSuccess("Your enquiry was received, but we couldn't send the confirmation email. Our admission team will still contact you.");
         setSubmitted(true);
       }
-    } catch {
+    } catch (error) {
+      console.error('EmailJS error:', error?.status, error?.text || error?.message || error);
       setErrorMessage("Sorry, we couldn't submit your enquiry right now. Please try again or contact the college directly.");
     } finally {
       setSending(false);
