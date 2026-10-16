@@ -187,6 +187,152 @@ const FALLBACK_PROGRAMS = [
   { name: 'Automobile Engineering' },
 ];
 
+// ===== Satara Education Society tab content =====
+const SES_STATS = [
+  { num: '1935', label: 'Established', tone: '#243358' },
+  { num: '90+', label: 'Years of Legacy', tone: '#c8963e' },
+  { num: '6', label: 'Institutions', tone: '#7a263a' },
+  { num: '4', label: 'Education Levels', tone: '#0f766e' },
+];
+
+const SES_HISTORY = [
+  {
+    year: '1935',
+    title: 'A Journey That Began in 1935',
+    text: 'The foundation of Satara Education Society was laid in 1935 with the objective of contributing to education in Satara and the surrounding region.',
+    tone: '#243358',
+  },
+  {
+    year: 'Decades',
+    title: 'Steady Expansion',
+    text: 'Over the decades, the Society expanded its educational activities to address the evolving academic and professional needs of students.',
+    tone: '#7c3aed',
+  },
+  {
+    year: '1983',
+    title: 'Satara Polytechnic',
+    text: 'A significant milestone was the establishment of Satara Polytechnic in 1983, which introduced opportunities for diploma-level technical education.',
+    tone: '#c8963e',
+  },
+  {
+    year: '1986',
+    title: 'Pharmacy Education',
+    text: 'The Society also expanded into pharmaceutical education through the Late Suman Dhekane Department of Pharmacy, established in 1986.',
+    tone: '#7a263a',
+  },
+  {
+    year: 'Today',
+    title: 'A Lasting Educational Presence',
+    text: 'Satara Education Society represents a longstanding educational presence in Satara, bringing together institutions serving students at different stages of their academic journeys.',
+    tone: '#0f766e',
+  },
+];
+
+const SES_MISSION = [
+  'To provide accessible and quality educational opportunities across various academic disciplines.',
+  'To promote technical knowledge, practical skills and professional competence.',
+  'To encourage discipline, ethical values and social responsibility among students.',
+  'To create an environment that supports academic excellence and personal development.',
+  'To prepare students for higher education, employment and future professional challenges.',
+  'To contribute positively to the educational and social development of the region.',
+];
+
+const SES_INSTITUTIONS = [
+  {
+    icon: '🏫',
+    name: 'Anant English School, Satara',
+    tone: '#2563eb',
+    desc: 'Anant English School is one of the educational institutions associated with Satara Education Society. The school contributes to foundational and secondary education by supporting students in their academic development and preparing them for further educational opportunities.',
+    location: 'Mangalwar Peth, Satara, Maharashtra.',
+  },
+  {
+    icon: '📗',
+    name: 'Annasaheb Rajebhosale Primary School',
+    tone: '#0f766e',
+    desc: 'Annasaheb Rajebhosale Primary School is associated with Satara Education Society and serves students at the primary education level. The institution supports foundational learning and the development of essential academic skills among young learners.',
+  },
+  {
+    icon: '🧒',
+    name: 'Late Keshav Gore Pre-Primary School',
+    tone: '#b45309',
+    desc: "The institution provides early childhood education and introduces young learners to foundational educational activities. It forms part of the Society's educational network supporting students from their earliest learning stages.",
+  },
+  {
+    icon: '🏛️',
+    name: 'N. B. Deshmukh Junior College',
+    tone: '#7c3aed',
+    desc: 'N. B. Deshmukh Junior College is associated with Satara Education Society and contributes to higher secondary education. The institution supports students during an important stage of their academic journey, helping prepare them for further education and professional opportunities.',
+  },
+  {
+    icon: '⚙️',
+    name: 'Satara Polytechnic, Satara',
+    tone: '#7a263a',
+    tag: 'Established 1983',
+    desc: 'Satara Polytechnic is a technical education institution managed by Satara Education Society. Established in 1983, the institute provides diploma-level engineering education with an emphasis on theoretical knowledge, practical training and technical skill development.',
+    facts: [
+      { label: 'Established', value: '1983' },
+      { label: 'Academic Focus', value: 'Diploma Engineering Education' },
+      { label: 'Approvals', value: 'AICTE, New Delhi & MSBTE, Mumbai' },
+      { label: 'Campus', value: 'Approximately 17.5 acres' },
+    ],
+    location: 'Satara, Maharashtra.',
+  },
+  {
+    icon: '💊',
+    name: 'Late Suman Dhekane Department of Pharmacy',
+    tone: '#4338ca',
+    tag: 'Established 1986',
+    desc: 'Late Suman Dhekane Department of Pharmacy is a pharmaceutical education institution operated under Satara Education Society. It offers a two-year, full-time Diploma in Pharmacy (D.Pharm.) programme designed to provide students with foundational pharmaceutical knowledge and professional education.',
+    facts: [
+      { label: 'Programme', value: 'Diploma in Pharmacy (D.Pharm.)' },
+      { label: 'Duration', value: '2 Years' },
+      { label: 'Reported Intake', value: '60 Students' },
+      { label: 'Approval', value: 'Pharmacy Council of India (PCI)' },
+    ],
+    location: 'Mangalwar Peth, Satara, Maharashtra.',
+  },
+];
+
+const SES_APPROACH = [
+  { icon: '📖', text: 'Academic learning and conceptual understanding.' },
+  { icon: '🛠️', text: 'Practical knowledge and skill development.' },
+  { icon: '🧭', text: 'Discipline, responsibility and ethical values.' },
+  { icon: '⚙️', text: 'Opportunities for technical and professional education.' },
+  { icon: '🚀', text: 'Preparation for higher education and employment.' },
+  { icon: '🤝', text: 'Contribution to society through education.' },
+];
+
+const SES_STAGES = [
+  { icon: '🌱', name: 'Pre-Primary Education', desc: 'Supporting early childhood learning.', tone: '#0f766e' },
+  { icon: '📖', name: 'Primary Education', desc: 'Developing essential foundational knowledge and academic skills.', tone: '#2563eb' },
+  { icon: '📚', name: 'Secondary Education', desc: 'Preparing students for advanced academic learning.', tone: '#7c3aed' },
+  { icon: '🎓', name: 'Higher Secondary Education', desc: 'Supporting the transition towards higher education.', tone: '#c8963e' },
+  { icon: '⚙️', name: 'Technical Education', desc: 'Providing diploma-level engineering education.', tone: '#7a263a' },
+  { icon: '💊', name: 'Pharmaceutical Education', desc: 'Offering professional diploma education in pharmacy.', tone: '#4338ca' },
+];
+
+const SES_MILESTONES = [
+  { year: '1935', text: 'Establishment of Satara Education Society', tone: '#243358' },
+  { year: '1983', text: 'Establishment of Satara Polytechnic', tone: '#c8963e' },
+  { year: '1986', text: 'Establishment of Late Suman Dhekane Department of Pharmacy', tone: '#7a263a' },
+  { year: '2025', text: "Completion of 90 years since the Society's establishment", tone: '#0f766e' },
+  { year: '2026', text: 'Continuing a legacy of more than nine decades in education', tone: '#4338ca' },
+];
+
+// Numbered heading used by each Society section; colour comes from the
+// parent section's --tone custom property.
+function SesHead({ num, title, sub }) {
+  return (
+    <div className="ses-head">
+      <span className="ses-head-num">{num}</span>
+      <div className="ses-head-text">
+        <h3 className="ses-head-title">{title}</h3>
+        {sub && <p className="ses-head-sub">{sub}</p>}
+      </div>
+    </div>
+  );
+}
+
 function AboutCollege() {
   const { page } = useParams();
   const [active, setActive] = useState('overview');
@@ -422,7 +568,6 @@ function AboutCollege() {
     );
   }
 
-  const getSociety = () => about.society || {};
   const getInstitute = () => about.institute || {};
   const getDisclosure = () => about.disclosure || {};
   const getVision = () => about.vision || {};
@@ -571,71 +716,230 @@ function AboutCollege() {
           {/* Society */}
           {active === 'society' && (
             <>
-              {/* Box 1: About the Society */}
-              <div className="about-box">
-                <h2 className="about-box-title">About the Society</h2>
-                <div className="about-box-line"></div>
-                <div className="about-intro-text">
-                  {renderContent(getSociety().content || STATIC_CONTENT.about.society)}
+              {/* Hero */}
+              <header className="ses-hero">
+                <span className="ses-hero-badge">Est. 1935 · Satara, Maharashtra</span>
+                <h2 className="ses-hero-title">Satara Education Society</h2>
+                <p className="ses-hero-sub">A Legacy of Education Since 1935</p>
+                <p className="ses-hero-tag">Empowering Generations Through Knowledge, Values and Technical Excellence</p>
+                <div className="ses-chip-row">
+                  <span className="ses-chip">🎓 6 Institutions</span>
+                  <span className="ses-chip">📚 4 Education Levels</span>
+                  <span className="ses-chip">🧭 90+ Years of Legacy</span>
                 </div>
+              </header>
+
+              {/* Stats strip */}
+              <div className="ses-stats">
+                {SES_STATS.map((stat, i) => (
+                  <div className="ses-stat" key={i} style={{ '--tone': stat.tone }}>
+                    <span className="ses-stat-num">{stat.num}</span>
+                    <span className="ses-stat-label">{stat.label}</span>
+                  </div>
+                ))}
               </div>
 
-              {/* Box 2: At a Glance */}
-              <div className="about-box">
-                <h2 className="about-box-title">At a Glance</h2>
-                <div className="about-box-line"></div>
-                <div className="info-table">
-                  <div className="info-row"><span className="info-label">Established</span><span className="info-value">1935</span></div>
-                  <div className="info-row"><span className="info-label">Location</span><span className="info-value">Satara, Maharashtra</span></div>
-                  <div className="info-row"><span className="info-label">Sector</span><span className="info-value">Education</span></div>
-                  <div className="info-row"><span className="info-label">Areas</span><span className="info-value">School, Junior College, Technical & Professional Education</span></div>
-                </div>
-              </div>
-
-              {/* Box 3: Educational Institutions */}
-              <div className="about-box">
-                <h2 className="about-box-title">Educational Institutions</h2>
-                <div className="about-box-line"></div>
-                <p className="society-lead">The Society's educational activities include institutions in areas such as:</p>
-                <ul className="vm-list">
-                  <li>School Education</li>
-                  <li>Junior College Education</li>
-                  <li>Diploma / Technical Education</li>
-                  <li>Pharmacy Education</li>
-                </ul>
-                <p className="society-lead" style={{ marginTop: '12px' }}>
-                  <strong>Satara Polytechnic, Satara</strong> is one of the technical education institutions associated with the Society.
+              {/* 01 — About the Society */}
+              <section className="ses-card" style={{ '--tone': '#243358' }}>
+                <SesHead num="01" title="About Satara Education Society" />
+                <p>
+                  Satara Education Society (SES) is a private educational trust established in 1935 in Satara,
+                  Maharashtra. With a longstanding commitment to education, the Society has contributed to the
+                  academic development of students by supporting educational institutions across different levels
+                  and disciplines.
                 </p>
-              </div>
+                <p>The Society operates institutions offering school education, higher secondary education, technical education and pharmacy education.</p>
+                <p>
+                  Through its institutions, Satara Education Society aims to provide accessible, meaningful and
+                  career-oriented educational opportunities while encouraging academic excellence, discipline,
+                  practical knowledge and responsible citizenship.
+                </p>
+                <p>
+                  With a history spanning more than nine decades, the Society continues its educational journey by
+                  supporting learning, professional development and opportunities for future generations.
+                </p>
+              </section>
 
-              {/* Box 4: Our Commitment */}
-              <div className="about-box">
-                <h2 className="about-box-title">Our Commitment</h2>
-                <div className="about-box-line"></div>
-                <div className="about-intro-text">
-                  <p>
-                    The Society strives to create an educational environment that encourages knowledge, discipline, practical skills, innovation and responsible citizenship. Its institutions work towards preparing students for higher education, employment, entrepreneurship and meaningful contribution to society.
-                  </p>
-                </div>
-              </div>
+              {/* 02 — History & Legacy */}
+              <section className="ses-card" style={{ '--tone': '#7c3aed' }}>
+                <SesHead num="02" title="Our History and Legacy" sub="A journey that began in 1935" />
+                <ol className="ses-timeline">
+                  {SES_HISTORY.map((item, i) => (
+                    <li className="ses-timeline-item" key={i} style={{ '--tone': item.tone }}>
+                      <span className="ses-timeline-year">{item.year}</span>
+                      <div className="ses-timeline-body">
+                        <h4>{item.title}</h4>
+                        <p>{item.text}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </section>
 
-              {/* Box 5: Vision & Mission */}
-              <div className="about-box">
-                <h2 className="about-box-title">Vision &amp; Mission</h2>
-                <div className="about-box-line"></div>
-                <div className="vm-block about-vm-block">
-                  <h3 className="vm-title">Vision</h3>
-                  <p className="society-lead">
-                    To promote quality education and develop knowledgeable, skilled and responsible individuals who can contribute positively to society.
-                  </p>
+              {/* 03 — Vision & Mission */}
+              <section className="ses-card" style={{ '--tone': '#c8963e' }}>
+                <SesHead num="03" title="Our Vision & Mission" />
+                <div className="ses-vision">
+                  <span className="ses-vision-icon" aria-hidden="true">🌟</span>
+                  <div>
+                    <h4>Our Vision</h4>
+                    <p>
+                      To contribute to the development of an educated, skilled and responsible society by promoting
+                      quality education, knowledge, innovation and lifelong learning.
+                    </p>
+                  </div>
                 </div>
-                <div className="vm-block about-vm-block">
-                  <h3 className="vm-title">Mission</h3>
-                  <p className="society-lead">
-                    To provide accessible and value-based education, encourage practical learning and skill development, and create opportunities for students to achieve their academic and professional goals.
-                  </p>
+                <h4 className="ses-sub-title">Our Mission</h4>
+                <ul className="ses-mission-list">
+                  {SES_MISSION.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              </section>
+
+              {/* 04 — Institutions */}
+              <section className="ses-card" style={{ '--tone': '#0f766e' }}>
+                <SesHead
+                  num="04"
+                  title="Institutions Under Satara Education Society"
+                  sub="School, higher secondary, technical and pharmaceutical education"
+                />
+                <div className="ses-inst-grid">
+                  {SES_INSTITUTIONS.map((inst, i) => (
+                    <article className="ses-inst" key={i} style={{ '--tone': inst.tone }}>
+                      <div className="ses-inst-top">
+                        <span className="ses-inst-icon" aria-hidden="true">{inst.icon}</span>
+                        <div className="ses-inst-heading">
+                          <h4 className="ses-inst-name">{inst.name}</h4>
+                          {inst.tag && <span className="ses-inst-tag">{inst.tag}</span>}
+                        </div>
+                      </div>
+                      <p className="ses-inst-desc">{inst.desc}</p>
+                      {inst.facts && (
+                        <dl className="ses-inst-facts">
+                          {inst.facts.map((fact, j) => (
+                            <div key={j}>
+                              <dt>{fact.label}</dt>
+                              <dd>{fact.value}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                      )}
+                      {inst.location && <span className="ses-inst-loc">📍 {inst.location}</span>}
+                    </article>
+                  ))}
                 </div>
-              </div>
+              </section>
+
+              {/* 05 — Educational Approach */}
+              <section className="ses-card" style={{ '--tone': '#b45309' }}>
+                <SesHead num="05" title="Our Educational Approach" sub="Building knowledge, skills and character" />
+                <p>
+                  Satara Education Society recognises education as an important foundation for individual
+                  development and social progress. Through its institutions, the Society supports an educational
+                  environment that combines academic learning with practical knowledge and personal development.
+                  Its educational approach emphasises:
+                </p>
+                <ul className="ses-approach">
+                  {SES_APPROACH.map((item, i) => (
+                    <li key={i}>
+                      <span className="ses-approach-icon" aria-hidden="true">{item.icon}</span>
+                      {item.text}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              {/* 06 — Contribution to Education */}
+              <section className="ses-card" style={{ '--tone': '#7a263a' }}>
+                <SesHead
+                  num="06"
+                  title="Our Contribution to Education"
+                  sub="More than nine decades of educational development in Satara"
+                />
+                <p>
+                  Its institutions collectively provide opportunities across multiple educational stages,
+                  covering learners from their earliest years to professional education:
+                </p>
+                <div className="ses-stage-grid">
+                  {SES_STAGES.map((stage, i) => (
+                    <div className="ses-stage" key={i} style={{ '--tone': stage.tone }}>
+                      <span className="ses-stage-icon" aria-hidden="true">{stage.icon}</span>
+                      <h4>{stage.name}</h4>
+                      <p>{stage.desc}</p>
+                    </div>
+                  ))}
+                </div>
+                <p className="ses-foot-note">
+                  Through this network, the Society contributes to the availability of diverse educational pathways within the region.
+                </p>
+              </section>
+
+              {/* 07 — Important Milestones */}
+              <section className="ses-card" style={{ '--tone': '#2563eb' }}>
+                <SesHead num="07" title="Important Milestones" />
+                <div className="ses-table-wrap">
+                  <table className="ses-table">
+                    <thead>
+                      <tr>
+                        <th>Year</th>
+                        <th>Milestone</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {SES_MILESTONES.map((item, i) => (
+                        <tr key={i}>
+                          <td><span className="ses-year-chip" style={{ '--tone': item.tone }}>{item.year}</span></td>
+                          <td>{item.text}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              {/* 08 — Contact Information */}
+              <section className="ses-card" style={{ '--tone': '#0f766e' }}>
+                <SesHead num="08" title="Contact Information" />
+                <div className="ses-contact">
+                  <div className="ses-contact-panel">
+                    <h4>📍 Satara Education Society</h4>
+                    <p>Mangalwar Peth, Satara, Maharashtra, India.</p>
+                    <p><strong>Postal Code:</strong> 415002</p>
+                  </div>
+                  <div className="ses-contact-panel">
+                    <a className="ses-contact-item" href="tel:02162279422">
+                      <span>📞 Reported Contact Number</span>
+                      <strong>02162-279422</strong>
+                    </a>
+                    <a
+                      className="ses-contact-item"
+                      href="https://www.satarapolytechnic.org"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span>🌐 Associated Institutional Website</span>
+                      <strong>www.satarapolytechnic.org</strong>
+                    </a>
+                  </div>
+                </div>
+                <p className="ses-note">
+                  The above website is associated with Satara Polytechnic and should not be represented as the
+                  independently verified official website of the parent Society.
+                </p>
+              </section>
+
+              {/* Closing banner */}
+              <section className="ses-closing">
+                <h3 className="ses-closing-title">Continuing the Legacy. Inspiring the Future.</h3>
+                <p>
+                  Since 1935, Satara Education Society has remained associated with the advancement of education in
+                  Satara. From foundational school education to technical and pharmaceutical studies, its
+                  institutions contribute to creating opportunities for students to learn, develop their abilities
+                  and prepare for the future.
+                </p>
+                <strong className="ses-closing-line">Satara Education Society: A Legacy of Learning Since 1935.</strong>
+              </section>
             </>
           )}
 
