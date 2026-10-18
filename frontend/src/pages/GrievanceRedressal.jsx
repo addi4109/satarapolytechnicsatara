@@ -308,6 +308,7 @@ function GrievanceRedressal() {
           )}
 
           <div className="gr-links">
+            <a className="gr-link" href="/student/grievance-portal">Grievance Redressal Portal →</a>
             <a className="gr-link" href="/cells/grievance">Grievance Redressal Cell →</a>
             <a className="gr-link" href="/cells/womens-grievance">Women Grievance Cell →</a>
             <a className="gr-link" href="/cells/anti-ragging">Anti-Ragging Cell →</a>
