@@ -12,7 +12,7 @@ const years = ['1st Year', '2nd Year', '3rd Year'];
 const now = new Date();
 const ayStart = now.getMonth() >= 3 ? now.getFullYear() : now.getFullYear() - 1;
 const fallbackRankersYear = `${ayStart}-${ayStart + 1}`;
-const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe', 'rankers', 'achievements', 'mous', 'library', 'timetable'];
+const VALID_TABS = ['about', 'vision', 'hod', 'faculty', 'infrastructure', 'curriculum', 'obe', 'rankers', 'achievements', 'mous', 'library', 'timetable', 'newsletter'];
 
 function DepartmentsPage() {
   const { deptId } = useParams();
@@ -94,6 +94,7 @@ function DepartmentsPage() {
     { id: 'mous', label: 'MOUs' },
     { id: 'library', label: 'Department Library' },
     { id: 'timetable', label: 'Time Table' },
+    { id: 'newsletter', label: 'Newsletter' },
   ];
 
   if (loading) {
@@ -741,6 +742,79 @@ function DepartmentsPage() {
                                       </span>
                                     </a>
                                   </div>
+                                ) : (
+                                  <span style={{ color: '#ccc', fontSize: '12px' }}>—</span>
+                                )}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  );
+                })()}
+              </>
+            )}
+
+            {activeTab === 'newsletter' && (
+              <>
+                <h2 className="content-heading">Newsletter</h2>
+                <div className="content-line"></div>
+                <p>
+                  Read the newsletters published by the {dept.name} department.
+                  View an issue online or download it to read later.
+                </p>
+
+                {(() => {
+                  const newsletters = dept.newsletters || [];
+                  if (newsletters.length === 0) {
+                    return (
+                      <p style={{ color: '#888', fontStyle: 'italic' }}>
+                        No newsletters added yet. Admin can add them from the Admin Panel.
+                      </p>
+                    );
+                  }
+                  return (
+                    <div className="fee-table-wrap dept-doc-table-wrap" style={{ marginTop: '20px' }}>
+                      <table className="fee-table">
+                        <thead>
+                          <tr>
+                            <th style={{ width: 50 }}>Sr. No.</th>
+                            <th>Title</th>
+                            <th style={{ width: 100, textAlign: 'center' }}>View</th>
+                            <th style={{ width: 110, textAlign: 'center' }}>Download</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {newsletters.map((n, i) => (
+                            <tr key={i}>
+                              <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
+                              <td className="fee-particular" style={{ fontWeight: 500 }}>{n.title}</td>
+                              <td style={{ textAlign: 'center' }}>
+                                {n.url ? (
+                                  <a
+                                    href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(n.url)}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="exam-btn exam-btn-view"
+                                  >View</a>
+                                ) : (
+                                  <span style={{ color: '#ccc', fontSize: '12px' }}>—</span>
+                                )}
+                              </td>
+                              <td style={{ textAlign: 'center' }}>
+                                {n.url ? (
+                                  <a
+                                    href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(n.url)}`}
+                                    download
+                                    className="exam-btn exam-btn-download"
+                                    title="Download"
+                                  >
+                                    <span className="exam-download-text">Download</span>
+                                    <span className="exam-download-icon">
+                                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                    </span>
+                                  </a>
                                 ) : (
                                   <span style={{ color: '#ccc', fontSize: '12px' }}>—</span>
                                 )}

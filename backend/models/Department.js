@@ -23,6 +23,13 @@ const curriculumSchema = new mongoose.Schema({
   url: { type: String, default: '' },
 });
 
+// Department newsletter entry (title + PDF) shown on the Newsletter tab
+const newsletterSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  url: { type: String, default: '' },
+  createdAt: { type: Date, default: Date.now },
+});
+
 const deptNoticeSchema = new mongoose.Schema({
   title: { type: String, required: true },
   url: { type: String, default: '' },
@@ -98,6 +105,7 @@ const departmentSchema = new mongoose.Schema(
     deptNotices: [deptNoticeSchema],
     deptEvents: [deptEventSchema],
     deptTimetable: [deptTimetableSchema],
+    newsletters: [newsletterSchema],
     // Rankers tab: one image per academic year. The legacy single-banner
     // fields are kept so departments saved before this still render.
     rankers: [rankerSchema],

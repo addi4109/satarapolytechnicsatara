@@ -34,6 +34,7 @@ const emptyForm = {
   mous: [],
   library: { description: '', books: [], titles: [] },
   deptTimetable: [],
+  newsletters: [],
 
   order: 0,
 };
@@ -101,6 +102,7 @@ function AdminDepartmentForm() {
             titles: dept.library?.titles || [],
           },
           deptTimetable: dept.deptTimetable || [],
+          newsletters: dept.newsletters || [],
 
           order: dept.order || 0,
         });
@@ -259,6 +261,21 @@ function AdminDepartmentForm() {
     setForm((prev) => ({ ...prev, mous: prev.mous.filter((_, i) => i !== idx) }));
   };
 
+  // Newsletter management
+  const addNewsletter = () => {
+    setForm((prev) => ({ ...prev, newsletters: [...prev.newsletters, { title: '', url: '' }] }));
+  };
+  const updateNewsletter = (idx, field, val) => {
+    setForm((prev) => {
+      const nl = [...prev.newsletters];
+      nl[idx] = { ...nl[idx], [field]: val };
+      return { ...prev, newsletters: nl };
+    });
+  };
+  const removeNewsletter = (idx) => {
+    setForm((prev) => ({ ...prev, newsletters: prev.newsletters.filter((_, i) => i !== idx) }));
+  };
+
   // Curriculum management
   const curriculumEndRef = useRef(null);
   const addSubject = () => {
@@ -312,6 +329,7 @@ function AdminDepartmentForm() {
         ...form,
         mission: form.mission.split('\n').filter((m) => m.trim()),
         curriculum: form.curriculum.filter((s) => s.name.trim()),
+        newsletters: form.newsletters.filter((n) => n.title.trim()),
         peos: form.peos.filter((p) => p.title.trim() || p.description.trim()),
         pos: form.pos.filter((p) => p.title.trim() || p.description.trim()),
         psos: form.psos.filter((p) => p.title.trim() || p.description.trim()),
@@ -374,6 +392,7 @@ function AdminDepartmentForm() {
             { key: 'mous', label: 'MOUs' },
             { key: 'library', label: 'Library' },
             { key: 'timetable', label: 'Time Table' },
+            { key: 'newsletter', label: 'Newsletter' },
           ]}
           activeTab={activeTab}
           onChange={(tab) => { setActiveTab(tab); if (tab === 'basic') setEditingBasic(false); if (tab === 'obe') setObEditing(false); if (tab === 'hod') setHodEditing(false); }}
@@ -897,6 +916,39 @@ function AdminDepartmentForm() {
                     </div>
                   ))
                 }
+                </div>
+              )}
+            </div>
+          </div>
+          )}
+
+          {/* Newsletter */}
+          {activeTab === 'newsletter' && (
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
+              </div>
+              <div>
+                <h3>Newsletter</h3>
+                <p>Department newsletter PDFs with title</p>
+              </div>
+              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addNewsletter}>+ Add Newsletter</button>
+            </div>
+            <div className="dept-form-card-body">
+              {form.newsletters.length === 0 ? (
+                <div className="members-empty">No newsletters added yet. Click "+ Add Newsletter" to add one.</div>
+              ) : (
+                <div className="faculty-cards-grid">
+                  {form.newsletters.map((n, idx) => (
+                    <div key={idx} className="faculty-card">
+                      <button type="button" className="faculty-card-remove" onClick={() => removeNewsletter(idx)} title="Remove">✕</button>
+                      <div className="faculty-card-fields">
+                        <input type="text" placeholder="Title (e.g. Newsletter - May 2026)" value={n.title} onChange={(e) => updateNewsletter(idx, 'title', e.target.value)} />
+                        <PdfUpload value={n.url} onChange={(url) => updateNewsletter(idx, 'url', url)} label="Newsletter PDF" />
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
