@@ -35,6 +35,7 @@ const emptyForm = {
   library: { description: '', books: [], titles: [] },
   deptTimetable: [],
   newsletters: [],
+  questionPapers: [],
 
   order: 0,
 };
@@ -103,6 +104,7 @@ function AdminDepartmentForm() {
           },
           deptTimetable: dept.deptTimetable || [],
           newsletters: dept.newsletters || [],
+          questionPapers: dept.questionPapers || [],
 
           order: dept.order || 0,
         });
@@ -301,6 +303,21 @@ function AdminDepartmentForm() {
     setForm((prev) => ({ ...prev, curriculum: prev.curriculum.filter((_, i) => i !== idx) }));
   };
 
+  // Question paper management
+  const addQuestionPaper = () => {
+    setForm((prev) => ({ ...prev, questionPapers: [...prev.questionPapers, { year: '', semester: 1, title: '', url: '' }] }));
+  };
+  const updateQuestionPaper = (idx, field, val) => {
+    setForm((prev) => {
+      const qp = [...prev.questionPapers];
+      qp[idx] = { ...qp[idx], [field]: val };
+      return { ...prev, questionPapers: qp };
+    });
+  };
+  const removeQuestionPaper = (idx) => {
+    setForm((prev) => ({ ...prev, questionPapers: prev.questionPapers.filter((_, i) => i !== idx) }));
+  };
+
   // OBE management
   const addObeItem = (field) => {
     setForm((prev) => ({ ...prev, [field]: [...prev[field], { title: '', description: '' }] }));
@@ -330,6 +347,7 @@ function AdminDepartmentForm() {
         mission: form.mission.split('\n').filter((m) => m.trim()),
         curriculum: form.curriculum.filter((s) => s.name.trim()),
         newsletters: form.newsletters.filter((n) => n.title.trim()),
+        questionPapers: form.questionPapers.filter((q) => q.year.trim() && q.title.trim()),
         peos: form.peos.filter((p) => p.title.trim() || p.description.trim()),
         pos: form.pos.filter((p) => p.title.trim() || p.description.trim()),
         psos: form.psos.filter((p) => p.title.trim() || p.description.trim()),
@@ -386,6 +404,7 @@ function AdminDepartmentForm() {
             { key: 'faculty', label: 'Faculty' },
             { key: 'infrastructure', label: 'Infrastructure' },
             { key: 'curriculum', label: 'Curriculum' },
+            { key: 'question-papers', label: 'Question Papers' },
             { key: 'obe', label: 'OBE' },
             { key: 'rankers', label: 'Rankers' },
             { key: 'achievements', label: 'Achievements' },
@@ -1021,6 +1040,70 @@ function AdminDepartmentForm() {
                 </div>
               )}
               <div ref={curriculumEndRef} />
+            </div>
+          </div>
+          )}
+
+          {/* Previous Year Question Papers */}
+          {activeTab === 'question-papers' && (
+          <div className="dept-form-card">
+            <div className="dept-form-card-header">
+              <div className="dept-form-card-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M10 12a1.5 1.5 0 1 1 2 1.2c-.6.4-1 .8-1 1.5"/><path d="M10 17h4"/></svg>
+              </div>
+              <div>
+                <h3>Previous Year Question Papers</h3>
+                <p>Year, semester, title and PDF for each paper</p>
+              </div>
+              <button type="button" className="btn btn-success btn-sm dept-card-add-btn" onClick={addQuestionPaper}>+ Add Question Paper</button>
+            </div>
+            <div className="dept-form-card-body">
+              {form.questionPapers.length === 0 ? (
+                <div className="admin-curriculum-empty">No question papers added yet. Click "+ Add Question Paper" to add one.</div>
+              ) : (
+                <div style={{ overflowX: 'auto' }}>
+                  <table className="admin-curriculum-table">
+                    <thead>
+                      <tr>
+                        <th style={{ width: '14%' }}>Year</th>
+                        <th style={{ width: '16%' }}>Semester</th>
+                        <th style={{ width: '30%' }}>Title</th>
+                        <th style={{ width: '26%' }}>Link (PDF/URL)</th>
+                        <th style={{ width: '14%', textAlign: 'center' }}>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {form.questionPapers.map((q, idx) => (
+                        <tr key={idx}>
+                          <td>
+                            <input className="subj-input" type="text" placeholder="Year (e.g. 2024)" value={q.year} onChange={(e) => updateQuestionPaper(idx, 'year', e.target.value)} />
+                          </td>
+                          <td>
+                            <select
+                              className="subj-input"
+                              value={q.semester}
+                              onChange={(e) => updateQuestionPaper(idx, 'semester', Number(e.target.value))}
+                            >
+                              {[1, 2, 3, 4, 5, 6].map((s) => (
+                                <option key={s} value={s}>Semester {s}</option>
+                              ))}
+                            </select>
+                          </td>
+                          <td>
+                            <input className="subj-input" type="text" placeholder="Question paper title" value={q.title} onChange={(e) => updateQuestionPaper(idx, 'title', e.target.value)} />
+                          </td>
+                          <td>
+                            <PdfUpload value={q.url} onChange={(url) => updateQuestionPaper(idx, 'url', url)} />
+                          </td>
+                          <td style={{ textAlign: 'center' }}>
+                            <button type="button" className="btn btn-danger btn-sm" onClick={() => removeQuestionPaper(idx)}>Delete</button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           </div>
           )}

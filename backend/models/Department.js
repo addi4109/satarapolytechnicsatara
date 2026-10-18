@@ -30,6 +30,14 @@ const newsletterSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+// Previous year question paper row (year + semester + title + PDF)
+const questionPaperSchema = new mongoose.Schema({
+  year: { type: String, required: true },
+  semester: { type: Number, required: true },
+  title: { type: String, required: true },
+  url: { type: String, default: '' },
+});
+
 const deptNoticeSchema = new mongoose.Schema({
   title: { type: String, required: true },
   url: { type: String, default: '' },
@@ -106,6 +114,7 @@ const departmentSchema = new mongoose.Schema(
     deptEvents: [deptEventSchema],
     deptTimetable: [deptTimetableSchema],
     newsletters: [newsletterSchema],
+    questionPapers: [questionPaperSchema],
     // Rankers tab: one image per academic year. The legacy single-banner
     // fields are kept so departments saved before this still render.
     rankers: [rankerSchema],
