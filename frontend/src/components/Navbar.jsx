@@ -165,7 +165,6 @@ const MENU = [
         header: 'Student Welfare',
         items: [
           { label: 'Grievance Redressal', link: '/student/grievance-redressal' },
-          { label: 'Grievance Portal', link: '/student/grievance-portal' },
         ],
       },
     ],
