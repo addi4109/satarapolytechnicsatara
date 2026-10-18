@@ -1569,11 +1569,13 @@
 }
 
 /* ===== Previous Year Question Papers - filter form (year + semester) ===== */
+/* Full width: the filter card spans the same width as the results table. */
 .qp-filter-form {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-width: 340px;
+  width: 100%;
+  box-sizing: border-box;
   background: #fff;
   border: 1px solid #e4e8ed;
   border-radius: 10px;
@@ -1628,8 +1630,3 @@
   background: #2a3f6a;
 }
 
-@media (max-width: 560px) {
-  .qp-filter-form {
-    max-width: 100%;
-  }
-}
