@@ -146,81 +146,113 @@
   background: linear-gradient(180deg, #fbfcfe, #f4f7fb);
 }
 
-/* Portal action buttons — the coloured login buttons of the reference UI,
-   recoloured with the college palette. */
-.gp-action {
+.gp-box-intro {
+  margin: 0;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--sp-muted, #6b7a94);
+}
+
+/* ===== Login form ===== */
+.gp-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  padding: 13px 18px;
+  gap: 13px;
+}
+
+.gp-form-error {
+  padding: 9px 12px;
+  background: rgba(192, 57, 43, 0.08);
+  border: 1px solid rgba(192, 57, 43, 0.3);
   border-radius: 6px;
-  text-align: center;
-  text-decoration: none;
-  color: #fff;
-  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
-}
-
-.gp-action:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.07);
-  box-shadow: 0 8px 18px rgba(30, 45, 77, 0.18);
-  color: #fff;
-}
-
-.gp-action:active {
-  transform: translateY(0);
-}
-
-.gp-action-label {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-}
-
-.gp-action-desc {
-  font-size: 11.5px;
-  font-weight: 400;
-  opacity: 0.9;
-}
-
-.gp-btn-navy {
-  background: var(--sp-navy, #243358);
-}
-
-.gp-btn-gold {
-  background: var(--sp-gold, #c8963e);
-}
-
-.gp-btn-maroon {
-  background: var(--sp-maroon, #7a263a);
-}
-
-.gp-btn-teal {
-  background: var(--sp-teal, #0f766e);
-}
-
-/* Contact row inside the box */
-.gp-box-contact {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px 18px;
-  margin-top: 6px;
-  padding-top: 14px;
-  border-top: 1px dashed var(--sp-line, #e4e8ed);
-}
-
-.gp-contact-item {
-  font-size: 13px;
+  color: #c0392b;
+  font-size: 12.5px;
   font-weight: 600;
+  text-align: center;
+}
+
+.gp-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.gp-form-group label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
   color: var(--sp-navy, #243358);
+}
+
+.gp-form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--sp-line, #e4e8ed);
+  border-radius: 6px;
+  background: #fff;
+  font-size: 13.5px;
+  font-family: var(--sp-font-ui, 'Public Sans', sans-serif);
+  color: var(--sp-navy, #243358);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gp-form-group input::placeholder {
+  color: #9aa5b5;
+}
+
+.gp-form-group input:focus {
+  outline: none;
+  border-color: var(--sp-navy-light, #4a7ab0);
+  box-shadow: 0 0 0 3px rgba(74, 122, 176, 0.15);
+}
+
+.gp-login-btn {
+  margin-top: 4px;
+  padding: 11px 18px;
+  border: none;
+  border-radius: 6px;
+  background: var(--sp-navy, #243358);
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  font-family: var(--sp-font-ui, 'Public Sans', sans-serif);
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.gp-login-btn:hover:not(:disabled) {
+  background: var(--sp-gold, #c8963e);
+  box-shadow: 0 6px 16px rgba(200, 150, 62, 0.3);
+}
+
+.gp-login-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.gp-login-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.gp-form-note {
+  margin: 2px 0 0;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--sp-muted, #6b7a94);
+}
+
+.gp-form-note a {
+  color: var(--sp-gold-dark, #a5721c);
+  font-weight: 600;
   text-decoration: none;
 }
 
-.gp-contact-item:hover {
-  color: var(--sp-gold-dark, #a5721c);
+.gp-form-note a:hover {
+  text-decoration: underline;
 }
 
 /* ===== Quick info strip ===== */

@@ -1,40 +1,12 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import SEO, { breadcrumbSchema } from '../components/SEO';
+import { setAdminApiKey } from '../lib/adminApi';
+import API_URL from '../lib/api';
 import './GrievancePortal.css';
 
 const COLLEGE_LOGO =
   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLd7Dy_lmlGJVHmuU9Xft3chSek82jrLr2qJZ_Rl8kuw&s=10';
-
-const GRIEVANCE_EMAIL = 'spsgrievance@gmail.com';
-const OFFICE_PHONE = '+91-94233 42843';
-
-// Portal quick actions — the coloured buttons of the portal home page.
-const portalActions = [
-  {
-    label: 'Lodge a Grievance',
-    desc: 'Students, parents & staff — submit a complaint online',
-    to: '/student/grievance-redressal#lodge',
-    variant: 'gp-btn-navy',
-  },
-  {
-    label: 'About the Cell',
-    desc: 'Objectives, grievances handled & redressal process',
-    to: '/student/grievance-redressal',
-    variant: 'gp-btn-gold',
-  },
-  {
-    label: 'Grievance Committee',
-    desc: 'View committee members and contact details',
-    to: '/cells/grievance',
-    variant: 'gp-btn-maroon',
-  },
-  {
-    label: 'Women Grievance Cell',
-    desc: 'Secure channel for women students & staff',
-    to: '/cells/womens-grievance',
-    variant: 'gp-btn-teal',
-  },
-];
 
 // Small quick-info strip under the portal box.
 const quickInfo = [
@@ -44,11 +16,54 @@ const quickInfo = [
 ];
 
 function GrievancePortal() {
+  const navigate = useNavigate();
+  const [form, setForm] = useState({ email: '', password: '', apiKey: '' });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Committee / admin sign-in — same credentials as the admin panel.
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${API_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: form.email.trim(),
+          password: form.password,
+          apiKey: form.apiKey.trim(),
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        sessionStorage.setItem('adminAuth', 'true');
+        setAdminApiKey(form.apiKey.trim());
+        navigate('/admin');
+      } else {
+        setError(data.error || 'Invalid email or password');
+      }
+    } catch {
+      setError('Unable to connect to server. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <SEO
         title="Grievance Redressal Portal | Satara Polytechnic, Satara"
-        description="Online Grievance Redressal Portal of Satara Polytechnic, Satara — lodge a student, parent or staff grievance, know the redressal process and contact the Grievance Redressal Cell."
+        description="Online Grievance Redressal Portal of Satara Polytechnic, Satara — committee sign-in, grievance redressal process and contact details of the Grievance Redressal Cell."
         keywords="grievance portal, grievance redressal portal, student grievance Satara Polytechnic, complaint cell, AICTE grievance"
         url="/student/grievance-portal"
         structuredData={breadcrumbSchema([
@@ -84,25 +99,66 @@ function GrievancePortal() {
         {/* ===== Divider bar ===== */}
         <div className="gp-divider" />
 
-        {/* ===== Portal action box ===== */}
+        {/* ===== Portal login box ===== */}
         <div className="gp-box">
           <div className="gp-box-header">Grievance Redressal Portal</div>
           <div className="gp-box-body">
-            {portalActions.map((action) => (
-              <Link to={action.to} className={`gp-action ${action.variant}`} key={action.label}>
-                <span className="gp-action-label">{action.label}</span>
-                <span className="gp-action-desc">{action.desc}</span>
-              </Link>
-            ))}
+            <p className="gp-box-intro">Committee / Admin Login</p>
 
-            <div className="gp-box-contact">
-              <a href={`mailto:${GRIEVANCE_EMAIL}`} className="gp-contact-item">
-                <span aria-hidden="true">✉</span> {GRIEVANCE_EMAIL}
-              </a>
-              <a href={`tel:${OFFICE_PHONE.replace(/[^+0-9]/g, '')}`} className="gp-contact-item">
-                <span aria-hidden="true">📞</span> {OFFICE_PHONE}
-              </a>
-            </div>
+            <form className="gp-form" onSubmit={handleSubmit}>
+              {error && <div className="gp-form-error">{error}</div>}
+
+              <div className="gp-form-group">
+                <label htmlFor="gp-email">Email</label>
+                <input
+                  id="gp-email"
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                  autoComplete="username"
+                  required
+                />
+              </div>
+
+              <div className="gp-form-group">
+                <label htmlFor="gp-password">Password</label>
+                <input
+                  id="gp-password"
+                  type="password"
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  placeholder="Enter your password"
+                  autoComplete="current-password"
+                  required
+                />
+              </div>
+
+              <div className="gp-form-group">
+                <label htmlFor="gp-apikey">API Key</label>
+                <input
+                  id="gp-apikey"
+                  type="password"
+                  name="apiKey"
+                  value={form.apiKey}
+                  onChange={handleChange}
+                  placeholder="Enter admin API key"
+                  autoComplete="off"
+                  required
+                />
+              </div>
+
+              <button type="submit" className="gp-login-btn" disabled={loading}>
+                {loading ? 'Logging in…' : 'Login'}
+              </button>
+            </form>
+
+            <p className="gp-form-note">
+              Students &amp; parents can lodge a grievance on the{' '}
+              <Link to="/student/grievance-redressal">Grievance Redressal page</Link>.
+            </p>
           </div>
         </div>
 
@@ -120,7 +176,7 @@ function GrievancePortal() {
         <div className="gp-footer-links">
           <Link to="/">Go to home page</Link>
           <span className="gp-sep">|</span>
-          <a href={`mailto:${GRIEVANCE_EMAIL}`}>Need Help?</a>
+          <Link to="/student/grievance-redressal">Need Help?</Link>
         </div>
         <p className="gp-copyright">
           All rights reserved. Satara Education Society's Satara Polytechnic, Satara. &copy;{new Date().getFullYear()}.
