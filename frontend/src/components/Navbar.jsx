@@ -102,12 +102,11 @@ const MENU = [
   {
     label: 'Life@SPS',
     stack: true,
-    match: (p) => p.startsWith('/activities') || p.startsWith('/campus') || p.startsWith('/gallery') || p.startsWith('/events'),
+    match: (p) => p.startsWith('/activities') || p.startsWith('/campus') || p.startsWith('/gallery'),
     columns: [
       {
         header: 'Activities',
         items: [
-          { label: 'Events', link: '/events' },
           { label: 'Sports', link: '/activities/sports' },
           { label: 'Cultural', link: '/activities/cultural' },
           { label: 'Technical Events', link: '/activities/technical' },

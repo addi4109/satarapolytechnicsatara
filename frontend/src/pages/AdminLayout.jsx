@@ -56,7 +56,6 @@ function AdminLayout({ children }) {
     { to: '/admin/gallery', label: 'Gallery' },
     { to: '/admin/campus', label: 'Campus' },
     { to: '/admin/activities', label: 'Activities' },
-    { to: '/admin/events', label: 'Events' },
     { to: '/admin/examinations', label: 'Examination' },
     { to: '/admin/notices', label: 'Notices' },
     { to: '/admin/contact', label: 'Contact' },

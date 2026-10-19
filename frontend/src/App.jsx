@@ -84,7 +84,6 @@ const Examinations = lazyWithRetry(() => import('./pages/Examinations'));
 const Campus = lazyWithRetry(() => import('./pages/Campus'));
 const Contact = lazyWithRetry(() => import('./pages/Contact'));
 const Activities = lazyWithRetry(() => import('./pages/Activities'));
-const Events = lazyWithRetry(() => import('./pages/Events'));
 const Notices = lazyWithRetry(() => import('./pages/Notices'));
 const AdmissionNotices = lazyWithRetry(() => import('./pages/AdmissionNotices'));
 const Alumni = lazyWithRetry(() => import('./pages/Alumni'));
@@ -104,7 +103,6 @@ const AdminAdmissions = lazyWithRetry(() => import('./pages/AdminAdmissions'));
 const AdminExaminations = lazyWithRetry(() => import('./pages/AdminExaminations'));
 const AdminCampus = lazyWithRetry(() => import('./pages/AdminCampus'));
 const AdminActivities = lazyWithRetry(() => import('./pages/AdminActivities'));
-const AdminEvents = lazyWithRetry(() => import('./pages/AdminEvents'));
 const AdminContact = lazyWithRetry(() => import('./pages/AdminContact'));
 const AdminEnquiries = lazyWithRetry(() => import('./pages/AdminEnquiries'));
 const AdminFeedbacks = lazyWithRetry(() => import('./pages/AdminFeedbacks'));
@@ -209,7 +207,6 @@ function AppLayout() {
           <Route path="/contact/:page" element={<Contact />} />
           <Route path="/activities" element={<Activities />} />
           <Route path="/activities/:page" element={<Activities />} />
-          <Route path="/events" element={<Events />} />
           <Route path="/gallery/photos" element={<PhotoGallery />} />
           <Route path="/gallery/videos" element={<VideoGallery />} />
           <Route path="/gallery/media" element={<MediaNews />} />
@@ -233,7 +230,6 @@ function AppLayout() {
           <Route path="/admin/examinations" element={<AdminExaminations />} />
           <Route path="/admin/campus" element={<AdminCampus />} />
           <Route path="/admin/activities" element={<AdminActivities />} />
-          <Route path="/admin/events" element={<AdminEvents />} />
           <Route path="/admin/contact" element={<AdminContact />} />
           <Route path="/admin/enquiries" element={<AdminEnquiries />} />
           <Route path="/admin/feedbacks" element={<AdminFeedbacks />} />

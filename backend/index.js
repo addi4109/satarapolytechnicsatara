@@ -32,7 +32,6 @@ import authRouter from './routes/auth.js';
 import rulesRouter from './routes/rules.js';
 import alumniRouter from './routes/alumni.js';
 import entrepreneursRouter from './routes/entrepreneurs.js';
-import eventsRouter from './routes/events.js';
 import alumniAssociationRouter from './routes/alumni-association.js';
 import alumniVisionRouter from './routes/alumni-vision.js';
 import visitsRouter from './routes/visits.js';
@@ -85,7 +84,7 @@ const API_RESOURCE_PATHS = new Set([
   'news', 'about', 'contact', 'campus', 'activities', 'examinations',
   'placements', 'placements-admin', 'placement-gallery', 'admissions-admin', 'management',
   'governing-body', 'local-governing-body', 'alumni', 'alumni-association',
-  'alumni-vision', 'entrepreneurs', 'settings', 'auth', 'pdf-proxy', 'rules', 'events',
+  'alumni-vision', 'entrepreneurs', 'settings', 'auth', 'pdf-proxy', 'rules',
 ]);
 app.use((req, res, next) => {
   if (!req.path.startsWith('/api/') && req.path !== '/api') {
@@ -155,7 +154,6 @@ app.use('/api/contact', contactRouter);
 app.use('/api/rules', rulesRouter);
 app.use('/api/alumni', alumniRouter);
 app.use('/api/entrepreneurs', entrepreneursRouter);
-app.use('/api/events', eventsRouter);
 app.use('/api/alumni-association', alumniAssociationRouter);
 app.use('/api/alumni-vision', alumniVisionRouter);
 app.use('/api/pdf-proxy', pdfProxyRouter);
