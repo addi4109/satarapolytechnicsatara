@@ -137,7 +137,11 @@ const MENU = [
   {
     label: 'Student Section',
     stack: true,
-    match: (p) => p.startsWith('/alumni') || p.startsWith('/examination') || p.startsWith('/student'),
+    match: (p) =>
+      p.startsWith('/alumni') ||
+      p.startsWith('/examination') ||
+      p.startsWith('/student') ||
+      p.startsWith('/online-grievance'),
     columns: [
       {
         header: 'Examination',
@@ -165,18 +169,9 @@ const MENU = [
         header: 'Student Welfare',
         items: [
           { label: 'Grievance Redressal', link: '/student/grievance-redressal' },
+          { label: 'Online Grievance Portal', link: '/online-grievance' },
         ],
       },
-    ],
-  },
-  {
-    label: 'Online Grievance',
-    match: (p) => p.startsWith('/online-grievance'),
-    children: [
-      { label: 'Grievance Dashboard', link: '/online-grievance' },
-      { label: 'Student Grievance', link: '/online-grievance?form=student' },
-      { label: 'Faculty Grievance', link: '/online-grievance?form=faculty' },
-      { label: 'Stakeholder Grievance', link: '/online-grievance?form=stakeholder' },
     ],
   },
   {
