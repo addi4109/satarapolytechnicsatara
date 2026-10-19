@@ -170,6 +170,16 @@ const MENU = [
     ],
   },
   {
+    label: 'Online Grievance',
+    match: (p) => p.startsWith('/online-grievance'),
+    children: [
+      { label: 'Grievance Dashboard', link: '/online-grievance' },
+      { label: 'Student Grievance', link: '/online-grievance?form=student' },
+      { label: 'Faculty Grievance', link: '/online-grievance?form=faculty' },
+      { label: 'Stakeholder Grievance', link: '/online-grievance?form=stakeholder' },
+    ],
+  },
+  {
     label: 'Notices',
     link: '/notices',
     match: (p) => p.startsWith('/notices'),
