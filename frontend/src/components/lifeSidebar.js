@@ -8,8 +8,6 @@ export const LIFE_SIDEBAR_GROUPS = [
       { label: 'Sports', to: '/activities/sports' },
       { label: 'Cultural', to: '/activities/cultural' },
       { label: 'Technical Events', to: '/activities/technical' },
-      { label: 'Industrial Visits', to: '/activities/industrial-visits' },
-      { label: 'Competitions', to: '/activities/competitions' },
       { label: 'Academic Events & Activities', to: '/activities/academic-events' },
     ],
   },

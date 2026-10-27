@@ -8,10 +8,6 @@ export const STATIC_CONTENT = {
       'Cultural activities give students a platform to showcase their talent in music, dance, drama and fine arts. Events are organised throughout the year, including the annual gathering and youth festival competitions.',
     technical:
       'Technical events such as paper presentations, project exhibitions, coding contests, robo-races and workshops help students apply classroom knowledge to real-world problems and sharpen their innovation skills.',
-    'industrial-visits':
-      'Industrial visits are arranged regularly to give students first-hand exposure to manufacturing processes, industry practices and modern technology, bridging the gap between classroom learning and industry requirements.',
-    competitions:
-      'Students are motivated to take part in various state and national level competitions including technical symposiums, hackathons, debates and elocution contests, where they have won numerous prizes.',
   },
 
   about: {
