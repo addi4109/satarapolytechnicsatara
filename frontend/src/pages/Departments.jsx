@@ -26,11 +26,6 @@ function DepartmentsPage() {
   const [error, setError] = useState(null);
   const [lightbox, setLightbox] = useState(null);
 
-  // Previous Year Question Papers — filter form (year + semester, submit shows table)
-  const [qpYear, setQpYear] = useState('');
-  const [qpSem, setQpSem] = useState('');
-  const [qpSubmitted, setQpSubmitted] = useState(null);
-
   const closeLightbox = useCallback(() => setLightbox(null), []);
 
   useEffect(() => {
@@ -407,129 +402,30 @@ function DepartmentsPage() {
                 <h2 className="content-heading">Previous Year Question Papers</h2>
                 <div className="content-line"></div>
                 <p>
-                  Select the year and semester of the {dept.name} department question
-                  papers you want to view, then click Submit. The papers will be listed
-                  below in a table.
+                  Previous year question papers are hosted on the official MSBTE
+                  e-content portal. Use the search form inside the frame below to
+                  find papers for your year and semester.
                 </p>
 
-                {(() => {
-                  const papers = dept.questionPapers || [];
-                  if (papers.length === 0) {
-                    return (
-                      <p style={{ color: '#888', fontStyle: 'italic' }}>
-                        No question papers added yet. Admin can add them from the Admin Panel.
-                      </p>
-                    );
-                  }
+                <div className="qp-frame-wrap">
+                  <iframe
+                    className="qp-frame"
+                    src="https://econtent.msbte.edu.in/question_papers/"
+                    title="MSBTE Previous Year Question Papers"
+                    loading="lazy"
+                  ></iframe>
+                </div>
 
-                  const qpYears = [...new Set(papers.map((p) => p.year).filter(Boolean))]
-                    .sort((a, b) => String(b).localeCompare(String(a), undefined, { numeric: true }));
-                  const yearValue = qpYears.includes(qpYear) ? qpYear : qpYears[0] || '';
-                  const qpSems = [...new Set(papers.filter((p) => p.year === yearValue).map((p) => p.semester))]
-                    .sort((a, b) => a - b);
-                  const semValue = qpSems.includes(Number(qpSem)) ? Number(qpSem) : (qpSems[0] ?? 1);
-                  const results = qpSubmitted
-                    ? papers.filter((p) => p.year === qpSubmitted.year && p.semester === qpSubmitted.sem)
-                    : null;
-
-                  return (
-                    <>
-                      <form
-                        className="qp-filter-form"
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          setQpSubmitted({ year: yearValue, sem: semValue });
-                        }}
-                      >
-                        <div className="qp-field">
-                          <label className="qp-label" htmlFor="qp-year">Year</label>
-                          <select
-                            id="qp-year"
-                            className="qp-select"
-                            value={yearValue}
-                            onChange={(e) => setQpYear(e.target.value)}
-                          >
-                            {qpYears.map((y) => (
-                              <option key={y} value={y}>{y}</option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="qp-field">
-                          <label className="qp-label" htmlFor="qp-sem">Semester</label>
-                          <select
-                            id="qp-sem"
-                            className="qp-select"
-                            value={semValue}
-                            onChange={(e) => setQpSem(e.target.value)}
-                          >
-                            {qpSems.map((s) => (
-                              <option key={s} value={s}>Semester {s}</option>
-                            ))}
-                          </select>
-                        </div>
-                        <button type="submit" className="qp-submit">Submit</button>
-                      </form>
-
-                      {results !== null && (
-                        results.length > 0 ? (
-                          <div className="fee-table-wrap dept-doc-table-wrap" style={{ marginTop: '20px' }}>
-                            <table className="fee-table">
-                              <thead>
-                                <tr>
-                                  <th style={{ width: 50 }}>Sr. No.</th>
-                                  <th>Title</th>
-                                  <th style={{ width: 100, textAlign: 'center' }}>View</th>
-                                  <th style={{ width: 110, textAlign: 'center' }}>Download</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {results.map((q, i) => (
-                                  <tr key={i}>
-                                    <td style={{ textAlign: 'center', fontWeight: 600, color: '#243358' }}>{i + 1}</td>
-                                    <td className="fee-particular" style={{ fontWeight: 500 }}>{q.title}</td>
-                                    <td style={{ textAlign: 'center' }}>
-                                      {q.url ? (
-                                        <a
-                                          href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(q.url)}`}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="exam-btn exam-btn-view"
-                                        >View</a>
-                                      ) : (
-                                        <span style={{ color: '#ccc', fontSize: '12px' }}>—</span>
-                                      )}
-                                    </td>
-                                    <td style={{ textAlign: 'center' }}>
-                                      {q.url ? (
-                                        <a
-                                          href={`${API_URL}/pdf-proxy?url=${encodeURIComponent(q.url)}`}
-                                          download
-                                          className="exam-btn exam-btn-download"
-                                          title="Download"
-                                        >
-                                          <span className="exam-download-text">Download</span>
-                                          <span className="exam-download-icon">
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                                          </span>
-                                        </a>
-                                      ) : (
-                                        <span style={{ color: '#ccc', fontSize: '12px' }}>—</span>
-                                      )}
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
-                        ) : (
-                          <p style={{ color: '#888', fontStyle: 'italic', marginTop: '16px' }}>
-                            No question papers found for Year {qpSubmitted.year}, Semester {qpSubmitted.sem}.
-                          </p>
-                        )
-                      )}
-                    </>
-                  );
-                })()}
+                <p style={{ marginTop: '14px' }}>
+                  <a
+                    href="https://econtent.msbte.edu.in/question_papers/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="exam-btn exam-btn-view"
+                  >
+                    Open in new tab
+                  </a>
+                </p>
               </>
             )}
 

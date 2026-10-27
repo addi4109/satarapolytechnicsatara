@@ -1568,65 +1568,30 @@
   }
 }
 
-/* ===== Previous Year Question Papers - filter form (year + semester) ===== */
-/* Full width: the filter card spans the same width as the results table. */
-.qp-filter-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+/* ===== Previous Year Question Papers - embedded MSBTE portal ===== */
+/* Fixed-height frame so only the search form area at the top of the MSBTE
+   page shows inside it; the rest of their page scrolls within the frame. */
+.qp-frame-wrap {
   width: 100%;
-  box-sizing: border-box;
+  height: 540px;
+  margin-top: 6px;
   background: #fff;
   border: 1px solid #e4e8ed;
   border-radius: 10px;
-  padding: 18px;
-  margin-top: 6px;
+  overflow: hidden;
   box-shadow: 0 2px 8px rgba(36, 51, 88, 0.05);
 }
 
-.qp-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.qp-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
-.qp-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #243358;
-}
-
-.qp-select {
-  padding: 9px 10px;
-  border: 1px solid #d6dce5;
-  border-radius: 6px;
-  font-size: 14px;
-  font-family: inherit;
-  color: #333;
-  background: #fff;
-}
-
-.qp-select:focus {
-  outline: none;
-  border-color: #c8963e;
-  box-shadow: 0 0 0 2px rgba(200, 150, 62, 0.15);
-}
-
-.qp-submit {
-  align-self: flex-start;
-  padding: 10px 26px;
-  background: #243358;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  font-family: inherit;
-  cursor: pointer;
-  transition: background 0.15s;
-}
-
-.qp-submit:hover {
-  background: #2a3f6a;
+@media (max-width: 600px) {
+  .qp-frame-wrap {
+    height: 420px;
+  }
 }
 

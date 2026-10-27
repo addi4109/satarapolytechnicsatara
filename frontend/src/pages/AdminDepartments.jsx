@@ -55,7 +55,6 @@ function AdminDepartments() {
     { key: 'infrastructure', label: 'Infrastructure' },
     { key: 'curriculum', label: 'Curriculum / Syllabus' },
     { key: 'newsletter', label: 'Newsletter' },
-    { key: 'question-papers', label: 'Question Papers' },
   ];
 
   return (
