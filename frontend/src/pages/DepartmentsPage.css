@@ -1569,11 +1569,12 @@
 }
 
 /* ===== Previous Year Question Papers - embedded MSBTE portal ===== */
-/* Fixed-height frame so only the search form area at the top of the MSBTE
-   page shows inside it; the rest of their page scrolls within the frame. */
+/* Frame is sized to hold the MSBTE header + search form exactly, with
+   scrolling disabled inside the frame so no inner scrollbar appears.
+   Anything below the form opens via the "Open in new tab" link. */
 .qp-frame-wrap {
   width: 100%;
-  height: 540px;
+  height: 640px;
   margin-top: 6px;
   background: #fff;
   border: 1px solid #e4e8ed;
@@ -1587,11 +1588,18 @@
   width: 100%;
   height: 100%;
   border: 0;
+  overflow: hidden;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .qp-frame-wrap {
-    height: 420px;
+    height: 680px;
+  }
+}
+
+@media (max-width: 560px) {
+  .qp-frame-wrap {
+    height: 780px;
   }
 }
 

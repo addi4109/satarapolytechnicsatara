@@ -413,6 +413,7 @@ function DepartmentsPage() {
                     src="https://econtent.msbte.edu.in/question_papers/"
                     title="MSBTE Previous Year Question Papers"
                     loading="lazy"
+                    scrolling="no"
                   ></iframe>
                 </div>
 
