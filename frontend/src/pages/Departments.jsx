@@ -419,7 +419,7 @@ function DepartmentsPage() {
             )}
 
             {activeTab === 'obe' && (
-              <div className="obe-main-card">
+              <>
                 <h2 className="content-heading">Outcome Based Education</h2>
                 <div className="content-line"></div>
                 <p>
@@ -427,9 +427,9 @@ function DepartmentsPage() {
                   framework to ensure that students achieve the desired learning outcomes.
                 </p>
 
-                {/* All three OBE groups at a glance — heading + list, no inner cards. */}
-                <div className="obe-all-grid">
-                  <div className="obe-group">
+                {/* Three main cards — PEOs, POs and PSOs — plain rows, no sub-cards. */}
+                <div className="obe-cards">
+                  <div className="obe-main-card">
                     <h3 className="obe-sub-heading">Program Educational Objectives (PEOs)</h3>
                     {dept.peos && dept.peos.length > 0 ? (
                       <ul className="obe-list">
@@ -447,7 +447,7 @@ function DepartmentsPage() {
                     )}
                   </div>
 
-                  <div className="obe-group">
+                  <div className="obe-main-card">
                     <h3 className="obe-sub-heading">Program Outcomes (POs)</h3>
                     {dept.pos && dept.pos.length > 0 ? (
                       <ul className="obe-list">
@@ -465,7 +465,7 @@ function DepartmentsPage() {
                     )}
                   </div>
 
-                  <div className="obe-group">
+                  <div className="obe-main-card">
                     <h3 className="obe-sub-heading">Program Specific Outcomes (PSOs)</h3>
                     {dept.psos && dept.psos.length > 0 ? (
                       <ul className="obe-list">
@@ -483,7 +483,7 @@ function DepartmentsPage() {
                     )}
                   </div>
                 </div>
-              </div>
+              </>
             )}
 
             {activeTab === 'rankers' && (

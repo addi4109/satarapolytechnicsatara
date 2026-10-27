@@ -1038,46 +1038,35 @@ function AdminDepartmentForm() {
               </div>
             </div>
             <div className="dept-form-card-body" style={{ cursor: 'pointer' }} onClick={() => setObEditing(true)}>
-              <div className="obe-main-card" style={{ margin: 0 }}>
-                <div className="obe-tabs">
-                  {['peos', 'pos', 'psos'].map((tab) => (
-                    <button key={tab} className="obe-tab active" style={{ pointerEvents: 'none' }}>
-                      {tab === 'peos' && 'PEOs'}
-                      {tab === 'pos' && 'POs'}
-                      {tab === 'psos' && 'PSOs'}
-                    </button>
-                  ))}
-                </div>
-                <div className="obe-content">
-                  {['peos', 'pos', 'psos'].map((field) => {
-                    const labels = { peos: 'Program Educational Objectives (PEOs)', pos: 'Program Outcomes (POs)', psos: 'Program Specific Outcomes (PSOs)' };
-                    const descs = {
-                      peos: 'PEOs are broad statements that describe the career and professional achievements that the program is preparing graduates to achieve.',
-                      pos: 'POs are measurable outcomes that students are expected to achieve by the time of graduation.',
-                      psos: 'PSOs are outcomes that differentiate the program from other programs and reflect the discipline-specific competencies.',
-                    };
-                    return (
-                      <div key={field} className="obe-sub-card" style={{ marginBottom: '16px' }}>
-                        <h3 className="obe-sub-heading">{labels[field]}</h3>
-                        <p className="obe-desc">{descs[field]}</p>
-                        {form[field] && form[field].length > 0 ? (
-                          <ul className="obe-list">
-                            {form[field].map((item, i) => (
-                              <li key={i} className="obe-list-item">
-                                <div>
-                                  {item.title && <strong>{item.title}</strong>}
-                                  {item.description && <p>{item.description}</p>}
-                                </div>
-                              </li>
-                            ))}
-                          </ul>
-                        ) : (
-                          <p style={{ color: '#888', fontStyle: 'italic' }}>{labels[field].replace(/\(.*\)/, '').trim()} not added yet.</p>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {['peos', 'pos', 'psos'].map((field) => {
+                  const labels = { peos: 'Program Educational Objectives (PEOs)', pos: 'Program Outcomes (POs)', psos: 'Program Specific Outcomes (PSOs)' };
+                  const descs = {
+                    peos: 'PEOs are broad statements that describe the career and professional achievements that the program is preparing graduates to achieve.',
+                    pos: 'POs are measurable outcomes that students are expected to achieve by the time of graduation.',
+                    psos: 'PSOs are outcomes that differentiate the program from other programs and reflect the discipline-specific competencies.',
+                  };
+                  return (
+                    <div key={field} className="obe-main-card" style={{ margin: 0 }}>
+                      <h3 className="obe-sub-heading">{labels[field]}</h3>
+                      <p className="obe-desc">{descs[field]}</p>
+                      {form[field] && form[field].length > 0 ? (
+                        <ul className="obe-list">
+                          {form[field].map((item, i) => (
+                            <li key={i} className="obe-list-item">
+                              <div>
+                                {item.title && <strong>{item.title}</strong>}
+                                {item.description && <p>{item.description}</p>}
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p style={{ color: '#888', fontStyle: 'italic' }}>{labels[field].replace(/\(.*\)/, '').trim()} not added yet.</p>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
               <div style={{ textAlign: 'center', marginTop: '16px' }}>
                 <span style={{ fontSize: '13px', color: '#888' }}>
