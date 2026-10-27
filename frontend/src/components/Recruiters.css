@@ -58,15 +58,15 @@
 
 .recruiter-card {
   flex-shrink: 0;
-  width: 220px;
-  height: 120px;
+  width: 168px;
+  height: 92px;
   background: #fff;
   border: 1px solid var(--sp-line);
   border-radius: var(--sp-radius);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px 24px;
+  padding: 14px 16px;
 }
 
 .recruiter-logo {
@@ -77,8 +77,8 @@
 
 @media (max-width: 768px) {
   .recruiter-card {
-    width: 150px;
-    height: 78px;
+    width: 118px;
+    height: 64px;
   }
 
   .marquee-wrapper {
