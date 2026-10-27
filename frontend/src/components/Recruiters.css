@@ -1,6 +1,8 @@
 .recruiters-section {
   background: var(--sp-page);
-  padding: 44px 0 40px;
+  /* Side padding matches .dept-section so the marquee lines up with the
+     department card grid above it. */
+  padding: 44px 20px 40px;
   overflow: hidden;
 }
 
@@ -21,10 +23,13 @@
   border-radius: 2px;
 }
 
-/* Full-width marquee: logos dissolve into the background at both edges
-   via an alpha mask, instead of being hard-cut or boxed in a container. */
+/* Marquee shares the department card section's width: a 1200px container
+   centred inside the section's 20px side padding, with logos dissolving into
+   the background at both edges via an alpha mask. */
 .marquee-wrapper {
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   overflow: hidden;
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 140px, #000 calc(100% - 140px), transparent 100%);
   mask-image: linear-gradient(to right, transparent 0, #000 140px, #000 calc(100% - 140px), transparent 100%);
