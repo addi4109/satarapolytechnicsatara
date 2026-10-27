@@ -1568,38 +1568,24 @@
   }
 }
 
-/* ===== Previous Year Question Papers - embedded MSBTE portal ===== */
-/* Frame is sized to hold the MSBTE header + search form exactly, with
-   scrolling disabled inside the frame so no inner scrollbar appears.
-   Anything below the form opens via the "Open in new tab" link. */
-.qp-frame-wrap {
-  width: 100%;
-  height: 640px;
-  margin-top: 6px;
-  background: #fff;
-  border: 1px solid #e4e8ed;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(36, 51, 88, 0.05);
+/* ===== Previous Year Question Papers - link to the MSBTE portal ===== */
+.qp-open-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 28px;
+  background: #243358;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s;
 }
 
-.qp-frame {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  overflow: hidden;
-}
-
-@media (max-width: 768px) {
-  .qp-frame-wrap {
-    height: 680px;
-  }
-}
-
-@media (max-width: 560px) {
-  .qp-frame-wrap {
-    height: 780px;
-  }
+.qp-open-btn:hover {
+  background: #2a3f6a;
 }
 

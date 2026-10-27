@@ -403,30 +403,18 @@ function DepartmentsPage() {
                 <div className="content-line"></div>
                 <p>
                   Previous year question papers are hosted on the official MSBTE
-                  e-content portal. Use the search form inside the frame below to
-                  find papers for your year and semester.
+                  e-content portal. Use the button below to search papers for your
+                  year and semester.
                 </p>
 
-                <div className="qp-frame-wrap">
-                  <iframe
-                    className="qp-frame"
-                    src="https://econtent.msbte.edu.in/question_papers/"
-                    title="MSBTE Previous Year Question Papers"
-                    loading="lazy"
-                    scrolling="no"
-                  ></iframe>
-                </div>
-
-                <p style={{ marginTop: '14px' }}>
-                  <a
-                    href="https://econtent.msbte.edu.in/question_papers/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="exam-btn exam-btn-view"
-                  >
-                    Open in new tab
-                  </a>
-                </p>
+                <a
+                  className="qp-open-btn"
+                  href="https://econtent.msbte.edu.in/question_papers/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Search Question Papers on MSBTE
+                </a>
               </>
             )}
 
