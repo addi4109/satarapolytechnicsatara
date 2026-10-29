@@ -308,16 +308,11 @@ function AdminAbout() {
   // ─── Preview card components ──────────────────────────────────────
 
   const PreviewCard = ({ children }) => (
-    <div className="about-preview-card" onClick={!editing ? startEditing : undefined}>
-      {!editing && (
-        <div className="about-preview-hint">Click to edit</div>
-      )}
-      {children}
-    </div>
+    <div className="about-preview-card">{children}</div>
   );
 
   const ContentPreview = ({ text }) => {
-    if (!text) return <p style={{ color: '#aaa', fontStyle: 'italic' }}>No content yet. Click to add.</p>;
+    if (!text) return <p style={{ color: '#aaa', fontStyle: 'italic' }}>No content yet.</p>;
     return text.split('\n').filter(p => p.trim()).map((para, i) => (
       <p key={i} style={{ marginBottom: '12px', lineHeight: '1.7', color: '#444' }}>{para}</p>
     ));
@@ -438,7 +433,7 @@ function AdminAbout() {
               </div>
             ) : (
               <p style={{ color: '#aaa', fontStyle: 'italic' }}>
-                No chart image uploaded yet. The site shows a built-in placeholder structure until you upload one. Click to add.
+                No chart image uploaded yet. The site shows a built-in placeholder structure until you upload one.
               </p>
             )}
           </PreviewCard>
@@ -453,7 +448,7 @@ function AdminAbout() {
             <PdfPreview url={currentData.pdfUrl} />
             {(currentData.conductSections || []).length === 0 ? (
               <p style={{ color: '#aaa', fontStyle: 'italic' }}>
-                No rules added yet. The site shows built-in default rules until you add content. Click to add.
+                No rules added yet. The site shows built-in default rules until you add content.
               </p>
             ) : (
               <div className="coc-grid">
