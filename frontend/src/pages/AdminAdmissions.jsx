@@ -908,8 +908,7 @@ function AdminAdmissions() {
 
         {/* Preview or Editor */}
         {view === 'preview' ? (
-          <div style={{ position: 'relative' }} onClick={startEditing}>
-            <div className="about-preview-hint">Click to edit</div>
+          <div style={{ position: 'relative' }}>
             {renderPreview()}
           </div>
         ) : (
