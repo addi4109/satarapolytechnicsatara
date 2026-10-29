@@ -1226,21 +1226,24 @@
 .about-admin-back {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: none;
+  gap: 8px;
+  background: #1d4ed8;
   border: none;
-  padding: 0;
-  margin-bottom: 14px;
+  padding: 10px 20px;
+  margin-bottom: 18px;
   cursor: pointer;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 700;
-  color: #243358;
-  transition: color 0.15s;
+  color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(29, 78, 216, 0.3);
+  transition: background 0.15s, box-shadow 0.15s;
 }
 
 .about-admin-back:hover {
-  color: #c8963e;
+  background: #1e40af;
+  box-shadow: 0 4px 10px rgba(29, 78, 216, 0.35);
 }
 
 @media (max-width: 560px) {

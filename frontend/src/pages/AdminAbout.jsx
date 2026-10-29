@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import AdminAlert from '../components/AdminAlert';
-import AdminTabs from '../components/AdminTabs';
 import AdminLoading from '../components/AdminLoading';
 import ImageUpload from '../components/ImageUpload';
 import PdfUpload from '../components/PdfUpload';
@@ -725,10 +724,8 @@ function AdminAbout() {
 
       <div className="admin-content">
         <button type="button" className="about-admin-back" onClick={() => { setEditing(false); setHome(true); }}>
-          ← All sections
+          ← Back to all sections
         </button>
-
-        <AdminTabs tabs={SECTIONS.map((s) => ({ ...s, saved: !!sections[s.key] }))} activeTab={activeTab} onChange={setActiveTab} />
 
         {/* Alert */}
         <AdminAlert type={msg?.type} message={msg} onDismiss={() => setMsg(null)} />
