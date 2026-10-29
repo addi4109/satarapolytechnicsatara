@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import AdminAlert from '../components/AdminAlert';
-import AdminTabs from '../components/AdminTabs';
 import AdminLoading from '../components/AdminLoading';
 import ImageUpload from '../components/ImageUpload';
 import PdfUpload from '../components/PdfUpload';
@@ -10,10 +9,10 @@ import './Academics.css';
 import API_URL from '../lib/api';
 
 const SECTIONS = [
-  { key: 'about', label: 'About Placement Cell' },
-  { key: 'process', label: 'Placement Process' },
-  { key: 'records', label: 'Placement Records' },
-  { key: 'recruiters', label: 'Our Recruiters' },
+  { key: 'about', label: 'About Placement Cell', icon: '🏢', desc: 'Placement cell overview, officer profile and office team.' },
+  { key: 'process', label: 'Placement Process', icon: '🔄', desc: 'Step-by-step placement process shown to students.' },
+  { key: 'records', label: 'Placement Records', icon: '📊', desc: 'Year-wise placement records, banner and record PDFs.' },
+  { key: 'recruiters', label: 'Our Recruiters', icon: '🤝', desc: 'Company logos of the recruiters visiting the campus.' },
 ];
 
 const defaultSection = {
@@ -34,6 +33,8 @@ const defaultSection = {
 };
 
 function AdminPlacements() {
+  // home = true shows the section cards; false shows the opened section.
+  const [home, setHome] = useState(true);
   const [activeTab, setActiveTab] = useState('about');
   const [sections, setSections] = useState({});
   const [form, setForm] = useState({ ...defaultSection });
@@ -222,6 +223,55 @@ function AdminPlacements() {
     );
   }
 
+  const openSection = (key) => {
+    setActiveTab(key);
+    setView('preview');
+    setHome(false);
+  };
+
+  // ─── Main page: section cards ────────────────────────────────────
+
+  if (home) {
+    return (
+      <AdminLayout>
+        <div className="admin-topbar">
+          <h1>Placements</h1>
+        </div>
+
+        <div className="admin-content">
+          <div className="admin-sec-head">
+            <h2>All Sections</h2>
+            <p>Click a card to open that section below. Saved sections keep their content.</p>
+          </div>
+
+          <div className="admin-sec-grid">
+            {SECTIONS.map((s) => {
+              const saved = !!sections[s.key];
+              return (
+                <button
+                  key={s.key}
+                  type="button"
+                  className="admin-sec-card"
+                  onClick={() => openSection(s.key)}
+                >
+                  <div className="admin-sec-card-top">
+                    <span className="admin-sec-card-icon">{s.icon}</span>
+                    <span className={`admin-sec-card-badge ${saved ? 'is-saved' : ''}`}>
+                      {saved ? 'Saved' : 'Not saved'}
+                    </span>
+                  </div>
+                  <h3 className="admin-sec-card-title">{s.label}</h3>
+                  <p className="admin-sec-card-desc">{s.desc}</p>
+                  <span className="admin-sec-card-open">Open section →</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </AdminLayout>
+    );
+  }
+
   return (
     <AdminLayout>
       <div className="admin-topbar">
@@ -229,7 +279,9 @@ function AdminPlacements() {
       </div>
 
       <div className="admin-content">
-        <AdminTabs tabs={SECTIONS.map((s) => ({ ...s, saved: !!sections[s.key] }))} activeTab={activeTab} onChange={setActiveTab} />
+        <button type="button" className="admin-sec-back" onClick={() => { setView('preview'); setHome(true); }}>
+          ← Back to all sections
+        </button>
 
         <AdminAlert type={msg?.type} message={msg} onDismiss={() => setMsg(null)} />
 
