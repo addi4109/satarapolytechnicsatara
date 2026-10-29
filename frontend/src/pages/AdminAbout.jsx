@@ -272,30 +272,30 @@ function AdminAbout() {
         </div>
 
         <div className="admin-content">
-          <div className="about-admin-home-head">
+          <div className="admin-sec-head">
             <h2>All Sections</h2>
             <p>Click a card to open that section below. Saved sections keep their content.</p>
           </div>
 
-          <div className="about-admin-grid">
+          <div className="admin-sec-grid">
             {SECTIONS.map((s) => {
               const saved = !!sections[s.key];
               return (
                 <button
                   key={s.key}
                   type="button"
-                  className="about-admin-card"
+                  className="admin-sec-card"
                   onClick={() => openSection(s.key)}
                 >
-                  <div className="about-admin-card-top">
-                    <span className="about-admin-card-icon">{s.icon}</span>
-                    <span className={`about-admin-card-badge ${saved ? 'is-saved' : ''}`}>
+                  <div className="admin-sec-card-top">
+                    <span className="admin-sec-card-icon">{s.icon}</span>
+                    <span className={`admin-sec-card-badge ${saved ? 'is-saved' : ''}`}>
                       {saved ? 'Saved' : 'Not saved'}
                     </span>
                   </div>
-                  <h3 className="about-admin-card-title">{s.label}</h3>
-                  <p className="about-admin-card-desc">{s.desc}</p>
-                  <span className="about-admin-card-open">Open section →</span>
+                  <h3 className="admin-sec-card-title">{s.label}</h3>
+                  <p className="admin-sec-card-desc">{s.desc}</p>
+                  <span className="admin-sec-card-open">Open section →</span>
                 </button>
               );
             })}
@@ -723,7 +723,7 @@ function AdminAbout() {
       </div>
 
       <div className="admin-content">
-        <button type="button" className="about-admin-back" onClick={() => { setEditing(false); setHome(true); }}>
+        <button type="button" className="admin-sec-back" onClick={() => { setEditing(false); setHome(true); }}>
           ← Back to all sections
         </button>
 

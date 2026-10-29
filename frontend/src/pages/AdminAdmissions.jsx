@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import AdminAlert from '../components/AdminAlert';
-import AdminTabs from '../components/AdminTabs';
 import AdminLoading from '../components/AdminLoading';
 import PdfUpload from '../components/PdfUpload';
 import './Academics.css';
@@ -30,16 +29,16 @@ const defaultInfoRows = [
 ];
 
 const SECTIONS = [
-  { key: 'overview', label: 'Overview' },
-  { key: 'courses', label: 'Courses' },
-  { key: 'eligibility', label: 'Eligibility' },
-  { key: 'process', label: 'Process' },
-  { key: 'first-year', label: 'First Year' },
-  { key: 'direct-second', label: 'Direct Second' },
-  { key: 'acap', label: 'A-CAP' },
-  { key: 'fees', label: 'Fees' },
-  { key: 'scholarships', label: 'Scholarships' },
-  { key: 'brochure', label: 'Brochure' },
+  { key: 'overview', label: 'Overview', icon: '🧭', desc: 'Admission overview with key facts, academic year and contact details.' },
+  { key: 'courses', label: 'Courses', icon: '📚', desc: 'Course table with duration, intake and direct second year options.' },
+  { key: 'eligibility', label: 'Eligibility', icon: '✅', desc: 'Eligibility criteria for first year and direct second year entry.' },
+  { key: 'process', label: 'Process', icon: '🔄', desc: 'Step-by-step admission process flow shown to applicants.' },
+  { key: 'first-year', label: 'First Year', icon: '🎓', desc: 'Documents required for first year admission.' },
+  { key: 'direct-second', label: 'Direct Second', icon: '🔁', desc: 'Documents required for direct second year (lateral entry).' },
+  { key: 'acap', label: 'A-CAP', icon: '🏛️', desc: 'A-CAP / institute level admission documents and details.' },
+  { key: 'fees', label: 'Fees', icon: '💰', desc: 'Fee structure PDF for all categories.' },
+  { key: 'scholarships', label: 'Scholarships', icon: '🎁', desc: 'Scholarship categories, schemes and required documents.' },
+  { key: 'brochure', label: 'Brochure', icon: '📄', desc: 'College brochure PDF shown on the admissions page.' },
 ];
 
 const defaultSection = {
@@ -62,6 +61,8 @@ const defaultSection = {
 
 
 function AdminAdmissions() {
+  // home = true shows the section cards; false shows the opened section.
+  const [home, setHome] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   const [sections, setSections] = useState({});
   const [form, setForm] = useState({ ...defaultSection });
@@ -821,6 +822,55 @@ function AdminAdmissions() {
     );
   }
 
+  const openSection = (key) => {
+    setActiveTab(key);
+    setView('preview');
+    setHome(false);
+  };
+
+  // ─── Main page: section cards ────────────────────────────────────
+
+  if (home) {
+    return (
+      <AdminLayout>
+        <div className="admin-topbar">
+          <h1>Admissions</h1>
+        </div>
+
+        <div className="admin-content">
+          <div className="admin-sec-head">
+            <h2>All Sections</h2>
+            <p>Click a card to open that section below. Saved sections keep their content.</p>
+          </div>
+
+          <div className="admin-sec-grid">
+            {SECTIONS.map((s) => {
+              const saved = !!sections[s.key];
+              return (
+                <button
+                  key={s.key}
+                  type="button"
+                  className="admin-sec-card"
+                  onClick={() => openSection(s.key)}
+                >
+                  <div className="admin-sec-card-top">
+                    <span className="admin-sec-card-icon">{s.icon}</span>
+                    <span className={`admin-sec-card-badge ${saved ? 'is-saved' : ''}`}>
+                      {saved ? 'Saved' : 'Not saved'}
+                    </span>
+                  </div>
+                  <h3 className="admin-sec-card-title">{s.label}</h3>
+                  <p className="admin-sec-card-desc">{s.desc}</p>
+                  <span className="admin-sec-card-open">Open section →</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </AdminLayout>
+    );
+  }
+
   return (
     <AdminLayout>
       <div className="admin-topbar">
@@ -828,7 +878,9 @@ function AdminAdmissions() {
       </div>
 
       <div className="admin-content">
-        <AdminTabs tabs={SECTIONS.map((s) => ({ ...s, saved: !!sections[s.key] }))} activeTab={activeTab} onChange={setActiveTab} />
+        <button type="button" className="admin-sec-back" onClick={() => { setView('preview'); setHome(true); }}>
+          ← Back to all sections
+        </button>
 
         {/* Alert */}
         <AdminAlert type={msg?.type} message={msg} onDismiss={() => setMsg(null)} />
