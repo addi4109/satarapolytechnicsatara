@@ -11,14 +11,14 @@ import './AboutCollege.css';
 import API_URL from '../lib/api';
 
 const SECTIONS = [
-  { key: 'society', label: 'Satara Education Society' },
-  { key: 'institute', label: 'Institute' },
-  { key: 'disclosure', label: 'Mandatory Disclosure' },
-  { key: 'vision', label: 'Vision & Mission' },
-  { key: 'affiliation', label: 'Affiliation & Approval' },
-  { key: 'policy', label: 'Institute Policy' },
-  { key: 'organisational-chart', label: 'Org Chart' },
-  { key: 'code-of-conduct', label: 'Code of Conduct' },
+  { key: 'society', label: 'Satara Education Society', icon: '🏛️', desc: 'The trust behind the institute — history, structure and governing body.' },
+  { key: 'institute', label: 'Institute', icon: '🎓', desc: 'Institute overview, key facts and highlight stats shown on the About page.' },
+  { key: 'disclosure', label: 'Mandatory Disclosure', icon: '📄', desc: 'Statutory disclosures, approvals and other required public information.' },
+  { key: 'vision', label: 'Vision & Mission', icon: '🌟', desc: 'Vision statement and the mission points of the institute.' },
+  { key: 'affiliation', label: 'Affiliation & Approval', icon: '✅', desc: 'University affiliation, approvals and accreditation details.' },
+  { key: 'policy', label: 'Institute Policy', icon: '📋', desc: 'Institute policies with an optional downloadable policy PDF.' },
+  { key: 'organisational-chart', label: 'Org Chart', icon: '📊', desc: 'Organisational chart uploaded as a single image.' },
+  { key: 'code-of-conduct', label: 'Code of Conduct', icon: '🤝', desc: 'Code of conduct rule cards for students and staff.' },
 ];
 
 const defaultSection = {
@@ -52,6 +52,8 @@ function PdfPreview({ url }) {
 }
 
 function AdminAbout() {
+  // home = true shows the section cards; false shows the opened section.
+  const [home, setHome] = useState(true);
   const [activeTab, setActiveTab] = useState('society');
   const [sections, setSections] = useState({});
   const [loading, setLoading] = useState(true);
@@ -247,10 +249,59 @@ function AdminAbout() {
 
   const currentSection = SECTIONS.find((s) => s.key === activeTab);
 
+  const openSection = (key) => {
+    setActiveTab(key);
+    setEditing(false);
+    setHome(false);
+  };
+
   if (loading) {
     return (
       <AdminLayout>
         <AdminLoading text="Loading about..." />
+      </AdminLayout>
+    );
+  }
+
+  // ─── Main page: section cards ────────────────────────────────────
+
+  if (home) {
+    return (
+      <AdminLayout>
+        <div className="admin-topbar">
+          <h1>About College</h1>
+        </div>
+
+        <div className="admin-content">
+          <div className="about-admin-home-head">
+            <h2>All Sections</h2>
+            <p>Click a card to open that section below. Saved sections keep their content.</p>
+          </div>
+
+          <div className="about-admin-grid">
+            {SECTIONS.map((s) => {
+              const saved = !!sections[s.key];
+              return (
+                <button
+                  key={s.key}
+                  type="button"
+                  className="about-admin-card"
+                  onClick={() => openSection(s.key)}
+                >
+                  <div className="about-admin-card-top">
+                    <span className="about-admin-card-icon">{s.icon}</span>
+                    <span className={`about-admin-card-badge ${saved ? 'is-saved' : ''}`}>
+                      {saved ? 'Saved' : 'Not saved'}
+                    </span>
+                  </div>
+                  <h3 className="about-admin-card-title">{s.label}</h3>
+                  <p className="about-admin-card-desc">{s.desc}</p>
+                  <span className="about-admin-card-open">Open section →</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </AdminLayout>
     );
   }
@@ -673,6 +724,10 @@ function AdminAbout() {
       </div>
 
       <div className="admin-content">
+        <button type="button" className="about-admin-back" onClick={() => { setEditing(false); setHome(true); }}>
+          ← All sections
+        </button>
+
         <AdminTabs tabs={SECTIONS.map((s) => ({ ...s, saved: !!sections[s.key] }))} activeTab={activeTab} onChange={setActiveTab} />
 
         {/* Alert */}
