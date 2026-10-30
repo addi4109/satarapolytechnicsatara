@@ -189,7 +189,7 @@ const FALLBACK_PROGRAMS = [
 
 // ===== Satara Education Society tab content =====
 const SES_ABOUT =
-  'Satara Education Society (SES) is a private educational trust established in 1935 in Satara, Maharashtra. With a longstanding commitment to education, the Society has contributed to the academic development of students by supporting educational institutions across different levels and disciplines.\n\nThe Society operates institutions offering school education, higher secondary education, technical education and pharmacy education.\n\nThrough its institutions, Satara Education Society aims to provide accessible, meaningful and career-oriented educational opportunities while encouraging academic excellence, discipline, practical knowledge and responsible citizenship.\n\nWith a history spanning more than nine decades, the Society continues its educational journey by supporting learning, professional development and opportunities for future generations.';
+  'Satara Education Society (SES), established in 1935 in Satara, Maharashtra, is a educational trust committed to providing quality education across school, higher secondary, technical and pharmacy disciplines. The Society aims to provide accessible, meaningful educational opportunities while encouraging academic excellence, discipline and responsible citizenship. With a history spanning more than nine decades, the Society continues supporting learning and professional development for future generations.';
 
 const SES_STATS = [
   { num: '1935', label: 'Established' },
@@ -202,80 +202,71 @@ const SES_HISTORY = [
   {
     year: '1935',
     title: 'A Journey That Began in 1935',
-    text: 'The foundation of Satara Education Society was laid in 1935 with the objective of contributing to education in Satara and the surrounding region.',
-  },
-  {
-    year: 'Decades',
-    title: 'Steady Expansion',
-    text: 'Over the decades, the Society expanded its educational activities to address the evolving academic and professional needs of students.',
+    text: 'Society established to contribute to education in Satara and surrounding region.',
   },
   {
     year: '1983',
     title: 'Satara Polytechnic',
-    text: 'A significant milestone was the establishment of Satara Polytechnic in 1983, which introduced opportunities for diploma-level technical education.',
+    text: 'Established to introduce diploma-level technical education.',
   },
   {
     year: '1986',
     title: 'Pharmacy Education',
-    text: 'The Society also expanded into pharmaceutical education through the Late Suman Dhekane Department of Pharmacy, established in 1986.',
+    text: 'Expanded into pharmaceutical education.',
   },
   {
     year: 'Today',
-    title: 'A Lasting Educational Presence',
-    text: 'Satara Education Society represents a longstanding educational presence in Satara, bringing together institutions serving students at different stages of their academic journeys.',
+    title: 'Ongoing Educational Presence',
+    text: 'Satara Education Society continues serving students across the region.',
   },
 ];
 
 const SES_MISSION = [
-  'To provide accessible and quality educational opportunities across various academic disciplines.',
-  'To promote technical knowledge, practical skills and professional competence.',
-  'To encourage discipline, ethical values and social responsibility among students.',
-  'To create an environment that supports academic excellence and personal development.',
-  'To prepare students for higher education, employment and future professional challenges.',
-  'To contribute positively to the educational and social development of the region.',
+  'Provide accessible quality education across academic disciplines.',
+  'Promote technical knowledge, practical skills and professional competence.',
+  'Encourage discipline, ethical values and social responsibility.',
+  'Support academic excellence and personal development.',
+  'Prepare students for higher education and professional challenges.',
+  'Contribute to educational and social development of the region.',
 ];
 
 const SES_INSTITUTIONS = [
   {
     name: 'Anant English School, Satara',
-    desc: 'Anant English School is one of the educational institutions associated with Satara Education Society. The school contributes to foundational and secondary education by supporting students in their academic development and preparing them for further educational opportunities.',
-    location: 'Mangalwar Peth, Satara, Maharashtra.',
+    desc: 'Foundational and secondary education institution supporting student academic development.',
+    location: 'Mangalwar Peth, Satara.',
   },
   {
     name: 'Annasaheb Rajebhosale Primary School',
-    desc: 'Annasaheb Rajebhosale Primary School is associated with Satara Education Society and serves students at the primary education level. The institution supports foundational learning and the development of essential academic skills among young learners.',
+    desc: 'Primary education institution supporting foundational learning and academic skills.',
   },
   {
     name: 'Late Keshav Gore Pre-Primary School',
-    desc: "The institution provides early childhood education and introduces young learners to foundational educational activities. It forms part of the Society's educational network supporting students from their earliest learning stages.",
+    desc: 'Early childhood education institution supporting foundational learning.',
   },
   {
     name: 'N. B. Deshmukh Junior College',
-    desc: 'N. B. Deshmukh Junior College is associated with Satara Education Society and contributes to higher secondary education. The institution supports students during an important stage of their academic journey, helping prepare them for further education and professional opportunities.',
+    desc: 'Higher secondary education institution supporting academic journey towards professional opportunities.',
   },
   {
     name: 'Satara Polytechnic, Satara',
-    tag: 'Established 1983',
-    desc: 'Satara Polytechnic is a technical education institution managed by Satara Education Society. Established in 1983, the institute provides diploma-level engineering education with an emphasis on theoretical knowledge, practical training and technical skill development.',
+    tag: 'Est. 1983',
+    desc: 'Technical education institution providing diploma-level engineering education.',
     facts: [
       { label: 'Established', value: '1983' },
-      { label: 'Academic Focus', value: 'Diploma Engineering Education' },
-      { label: 'Approvals', value: 'AICTE, New Delhi & MSBTE, Mumbai' },
-      { label: 'Campus', value: 'Approximately 17.5 acres' },
+      { label: 'Academic Focus', value: 'Diploma Engineering' },
     ],
     location: 'Satara, Maharashtra.',
   },
   {
     name: 'Late Suman Dhekane Department of Pharmacy',
-    tag: 'Established 1986',
-    desc: 'Late Suman Dhekane Department of Pharmacy is a pharmaceutical education institution operated under Satara Education Society. It offers a two-year, full-time Diploma in Pharmacy (D.Pharm.) programme designed to provide students with foundational pharmaceutical knowledge and professional education.',
+    tag: 'Est. 1986',
+    desc: 'Pharmaceutical education institution offering D.Pharm. programme.',
     facts: [
-      { label: 'Programme', value: 'Diploma in Pharmacy (D.Pharm.)' },
+      { label: 'Programme', value: 'D.Pharm.' },
       { label: 'Duration', value: '2 Years' },
-      { label: 'Reported Intake', value: '60 Students' },
-      { label: 'Approval', value: 'Pharmacy Council of India (PCI)' },
     ],
-    location: 'Mangalwar Peth, Satara, Maharashtra.',
+    location: 'Mangalwar Peth, Satara.',
   },
 ];
 
@@ -283,26 +274,26 @@ const SES_APPROACH = [
   'Academic learning and conceptual understanding.',
   'Practical knowledge and skill development.',
   'Discipline, responsibility and ethical values.',
-  'Opportunities for technical and professional education.',
-  'Preparation for higher education and employment.',
-  'Contribution to society through education.',
+  'Technical and professional education opportunities.',
+  'Higher education and employment preparation.',
+  'Contribution to education.',
 ];
 
 const SES_STAGES = [
-  { name: 'Pre-Primary Education', desc: 'Supporting early childhood learning.' },
-  { name: 'Primary Education', desc: 'Developing essential foundational knowledge and academic skills.' },
-  { name: 'Secondary Education', desc: 'Preparing students for advanced academic learning.' },
-  { name: 'Higher Secondary Education', desc: 'Supporting the transition towards higher education.' },
-  { name: 'Technical Education', desc: 'Providing diploma-level engineering education.' },
-  { name: 'Pharmaceutical Education', desc: 'Offering professional diploma education in pharmacy.' },
+  { name: 'Pre-Primary', desc: 'Early childhood learning.' },
+  { name: 'Primary', desc: 'Foundational knowledge and academic skills.' },
+  { name: 'Secondary', desc: 'Preparing for advanced academic learning.' },
+  { name: 'Higher Secondary', desc: 'Transition towards higher education.' },
+  { name: 'Technical Education', desc: 'Diploma-level engineering education.' },
+  { name: 'Pharmaceutical Education', desc: 'Professional diploma in pharmacy.' },
 ];
 
 const SES_MILESTONES = [
   { year: '1935', text: 'Establishment of Satara Education Society' },
   { year: '1983', text: 'Establishment of Satara Polytechnic' },
-  { year: '1986', text: 'Establishment of Late Suman Dhekane Department of Pharmacy' },
-  { year: '2025', text: "Completion of 90 years since the Society's establishment" },
-  { year: '2026', text: 'Continuing a legacy of more than nine decades in education' },
+  { year: '1986', text: 'Establishment of Pharmacy Education' },
+  { year: '2025', text: '90 years since establishment' },
+  { year: '2026', text: 'Continuing legacy in education' },
 ];
 
 function AboutCollege() {
