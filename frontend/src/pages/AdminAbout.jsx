@@ -366,7 +366,6 @@ function AdminAbout() {
         return (
           <PreviewCard>
             <h2 className="content-heading">{currentData.title || 'Satara Education Society'}</h2>
-            <div className="content-line"></div>
             <ContentPreview text={currentData.content} />
           </PreviewCard>
         );
@@ -474,14 +473,14 @@ function AdminAbout() {
     switch (activeTab) {
       case 'society':
         return (
-          <div className="about-edit-form">
-            <div className="form-group">
+          <div className="about-edit-form" style={{ padding: '20px' }}>
+            <div className="form-group" style={{ marginBottom: '16px' }}>
               <label>Section Title</label>
-              <input type="text" value={editForm.title} onChange={(e) => handleChange('title', e.target.value)} placeholder="Enter title..." />
+              <input type="text" value={editForm.title} onChange={(e) => handleChange('title', e.target.value)} placeholder="Enter title..." style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '6px' }} />
             </div>
-            <div className="form-group">
+            <div className="form-group" style={{ marginBottom: '0' }}>
               <label>Content</label>
-              <textarea value={editForm.content} onChange={(e) => handleChange('content', e.target.value)} rows={8} placeholder="Write the content here..." />
+              <textarea value={editForm.content} onChange={(e) => handleChange('content', e.target.value)} rows={4} placeholder="Write the society content here..." style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px' }} />
             </div>
           </div>
         );
