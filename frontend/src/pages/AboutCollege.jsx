@@ -740,38 +740,6 @@ function AboutCollege() {
                   </ul>
                 </div>
               </div>
-
-              {/* Box 5: Institutions */}
-              <div className="about-box">
-                <h2 className="about-box-title">Institutions Under Satara Education Society</h2>
-                <div className="about-box-line"></div>
-                <p>School, higher secondary, technical and pharmaceutical education across Satara:</p>
-                <div className="coc-grid">
-                  {SES_INSTITUTIONS.map((inst, i) => (
-                    <div className="coc-card" key={i}>
-                      <h3 className="coc-card-title">
-                        {inst.name}
-                        {inst.tag && ` · ${inst.tag}`}
-                      </h3>
-                      <p>{inst.desc}</p>
-                      {(inst.facts || inst.location) && (
-                        <div className="info-table">
-                          {(inst.facts || []).map((fact, j) => (
-                            <div className="info-row" key={j}>
-                              <span className="info-label">{fact.label}</span>
-                              <span className="info-value">{fact.value}</span>
-                            </div>
-                          ))}
-                          {inst.location && (
-                            <div className="info-row">
-                              <span className="info-label">Location</span>
-                              <span className="info-value">{inst.location}</span>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  ))}
                 </div>
               </div>
 
