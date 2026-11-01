@@ -50,11 +50,8 @@ function AdminStaffCard({
   onSave,
   onCancel,
   onDelete,
-  deleteConfirm = false,
-  onCancelDelete,
   saving = false,
   fields = [],
-  order,
   editButton = false,
 }) {
   const handleFieldChange = (key, value) => {

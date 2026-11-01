@@ -75,7 +75,7 @@ function AdminAlumni() {
       const res = await fetch(`${API_URL}/alumni`);
       const data = await res.json();
       setAlumni(data);
-    } catch (err) {
+    } catch {
       setAlumniError('Failed to load alumni data.');
     } finally {
       setAlumniLoading(false);

@@ -109,7 +109,7 @@ function AdminDepartmentForm() {
       } else {
         setMessage({ type: 'error', text: 'Department not found' });
       }
-    } catch (err) {
+    } catch {
       setMessage({ type: 'error', text: 'Failed to load department' });
     } finally {
       setLoading(false);
@@ -353,7 +353,7 @@ function AdminDepartmentForm() {
         const err = await res.json();
         setMessage({ type: 'error', text: err.error || 'Failed to save' });
       }
-    } catch (err) {
+    } catch {
       setMessage({ type: 'error', text: 'Network error. Is the server running?' });
     } finally {
       setSaving(false);

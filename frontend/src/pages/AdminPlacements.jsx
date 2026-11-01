@@ -45,15 +45,7 @@ function AdminPlacements() {
   // View mode for process and records tabs
   const [view, setView] = useState('preview');
 
-  // Step states
-  const [newStepTitle, setNewStepTitle] = useState('');
-  const [newStepDesc, setNewStepDesc] = useState('');
   const [editingStepIdx, setEditingStepIdx] = useState(null);
-
-  // Record states
-  const [newRecYear, setNewRecYear] = useState('');
-  const [newRecPlaced, setNewRecPlaced] = useState('');
-  const [newRecCompanies, setNewRecCompanies] = useState('');
 
 
 
@@ -103,11 +95,6 @@ function AdminPlacements() {
   }, [activeTab, sections]);
 
   const resetInputs = () => {
-    setNewStepTitle('');
-    setNewStepDesc('');
-    setNewRecYear('');
-    setNewRecPlaced('');
-    setNewRecCompanies('');
     setEditingStepIdx(null);
   };
 
@@ -141,7 +128,7 @@ function AdminPlacements() {
       setSections((prev) => ({ ...prev, [activeTab]: saved }));
       setMsg({ type: 'success', text: 'Saved!' });
       setView('preview');
-    } catch (err) {
+    } catch {
       setMsg({ type: 'error', text: 'Failed to save.' });
     } finally {
       setSaving(false);
@@ -159,34 +146,14 @@ function AdminPlacements() {
       });
       setForm({ ...defaultSection });
       setMsg({ type: 'success', text: 'Deleted successfully!' });
-    } catch (err) {
+    } catch {
       setMsg({ type: 'error', text: 'Failed to delete.' });
     }
   };
 
   // Step helpers
-  const addStep = () => {
-    if (!newStepTitle.trim()) return;
-    handleChange('steps', [...form.steps, { title: newStepTitle.trim(), desc: newStepDesc.trim() }]);
-    setNewStepTitle('');
-    setNewStepDesc('');
-  };
-
   const removeStep = (index) => {
     handleChange('steps', form.steps.filter((_, i) => i !== index));
-  };
-
-  // Record helpers
-  const addRecord = () => {
-    if (!newRecYear.trim()) return;
-    handleChange('records', [...form.records, { year: newRecYear.trim(), placed: newRecPlaced.trim(), companies: newRecCompanies.trim() }]);
-    setNewRecYear('');
-    setNewRecPlaced('');
-    setNewRecCompanies('');
-  };
-
-  const removeRecord = (index) => {
-    handleChange('records', form.records.filter((_, i) => i !== index));
   };
 
   // Recruiter helpers

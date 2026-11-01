@@ -356,7 +356,6 @@ function Navbar() {
     ));
 
   const renderMenuItem = (item, idx) => {
-    const hasDropdown = item.children || item.columns;
     const isActive = item.match ? item.match(location.pathname) : false;
 
     if (item.columns) {

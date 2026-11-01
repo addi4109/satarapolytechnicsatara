@@ -67,7 +67,6 @@ function AdminAbout() {
   const [editingStatIdx, setEditingStatIdx] = useState(null);
   const [editingInfoIdx, setEditingInfoIdx] = useState(null);
   const [newMissionItem, setNewMissionItem] = useState('');
-  const [newAchievementItem, setNewAchievementItem] = useState('');
   // Tracks which conduct card the inline "Add rule" input belongs to.
   const [newConductItem, setNewConductItem] = useState(null);
   const [newConductItemText, setNewConductItemText] = useState('');
@@ -96,7 +95,6 @@ function AdminAbout() {
     setEditingInfoIdx(null);
     setMsg(null);
     setNewMissionItem('');
-    setNewAchievementItem('');
     setNewConductItem(null);
     setNewConductItemText('');
   }, [activeTab]);
@@ -127,7 +125,6 @@ function AdminAbout() {
     setEditingStatIdx(null);
     setEditingInfoIdx(null);
     setNewMissionItem('');
-    setNewAchievementItem('');
   };
 
   const handleSave = async () => {
@@ -144,7 +141,7 @@ function AdminAbout() {
       setSections((prev) => ({ ...prev, [activeTab]: saved }));
       setMsg({ type: 'success', text: 'Saved successfully!' });
       setEditing(false);
-    } catch (err) {
+    } catch {
       setMsg({ type: 'error', text: 'Failed to save.' });
     } finally {
       setSaving(false);
@@ -162,7 +159,7 @@ function AdminAbout() {
       });
       setEditing(false);
       setMsg({ type: 'success', text: 'Deleted.' });
-    } catch (err) {
+    } catch {
       setMsg({ type: 'error', text: 'Failed to delete.' });
     }
   };

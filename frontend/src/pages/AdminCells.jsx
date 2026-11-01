@@ -99,7 +99,7 @@ function AdminCells() {
       } else {
         setMessage({ type: 'error', text: 'Failed to save' });
       }
-    } catch (err) {
+    } catch {
       setMessage({ type: 'error', text: 'Network error' });
     } finally {
       setSaving(false);
@@ -115,7 +115,7 @@ function AdminCells() {
         goBack();
         setMessage({ type: 'success', text: 'Deleted' });
       }
-    } catch (err) {
+    } catch {
       setMessage({ type: 'error', text: 'Failed to delete' });
     }
   };

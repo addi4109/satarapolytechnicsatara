@@ -58,7 +58,6 @@ function AdminCampus() {
   const [showStaffForm, setShowStaffForm] = useState(false);
   const [editStaffIdx, setEditStaffIdx] = useState(null);
   const [staffForm, setStaffForm] = useState({ ...defaultStaff });
-  const [deleteConfirm, setDeleteConfirm] = useState(null);
 
   // Table editing state
   const [editingTableIdx, setEditingTableIdx] = useState(null);
@@ -104,7 +103,6 @@ function AdminCampus() {
     setShowStaffForm(false);
     setEditStaffIdx(null);
     setStaffForm({ ...defaultStaff });
-    setDeleteConfirm(null);
     setEditingTableIdx(null);
     setEditingCell(null);
   }, [activeTab, sections]);
@@ -129,19 +127,6 @@ function AdminCampus() {
       setMsg({ type: 'error', text: 'Failed to save.' });
     } finally {
       setSaving(false);
-    }
-  };
-
-  const handleDelete = async () => {
-    if (!window.confirm('Are you sure you want to delete this section?')) return;
-    try {
-      await fetch(`${API_URL}/campus/${activeTab}`, { method: 'DELETE' });
-      setSections((prev) => { const u = { ...prev }; delete u[activeTab]; return u; });
-      setForm({ ...defaultForm });
-      setEditing(false);
-      setMsg({ type: 'success', text: 'Deleted successfully!' });
-    } catch {
-      setMsg({ type: 'error', text: 'Failed to delete.' });
     }
   };
 
@@ -238,7 +223,7 @@ function AdminCampus() {
     setStaffForm({ ...defaultStaff });
     setMsg({ type: 'success', text: editStaffIdx !== null ? 'Staff updated!' : 'Staff added!' });
   };
-  const deleteStaff = (idx) => { handleChange('staffMembers', form.staffMembers.filter((_, i) => i !== idx)); setDeleteConfirm(null); };
+  const deleteStaff = (idx) => { handleChange('staffMembers', form.staffMembers.filter((_, i) => i !== idx)); };
 
   // ===== FOOD MENU HELPERS =====
   const addFoodItem = () => handleChange('foodMenu', [...form.foodMenu, { name: '', category: 'Breakfast', price: '', time: '' }]);
@@ -586,7 +571,6 @@ function AdminCampus() {
             } else { setForm({ ...defaultForm }); }
             setEditing(false);
             setShowStaffForm(false);
-            setDeleteConfirm(null);
             setEditingTableIdx(null);
             setEditingCell(null);
           }}>Cancel</button>
@@ -845,7 +829,6 @@ function AdminCampus() {
                         member={member}
                         onStartEdit={() => openEditStaff(index)}
                         onDelete={() => deleteStaff(index)}
-                        deleteConfirm={false}
                         fields={[]}
                       />
                     )

@@ -229,46 +229,6 @@ const SES_MISSION = [
   'Contribute to educational and social development of the region.',
 ];
 
-const SES_INSTITUTIONS = [
-  {
-    name: 'Anant English School, Satara',
-    desc: 'Foundational and secondary education institution supporting student academic development.',
-    location: 'Mangalwar Peth, Satara.',
-  },
-  {
-    name: 'Annasaheb Rajebhosale Primary School',
-    desc: 'Primary education institution supporting foundational learning and academic skills.',
-  },
-  {
-    name: 'Late Keshav Gore Pre-Primary School',
-    desc: 'Early childhood education institution supporting foundational learning.',
-  },
-  {
-    name: 'N. B. Deshmukh Junior College',
-    desc: 'Higher secondary education institution supporting academic journey towards professional opportunities.',
-  },
-  {
-    name: 'Satara Polytechnic, Satara',
-    tag: 'Est. 1983',
-    desc: 'Technical education institution providing diploma-level engineering education.',
-    facts: [
-      { label: 'Established', value: '1983' },
-      { label: 'Academic Focus', value: 'Diploma Engineering' },
-    ],
-    location: 'Satara, Maharashtra.',
-  },
-  {
-    name: 'Late Suman Dhekane Department of Pharmacy',
-    tag: 'Est. 1986',
-    desc: 'Pharmaceutical education institution offering D.Pharm. programme.',
-    facts: [
-      { label: 'Programme', value: 'D.Pharm.' },
-      { label: 'Duration', value: '2 Years' },
-    ],
-    location: 'Mangalwar Peth, Satara.',
-  },
-];
-
 const SES_APPROACH = [
   'Academic learning and conceptual understanding.',
   'Practical knowledge and skill development.',

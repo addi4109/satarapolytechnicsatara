@@ -126,21 +126,6 @@ function Admissions() {
     );
   };
 
-  // Helper: render info rows
-  const renderInfoRows = (rows) => {
-    if (!rows || rows.length === 0) return null;
-    return (
-      <div className="info-table">
-        {rows.map((row, i) => (
-          <div className="info-row" key={i}>
-            <span className="info-label">{row.label}</span>
-            <span className="info-value">{row.value}</span>
-          </div>
-        ))}
-      </div>
-    );
-  };
-
   // Helper: render sub-sections
   const renderSubSections = (subSections) => {
     if (!subSections || subSections.length === 0) return null;

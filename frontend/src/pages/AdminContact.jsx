@@ -82,7 +82,7 @@ function AdminContact() {
       const saved = await res.json();
       setSections((prev) => ({ ...prev, office: saved }));
       setMsg({ type: 'success', text: 'Contact settings saved!' });
-    } catch (err) {
+    } catch {
       setMsg({ type: 'error', text: 'Failed to save.' });
     } finally {
       setSaving(false);
@@ -105,7 +105,7 @@ function AdminContact() {
       const saved = await res.json();
       setSections((prev) => ({ ...prev, links: saved }));
       setMsg({ type: 'success', text: 'Important links saved!' });
-    } catch (err) {
+    } catch {
       setMsg({ type: 'error', text: 'Failed to save.' });
     } finally {
       setSaving(false);
@@ -128,7 +128,7 @@ function AdminContact() {
       const saved = await res.json();
       setSections((prev) => ({ ...prev, departments: saved }));
       setMsg({ type: 'success', text: 'Department details saved!' });
-    } catch (err) {
+    } catch {
       setMsg({ type: 'error', text: 'Failed to save.' });
     } finally {
       setSaving(false);

@@ -4,7 +4,6 @@ import AdminAlert from '../components/AdminAlert';
 import AdminTabs from '../components/AdminTabs';
 import AdminLoading from '../components/AdminLoading';
 import PdfUpload from '../components/PdfUpload';
-import ImageUpload from '../components/ImageUpload';
 import './Academics.css';
 import './Admin.css';
 
@@ -84,11 +83,6 @@ function AdminExaminations() {
   useEffect(() => {
     const existing = sections[activeTab];
     if (existing) {
-      // Normalise rankholder images: backend may store photoUrl, admin uses image.
-      const rankholders = (existing.rankholders || []).map((h) => ({
-        ...h,
-        image: h.image || h.photoUrl || '',
-      }));
       setForm({
         title: existing.title || '',
         content: existing.content || '',

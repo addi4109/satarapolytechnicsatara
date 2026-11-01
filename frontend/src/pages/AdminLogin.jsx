@@ -39,7 +39,7 @@ function AdminLogin() {
       } else {
         setError(data.error || 'Invalid email or password');
       }
-    } catch (err) {
+    } catch {
       setError('Unable to connect to server. Please try again.');
     } finally {
       setLoading(false);

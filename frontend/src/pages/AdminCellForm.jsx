@@ -48,7 +48,7 @@ function AdminCellForm() {
       } else {
         setMessage({ type: 'error', text: 'Cell not found' });
       }
-    } catch (err) {
+    } catch {
       setMessage({ type: 'error', text: 'Failed to load cell' });
     } finally {
       setLoading(false);
@@ -118,7 +118,7 @@ function AdminCellForm() {
         const err = await res.json();
         setMessage({ type: 'error', text: err.error || 'Failed to save' });
       }
-    } catch (err) {
+    } catch {
       setMessage({ type: 'error', text: 'Network error. Is the server running?' });
     } finally {
       setSaving(false);

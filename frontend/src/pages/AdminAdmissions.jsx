@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import AdminAlert from '../components/AdminAlert';
-import AdminLoading from '../components/AdminLoading';
 import PdfUpload from '../components/PdfUpload';
 import './Academics.css';
 import { getAcademicYear } from '../lib/siteConfig';
@@ -74,7 +73,6 @@ function AdminAdmissions() {
   const [view, setView] = useState('preview');
 
   // List item states
-  const [editingStatIdx, setEditingStatIdx] = useState(null);
   const [editingDocIdx, setEditingDocIdx] = useState(null);
   const [editingStepIdx, setEditingStepIdx] = useState(null);
   const [editingElig, setEditingElig] = useState(null);
@@ -127,7 +125,6 @@ function AdminAdmissions() {
 
   const resetListInputs = () => {
     setEditingDocIdx(null);
-    setEditingStatIdx(null);
     setEditingElig(null);
     setEditingStepIdx(null);
     setEditingScholCatIdx(null);
@@ -183,7 +180,7 @@ function AdminAdmissions() {
       setSections((prev) => ({ ...prev, [activeTab]: saved }));
       setMsg({ type: 'success', text: 'Saved successfully!' });
       setView('preview');
-    } catch (err) {
+    } catch {
       setMsg({ type: 'error', text: 'Failed to save.' });
     } finally {
       setSaving(false);
@@ -202,7 +199,7 @@ function AdminAdmissions() {
       setForm({ ...defaultSection });
       setMsg({ type: 'success', text: 'Deleted.' });
       setView('preview');
-    } catch (err) {
+    } catch {
       setMsg({ type: 'error', text: 'Failed to delete.' });
     }
   };
@@ -211,10 +208,6 @@ function AdminAdmissions() {
   const addEmptyDoc = () => { handleChange('documents', [...form.documents, '']); setEditingDocIdx(form.documents.length); };
   const updateDoc = (i, val) => { const d = [...form.documents]; d[i] = val; handleChange('documents', d); };
   const removeDoc = (i) => { handleChange('documents', form.documents.filter((_, idx) => idx !== i)); setEditingDocIdx(null); };
-
-  const addEmptyStat = () => { handleChange('stats', [...form.stats, { num: '', label: '' }]); setEditingStatIdx(form.stats.length); };
-  const updateStat = (i, f, v) => { const s = [...form.stats]; s[i] = { ...s[i], [f]: v }; handleChange('stats', s); };
-  const removeStat = (i) => { handleChange('stats', form.stats.filter((_, idx) => idx !== i)); setEditingStatIdx(null); };
 
   const addEmptyStep = () => { handleChange('steps', [...form.steps, { title: '', desc: '' }]); setEditingStepIdx(form.steps.length); };
   const updateStep = (i, f, v) => { const s = [...form.steps]; s[i] = { ...s[i], [f]: v }; handleChange('steps', s); };
@@ -253,11 +246,6 @@ function AdminAdmissions() {
   const currentSection = SECTIONS.find((s) => s.key === activeTab);
 
   // ─── Preview Renderers ────────────────────────────────────────────
-  const renderContent = (text) => {
-    if (!text) return <p style={{ color: '#aaa', fontStyle: 'italic' }}>No content yet.</p>;
-    return text.split('\n').filter(p => p.trim()).map((p, i) => <p key={i}>{p}</p>);
-  };
-
   const renderInfoRows = (rows) => {
     if (!rows || rows.length === 0) return null;
     return (
@@ -266,20 +254,6 @@ function AdminAdmissions() {
           <div className="info-row" key={i}>
             <span className="info-label">{row.label}</span>
             <span className="info-value">{row.value}</span>
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-  const renderStats = (stats) => {
-    if (!stats || stats.length === 0) return null;
-    return (
-      <div className="overview-stats">
-        {stats.map((s, i) => (
-          <div className="stat-box" key={i}>
-            <span className="stat-num">{s.num}</span>
-            <span className="stat-txt">{s.label}</span>
           </div>
         ))}
       </div>
@@ -337,38 +311,6 @@ function AdminAdmissions() {
       />
     </div>
   );
-
-  const renderFeePreview = (feeRows, label) => {
-    if (!feeRows || feeRows.length === 0) return null;
-    return (
-      <div style={{ overflowX: 'auto', marginBottom: '20px' }}>
-        <table className="fee-table">
-          <thead>
-            <tr>
-              <th style={{ width: 80 }}>Year</th>
-              <th>Fee Particulars</th>
-              <th>OPEN/OBC/EWS/SEBC</th>
-              <th>VJNT/SBC</th>
-              <th>SC/ST</th>
-              <th>Girls</th>
-            </tr>
-          </thead>
-          <tbody>
-            {feeRows.map((row, i) => (
-              <tr key={i} style={i === feeRows.length - 1 ? { fontWeight: 700, background: '#f8f9fa' } : {}}>
-                {i === 0 && <td rowSpan={feeRows.length} style={{ fontWeight: 600, textAlign: 'center', verticalAlign: 'middle' }}>{label}</td>}
-                <td style={{ fontWeight: 500 }}>{row.particular}</td>
-                <td>{row.open || '-'}</td>
-                <td>{row.vjnt || '-'}</td>
-                <td>{row.scst || '-'}</td>
-                <td>{row.girls || '-'}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  };
 
   // ─── Preview for each tab ─────────────────────────────────────────
   const renderPreview = () => {

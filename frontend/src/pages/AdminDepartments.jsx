@@ -42,7 +42,7 @@ function AdminDepartments() {
       } else {
         setMessage({ type: 'error', text: 'Failed to delete department' });
       }
-    } catch (err) {
+    } catch {
       setMessage({ type: 'error', text: 'Failed to delete department' });
     }
     setDeleteConfirm(null);
