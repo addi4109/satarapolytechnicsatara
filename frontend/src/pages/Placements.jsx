@@ -329,7 +329,7 @@ function Placements() {
 
               {/* Latest Record Banner (uploaded via Admin) */}
               <div
-                className="placement-record-banner"
+                className={`placement-record-banner${getSection('records').recordBanner ? ' has-image' : ''}`}
                 style={{ cursor: getSection('records').recordBanner ? 'pointer' : 'default' }}
                 onClick={() => getSection('records').recordBanner && setLightbox({ url: getSection('records').recordBanner, caption: 'Latest Placement Record' })}
               >

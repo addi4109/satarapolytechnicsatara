@@ -195,7 +195,7 @@
 
 /* Latest Placement Record Banner */
 .placement-record-banner {
-  margin-top: 24px;
+  margin: 24px auto 0;
   padding: 12px;
   border-radius: var(--sp-radius, 8px);
   overflow: hidden;
@@ -204,12 +204,19 @@
   transition: box-shadow 0.2s;
 }
 
+/* Shrink the frame to the uploaded poster instead of stretching it. */
+.placement-record-banner.has-image {
+  width: fit-content;
+  max-width: 100%;
+}
+
 .placement-record-banner:hover {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
 }
 
 .placement-record-banner img {
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   max-height: 440px;
   height: auto;
   object-fit: contain;
