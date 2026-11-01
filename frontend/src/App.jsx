@@ -64,7 +64,6 @@ const ImageSlider = lazyWithRetry(() => import('./components/ImageSlider'));
 const NoticeTicker = lazyWithRetry(() => import('./components/NoticeTicker'));
 const WelcomeSection = lazyWithRetry(() => import('./components/WelcomeSection'));
 const Departments = lazyWithRetry(() => import('./components/Departments'));
-const Facilities = lazyWithRetry(() => import('./components/Facilities'));
 const PlacementRecordBanner = lazyWithRetry(() => import('./components/PlacementRecordBanner'));
 const Recruiters = lazyWithRetry(() => import('./components/Recruiters'));
 const LatestNews = lazyWithRetry(() => import('./components/LatestNews'));
@@ -146,7 +145,6 @@ function HomePage() {
       <ImageSlider />
       <NoticeTicker />
       <WelcomeSection />
-      <Facilities />
       <Departments />
       <PlacementRecordBanner />
       <Recruiters />
