@@ -1,7 +1,11 @@
 /**
- * AdminStaffCard — Reusable staff member card with click-to-edit.
+ * AdminStaffCard — Reusable staff member card.
  * Used in Governing Body, Local Governing Body, Non-teaching Staff,
  * Office Staff, Placement Team, and any other staff listing.
+ *
+ * By default the whole card is clickable (click-to-edit). Pass
+ * `editButton` to make it a plain card with an explicit Edit button
+ * instead.
  *
  * Usage:
  *   <AdminStaffCard
@@ -51,6 +55,7 @@ function AdminStaffCard({
   saving = false,
   fields = [],
   order,
+  editButton = false,
 }) {
   const handleFieldChange = (key, value) => {
     onFormChange({ ...editForm, [key]: value });
@@ -127,9 +132,9 @@ function AdminStaffCard({
   return (
     <div
       className="staff-card"
-      onClick={onStartEdit}
-      style={{ cursor: 'pointer' }}
-      title="Click to edit"
+      onClick={editButton ? undefined : onStartEdit}
+      style={editButton ? undefined : { cursor: 'pointer' }}
+      title={editButton ? undefined : 'Click to edit'}
     >
       {member?.photoUrl ? (
         <img src={member.photoUrl} alt={name} className="staff-card-photo" />
@@ -138,6 +143,11 @@ function AdminStaffCard({
       )}
       <h3 className="staff-card-name">{name}</h3>
       <p className="staff-card-designation">{member?.designation || member?.position || ''}</p>
+      {editButton && (
+        <button type="button" className="btn btn-primary btn-sm" style={{ marginTop: '10px' }} onClick={onStartEdit}>
+          Edit
+        </button>
+      )}
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from './AdminLayout';
 import AdminAlert from '../components/AdminAlert';
-import AdminTabs from '../components/AdminTabs';
 import AdminStaffCard from '../components/AdminStaffCard';
 import AdminLoading from '../components/AdminLoading';
 import ImageUpload from '../components/ImageUpload';
@@ -13,6 +12,15 @@ const ROLES = [
   { key: 'chairman', label: 'Chairman' },
   { key: 'secretary', label: 'Secretary' },
   { key: 'principal', label: 'Principal' },
+];
+
+const SECTIONS = [
+  { key: 'founder', label: 'Founder', icon: '👨‍💼', desc: 'Founder photo, designation and message shown on the Management page.' },
+  { key: 'chairman', label: 'Chairman', icon: '🏛️', desc: 'Chairman photo, designation and message.' },
+  { key: 'secretary', label: 'Secretary', icon: '📝', desc: 'Secretary photo, designation and message.' },
+  { key: 'principal', label: 'Principal', icon: '🎓', desc: 'Principal photo, qualification and message.' },
+  { key: 'governing-body', label: 'Governing Body', icon: '👥', desc: 'Members of the institute governing body.' },
+  { key: 'local-governing-body', label: 'Local Governing Body', icon: '🏘️', desc: 'Members of the local governing body.' },
 ];
 
 const STAFF_FIELDS = [
@@ -30,6 +38,8 @@ const defaultGbMember = {
 };
 
 function AdminManagement() {
+  // home = true shows the section cards; false shows the opened section.
+  const [home, setHome] = useState(true);
   const [activeTab, setActiveTab] = useState('founder');
   const [entries, setEntries] = useState({});
   const [form, setForm] = useState({ ...defaultEntry });
@@ -56,7 +66,12 @@ function AdminManagement() {
   const [lgbSaving, setLgbSaving] = useState(false);
   const [deleteConfirmLgb, setDeleteConfirmLgb] = useState(null);
 
-  useEffect(() => { fetchEntries(); }, []);
+  // Fetch everything up front so the card badges on the home page are accurate.
+  useEffect(() => {
+    fetchEntries();
+    fetchGbMembers();
+    fetchLgbMembers();
+  }, []);
 
   useEffect(() => {
     if (activeTab === 'governing-body') fetchGbMembers();
@@ -234,11 +249,60 @@ function AdminManagement() {
     );
   }
 
-  const allTabs = [
-    ...ROLES.map((r) => ({ key: r.key, label: r.label, saved: !!entries[r.key] })),
-    { key: 'governing-body', label: 'Governing Body', badge: gbMembers.length },
-    { key: 'local-governing-body', label: 'Local Governing Body', badge: lgbMembers.length },
-  ];
+  const isSectionSaved = (key) => {
+    if (key === 'governing-body') return gbMembers.length > 0;
+    if (key === 'local-governing-body') return lgbMembers.length > 0;
+    return !!entries[key];
+  };
+
+  const openSection = (key) => {
+    setActiveTab(key);
+    setEditingRole(false);
+    setHome(false);
+  };
+
+  // ─── Main page: section cards ────────────────────────────────────
+
+  if (home) {
+    return (
+      <AdminLayout>
+        <div className="admin-topbar">
+          <h1>Management</h1>
+        </div>
+
+        <div className="admin-content">
+          <div className="admin-sec-head">
+            <h2>All Sections</h2>
+            <p>Click a card to open that section below. Saved sections keep their content.</p>
+          </div>
+
+          <div className="admin-sec-grid">
+            {SECTIONS.map((s) => {
+              const saved = isSectionSaved(s.key);
+              return (
+                <button
+                  key={s.key}
+                  type="button"
+                  className="admin-sec-card"
+                  onClick={() => openSection(s.key)}
+                >
+                  <div className="admin-sec-card-top">
+                    <span className="admin-sec-card-icon">{s.icon}</span>
+                    <span className={`admin-sec-card-badge ${saved ? 'is-saved' : ''}`}>
+                      {saved ? 'Saved' : 'Not saved'}
+                    </span>
+                  </div>
+                  <h3 className="admin-sec-card-title">{s.label}</h3>
+                  <p className="admin-sec-card-desc">{s.desc}</p>
+                  <span className="admin-sec-card-open">Open section →</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </AdminLayout>
+    );
+  }
 
   // Staff fields for add/edit form
   const staffFields = STAFF_FIELDS;
@@ -252,7 +316,9 @@ function AdminManagement() {
 
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           <div style={{ padding: '16px 24px 0', flexShrink: 0 }}>
-            <AdminTabs tabs={allTabs} activeTab={activeTab} onChange={setActiveTab} />
+            <button type="button" className="admin-sec-back" onClick={() => { setEditingRole(false); setHome(true); }}>
+              ← Back to all sections
+            </button>
           </div>
 
           <div style={{ padding: '10px 24px', textAlign: 'center', flexShrink: 0 }}>
@@ -267,7 +333,7 @@ function AdminManagement() {
             {/* ── Governing Body Tab ── */}
             {isGbTab && (
               <>
-                <p className="admin-edit-hint">Click a card to edit. Click the + box to add a new member.</p>
+                <p className="admin-edit-hint">Click Edit on a card to change it. Click the + box to add a new member.</p>
                 {gbLoading ? (
                   <AdminLoading text="Loading governing body..." />
                 ) : (
@@ -299,6 +365,7 @@ function AdminManagement() {
                       <AdminStaffCard
                         key={member._id}
                         member={member}
+                        editButton
                         isEditing={editGbId === member._id}
                         editForm={gbForm}
                         onFormChange={setGbForm}
@@ -321,7 +388,7 @@ function AdminManagement() {
             {/* ── Local Governing Body Tab ── */}
             {isLgbTab && (
               <>
-                <p className="admin-edit-hint">Click a card to edit. Click the + box to add a new member.</p>
+                <p className="admin-edit-hint">Click Edit on a card to change it. Click the + box to add a new member.</p>
                 {lgbLoading ? (
                   <AdminLoading text="Loading local governing body..." />
                 ) : (
@@ -353,6 +420,7 @@ function AdminManagement() {
                       <AdminStaffCard
                         key={member._id}
                         member={member}
+                        editButton
                         isEditing={editLgbId === member._id}
                         editForm={lgbForm}
                         onFormChange={setLgbForm}
@@ -375,16 +443,9 @@ function AdminManagement() {
             {/* ── Management Role Tabs (Founder/Chairman/etc.) ── */}
             {!isGbTab && !isLgbTab && (
               <>
-                <p className="admin-edit-hint">Click the card to edit.</p>
-
-                {/* Preview mode */}
+                {/* Preview mode — live view; editing starts from the button below */}
                 {!editingRole ? (
-                  <div
-                    className="placement-officer-card"
-                    onClick={() => setEditingRole(true)}
-                    style={{ cursor: 'pointer' }}
-                    title="Click to edit"
-                  >
+                  <div className="placement-officer-card">
                     <div className="placement-officer-left">
                       {form.photoUrl ? (
                         <div className="placement-officer-photo">
@@ -403,7 +464,7 @@ function AdminManagement() {
                       {form.message ? (
                         form.message.split('\n').filter((p) => p.trim()).map((para, i) => <p key={i}>{para}</p>)
                       ) : (
-                        <p style={{ fontStyle: 'italic', color: '#aaa' }}>No message added yet. Click to edit.</p>
+                        <p style={{ fontStyle: 'italic', color: '#aaa' }}>No message added yet.</p>
                       )}
                     </div>
                   </div>
@@ -425,6 +486,17 @@ function AdminManagement() {
                       <textarea value={form.message} onChange={(e) => handleChange('message', e.target.value)} placeholder="Write the message or about section..." rows={6}
                         style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', color: '#555', lineHeight: '1.75', resize: 'vertical', boxSizing: 'border-box', minHeight: '120px' }} />
                     </div>
+                  </div>
+                )}
+
+                {!editingRole && (
+                  <div style={{ marginTop: '16px', display: 'flex', gap: '10px' }}>
+                    <button className="btn btn-primary" onClick={() => setEditingRole(true)}>
+                      {activeEntry ? 'Edit Section' : 'Add Content'}
+                    </button>
+                    {activeEntry && (
+                      <button className="btn btn-danger btn-sm" onClick={handleDelete}>Delete</button>
+                    )}
                   </div>
                 )}
 
