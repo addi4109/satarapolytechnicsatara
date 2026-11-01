@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState, useEffect } from 'react';
+import { lazy, Suspense, useState, useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import SEO from './components/SEO';
 import Navbar from './components/Navbar';
@@ -159,6 +159,7 @@ function AppLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const isAdmin = location.pathname.startsWith('/admin');
+  const prevPathRef = useRef(location.pathname);
 
   // Inertial (Lenis) scrolling on public pages; admin keeps native scroll.
   useEffect(() => {
@@ -192,11 +193,22 @@ function AppLayout() {
     return () => document.removeEventListener('click', handleClick);
   }, [navigate]);
 
-  // Scroll to top on every route change (skip admin, which manages its own layout).
+  // Scroll to top on route changes, except when moving between Life@SPS
+  // sidebar pages so the reader keeps their position in the section.
   useEffect(() => {
-    if (!isAdmin) {
-      scrollToTopImmediate();
-    }
+    const prevPath = prevPathRef.current;
+    prevPathRef.current = location.pathname;
+
+    if (isAdmin) return;
+
+    const isLifePath = (path) =>
+      path.startsWith('/activities') ||
+      path.startsWith('/campus') ||
+      path.startsWith('/gallery');
+
+    if (isLifePath(prevPath) && isLifePath(location.pathname)) return;
+
+    scrollToTopImmediate();
   }, [location.pathname, isAdmin]);
 
   // Global scroll-reveal engine: animates [data-reveal] elements into view.
