@@ -1,56 +1,11 @@
-/* ===== Header (white nav bar) =====
-   Sticky: pins to the top of the viewport once the top strip above has
-   scrolled away, so the tabs stay reachable. z-index keeps it above page
-   content and holds the mobile drawer backdrop inside this header's
-   stacking context. */
+/* ===== Header (navy nav bar) =====
+   Sticky: pins to the top of the viewport so the tabs stay reachable.
+   z-index keeps it above page content and holds the mobile drawer
+   backdrop inside this header's stacking context. */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 1000;
-}
-
-/* ===== top strip =====
-   Stays at its fixed place at the top of the page and scrolls away with
-   it — only the nav bar below is sticky. */
-.top-strip {
-  background: var(--sp-navy-deep);
-  color: #c5cad4;
-  font-size: 12px;
-  padding: 4px 0;
-}
-
-.top-strip-inner {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-
-.top-strip span {
-  white-space: nowrap;
-  min-width: 0;
-}
-
-.top-strip .top-left,
-.top-strip .top-right {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.top-strip-link {
-  color: #c5cad4;
-  text-decoration: none;
-  transition: color 0.15s;
-}
-
-.top-strip-link:hover {
-  color: #fff;
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 /* ===== single-bar header: identity block + tabs in front ===== */
@@ -548,8 +503,7 @@
   color: var(--sp-muted);
 }
 
-/* Drawer-only search item: hidden by default, shown only <= 640px where
-   the top strip (with its search box) is display: none. */
+/* Drawer-only search item: hidden by default, shown only <= 640px. */
 .mobile-search-item {
   display: none;
 }
@@ -909,10 +863,6 @@
 }
 
 @media (max-width: 640px) {
-  .top-strip {
-    display: none;
-  }
-
   .main-header-inner {
     padding: 10px 16px;
   }

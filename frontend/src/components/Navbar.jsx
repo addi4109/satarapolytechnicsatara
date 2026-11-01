@@ -202,10 +202,6 @@ function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Real contact details (previously placeholder numbers).
-  const PHONE = '+91-94233 42843';
-  const EMAIL = 'satarapolyinfo@gmail.com';
-
   // Fetch cells & departments for the dropdowns. Uses exponential backoff
   // because a cold-started backend (Render free tier) can take ~1 min to
   // answer the first request; without retry the dropdowns fall back to
@@ -450,62 +446,8 @@ function Navbar() {
 
   return (
     <>
-      {/* Top strip — at its fixed place at the top of the page, scrolls
-          away with it. */}
-      <div className="top-strip">
-        <div className="top-strip-inner">
-          <span className="top-left">
-            <a href={`tel:${PHONE.replace(/[^+\d]/g, '')}`} className="top-strip-link">
-              <span aria-hidden="true">📞</span> {PHONE}
-            </a>
-          </span>
-          <form className="top-search-wrap" role="search" onSubmit={handleSearchSubmit}>
-            <input
-              type="search"
-              className="top-search-input"
-              placeholder="Search pages…"
-              aria-label="Search site"
-              value={query}
-              onChange={(e) => {
-                setQuery(e.target.value);
-                setShowResults(true);
-              }}
-              onFocus={() => setShowResults(true)}
-              onKeyDown={(e) => e.key === 'Escape' && setShowResults(false)}
-            />
-            <button type="submit" className="top-search-btn" aria-label="Search">
-              <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
-                <circle cx="11" cy="11" r="7" />
-                <line x1="16.5" y1="16.5" x2="21" y2="21" />
-              </svg>
-            </button>
-            {showResults && query.trim() && (
-              <ul className="top-search-results">
-                {searchResults.length === 0 ? (
-                  <li className="top-search-empty">No matching pages found</li>
-                ) : (
-                  searchResults.map((r) => (
-                    <li key={r.link}>
-                      <button type="button" onClick={() => handleSearchSelect(r.link)}>
-                        <span className="result-label">{r.label}</span>
-                        {r.section && <span className="result-section">{r.section}</span>}
-                      </button>
-                    </li>
-                  ))
-                )}
-              </ul>
-            )}
-          </form>
-          <span className="top-right">
-            <a href={`mailto:${EMAIL}`} className="top-strip-link">
-              <span aria-hidden="true">✉</span> {EMAIL}
-            </a>
-          </span>
-        </div>
-      </div>
-
       {/* single-bar header: identity block on the left, tabs in front.
-          Sticky — pins below the viewport top once the strip scrolls off. */}
+          Sticky — stays pinned to the top of the viewport. */}
       <header className="site-header main-header">
         <div className="main-header-inner">
           <Link to="/" className="logo-area" aria-label="Satara Polytechnic, Satara — Home">
