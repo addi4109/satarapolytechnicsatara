@@ -188,3 +188,10 @@
     flex-direction: column;
   }
 }
+
+/* On phones the four highlight cards are hidden; the poster stands alone. */
+@media (max-width: 768px) {
+  .pr-banner-side {
+    display: none;
+  }
+}
