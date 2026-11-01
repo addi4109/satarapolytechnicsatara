@@ -6,6 +6,7 @@ import './DepartmentsPage.css';
 import './Gallery.css';
 
 import API_URL from '../lib/api';
+import { getDepartmentFallback } from '../data/departmentFallbacks';
 const years = ['1st Year', '2nd Year', '3rd Year'];
 // Fallback academic year label (April–March) when the admin hasn't set one
 const now = new Date();
@@ -21,7 +22,7 @@ function DepartmentsPage() {
     VALID_TABS.includes(tabParam) ? tabParam : 'about'
   );
   const [departments, setDepartments] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [lightbox, setLightbox] = useState(null);
 
@@ -63,7 +64,18 @@ function DepartmentsPage() {
   };
 
   const activeSlug = deptId || (departments.length > 0 ? departments[0].slug : '');
-  const dept = departments.find((d) => d.slug === activeSlug) || departments[0];
+  const selectedDept = departments.find((d) => d.slug === activeSlug) || departments[0];
+  const fallbackDept = getDepartmentFallback(activeSlug);
+  const dept = selectedDept
+    ? {
+        ...(fallbackDept || {}),
+        ...selectedDept,
+        about: selectedDept.about || fallbackDept?.about || '',
+        image: selectedDept.image || fallbackDept?.image || '',
+      }
+    : fallbackDept;
+  const facultyCount = dept?.faculty?.length ? dept.faculty.length + 1 : dept?.facultyCount || 0;
+  const labsCount = dept?.labs?.length || dept?.labsCount || 0;
 
   // Year -> semester -> subject grouping for the Curriculum / Syllabus tables
   const curriculumYears = years
@@ -98,7 +110,7 @@ function DepartmentsPage() {
   ];
 
 
-  if (error) {
+  if (error && !dept) {
     return (
       <>
         <PageBanner
@@ -115,8 +127,6 @@ function DepartmentsPage() {
       </>
     );
   }
-
-  if (loading) return null;
 
   if (!dept) {
     return (
@@ -214,11 +224,11 @@ function DepartmentsPage() {
                     </div>
                   )}
                   <div className="stat-box">
-                    <span className="stat-num">{(dept.faculty?.length || 0) + 1}</span>
+                      <span className="stat-num">{facultyCount}</span>
                     <span className="stat-txt">Faculty</span>
                   </div>
                   <div className="stat-box">
-                    <span className="stat-num">{dept.labs?.length || 0}</span>
+                      <span className="stat-num">{labsCount}</span>
                     <span className="stat-txt">Labs</span>
                   </div>
                   {dept.slug !== 'general-science' && !dept.name?.toLowerCase().includes('general science') && (
