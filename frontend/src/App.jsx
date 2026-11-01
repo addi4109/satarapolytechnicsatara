@@ -1,5 +1,5 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import SEO from './components/SEO';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -157,6 +157,7 @@ function HomePage() {
 
 function AppLayout() {
   const location = useLocation();
+  const navigate = useNavigate();
   const isAdmin = location.pathname.startsWith('/admin');
 
   // Inertial (Lenis) scrolling on public pages; admin keeps native scroll.
@@ -165,6 +166,31 @@ function AppLayout() {
     initSmoothScroll();
     return () => destroySmoothScroll();
   }, [isAdmin]);
+
+  // Route internal <a href="/..."> clicks through the client router so pages
+  // change without a full reload. External links, mail/tel, hash links,
+  // new-tab links and downloads are left to the browser.
+  useEffect(() => {
+    function handleClick(event) {
+      if (event.defaultPrevented || event.button !== 0) return;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (!(event.target instanceof Element)) return;
+
+      const anchor = event.target.closest('a');
+      if (!anchor) return;
+      if (anchor.target && anchor.target !== '_self') return;
+      if (anchor.hasAttribute('download')) return;
+
+      const href = anchor.getAttribute('href');
+      if (!href || !href.startsWith('/') || href.startsWith('//')) return;
+
+      event.preventDefault();
+      navigate(href);
+    }
+
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, [navigate]);
 
   // Scroll to top on every route change (skip admin, which manages its own layout).
   useEffect(() => {
