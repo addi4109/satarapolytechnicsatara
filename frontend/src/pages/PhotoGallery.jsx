@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import { SkeletonCards } from "../components/Skeleton";
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import PageSidebar from '../components/PageSidebar';
@@ -72,9 +71,7 @@ function PhotoGallery() {
           infrastructure, and everyday moments that make our college vibrant.
         </p>
 
-        {loading ? (
-          <SkeletonCards count={8} />
-        ) : photos.length === 0 ? (
+        {loading ? null : photos.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>No photos available yet.</p>
         ) : (
           <div className="photo-grid">

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { SkeletonPage } from "../components/Skeleton";
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
@@ -20,14 +19,8 @@ function CellDetail() {
       .finally(() => setLoading(false));
   }, [cellId]);
 
-  if (loading) {
-    return (
-      <>
-        <SEO title="Cell | Satara Polytechnic" description="Loading cell details..." url={`/cells/${cellId}`} />
-        <SkeletonPage />
-      </>
-    );
-  }
+
+  if (loading) return null;
 
   if (!cell) {
     return (

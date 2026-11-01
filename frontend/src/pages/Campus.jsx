@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { SkeletonPage } from "../components/Skeleton";
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
@@ -37,7 +36,7 @@ function Campus() {
   const { page } = useParams();
   const [active, setActive] = useState('library');
   const [sections, setSections] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     if (page && routeMap[page]) {
@@ -119,14 +118,6 @@ function Campus() {
     window.history.replaceState(null, '', `/campus/${id}`);
   };
 
-  if (loading) {
-    return (
-      <>
-        <SEO title="Campus | Satara Polytechnic" description="Explore campus facilities at Satara Polytechnic." keywords="college campus, library, canteen" url="/campus" />
-        <SkeletonPage />
-      </>
-    );
-  }
 
   return (
     <>

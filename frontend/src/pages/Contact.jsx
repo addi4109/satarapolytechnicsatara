@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { SkeletonPage } from "../components/Skeleton";
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
@@ -35,7 +34,7 @@ function Contact() {
   const { page } = useParams();
   const [active, setActive] = useState('contact');
   const [contactData, setContactData] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [feedbackForm, setFeedbackForm] = useState({ name: '', email: '', phone: '', subject: '', message: '', rating: 0 });
   const [feedbackSent, setFeedbackSent] = useState(false);
 
@@ -88,14 +87,6 @@ function Contact() {
     active === 'office' ? 'Office Contacts' :
     active === 'feedback' ? 'Feedback' : 'Contact Us';
 
-  if (loading) {
-    return (
-      <>
-        <SEO title="Contact Us | Satara Polytechnic" description="Get in touch with Satara Polytechnic, Satara." keywords="contact Satara Polytechnic, college phone, college email" url="/contact" />
-        <SkeletonPage />
-      </>
-    );
-  }
 
   return (
     <>

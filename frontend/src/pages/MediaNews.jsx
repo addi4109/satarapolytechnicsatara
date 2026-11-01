@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import { SkeletonCards } from "../components/Skeleton";
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import PageSidebar from '../components/PageSidebar';
@@ -81,9 +80,7 @@ function MediaNews() {
           events, and activities from various newspapers and publications.
         </p>
 
-        {loading ? (
-          <SkeletonCards count={6} />
-        ) : newsItems.length === 0 ? (
+        {loading ? null : newsItems.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>No news available yet.</p>
         ) : (
           <>

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { SkeletonPage } from "../components/Skeleton";
 import { useParams, Link } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
@@ -40,7 +39,7 @@ function Admissions() {
   const { page } = useParams();
   const [active, setActive] = useState('overview');
   const [sections, setSections] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     if (page && routeMap[page]) {
@@ -172,14 +171,6 @@ function Admissions() {
 
   const getSection = (key) => sections[key] || {};
 
-  if (loading) {
-    return (
-      <>
-        <SEO title="Admissions | Satara Polytechnic" description="Diploma admission information at Satara Polytechnic." keywords="polytechnic admission, fee structure" url="/admissions/overview" />
-        <SkeletonPage />
-      </>
-    );
-  }
 
   return (
     <>

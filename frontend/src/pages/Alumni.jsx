@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { SkeletonPage } from "../components/Skeleton";
 import API_URL from '../lib/api';
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
@@ -28,7 +27,6 @@ const sidebarLinks = [
 function Alumni() {
   const { page } = useParams();
   const [active, setActive] = useState('about');
-  const [loading] = useState(false);
   const [entrepreneurs, setEntrepreneurs] = useState([]);
   const [associationMembers, setAssociationMembers] = useState([]);
   const [alumniVision, setAlumniVision] = useState(null);
@@ -80,14 +78,6 @@ function Alumni() {
     active === 'association' ? 'Alumni Association' :
     'Alumni Registration Form';
 
-  if (loading) {
-    return (
-      <>
-        <SEO title="Alumni | Satara Polytechnic" description="Alumni network of Satara Polytechnic, Satara." keywords="alumni, Satara Polytechnic alumni" url="/alumni" />
-        <SkeletonPage />
-      </>
-    );
-  }
 
   return (
     <>

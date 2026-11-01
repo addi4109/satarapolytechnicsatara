@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import { SkeletonPage } from "../components/Skeleton";
 import { useParams, useSearchParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
@@ -98,14 +97,6 @@ function DepartmentsPage() {
     { id: 'newsletter', label: 'Newsletter' },
   ];
 
-  if (loading) {
-    return (
-      <>
-        <SEO title="Departments | Satara Polytechnic" description="Explore 6 engineering departments at Satara Polytechnic." keywords="engineering departments, polytechnic departments" url="/departments/computer" />
-        <SkeletonPage />
-      </>
-    );
-  }
 
   if (error) {
     return (
@@ -124,6 +115,8 @@ function DepartmentsPage() {
       </>
     );
   }
+
+  if (loading) return null;
 
   if (!dept) {
     return (

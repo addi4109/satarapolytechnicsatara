@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { SkeletonPage } from "../components/Skeleton";
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
@@ -305,7 +304,7 @@ function AboutCollege() {
   const [lgbMembers, setLgbMembers] = useState([]);
   const [programs, setPrograms] = useState([]);
   const [campusSections, setCampusSections] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [lightbox, setLightbox] = useState(null);
 
   // Switch sidebar tab and keep the URL in sync (e.g. /about/registrar).
@@ -522,14 +521,6 @@ function AboutCollege() {
     );
   };
 
-  if (loading) {
-    return (
-      <>
-        <SEO title="About College | Satara Polytechnic" description="Learn about Satara Polytechnic, Satara - its history, vision, mission, and leadership." keywords="about Satara Polytechnic, college history" url="/about/college" />
-        <SkeletonPage />
-      </>
-    );
-  }
 
   const getInstitute = () => about.institute || {};
   const getDisclosure = () => about.disclosure || {};

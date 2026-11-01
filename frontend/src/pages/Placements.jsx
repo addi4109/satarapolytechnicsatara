@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import { SkeletonPage } from "../components/Skeleton";
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
@@ -31,7 +30,7 @@ function Placements() {
   const [sections, setSections] = useState({});
   const [placementCell, setPlacementCell] = useState(null);
   const [gallery, setGallery] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [lightbox, setLightbox] = useState(null);
 
   const closeLightbox = useCallback(() => setLightbox(null), []);
@@ -105,14 +104,6 @@ function Placements() {
 
   const getSection = (key) => sections[key] || {};
 
-  if (loading) {
-    return (
-      <>
-        <SEO title="Placements | Satara Polytechnic" description="Training & Placement Cell at Satara Polytechnic offering campus recruitment drives." keywords="polytechnic placements, campus recruitment" url="/placements" />
-        <SkeletonPage />
-      </>
-    );
-  }
 
   return (
     <>

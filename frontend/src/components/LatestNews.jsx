@@ -262,18 +262,7 @@ function LatestNews() {
           </p>
         </div>
 
-        {loading ? (
-          <div className="latest-news-grid">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div className="news-card-skeleton" key={i}>
-                <div className="news-card-skel-img" />
-                <div className="news-card-skel-line short" />
-                <div className="news-card-skel-line" />
-                <div className="news-card-skel-line short" />
-              </div>
-            ))}
-          </div>
-        ) : news.length === 0 ? (
+        {loading ? null : news.length === 0 ? (
           <div className="latest-news-empty">
             <p>No news added yet.</p>
           </div>

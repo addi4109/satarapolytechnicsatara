@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { SkeletonTable } from "../components/Skeleton";
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import './Notices.css';
@@ -51,9 +50,7 @@ function Notices() {
 
       <div className="notices-page-wrap">
         <div className="fee-table-wrap notices-doc-table-wrap">
-          {loading ? (
-            <SkeletonTable rows={8} cols={4} />
-          ) : notices.length === 0 ? (
+          {loading ? null : notices.length === 0 ? (
             <div className="notices-empty">
               <p>No notices available.</p>
             </div>

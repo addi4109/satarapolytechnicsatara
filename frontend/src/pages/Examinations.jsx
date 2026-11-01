@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { SkeletonPage } from "../components/Skeleton";
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
@@ -32,7 +31,7 @@ function Examinations() {
   const { page } = useParams();
   const [active, setActive] = useState('schedule');
   const [sections, setSections] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     if (page && routeMap[page]) {
@@ -61,14 +60,6 @@ function Examinations() {
 
   const getSection = (key) => sections[key] || {};
 
-  if (loading) {
-    return (
-      <>
-        <SEO title="Examination | Satara Polytechnic" description="MSBTE exam schedule, rules, and results." keywords="MSBTE exam, exam schedule, results" url="/examination" />
-        <SkeletonPage />
-      </>
-    );
-  }
 
   return (
     <>

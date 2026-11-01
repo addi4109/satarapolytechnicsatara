@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import { SkeletonPage } from "../components/Skeleton";
 import { useParams } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
@@ -47,7 +46,7 @@ function Activities() {
   const { page } = useParams();
   const [active, setActive] = useState('sports');
   const [sections, setSections] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [lightbox, setLightbox] = useState(null);
 
   const closeLightbox = useCallback(() => setLightbox(null), []);
@@ -91,14 +90,6 @@ function Activities() {
     window.history.replaceState(null, '', `/activities/${id}`);
   };
 
-  if (loading) {
-    return (
-      <>
-        <SEO title="Activities | Satara Polytechnic" description="Student activities at Satara Polytechnic." keywords="college activities, sports, cultural events" url="/activities" />
-        <SkeletonPage />
-      </>
-    );
-  }
 
   return (
     <>

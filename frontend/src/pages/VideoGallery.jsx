@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { SkeletonCards } from "../components/Skeleton";
 import PageBanner from '../components/PageBanner';
 import SEO, { breadcrumbSchema } from '../components/SEO';
 import PageSidebar from '../components/PageSidebar';
@@ -68,9 +67,7 @@ function VideoGallery() {
           Stay connected with everything happening at Satara Polytechnic.
         </p>
 
-        {loading ? (
-          <SkeletonCards count={6} />
-        ) : videos.length === 0 ? (
+        {loading ? null : videos.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#888', padding: '40px' }}>No videos available yet.</p>
         ) : (
           <div className="video-grid">
