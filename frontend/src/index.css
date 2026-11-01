@@ -41,38 +41,20 @@ body {
   min-height: 100vh;
 }
 
-/* Home page: muted, flat colour bands so sections read as separate
-   chapters. Solid colours only — no gradients or glow effects. */
+/* Home page: one flat background across every section instead of
+   alternating white/grey blocks. Flat colour only — no gradients. */
 .home-page {
   background: var(--sp-page);
 }
 
-.home-page .welcome-section {
-  background: var(--sp-cream);
-}
-
-.home-page .why-section {
-  background: #eef2f8;
-}
-
-.home-page .dept-section {
-  background: #fff;
-}
-
-.home-page .pr-banner-section {
-  background: #fbf6ea;
-}
-
-.home-page .recruiters-section {
-  background: var(--sp-teal-tint);
-}
-
-.home-page .latest-news-section {
-  background: var(--sp-page);
-}
-
+.home-page .welcome-section,
+.home-page .why-section,
+.home-page .dept-section,
+.home-page .pr-banner-section,
+.home-page .recruiters-section,
+.home-page .latest-news-section,
 .home-page .contact-section {
-  background: var(--sp-cream);
+  background: transparent;
 }
 
 /* Full-bleed elements should never force a horizontal scrollbar */
