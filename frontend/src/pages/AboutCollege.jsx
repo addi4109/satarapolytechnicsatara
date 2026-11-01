@@ -740,8 +740,6 @@ function AboutCollege() {
                   </ul>
                 </div>
               </div>
-                </div>
-              </div>
 
               {/* Box 6: Educational Approach */}
               <div className="about-box">
