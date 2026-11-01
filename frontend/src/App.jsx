@@ -142,15 +142,16 @@ function HomePage() {
           },
         }}
       />
-      <ImageSlider />
-      <NoticeTicker />
-      <WelcomeSection />
-      <Departments />
-      <PlacementRecordBanner />
-      <Recruiters />
-      <LatestNews />
-      <ContactMap />
-    </Suspense>
+      <div className="home-page">
+        <ImageSlider />
+        <NoticeTicker />
+        <WelcomeSection />
+        <Departments />
+        <PlacementRecordBanner />
+        <Recruiters />
+        <LatestNews />
+        <ContactMap />
+      </div>    </Suspense>
   );
 }
 
