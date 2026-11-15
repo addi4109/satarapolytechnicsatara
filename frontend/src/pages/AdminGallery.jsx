@@ -11,7 +11,7 @@ import API_URL from '../lib/api';
 
 const emptyPhoto = { title: '', image: '', description: '', order: 0 };
 const emptyPlacementPhoto = { title: '', image: '', description: '', order: 0 };
-const emptyVideo = { title: '', videoUrl: '', thumbnail: '', description: '', order: 0 };
+const emptyVideo = { title: '', videoUrl: '', description: '', order: 0 };
 const emptyNews = { title: '', date: '', source: '', summary: '', image: '', order: 0 };
 const emptySlide = { image: '', title: '', subtitle: '', link: '', order: 0 };
 
@@ -164,14 +164,9 @@ function AdminGallery() {
             <div className="form-group">
               <VideoUpload value={form.videoUrl || ''} onChange={(url) => setForm({ ...form, videoUrl: url })} label="Video *" placeholder="Upload video..." />
             </div>
-            <div style={{ display: 'flex', gap: '8px' }}>
-              <div className="form-group" style={{ flex: 1 }}>
-                <ImageUpload value={form.thumbnail || ''} onChange={(url) => setForm({ ...form, thumbnail: url })} label="" placeholder="Thumbnail..." />
-              </div>
-              <div className="form-group" style={{ width: '80px' }}>
-                <label style={{ fontSize: '12px', fontWeight: 600 }}>Order</label>
-                <input type="number" value={form.order || 0} onChange={(e) => setForm({ ...form, order: Number(e.target.value) })} min={0} />
-              </div>
+            <div className="form-group" style={{ width: '100px' }}>
+              <label style={{ fontSize: '12px', fontWeight: 600 }}>Order</label>
+              <input type="number" value={form.order || 0} onChange={(e) => setForm({ ...form, order: Number(e.target.value) })} min={0} />
             </div>
             <div className="form-group">
               <label style={{ fontSize: '12px', fontWeight: 600 }}>Description</label>
@@ -334,7 +329,7 @@ function AdminGallery() {
               ) : (
                 <AdminContentCard
                   key={v._id}
-                  image={v.thumbnail}
+                  video={v.videoUrl}
                   imageAlt={v.title}
                   placeholderIcon="▶"
                   imageHeight="160px"

@@ -98,9 +98,22 @@ function VideoGallery() {
                       style={{ cursor: 'pointer' }}
                       onClick={() => video.videoUrl && setPlaying(video._id)}
                     >
-                      {video.thumbnail ? (
-                        <img src={video.thumbnail} alt={video.title} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0 }} />
-                      ) : null}
+                      {isYouTube(video.videoUrl) ? (
+                        <iframe
+                          src={getYouTubeEmbed(video.videoUrl)}
+                          title={video.title}
+                          tabIndex={-1}
+                          style={{ width: '100%', height: '100%', border: 'none', position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }}
+                        />
+                      ) : (
+                        <video
+                          src={video.videoUrl}
+                          muted
+                          playsInline
+                          preload="metadata"
+                          style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0 }}
+                        />
+                      )}
                       <span className="video-play-btn">▶</span>
                     </div>
                   )}

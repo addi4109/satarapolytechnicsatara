@@ -15,6 +15,7 @@
  */
 function AdminContentCard({
   image,
+  video,
   imageAlt = '',
   imageHeight = '160px',
   placeholderIcon = '',
@@ -37,7 +38,16 @@ function AdminContentCard({
       style={style}
     >
       {/* Image area */}
-      {image ? (
+      {video ? (
+        <video
+          src={video}
+          className="admin-content-card-img"
+          style={{ height: imageHeight }}
+          muted
+          playsInline
+          preload="metadata"
+        />
+      ) : image ? (
         <img src={image} alt={imageAlt} className="admin-content-card-img" style={{ height: imageHeight }} />
       ) : placeholderIcon ? (
         <div className="admin-content-card-placeholder" style={{ height: imageHeight }}>
