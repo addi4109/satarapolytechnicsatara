@@ -4,6 +4,7 @@ import AdminAlert from '../components/AdminAlert';
 import AdminLoading from '../components/AdminLoading';
 import ImageUpload from '../components/ImageUpload';
 import PdfUpload from '../components/PdfUpload';
+import { STATIC_CONTENT } from '../data/staticContent';
 import './Academics.css';
 
 import API_URL from '../lib/api';
@@ -69,10 +70,11 @@ function AdminPlacements() {
 
   useEffect(() => {
     const existing = sections[activeTab];
+    const aboutFallback = activeTab === 'about' ? STATIC_CONTENT.placements.about : '';
     if (existing) {
       setForm({
         title: existing.title || '',
-        content: existing.content || '',
+        content: existing.content || aboutFallback,
         steps: existing.steps || [],
         records: existing.records || [],
         recordTable: existing.recordTable || [],
@@ -87,7 +89,7 @@ function AdminPlacements() {
         active: existing.active !== false,
       });
     } else {
-      setForm({ ...defaultSection });
+      setForm({ ...defaultSection, content: aboutFallback });
     }
     setMsg(null);
     resetInputs();
@@ -106,11 +108,12 @@ function AdminPlacements() {
 
   const cancelEditing = () => {
     const existing = sections[activeTab];
+    const aboutFallback = activeTab === 'about' ? STATIC_CONTENT.placements.about : '';
     if (existing) {
       setForm({
-        title: existing.title || '', content: existing.content || '', steps: existing.steps || [], records: existing.records || [], recordTable: existing.recordTable || [], recordImages: existing.recordImages || [], recordBanner: existing.recordBanner || '', recruiters: existing.recruiters || [], officerName: existing.officerName || '', officerPhoto: existing.officerPhoto || '', officerQual: existing.officerQual || '', officerMsg: existing.officerMsg || '', officeTeam: existing.officeTeam || [], active: existing.active !== false,
+        title: existing.title || '', content: existing.content || aboutFallback, steps: existing.steps || [], records: existing.records || [], recordTable: existing.recordTable || [], recordImages: existing.recordImages || [], recordBanner: existing.recordBanner || '', recruiters: existing.recruiters || [], officerName: existing.officerName || '', officerPhoto: existing.officerPhoto || '', officerQual: existing.officerQual || '', officerMsg: existing.officerMsg || '', officeTeam: existing.officeTeam || [], active: existing.active !== false,
       });
-    } else { setForm({ ...defaultSection }); }
+    } else { setForm({ ...defaultSection, content: aboutFallback }); }
     setView('preview'); resetInputs();
   };
 
@@ -277,7 +280,7 @@ function AdminPlacements() {
         {/* Form */}
         <div className="admin-card">
           <div className="admin-card-header">
-            <h3>{activeTab === 'records' ? 'Placement Records' : activeTab === 'about' ? 'Placement Officer & Team' : activeTab === 'process' ? 'Placement Process Steps' : activeTab === 'recruiters' ? 'Our Recruiters' : 'Section Content'}</h3>
+            <h3>{activeTab === 'records' ? 'Placement Records' : activeTab === 'about' ? 'About Placement Cell' : activeTab === 'process' ? 'Placement Process Steps' : activeTab === 'recruiters' ? 'Our Recruiters' : 'Section Content'}</h3>
             {sections[activeTab] && (
               <button className="btn btn-danger btn-sm" onClick={handleDelete}>Delete</button>
             )}
@@ -296,10 +299,10 @@ function AdminPlacements() {
               </div>
             )}
 
-            {/* Content - hidden for records, about, process, and recruiters */}
-            {activeTab !== 'records' && activeTab !== 'about' && activeTab !== 'process' && activeTab !== 'recruiters' && (
+            {/* Content - hidden for records, process, and recruiters */}
+            {activeTab !== 'records' && activeTab !== 'process' && activeTab !== 'recruiters' && (
               <div className="form-group">
-                <label>Content</label>
+                <label>{activeTab === 'about' ? 'About Placement Cell Content' : 'Content'}</label>
                 <textarea
                   value={form.content}
                   onChange={(e) => handleChange('content', e.target.value)}
@@ -677,10 +680,11 @@ function AdminPlacements() {
               <button
                 className="btn btn-secondary"
                 onClick={() => {
+                  const aboutFallback = activeTab === 'about' ? STATIC_CONTENT.placements.about : '';
                   if (sections[activeTab]) {
                     setForm({
                       title: sections[activeTab].title || '',
-                      content: sections[activeTab].content || '',
+                      content: sections[activeTab].content || aboutFallback,
                       steps: sections[activeTab].steps || [],
                       records: sections[activeTab].records || [],
                       recordTable: sections[activeTab].recordTable || [],
@@ -695,7 +699,7 @@ function AdminPlacements() {
                       active: sections[activeTab].active !== false,
                     });
                   } else {
-                    setForm({ ...defaultSection });
+                    setForm({ ...defaultSection, content: aboutFallback });
                   }
                   setMsg(null);
                   resetInputs();
