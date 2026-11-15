@@ -538,6 +538,7 @@
   color: #666;
   line-height: 1.7;
   margin: 0 0 16px;
+  white-space: pre-line;
 }
 
 .preview-members-table {

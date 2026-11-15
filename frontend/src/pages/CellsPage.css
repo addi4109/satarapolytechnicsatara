@@ -159,6 +159,7 @@
   color: #555;
   line-height: 1.8;
   margin: 0 0 18px;
+  white-space: pre-line;
 }
 
 .cell-block-section {
@@ -271,6 +272,7 @@
   padding: 16px 20px;
   background: #f9fafc;
   border-radius: 6px;
+  white-space: pre-line;
 }
 
 @media (max-width: 768px) {
