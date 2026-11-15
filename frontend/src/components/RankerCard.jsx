@@ -13,7 +13,6 @@ const initialsOf = (name = '') =>
 
 function RankerCard({ ranker }) {
   const roman = ROMAN[ranker.rank] || String(ranker.rank || '');
-  const meta = [ranker.year, ranker.score].filter(Boolean).join(' • ');
 
   return (
     <article
@@ -40,8 +39,6 @@ function RankerCard({ ranker }) {
             {ranker.branch}
           </p>
         )}
-
-        {meta && <p className="ranker-meta-line">{meta}</p>}
       </div>
 
       <div className="ranker-divider" />
