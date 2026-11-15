@@ -68,6 +68,7 @@ const Departments = lazyWithRetry(() => import('./components/Departments'));
 const PlacementRecordBanner = lazyWithRetry(() => import('./components/PlacementRecordBanner'));
 const Recruiters = lazyWithRetry(() => import('./components/Recruiters'));
 const LatestNews = lazyWithRetry(() => import('./components/LatestNews'));
+const InstituteRankers = lazyWithRetry(() => import('./components/InstituteRankers'));
 const ContactMap = lazyWithRetry(() => import('./components/ContactMap'));
 const AboutCollege = lazyWithRetry(() => import('./pages/AboutCollege'));
 const Academics = lazyWithRetry(() => import('./pages/Academics'));
@@ -108,6 +109,7 @@ const AdminContact = lazyWithRetry(() => import('./pages/AdminContact'));
 const AdminEnquiries = lazyWithRetry(() => import('./pages/AdminEnquiries'));
 const AdminFeedbacks = lazyWithRetry(() => import('./pages/AdminFeedbacks'));
 const AdminAlumni = lazyWithRetry(() => import('./pages/AdminAlumni'));
+const AdminRankers = lazyWithRetry(() => import('./pages/AdminRankers'));
 
 // Loading fallback
 function PageLoader() {
@@ -151,6 +153,7 @@ function HomePage() {
         <PlacementRecordBanner />
         <Recruiters />
         <LatestNews />
+        <InstituteRankers />
         <ContactMap />
       </div>    </Suspense>
   );
@@ -274,6 +277,7 @@ function AppLayout() {
           <Route path="/admin/enquiries" element={<AdminEnquiries />} />
           <Route path="/admin/feedbacks" element={<AdminFeedbacks />} />
           <Route path="/admin/alumni" element={<AdminAlumni />} />
+          <Route path="/admin/rankers" element={<AdminRankers />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </Suspense>

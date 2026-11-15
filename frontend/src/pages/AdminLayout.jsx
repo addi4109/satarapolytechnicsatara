@@ -54,6 +54,7 @@ function AdminLayout({ children }) {
     { to: '/admin/cells', label: 'Cells & Committees' },
     { to: '/admin/departments', label: 'Departments' },
     { to: '/admin/gallery', label: 'Gallery' },
+    { to: '/admin/rankers', label: 'Institute Rankers' },
     { to: '/admin/campus', label: 'Campus' },
     { to: '/admin/activities', label: 'Activities' },
     { to: '/admin/examinations', label: 'Examination' },
