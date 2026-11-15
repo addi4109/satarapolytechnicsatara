@@ -14,8 +14,8 @@
 .ranker-card {
   position: relative;
   width: 100%;
-  max-width: 401px;
-  height: 440px;
+  max-width: 360px;
+  height: 420px;
   display: flex;
   flex-direction: column;
   background: #fff;
@@ -33,19 +33,19 @@
 }
 
 .ranker-profile-section {
-  height: 230px;
-  flex: 0 0 230px;
-  padding-top: 28px;
+  height: 220px;
+  flex: 0 0 220px;
+  padding-top: 26px;
   position: relative;
   z-index: 1;
 }
 
 .ranker-dots-bg {
   position: absolute;
-  width: 320px;
-  height: 220px;
+  width: 305px;
+  height: 205px;
   left: 50%;
-  top: 45px;
+  top: 42px;
   transform: translateX(-50%);
   background-image: radial-gradient(
     circle,
@@ -69,8 +69,8 @@
 }
 
 .ranker-profile-image {
-  width: 145px;
-  height: 145px;
+  width: 140px;
+  height: 140px;
   border: 4px solid var(--sp-gold, #c8963e);
   border-radius: 50%;
   margin: auto;
@@ -159,6 +159,6 @@
 @media (max-width: 860px) {
   .rankers-grid > .ranker-card {
     flex-basis: 100%;
-    max-width: 401px;
+    max-width: 360px;
   }
 }
