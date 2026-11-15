@@ -3,26 +3,13 @@ import AdminLayout from './AdminLayout';
 import AdminAlert from '../components/AdminAlert';
 import AdminLoading from '../components/AdminLoading';
 import ImageUpload from '../components/ImageUpload';
+import RankerCard from '../components/RankerCard';
 import './Admin.css';
+import './AdminRankers.css';
 
 import API_URL from '../lib/api';
 
 const emptyRanker = { rank: 1, name: '', photo: '', branch: '', year: '', score: '' };
-
-const rankColor = {
-  1: '#e3b64d',
-  2: '#aeb9c9',
-  3: '#c07a4d',
-};
-
-const initialsOf = (name = '') =>
-  name
-    .trim()
-    .split(/\s+/)
-    .map((word) => word[0])
-    .slice(0, 2)
-    .join('')
-    .toUpperCase();
 
 function AdminRankers() {
   const [rankers, setRankers] = useState([]);
@@ -240,88 +227,29 @@ function AdminRankers() {
             </div>
           </div>
         ) : (
-          <div className="admin-sec-grid">
+          <div className="rankers-grid admin-rankers-grid">
             {sortedRankers.map((ranker) => (
-              <div className="admin-content-card" key={ranker._id}>
-                <div className="admin-content-card-body">
-                  <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
-                    <div
-                      style={{
-                        width: '72px',
-                        height: '72px',
-                        flexShrink: 0,
-                        borderRadius: '50%',
-                        overflow: 'hidden',
-                        border: `3px solid ${rankColor[ranker.rank] || '#c8963e'}`,
-                        background: '#f5f7fa',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      {ranker.photo ? (
-                        <img
-                          src={ranker.photo}
-                          alt={ranker.name}
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
-                      ) : (
-                        <span style={{ fontSize: '22px', fontWeight: 700, color: '#243358' }}>
-                          {initialsOf(ranker.name) || '?'}
-                        </span>
-                      )}
-                    </div>
+              <div className="admin-ranker-item" key={ranker._id}>
+                <RankerCard ranker={ranker} />
 
-                    <div style={{ minWidth: 0, flex: 1 }}>
-                      <span
-                        style={{
-                          display: 'inline-block',
-                          background: rankColor[ranker.rank] || '#c8963e',
-                          color: '#1e2d4d',
-                          fontSize: '10px',
-                          fontWeight: 800,
-                          letterSpacing: '0.8px',
-                          textTransform: 'uppercase',
-                          padding: '3px 9px',
-                          borderRadius: '999px',
-                          marginBottom: '6px',
-                        }}
-                      >
-                        Rank {ranker.rank}
-                      </span>
-                      <h4 style={{ margin: '0 0 4px', color: '#243358', fontSize: '15px', fontWeight: 700 }}>
-                        {ranker.name}
-                      </h4>
-                      <p style={{ margin: '0 0 2px', color: '#666', fontSize: '12.5px' }}>
-                        {[ranker.branch, ranker.year].filter(Boolean).join(' • ') || '—'}
-                      </p>
-                      {ranker.score && (
-                        <p style={{ margin: 0, color: '#a5721c', fontSize: '12.5px', fontWeight: 700 }}>
-                          {ranker.score}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', gap: '8px', marginTop: '14px', paddingTop: '12px', borderTop: '1px solid #eef1f5' }}>
-                    <button type="button" className="btn btn-secondary btn-sm" onClick={() => openEdit(ranker)}>
-                      Edit
-                    </button>
-                    {deleteConfirm === ranker._id ? (
-                      <>
-                        <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(ranker._id)}>
-                          Confirm Delete
-                        </button>
-                        <button type="button" className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirm(null)}>
-                          Cancel
-                        </button>
-                      </>
-                    ) : (
-                      <button type="button" className="btn btn-danger btn-sm" onClick={() => setDeleteConfirm(ranker._id)}>
-                        Delete
+                <div className="admin-ranker-actions">
+                  <button type="button" className="btn btn-secondary btn-sm" onClick={() => openEdit(ranker)}>
+                    Edit
+                  </button>
+                  {deleteConfirm === ranker._id ? (
+                    <>
+                      <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(ranker._id)}>
+                        Confirm Delete
                       </button>
-                    )}
-                  </div>
+                      <button type="button" className="btn btn-secondary btn-sm" onClick={() => setDeleteConfirm(null)}>
+                        Cancel
+                      </button>
+                    </>
+                  ) : (
+                    <button type="button" className="btn btn-danger btn-sm" onClick={() => setDeleteConfirm(ranker._id)}>
+                      Delete
+                    </button>
+                  )}
                 </div>
               </div>
             ))}

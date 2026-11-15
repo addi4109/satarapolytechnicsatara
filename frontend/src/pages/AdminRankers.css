@@ -1,0 +1,28 @@
+.admin-rankers-grid .admin-ranker-item {
+  flex: 0 1 calc((100% - 48px) / 3);
+  min-width: 260px;
+  max-width: 401px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-ranker-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+@media (max-width: 1200px) {
+  .admin-rankers-grid .admin-ranker-item {
+    flex-basis: calc((100% - 24px) / 2);
+  }
+}
+
+@media (max-width: 860px) {
+  .admin-rankers-grid .admin-ranker-item {
+    flex-basis: 100%;
+    max-width: 401px;
+  }
+}

@@ -1,16 +1,8 @@
 import { useEffect, useState } from 'react';
+import RankerCard from './RankerCard';
 import './InstituteRankers.css';
 
 import API_URL from '../lib/api';
-
-const initialsOf = (name = '') =>
-  name
-    .trim()
-    .split(/\s+/)
-    .map((word) => word[0])
-    .slice(0, 2)
-    .join('')
-    .toUpperCase();
 
 function InstituteRankers() {
   const [rankers, setRankers] = useState([]);
@@ -24,7 +16,7 @@ function InstituteRankers() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading || rankers.length < 3) return null;
+  if (loading || rankers.length === 0) return null;
 
   const topRankers = [...rankers]
     .sort((a, b) => (a.rank || 0) - (b.rank || 0))
@@ -44,31 +36,7 @@ function InstituteRankers() {
 
         <div className="rankers-grid">
           {topRankers.map((ranker) => (
-            <article
-              className={`ranker-card ranker-rank-${ranker.rank || 1}`}
-              key={ranker._id}
-            >
-              <div className="ranker-card-top">
-                <span className="ranker-badge">Rank {ranker.rank}</span>
-                <div className="ranker-photo">
-                  {ranker.photo ? (
-                    <img src={ranker.photo} alt={ranker.name} />
-                  ) : (
-                    <span>{initialsOf(ranker.name) || '?'}</span>
-                  )}
-                </div>
-              </div>
-
-              <div className="ranker-card-body">
-                <h3 className="ranker-name">{ranker.name}</h3>
-                {ranker.branch && <p className="ranker-branch">{ranker.branch}</p>}
-
-                <div className="ranker-meta">
-                  {ranker.year && <span className="ranker-year">{ranker.year}</span>}
-                  {ranker.score && <span className="ranker-score">{ranker.score}</span>}
-                </div>
-              </div>
-            </article>
+            <RankerCard ranker={ranker} key={ranker._id} />
           ))}
         </div>
       </div>

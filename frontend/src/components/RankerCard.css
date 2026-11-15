@@ -1,0 +1,191 @@
+.rankers-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.rankers-grid > .ranker-card {
+  flex: 0 1 calc((100% - 48px) / 3);
+  min-width: 260px;
+}
+
+.ranker-card {
+  position: relative;
+  width: 100%;
+  max-width: 401px;
+  height: 576px;
+  background: #fff;
+  border: 1px solid #eef1f5;
+  border-radius: 12px;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 4px 18px rgba(36, 51, 88, 0.07);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ranker-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(36, 51, 88, 0.14);
+}
+
+.ranker-profile-section {
+  height: 289px;
+  padding-top: 44px;
+  position: relative;
+  z-index: 1;
+}
+
+.ranker-dots-bg {
+  position: absolute;
+  width: 355px;
+  height: 270px;
+  left: 50%;
+  top: 65px;
+  transform: translateX(-50%);
+  background-image: radial-gradient(
+    circle,
+    rgba(36, 51, 88, 0.13) 1.5px,
+    transparent 2px
+  );
+  background-size: 9px 9px;
+  -webkit-mask-image: radial-gradient(
+    ellipse,
+    black 25%,
+    rgba(0, 0, 0, 0.7) 48%,
+    transparent 75%
+  );
+  mask-image: radial-gradient(
+    ellipse,
+    black 25%,
+    rgba(0, 0, 0, 0.7) 48%,
+    transparent 75%
+  );
+  z-index: -1;
+}
+
+.ranker-profile-image {
+  width: 159px;
+  height: 159px;
+  border: 5px solid var(--sp-gold, #c8963e);
+  border-radius: 50%;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+  background: var(--sp-cream, #f7f4ec);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ranker-profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ranker-profile-image span {
+  font-family: var(--sp-font-display, 'Georgia', serif);
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--sp-navy, #243358);
+}
+
+.ranker-student-name {
+  color: var(--sp-navy, #243358);
+  font-size: 22px;
+  font-weight: 700;
+  margin: 12px 18px 0;
+  position: relative;
+  z-index: 2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ranker-department {
+  color: #555;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 6px 18px 0;
+  position: relative;
+  z-index: 2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ranker-meta-line {
+  color: var(--sp-gold-dark, #a5721c);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  margin: 7px 18px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.ranker-divider {
+  width: 83%;
+  height: 1px;
+  background: #e6dce8;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.ranker-rank-section {
+  padding-top: 18px;
+  position: relative;
+  z-index: 2;
+}
+
+.ranker-emblem {
+  width: 65px;
+  height: 65px;
+  margin: 0 auto;
+  position: relative;
+  color: var(--sp-gold, #c8963e);
+}
+
+.ranker-emblem svg {
+  width: 65px;
+  height: 65px;
+  display: block;
+}
+
+.ranker-number {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 48px;
+  line-height: 1;
+  font-weight: 800;
+  color: var(--sp-navy, #243358);
+}
+
+.ranker-number-multi {
+  top: 19px;
+  font-size: 33px;
+  letter-spacing: -1px;
+}
+
+.ranker-rank-title {
+  color: var(--sp-navy, #243358);
+  font-family: var(--sp-font-display, 'Georgia', serif);
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-top: 7px;
+}
+
+@media (max-width: 860px) {
+  .rankers-grid > .ranker-card {
+    flex-basis: 100%;
+    max-width: 401px;
+  }
+}
