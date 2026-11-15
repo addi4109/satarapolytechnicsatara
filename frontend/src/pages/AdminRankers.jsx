@@ -143,11 +143,16 @@ function AdminRankers() {
                 <div className="form-row">
                   <div className="form-group">
                     <label>Rank *</label>
-                    <select value={form.rank} onChange={(e) => handleChange('rank', Number(e.target.value))}>
-                      <option value={1}>Rank 1</option>
-                      <option value={2}>Rank 2</option>
-                      <option value={3}>Rank 3</option>
-                    </select>
+                    <input
+                      type="number"
+                      min="1"
+                      max="3"
+                      step="1"
+                      value={form.rank}
+                      onChange={(e) => handleChange('rank', Number(e.target.value))}
+                      placeholder="Enter rank number"
+                      required
+                    />
                   </div>
                   <div className="form-group">
                     <label>Student Name *</label>

@@ -140,43 +140,19 @@
   z-index: 2;
 }
 
-.ranker-emblem {
-  width: 62px;
-  height: 62px;
-  margin: 0 auto;
-  position: relative;
-  color: var(--sp-gold, #c8963e);
-}
-
-.ranker-emblem svg {
-  width: 62px;
-  height: 62px;
-  display: block;
-}
-
-.ranker-number {
-  position: absolute;
-  top: 11px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 45px;
+.ranker-rank-number {
+  font-size: 56px;
   line-height: 1;
   font-weight: 800;
   color: var(--sp-navy, #243358);
 }
 
-.ranker-number-multi {
-  top: 18px;
-  font-size: 31px;
-  letter-spacing: -1px;
-}
-
 .ranker-rank-title {
   color: var(--sp-navy, #243358);
   font-family: var(--sp-font-display, 'Georgia', serif);
-  font-size: 32px;
+  font-size: 22px;
   font-weight: 800;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   margin-top: 6px;
 }
 
