@@ -9,15 +9,13 @@ function WhyChooseUs() {
       <div className="why-inner" data-reveal="fade">
         <h2 className="why-heading">Why Choose Satara Polytechnic, Satara?</h2>
         <div className="why-line"></div>
-        <div className="why-image-wrap">
-          <img
-            src="https://res.cloudinary.com/yjiggwb7/image/upload/v1788694078/rbkkxa849rsstcnzluz1.png"
-            alt="Why Choose Satara Polytechnic, Satara"
-            className="why-image"
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
+        <img
+          src="https://res.cloudinary.com/yjiggwb7/image/upload/v1788694078/rbkkxa849rsstcnzluz1.png"
+          alt="Why Choose Satara Polytechnic, Satara"
+          className="why-image"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
     </section>
   );

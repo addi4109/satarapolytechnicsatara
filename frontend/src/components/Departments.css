@@ -161,32 +161,12 @@
 
 /* ===== Why Choose Us ===== */
 .why-section {
-  position: relative;
   width: 100%;
-  overflow: hidden;
   padding: 56px 20px 64px;
-  background:
-    radial-gradient(circle at 10% 16%, rgba(200, 150, 62, 0.18), transparent 32%),
-    radial-gradient(circle at 92% 86%, rgba(36, 51, 88, 0.11), transparent 34%),
-    linear-gradient(180deg, #f8f5ed 0%, #fffdf8 52%, #f4f0e6 100%);
-  border-top: 1px solid rgba(200, 150, 62, 0.24);
-  border-bottom: 1px solid rgba(36, 51, 88, 0.08);
-}
-
-.why-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle, rgba(36, 51, 88, 0.09) 1px, transparent 1px);
-  background-size: 20px 20px;
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
-  mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
-  pointer-events: none;
+  background: var(--sp-cream, #f7f4ec);
 }
 
 .why-inner {
-  position: relative;
-  z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
@@ -209,22 +189,12 @@
   border-radius: 2px;
 }
 
-.why-image-wrap {
-  width: min(720px, 100%);
-  margin: 0 auto;
-  padding: 10px;
-  background: #fff;
-  border: 1px solid rgba(36, 51, 88, 0.1);
-  border-radius: 18px;
-  box-shadow: 0 20px 50px rgba(36, 51, 88, 0.14);
-}
-
 .why-image {
   display: block;
-  width: 100%;
+  width: min(720px, 100%);
   height: auto;
+  margin: 0 auto;
   object-fit: contain;
-  border-radius: 10px;
 }
 
 @media (max-width: 600px) {
@@ -238,14 +208,5 @@
 
   .why-line {
     margin-bottom: 22px;
-  }
-
-  .why-image-wrap {
-    padding: 6px;
-    border-radius: 12px;
-  }
-
-  .why-image {
-    border-radius: 8px;
   }
 }
