@@ -15,7 +15,9 @@
   position: relative;
   width: 100%;
   max-width: 401px;
-  height: 576px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
   background: #fff;
   border: 1px solid #eef1f5;
   border-radius: 12px;
@@ -31,18 +33,19 @@
 }
 
 .ranker-profile-section {
-  height: 289px;
-  padding-top: 44px;
+  height: 265px;
+  flex: 0 0 265px;
+  padding-top: 28px;
   position: relative;
   z-index: 1;
 }
 
 .ranker-dots-bg {
   position: absolute;
-  width: 355px;
-  height: 270px;
+  width: 330px;
+  height: 245px;
   left: 50%;
-  top: 65px;
+  top: 48px;
   transform: translateX(-50%);
   background-image: radial-gradient(
     circle,
@@ -66,9 +69,9 @@
 }
 
 .ranker-profile-image {
-  width: 159px;
-  height: 159px;
-  border: 5px solid var(--sp-gold, #c8963e);
+  width: 150px;
+  height: 150px;
+  border: 4px solid var(--sp-gold, #c8963e);
   border-radius: 50%;
   margin: auto;
   overflow: hidden;
@@ -89,16 +92,16 @@
 
 .ranker-profile-image span {
   font-family: var(--sp-font-display, 'Georgia', serif);
-  font-size: 48px;
+  font-size: 42px;
   font-weight: 700;
   color: var(--sp-navy, #243358);
 }
 
 .ranker-student-name {
   color: var(--sp-navy, #243358);
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
-  margin: 12px 18px 0;
+  margin: 10px 18px 0;
   position: relative;
   z-index: 2;
   white-space: nowrap;
@@ -108,9 +111,9 @@
 
 .ranker-department {
   color: #555;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
-  margin: 6px 18px 0;
+  margin: 5px 18px 0;
   position: relative;
   z-index: 2;
   white-space: nowrap;
@@ -120,10 +123,10 @@
 
 .ranker-meta-line {
   color: var(--sp-gold-dark, #a5721c);
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.3px;
-  margin: 7px 18px 0;
+  margin: 5px 18px 0;
   position: relative;
   z-index: 2;
 }
@@ -138,49 +141,53 @@
 }
 
 .ranker-rank-section {
-  padding-top: 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: relative;
   z-index: 2;
 }
 
 .ranker-emblem {
-  width: 65px;
-  height: 65px;
+  width: 62px;
+  height: 62px;
   margin: 0 auto;
   position: relative;
   color: var(--sp-gold, #c8963e);
 }
 
 .ranker-emblem svg {
-  width: 65px;
-  height: 65px;
+  width: 62px;
+  height: 62px;
   display: block;
 }
 
 .ranker-number {
   position: absolute;
-  top: 12px;
+  top: 11px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 48px;
+  font-size: 45px;
   line-height: 1;
   font-weight: 800;
   color: var(--sp-navy, #243358);
 }
 
 .ranker-number-multi {
-  top: 19px;
-  font-size: 33px;
+  top: 18px;
+  font-size: 31px;
   letter-spacing: -1px;
 }
 
 .ranker-rank-title {
   color: var(--sp-navy, #243358);
   font-family: var(--sp-font-display, 'Georgia', serif);
-  font-size: 38px;
+  font-size: 32px;
   font-weight: 800;
   letter-spacing: 1px;
-  margin-top: 7px;
+  margin-top: 6px;
 }
 
 @media (max-width: 860px) {
