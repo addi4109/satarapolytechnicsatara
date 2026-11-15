@@ -179,21 +179,3 @@ table.programs-table tbody tr:hover {
     padding: 8px 10px;
   }
 }
-
-/* ---------- Content section headings ---------- */
-:is(h1, h2, h3).content-heading {
-  background: var(--sp-navy, #243358);
-  color: #fff;
-  padding: 12px 18px;
-  border-radius: 6px;
-  border-left: 5px solid var(--sp-gold, #c8963e);
-}
-
-:is(h2, h3, h4).content-sub-heading {
-  background: var(--sp-cream, #f7f4ec);
-  color: var(--sp-navy, #243358);
-  padding: 9px 16px;
-  border-radius: 5px;
-  border-left: 4px solid var(--sp-gold, #c8963e);
-  border-bottom: none;
-}
