@@ -3104,6 +3104,87 @@
   color: #999;
 }
 
+.dash-settings-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background: #fff;
+  border: 1px solid #e4e8ed;
+  border-radius: 8px;
+  padding: 16px 18px;
+  margin-bottom: 28px;
+}
+
+.dash-settings-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.dash-settings-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #243358;
+}
+
+.dash-settings-desc {
+  font-size: 11.5px;
+  color: #888;
+}
+
+.dash-settings-msg {
+  font-size: 11.5px;
+  margin-top: 4px;
+}
+
+.dash-settings-msg.success {
+  color: #2e7d32;
+}
+
+.dash-settings-msg.error {
+  color: #c62828;
+}
+
+.dash-switch {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  border-radius: 999px;
+  border: none;
+  background: #c9ced6;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.dash-switch.on {
+  background: #2e7d32;
+}
+
+.dash-switch:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.dash-switch-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s;
+}
+
+.dash-switch.on .dash-switch-knob {
+  transform: translateX(22px);
+}
+
 @media (max-width: 768px) {
   .dash-stats-grid {
     grid-template-columns: repeat(3, 1fr);

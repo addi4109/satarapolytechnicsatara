@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import GoToTop from './components/GoToTop';
 import EnquiryPopup from './components/EnquiryPopup';
+import API_URL from './lib/api';
 import { initScrollReveal, startScrollRevealWatcher } from './lib/scrollReveal';
 import { initSmoothScroll, destroySmoothScroll, scrollToTopImmediate } from './lib/smoothScroll';
 
@@ -295,9 +296,21 @@ function AppWithLoader() {
   const [showEnquiry, setShowEnquiry] = useState(false);
 
   useEffect(() => {
-    if (location.pathname === '/') {
-      setTimeout(() => setShowEnquiry(true), 800);
-    }
+    if (location.pathname !== '/') return;
+    let cancelled = false;
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`${API_URL}/settings/enquiryPopupEnabled`);
+        const data = await res.json();
+        if (!cancelled && data.value !== false) setShowEnquiry(true);
+      } catch {
+        if (!cancelled) setShowEnquiry(true);
+      }
+    }, 800);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
   }, [location.pathname]);
 
   return (

@@ -15,11 +15,14 @@ function AdminDashboard() {
   });
   const [loading, setLoading] = useState(true);
   const [showDebug, setShowDebug] = useState(false);
+  const [popupEnabled, setPopupEnabled] = useState(true);
+  const [savingPopup, setSavingPopup] = useState(false);
+  const [popupMsg, setPopupMsg] = useState(null);
 
   useEffect(() => {
     const fetchAll = async () => {
       try {
-        const [cells, depts, photos, videos, news, recruiters, notices, slides] = await Promise.all([
+        const [cells, depts, photos, videos, news, recruiters, notices, slides, settings] = await Promise.all([
           fetch(`${API_URL}/cells`).then((r) => r.json()),
           fetch(`${API_URL}/departments`).then((r) => r.json()),
           fetch(`${API_URL}/photos`).then((r) => r.json()),
@@ -28,6 +31,7 @@ function AdminDashboard() {
           fetch(`${API_URL}/recruiters`).then((r) => r.json()),
           fetch(`${API_URL}/notices/all`).then((r) => r.json()),
           fetch(`${API_URL}/slides`).then((r) => r.json()),
+          fetch(`${API_URL}/settings`).then((r) => r.json()),
         ]);
         const enquiriesSnap = await getDocs(collection(db, 'enquiries'));
         setStats({
@@ -41,6 +45,7 @@ function AdminDashboard() {
           slides: slides.length,
           enquiries: enquiriesSnap.size,
         });
+        setPopupEnabled(settings?.enquiryPopupEnabled !== false);
       } catch (err) {
         console.error('Failed to load stats:', err);
       } finally {
@@ -49,6 +54,27 @@ function AdminDashboard() {
     };
     fetchAll();
   }, []);
+
+  const toggleEnquiryPopup = async () => {
+    const next = !popupEnabled;
+    setPopupEnabled(next);
+    setSavingPopup(true);
+    setPopupMsg(null);
+    try {
+      const res = await fetch(`${API_URL}/settings`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: 'enquiryPopupEnabled', value: next }),
+      });
+      if (!res.ok) throw new Error('Failed to update setting');
+      setPopupMsg({ type: 'success', text: next ? 'Admission enquiry popup turned on.' : 'Admission enquiry popup turned off.' });
+    } catch {
+      setPopupEnabled(!next);
+      setPopupMsg({ type: 'error', text: 'Failed to update popup setting.' });
+    } finally {
+      setSavingPopup(false);
+    }
+  };
 
   return (
     <AdminLayout>
@@ -101,6 +127,27 @@ function AdminDashboard() {
             <div className="dash-stat-num">{loading ? '—' : stats.enquiries}</div>
             <div className="dash-stat-label">Enquiries</div>
           </Link>
+        </div>
+
+        {/* Website Settings */}
+        <h3 className="dash-section-title">Website Settings</h3>
+        <div className="dash-settings-card">
+          <div className="dash-settings-info">
+            <span className="dash-settings-name">Admission Enquiry Popup</span>
+            <span className="dash-settings-desc">Show the admission enquiry popup when visitors open the home page.</span>
+            {popupMsg && <span className={`dash-settings-msg ${popupMsg.type}`}>{popupMsg.text}</span>}
+          </div>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={popupEnabled}
+            aria-label="Toggle admission enquiry popup"
+            className={`dash-switch ${popupEnabled ? 'on' : ''}`}
+            onClick={toggleEnquiryPopup}
+            disabled={savingPopup}
+          >
+            <span className="dash-switch-knob" />
+          </button>
         </div>
 
         {/* Quick Actions */}
