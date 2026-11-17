@@ -197,29 +197,6 @@ const SES_STATS = [
   { num: '4', label: 'Education Levels' },
 ];
 
-const SES_HISTORY = [
-  {
-    year: '1935',
-    title: 'A Journey That Began in 1935',
-    text: 'Society established to contribute to education in Satara and surrounding region.',
-  },
-  {
-    year: '1983',
-    title: 'Satara Polytechnic',
-    text: 'Established to introduce diploma-level technical education.',
-  },
-  {
-    year: '1986',
-    title: 'Pharmacy Education',
-    text: 'Expanded into pharmaceutical education.',
-  },
-  {
-    year: 'Today',
-    title: 'Ongoing Educational Presence',
-    text: 'Satara Education Society continues serving students across the region.',
-  },
-];
-
 const SES_MISSION = [
   'Provide accessible quality education across academic disciplines.',
   'Promote technical knowledge, practical skills and professional competence.',
@@ -651,24 +628,6 @@ function AboutCollege() {
                   <div className="info-row"><span className="info-label">Education Areas</span><span className="info-value">School, Higher Secondary, Technical &amp; Pharmacy Education</span></div>
                 </div>
                 {renderStats(SES_STATS)}
-              </div>
-
-              {/* Box 3: History & Legacy */}
-              <div className="about-box">
-                <h2 className="about-box-title">Our History and Legacy</h2>
-                <div className="about-box-line"></div>
-                <p>A journey that began in 1935.</p>
-                <div className="timeline">
-                  {SES_HISTORY.map((item, i) => (
-                    <div className="timeline-item" key={i}>
-                      <span className="timeline-year">{item.year}</span>
-                      <span className="timeline-text">
-                        <strong className="timeline-title">{item.title}</strong>
-                        {item.text}
-                      </span>
-                    </div>
-                  ))}
-                </div>
               </div>
 
               {/* Box 4: Vision & Mission */}
