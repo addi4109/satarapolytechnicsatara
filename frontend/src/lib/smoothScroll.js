@@ -69,9 +69,11 @@ export function initSmoothScroll() {
     syncTouch: false, // leave touch/trackpad-native scrolling alone
     touchMultiplier: 1.5,
     // Never hijack wheel events aimed at overlay panels (enquiry form,
-    // lightboxes) so their inner scrolling keeps working untouched.
+    // lightboxes, accessibility widget) so their inner scrolling keeps working.
     prevent: (node) =>
-      !!node.closest?.('.enquiry-overlay, .enquiry-panel, .lightbox-content, .news-lightbox-content'),
+      !!node.closest?.(
+        '.enquiry-overlay, .enquiry-panel, .lightbox-content, .news-lightbox-content, .asw-menu',
+      ),
   });
 
   startRaf();
