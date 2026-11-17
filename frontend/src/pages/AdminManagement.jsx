@@ -6,6 +6,7 @@ import AdminLoading from '../components/AdminLoading';
 import ImageUpload from '../components/ImageUpload';
 
 import API_URL from '../lib/api';
+import { renderRichTextParagraphs } from '../lib/richText';
 
 const ROLES = [
   { key: 'founder', label: 'Founder' },
@@ -461,9 +462,7 @@ function AdminManagement() {
                       {form.qualification && <p className="placement-officer-qual">{form.qualification}</p>}
                     </div>
                     <div className="placement-officer-msg">
-                      {form.message ? (
-                        form.message.split('\n').filter((p) => p.trim()).map((para, i) => <p key={i}>{para}</p>)
-                      ) : (
+                      {form.message ? renderRichTextParagraphs(form.message) : (
                         <p style={{ fontStyle: 'italic', color: '#aaa' }}>No message added yet.</p>
                       )}
                     </div>
@@ -485,6 +484,9 @@ function AdminManagement() {
                     <div className="placement-officer-msg">
                       <textarea value={form.message} onChange={(e) => handleChange('message', e.target.value)} placeholder="Write the message or about section..." rows={6}
                         style={{ width: '100%', padding: '10px 14px', border: '1px solid #ddd', borderRadius: '6px', fontSize: '14px', color: '#555', lineHeight: '1.75', resize: 'vertical', boxSizing: 'border-box', minHeight: '120px' }} />
+                      <p style={{ margin: '8px 0 0', fontSize: '12px', color: '#888' }}>
+                        Use <strong>**bold**</strong>, <em>*italic*</em>, or <strong><em>***bold italic***</em></strong>.
+                      </p>
                     </div>
                   </div>
                 )}

@@ -56,6 +56,7 @@ const SIDEBAR_GROUPS = sidebarLinks.reduce((acc, link) => {
 }, {});
 
 import API_URL from '../lib/api';
+import { renderRichTextParagraphs } from '../lib/richText';
 
 // Organisational chart — top-down levels of the institute hierarchy.
 const ORG_CHART_LEVELS = [
@@ -420,13 +421,7 @@ function AboutCollege() {
           <p className="leader-profile-qual">{entry.qualification}</p>
         )}
         <div className="leader-profile-msg">
-          {entry.message ? (
-            entry.message.split('\n').filter(p => p.trim()).map((para, i) => (
-              <p key={i}>{para}</p>
-            ))
-          ) : (
-            <p>No message available.</p>
-          )}
+          {entry.message ? renderRichTextParagraphs(entry.message) : <p>No message available.</p>}
         </div>
       </div>
     );
