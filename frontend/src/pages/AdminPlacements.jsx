@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AdminLayout from './AdminLayout';
 import AdminAlert from '../components/AdminAlert';
 import AdminLoading from '../components/AdminLoading';
@@ -34,6 +35,8 @@ const defaultSection = {
 };
 
 function AdminPlacements() {
+  const navigate = useNavigate();
+
   // home = true shows the section cards; false shows the opened section.
   const [home, setHome] = useState(true);
   const [activeTab, setActiveTab] = useState('about');
@@ -236,6 +239,19 @@ function AdminPlacements() {
                 </button>
               );
             })}
+            <button
+              type="button"
+              className="admin-sec-card"
+              onClick={() => navigate('/admin/rankers')}
+            >
+              <div className="admin-sec-card-top">
+                <span className="admin-sec-card-icon">🏆</span>
+                <span className="admin-sec-card-badge is-saved">Manage</span>
+              </div>
+              <h3 className="admin-sec-card-title">Institute Rankers</h3>
+              <p className="admin-sec-card-desc">Manage institute toppers shown on the homepage.</p>
+              <span className="admin-sec-card-open">Open section →</span>
+            </button>
           </div>
         </div>
       </AdminLayout>
