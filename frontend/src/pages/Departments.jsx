@@ -425,20 +425,35 @@ function DepartmentsPage() {
               <>
                 <h2 className="content-heading">Outcome Based Education</h2>
                 <div className="content-line"></div>
-                <p>
-                  The {dept.name} department follows the Outcome Based Education (OBE)
-                  framework to ensure that students achieve the desired learning outcomes.
-                </p>
 
-                {/* Three main cards — PEOs, POs and PSOs — plain rows, no sub-cards. */}
+                <div className="obe-intro">
+                  <span className="obe-intro-eyebrow">Quality Framework</span>
+                  <p className="obe-intro-text">
+                    The {dept.name} department follows the Outcome Based Education (OBE)
+                    framework to ensure that students achieve the desired learning outcomes.
+                  </p>
+                  <div className="obe-intro-chips">
+                    <span className="obe-chip">{dept.peos?.length || 0} PEOs</span>
+                    <span className="obe-chip">{dept.pos?.length || 0} POs</span>
+                    <span className="obe-chip">{dept.psos?.length || 0} PSOs</span>
+                  </div>
+                </div>
+
                 <div className="obe-cards">
                   <div className="obe-main-card">
-                    <h3 className="obe-sub-heading">Program Educational Objectives (PEOs)</h3>
+                    <div className="obe-card-head">
+                      <span className="obe-card-badge">PEO</span>
+                      <div className="obe-card-titles">
+                        <h3 className="obe-sub-heading">Program Educational Objectives</h3>
+                        <span className="obe-card-count">What graduates are prepared to achieve</span>
+                      </div>
+                    </div>
                     {dept.peos && dept.peos.length > 0 ? (
                       <ul className="obe-list">
                         {dept.peos.map((peo, i) => (
                           <li key={i} className="obe-list-item">
-                            <div>
+                            <span className="obe-item-index">{String(i + 1).padStart(2, '0')}</span>
+                            <div className="obe-item-body">
                               {peo.title && <strong>{peo.title}</strong>}
                               {peo.description && <p>{peo.description}</p>}
                             </div>
@@ -451,12 +466,19 @@ function DepartmentsPage() {
                   </div>
 
                   <div className="obe-main-card">
-                    <h3 className="obe-sub-heading">Program Outcomes (POs)</h3>
+                    <div className="obe-card-head">
+                      <span className="obe-card-badge">PO</span>
+                      <div className="obe-card-titles">
+                        <h3 className="obe-sub-heading">Program Outcomes</h3>
+                        <span className="obe-card-count">Skills and competencies gained at graduation</span>
+                      </div>
+                    </div>
                     {dept.pos && dept.pos.length > 0 ? (
                       <ul className="obe-list">
                         {dept.pos.map((po, i) => (
                           <li key={i} className="obe-list-item">
-                            <div>
+                            <span className="obe-item-index">{String(i + 1).padStart(2, '0')}</span>
+                            <div className="obe-item-body">
                               {po.title && <strong>{po.title}</strong>}
                               {po.description && <p>{po.description}</p>}
                             </div>
@@ -469,12 +491,19 @@ function DepartmentsPage() {
                   </div>
 
                   <div className="obe-main-card">
-                    <h3 className="obe-sub-heading">Program Specific Outcomes (PSOs)</h3>
+                    <div className="obe-card-head">
+                      <span className="obe-card-badge">PSO</span>
+                      <div className="obe-card-titles">
+                        <h3 className="obe-sub-heading">Program Specific Outcomes</h3>
+                        <span className="obe-card-count">Discipline-specific expertise</span>
+                      </div>
+                    </div>
                     {dept.psos && dept.psos.length > 0 ? (
                       <ul className="obe-list">
                         {dept.psos.map((pso, i) => (
                           <li key={i} className="obe-list-item">
-                            <div>
+                            <span className="obe-item-index">{String(i + 1).padStart(2, '0')}</span>
+                            <div className="obe-item-body">
                               {pso.title && <strong>{pso.title}</strong>}
                               {pso.description && <p>{pso.description}</p>}
                             </div>
