@@ -288,7 +288,7 @@ function AboutCollege() {
 
         setGbMembers(gbData);
         setLgbMembers(lgbData);
-        setPrograms(Array.isArray(deptData) ? deptData.filter((d) => !d.hideFromHome) : []);
+        setPrograms(Array.isArray(deptData) ? deptData.filter((d) => !d.hideFromHome && d.slug !== 'general-science-humanities') : []);
 
         const campusMapped = {};
         (Array.isArray(campusData) ? campusData : []).forEach((s) => { campusMapped[s.section] = s; });
@@ -771,7 +771,7 @@ function AboutCollege() {
               )}
 
               {/* Box 2: Core Values */}
-              <div className="about-box">
+              <div className="about-box core-values-box">
                 <h2 className="about-box-title">Core Values</h2>
                 <div className="about-box-line"></div>
                 <div className="values-grid">

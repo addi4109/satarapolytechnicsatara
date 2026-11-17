@@ -929,6 +929,10 @@
   margin-bottom: 24px;
 }
 
+.core-values-box {
+  margin-top: 40px;
+}
+
 .about-box-title {
   font-family: var(--sp-font-display);
   font-size: clamp(20px, 2.2vw, 24px);
