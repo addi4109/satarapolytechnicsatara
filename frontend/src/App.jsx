@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState, useEffect, useRef } from 'react';
+import { Suspense, useState, useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import SEO from './components/SEO';
 import Navbar from './components/Navbar';
@@ -9,118 +9,55 @@ import API_URL from './lib/api';
 import { initScrollReveal, startScrollRevealWatcher } from './lib/scrollReveal';
 import { initSmoothScroll, destroySmoothScroll, scrollToTopImmediate } from './lib/smoothScroll';
 
-// Deploy-safe lazy loader.
-//
-// Each deploy renames the hashed files in /assets (e.g. CellsPage-tR18qlJv.css).
-// A tab opened before the deploy still runs the old JS, which requests assets
-// that no longer exist and fails with "Unable to preload CSS" or "Failed to
-// fetch dynamically imported module". Reloading once fetches the new
-// index.html, whose script references the current hashed files.
-//
-// Reload-loop safety: only *fetch/preload* failures trigger a reload (never
-// bare TypeErrors from module evaluation), and a time-window lock allows at
-// most one recovery reload per 30s. The lock is intentionally NOT cleared on
-// successful imports — clearing it lets a persistently failing chunk alternate
-// with a succeeding one and reload the page forever.
-const CHUNK_RELOAD_KEY = 'chunk-reload-attempted-at';
-const CHUNK_RELOAD_LOCK_MS = 30000;
-
-const STALE_CHUNK_PATTERN =
-  /Unable to preload|Failed to fetch dynamically imported module|error loading dynamically imported module|Importing a module script failed/i;
-
-function hasRecentChunkReload() {
-  try {
-    const at = Number(sessionStorage.getItem(CHUNK_RELOAD_KEY));
-    return Number.isFinite(at) && Date.now() - at < CHUNK_RELOAD_LOCK_MS;
-  } catch {
-    // Storage unavailable: assume we already tried to avoid reload loops.
-    return true;
-  }
-}
-
-function markChunkReload() {
-  try {
-    sessionStorage.setItem(CHUNK_RELOAD_KEY, String(Date.now()));
-  } catch {
-    // Ignore storage failures.
-  }
-}
-
-function ChunkReloadFallback() {
-  return (
-    <div style={{ padding: '24px', textAlign: 'center', color: '#6b7280' }}>
-      Content couldn’t load.{' '}
-      <button type="button" onClick={() => window.location.reload()}>
-        Refresh
-      </button>
-    </div>
-  );
-}
-
-function lazyWithRetry(factory) {
-  return lazy(() =>
-    factory().catch((error) => {
-      const message = error?.message ?? '';
-      if (!STALE_CHUNK_PATTERN.test(message)) throw error;
-      if (!hasRecentChunkReload()) {
-        markChunkReload();
-        window.location.reload();
-      }
-      return { default: ChunkReloadFallback };
-    }),
-  );
-}
-
-// Lazy-loaded page components for code splitting
-const ImageSlider = lazyWithRetry(() => import('./components/ImageSlider'));
-const NoticeTicker = lazyWithRetry(() => import('./components/NoticeTicker'));
-const WelcomeSection = lazyWithRetry(() => import('./components/WelcomeSection'));
-const Departments = lazyWithRetry(() => import('./components/Departments'));
-const PlacementRecordBanner = lazyWithRetry(() => import('./components/PlacementRecordBanner'));
-const Recruiters = lazyWithRetry(() => import('./components/Recruiters'));
-const LatestNews = lazyWithRetry(() => import('./components/LatestNews'));
-const InstituteRankers = lazyWithRetry(() => import('./components/InstituteRankers'));
-const ContactMap = lazyWithRetry(() => import('./components/ContactMap'));
-const AboutCollege = lazyWithRetry(() => import('./pages/AboutCollege'));
-const Academics = lazyWithRetry(() => import('./pages/Academics'));
-const DepartmentsPage = lazyWithRetry(() => import('./pages/Departments'));
-const CellsPage = lazyWithRetry(() => import('./pages/CellsPage'));
-const CellDetail = lazyWithRetry(() => import('./pages/CellDetail'));
-const PhotoGallery = lazyWithRetry(() => import('./pages/PhotoGallery'));
-const VideoGallery = lazyWithRetry(() => import('./pages/VideoGallery'));
-const MediaNews = lazyWithRetry(() => import('./pages/MediaNews'));
-const Admissions = lazyWithRetry(() => import('./pages/Admissions'));
-const ApplyNow = lazyWithRetry(() => import('./pages/ApplyNow'));
-const Placements = lazyWithRetry(() => import('./pages/Placements'));
-const Examinations = lazyWithRetry(() => import('./pages/Examinations'));
-const Campus = lazyWithRetry(() => import('./pages/Campus'));
-const Contact = lazyWithRetry(() => import('./pages/Contact'));
-const Activities = lazyWithRetry(() => import('./pages/Activities'));
-const Notices = lazyWithRetry(() => import('./pages/Notices'));
-const AdmissionNotices = lazyWithRetry(() => import('./pages/AdmissionNotices'));
-const Alumni = lazyWithRetry(() => import('./pages/Alumni'));
-const GrievanceRedressal = lazyWithRetry(() => import('./pages/GrievanceRedressal'));
-const OnlineGrievance = lazyWithRetry(() => import('./pages/OnlineGrievance'));
-const AdminLogin = lazyWithRetry(() => import('./pages/AdminLogin'));
-const AdminDashboard = lazyWithRetry(() => import('./pages/AdminDashboard'));
-const AdminCells = lazyWithRetry(() => import('./pages/AdminCells'));
-const AdminCellForm = lazyWithRetry(() => import('./pages/AdminCellForm'));
-const AdminDepartments = lazyWithRetry(() => import('./pages/AdminDepartments'));
-const AdminDepartmentForm = lazyWithRetry(() => import('./pages/AdminDepartmentForm'));
-const AdminGallery = lazyWithRetry(() => import('./pages/AdminGallery'));
-const AdminPlacements = lazyWithRetry(() => import('./pages/AdminPlacements'));
-const AdminNotices = lazyWithRetry(() => import('./pages/AdminNotices'));
-const AdminManagement = lazyWithRetry(() => import('./pages/AdminManagement'));
-const AdminAbout = lazyWithRetry(() => import('./pages/AdminAbout'));
-const AdminAdmissions = lazyWithRetry(() => import('./pages/AdminAdmissions'));
-const AdminExaminations = lazyWithRetry(() => import('./pages/AdminExaminations'));
-const AdminCampus = lazyWithRetry(() => import('./pages/AdminCampus'));
-const AdminActivities = lazyWithRetry(() => import('./pages/AdminActivities'));
-const AdminContact = lazyWithRetry(() => import('./pages/AdminContact'));
-const AdminEnquiries = lazyWithRetry(() => import('./pages/AdminEnquiries'));
-const AdminFeedbacks = lazyWithRetry(() => import('./pages/AdminFeedbacks'));
-const AdminAlumni = lazyWithRetry(() => import('./pages/AdminAlumni'));
-const AdminRankers = lazyWithRetry(() => import('./pages/AdminRankers'));
+import ImageSlider from './components/ImageSlider';
+import NoticeTicker from './components/NoticeTicker';
+import WelcomeSection from './components/WelcomeSection';
+import Departments from './components/Departments';
+import PlacementRecordBanner from './components/PlacementRecordBanner';
+import Recruiters from './components/Recruiters';
+import LatestNews from './components/LatestNews';
+import InstituteRankers from './components/InstituteRankers';
+import ContactMap from './components/ContactMap';
+import AboutCollege from './pages/AboutCollege';
+import Academics from './pages/Academics';
+import DepartmentsPage from './pages/Departments';
+import CellsPage from './pages/CellsPage';
+import CellDetail from './pages/CellDetail';
+import PhotoGallery from './pages/PhotoGallery';
+import VideoGallery from './pages/VideoGallery';
+import MediaNews from './pages/MediaNews';
+import Admissions from './pages/Admissions';
+import ApplyNow from './pages/ApplyNow';
+import Placements from './pages/Placements';
+import Examinations from './pages/Examinations';
+import Campus from './pages/Campus';
+import Contact from './pages/Contact';
+import Activities from './pages/Activities';
+import Notices from './pages/Notices';
+import AdmissionNotices from './pages/AdmissionNotices';
+import Alumni from './pages/Alumni';
+import GrievanceRedressal from './pages/GrievanceRedressal';
+import OnlineGrievance from './pages/OnlineGrievance';
+import AdminLogin from './pages/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminCells from './pages/AdminCells';
+import AdminCellForm from './pages/AdminCellForm';
+import AdminDepartments from './pages/AdminDepartments';
+import AdminDepartmentForm from './pages/AdminDepartmentForm';
+import AdminGallery from './pages/AdminGallery';
+import AdminPlacements from './pages/AdminPlacements';
+import AdminNotices from './pages/AdminNotices';
+import AdminManagement from './pages/AdminManagement';
+import AdminAbout from './pages/AdminAbout';
+import AdminAdmissions from './pages/AdminAdmissions';
+import AdminExaminations from './pages/AdminExaminations';
+import AdminCampus from './pages/AdminCampus';
+import AdminActivities from './pages/AdminActivities';
+import AdminContact from './pages/AdminContact';
+import AdminEnquiries from './pages/AdminEnquiries';
+import AdminFeedbacks from './pages/AdminFeedbacks';
+import AdminAlumni from './pages/AdminAlumni';
+import AdminRankers from './pages/AdminRankers';
 
 // Loading fallback
 function PageLoader() {
