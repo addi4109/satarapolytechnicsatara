@@ -46,16 +46,27 @@ function markChunkReload() {
   }
 }
 
+function ChunkReloadFallback() {
+  return (
+    <div style={{ padding: '24px', textAlign: 'center', color: '#6b7280' }}>
+      Content couldn’t load.{' '}
+      <button type="button" onClick={() => window.location.reload()}>
+        Refresh
+      </button>
+    </div>
+  );
+}
+
 function lazyWithRetry(factory) {
   return lazy(() =>
     factory().catch((error) => {
       const message = error?.message ?? '';
-      const isStaleChunk = STALE_CHUNK_PATTERN.test(message);
-      if (isStaleChunk && !hasRecentChunkReload()) {
+      if (!STALE_CHUNK_PATTERN.test(message)) throw error;
+      if (!hasRecentChunkReload()) {
         markChunkReload();
         window.location.reload();
       }
-      throw error;
+      return { default: ChunkReloadFallback };
     }),
   );
 }
