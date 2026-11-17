@@ -760,6 +760,16 @@ function AboutCollege() {
                 </div>
               </div>
 
+              {Object.keys(management).length > 0 && (
+                <div className="leadership-section">
+                  <h2 className="leadership-heading">Our Leadership</h2>
+                  <div className="leadership-line"></div>
+                  <div className="leadership-grid">
+                    {['founder', 'chairman', 'principal', 'secretary'].map((role) => renderLeaderCard(role))}
+                  </div>
+                </div>
+              )}
+
               {/* Box 2: Core Values */}
               <div className="about-box">
                 <h2 className="about-box-title">Core Values</h2>
@@ -832,17 +842,6 @@ function AboutCollege() {
               </div>
 
               {renderStats(getInstitute().stats)}
-
-              {/* Leadership Photo Cards */}
-              {Object.keys(management).length > 0 && (
-                <div className="leadership-section">
-                  <h2 className="leadership-heading">Our Leadership</h2>
-                  <div className="leadership-line"></div>
-                  <div className="leadership-grid">
-                    {['founder', 'chairman', 'principal', 'secretary'].map((role) => renderLeaderCard(role))}
-                  </div>
-                </div>
-              )}
             </>
           )}
 
