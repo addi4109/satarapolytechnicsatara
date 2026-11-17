@@ -19,10 +19,6 @@ html.lenis body {
   overflow-clip-margin: 1px;
 }
 
-.asw-menu-content {
-  overscroll-behavior: contain;
-}
-
 body {
   margin: 0;
   font-family: 'Public Sans', -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
