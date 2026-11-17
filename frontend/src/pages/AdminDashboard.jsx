@@ -129,30 +129,31 @@ function AdminDashboard() {
           </Link>
         </div>
 
-        {/* Website Settings */}
-        <h3 className="dash-section-title">Website Settings</h3>
-        <div className="dash-settings-card">
-          <div className="dash-settings-info">
-            <span className="dash-settings-name">Admission Enquiry Popup</span>
-            <span className="dash-settings-desc">Show the admission enquiry popup when visitors open the home page.</span>
-            {popupMsg && <span className={`dash-settings-msg ${popupMsg.type}`}>{popupMsg.text}</span>}
-          </div>
-          <button
-            type="button"
-            role="switch"
-            aria-checked={popupEnabled}
-            aria-label="Toggle admission enquiry popup"
-            className={`dash-switch ${popupEnabled ? 'on' : ''}`}
-            onClick={toggleEnquiryPopup}
-            disabled={savingPopup}
-          >
-            <span className="dash-switch-knob" />
-          </button>
-        </div>
-
         {/* Quick Actions */}
         <h3 className="dash-section-title">Quick Actions</h3>
         <div className="dash-actions-grid">
+          <div className="dash-action-card dash-action-toggle">
+            <div className="dash-action-icon" style={{ background: '#e8f5e9', color: '#2e7d32' }}>💬</div>
+            <div className="dash-action-info">
+              <span className="dash-action-name">Admission Enquiry Popup</span>
+              <span className="dash-action-desc">
+                {popupEnabled ? 'On — shows on the home page' : 'Off — hidden on the home page'}
+              </span>
+              {popupMsg && <span className={`dash-settings-msg ${popupMsg.type}`}>{popupMsg.text}</span>}
+            </div>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={popupEnabled}
+              aria-label="Toggle admission enquiry popup"
+              className={`dash-switch ${popupEnabled ? 'on' : ''}`}
+              onClick={toggleEnquiryPopup}
+              disabled={savingPopup}
+            >
+              <span className="dash-switch-knob" />
+            </button>
+          </div>
+
           <Link to="/admin/cells/new" className="dash-action-card">
             <div className="dash-action-icon" style={{ background: '#d4edda', color: '#155724' }}>+</div>
             <div className="dash-action-info">
