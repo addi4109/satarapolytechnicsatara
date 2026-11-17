@@ -162,3 +162,59 @@
     max-width: 360px;
   }
 }
+
+.home-page .rankers-grid > .ranker-card {
+  min-width: 220px;
+  max-width: 300px;
+}
+
+.home-page .ranker-card {
+  height: 340px;
+}
+
+.home-page .ranker-profile-section {
+  height: 180px;
+  flex: 0 0 180px;
+  padding-top: 20px;
+}
+
+.home-page .ranker-dots-bg {
+  width: 250px;
+  height: 165px;
+  top: 32px;
+}
+
+.home-page .ranker-profile-image {
+  width: 110px;
+  height: 110px;
+}
+
+.home-page .ranker-profile-image span {
+  font-size: 34px;
+}
+
+.home-page .ranker-student-name {
+  font-size: 17px;
+  margin-top: 8px;
+}
+
+.home-page .ranker-department {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.home-page .ranker-rank-number {
+  font-size: 44px;
+}
+
+.home-page .ranker-rank-title {
+  font-size: 18px;
+  margin-top: 4px;
+}
+
+@media (max-width: 860px) {
+  .home-page .rankers-grid > .ranker-card {
+    flex-basis: 100%;
+    max-width: 300px;
+  }
+}
