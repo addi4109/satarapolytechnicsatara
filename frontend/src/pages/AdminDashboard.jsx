@@ -81,7 +81,7 @@ function AdminDashboard() {
       <div className="admin-topbar">
         <h1>Dashboard</h1>
       </div>
-      <div className="admin-content">
+      <div className="admin-content dashboard-content">
         {/* Header */}
         <div className="dash-header">
           <h2 className="dash-header-title">Satara Polytechnic, Satara</h2>

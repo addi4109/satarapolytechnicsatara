@@ -3050,6 +3050,92 @@
   margin: 0 0 14px;
 }
 
+.dashboard-content {
+  height: calc(100vh - 58px);
+  overflow: hidden;
+  padding: 16px 24px;
+}
+
+.dashboard-content .dash-header {
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.dashboard-content .dash-header-title {
+  font-size: 18px;
+}
+
+.dashboard-content .dash-header-sub {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.dashboard-content .dash-header-by {
+  font-size: 11px;
+}
+
+.dashboard-content .dash-section-title {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.dashboard-content .dash-stats-grid {
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.dashboard-content .dash-stat-card {
+  padding: 10px 12px;
+}
+
+.dashboard-content .dash-stat-num {
+  font-size: 20px;
+}
+
+.dashboard-content .dash-stat-label {
+  font-size: 11px;
+}
+
+.dashboard-content .dash-actions-grid {
+  gap: 8px;
+}
+
+.dashboard-content .dash-action-card {
+  padding: 10px 12px;
+}
+
+.dashboard-content .dash-action-icon {
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+}
+
+.dashboard-content .dash-action-name {
+  font-size: 12px;
+}
+
+.dashboard-content .dash-action-desc {
+  font-size: 10px;
+}
+
+.dashboard-content .dash-settings-msg {
+  font-size: 10px;
+}
+
+.dashboard-content .dash-switch {
+  width: 40px;
+  height: 22px;
+}
+
+.dashboard-content .dash-switch-knob {
+  width: 16px;
+  height: 16px;
+}
+
+.dashboard-content .dash-switch.on .dash-switch-knob {
+  transform: translateX(18px);
+}
+
 .dash-actions-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
